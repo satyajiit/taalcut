@@ -68,10 +68,10 @@
   "productName": "Taalcut",
   "dependencies": {
     "@huggingface/transformers": "4.3.1",
-    "@hyperframes/core": "0.8.209",
-    "@hyperframes/parsers": "0.8.209",
+    "@hyperframes/core": "0.9.30",
+    "@hyperframes/parsers": "0.9.30",
     "@hyperframes/producer": "0.8.209",
-    "@hyperframes/sdk": "0.8.209",
+    "@hyperframes/sdk": "0.9.30",
     "@sentry/electron": "8.1.0",
     "gsap": "3.15.0",
     "harfbuzzjs": "1.6.3",

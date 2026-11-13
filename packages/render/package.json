@@ -17,10 +17,10 @@
     "fetch:assets": "node scripts/fetch-fonts.mjs && node scripts/fetch-shell.mjs"
   },
   "dependencies": {
-    "@hyperframes/core": "0.8.209",
-    "@hyperframes/parsers": "0.8.209",
+    "@hyperframes/core": "0.9.30",
+    "@hyperframes/parsers": "0.9.30",
     "@hyperframes/producer": "0.8.209",
-    "@hyperframes/sdk": "0.8.209",
+    "@hyperframes/sdk": "0.9.30",
     "@taalcut/core": "workspace:*",
     "@taalcut/media": "workspace:*",
     "@taalcut/timeline": "workspace:*",

@@ -25,7 +25,7 @@
     "i18n:check": "node ../../scripts/i18n.mjs check"
   },
   "dependencies": {
-    "@hyperframes/player": "0.8.209",
+    "@hyperframes/player": "0.9.30",
     "@lingui/core": "6.9.1",
     "@lingui/react": "6.9.1",
     "@taalcut-vendor/page-mascot": "workspace:*",

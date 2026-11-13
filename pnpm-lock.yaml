@@ -73,17 +73,17 @@ importers:
         specifier: 4.3.1
         version: 4.3.1
       '@hyperframes/core':
-        specifier: 0.8.209
-        version: 0.8.209
+        specifier: 0.9.30
+        version: 0.9.30
       '@hyperframes/parsers':
-        specifier: 0.8.209
-        version: 0.8.209
+        specifier: 0.9.30
+        version: 0.9.30
       '@hyperframes/producer':
         specifier: 0.8.209
         version: 0.8.209
       '@hyperframes/sdk':
-        specifier: 0.8.209
-        version: 0.8.209
+        specifier: 0.9.30
+        version: 0.9.30
       '@sentry/electron':
         specifier: 8.1.0
         version: 8.1.0
@@ -516,17 +516,17 @@ importers:
   packages/render:
     dependencies:
       '@hyperframes/core':
-        specifier: 0.8.209
-        version: 0.8.209
+        specifier: 0.9.30
+        version: 0.9.30
       '@hyperframes/parsers':
-        specifier: 0.8.209
-        version: 0.8.209
+        specifier: 0.9.30
+        version: 0.9.30
       '@hyperframes/producer':
         specifier: 0.8.209
         version: 0.8.209
       '@hyperframes/sdk':
-        specifier: 0.8.209
-        version: 0.8.209
+        specifier: 0.9.30
+        version: 0.9.30
       '@taalcut/core':
         specifier: workspace:*
         version: link:../core
@@ -663,8 +663,8 @@ importers:
   packages/ui:
     dependencies:
       '@hyperframes/player':
-        specifier: 0.8.209
-        version: 0.8.209
+        specifier: 0.9.30
+        version: 0.9.30
       '@lingui/core':
         specifier: 6.9.1
         version: 6.9.1(@babel/core@7.29.7(supports-color@10.2.2))
@@ -1868,6 +1868,9 @@ packages:
   '@hyperframes/core@0.8.209':
     resolution: {integrity: sha512-5htuYU4zGrLYN4sKIXnNDBOCI+iSIcLw1KOuWobzlJXAef8g6mtRTkqpM2xZgWmMQbhkM/o54j97e4s+GCWaOA==}
 
+  '@hyperframes/core@0.9.30':
+    resolution: {integrity: sha512-4U24NEPkOrtYvGnTHOxizP8Deyt4s3Y0m7cOLNyxHud7dQ811I3kcKp8ozNepKLUzl1lSotxXdVVUB5yVeAJVA==}
+
   '@hyperframes/engine@0.8.209':
     resolution: {integrity: sha512-iedXMrUe2LtIE3miZXtHcE0yV6jaxTvkwSX6y6hfzlJodR+qLn8+pBna5sv+cobYKOuLmS1MzfuGyCyq9h6Y+A==}
     engines: {node: '>=22'}
@@ -1875,21 +1878,30 @@ packages:
   '@hyperframes/lint@0.8.209':
     resolution: {integrity: sha512-NNdYjKqlxFH9Am+jhWSMxx4XbE+D9kMpwTB245uZ4pDf9QDyWA2sqDEnY6p1QjRk09hpVgEhfzGKW3DptxKXAA==}
 
+  '@hyperframes/lint@0.9.30':
+    resolution: {integrity: sha512-1COM1R+GTDO1JtDAdw67fOHFRiS2S3iFmB0KUW6Ltzjx3V5Nb7fqifxh9LkxUblOLY7hXn/vo/Qoan6QsW+rWg==}
+
   '@hyperframes/parsers@0.8.209':
     resolution: {integrity: sha512-c6LaI+Y/09ZYyvNO0CVH7xpCDl28KWz8PamDi3zTbPVvM2RYSRls/HWFWBK9b/eZhZ0+XlY9a4IcfFLgpC/C5g==}
 
-  '@hyperframes/player@0.8.209':
-    resolution: {integrity: sha512-UkFG5nA+iGbG9D7nRS3utowjhQJEsMF7ENzgFYudRyvyvT5IcWxhHiTenoCyGA1mdvW9F7s/z+cRSmfgY0QYbw==}
+  '@hyperframes/parsers@0.9.30':
+    resolution: {integrity: sha512-Of4RglLZ2GdG7cYPmlg18U5fN+WLh9vULeEP12a6PGJcSn8VLme2a3Hy9QtEefVB8bvSseVidSLIXPTrVfBhAA==}
+
+  '@hyperframes/player@0.9.30':
+    resolution: {integrity: sha512-BKcUxZZFT7MDWkMvj/+i+rX2QLQqW2kMmZkONOQCaC+4nmz++mjdwIb/qyext6v5JNXPxigj1ODXilzCl87HxQ==}
 
   '@hyperframes/producer@0.8.209':
     resolution: {integrity: sha512-+cYpIVsjNjENQxctuqM2/LYdgJCqXJL2YSc9HOp2Gwd0uL4+WDextDDomC3QXlcRnwqkDU6FyRJMobjBtL3ghg==}
     engines: {node: '>=22'}
 
-  '@hyperframes/sdk@0.8.209':
-    resolution: {integrity: sha512-1uIVcojuON83jlDk9KIQydyTNNUGa4ZNh9G5am3e2M0PtqKaLkXZ7bIY3FKo72sW0Uv/zdvIwM8xoQ5BuD3jtw==}
+  '@hyperframes/sdk@0.9.30':
+    resolution: {integrity: sha512-zFc5XaDADn9Rpv6J+zoGgWMOTA+p8X9qqlRpxjwtu8NUfi2YoIv0AamRc3NNc962NnGHD/WAFi7ztkSi8+bbBQ==}
 
   '@hyperframes/studio-server@0.8.209':
     resolution: {integrity: sha512-Ax7zqX3CY06pso1CArLd70jKcOD/AnfX0mY07B2ZHchTIfmatDoVB6bvVNPyYS64ypv7RNAgw66Rzg+4OEcd0Q==}
+
+  '@hyperframes/studio-server@0.9.30':
+    resolution: {integrity: sha512-iHpAhGLRofofCCzFizxY3dzHFacvejH+e6m4mGQ0ic+akJOy0diRZAS7sn5AO/AUGPy2dFByICnXLWoBNuaptA==}
 
   '@ioredis/commands@1.10.0':
     resolution: {integrity: sha512-UmeW7z4LfctwoQ5wkhVzgq8tXkreED2xZGpX+Bg+zA+WJFZCT6c062AfCK/Dfk81xZnnwdhJCUMkitihRaoC2Q==}
@@ -8696,6 +8708,21 @@ snapshots:
     transitivePeerDependencies:
       - canvas
 
+  '@hyperframes/core@0.9.30':
+    dependencies:
+      '@chenglou/pretext': 0.0.5
+      '@hyperframes/lint': 0.9.30
+      '@hyperframes/parsers': 0.9.30
+      '@hyperframes/studio-server': 0.9.30
+      acorn: 8.19.0
+      linkedom: 0.18.13
+      postcss: 8.5.29
+      wawoff2: 2.0.1
+    optionalDependencies:
+      esbuild: 0.28.2
+    transitivePeerDependencies:
+      - canvas
+
   '@hyperframes/engine@0.8.209(patch_hash=4cb81b3c896acbf2348b582dee1eaa4af121b78d04f5841c88007291831c86ed)':
     dependencies:
       '@hono/node-server': 2.1.4(hono@4.13.13)
@@ -8724,6 +8751,19 @@ snapshots:
     transitivePeerDependencies:
       - canvas
 
+  '@hyperframes/lint@0.9.30':
+    dependencies:
+      '@hyperframes/parsers': 0.9.30
+      acorn: 8.19.0
+      acorn-walk: 8.3.5
+      htmlparser2: 10.1.0
+      ignore: 5.3.2
+      linkedom: 0.18.13
+      postcss: 8.5.29
+      postcss-selector-parser: 7.1.6
+    transitivePeerDependencies:
+      - canvas
+
   '@hyperframes/parsers@0.8.209':
     dependencies:
       '@babel/parser': 7.29.9
@@ -8736,9 +8776,21 @@ snapshots:
     transitivePeerDependencies:
       - canvas
 
-  '@hyperframes/player@0.8.209':
+  '@hyperframes/parsers@0.9.30':
     dependencies:
-      '@hyperframes/core': 0.8.209
+      '@babel/parser': 7.29.9
+      acorn: 8.19.0
+      acorn-walk: 8.3.5
+      entities: 7.0.1
+      linkedom: 0.18.13
+      magic-string: 0.30.21
+      recast: 0.23.21
+    transitivePeerDependencies:
+      - canvas
+
+  '@hyperframes/player@0.9.30':
+    dependencies:
+      '@hyperframes/core': 0.9.30
     transitivePeerDependencies:
       - canvas
 
@@ -8762,10 +8814,10 @@ snapshots:
       - utf-8-validate
       - yauzl
 
-  '@hyperframes/sdk@0.8.209':
+  '@hyperframes/sdk@0.9.30':
     dependencies:
-      '@hyperframes/core': 0.8.209
-      '@hyperframes/parsers': 0.8.209
+      '@hyperframes/core': 0.9.30
+      '@hyperframes/parsers': 0.9.30
       linkedom: 0.18.13
     transitivePeerDependencies:
       - canvas
@@ -8774,6 +8826,19 @@ snapshots:
     dependencies:
       '@hyperframes/core': 0.8.209
       '@hyperframes/parsers': 0.8.209
+      hono: 4.13.13
+      linkedom: 0.18.13
+      postcss: 8.5.29
+      postcss-selector-parser: 7.1.6
+    optionalDependencies:
+      sharp: link:packages/vision/stubs/sharp
+    transitivePeerDependencies:
+      - canvas
+
+  '@hyperframes/studio-server@0.9.30':
+    dependencies:
+      '@hyperframes/core': 0.9.30
+      '@hyperframes/parsers': 0.9.30
       hono: 4.13.13
       linkedom: 0.18.13
       postcss: 8.5.29
