@@ -59,7 +59,7 @@
     "@taalcut/transfer": "workspace:*",
     "@taalcut/vision": "workspace:*",
     "electron": "45.3.0",
-    "electron-builder": "26.15.7",
+    "electron-builder": "26.18.0",
     "electron-updater": "6.8.9",
     "rolldown": "1.2.13",
     "tsdown": "0.23.1",
