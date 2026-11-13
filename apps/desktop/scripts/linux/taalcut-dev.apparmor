@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+#
+# Taalcut development builds on Ubuntu 23.10 and later (LNX1). The kernel lets only programs with an AppArmor
+# profile make the unprivileged user namespaces Chromium's sandbox needs
+# (kernel.apparmor_restrict_unprivileged_userns=1). These profiles confine nothing (flags=unconfined, like Ubuntu's
+# own chrome and code profiles); they name three programs and allow them user namespaces, so the sandbox stays on:
+# the repo's Electron (any checkout or worktree, pnpm's layout) and the headless Chrome HyperFrames renders with
+# (its download cache and Taalcut's installed component), and bubblewrap, which confines the agent's workspace shell
+# (AGT2 sbx). Installed by install-apparmor-dev.sh; the .deb ships its own profile for the packaged app.
+
+abi <abi/4.0>,
+include <tunables/global>
+
+profile taalcut-dev-electron /{home,tmp}/**/node_modules/.pnpm/electron@*/node_modules/electron/dist/electron flags=(unconfined) {
+  userns,
+
+  include if exists <local/taalcut-dev-electron>
+}
+
+profile taalcut-dev-headless-shell /{home,tmp}/**/chrome-headless-shell-linux64/chrome-headless-shell flags=(unconfined) {
+  userns,
+
+  include if exists <local/taalcut-dev-headless-shell>
+}
+
+profile taalcut-dev-bwrap /usr/bin/bwrap flags=(unconfined) {
+  userns,
+
+  include if exists <local/taalcut-dev-bwrap>
+}

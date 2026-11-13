@@ -1,0 +1,15 @@
+{
+  "file": "places-v1.bin.gz",
+  "version": 1,
+  "source": "GeoNames cities1000, admin1CodesASCII, countryInfo",
+  "url": "https://download.geonames.org/export/dump/",
+  "licence": "CC-BY-4.0",
+  "attribution": "Contains data from GeoNames (https://www.geonames.org), licensed under CC BY 4.0.",
+  "sourceDate": "2026-10-28",
+  "cities": 162014,
+  "regions": 3865,
+  "countries": 252,
+  "zones": 392,
+  "bytes": 3254368,
+  "sha256": "62d348161b7663a8972d0faf43f53be68f17ed3d010d54db1d581869c68c43c1"
+}

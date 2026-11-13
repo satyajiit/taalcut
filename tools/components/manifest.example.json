@@ -1,0 +1,377 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "EXAMPLE ONLY. Every sha256 is the all-zero placeholder, every size and version is a plausible guess, and every URL (the NOTICE.txt each licence pins too) is on the reserved .invalid domain, so nothing here can be downloaded. Release engineering fills in the real manifest.json from the files it actually hosts (see README.md).",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "onnxruntime",
+      "name": "ONNX Runtime",
+      "version": "1.24.0",
+      "kind": "runtime",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.example.invalid/onnxruntime/1.24.0/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "attribution": "ONNX Runtime, Copyright (c) Microsoft Corporation. MIT licence."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.invalid/onnxruntime/1.24.0/onnxruntime-node-darwin-arm64.tar.zst",
+            "https://mirror.taalcut.invalid/onnxruntime/1.24.0/onnxruntime-node-darwin-arm64.tar.zst"
+          ],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 96000000,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 1,
+            "extractedSize": 270000000
+          }
+        }
+      ]
+    },
+    {
+      "id": "embeddinggemma-2",
+      "name": "EmbeddingGemma 2",
+      "version": "2.0.0-onnx-q8",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.example.invalid/embeddinggemma-2/2.0.0-onnx-q8/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "attribution": "EmbeddingGemma 2 by Google. Converted to ONNX and quantised to int8 for Taalcut."
+      },
+      "dependencies": ["onnxruntime"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.invalid/embeddinggemma-2/2.0.0-onnx-q8/embeddinggemma-2-q8.tar.zst"
+          ],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 690000000,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 1,
+            "extractedSize": 780000000
+          }
+        }
+      ]
+    },
+    {
+      "id": "beat-this",
+      "name": "Beat This!",
+      "version": "1.1.0-onnx-25308706",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.example.invalid/beat-this/1.1.0-onnx-25308706/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "attribution": "Beat This! by Foscarin, Schlüter and Widmer (CPJKU / JKU Linz). MIT licence."
+      },
+      "dependencies": ["onnxruntime"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": ["https://components.taalcut.invalid/beat-this/1.1.0-onnx-25308706/beat-this.tar.zst"],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 180000000,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 191000000
+          }
+        }
+      ]
+    },
+    {
+      "id": "sherpa-onnx",
+      "name": "sherpa-onnx",
+      "version": "1.13.8",
+      "kind": "runtime",
+      "tiers": [],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.example.invalid/sherpa-onnx/1.13.8/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": ["https://components.taalcut.invalid/sherpa-onnx/1.13.8/sherpa-onnx-darwin-arm64.tar.gz"],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 31000000,
+          "install": {
+            "type": "archive",
+            "format": "tar.gz",
+            "stripComponents": 1,
+            "extractedSize": 78000000
+          }
+        }
+      ]
+    },
+    {
+      "id": "parakeet-tdt-0-6b-v3",
+      "name": "Parakeet TDT 0.6B v3",
+      "version": "3.0.0-int8",
+      "kind": "model",
+      "tiers": [],
+      "licence": {
+        "spdx": "CC-BY-4.0",
+        "notice": {
+          "url": "https://components.example.invalid/parakeet-tdt-0-6b-v3/3.0.0-int8/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "attribution": "Parakeet TDT 0.6B v3 by NVIDIA, licensed under CC BY 4.0. Converted to ONNX and quantised to int8 for sherpa-onnx; no other changes."
+      },
+      "dependencies": ["sherpa-onnx"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.invalid/parakeet-tdt-0-6b-v3/3.0.0-int8/parakeet-tdt-0.6b-v3-int8.tar.zst",
+            "https://mirror.taalcut.invalid/parakeet-tdt-0-6b-v3/3.0.0-int8/parakeet-tdt-0.6b-v3-int8.tar.zst"
+          ],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 600000000,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 1,
+            "extractedSize": 670000000
+          }
+        }
+      ]
+    },
+    {
+      "id": "parakeet-tdt-0-6b-v3-coreml",
+      "name": "Parakeet TDT 0.6B v3 (Core ML)",
+      "version": "int8-7dd20fe6",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "CC-BY-4.0",
+        "notice": {
+          "url": "https://components.example.invalid/parakeet-tdt-0-6b-v3-coreml/int8-7dd20fe6/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "attribution": "Parakeet TDT 0.6B v3 by NVIDIA, CC BY 4.0; converted to Core ML by FluidInference; no other changes"
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.invalid/parakeet-tdt-0-6b-v3-coreml/int8-7dd20fe6/parakeet-tdt-0-6b-v3-coreml.tar.zst"
+          ],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 450000000,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 484000000
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-cpp",
+      "name": "whisper.cpp",
+      "version": "1.9.5",
+      "kind": "runtime",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.example.invalid/whisper-cpp/1.9.5/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": ["https://components.taalcut.invalid/whisper-cpp/1.9.5/whisper-cpp-darwin-arm64.tar.gz"],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 4000000,
+          "install": {
+            "type": "archive",
+            "format": "tar.gz",
+            "stripComponents": 1,
+            "extractedSize": 11000000
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-tiny",
+      "name": "Whisper tiny",
+      "version": "tiny",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.example.invalid/whisper-tiny/tiny/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-tiny.bin)."
+      },
+      "dependencies": ["whisper-cpp"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": ["https://components.taalcut.invalid/whisper-tiny/tiny/ggml-tiny.bin"],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 78000000,
+          "install": {
+            "type": "file",
+            "fileName": "ggml-tiny.bin"
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-small-q8-0",
+      "name": "Whisper small Q8_0",
+      "version": "small-q8_0",
+      "kind": "model",
+      "tiers": ["minimum"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.example.invalid/whisper-small-q8-0/small-q8_0/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-small-q8_0.bin)."
+      },
+      "dependencies": ["whisper-cpp"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": ["https://components.taalcut.invalid/whisper-small-q8-0/small-q8_0/ggml-small-q8_0.bin"],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 265000000,
+          "install": {
+            "type": "file",
+            "fileName": "ggml-small-q8_0.bin"
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-medium-q5-0",
+      "name": "Whisper medium Q5_0",
+      "version": "medium-q5_0",
+      "kind": "model",
+      "tiers": ["recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.example.invalid/whisper-medium-q5-0/medium-q5_0/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-medium-q5_0.bin)."
+      },
+      "dependencies": ["whisper-cpp"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": ["https://components.taalcut.invalid/whisper-medium-q5-0/medium-q5_0/ggml-medium-q5_0.bin"],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 540000000,
+          "install": {
+            "type": "file",
+            "fileName": "ggml-medium-q5_0.bin"
+          }
+        }
+      ]
+    },
+    {
+      "id": "deno",
+      "name": "Deno",
+      "version": "2.6.0",
+      "kind": "runtime",
+      "tiers": [],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.example.invalid/deno/2.6.0/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": ["https://components.taalcut.invalid/deno/2.6.0/deno-aarch64-apple-darwin"],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 105000000,
+          "install": {
+            "type": "file",
+            "fileName": "deno",
+            "executable": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "reference-fetcher",
+      "name": "yt-dlp",
+      "version": "2026.10.01",
+      "kind": "tool",
+      "tiers": [],
+      "licence": {
+        "spdx": "Unlicense",
+        "notice": {
+          "url": "https://components.example.invalid/reference-fetcher/2026.10.01/NOTICE.txt",
+          "size": 4096,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "dependencies": ["deno"],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": ["https://components.taalcut.invalid/reference-fetcher/2026.10.01/yt-dlp_macos"],
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size": 36000000,
+          "install": {
+            "type": "file",
+            "fileName": "yt-dlp",
+            "executable": true
+          }
+        }
+      ]
+    }
+  ]
+}

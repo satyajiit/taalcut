@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taalcut Design System</title>
+<script>
+  (function () {
+    var pref = 'system';
+    try { var s = localStorage.getItem('taalcut.theme'); if (s === 'light' || s === 'dark') pref = s; } catch (e) {}
+    if (pref !== 'system') document.documentElement.setAttribute('data-theme', pref);
+    document.documentElement.setAttribute('data-theme-preference', pref);
+  })();
+</script>
+<!-- The faces the website loads (website/src/styles/global.css), by the names the tokens give them ("Onest Variable"
+     and the rest): serve this page from the repo's root after pnpm install. -->
+<link rel="stylesheet" href="../website/node_modules/@fontsource-variable/onest/wght.css">
+<link rel="stylesheet" href="../website/node_modules/@fontsource-variable/noto-sans-devanagari/wght.css">
+<link rel="stylesheet" href="../website/node_modules/@fontsource-variable/jetbrains-mono/wght.css">
+<link rel="icon" href="logo/kit/web/favicon.ico" sizes="48x48">
+<link rel="icon" href="logo/kit/web/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="tokens/tokens.css">
+<link rel="stylesheet" href="tokens/base.css">
+<style>
+/* Hallmark · route: custom (tuned) · page: design-system preview · nav: N9 edge-aligned · footer: Ft2 inline
+ * theme: custom · vibe: "golden hour, on the beat" · display/body: Onest · mono: JetBrains Mono
+ * pre-emit critique: P5 H4 E4 S5 R4 V4 · every colour and font is a token
+ */
+.wrap { max-width: 1180px; margin-inline: auto; padding-inline: var(--space-md); }
+header.top {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--color-canvas); border-bottom: var(--rule-hair) solid var(--color-rule-subtle);
+}
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); min-height: 56px; flex-wrap: wrap; padding-block: var(--space-xs); }
+/* The logo (design/logo/kit), four-colour, small drawing at header size. The --color-logo-* tokens
+   resolve to the kit's four-colour-light or four-colour-dark values for the current theme. */
+.logo { display: inline-flex; align-items: center; color: var(--color-logo-ink); text-decoration: none; }
+.logo svg { display: block; height: 30px; width: auto; }
+.logo .w { fill: currentColor; }
+.logo .b0 { fill: var(--color-logo-1); }
+.logo .b1 { fill: var(--color-logo-2); }
+.logo .b2 { fill: var(--color-logo-3); }
+.logo .b3 { fill: var(--color-logo-4); }
+.resolved { color: var(--color-ink-3); font-size: var(--text-sm); white-space: nowrap; }
+
+.seg { display: inline-flex; gap: 2px; padding: 2px; border-radius: var(--radius-pill); background: var(--color-sunken); border: var(--rule-hair) solid var(--color-rule); }
+.seg button { font: inherit; font-size: var(--text-sm); font-weight: var(--font-weight-medium); color: var(--color-ink-2); background: none; border: 0; border-radius: var(--radius-pill); padding: var(--space-2xs) var(--space-sm); cursor: pointer; white-space: nowrap; transition: color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out); }
+.seg button:hover { color: var(--color-ink); }
+.seg button[aria-checked="true"] { background: var(--color-raised); color: var(--color-ink); box-shadow: var(--shadow-sm); }
+
+main section { padding-block: var(--space-2xl); border-bottom: var(--rule-hair) solid var(--color-rule-subtle); }
+h1 { font-size: var(--text-display); line-height: var(--text-display--line-height); letter-spacing: var(--text-display--letter-spacing); font-weight: var(--font-weight-bold); max-width: 18ch; }
+h1 .beat { color: var(--color-marigold-strong); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 8px; text-decoration-color: var(--color-rose-strong); }
+h2 { font-size: var(--text-2xl); line-height: var(--text-2xl--line-height); letter-spacing: var(--text-2xl--letter-spacing); margin-bottom: var(--space-xs); }
+h3 { font-size: var(--text-lg); line-height: var(--text-lg--line-height); margin-bottom: var(--space-2xs); }
+.lede { font-size: var(--text-md); line-height: var(--text-md--line-height); color: var(--color-ink-2); max-width: 62ch; margin: var(--space-md) 0 0; }
+.note { font-size: var(--text-sm); line-height: var(--text-sm--line-height); color: var(--color-ink-3); max-width: 70ch; margin: 0 0 var(--space-lg); }
+
+/* ---------- studio composition ---------- */
+.studio { display: grid; grid-template-columns: 200px minmax(0, 1fr) minmax(0, 1.25fr); gap: var(--space-sm); margin-top: var(--space-xl); }
+.panel { background: var(--color-raised); border: var(--rule-hair) solid var(--color-rule-subtle); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); padding: var(--space-sm); min-width: 0; }
+.nav { background: var(--color-sunken); }
+.nav a { display: flex; align-items: center; gap: var(--space-xs); padding: var(--space-xs) var(--space-xs); border-radius: var(--radius-md); color: var(--color-ink-2); text-decoration: none; font-weight: var(--font-weight-medium); white-space: nowrap; }
+.nav a:hover { background: var(--color-hover); color: var(--color-ink); }
+.nav a[aria-current="page"] { background: var(--color-raised); color: var(--color-ink); box-shadow: var(--shadow-sm); }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.dot.library { background: var(--color-area-library-strong); }
+.dot.templates { background: var(--color-area-templates-strong); }
+.dot.make { background: var(--color-area-make-strong); }
+.dot.agent { background: var(--color-area-agent-strong); }
+
+.msg { border-radius: var(--radius-lg); padding: var(--space-sm); font-size: var(--text-md); line-height: var(--text-md--line-height); }
+.msg + .msg { margin-top: var(--space-xs); }
+.msg.you { background: var(--color-sunken); margin-left: var(--space-xl); }
+.msg.agent { background: var(--color-ai-soft); border-left: var(--rule-fine) solid var(--color-ai-strong); }
+.who { display: flex; align-items: center; gap: var(--space-2xs); font-size: var(--text-xs); font-weight: var(--font-weight-semibold); color: var(--color-ai-strong); margin-bottom: var(--space-2xs); }
+.msg.you .who { color: var(--color-you-strong); }
+.steps { list-style: none; margin: var(--space-xs) 0 0; padding: 0; font-size: var(--text-sm); color: var(--color-ink-2); }
+.steps li { display: flex; gap: var(--space-xs); align-items: baseline; }
+.steps li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--color-ai-strong); flex: none; transform: translateY(-1px); }
+.composer { margin-top: var(--space-sm); display: flex; gap: var(--space-xs); align-items: center; border: var(--rule-hair) solid var(--color-rule-strong); border-radius: var(--radius-2xl); padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) var(--space-sm); background: var(--color-canvas); }
+.composer span { flex: 1; color: var(--color-ink-3); font-size: var(--text-md); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.viewer { border-radius: var(--radius-lg); aspect-ratio: 16 / 10; display: grid; place-items: center; border: var(--rule-hair) solid var(--color-viewer-rule); }
+.frame { height: 86%; aspect-ratio: 9 / 16; border-radius: var(--radius-sm); background: var(--color-viewer-rule); display: grid; align-content: end; padding: var(--space-xs); }
+.caption-demo { font-weight: var(--font-weight-bold); font-size: var(--text-sm); line-height: 1.2; text-align: center; color: var(--color-marigold); }
+.tc-row { display: flex; justify-content: space-between; margin-top: var(--space-xs); font-size: var(--text-xs); color: var(--color-ink-3); }
+
+.timeline { position: relative; margin-top: var(--space-xs); background: var(--color-sunken); border-radius: var(--radius-md); padding: var(--space-xs); }
+.slots { display: flex; gap: 2px; height: 44px; }
+.slot { flex: var(--w) 1 0; min-width: 0; border-radius: var(--radius-clip); background: var(--color-overlay); border: var(--rule-hair) solid var(--color-rule); position: relative; }
+.slot.ai { border-bottom: 3px solid var(--color-ai-strong); }
+.slot.you { border-bottom: 3px solid var(--color-you-strong); background: var(--color-you-soft); }
+.beats { position: relative; height: 10px; margin-top: 4px; }
+.beats i { position: absolute; left: calc(var(--at) * 1%); width: 2px; height: 10px; border-radius: 1px; background: var(--color-beat-strong); }
+.beats i.down { height: 10px; width: 3px; }
+.playhead { position: absolute; top: 4px; bottom: 4px; left: 38%; width: 2px; background: var(--color-playhead-strong); border-radius: 1px; }
+.legend { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-xs); font-size: var(--text-xs); color: var(--color-ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: var(--space-2xs); white-space: nowrap; }
+.key { width: 14px; height: 3px; border-radius: 2px; }
+
+/* ---------- palette ---------- */
+.grid { display: grid; gap: var(--space-sm); }
+.grid.surfaces { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.sw { border-radius: var(--radius-lg); border: var(--rule-hair) solid var(--color-rule); overflow: hidden; background: var(--color-raised); min-width: 0; }
+.sw .chip { height: 64px; }
+.sw .meta { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); line-height: 1.4; }
+.sw .meta b { display: block; font-size: var(--text-sm); font-weight: var(--font-weight-semibold); color: var(--color-ink); }
+.sw .meta code { color: var(--color-ink-3); font-size: var(--text-2xs); overflow-wrap: anywhere; }
+
+.accents { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.accent { border-radius: var(--radius-xl); border: var(--rule-hair) solid var(--color-rule-subtle); background: var(--color-raised); padding: var(--space-sm); min-width: 0; }
+.accent .row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 4px; margin: var(--space-xs) 0; }
+.accent .row div { height: 52px; border-radius: var(--radius-md); display: grid; place-items: center; font-size: var(--text-xs); font-weight: var(--font-weight-semibold); }
+.accent p { margin: 0; font-size: var(--text-sm); color: var(--color-ink-2); }
+.accent h3 { display: flex; align-items: center; gap: var(--space-xs); }
+.status-row { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: var(--space-sm); }
+.alert { display: flex; gap: var(--space-xs); align-items: flex-start; border-radius: var(--radius-lg); padding: var(--space-sm); font-size: var(--text-sm); }
+.alert svg { flex: none; margin-top: 2px; }
+
+/* ---------- type ---------- */
+.type-scale { display: grid; gap: var(--space-xs); }
+.type-scale div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: var(--space-sm); align-items: baseline; border-bottom: var(--rule-hair) solid var(--color-rule-subtle); padding-bottom: var(--space-xs); }
+.type-scale code { font-size: var(--text-xs); color: var(--color-ink-3); }
+.type-scale p { margin: 0; overflow-wrap: anywhere; min-width: 0; }
+.mono-demo { display: flex; flex-wrap: wrap; gap: var(--space-lg); margin-top: var(--space-lg); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.mono-demo div span { display: block; font-family: var(--font-sans); font-size: var(--text-xs); color: var(--color-ink-3); }
+.hindi { margin-top: var(--space-lg); font-size: var(--text-xl); line-height: 1.6; }
+
+/* ---------- components ---------- */
+.btn { font: inherit; font-size: var(--text-base); font-weight: var(--font-weight-semibold); display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); height: 36px; padding: 0 var(--space-md); border-radius: var(--radius-md); border: var(--rule-hair) solid transparent; cursor: pointer; white-space: nowrap; transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.btn.primary { background: var(--color-primary); color: var(--color-primary-ink); border-color: var(--color-primary-strong); }
+.btn.primary:hover, .btn.primary.is-hover { background: var(--color-primary-strong); color: var(--color-canvas); }
+.btn.secondary { background: var(--color-sunken); color: var(--color-ink); border-color: var(--color-rule); }
+.btn.secondary:hover, .btn.secondary.is-hover { background: var(--color-hover); }
+.btn.ghost { background: none; color: var(--color-ink-2); }
+.btn.ghost:hover, .btn.ghost.is-hover { background: var(--color-hover); color: var(--color-ink); }
+.btn.danger { background: var(--color-danger); color: var(--color-danger-ink); border-color: var(--color-danger-strong); }
+.btn:active, .btn.is-active { transform: translateY(1px); }
+.btn.is-focus { outline: var(--rule-fine) solid var(--color-focus); outline-offset: 2px; }
+.btn:disabled { background: var(--color-sunken); color: var(--color-ink-disabled); border-color: var(--color-rule-subtle); cursor: not-allowed; transform: none; }
+.btn[data-state="error"] { background: var(--color-danger-soft); color: var(--color-danger-strong); border-color: var(--color-danger-strong); }
+.btn[data-state="success"] { background: var(--color-success-soft); color: var(--color-success-strong); border-color: var(--color-success-strong); }
+.spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.states { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-sm); }
+.states figure { margin: 0; display: grid; gap: var(--space-2xs); justify-items: start; }
+.states figcaption { font-size: var(--text-xs); color: var(--color-ink-3); }
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-bottom: var(--space-lg); }
+
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.chip-tag { display: inline-flex; align-items: center; gap: var(--space-2xs); padding: 2px var(--space-xs); border-radius: var(--radius-pill); font-size: var(--text-xs); font-weight: var(--font-weight-semibold); white-space: nowrap; }
+.field { display: grid; gap: var(--space-2xs); max-width: 360px; margin-top: var(--space-lg); }
+.field label { font-size: var(--text-sm); font-weight: var(--font-weight-medium); }
+.field input { font: inherit; font-size: var(--text-base); height: 36px; padding: 0 var(--space-sm); border-radius: var(--radius-md); border: var(--rule-hair) solid var(--color-rule-strong); background: var(--color-canvas); color: var(--color-ink); }
+.field input::placeholder { color: var(--color-ink-3); }
+.field small { font-size: var(--text-xs); color: var(--color-ink-3); }
+
+footer { padding-block: var(--space-lg); font-size: var(--text-sm); color: var(--color-ink-3); }
+footer a { color: var(--color-marigold-strong); }
+
+@media (max-width: 960px) {
+  .studio { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .studio .nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-2xs); }
+}
+@media (max-width: 640px) {
+  .studio { grid-template-columns: minmax(0, 1fr); }
+  .msg.you { margin-left: var(--space-md); }
+  .resolved { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Taalcut"><svg viewBox="0 0 905 256" aria-hidden="true"><path class="b0" d="M142.45 16.88A112 112 0 0 1 232.16 85.72L167.15 103.14A46 46 0 0 0 142.45 84.18Z"/><path class="b1" d="M239.41 112.76A112 112 0 0 1 142.45 239.12L142.45 192.5A66 66 0 0 0 194.37 124.83Z"/><path class="b2" d="M114.45 239.12A112 112 0 0 1 24.73 170.28L55.99 161.91A80 80 0 0 0 114.45 206.77Z"/><path class="b3" d="M17.49 143.24A112 112 0 0 1 114.45 16.88L114.45 63.5A66 66 0 0 0 62.52 131.17Z"/><path class="w" fill-rule="evenodd" d="M324.07 60.8L343.49 60.8L343.49 83.2L362.9 83.2L362.9 100.37L343.49 100.37L343.49 172.8L324.07 172.8L324.07 100.37L307.65 100.37L307.65 83.2L324.07 83.2ZM448.02 83.2L467.43 83.2L467.43 172.8L448.02 172.8L448.02 166.07A47.04 47.04 0 1 1 448.02 89.93ZM448.02 128A27.63 27.63 0 1 0 392.77 128A27.63 27.63 0 1 0 448.02 128ZM557.03 83.2L576.45 83.2L576.45 172.8L557.03 172.8L557.03 166.07A47.04 47.04 0 1 1 557.03 89.93ZM557.03 128A27.63 27.63 0 1 0 501.78 128A27.63 27.63 0 1 0 557.03 128ZM592.87 41.39L612.29 41.39L612.29 172.8L592.87 172.8ZM709.02 161.26A47.04 47.04 0 1 1 709.02 94.74L695.29 108.46A27.63 27.63 0 1 0 695.29 147.54ZM731.75 83.2L751.17 83.2L751.17 130.24A25.39 25.39 0 0 0 776.55 155.63A25.39 25.39 0 0 0 801.94 130.24L801.94 83.2L821.35 83.2L821.35 172.8L801.94 172.8L801.94 167.15A44.8 44.8 0 0 1 731.75 130.24ZM849.73 60.8L869.14 60.8L869.14 83.2L888.55 83.2L888.55 100.37L869.14 100.37L869.14 172.8L849.73 172.8L849.73 100.37L833.3 100.37L833.3 83.2L849.73 83.2Z"/></svg></a>
+    <div style="display:flex;align-items:center;gap:var(--space-sm)">
+      <span class="resolved" id="resolved"></span>
+      <div class="seg" role="radiogroup" aria-label="Theme" id="seg">
+        <button type="button" role="radio" data-pref="system">System</button>
+        <button type="button" role="radio" data-pref="light">Light</button>
+        <button type="button" role="radio" data-pref="dark">Dark</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap">
+      <h1>Cut your clips to the <span class="beat">beat</span> of a reel you love.</h1>
+      <p class="lede">The Taalcut design system: Onest everywhere, a warm golden-hour palette, and four accents that each have a job. Switch the theme above; every colour on this page comes from <code>tokens.css</code>.</p>
+
+      <div class="studio" role="group" aria-label="Studio sample">
+        <nav class="panel nav" aria-label="Areas">
+          <a href="#" aria-current="page"><span class="dot make"></span>Make</a>
+          <a href="#"><span class="dot library"></span>Library</a>
+          <a href="#"><span class="dot templates"></span>Templates</a>
+          <a href="#"><span class="dot agent"></span>Agent</a>
+        </nav>
+
+        <div class="panel">
+          <div class="msg you"><div class="who">You</div>Make my Goa trip into a reel like this one.</div>
+          <div class="msg agent">
+            <div class="who">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10.5l-5.6 1.9L12 18l-1.9-5.6L4.5 10.5l5.6-1.9z"/></svg>
+              Taalcut
+            </div>
+            I matched every slot from your Goa folder. The last slot ends on the drone shot, because the reference closes on its widest frame.
+            <ul class="steps"><li>Broke down the reference into slots and beats</li><li>Picked and ordered clips for every slot</li><li>Checked the render before showing it</li></ul>
+          </div>
+          <div class="composer"><span>Ask for a change, or drop a clip…</span><button class="btn primary" type="button">Send</button></div>
+        </div>
+
+        <div class="panel">
+          <div class="viewer tc-viewer"><div class="frame"><div class="caption-demo">sunset run</div></div></div>
+          <div class="tc-row"><time>00:00:04:12</time><time>00:00:15:00</time></div>
+          <div class="timeline">
+            <div class="slots">
+              <div class="slot ai" style="--w:10"></div><div class="slot ai" style="--w:7"></div><div class="slot you" style="--w:12"></div><div class="slot ai" style="--w:6"></div><div class="slot ai" style="--w:9"></div><div class="slot ai" style="--w:14"></div>
+            </div>
+            <div class="beats" aria-hidden="true">
+              <i class="down" style="--at:0"></i><i style="--at:9"></i><i style="--at:17"></i><i class="down" style="--at:25"></i><i style="--at:34"></i><i style="--at:43"></i><i class="down" style="--at:51"></i><i style="--at:60"></i><i style="--at:69"></i><i class="down" style="--at:77"></i><i style="--at:86"></i><i style="--at:95"></i>
+            </div>
+            <div class="playhead" aria-hidden="true"></div>
+          </div>
+          <div class="legend">
+            <span><i class="key" style="background:var(--color-ai-strong)"></i>Picked by the agent</span>
+            <span><i class="key" style="background:var(--color-you-strong)"></i>Changed by you</span>
+            <span><i class="key" style="background:var(--color-beat-strong)"></i>Beats</span>
+            <span><i class="key" style="background:var(--color-playhead-strong)"></i>Playhead</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Four accents, four jobs</h2>
+      <p class="note">Each accent has a fill (filled controls, brand moments), a strong tone (text, icons, markers on any surface) and a soft wash (chips, selected rows). Text on a fill uses its ink token. In everyday screens accents stay under about 5% of the view; brand moments may use all four.</p>
+      <div class="grid accents">
+        <div class="accent"><h3><span class="dot make"></span>Marigold</h3>
+          <div class="row"><div style="background:var(--color-marigold);color:var(--color-marigold-ink)">fill</div><div style="background:var(--color-marigold-soft);color:var(--color-marigold-strong)">soft</div><div style="background:var(--color-canvas);color:var(--color-marigold-strong);border:var(--rule-hair) solid var(--color-rule)">strong</div></div>
+          <p>Primary action, focus, selection, playhead, progress, the Make area, beat one of the logo.</p></div>
+        <div class="accent"><h3><span class="dot templates"></span>Rose</h3>
+          <div class="row"><div style="background:var(--color-rose);color:var(--color-rose-ink)">fill</div><div style="background:var(--color-rose-soft);color:var(--color-rose-strong)">soft</div><div style="background:var(--color-canvas);color:var(--color-rose-strong);border:var(--rule-hair) solid var(--color-rule)">strong</div></div>
+          <p>Templates area, beat markers, slot boundaries: the rhythm of a reference.</p></div>
+        <div class="accent"><h3><span class="dot library"></span>Teal</h3>
+          <div class="row"><div style="background:var(--color-teal);color:var(--color-teal-ink)">fill</div><div style="background:var(--color-teal-soft);color:var(--color-teal-strong)">soft</div><div style="background:var(--color-canvas);color:var(--color-teal-strong);border:var(--rule-hair) solid var(--color-rule)">strong</div></div>
+          <p>Library area, your footage, and everything you changed.</p></div>
+        <div class="accent"><h3><span class="dot agent"></span>Violet</h3>
+          <div class="row"><div style="background:var(--color-violet);color:var(--color-violet-ink)">fill</div><div style="background:var(--color-violet-soft);color:var(--color-violet-strong)">soft</div><div style="background:var(--color-canvas);color:var(--color-violet-strong);border:var(--rule-hair) solid var(--color-rule)">strong</div></div>
+          <p>Agent area, AI activity, and everything the agent decided.</p></div>
+      </div>
+
+      <div class="grid status-row">
+        <div class="alert" style="background:var(--color-success-soft);color:var(--color-ink)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-success-strong)" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Saved.</b> Export finished.</span></div>
+        <div class="alert" style="background:var(--color-warning-soft);color:var(--color-ink)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning-strong)" stroke-width="2.5" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span><b>Check this.</b> Slot 4 has no clip that fits.</span></div>
+        <div class="alert" style="background:var(--color-danger-soft);color:var(--color-ink)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-danger-strong)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span><b>Render failed.</b> The disk is full. Free up space and try again.</span></div>
+        <div class="alert" style="background:var(--color-info-soft);color:var(--color-ink)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-info-strong)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg><span><b>Heads up.</b> This step uses your cloud model.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Surfaces, ink and lines</h2>
+      <p class="note">Warm neutrals, tinted toward marigold. In dark mode higher surfaces get lighter. The viewer surround is the one neutral grey, the same in both themes, so footage colour reads true.</p>
+      <div class="grid surfaces" id="surfaces"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Onest, everywhere</h2>
+      <p class="note">One family for everything you read, from headlines to chat. JetBrains Mono only for numbers that change in place. Every other script falls back to its Noto family: Noto Sans Devanagari for Hindi.</p>
+      <div class="type-scale">
+        <div><code>display</code><p style="font-size:var(--text-display);line-height:var(--text-display--line-height);letter-spacing:var(--text-display--letter-spacing);font-weight:var(--font-weight-bold)">Ready to post</p></div>
+        <div><code>2xl · 24</code><p style="font-size:var(--text-2xl);font-weight:var(--font-weight-semibold);letter-spacing:var(--text-2xl--letter-spacing)">Your library</p></div>
+        <div><code>xl · 20</code><p style="font-size:var(--text-xl);font-weight:var(--font-weight-semibold)">Template breakdown</p></div>
+        <div><code>lg · 17</code><p style="font-size:var(--text-lg);font-weight:var(--font-weight-semibold)">Cast board</p></div>
+        <div><code>md · 15</code><p style="font-size:var(--text-md);line-height:var(--text-md--line-height)">I swapped slot 3 for your sunset clip. Say "undo" to put the old one back.</p></div>
+        <div><code>base · 14</code><p style="font-size:var(--text-base)">Export · Settings · Add folder</p></div>
+        <div><code>sm · 13</code><p style="font-size:var(--text-sm);color:var(--color-ink-2)">Imported 214 of 380 clips</p></div>
+        <div><code>2xs · 11</code><p style="font-size:var(--text-2xs);color:var(--color-ink-3)">SLOT 3 · 0.8 S</p></div>
+      </div>
+      <div class="mono-demo">
+        <div><span>Timecode</span>00:01:24:18</div>
+        <div><span>Duration</span>0.80 s</div>
+        <div><span>File size</span>2.14 GB</div>
+        <div><span>Frame</span>#002 418</div>
+      </div>
+      <p class="hindi" lang="hi">अपनी क्लिप्स को रील की ताल पर काटें।</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Controls</h2>
+      <p class="note">Every interactive control ships all eight states. Primary is the only marigold fill on a screen.</p>
+      <div class="btn-row">
+        <button class="btn primary" type="button">Export video</button>
+        <button class="btn secondary" type="button">Swap clip</button>
+        <button class="btn ghost" type="button">Cancel</button>
+        <button class="btn danger" type="button">Delete project</button>
+      </div>
+      <div class="states">
+        <figure><button class="btn primary" type="button">Export</button><figcaption>default</figcaption></figure>
+        <figure><button class="btn primary is-hover" type="button">Export</button><figcaption>hover</figcaption></figure>
+        <figure><button class="btn primary is-focus" type="button">Export</button><figcaption>focus</figcaption></figure>
+        <figure><button class="btn primary is-active" type="button">Export</button><figcaption>active</figcaption></figure>
+        <figure><button class="btn primary" type="button" disabled>Export</button><figcaption>disabled</figcaption></figure>
+        <figure><button class="btn primary" type="button" data-state="loading" aria-busy="true"><span class="spin" aria-hidden="true"></span>Rendering</button><figcaption>loading</figcaption></figure>
+        <figure><button class="btn" type="button" data-state="error">Try again</button><figcaption>error</figcaption></figure>
+        <figure><button class="btn" type="button" data-state="success">Saved</button><figcaption>success</figcaption></figure>
+      </div>
+
+      <div class="chips" style="margin-top:var(--space-lg)">
+        <span class="chip-tag" style="background:var(--color-ai-soft);color:var(--color-ai-strong)">AI pick</span>
+        <span class="chip-tag" style="background:var(--color-you-soft);color:var(--color-you-strong)">You changed this</span>
+        <span class="chip-tag" style="background:var(--color-rose-soft);color:var(--color-rose-strong)">12 slots · 98 BPM</span>
+        <span class="chip-tag" style="background:var(--color-marigold-soft);color:var(--color-marigold-strong)">Rendering</span>
+        <span class="chip-tag" style="background:var(--color-sunken);color:var(--color-ink-2)">9:16 · 1080p</span>
+      </div>
+
+      <div class="field">
+        <label for="name">Project name</label>
+        <input id="name" placeholder="Goa trip, Sunday edit">
+        <small>Only you see this name.</small>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Generated tokens: <code>design/tokens/</code> · contrast checks: <a href="contrast-report.md">contrast-report.md</a> · rules: <a href="../DESIGN.md">DESIGN.md</a></div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var seg = document.getElementById('seg');
+  var buttons = Array.prototype.slice.call(seg.querySelectorAll('button'));
+  var media = window.matchMedia('(prefers-color-scheme: dark)');
+  var pref = root.getAttribute('data-theme-preference') || 'system';
+
+  function resolved() { return pref === 'system' ? (media.matches ? 'dark' : 'light') : pref; }
+  function render() {
+    buttons.forEach(function (b) { var on = b.dataset.pref === pref; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
+    document.getElementById('resolved').textContent = 'Showing ' + resolved() + (pref === 'system' ? ' (system)' : '');
+    fillSurfaces();
+  }
+  function apply(next) {
+    pref = next;
+    root.setAttribute('data-theme-switching', '');
+    if (pref === 'system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', pref);
+    root.setAttribute('data-theme-preference', pref);
+    try { localStorage.setItem('taalcut.theme', pref); } catch (e) {}
+    requestAnimationFrame(function () { requestAnimationFrame(function () { root.removeAttribute('data-theme-switching'); }); });
+    render();
+  }
+  buttons.forEach(function (b, i) {
+    b.addEventListener('click', function () { apply(b.dataset.pref); });
+    b.addEventListener('keydown', function (e) {
+      var step = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+      if (!step) return;
+      e.preventDefault();
+      var n = buttons[(i + step + buttons.length) % buttons.length];
+      apply(n.dataset.pref); n.focus();
+    });
+  });
+  media.addEventListener('change', function () { if (pref === 'system') render(); });
+
+  var surfaceTokens = [
+    ['canvas', 'App background'], ['sunken', 'Wells, sidebar, timeline bed'], ['raised', 'Cards, panels'], ['overlay', 'Menus, dialogs'],
+    ['hover', 'Hover state'], ['viewer', 'Viewer surround (both themes)'], ['ink', 'Primary text'], ['ink-2', 'Secondary text'],
+    ['ink-3', 'Tertiary text, placeholders'], ['rule-subtle', 'Dividers'], ['rule', 'Borders'], ['rule-strong', 'Input borders'], ['focus', 'Focus ring']
+  ];
+  function fillSurfaces() {
+    var host = document.getElementById('surfaces');
+    var cs = getComputedStyle(root);
+    host.innerHTML = '';
+    surfaceTokens.forEach(function (t) {
+      var el = document.createElement('div');
+      el.className = 'sw';
+      el.innerHTML = '<div class="chip" style="background:var(--color-' + t[0] + ')"></div><div class="meta"><b>' + t[0] + '</b>' + t[1] + '<br><code>' + cs.getPropertyValue('--color-' + t[0]).trim() + '</code></div>';
+      host.appendChild(el);
+    });
+  }
+  render();
+})();
+</script>
+</body>
+</html>

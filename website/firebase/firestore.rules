@@ -1,0 +1,69 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Taalcut contributors
+//
+// taalcut.app's Firestore: two collections the public can add to and nobody can read through the client.
+// The site checks the same shapes before it writes (website/src/lib/firebase/entries.ts); firebase/test/rules.test.ts
+// holds the two together. DATA.md says what each field is for and how long it is kept.
+// App Check enforcement for Firestore is a console switch (website/SPEC.md › Hosting, owner steps).
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // The same pattern as EMAIL_PATTERN in website/src/lib/email.ts, at most 254 characters, already normalised
+    // (lowercase and trimmed), because the address is the waitlist's document id.
+    function isEmail(value) {
+      return value is string
+        && value.size() <= 254
+        && value == value.lower()
+        && value == value.trim()
+        && value.matches('^[^\\s@/]+@[^\\s@/]+[.][^\\s@/.]{2,}$');
+    }
+
+    // waitlist/{email}: create only. A second sign-up for the same address is an update and is refused; the site
+    // shows it like a new one, so nobody learns whether an address is listed.
+    function isWaitlistEntry(data) {
+      return data.keys().hasOnly(['email', 'platforms', 'make', 'source', 'consentVersion', 'createdAt'])
+        && data.keys().hasAll(['email', 'platforms', 'make', 'source', 'consentVersion', 'createdAt'])
+        && isEmail(data.email)
+        && data.platforms is list
+        && data.platforms.size() <= 3
+        && data.platforms.toSet().size() == data.platforms.size()
+        && data.platforms.toSet().hasOnly(['macos', 'ubuntu', 'windows'])
+        && (data.make == null || data.make in ['travel', 'food', 'product', 'fitness', 'day-in-life', 'other'])
+        && data.source is string
+        && data.source.matches('^[a-z0-9-]{1,40}$')
+        && data.consentVersion == 'waitlist-2026-11'
+        && data.createdAt == request.time;
+    }
+
+    match /waitlist/{id} {
+      allow create: if request.resource.id == request.resource.data.email
+        && isWaitlistEntry(request.resource.data);
+    }
+
+    // contact/{auto id}: create only, for a reply by email.
+    function isContactMessage(data) {
+      return data.keys().hasOnly(['name', 'email', 'topic', 'message', 'createdAt'])
+        && data.keys().hasAll(['name', 'email', 'topic', 'message', 'createdAt'])
+        && data.name is string
+        && data.name.size() >= 1
+        && data.name.size() <= 80
+        && isEmail(data.email)
+        && data.topic in ['hello', 'press', 'privacy', 'security', 'broken']
+        && data.message is string
+        && data.message.size() >= 1
+        && data.message.size() <= 2000
+        && data.createdAt == request.time;
+    }
+
+    match /contact/{id} {
+      allow create: if isContactMessage(request.resource.data);
+    }
+
+    // Everything else, and every read, update and delete above: denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

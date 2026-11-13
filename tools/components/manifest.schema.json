@@ -1,0 +1,371 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:taalcut:component-manifest:1",
+  "title": "Taalcut component manifest",
+  "description": "Downloadable runtimes, models and tools (PRD G13). Generated from packages/jobs; do not edit.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "$comment": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "sequence": {
+      "description": "Signed manifests: goes up with every publication. The app refuses one lower than the highest it has accepted (anti-rollback).",
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "notAfter": {
+      "description": "Signed manifests: UTC time (ISO 8601, ending in Z) after which the app refuses this manifest.",
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 64,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "description": "Stable kebab-case id, e.g. \"onnxruntime\". Used in paths and as the install idempotency key."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "Product name, shown as is (not translated)."
+          },
+          "version": {
+            "type": "string",
+            "maxLength": 64,
+            "pattern": "^[0-9A-Za-z][0-9A-Za-z.+_-]*$",
+            "description": "Upstream version. Any change to it (or to sha256) means \"update available\"."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "runtime",
+              "model",
+              "tool"
+            ]
+          },
+          "tiers": {
+            "default": [],
+            "description": "Hardware tiers that install this by default. Empty: on demand only.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "minimum",
+                "recommended",
+                "high"
+              ]
+            }
+          },
+          "licence": {
+            "type": "object",
+            "properties": {
+              "spdx": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "description": "SPDX licence expression, e.g. \"MIT\" or \"CC-BY-4.0\"."
+              },
+              "notice": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "https:// URL of the NOTICE.txt, beside the component it describes."
+                  },
+                  "size": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 16777216,
+                    "description": "Exact size of the NOTICE.txt in bytes."
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "description": "Lowercase hex sha256 of the NOTICE.txt."
+                  }
+                },
+                "required": [
+                  "url",
+                  "size",
+                  "sha256"
+                ],
+                "description": "The component's NOTICE.txt, hosted beside it and pinned like an artifact: its licence and attribution, what Taalcut changed, where the corresponding source of its copyleft pieces is, and the full text of every licence. Immutable: a changed notice gets a new key (its name carries its sha256); the component's version doesn't change."
+              },
+              "attribution": {
+                "description": "Credit line shown in Settings → About. Required for CC BY licences.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              },
+              "acceptance": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120,
+                    "description": "Who makes and owns the component and licenses it to the person, e.g. \"NVIDIA Corporation\"."
+                  },
+                  "termsVersion": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[0-9A-Za-z][0-9A-Za-z.+_-]*$",
+                    "description": "Which terms the person accepts, e.g. a date. A new value asks again; an acceptance of another one does not count."
+                  },
+                  "documents": {
+                    "minItems": 1,
+                    "maxItems": 8,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 120,
+                          "description": "The document's own title, e.g. \"CUDA Toolkit End User License Agreement\". Shown as is."
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The owner's official page with the text, opened in the system browser."
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "url"
+                      ]
+                    },
+                    "description": "Each licence text the person accepts, linked from the card that asks."
+                  }
+                },
+                "required": [
+                  "owner",
+                  "termsVersion",
+                  "documents"
+                ],
+                "description": "Terms the person accepts in the app before this component downloads (LNX1-TRM). Until they have, the component and everything that depends on it stay out of the download, and an install is refused (jobs.terms_not_accepted). Older builds ignore it."
+              }
+            },
+            "required": [
+              "spdx",
+              "notice"
+            ]
+          },
+          "dependencies": {
+            "default": [],
+            "description": "Component ids installed first.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Stable kebab-case id, e.g. \"onnxruntime\". Used in paths and as the install idempotency key."
+            }
+          },
+          "requires": {
+            "type": "object",
+            "properties": {
+              "platform": {
+                "description": "process.platform the component runs on, e.g. 'darwin'. Artifacts already say the platform; this one is for minOsVersion.",
+                "type": "string",
+                "maxLength": 32,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "minOsVersion": {
+                "description": "Lowest OS version, dotted, e.g. '15' for macOS 15. Needs `platform`.",
+                "type": "string",
+                "maxLength": 32,
+                "pattern": "^\\d+(?:\\.\\d+)*$"
+              },
+              "gpuApi": {
+                "description": "A GPU of the machine must offer this API: 'cuda', 'vulkan', 'metal', 'directml', 'rocm'.",
+                "type": "string",
+                "maxLength": 32,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "minDriver": {
+                "description": "Lowest driver version of that GPU, dotted, e.g. '580' for CUDA 13. Needs `gpuApi`.",
+                "type": "string",
+                "maxLength": 32,
+                "pattern": "^\\d+(?:\\.\\d+)*$"
+              },
+              "minComputeCapability": {
+                "description": "Lowest CUDA compute capability of that GPU, e.g. '7.5' (Turing). Needs `gpuApi`.",
+                "type": "string",
+                "maxLength": 32,
+                "pattern": "^\\d+(?:\\.\\d+)*$"
+              },
+              "minVramBytes": {
+                "description": "Least dedicated video memory on that GPU, in bytes.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "minGlibc": {
+                "description": "Lowest glibc the machine must run, e.g. '2.38' for an upstream Linux build made on Ubuntu 24.04.",
+                "type": "string",
+                "maxLength": 32,
+                "pattern": "^\\d+(?:\\.\\d+)*$"
+              }
+            },
+            "additionalProperties": {},
+            "description": "What the machine must have for this component to run (LNX1 seam 4). A key this build doesn't know never holds, so the component isn't installed where it can't be checked."
+          },
+          "variants": {
+            "description": "Accelerator builds that stand in for this one where they fit (requires), most preferred first; this one is the fallback. A variant has no tiers of its own: it is picked through this one.",
+            "maxItems": 8,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Stable kebab-case id, e.g. \"onnxruntime\". Used in paths and as the install idempotency key."
+            }
+          },
+          "artifacts": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "platform": {
+                  "type": "string",
+                  "enum": [
+                    "any",
+                    "darwin-arm64",
+                    "darwin-x64",
+                    "win32-arm64",
+                    "win32-x64",
+                    "linux-arm64",
+                    "linux-x64"
+                  ]
+                },
+                "urls": {
+                  "minItems": 1,
+                  "maxItems": 8,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "https:// URL. Mirrors are tried in order and must serve identical bytes."
+                  }
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$",
+                  "description": "Lowercase hex sha256 of the downloaded file (the archive itself for archives)."
+                },
+                "size": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "description": "Exact size of the downloaded file in bytes."
+                },
+                "install": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "file"
+                        },
+                        "fileName": {
+                          "type": "string",
+                          "maxLength": 255,
+                          "pattern": "^(?!\\.\\.?$)[^/\\\\\\u0000]+$",
+                          "description": "Name of the installed file inside the component folder. No slashes."
+                        },
+                        "executable": {
+                          "default": false,
+                          "description": "chmod 755 after install (CLI tools such as yt-dlp).",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "fileName"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "archive"
+                        },
+                        "format": {
+                          "type": "string",
+                          "enum": [
+                            "tar",
+                            "tar.gz",
+                            "tar.zst"
+                          ]
+                        },
+                        "stripComponents": {
+                          "default": 0,
+                          "description": "Leading path segments to drop, like tar --strip-components.",
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 8
+                        },
+                        "extractedSize": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991,
+                          "description": "Sum of the sizes of the regular files in the archive. Used for the disk check and as a hard cap."
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "format",
+                        "extractedSize"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "platform",
+                "urls",
+                "sha256",
+                "size",
+                "install"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "version",
+          "kind",
+          "licence",
+          "artifacts"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "components"
+  ]
+}

@@ -1,0 +1,509 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-16 00:05+0700\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: es\n"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.more"
+msgstr "{count, plural, one {# más} many {# más} other {# más}}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+#, fuzzy
+msgid "notify.mcp.approval.title"
+msgstr "{name} te está esperando"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.needsAttention.body"
+msgstr "{name} no pasó una de las revisiones. Abre Taalcut para ver qué corregir."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.ready.body"
+msgstr "{name} pasó sus revisiones y ya está en Renders."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.about"
+msgstr "Acerca de {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.resetZoom"
+msgstr "Tamaño real"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.agent"
+msgstr "Agente"
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+#, fuzzy
+msgid "menu.view.back"
+msgstr "Atrás"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.beats"
+msgstr "Ritmo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.front"
+msgstr "Traer todo al frente"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.close"
+msgstr "Cerrar ventana"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.copy"
+msgstr "Copiar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.jobs"
+msgstr "No se pudieron descargar los modelos de {jobs}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.stopped.everything.computer"
+msgstr "No se pudieron descargar los modelos que necesita este equipo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.everything"
+msgstr "No se pudieron descargar los modelos que necesita este Mac"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.cut"
+msgstr "Cortar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.delete"
+msgstr "Eliminar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit"
+msgstr "Edición"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.ready.body.computer"
+msgstr "Ya se descargó todo lo que necesita este equipo. Desde ahora, sus modelos funcionan sin conexión."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.body"
+msgstr "Ya se descargó todo lo que necesita este Mac. Desde ahora, sus modelos funcionan sin conexión."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.failed.body"
+msgstr "La exportación de {name} se detuvo. Abre Taalcut para volver a intentarlo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.file"
+msgstr "Archivo"
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+#, fuzzy
+msgid "menu.view.forward"
+msgstr "Adelante"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go"
+msgstr "Ir"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help"
+msgstr "Ayuda"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.hide"
+msgstr "Ocultar {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.hideOthers"
+msgstr "Ocultar otros"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+#, fuzzy
+msgid "notify.mcp.approval.body"
+msgstr "Pidió hacer algo que necesita tu aprobación. Abre Taalcut para aprobarlo o rechazarlo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.library"
+msgstr "Biblioteca"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.make"
+msgstr "Crear"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.minimize"
+msgstr "Minimizar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.paste"
+msgstr "Pegar"
+
+# review: Drafted with macOS's Spanish Edit menu wording “Pegar y adaptar estilo”; check against the current macOS Spanish (LatAm) menu.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.pasteAndMatchStyle"
+msgstr "Pegar y adaptar estilo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.quit"
+msgstr "Salir de {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.redo"
+msgstr "Rehacer"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.reload"
+msgstr "Volver a cargar"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.reportIssue"
+msgstr "Informar de un problema en GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.requestFeature"
+msgstr "Sugerir una función en GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.search"
+msgstr "Búsqueda"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.selectAll"
+msgstr "Seleccionar todo"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.feedback"
+msgstr "Enviar comentarios…"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.services"
+msgstr "Servicios"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.other"
+msgstr "Ajustes › Modelos explica por qué, con Volver a intentar."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.settings"
+msgstr "Ajustes…"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.shots"
+msgstr "Tomas"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.showAll"
+msgstr "Mostrar todo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.sounds"
+msgstr "Efectos de sonido"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.speech"
+msgstr "Voz"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.github"
+msgstr "Dar una estrella a {appName} en GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+#, fuzzy
+msgid "macos.localNetworkUsage"
+msgstr "Taalcut comprueba que este Mac sea accesible en tu red Wi-Fi para que tu teléfono pueda enviarle videos. Los teléfonos pueden seguir enviando videos aunque desactives esto."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.manifest"
+msgstr "Taalcut no pudo verificar su lista de modelos. Actualiza Taalcut y vuelve a intentarlo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.title"
+msgstr "Taalcut está listo"
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+#, fuzzy
+msgid "macos.photoLibraryUsage"
+msgstr "Taalcut lee las fotos y los videos que elijas de Apple Fotos o de un iPhone o iPad conectado. Tus originales no se modifican."
+
+#. js-lingui-explicit-id
+#: src/main/voice/microphone-note.ts
+#, fuzzy
+msgid "macos.microphoneUsage"
+msgstr "Taalcut graba tu voz solo cuando lees la frase de consentimiento para crear una voz propia. La grabación se queda en este Mac hasta que crees esa voz."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.templates"
+msgstr "Plantillas"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.text"
+msgstr "Texto en los fotogramas"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.network"
+msgstr "La conexión se cortaba una y otra vez. Revisa tu conexión a internet y vuelve a intentarlo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.refused"
+msgstr "El servidor de descargas los rechazó. Vuelve a intentarlo más tarde."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.different"
+msgstr "El servidor envió archivos distintos de los que espera Taalcut. Vuelve a intentarlo más tarde."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.install"
+msgstr "Se descargaron, pero no se pudieron instalar. Vuelve a intentarlo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.reason.space.computer"
+msgstr "Este equipo no tiene suficiente espacio libre para ellos. Libera espacio y vuelve a intentarlo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.space"
+msgstr "Este Mac no tiene suficiente espacio libre para ellos. Libera espacio y vuelve a intentarlo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.titles"
+msgstr "Títulos"
+
+# review: Developer-only item. No Apple standard exists; drafted as “Mostrar u ocultar herramientas para desarrolladores” (Chrome's term for DevTools).
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.toggleDevTools"
+msgstr "Mostrar u ocultar herramientas para desarrolladores"
+
+# review: Source is a toggle (“Toggle Full Screen”); macOS usually retitles this item itself (“Entrar en pantalla completa”/“Salir de pantalla completa”). Drafted as the neutral “Pantalla completa”.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.fullScreen"
+msgstr "Pantalla completa"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.sidebar"
+msgstr "Mostrar u ocultar barra lateral"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.undo"
+msgstr "Deshacer"
+
+# review: macOS names the View menu “Visualización” in Spanish; check against the current LatAm Spanish macOS.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view"
+msgstr "Visualización"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window"
+msgstr "Ventana"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.writing"
+msgstr "Escritura"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.ready.title"
+msgstr "Tu video está listo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.needsAttention.title"
+msgstr "Tu video necesita una revisión"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.failed.title"
+msgstr "No se pudo crear tu video"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.zoom"
+msgstr "Zoom"
+
+# review: Zoom In/Out and Actual Size follow Safari's Spanish View menu (“Ampliar”, “Reducir”, “Tamaño real”); check against macOS.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.zoomIn"
+msgstr "Ampliar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.zoomOut"
+msgstr "Reducir"

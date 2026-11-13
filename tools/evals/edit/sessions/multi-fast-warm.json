@@ -1,0 +1,306 @@
+{
+ "caseId": "multi-fast-warm",
+ "model": "scripted/EDT2 revision-aware contract",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6NR0PAF5TM0A9T9NQPA7TGC",
+   "module": "agent",
+   "provider": "scripted",
+   "model": "script-1",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "provider": "scripted",
+    "model": "script-1",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "call_0_0",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ]
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "call_0_0",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 100,
+    "outputTokens": 20,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "costUsd": 0,
+    "totalTokens": 120
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6NR0PARC3EJR8SXNEK482DX",
+   "module": "agent",
+   "provider": "scripted",
+   "model": "script-1",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "provider": "scripted",
+    "model": "script-1",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "call_1_0",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3,
+        "clip": "5",
+        "speed": 2
+       }
+      }
+     }
+    ]
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "call_1_0",
+     "name": "timeline_setSpeed",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 3,
+      "clip": "5",
+      "speed": 2
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 100,
+    "outputTokens": 20,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "costUsd": 0,
+    "totalTokens": 120
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6NR0PB553Y81D7VCYWJARC7",
+   "module": "agent",
+   "provider": "scripted",
+   "model": "script-1",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "provider": "scripted",
+    "model": "script-1",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "call_2_0",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ]
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "call_2_0",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 100,
+    "outputTokens": 20,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "costUsd": 0,
+    "totalTokens": 120
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6NR0PB86N1E670437GZCN2Z",
+   "module": "agent",
+   "provider": "scripted",
+   "model": "script-1",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "provider": "scripted",
+    "model": "script-1",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "call_3_0",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4,
+        "clips": [
+         "5"
+        ],
+        "temperature": 0.6
+       }
+      }
+     }
+    ]
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "call_3_0",
+     "name": "timeline_setGrade",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4,
+      "clips": [
+       "5"
+      ],
+      "temperature": 0.6
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 100,
+    "outputTokens": 20,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "costUsd": 0,
+    "totalTokens": 120
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6NR0PBFTDRNP7ZYRR2DHZGC",
+   "module": "agent",
+   "provider": "scripted",
+   "model": "script-1",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "provider": "scripted",
+    "model": "script-1",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "call_4_0",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ]
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "call_4_0",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 100,
+    "outputTokens": 20,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "costUsd": 0,
+    "totalTokens": 120
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6NR0PBKPWN4YX405NKSWR00",
+   "module": "agent",
+   "provider": "scripted",
+   "model": "script-1",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "provider": "scripted",
+    "model": "script-1",
+    "parts": [
+     {
+      "type": "text",
+      "text": "The dog clip now plays at double speed with warmer colors."
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "call_5_0",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     }
+    ]
+   },
+   "text": "The dog clip now plays at double speed with warmer colors.",
+   "toolCalls": [
+    {
+     "id": "call_5_0",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 100,
+    "outputTokens": 20,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "costUsd": 0,
+    "totalTokens": 120
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

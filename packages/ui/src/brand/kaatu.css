@@ -1,0 +1,31 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* Kaatu's breath (DESIGN.md "Mascot", UX4): a CSS animation of transform on its own layer, so the compositor runs it
+ * and the page recalculates no style while Kaatu breathes (it was one recalculation a frame, audit P2-6). Scaled
+ * from the bottom so Kaatu stays seated: under 2 % awake (4.8 s), 3 % asleep (6.4 s). It holds where it is while
+ * the window isn't the one in front; a hidden window draws nothing. Reduced motion: no breath (mascot.tsx doesn't
+ * ask for one). */
+@keyframes tc-kaatu-breath {
+  50% {
+    transform: translateY(-1px) scaleY(1.016);
+  }
+}
+@keyframes tc-kaatu-breath-asleep {
+  50% {
+    transform: translateY(-1px) scaleY(1.03);
+  }
+}
+[data-slot='mascot-breath'][data-breath='awake'] {
+  animation: tc-kaatu-breath 4.8s ease-in-out infinite;
+}
+[data-slot='mascot-breath'][data-breath='asleep'] {
+  animation: tc-kaatu-breath-asleep 6.4s ease-in-out infinite;
+}
+:root[data-window-active='false'] [data-slot='mascot-breath'] {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-slot='mascot-breath'] {
+    animation: none !important;
+  }
+}

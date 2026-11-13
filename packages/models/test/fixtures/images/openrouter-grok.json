@@ -1,0 +1,6 @@
+{
+  "id": "gen-img-0001",
+  "model": "x-ai/grok-imagine-image-2.0",
+  "data": [{ "b64_json": "{{png:1152x2048}}", "media_type": "image/png" }],
+  "usage": { "cost": 0.08 }
+}

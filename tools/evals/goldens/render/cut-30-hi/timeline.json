@@ -1,0 +1,39 @@
+{
+  "id": "cut-30-hi",
+  "synthetic": true,
+  "note": "Synthetic plan. Media is generated at test time.",
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "width": 80,
+  "height": 24,
+  "cellSize": 2,
+  "clips": [
+    {
+      "clipId": 1,
+      "color": "#f2c14e",
+      "inFrame": 0,
+      "frames": 300
+    },
+    {
+      "clipId": 2,
+      "color": "#3d5a80",
+      "inFrame": 0,
+      "frames": 600
+    }
+  ],
+  "beats": [
+    0,
+    300,
+    600
+  ],
+  "overlays": [],
+  "captions": [
+    {
+      "text": "नमस्ते",
+      "startFrame": 30,
+      "language": "hi"
+    }
+  ]
+}

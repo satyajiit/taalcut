@@ -1,0 +1,71 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "Reference fetcher (P2-T3, D11): yt-dlp and the Deno it runs YouTube's challenge solver on (EJS). Both on demand (tiers []): the first pasted link installs them, deno first. Hosted at components.taalcut.app by tools/components/hosting (README.md, \"Releasing components\"; hosting/plan.mjs pins each source). yt-dlp 2026.10.21 (the newest stable tag, commit 6ccd977303412151ee23352c6257dd658ffc1987) is built by Taalcut from its tagged source by tools/components/yt-dlp/pack.mjs, the way upstream builds its macOS release: a PyInstaller onedir (yt-dlp beside its _internal/ folder, nothing unpacked at run time) with lazy extractors and upstream's hash-locked requirements (curl_cffi included), on python-build-standalone's relocatable CPython 3.14.9, arm64 only. Every Mach-O is signed with Taalcut's Developer ID (hardened runtime, secure timestamp, no entitlements) and notarised by Apple, and the build is run (--version, an extraction from a local page, the same under the fetcher's sandbox profile) before it is packed as tar.zst with LICENSES/ (every bundled piece and its licence, INVENTORY.txt). The file as a whole is GPL-3.0-or-later; the sources of its copyleft pieces (mutagen, the PyInstaller bootloader, certifi), yt-dlp's own and Taalcut's build scripts are hosted beside it under source/, as its NOTICE.txt says. Deno is 2.9.6 from npm's @deno/darwin-arm64, hosted unchanged (a tar.gz, which the manager extracts; npm sha512 integrity verified; the deno binary is Developer ID-signed and notarised by Deno Land Inc., 2H4KBF436B, hardened runtime, and keeps that signature), with the seven MPL-2.0 crates it is built with hosted beside it under source/crates/. Stable yt-dlp goes stale within weeks: a newer tag is a new version through the same release path (tools/components/README.md, \"The reference fetcher\"). sign-manifest.mjs drops this comment.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "deno",
+      "name": "Deno",
+      "version": "2.9.6",
+      "kind": "runtime",
+      "tiers": [],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/deno/2.9.6/NOTICE-4a20f919001f51ed.txt",
+          "size": 1629287,
+          "sha256": "4a20f919001f51edc455ced96afa5fbd32d9a4c01c3caf1f64dac02a466679c9"
+        },
+        "attribution": "Deno, Copyright 2018-2026 the Deno authors. MIT licence. Runs yt-dlp's YouTube challenge solver."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": ["https://components.taalcut.app/deno/2.9.6/deno-2.9.6-darwin-arm64.tgz"],
+          "sha256": "60321cf03244e275589f0d099575bfc739c72ff5aa6e9d19d47d8f0757c24bad",
+          "size": 39597481,
+          "install": {
+            "type": "archive",
+            "format": "tar.gz",
+            "stripComponents": 1,
+            "extractedSize": 80915630
+          }
+        }
+      ]
+    },
+    {
+      "id": "reference-fetcher",
+      "name": "yt-dlp",
+      "version": "2026.10.21",
+      "kind": "tool",
+      "tiers": [],
+      "licence": {
+        "spdx": "GPL-3.0-or-later",
+        "notice": {
+          "url": "https://components.taalcut.app/reference-fetcher/2026.10.21/NOTICE-addd85960e8086f0.txt",
+          "size": 410419,
+          "sha256": "addd85960e8086f0d5c5c8f12980d102855b8e5fcf7c4f081b25b2007f570824"
+        },
+        "attribution": "yt-dlp 2026.10.21 (Unlicense source), built by Taalcut with PyInstaller; the build bundles GPL code (mutagen, the PyInstaller bootloader), so this file is GPL-3.0-or-later. Every bundled piece, its licence and where the sources are is in its NOTICE.txt."
+      },
+      "dependencies": ["deno"],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/reference-fetcher/2026.10.21/yt-dlp-2026.10.21-darwin-arm64.tar.zst"
+          ],
+          "sha256": "06081bab78bae53d286fde4cd2248542ddc963edd5391b5298a7467fef68a790",
+          "size": 20912722,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 43617779
+          }
+        }
+      ]
+    }
+  ]
+}

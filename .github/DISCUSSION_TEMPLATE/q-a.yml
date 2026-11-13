@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+# These forms belong to the categories Q&A, Ideas, Show and tell, and Templates in the repository's settings.
+# Enabling Discussions first creates six defaults (Announcements, General, Ideas, Polls, Q&A, Show and tell),
+# which is a larger set than these four. Forms cannot set a category's format: use question-and-answer for
+# Q&A and open-ended for Ideas, Show and tell, and Templates. Polls cannot have a form.
+# The filename must match the category slug GitHub assigns. cli/cli uses q-a, ideas, and show-and-tell.
+
+title: "[Q&A] "
+labels: ["type: question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Q&A
+
+        Ask how this build behaves. Say what you did and what you saw.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What were you trying to do, and what happened?
+      description: Name the screen, such as Library, Export, or Settings. Leave out passwords, keys, and home-folder paths.
+    validations:
+      required: true
+  - type: textarea
+    id: already-tried
+    attributes:
+      label: What have you already tried?
+      description: The troubleshooting page is the place to start. Link it if a section almost matched.
+    validations:
+      required: false
+  - type: input
+    id: build
+    attributes:
+      label: Which build is this?
+      description: Internal or alpha, if you know. The version is on Settings, then About.
+    validations:
+      required: false

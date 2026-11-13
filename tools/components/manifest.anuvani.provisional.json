@@ -1,0 +1,39 @@
+{
+  "$comment": "LIB1-LANG: the Indian-language identifier, hosted on 2026-10-29 (compose-provisional.mjs SOURCES). Built by hosting/build.mjs (hosting/plan/anuvani.mjs: CIIL/Anuvani-LID at 3b9caa41, mobile_inference/models, its accelerator format's front end and encoder, repacked unchanged) and written back by write-manifest.mjs. Listed on every tier; the desktop's component manager fetches it only when the person's languages or the app's language include an Indian language (apps/desktop jobs-root.ts, audio-spoken-languages.ts).",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "anuvani-lid",
+      "name": "Language identifier for Odia and other Indian languages",
+      "version": "3b9caa41-npu-15s",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/anuvani-lid/3b9caa41-npu-15s/NOTICE-9aaf942b0ea2704d.txt",
+          "size": 12064,
+          "sha256": "9aaf942b0ea2704d932f5c3383ef3ebfa0d2649cb77bcb69628d3bcfd633a8b6"
+        },
+        "attribution": "Anuvani-LID by Stephen Fernandes and Narayan Kumar Choudhary, Central Institute of Indian Languages. Apache-2.0. Its accelerator-format front end and encoder (rev 3b9caa41), unchanged."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/anuvani-lid/3b9caa41-npu-15s/anuvani-lid-3b9caa41-npu-15s.tar.zst"
+          ],
+          "sha256": "6252898b7342eb7b29a0d6f8a3af699d5b1da7c138621aefb1efa5aea9ebbdac",
+          "size": 436989666,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 471333102
+          }
+        }
+      ]
+    }
+  ]
+}

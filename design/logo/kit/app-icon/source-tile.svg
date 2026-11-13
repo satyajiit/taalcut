@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title">
+  <title id="title">Taalcut</title>
+  <rect x="0" y="0" width="256" height="256" rx="56" fill="#15110D"/>
+  <path fill="#FAAB3F" fill-rule="evenodd" d="M135.8 36.33A92 92 0 0 1 214.53 96.74L168.16 109.16A44.36 44.36 0 0 0 135.8 84.33Z"/>
+  <path fill="#F26A90" fill-rule="evenodd" d="M218.56 111.81A92 92 0 0 1 135.8 219.67L135.8 189.94A62.43 62.43 0 0 0 189.85 119.51Z"/>
+  <path fill="#9E8CF4" fill-rule="evenodd" d="M120.2 219.67A92 92 0 0 1 41.47 159.26L56.62 155.21A76.39 76.39 0 0 0 120.2 203.99Z"/>
+  <path fill="#3CC2B4" fill-rule="evenodd" d="M37.44 144.19A92 92 0 0 1 120.2 36.33L120.2 66.06A62.43 62.43 0 0 0 66.15 136.49Z"/>
+</svg>

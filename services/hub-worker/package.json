@@ -1,0 +1,22 @@
+{
+  "name": "@taalcut/hub-worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Cloudflare Worker that turns an in-app share into a hub pull request, and keeps ratings and reports. Never published.",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@taalcut/core": "workspace:*",
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "1.4.1",
+    "typescript": "6.0.3",
+    "vitest": "5.0.4",
+    "wrangler": "4.150.0"
+  }
+}

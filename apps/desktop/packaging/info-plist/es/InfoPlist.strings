@@ -1,0 +1,4 @@
+/* Generated from main's catalogue by i18n:extract (packaging/info-plist-strings.ts). Do not edit. */
+"NSLocalNetworkUsageDescription" = "Taalcut comprueba que este Mac sea accesible en tu red Wi-Fi para que tu teléfono pueda enviarle videos. Los teléfonos pueden seguir enviando videos aunque desactives esto.";
+"NSMicrophoneUsageDescription" = "Taalcut graba tu voz solo cuando lees la frase de consentimiento para crear una voz propia. La grabación se queda en este Mac hasta que crees esa voz.";
+"NSPhotoLibraryUsageDescription" = "Taalcut lee las fotos y los videos que elijas de Apple Fotos o de un iPhone o iPad conectado. Tus originales no se modifican.";

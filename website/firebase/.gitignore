@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+# An old location of the generated config; scripts/csp.mjs now writes website/firebase.json.
+firebase.json
+# The owner's project alias (copy .firebaserc.example) and the CLI's own files.
+.firebaserc
+.firebase/
+*-debug.log

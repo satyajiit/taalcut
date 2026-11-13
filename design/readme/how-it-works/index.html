@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- Copyright (C) 2026 Taalcut contributors -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280, height=720" />
+    <title>Taalcut: paste, pick, approve</title>
+    <script src="assets/gsap/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="loop.css" />
+  </head>
+  <body>
+    <!--
+      The README's "how it works" loop: paste a reel, the AI picks a clip for every slot, you approve. Ten seconds,
+      three steps over one strip of 13 slots. Stills come from the demonstration footage (../stills.mjs).
+    -->
+    <div
+      id="root"
+      data-composition-id="how-it-works"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+      data-duration="10"
+      data-fps="30"
+    >
+      <div id="stage">
+        <div id="steps">
+          <span class="pill" id="pill-1"><b>1</b>Paste</span>
+          <span class="pill" id="pill-2"><b>2</b>Pick</span>
+          <span class="pill" id="pill-3"><b>3</b>Approve</span>
+        </div>
+        <div id="kaatu"></div>
+
+        <div class="words" id="words-1">
+          <h1>Paste a reel you saved.</h1>
+          <p>Taalcut reads its cuts, its music beats and its pacing.</p>
+        </div>
+        <div class="words" id="words-2">
+          <h1>It picks a clip for every slot.</h1>
+          <p>From your own camera roll, on your Mac.</p>
+        </div>
+        <div class="words" id="words-3">
+          <h1>Watch your version. Approve once.</h1>
+          <p>Swap any shot. What you change is marked as yours.</p>
+        </div>
+
+        <div class="phone" id="reel">
+          <div class="frames" id="reel-frames"></div>
+          <div id="scan"></div>
+          <span class="label">Saved reel</span>
+        </div>
+
+        <div id="reads">
+          <div class="stat" id="stat-cuts"><b>12</b><span>cuts</span></div>
+          <div class="stat" id="stat-beats"><b>22</b><span>music beats</span></div>
+          <div class="stat" id="stat-slots"><b>13</b><span>slots to fill</span></div>
+        </div>
+
+        <div id="roll">
+          <div id="cells"></div>
+          <span class="sticker">1,284 clips</span>
+        </div>
+        <span class="tag" id="pick-tag"><i></i>AI pick · High</span>
+
+        <div class="phone" id="version">
+          <div class="frames" id="version-frames"></div>
+          <span class="label">Your version</span>
+        </div>
+        <div id="checks">
+          <div class="check" id="check-1"><i></i>13 of 13 slots picked</div>
+          <div class="check" id="check-2"><i></i>Checked against the reel</div>
+          <div id="approve"><span id="approve-ask">Approve</span><span id="approve-done">Approved</span></div>
+        </div>
+
+        <div id="strip">
+          <div id="slots"></div>
+          <div id="ticks"></div>
+          <div id="playhead"></div>
+          <span class="tag" id="yours-tag"><i></i>You changed this</span>
+        </div>
+        <div id="flyers"></div>
+      </div>
+    </div>
+    <script src="loop.js"></script>
+  </body>
+</html>

@@ -1,0 +1,381 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+
+/* The README's stills: paper, ink and the app's four accents in their light-theme values (design/tokens). */
+@font-face {
+  font-family: Onest;
+  src: url('../../apps/renderer/node_modules/@fontsource-variable/onest/files/onest-latin-wght-normal.woff2');
+  font-weight: 100 900;
+}
+:root {
+  --paper: #fbf8f2;
+  --paper-2: #f4eee4;
+  --line: #e5dccd;
+  --ink: #211a13;
+  --ink-2: #4d4338;
+  --ink-3: #6f6457;
+  --marigold: oklch(80% 0.155 72);
+  --marigold-strong: #a94e00;
+  --marigold-soft: oklch(94.5% 0.04 80);
+  --rose: oklch(64% 0.19 5);
+  --rose-strong: #b02b57;
+  --violet: oklch(56% 0.17 290);
+  --violet-strong: #6347b8;
+  --violet-soft: oklch(95% 0.025 290);
+  --teal: oklch(72% 0.115 185);
+  --teal-strong: #056965;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #d9d2c6;
+  font-family: Onest, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+h1,
+h2,
+p {
+  margin: 0;
+}
+section {
+  position: relative;
+  overflow: hidden;
+  width: 1280px;
+  margin: 24px 0;
+  background: var(--paper);
+  border-radius: 28px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: #fffdf9;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.chip.say {
+  border-color: transparent;
+  background: var(--marigold);
+  color: var(--ink);
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+/* Hero banner */
+.banner {
+  height: 540px;
+}
+.banner .copy {
+  position: absolute;
+  top: 58px;
+  left: 64px;
+  width: 610px;
+}
+.banner .logo {
+  display: block;
+  height: 46px;
+}
+.banner h1 {
+  margin-top: 50px;
+  font-size: 61px;
+  font-weight: 760;
+  line-height: 1.04;
+  letter-spacing: -2.9px;
+  white-space: nowrap;
+}
+.banner .sub {
+  margin-top: 24px;
+  max-width: 520px;
+  font-size: 23px;
+  line-height: 1.38;
+  color: var(--ink-2);
+}
+.banner .chips {
+  display: flex;
+  gap: 10px;
+  margin-top: 34px;
+}
+.phones {
+  position: absolute;
+  top: 44px;
+  right: 58px;
+  width: 520px;
+  height: 400px;
+}
+.phone {
+  position: absolute;
+  overflow: hidden;
+  width: 190px;
+  aspect-ratio: 9 / 16;
+  border: 5px solid #fffdf9;
+  border-radius: 22px;
+  background: #1c1712 center / cover;
+  box-shadow:
+    0 0 0 1.5px var(--line),
+    0 28px 46px -22px rgb(70 45 10 / 45%);
+}
+.phone.left {
+  top: 46px;
+  left: 0;
+  transform: rotate(-7deg);
+}
+.phone.mid {
+  top: 0;
+  left: 164px;
+  width: 206px;
+  z-index: 2;
+}
+.phone.right {
+  top: 46px;
+  right: 0;
+  transform: rotate(7deg);
+}
+.tag {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 13px;
+  border-radius: 999px;
+  background: #fffdf9;
+  box-shadow: 0 6px 18px -8px rgb(70 45 10 / 50%);
+  font-size: 14.5px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.rhythm {
+  position: absolute;
+  right: 58px;
+  bottom: 40px;
+  width: 520px;
+}
+.rhythm .bars,
+.rhythm .ticks {
+  display: flex;
+  gap: 4px;
+}
+.rhythm .bars i {
+  height: 13px;
+  border-radius: 7px;
+  background: var(--violet);
+}
+.rhythm .bars i.yours {
+  background: var(--teal-strong);
+}
+.rhythm .ticks {
+  justify-content: space-between;
+  margin-top: 7px;
+  padding: 0 2px;
+}
+.rhythm .ticks i {
+  width: 2.5px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--rose);
+  opacity: 0.55;
+}
+.rhythm .ticks i.sam {
+  height: 11px;
+  opacity: 1;
+}
+.kaatu {
+  position: absolute;
+  background-size: 300% 300%;
+}
+
+/* A framed screen */
+.screen {
+  height: 884px;
+  padding: 40px 40px 0;
+}
+.screen .window {
+  display: block;
+  width: 1200px;
+  height: 750px;
+  border-radius: 14px;
+  box-shadow:
+    0 0 0 1.5px var(--line),
+    0 30px 60px -30px rgb(70 45 10 / 40%);
+}
+.screen .caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 26px;
+}
+.screen h2 {
+  font-size: 27px;
+  font-weight: 720;
+  letter-spacing: -0.8px;
+}
+.screen h2 span {
+  margin-left: 12px;
+  font-size: 21px;
+  font-weight: 450;
+  letter-spacing: -0.3px;
+  color: var(--ink-3);
+}
+.screen .sample {
+  font-size: 17px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* Why it was made */
+.story {
+  height: 480px;
+}
+.story .copy {
+  position: absolute;
+  top: 66px;
+  left: 64px;
+  width: 640px;
+}
+.story .eyebrow {
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+.story h1 {
+  position: relative;
+  margin-top: 16px;
+  font-size: 92px;
+  font-weight: 780;
+  line-height: 0.98;
+  letter-spacing: -4.6px;
+}
+.story h1 .zero {
+  position: relative;
+  display: inline-block;
+}
+.story h1 .zero svg {
+  position: absolute;
+  top: -12px;
+  left: -26px;
+  width: 268px;
+  height: 118px;
+  overflow: visible;
+}
+.story .then {
+  margin-top: 34px;
+  max-width: 560px;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+.print {
+  position: absolute;
+  padding: 9px 9px 30px;
+  background: #fffdf9;
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 24px 40px -20px rgb(70 45 10 / 45%);
+}
+.print img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 13;
+  object-fit: cover;
+}
+.print::before {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 78px;
+  height: 26px;
+  background: rgb(255 179 49 / 55%);
+  content: '';
+  transform: translateX(-50%) rotate(-3deg);
+}
+
+/* The logo's four beats */
+.avartan {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  height: 340px;
+  padding: 0 72px;
+}
+.avartan .mark {
+  flex: none;
+  width: 236px;
+  height: 236px;
+}
+.beats {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 22px;
+}
+.beat {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
+  background: #fffdf9;
+}
+.beat .sign {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 23px;
+  font-weight: 750;
+  color: #fffdf9;
+}
+.beat b {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+.beat span {
+  display: block;
+  margin-top: 2px;
+  font-size: 17px;
+  color: var(--ink-3);
+}
+
+/* Kaatu */
+.cast {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 300px;
+  padding: 0 56px 36px;
+}
+.cast figure {
+  width: 196px;
+  margin: 0;
+  text-align: center;
+}
+.cast figure div {
+  width: 196px;
+  height: 196px;
+  background-size: 300% 300%;
+}
+.cast figcaption {
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink-2);
+}

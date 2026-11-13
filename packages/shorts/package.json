@@ -1,0 +1,20 @@
+{
+  "name": "@taalcut/shorts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Evidence-backed long-form to short editorial planning.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@taalcut/core": "workspace:*",
+    "zod": "^4.6.6"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "sharp",
+  "version": "0.35.5-taalcut-stub",
+  "private": true,
+  "license": "AGPL-3.0-or-later",
+  "description": "Stands in for sharp under @huggingface/transformers. Vision hands transformers raw RGB frames at the processor's size, so no image decoding or resizing library is loaded, and libvips (LGPL-3.0) is not shipped.",
+  "main": "index.cjs"
+}

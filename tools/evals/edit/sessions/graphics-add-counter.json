@@ -1,0 +1,474 @@
+{
+ "caseId": "graphics-add-counter",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": false,
+  "why": "it starts at 30 frames"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJ9AF2AW1HH0DSTJYMDE8V",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "u4SvhaJdjf3KojKaCDlHD6gs6md74NFZ",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "u4SvhaJdjf3KojKaCDlHD6gs6md74NFZ",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11751,
+      "output": 43,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11794,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604233700,
+     "responseId": "chatcmpl-3bf78fcb9c1d43699c7063c331b023b6",
+     "rawStopReason": "tool_calls",
+     "durationMs": 9732
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "u4SvhaJdjf3KojKaCDlHD6gs6md74NFZ",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11751,
+    "outputTokens": 43,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11794,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ9KZ9R3V9AJEC831KQ54N",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "PVp9pkSZCGkZ5nKkHfkdaZ0NHBiCy509",
+       "name": "graphics_create",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4,
+        "request": "Add a counter that goes from 0 to 50 over the skyline.",
+        "kind": "counter",
+        "words": {
+         "number": 0,
+         "text": "0"
+        },
+        "side": "left",
+        "where": "top",
+        "seconds": 0.5,
+        "sameDesignAs": "01K8EGQP9BJV22N684JHD49Y1P"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "PVp9pkSZCGkZ5nKkHfkdaZ0NHBiCy509",
+       "name": "graphics_create",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4,
+        "request": "Add a counter that goes from 0 to 50 over the skyline.",
+        "kind": "counter",
+        "words": {
+         "number": 0,
+         "text": "0"
+        },
+        "side": "left",
+        "where": "top",
+        "seconds": 0.5,
+        "sameDesignAs": "01K8EGQP9BJV22N684JHD49Y1P"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1566,
+      "output": 221,
+      "cacheRead": 11751,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13538,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604243434,
+     "responseId": "chatcmpl-aaa94d1a2d164ecbaeccf9843b0852a2",
+     "rawStopReason": "tool_calls",
+     "durationMs": 5789
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "PVp9pkSZCGkZ5nKkHfkdaZ0NHBiCy509",
+     "name": "graphics_create",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4,
+      "request": "Add a counter that goes from 0 to 50 over the skyline.",
+      "kind": "counter",
+      "words": {
+       "number": 0,
+       "text": "0"
+      },
+      "side": "left",
+      "where": "top",
+      "seconds": 0.5,
+      "sameDesignAs": "01K8EGQP9BJV22N684JHD49Y1P"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1566,
+    "outputTokens": 221,
+    "cachedInputTokens": 11751,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13538,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ9SMA2S3QMWCYCRJV7FSP",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "hUkwRbBDOAGwaYcfqvmQ0wg9D2GsvWMD",
+       "name": "graphics_create",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3,
+        "request": "Add a counter that goes from 0 to 50 over the skyline.",
+        "kind": "counter",
+        "words": {
+         "number": 50,
+         "text": "0 to 50"
+        },
+        "side": "left",
+        "where": "top",
+        "seconds": 2
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "hUkwRbBDOAGwaYcfqvmQ0wg9D2GsvWMD",
+       "name": "graphics_create",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3,
+        "request": "Add a counter that goes from 0 to 50 over the skyline.",
+        "kind": "counter",
+        "words": {
+         "number": 50,
+         "text": "0 to 50"
+        },
+        "side": "left",
+        "where": "top",
+        "seconds": 2
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 260,
+      "output": 189,
+      "cacheRead": 13317,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13766,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604249228,
+     "responseId": "chatcmpl-9c04244dcbcd4ef49eca47b15d77643d",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4439
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "hUkwRbBDOAGwaYcfqvmQ0wg9D2GsvWMD",
+     "name": "graphics_create",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 3,
+      "request": "Add a counter that goes from 0 to 50 over the skyline.",
+      "kind": "counter",
+      "words": {
+       "number": 50,
+       "text": "0 to 50"
+      },
+      "side": "left",
+      "where": "top",
+      "seconds": 2
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 260,
+    "outputTokens": 189,
+    "cachedInputTokens": 13317,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13766,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ9XZDD5B4EW6BJ6XB7VG7",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Created a counter graphic starting at 0 and going to 50, placed at the top left over clip 1 (the city skyline). It will run for 2 seconds starting at 30 seconds into the timeline."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Created a counter graphic starting at 0 and going to 50, placed at the top left over clip 1 (the city skyline). It will run for 2 seconds starting at 30 seconds into the timeline."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 438,
+      "output": 46,
+      "cacheRead": 13577,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14061,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604253678,
+     "responseId": "chatcmpl-c42b9682a5c249adb3e593909a5055f0",
+     "rawStopReason": "stop",
+     "durationMs": 1520
+    }
+   },
+   "text": "Created a counter graphic starting at 0 and going to 50, placed at the top left over clip 1 (the city skyline). It will run for 2 seconds starting at 30 seconds into the timeline.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 438,
+    "outputTokens": 46,
+    "cachedInputTokens": 13577,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14061,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ9ZF0AG5HYQGHS747SY9A",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "vtibTwOAOJ7izLWNmeePXBK91J8Z1Ugv",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "vtibTwOAOJ7izLWNmeePXBK91J8Z1Ugv",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 14138,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14193,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604255201,
+     "responseId": "chatcmpl-c22495f00de945b4a95cce45d7314ca6",
+     "rawStopReason": "tool_calls",
+     "durationMs": 13357
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "vtibTwOAOJ7izLWNmeePXBK91J8Z1Ugv",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 14138,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14193,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

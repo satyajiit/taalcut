@@ -1,0 +1,194 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "Audio components. Hosted at components.taalcut.app by tools/components/hosting (README.md, \"Releasing components\"; hosting/plan.mjs pins each source). sign-manifest.mjs drops this comment. beat-this 1.1.0-onnx-25308706 is one tar.zst of beat_this.onnx, config.json and mel-filterbank.bin (sorted names, ustar with 512-byte blocks, uid 0, gid 0, empty uname/gname, mode 0644, mtime 0, packed with COPYFILE_DISABLE=1 SOURCE_DATE_EPOCH=0 tar --format ustar --uid 0 --gid 0 --numeric-owner --no-xattrs --no-mac-metadata --no-acls --no-fflags -b 1 into a file, then zstd 1.5.7 -19 -T1 reading that file: hosting/archive.mjs, layout \"file\"); hosting/build.mjs packs it again from the pinned upstream files and gets the same sha256. Source files at musetric/beat-this-onnx revision 25308706dda545c0d5950065bb0604ad71bcf1f5: beat_this.onnx 190649026 1337dc6c21257ed6b803418efc320df42b5d8eb296ef16648ef60457cd4b9e55; mel-filterbank.bin 262656 1ee975d96f44ccf2c3bfe37825c1c1f0b089f5703c7a12a84b1f0a3bce004533; config.json 1012 966f271e9a44c8f1b9e438622b34165ecdf6df9adedc8a9c0a6f7fd9d3458cc2. beat-this depends on onnxruntime, which is not in this file. Whisper ggml files are ggerganov/whisper.cpp at revision 5359861c739e955e79d9a303bcbc70fb988958b1 (pinned 2026-10-23, UX2-MODELS: resolve/main would serve other bytes the day upstream changes a file), hosted unchanged. whisper-cpp and whisper-server are v1.9.5 (d1be6fde) whisper-cli and whisper-server from one tools/whisper/build.sh run (WHISPER_BUILD_SERVER=ON), linked statically (BUILD_SHARED_LIBS=OFF; only system frameworks), Metal library embedded, each signed with the Developer ID (team WW382UC8JD, hardened runtime, secure timestamp). The whisper models depend on whisper-cpp. parakeet-tdt-0-6b-v3 int8 omitted: HEAD of https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.tar.bz2 followed a redirect; the asset etag was 0x8DDDCA76689BE42 and content-length 487170055, not sha256 5793d0fd397c5778d2cf2126994d58e9d56b1be7c04d13c7a15bb1b4eafb16bf. It is also tar.bz2, which this schema cannot install. sherpa-onnx 1.13.8 omitted: the GitHub release API was fetched and macOS assets are tar.bz2 (not tar, tar.gz, or tar.zst), with several osx-arm64 builds, so no runtime was selected or repacked. parakeet-tdt-0-6b-v3-coreml at FluidInference revision 7dd20fe6b1797d35f5e3307e8b1732d9a178edfe has no tarball sha, so no artifact. The Hugging Face tree API int8 subset (Encoder, Decoder, JointDecisionv3, Preprocessor .mlmodelc, and parakeet_vocab.json; not Encoder_v2) is 21 files summing to 483105645 bytes: Decoder.mlmodelc/analytics/coremldata.bin 243, Decoder.mlmodelc/coremldata.bin 554, Decoder.mlmodelc/metadata.json 3427, Decoder.mlmodelc/model.mil 13110, Decoder.mlmodelc/weights/weight.bin 23604992, Encoder.mlmodelc/analytics/coremldata.bin 243, Encoder.mlmodelc/coremldata.bin 485, Encoder.mlmodelc/metadata.json 2921, Encoder.mlmodelc/model.mil 959769, Encoder.mlmodelc/weights/weight.bin 445187200, JointDecisionv3.mlmodelc/analytics/coremldata.bin 243, JointDecisionv3.mlmodelc/coremldata.bin 521, JointDecisionv3.mlmodelc/metadata.json 3453, JointDecisionv3.mlmodelc/model.mil 11775, JointDecisionv3.mlmodelc/weights/weight.bin 12642764, Preprocessor.mlmodelc/analytics/coremldata.bin 243, Preprocessor.mlmodelc/coremldata.bin 486, Preprocessor.mlmodelc/metadata.json 2841, Preprocessor.mlmodelc/model.mil 28181, Preprocessor.mlmodelc/weights/weight.bin 491072, parakeet_vocab.json 151122.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "whisper-cpp",
+      "name": "whisper.cpp",
+      "version": "1.9.5-d1be6fde",
+      "kind": "runtime",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/whisper-cpp/1.9.5-d1be6fde/NOTICE-0f72cb059298f012.txt",
+          "size": 2480,
+          "sha256": "0f72cb059298f0125c42611ce788186dbc630438082426a13cb1eecf18c97004"
+        },
+        "attribution": "whisper.cpp by Georgi Gerganov and contributors, MIT licence. whisper-cli built with Metal."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": ["https://components.taalcut.app/whisper-cpp/1.9.5-d1be6fde/whisper-cli"],
+          "sha256": "a53381fd74e56f5e8214f708016092ef03370442fc5aceb717da446e740bc743",
+          "size": 7977456,
+          "install": {
+            "type": "file",
+            "fileName": "whisper-cli",
+            "executable": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-server",
+      "name": "whisper.cpp server",
+      "version": "1.9.5-d1be6fde",
+      "kind": "runtime",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/whisper-server/1.9.5-d1be6fde/NOTICE-24776cfa5d6a901d.txt",
+          "size": 5243,
+          "sha256": "24776cfa5d6a901da9cd81034f629b2aec2999280818e4920d1c8ef23a45fc53"
+        },
+        "attribution": "whisper.cpp by Georgi Gerganov and contributors, MIT licence. whisper-server built with Metal."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": ["https://components.taalcut.app/whisper-server/1.9.5-d1be6fde/whisper-server"],
+          "sha256": "5e5daffe29ae173e2c83b716384f32399e0775a43498eac5b22f32d77f8a60a7",
+          "size": 8376784,
+          "install": {
+            "type": "file",
+            "fileName": "whisper-server",
+            "executable": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "beat-this",
+      "name": "Beat This!",
+      "version": "1.1.0-onnx-25308706",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/beat-this/1.1.0-onnx-25308706/NOTICE-175db1fd40e3d912.txt",
+          "size": 1717,
+          "sha256": "175db1fd40e3d912b1fcbc04b0b314e67fbdc52eb4670478bd70a341fe471f4f"
+        },
+        "attribution": "Beat This! by Foscarin, Schlüter and Widmer (CPJKU / JKU Linz). MIT licence."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/beat-this/1.1.0-onnx-25308706/beat-this-1.1.0-onnx-25308706.tar.zst"
+          ],
+          "sha256": "b6edbf26dad05e03cc11ec1612604c9d94cf9fe47ab3025a3c4c5f07fcabcc92",
+          "size": 122643040,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 190912694
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-tiny",
+      "name": "Whisper tiny",
+      "version": "tiny-5359861c",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/whisper-tiny/tiny-5359861c/NOTICE-4002ef4196a645f8.txt",
+          "size": 2862,
+          "sha256": "4002ef4196a645f8a1aafaea11103abcc00712f785ce955965c12e59756212b7"
+        },
+        "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-tiny.bin)."
+      },
+      "dependencies": ["whisper-cpp"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": ["https://components.taalcut.app/whisper-tiny/tiny-5359861c/ggml-tiny.bin"],
+          "sha256": "be07e048e1e599ad46341c8d2a135645097a538221678b7acdd1b1919c6e1b21",
+          "size": 77691713,
+          "install": {
+            "type": "file",
+            "fileName": "ggml-tiny.bin",
+            "executable": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-small-q8-0",
+      "name": "Whisper small Q8_0",
+      "version": "small-q8_0-5359861c",
+      "kind": "model",
+      "tiers": ["minimum"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/whisper-small-q8-0/small-q8_0-5359861c/NOTICE-bca9b94c5f24464a.txt",
+          "size": 2904,
+          "sha256": "bca9b94c5f24464a63e6b5e185d8f43fcab6097327c26f77a903b74f8eb89e12"
+        },
+        "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-small-q8_0.bin)."
+      },
+      "dependencies": ["whisper-cpp"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/whisper-small-q8-0/small-q8_0-5359861c/ggml-small-q8_0.bin"
+          ],
+          "sha256": "49c8fb02b65e6049d5fa6c04f81f53b867b5ec9540406812c643f177317f779f",
+          "size": 264464607,
+          "install": {
+            "type": "file",
+            "fileName": "ggml-small-q8_0.bin",
+            "executable": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-medium-q5-0",
+      "name": "Whisper medium Q5_0",
+      "version": "medium-q5_0-5359861c",
+      "kind": "model",
+      "tiers": ["recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/whisper-medium-q5-0/medium-q5_0-5359861c/NOTICE-d7e51a7ffae9c8af.txt",
+          "size": 2911,
+          "sha256": "d7e51a7ffae9c8af8481f55923edaa56c50d1eba35609766089db5d09d41861b"
+        },
+        "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-medium-q5_0.bin)."
+      },
+      "dependencies": ["whisper-cpp"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/whisper-medium-q5-0/medium-q5_0-5359861c/ggml-medium-q5_0.bin"
+          ],
+          "sha256": "19fea4b380c3a618ec4723c3eef2eb785ffba0d0538cf43f8f235e7b3b34220f",
+          "size": 539212467,
+          "install": {
+            "type": "file",
+            "fileName": "ggml-medium-q5_0.bin",
+            "executable": false
+          }
+        }
+      ]
+    }
+  ]
+}

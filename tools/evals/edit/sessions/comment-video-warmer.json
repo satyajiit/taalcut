@@ -1,0 +1,437 @@
+{
+ "caseId": "comment-video-warmer",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6F61VCK2Y3BABMR4HDC0TSV",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "aSLKgecKLHrIliib6SHfqNkB0hAqR3xJ",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "aSLKgecKLHrIliib6SHfqNkB0hAqR3xJ",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10991,
+      "output": 43,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11034,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793658514839,
+     "responseId": "chatcmpl-de317847b1be41f5a46297925726ed29",
+     "rawStopReason": "tool_calls",
+     "durationMs": 8057
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "aSLKgecKLHrIliib6SHfqNkB0hAqR3xJ",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10991,
+    "outputTokens": 43,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11034,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6F6238J2RG1M0HTQE3CEQT2",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "The request is to make the whole video (frames 0–360, which is 0–12 seconds at 30fps) a bit warmer. I'll apply a warm look to the entire video with a small, natural value.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "3MQCh4PGD4uN2V2UTcdYH32BBSMC1PXA",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "wholeVideo": true,
+        "look": "warm",
+        "lookStrength": 0.2,
+        "reset": false
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "The request is to make the whole video (frames 0–360, which is 0–12 seconds at 30fps) a bit warmer. I'll apply a warm look to the entire video with a small, natural value.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "3MQCh4PGD4uN2V2UTcdYH32BBSMC1PXA",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "wholeVideo": true,
+        "look": "warm",
+        "lookStrength": 0.2,
+        "reset": false
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 2268,
+      "output": 182,
+      "cacheRead": 10991,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13441,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793658522899,
+     "responseId": "chatcmpl-18d7faed15fc4d92b91576ae735bf95d",
+     "rawStopReason": "tool_calls",
+     "durationMs": 5094
+    }
+   },
+   "text": "The request is to make the whole video (frames 0–360, which is 0–12 seconds at 30fps) a bit warmer. I'll apply a warm look to the entire video with a small, natural value.\n\n",
+   "toolCalls": [
+    {
+     "id": "3MQCh4PGD4uN2V2UTcdYH32BBSMC1PXA",
+     "name": "timeline_setGrade",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "wholeVideo": true,
+      "look": "warm",
+      "lookStrength": 0.2,
+      "reset": false
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 2268,
+    "outputTokens": 182,
+    "cachedInputTokens": 10991,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13441,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6F62881DFACWADN6CYCF7PE",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "IciTbIBcYzbvNF2eK0OmoTDjMrtOrFHB",
+       "name": "comments_reply",
+       "arguments": {
+        "commentId": "01K8EKK60SFWE1Y31B7PEGBS3P",
+        "reply": "Made the whole video warmer with a +0.2 warm look.",
+        "status": "resolved",
+        "changed": []
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "IciTbIBcYzbvNF2eK0OmoTDjMrtOrFHB",
+       "name": "comments_reply",
+       "arguments": {
+        "commentId": "01K8EKK60SFWE1Y31B7PEGBS3P",
+        "reply": "Made the whole video warmer with a +0.2 warm look.",
+        "status": "resolved",
+        "changed": []
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 225,
+      "output": 95,
+      "cacheRead": 13259,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13579,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793658528005,
+     "responseId": "chatcmpl-f8d7c28ef7e44c69aefafd5f5c65f434",
+     "rawStopReason": "tool_calls",
+     "durationMs": 2029
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "IciTbIBcYzbvNF2eK0OmoTDjMrtOrFHB",
+     "name": "comments_reply",
+     "arguments": {
+      "commentId": "01K8EKK60SFWE1Y31B7PEGBS3P",
+      "reply": "Made the whole video warmer with a +0.2 warm look.",
+      "status": "resolved",
+      "changed": []
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 225,
+    "outputTokens": 95,
+    "cachedInputTokens": 13259,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13579,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6F62A7Q1W1Z2FJ86HN09GMD",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Done. The entire video now has a slightly warmer look."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Done. The entire video now has a slightly warmer look."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 143,
+      "output": 12,
+      "cacheRead": 13484,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13639,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793658530044,
+     "responseId": "chatcmpl-a80adf344a494d5b9ecb387ce005b89f",
+     "rawStopReason": "stop",
+     "durationMs": 509
+    }
+   },
+   "text": "Done. The entire video now has a slightly warmer look.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 143,
+    "outputTokens": 12,
+    "cachedInputTokens": 13484,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13639,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6F62AQVGXM9DHAEVCV26SS7",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "CLwRWe84axUP7HVZExSnxzYKEjjDEemZ",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "CLwRWe84axUP7HVZExSnxzYKEjjDEemZ",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13718,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13773,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793658530558,
+     "responseId": "chatcmpl-6b20de526ac04f9ab8af868c366694fb",
+     "rawStopReason": "tool_calls",
+     "durationMs": 9530
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "CLwRWe84axUP7HVZExSnxzYKEjjDEemZ",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13718,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13773,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

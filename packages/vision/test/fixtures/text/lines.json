@@ -1,0 +1,51 @@
+[
+  {
+    "file": "latin-en.png",
+    "height": 88,
+    "language": "en",
+    "text": "Save 20% today",
+    "width": 362
+  },
+  {
+    "file": "latin-es.png",
+    "height": 88,
+    "language": "es",
+    "text": "Suscríbete al canal",
+    "width": 410
+  },
+  {
+    "file": "latin-pt.png",
+    "height": 88,
+    "language": "pt",
+    "text": "Não perca essa oferta",
+    "width": 470
+  },
+  {
+    "file": "deva-namaste.png",
+    "height": 94,
+    "language": "hi",
+    "text": "नमस्ते दोस्तों",
+    "width": 229
+  },
+  {
+    "file": "deva-abhi.png",
+    "height": 94,
+    "language": "hi",
+    "text": "अभी खरीदें",
+    "width": 212
+  },
+  {
+    "file": "deva-price.png",
+    "height": 94,
+    "language": "hi",
+    "text": "कीमत केवल ₹499",
+    "width": 340
+  },
+  {
+    "file": "deva-suprabhat.png",
+    "height": 94,
+    "language": "hi",
+    "text": "सुप्रभात भारत",
+    "width": 255
+  }
+]

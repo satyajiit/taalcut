@@ -1,0 +1,26 @@
+{
+  "name": "@taalcut/templates",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Template schema, breakdown pipeline, versioning.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./src/test-support.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests",
+    "schema:export": "tsx scripts/export-schema.ts",
+    "hub:schema:export": "tsx scripts/export-hub-schema.ts",
+    "starters:build": "tsx scripts/starters-build.ts"
+  },
+  "dependencies": {
+    "@taalcut/core": "workspace:*",
+    "@taalcut/vision": "workspace:*",
+    "@taalcut/audio": "workspace:*",
+    "zod": "^4.6.6"
+  }
+}

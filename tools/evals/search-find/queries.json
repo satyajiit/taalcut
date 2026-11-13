@@ -1,0 +1,597 @@
+{
+  "v": 1,
+  "about": "LIB1-FIND search eval queries. Each names the clips that answer it (whole clips), from clips.json's 'shows', never from a run. A local owner set (search-find/owner.local.json, gitignored) may add the owner's clips as answers and add queries of its own; 'needs: places' queries are scored once the library has places (LIB1-PLACE). The last query checks the action filter.",
+  "queries": [
+    {
+      "id": "dance-shots",
+      "language": "en",
+      "kind": "action",
+      "text": "dance shots",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "people-dancing",
+      "language": "en",
+      "kind": "action",
+      "text": "people dancing",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "dance",
+      "language": "en",
+      "kind": "action",
+      "text": "dance",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "dancing-on-stage",
+      "language": "en",
+      "kind": "action",
+      "text": "dancing on a stage",
+      "relevant": [
+        "dance-kecskemet",
+        "dance-punjabi-stage"
+      ]
+    },
+    {
+      "id": "wedding-dance",
+      "language": "en",
+      "kind": "action",
+      "text": "couple dancing at a wedding",
+      "relevant": [
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "someone-cooking",
+      "language": "en",
+      "kind": "action",
+      "text": "someone cooking",
+      "relevant": [
+        "cooking-bulgogi",
+        "cooking-akara",
+        "cooking-khai-jiao"
+      ]
+    },
+    {
+      "id": "frying-in-a-pan",
+      "language": "en",
+      "kind": "action",
+      "text": "frying food in a pan",
+      "relevant": [
+        "cooking-bulgogi",
+        "cooking-akara",
+        "cooking-khai-jiao"
+      ]
+    },
+    {
+      "id": "walking-down-a-street",
+      "language": "en",
+      "kind": "action",
+      "text": "someone walking down a street",
+      "relevant": [
+        "walking-ljubljana"
+      ]
+    },
+    {
+      "id": "running",
+      "language": "en",
+      "kind": "action",
+      "text": "someone running",
+      "relevant": [
+        "jogging-tokyo"
+      ]
+    },
+    {
+      "id": "riding-a-bike",
+      "language": "en",
+      "kind": "action",
+      "text": "riding a bicycle",
+      "relevant": [
+        "cycling-girl"
+      ]
+    },
+    {
+      "id": "surfing",
+      "language": "en",
+      "kind": "action",
+      "text": "surfing a wave",
+      "relevant": [
+        "surfing-oahu"
+      ]
+    },
+    {
+      "id": "playing-guitar",
+      "language": "en",
+      "kind": "action",
+      "text": "playing guitar",
+      "relevant": [
+        "guitar-ghana"
+      ]
+    },
+    {
+      "id": "street-musicians",
+      "language": "en",
+      "kind": "action",
+      "text": "street musicians",
+      "relevant": [
+        "singers-hcmc",
+        "guitar-ghana"
+      ]
+    },
+    {
+      "id": "praying-at-a-temple",
+      "language": "en",
+      "kind": "action",
+      "text": "praying at a temple",
+      "relevant": [
+        "aarti"
+      ]
+    },
+    {
+      "id": "morning-exercise",
+      "language": "en",
+      "kind": "action",
+      "text": "morning exercise in the park",
+      "relevant": [
+        "exercise-hcmc"
+      ]
+    },
+    {
+      "id": "children-playing",
+      "language": "en",
+      "kind": "action",
+      "text": "children playing",
+      "relevant": [
+        "children-cameroon"
+      ]
+    },
+    {
+      "id": "cat-drinking",
+      "language": "en",
+      "kind": "action",
+      "text": "cat drinking water",
+      "relevant": [
+        "cat-slowmo"
+      ]
+    },
+    {
+      "id": "volleyball",
+      "language": "en",
+      "kind": "action",
+      "text": "playing volleyball on sand",
+      "relevant": [
+        "volleyball-slowmo"
+      ]
+    },
+    {
+      "id": "talking-to-camera",
+      "language": "en",
+      "kind": "person",
+      "text": "someone talking to camera",
+      "relevant": [
+        "talking-odia",
+        "talking-gautam",
+        "talking-expert"
+      ]
+    },
+    {
+      "id": "presentation",
+      "language": "en",
+      "kind": "person",
+      "text": "man giving a presentation",
+      "relevant": [
+        "talking-tarun"
+      ]
+    },
+    {
+      "id": "beach-at-sunset",
+      "language": "en",
+      "kind": "scene",
+      "text": "beach at sunset",
+      "relevant": [
+        "sunset-capetown",
+        "sunset-coxsbazar"
+      ]
+    },
+    {
+      "id": "sunset",
+      "language": "en",
+      "kind": "scene",
+      "text": "sunset",
+      "relevant": [
+        "sunset-capetown",
+        "sunset-coxsbazar",
+        "sunset-shimla",
+        "sunset-mojave"
+      ]
+    },
+    {
+      "id": "beach",
+      "language": "en",
+      "kind": "scene",
+      "text": "beach",
+      "relevant": [
+        "beach-seaside",
+        "sunset-coxsbazar",
+        "sunset-capetown"
+      ]
+    },
+    {
+      "id": "rainy-street",
+      "language": "en",
+      "kind": "scene",
+      "text": "rainy street",
+      "relevant": [
+        "rain-rome"
+      ]
+    },
+    {
+      "id": "bonfire-at-night",
+      "language": "en",
+      "kind": "scene",
+      "text": "bonfire at night",
+      "relevant": [
+        "holi-bonfire"
+      ]
+    },
+    {
+      "id": "water-puppets",
+      "language": "en",
+      "kind": "scene",
+      "text": "water puppet show",
+      "relevant": [
+        "water-puppets"
+      ]
+    },
+    {
+      "id": "train-in-a-street",
+      "language": "en",
+      "kind": "scene",
+      "text": "train passing through a narrow street",
+      "relevant": [
+        "train-street-hanoi"
+      ]
+    },
+    {
+      "id": "limestone-islands",
+      "language": "en",
+      "kind": "scene",
+      "text": "limestone cliffs over water",
+      "relevant": [
+        "halong-bay"
+      ]
+    },
+    {
+      "id": "meat-market",
+      "language": "en",
+      "kind": "scene",
+      "text": "market stalls selling meat",
+      "relevant": [
+        "hoian-market"
+      ]
+    },
+    {
+      "id": "slow-motion",
+      "language": "en",
+      "kind": "speed",
+      "text": "slow motion",
+      "relevant": [
+        "volleyball-slowmo",
+        "waterdrops-slowmo",
+        "cat-slowmo"
+      ]
+    },
+    {
+      "id": "drops-in-slow-motion",
+      "language": "en",
+      "kind": "speed",
+      "text": "water drops in slow motion",
+      "relevant": [
+        "waterdrops-slowmo"
+      ]
+    },
+    {
+      "id": "vietnam",
+      "language": "en",
+      "kind": "place",
+      "text": "Vietnam",
+      "relevant": [
+        "exercise-hcmc",
+        "singers-hcmc",
+        "train-street-hanoi",
+        "halong-bay",
+        "hoian-market",
+        "water-puppets",
+        "hanoi-traffic"
+      ]
+    },
+    {
+      "id": "hanoi",
+      "language": "en",
+      "kind": "place",
+      "text": "Hanoi",
+      "relevant": [
+        "train-street-hanoi",
+        "hanoi-traffic"
+      ]
+    },
+    {
+      "id": "hi-dancing",
+      "language": "hi",
+      "kind": "action",
+      "text": "नाचते हुए लोग",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "hi-dance-shots",
+      "language": "hi",
+      "kind": "action",
+      "text": "डांस वाले शॉट्स",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "hi-cooking",
+      "language": "hi",
+      "kind": "action",
+      "text": "खाना बनाते हुए",
+      "relevant": [
+        "cooking-bulgogi",
+        "cooking-akara",
+        "cooking-khai-jiao"
+      ]
+    },
+    {
+      "id": "hi-temple",
+      "language": "hi",
+      "kind": "action",
+      "text": "मंदिर में पूजा",
+      "relevant": [
+        "aarti"
+      ]
+    },
+    {
+      "id": "hi-beach-sunset",
+      "language": "hi",
+      "kind": "scene",
+      "text": "समुद्र किनारे सूर्यास्त",
+      "relevant": [
+        "sunset-capetown",
+        "sunset-coxsbazar"
+      ]
+    },
+    {
+      "id": "hinglish-dance",
+      "language": "hi-Latn",
+      "kind": "action",
+      "text": "dance wale shots",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "hinglish-beach",
+      "language": "hi-Latn",
+      "kind": "scene",
+      "text": "beach pe sunset",
+      "relevant": [
+        "sunset-capetown",
+        "sunset-coxsbazar"
+      ]
+    },
+    {
+      "id": "hinglish-rain",
+      "language": "hi-Latn",
+      "kind": "scene",
+      "text": "baarish wali sadak",
+      "relevant": [
+        "rain-rome"
+      ]
+    },
+    {
+      "id": "es-dancing",
+      "language": "es",
+      "kind": "action",
+      "text": "gente bailando",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "es-slow-motion",
+      "language": "es",
+      "kind": "speed",
+      "text": "cámara lenta",
+      "relevant": [
+        "volleyball-slowmo",
+        "waterdrops-slowmo",
+        "cat-slowmo"
+      ]
+    },
+    {
+      "id": "pt-surfing",
+      "language": "pt-BR",
+      "kind": "action",
+      "text": "surfando nas ondas",
+      "relevant": [
+        "surfing-oahu"
+      ]
+    },
+    {
+      "id": "pt-cooking",
+      "language": "pt-BR",
+      "kind": "action",
+      "text": "alguém cozinhando",
+      "relevant": [
+        "cooking-bulgogi",
+        "cooking-akara",
+        "cooking-khai-jiao"
+      ]
+    },
+    {
+      "id": "football-match",
+      "language": "en",
+      "kind": "action",
+      "text": "football match",
+      "relevant": [
+        "football-corner",
+        "crowd-football"
+      ]
+    },
+    {
+      "id": "cheering-crowd",
+      "language": "en",
+      "kind": "scene",
+      "text": "crowd cheering in a stadium",
+      "relevant": [
+        "crowd-football"
+      ]
+    },
+    {
+      "id": "concert",
+      "language": "en",
+      "kind": "scene",
+      "text": "rock concert crowd",
+      "relevant": [
+        "band-stage"
+      ]
+    },
+    {
+      "id": "waterfall",
+      "language": "en",
+      "kind": "scene",
+      "text": "waterfall",
+      "relevant": [
+        "waterfall"
+      ]
+    },
+    {
+      "id": "traffic-at-night",
+      "language": "en",
+      "kind": "scene",
+      "text": "traffic at night",
+      "relevant": [
+        "night-traffic",
+        "dusk-timelapse",
+        "hanoi-traffic"
+      ]
+    },
+    {
+      "id": "motorbike-traffic",
+      "language": "en",
+      "kind": "scene",
+      "text": "motorbikes in busy traffic",
+      "relevant": [
+        "hanoi-traffic"
+      ]
+    },
+    {
+      "id": "birds-eating",
+      "language": "en",
+      "kind": "action",
+      "text": "birds eating bread",
+      "relevant": [
+        "birds-eating"
+      ]
+    },
+    {
+      "id": "time-lapse",
+      "language": "en",
+      "kind": "speed",
+      "text": "time-lapse of a city",
+      "relevant": [
+        "dusk-timelapse"
+      ]
+    },
+    {
+      "id": "es-sunset",
+      "language": "es",
+      "kind": "scene",
+      "text": "puesta de sol",
+      "relevant": [
+        "sunset-capetown",
+        "sunset-coxsbazar",
+        "sunset-shimla",
+        "sunset-mojave"
+      ]
+    },
+    {
+      "id": "pt-dancing",
+      "language": "pt-BR",
+      "kind": "action",
+      "text": "pessoas dançando",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ]
+    },
+    {
+      "id": "people-filtered-dancing",
+      "language": "en",
+      "kind": "action",
+      "text": "people",
+      "relevant": [
+        "dance-rabha",
+        "dance-kecskemet",
+        "dance-santali",
+        "dance-holi-men",
+        "dance-punjabi-stage",
+        "dance-igbo-wedding"
+      ],
+      "filters": {
+        "actions": [
+          "dancing"
+        ]
+      }
+    }
+  ]
+}

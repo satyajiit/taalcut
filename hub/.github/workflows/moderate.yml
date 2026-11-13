@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+# One label. Adding `hidden` to an issue that also carries `hub:<hubId>` hides that
+# template. Removing `hidden` restores it. workflow_dispatch takes hubId and action
+# (hide or restore) when nobody filed a report. This workflow then calls
+# publish-index.yml. A commit made with GITHUB_TOKEN does not start that workflow
+# on its own.
+name: moderate
+on:
+  issues:
+    types: [labeled, unlabeled]
+  workflow_dispatch:
+    inputs:
+      hubId:
+        description: Hub template id
+        required: true
+        type: string
+      action:
+        description: hide or restore
+        required: true
+        type: choice
+        options:
+          - hide
+          - restore
+      reason:
+        description: Why it is hidden
+        required: false
+        type: string
+      issue:
+        description: Issue number
+        required: false
+        type: string
+permissions:
+  contents: write
+# Two label changes in a row push one after the other, never racing for main.
+concurrency:
+  group: moderation
+  cancel-in-progress: false
+jobs:
+  moderate:
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'hidden'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+      - name: Install
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Update the hidden list
+        run: node scripts/moderate.mjs --github-event "$GITHUB_EVENT_PATH" --event-name "${{ github.event_name }}"
+      - name: Commit
+        run: |
+          git config user.name taalcut-hub
+          git config user.email hub@users.noreply.github.com
+          git add moderation/hidden.json
+          git diff --cached --quiet || git commit -m "moderation: update hidden list"
+          git push
+  publish:
+    needs: moderate
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/publish-index.yml

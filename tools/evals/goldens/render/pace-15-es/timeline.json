@@ -1,0 +1,39 @@
+{
+  "id": "pace-15-es",
+  "synthetic": true,
+  "note": "Synthetic plan. Media is generated at test time.",
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "width": 80,
+  "height": 24,
+  "cellSize": 2,
+  "clips": [
+    {
+      "clipId": 9,
+      "color": "#6a4c93",
+      "inFrame": 0,
+      "frames": 100
+    },
+    {
+      "clipId": 10,
+      "color": "#ff595e",
+      "inFrame": 0,
+      "frames": 350
+    }
+  ],
+  "beats": [
+    0,
+    100,
+    200
+  ],
+  "overlays": [],
+  "captions": [
+    {
+      "text": "Corte",
+      "startFrame": 10,
+      "language": "es"
+    }
+  ]
+}

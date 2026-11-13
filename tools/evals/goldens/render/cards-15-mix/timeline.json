@@ -1,0 +1,66 @@
+{
+  "id": "cards-15-mix",
+  "synthetic": true,
+  "note": "Synthetic plan. Media is generated at test time.",
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "width": 80,
+  "height": 24,
+  "cellSize": 2,
+  "clips": [
+    {
+      "clipId": 1,
+      "color": "#e23d28",
+      "inFrame": 0,
+      "frames": 150
+    },
+    {
+      "clipId": 2,
+      "color": "#1f8a4c",
+      "inFrame": 0,
+      "frames": 150
+    },
+    {
+      "clipId": 3,
+      "color": "#2244aa",
+      "inFrame": 0,
+      "frames": 150
+    }
+  ],
+  "beats": [
+    0,
+    150,
+    300
+  ],
+  "overlays": [
+    {
+      "text": "Cards",
+      "startFrame": 0,
+      "language": "en"
+    }
+  ],
+  "captions": [
+    {
+      "text": "Hello",
+      "startFrame": 0,
+      "language": "en"
+    },
+    {
+      "text": "नमस्ते",
+      "startFrame": 150,
+      "language": "hi"
+    },
+    {
+      "text": "Hola",
+      "startFrame": 300,
+      "language": "es"
+    },
+    {
+      "text": "Olá",
+      "startFrame": 30,
+      "language": "pt-BR"
+    }
+  ]
+}

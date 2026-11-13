@@ -1,0 +1,96 @@
+{
+  "description": "Desktop: Intel Core i9-14900KS (8P+16E, 32 threads), 64 GB, GeForce RTX 4090 24 GB on driver 615.71.09 (other sessions held some VRAM) plus the UHD 770 iGPU, Ubuntu 24.04.5 LTS",
+  "provenance": "Recorded on the LNX1 host (xenon), 2026-10-27, with read-only commands: the files as read, the nvidia-smi output as printed. Reduced: /proc/cpuinfo to its processor and model name lines, pci.ids to the two GPUs, sysfs to the files the probe reads plus one connector.",
+  "files": {
+    "/proc/cpuinfo": "processor\t: 0\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 1\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 2\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 3\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 4\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 5\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 6\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 7\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 8\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 9\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 10\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 11\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 12\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 13\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 14\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 15\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 16\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 17\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 18\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 19\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 20\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 21\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 22\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 23\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 24\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 25\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 26\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 27\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 28\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 29\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 30\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\nprocessor\t: 31\nmodel name\t: Intel(R) Core(TM) i9-14900KS\n\n",
+    "/proc/meminfo": "MemTotal:       64472228 kB\nMemFree:         4140400 kB\nMemAvailable:   52865860 kB\nBuffers:         7689512 kB\nCached:         38268940 kB\nSwapCached:        61500 kB\nActive:         26034972 kB\nInactive:       27960072 kB\nActive(anon):    3833800 kB\nInactive(anon):  4367276 kB\nActive(file):   22201172 kB\nInactive(file): 23592796 kB\nUnevictable:       15020 kB\nMlocked:            4484 kB\nSwapTotal:       8388604 kB\nSwapFree:        1369744 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:            141744 kB\nWriteback:             8 kB\nAnonPages:       7993900 kB\nMapped:          2159332 kB\nShmem:            164412 kB\nKReclaimable:    3656504 kB\nSlab:            4435692 kB\nSReclaimable:    3506936 kB\nSUnreclaim:       928756 kB\nKernelStack:       82344 kB\nPageTables:       293036 kB\nSecPageTables:     20364 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    40624716 kB\nCommitted_AS:   55239636 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:      221044 kB\nVmallocChunk:          0 kB\nPercpu:            73472 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:    14336 kB\nShmemPmdMapped:        0 kB\nFileHugePages:    677888 kB\nFilePmdMapped:      2048 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:             0 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    59437348 kB\nDirectMap2M:     7356416 kB\nDirectMap1G:           0 kB\n",
+    "/etc/os-release": "PRETTY_NAME=\"Ubuntu 24.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.5 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+    "/sys/devices/cpu_core/cpus": "0-15\n",
+    "/sys/devices/cpu_atom/cpus": "16-31\n",
+    "/sys/class/drm/card1/device/vendor": "0x8086\n",
+    "/sys/class/drm/card1/device/device": "0xa780\n",
+    "/sys/class/drm/card1/device/uevent": "DRIVER=i915\nPCI_CLASS=38000\nPCI_ID=8086:A780\nPCI_SUBSYS_ID=1462:7D86\nPCI_SLOT_NAME=0000:00:02.0\nMODALIAS=pci:v00008086d0000A780sv00001462sd00007D86bc03sc80i00\n",
+    "/dev/dri/card1": "",
+    "/sys/class/drm/card2/device/vendor": "0x10de\n",
+    "/sys/class/drm/card2/device/device": "0x2684\n",
+    "/sys/class/drm/card2/device/uevent": "DRIVER=nvidia\nPCI_CLASS=30000\nPCI_ID=10DE:2684\nPCI_SUBSYS_ID=1462:5102\nPCI_SLOT_NAME=0000:01:00.0\nMODALIAS=pci:v000010DEd00002684sv00001462sd00005102bc03sc00i00\n",
+    "/dev/dri/card2": "",
+    "/sys/class/drm/renderD128/device/vendor": "0x8086\n",
+    "/sys/class/drm/renderD128/device/device": "0xa780\n",
+    "/sys/class/drm/renderD128/device/uevent": "DRIVER=i915\nPCI_CLASS=38000\nPCI_ID=8086:A780\nPCI_SUBSYS_ID=1462:7D86\nPCI_SLOT_NAME=0000:00:02.0\nMODALIAS=pci:v00008086d0000A780sv00001462sd00007D86bc03sc80i00\n",
+    "/dev/dri/renderD128": "",
+    "/sys/class/drm/renderD129/device/vendor": "0x10de\n",
+    "/sys/class/drm/renderD129/device/device": "0x2684\n",
+    "/sys/class/drm/renderD129/device/uevent": "DRIVER=nvidia\nPCI_CLASS=30000\nPCI_ID=10DE:2684\nPCI_SUBSYS_ID=1462:5102\nPCI_SLOT_NAME=0000:01:00.0\nMODALIAS=pci:v000010DEd00002684sv00001462sd00005102bc03sc00i00\n",
+    "/dev/dri/renderD129": "",
+    "/sys/class/drm/card1-DP-1/status": "disconnected\n",
+    "/sys/class/drm/version": "drm 1.1.0 20060810\n",
+    "/usr/share/vulkan/icd.d/asahi_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_asahi.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/gfxstream_vk_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.1.318\",\n        \"library_path\": \"libvulkan_gfxstream.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/intel_hasvk_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.3.318\",\n        \"library_path\": \"libvulkan_intel_hasvk.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/intel_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_intel.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/lvp_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_lvp.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/nouveau_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_nouveau.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/nvidia_icd.json": "{\n    \"file_format_version\" : \"1.0.1\",\n    \"ICD\": {\n        \"library_path\": \"libGLX_nvidia.so.0\",\n        \"api_version\" : \"1.4.351\"\n    }\n}\n",
+    "/usr/share/vulkan/icd.d/radeon_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_radeon.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/virtio_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_virtio.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/lib/x86_64-linux-gnu/libvulkan.so.1": "",
+    "/usr/bin/nvidia-smi": "",
+    "/usr/share/misc/pci.ids": "#\n#\tList of PCI ID's (reduced to the devices this fixture has)\n#\n\n10de  NVIDIA Corporation\n\t2684  AD102 [GeForce RTX 4090]\n8086  Intel Corporation\n\ta780  Raptor Lake-S GT1 [UHD Graphics 770]\n"
+  },
+  "commands": {
+    "nvidiaSmi": {
+      "stdout": "index, name, memory.total [MiB], memory.used [MiB], driver_version, compute_cap, pci.bus_id\n0, NVIDIA GeForce RTX 4090, 24564 MiB, 3474 MiB, 615.71.09, 8.9, 00000000:01:00.0\n",
+      "exitCode": 0
+    }
+  },
+  "freeDiskBytes": 322122547200,
+  "expected": {
+    "chip": "Intel(R) Core(TM) i9-14900KS",
+    "memoryBytes": 66019561472,
+    "cpuCores": {
+      "total": 32,
+      "performance": 16,
+      "efficiency": 16
+    },
+    "osVersion": "24.04",
+    "osName": "Ubuntu 24.04.5 LTS",
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 4090",
+        "vendor": "nvidia",
+        "vramBytes": 25757220864,
+        "vramFreeBytes": 22114467840,
+        "unifiedMemory": false,
+        "apis": ["cuda", "vulkan"],
+        "driverVersion": "615.71.09",
+        "computeCapability": "8.9",
+        "index": 0,
+        "cudaDeviceId": 0,
+        "pciBusId": "0000:01:00.0",
+        "renderNode": "/dev/dri/renderD129",
+        "kernelDriver": "nvidia"
+      },
+      {
+        "name": "Intel UHD Graphics 770",
+        "vendor": "intel",
+        "unifiedMemory": false,
+        "apis": ["vulkan"],
+        "pciBusId": "0000:00:02.0",
+        "renderNode": "/dev/dri/renderD128",
+        "kernelDriver": "i915"
+      }
+    ],
+    "backends": ["cuda", "vulkan", "webgpu", "cpu"],
+    "tier": "high",
+    "shortfalls": [],
+    "profile": "nvidia",
+    "classes": {
+      "cpu": 4,
+      "video": 3,
+      "gpu": 3,
+      "npu": 1
+    },
+    "videoEngine": "nvidia"
+  }
+}

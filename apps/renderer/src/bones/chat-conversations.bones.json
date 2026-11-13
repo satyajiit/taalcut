@@ -1,0 +1,70 @@
+{
+  "breakpoints": {
+    "1024": {
+      "name": "chat-conversations",
+      "viewportWidth": 0,
+      "width": 0,
+      "height": 0,
+      "bones": []
+    },
+    "1280": {
+      "name": "chat-conversations",
+      "viewportWidth": 224,
+      "width": 224,
+      "height": 100,
+      "bones": [
+        [
+          5.3571,
+          7,
+          41.4621,
+          17,
+          8
+        ],
+        [
+          5.3571,
+          41,
+          44.043,
+          17,
+          8
+        ],
+        [
+          5.3571,
+          75,
+          53.2506,
+          17,
+          8
+        ]
+      ]
+    },
+    "1600": {
+      "name": "chat-conversations",
+      "viewportWidth": 224,
+      "width": 224,
+      "height": 100,
+      "bones": [
+        [
+          5.3571,
+          7,
+          41.4621,
+          17,
+          8
+        ],
+        [
+          5.3571,
+          41,
+          44.043,
+          17,
+          8
+        ],
+        [
+          5.3571,
+          75,
+          53.2506,
+          17,
+          8
+        ]
+      ]
+    }
+  },
+  "_hash": "578000e7edc7f1c2a97e3d2f03dad67e"
+}

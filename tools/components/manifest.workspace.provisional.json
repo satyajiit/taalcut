@@ -1,0 +1,106 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "AGT2 sbx: workspace Node 24.22.2, CPython3.14.9 with NumPy2.5.4 and Pillow13.0.0, and HyperFrames CLI0.8.209-1, with a narrow Chrome157 drawElement/paint-timeout port and complete corresponding source. Built from workspace/pins.mjs and hyperframes-cli.lock.json using workspace/pack.mjs. Hosted on2026-11-11; Node preserves the Node.js Foundation signature and notarisation, Python and the CLI are Developer ID-signed by Matterward Labs and Apple-notarised. Artifacts and complete licence notices are pinned by SHA-256. On-demand installation needs no developer override. OpenCV remains held (pins.mjs HELD_WHEELS).",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "workspace-node",
+      "name": "Node.js (workspace shell)",
+      "version": "24.22.2",
+      "kind": "tool",
+      "tiers": [],
+      "licence": {
+        "spdx": "MIT AND Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND ISC AND Unicode-3.0 AND Zlib AND BlueOak-1.0.0 AND CC0-1.0",
+        "notice": {
+          "url": "https://components.taalcut.app/workspace-node/24.22.2/NOTICE-9a24f3ba5180f12c.txt",
+          "size": 158986,
+          "sha256": "9a24f3ba5180f12cc5f836bfc4a8694ed1dc12518ebe1da829c27ebcadc0ec01"
+        },
+        "attribution": "Node.js by the OpenJS Foundation and Node.js contributors (MIT), with V8, ICU, zlib, OpenSSL, libuv and the other libraries its LICENSE lists."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/workspace-node/24.22.2/node-v24.22.2-darwin-arm64.tar.zst"
+          ],
+          "sha256": "90be0827dc88fe7b13cb4de028cd75a61a4c1738e3261fdd825d0b50c27e6b03",
+          "size": 28836401,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 122722041
+          }
+        }
+      ]
+    },
+    {
+      "id": "workspace-python",
+      "name": "Python with NumPy and Pillow (workspace shell)",
+      "version": "3.14.9-1",
+      "kind": "tool",
+      "tiers": [],
+      "licence": {
+        "spdx": "PSF-2.0 AND Python-2.0 AND BSD-3-Clause AND MIT-CMU AND MIT AND Apache-2.0 AND BSD-2-Clause AND Zlib AND 0BSD AND FTL",
+        "notice": {
+          "url": "https://components.taalcut.app/workspace-python/3.14.9-1/NOTICE-22fa3416ccc89c22.txt",
+          "size": 237151,
+          "sha256": "22fa3416ccc89c2215820bd09741ab016997bb23a22526eb50b2aad5af58471f"
+        },
+        "attribution": "CPython by the Python Software Foundation (PSF-2.0), built by python-build-standalone (Astral); NumPy (BSD-3-Clause, NumPy developers); Pillow (MIT-CMU, Jeffrey A. Clark and contributors) and the libraries each bundles."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/workspace-python/3.14.9-1/python-3.14.9-1-darwin-arm64.tar.zst"
+          ],
+          "sha256": "a643aa14e3b34bcfad4e043310b18a61acf4fbf49101eac88d11e18188cbdad8",
+          "size": 32541461,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 120855236
+          }
+        }
+      ]
+    },
+    {
+      "id": "hyperframes-cli",
+      "name": "HyperFrames CLI (workspace shell)",
+      "version": "0.8.209-1",
+      "kind": "tool",
+      "tiers": [],
+      "licence": {
+        "spdx": "Apache-2.0 AND LicenseRef-HyperFrames-CLI-Dependencies AND AGPL-3.0-or-later AND LicenseRef-GSAP-Standard",
+        "notice": {
+          "url": "https://components.taalcut.app/hyperframes-cli/0.8.209-1/NOTICE-2fde4bee2e109439.txt",
+          "size": 172145,
+          "sha256": "2fde4bee2e1094397c524c342845cfb6681891f754c09b0a8c59e3e232f98d58"
+        },
+        "attribution": "The HyperFrames CLI by HeyGen, Inc. (Apache-2.0), with Puppeteer (Apache-2.0, Google), esbuild (MIT), unchanged GSAP 3.15.0 (GSAP Standard License), and the packages LICENSES/INVENTORY.txt lists. Taalcut capture and preload additions are AGPL-3.0-or-later with the included section 7 additional permission."
+      },
+      "dependencies": ["workspace-node"],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/hyperframes-cli/0.8.209-1/hyperframes-cli-0.8.209-1-darwin-arm64.tar.zst"
+          ],
+          "sha256": "21fc971ff8d3149c55d63675449e0e56c66b93e9d27d6025dece2bbbf20a3c2c",
+          "size": 13687515,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 75150293
+          }
+        }
+      ]
+    }
+  ]
+}

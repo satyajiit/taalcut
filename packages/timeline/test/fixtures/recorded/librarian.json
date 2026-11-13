@@ -1,0 +1,40 @@
+{
+  "skill": "timeline.librarian",
+  "note": "Scripted model turns in the shape the agent loop sees (tool calls, then handOff). {{name}} is filled from the test world; {{call.field}} from an earlier call's result.",
+  "turns": [
+    {
+      "text": "The user asked for two versions, so I won't ask. Casting first.",
+      "calls": [
+        {
+          "tool": "timeline.cast",
+          "as": "cast",
+          "input": { "projectId": "{{projectId}}", "template": { "id": "{{templateId}}" }, "variants": 2, "seed": 7 }
+        }
+      ]
+    },
+    {
+      "text": "Every slot is above the line. Assembling both variants.",
+      "calls": [
+        {
+          "tool": "timeline.assemble",
+          "as": "assembled",
+          "input": { "projectId": "{{projectId}}", "template": { "id": "{{templateId}}" }, "variants": 2, "seed": 7 }
+        }
+      ]
+    },
+    {
+      "calls": [
+        {
+          "tool": "handOff",
+          "input": {
+            "templateId": "{{templateId}}",
+            "timelineIds": "{{assembled.timelineIds}}",
+            "revisions": "{{assembled.revisions}}",
+            "lowConfidenceSlots": "{{assembled.lowConfidence}}",
+            "reranked": 0
+          }
+        }
+      ]
+    }
+  ]
+}

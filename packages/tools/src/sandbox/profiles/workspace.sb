@@ -1,0 +1,185 @@
+; SPDX-License-Identifier: AGPL-3.0-or-later AND Apache-2.0
+; Copyright (C) 2026 Taalcut contributors
+; Portions Copyright 2025 OpenAI (codex-rs/sandboxing/src/seatbelt_base_policy.sbpl, Apache-2.0; see NOTICE)
+;
+; The workspace shell's profile (AGT2 sbx): the agent's own shell, confined by macOS. Deny by default, so no Mach
+; or XPC service, pasteboard, LaunchServices `open`, Apple Event, keychain or network is reachable unless a rule
+; below names it; of loopback, only the run's own few ports. Reads: the system's own folders, the toolchain folders
+; (TOOLS_n) and the workspace. Writes: the workspace only, never its manifest or inputs/ (APFS clones of library
+; media). Paths and ports arrive only as params, never as built strings. Later rules win over earlier ones.
+;
+; The first block is Codex's base policy (Apache-2.0, commit 696b4502 of openai/codex, sha256 5103332d of the
+; file), unchanged but for this comment's place. Taalcut's rules below also let FFmpeg use Apple's software
+; encoder: the codec broker, its signature verifier and IOSurface frame buffers, with no wider Mach access.
+(version 1)
+
+; ---- Codex's seatbelt_base_policy.sbpl (Apache-2.0) ----
+; inspired by Chrome's sandbox policy:
+; https://source.chromium.org/chromium/chromium/src/+/main:sandbox/policy/mac/common.sb;l=273-319;drc=7b3962fe2e5fc9e2ee58000dc8fbf3429d84d3bd
+; https://source.chromium.org/chromium/chromium/src/+/main:sandbox/policy/mac/renderer.sb;l=64;drc=7b3962fe2e5fc9e2ee58000dc8fbf3429d84d3bd
+
+; start with closed-by-default
+(deny default)
+
+; child processes inherit the policy of their parent
+(allow process-exec)
+(allow process-fork)
+(allow signal (target same-sandbox))
+
+; process-info
+(allow process-info* (target same-sandbox))
+
+(allow file-write-data
+  (require-all
+    (path "/dev/null")
+    (vnode-type CHARACTER-DEVICE)))
+
+; sysctls permitted.
+(allow sysctl-read
+  (sysctl-name "hw.activecpu")
+  (sysctl-name "hw.busfrequency_compat")
+  (sysctl-name "hw.byteorder")
+  (sysctl-name "hw.cacheconfig")
+  (sysctl-name "hw.cachelinesize_compat")
+  (sysctl-name "hw.cpufamily")
+  (sysctl-name "hw.cpufrequency_compat")
+  (sysctl-name "hw.cputype")
+  (sysctl-name "hw.l1dcachesize_compat")
+  (sysctl-name "hw.l1icachesize_compat")
+  (sysctl-name "hw.l2cachesize_compat")
+  (sysctl-name "hw.l3cachesize_compat")
+  (sysctl-name "hw.logicalcpu_max")
+  (sysctl-name "hw.machine")
+  (sysctl-name "hw.model")
+  (sysctl-name "hw.memsize")
+  (sysctl-name "hw.ncpu")
+  (sysctl-name "hw.nperflevels")
+  ; Chrome locks these CPU feature detection down a bit more tightly,
+  ; but mostly for fingerprinting concerns which isn't an issue for codex.
+  (sysctl-name-prefix "hw.optional.arm.")
+  (sysctl-name-prefix "hw.optional.armv8_")
+  (sysctl-name "hw.packages")
+  (sysctl-name "hw.pagesize_compat")
+  (sysctl-name "hw.pagesize")
+  (sysctl-name "hw.physicalcpu")
+  (sysctl-name "hw.physicalcpu_max")
+  (sysctl-name "hw.logicalcpu")
+  (sysctl-name "hw.cpufrequency")
+  (sysctl-name "hw.tbfrequency_compat")
+  (sysctl-name "hw.vectorunit")
+  (sysctl-name "machdep.cpu.brand_string")
+  (sysctl-name "kern.argmax")
+  (sysctl-name "kern.hostname")
+  (sysctl-name "kern.maxfilesperproc")
+  (sysctl-name "kern.maxproc")
+  (sysctl-name "kern.osproductversion")
+  (sysctl-name "kern.osrelease")
+  (sysctl-name "kern.ostype")
+  (sysctl-name "kern.osvariant_status")
+  (sysctl-name "kern.osversion")
+  (sysctl-name "kern.secure_kernel")
+  ; Python's ProcessPoolExecutor queries this through sysconf(_SC_SEM_NSEMS_MAX).
+  (sysctl-name "kern.sysv.semmns")
+  (sysctl-name "kern.usrstack64")
+  (sysctl-name "kern.version")
+  (sysctl-name "sysctl.proc_cputype")
+  (sysctl-name "vm.loadavg")
+  (sysctl-name-prefix "hw.perflevel")
+  (sysctl-name-prefix "kern.proc.pgrp.")
+  (sysctl-name-prefix "kern.proc.pid.")
+  (sysctl-name-prefix "net.routetable.")
+)
+
+; Allow Java to read some CPU info. This is misclassified as a "write" because
+; userspace passes a memory buffer to the sysctl, but conceptually it is a read.
+(allow sysctl-write
+  (sysctl-name "kern.grade_cputype"))
+
+; IOKit
+(allow iokit-open
+  (iokit-registry-entry-class "RootDomainUserClient")
+)
+
+; needed to look up user info, see https://crbug.com/792228
+(allow mach-lookup
+  (global-name "com.apple.system.opendirectoryd.libinfo")
+)
+
+; Needed for python multiprocessing on MacOS for the SemLock
+(allow ipc-posix-sem)
+
+; Needed for PyTorch/libomp on macOS to register OpenMP runtimes.
+(allow ipc-posix-shm-read-data
+  ipc-posix-shm-write-create
+  ipc-posix-shm-write-unlink
+  (ipc-posix-name-regex #"^/__KMP_REGISTERED_LIB_[0-9]+$"))
+
+(allow mach-lookup
+  (global-name "com.apple.PowerManagement.control")
+)
+
+; allow openpty()
+(allow pseudo-tty)
+(allow file-read* file-write* file-ioctl (literal "/dev/ptmx"))
+(allow file-read* file-write*
+  (require-all
+    (regex #"^/dev/ttys[0-9]+")
+    (extension "com.apple.sandbox.pty")))
+; PTYs created before entering seatbelt may lack the extension; allow ioctl
+; on those slave ttys so interactive shells detect a TTY and remain functional.
+(allow file-ioctl (regex #"^/dev/ttys[0-9]+"))
+; ---- end of Codex's base policy ----
+
+; ---- Taalcut's rules ----
+; Apple's software H.264 encoder needs the codec broker, signature verification and IOSurface frame buffers.
+; Workspace commands use h264_videotoolbox -require_sw 1. Seatbelt cannot constrain codec options; this service
+; is not software-only. Normal GPU-first jobs still use the app's hardware-session gate through sandbox.run.
+(allow mach-lookup
+       (global-name "com.apple.coremedia.videoencoder")
+       (global-name "com.apple.trustd.agent"))
+(allow iokit-open (iokit-user-client-class "IOSurfaceRootUserClient"))
+(allow sysctl-read (sysctl-name "kern.hv_vmm_present"))
+; Files: the system's own folders (dyld, the shells, /usr/bin, fonts), never the home folder, /Volumes or another
+; per-user temp folder. dyld reads the root folder itself; /bin/sh and /usr/bin shims read /private/var/select.
+(allow file-read*
+       (literal "/") (subpath "/System") (subpath "/usr") (subpath "/bin") (subpath "/sbin")
+       (subpath "/Library/Fonts") (subpath "/Library/Apple/System/Library")
+       (subpath "/Library/Developer/CommandLineTools") (subpath "/Applications/Xcode.app/Contents/Developer")
+       (subpath "/private/etc") (subpath "/private/var/db/timezone") (subpath "/private/var/select")
+       (subpath "/dev"))
+(allow file-read-metadata
+       (literal "/private") (literal "/etc") (literal "/var") (literal "/tmp") (literal "/private/var")
+       (literal "/Library") (literal "/Library/Developer") (literal "/Users")
+       (literal "/Applications") (literal "/Applications/Xcode.app") (literal "/Applications/Xcode.app/Contents"))
+; The toolchain (Node, Python, the HyperFrames CLI, the headless shell, FFmpeg): read and run, never write.
+(allow file-read*
+       (subpath (param "TOOLS_0")) (subpath (param "TOOLS_1")) (subpath (param "TOOLS_2"))
+       (subpath (param "TOOLS_3")) (subpath (param "TOOLS_4")) (subpath (param "TOOLS_5"))
+       (subpath (param "TOOLS_6")) (subpath (param "TOOLS_7")))
+; Resolving a path (realpath, getcwd) reads the metadata of every folder above it, not their contents.
+(allow file-read-metadata
+       (path-ancestors (param "WS"))
+       (path-ancestors (param "TOOLS_0")) (path-ancestors (param "TOOLS_1")) (path-ancestors (param "TOOLS_2"))
+       (path-ancestors (param "TOOLS_3")) (path-ancestors (param "TOOLS_4")) (path-ancestors (param "TOOLS_5"))
+       (path-ancestors (param "TOOLS_6")) (path-ancestors (param "TOOLS_7")))
+; The workspace: read and write, then its manifest and inputs/ taken back out of the writes.
+(allow file-read* (subpath (param "WS")))
+(allow file-write* (subpath (param "WS")) (regex #"^/dev/fd/") (literal "/dev/tty") (literal "/dev/null"))
+(deny file-write* (literal (param "MANIFEST")) (subpath (param "INPUTS")) (literal (param "INPUTS")))
+; Pipes and socket pairs between the shell's own processes (Node's and Python's child processes); a socket pair
+; connects to nothing, and (deny default) keeps every network operation refused.
+(allow system-socket (socket-domain AF_UNIX))
+; chrome-headless-shell, run with --no-sandbox inside this profile (its own sandbox can't nest): its processes find
+; each other through their rendezvous service. Text renders from /System/Library/Fonts without the font server, and
+; HyperFrames drives it over a pipe.
+(allow mach-register mach-lookup
+       (global-name-regex #"^org\.chromium\.Chromium\.MachPortRendezvousServer\.[0-9]+$"))
+; The run's loopback ports (LOOPBACK_n, "localhost:<port>", free when it started): servers the shell starts listen
+; there and its own processes connect there (the HyperFrames CLI's file server, which Chrome loads). macOS shares
+; loopback with the whole machine, so every other port stays closed: the host's local services can't be reached.
+(allow network-bind network-inbound
+       (local ip (param "LOOPBACK_0")) (local ip (param "LOOPBACK_1"))
+       (local ip (param "LOOPBACK_2")) (local ip (param "LOOPBACK_3")))
+(allow network-outbound
+       (remote ip (param "LOOPBACK_0")) (remote ip (param "LOOPBACK_1"))
+       (remote ip (param "LOOPBACK_2")) (remote ip (param "LOOPBACK_3")))

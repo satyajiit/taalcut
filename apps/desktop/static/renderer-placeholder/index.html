@@ -1,0 +1,27 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- Copyright (C) 2026 Taalcut contributors -->
+<!--
+  Stand-in for apps/renderer/dist until the renderer build exists. The launch
+  tests run against it. One external script (probe.mjs, built from
+  src/placeholder/probe.ts) connects to main like the renderer does; no inline
+  script or style, so the strict CSP applies unchanged.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Taalcut</title>
+    <link rel="stylesheet" href="/placeholder.css" />
+    <script type="module" src="/probe.mjs"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Taalcut</h1>
+      <p>
+        The renderer build isn't here yet. Run <code>pnpm --filter @taalcut/renderer build</code>, then
+        rebuild the desktop app.
+      </p>
+    </main>
+  </body>
+</html>

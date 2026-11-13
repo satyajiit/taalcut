@@ -1,0 +1,39 @@
+{
+  "id": "pace-30-pt",
+  "synthetic": true,
+  "note": "Synthetic plan. Media is generated at test time.",
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "width": 80,
+  "height": 24,
+  "cellSize": 2,
+  "clips": [
+    {
+      "clipId": 11,
+      "color": "#22577a",
+      "inFrame": 0,
+      "frames": 200
+    },
+    {
+      "clipId": 12,
+      "color": "#38a3a5",
+      "inFrame": 0,
+      "frames": 700
+    }
+  ],
+  "beats": [
+    0,
+    200,
+    400
+  ],
+  "overlays": [],
+  "captions": [
+    {
+      "text": "Legenda",
+      "startFrame": 20,
+      "language": "pt-BR"
+    }
+  ]
+}

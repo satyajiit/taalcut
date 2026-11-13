@@ -1,0 +1,8 @@
+# Pinned for pack-transnetv2-coreml.sh (the versions the shipped archive was built with). Build tools only: none of
+# them is shipped (the component is the compiled Core ML model alone).
+numpy==2.1.3
+torch==2.5.1
+tensorflow==2.19.1
+coremltools==8.3.0
+onnxruntime==1.31.0
+protobuf==5.29.6

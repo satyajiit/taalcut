@@ -1,0 +1,146 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* Type roles (UX4). Every piece of text in the app takes one of these roles instead of picking a size and a
+ * weight of its own, so a page title, a section heading and a row's meta look the same on every page. The names
+ * are the contract the lanes build on; the values behind them are tuned for Onest (DESIGN.md, Typography). Written
+ * by hand, like base.css: build-tokens.mjs doesn't generate it. Imported by packages/ui/src/styles.css, so every
+ * app that uses the kit has them.
+ *
+ * The ladder, each role a clear step from its neighbours:
+ *   page title 20 bold > section 17 semibold > card title 15 semibold > body 14 > meta 12 > caption 11.
+ * Labels sit at body size in medium weight, and type-label-sm a step under them for small controls.
+ * Prose is 15 at the body weight, and data is body with tabular figures. Headline and display are for first run,
+ * empty states and brand moments only. */
+
+/* The reading measure: about 65 characters of Onest. Not 65ch: `ch` is the width of a zero, and Onest's zero is
+ * wide, so 65ch holds about 94 characters. In em, so it follows the text's own size. Use max-w-prose. */
+@theme {
+  --max-width-prose: 30em;
+}
+
+/* Brand moments only: the welcome, an export finished. */
+@utility type-display {
+  font-size: var(--text-display);
+  line-height: var(--text-display--line-height);
+  letter-spacing: var(--text-display--letter-spacing);
+  font-weight: var(--font-weight-bold);
+}
+
+/* First run's step headings and an empty state's headline. */
+@utility type-headline {
+  font-size: var(--text-3xl);
+  line-height: var(--text-3xl--line-height);
+  letter-spacing: var(--text-3xl--letter-spacing);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* The page's name: the window bar's h1. Always the largest heading on a page outside brand moments. */
+@utility type-page-title {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl--line-height);
+  letter-spacing: var(--text-xl--letter-spacing);
+  font-weight: var(--font-weight-bold);
+}
+
+/* A section of a page (h2). */
+@utility type-section {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  letter-spacing: var(--text-lg--letter-spacing);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* A card's, a panel's or a row's title (h3). */
+@utility type-card-title {
+  font-size: var(--text-md);
+  line-height: var(--text-md--line-height);
+  letter-spacing: var(--text-md--letter-spacing);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Text people read: agent messages, descriptions, help. Set it at max-w-prose. */
+@utility type-prose {
+  font-size: var(--text-md);
+  line-height: var(--text-md--line-height);
+  letter-spacing: var(--text-md--letter-spacing);
+  font-weight: var(--weight-body);
+}
+
+/* The default for UI text: rows, values, settings. */
+@utility type-body {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  letter-spacing: var(--text-base--letter-spacing);
+  font-weight: var(--weight-body);
+}
+
+/* Words on controls: buttons, tabs, menu items, field labels. */
+@utility type-label {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  letter-spacing: var(--text-base--letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Words on small controls, one step under label: the kit's sm button, the skip link, the theme picker's segments. */
+@utility type-label-sm {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  letter-spacing: var(--text-sm--letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Secondary facts beside or under a title: counts, dates, sizes, hints. Never below 12 px. */
+@utility type-meta {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  letter-spacing: var(--text-xs--letter-spacing);
+  font-weight: var(--weight-body);
+}
+
+/* The smallest text: chips and timeline labels only. Never a sentence. */
+@utility type-caption {
+  font-size: var(--text-2xs);
+  line-height: var(--text-2xs--line-height);
+  letter-spacing: var(--text-2xs--letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Numbers that sit still in tables and facts: tabular, so columns line up. Numbers that change in place
+ * (a timer, a timecode) stay in the mono face (tc-mono). */
+@utility type-data {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  letter-spacing: var(--text-base--letter-spacing);
+  font-weight: var(--weight-body);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hindi. Matras sit above the headline and below the baseline, so Devanagari needs more leading than Latin, and
+ * at 11 px a chip's matras collide: chips go up to 12. Tracking is 0, because letter-spacing opens gaps in the
+ * headline that joins a word's letters. On the role itself, so it holds whether the Hindi is the page's language
+ * or one line's (lang="hi" on the element); a role and a language outrank the role alone. */
+@layer utilities {
+  :is(.type-section, .type-prose):lang(hi) {
+    line-height: 1.75rem;
+  }
+
+  :is(.type-body, .type-label, .type-data):lang(hi) {
+    line-height: 1.5rem;
+  }
+
+  .type-label-sm:lang(hi) {
+    line-height: 1.375rem;
+  }
+
+  .type-meta:lang(hi) {
+    line-height: 1.25rem;
+    letter-spacing: 0;
+  }
+
+  .type-caption:lang(hi) {
+    font-size: var(--text-xs);
+    line-height: 1.25rem;
+    letter-spacing: 0;
+  }
+}

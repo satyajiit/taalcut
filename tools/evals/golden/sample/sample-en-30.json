@@ -1,0 +1,41 @@
+{
+  "reelId": "sample-en-30",
+  "synthetic": true,
+  "note": "Synthetic sample, not a real reel. English speech at 30/1.",
+  "source": {
+    "label": "synthetic-talking-head",
+    "durationFrames": 300,
+    "width": 1080,
+    "height": 1920
+  },
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "cuts": [24, 48, 80, 112, 144, 176, 208, 240, 264, 288],
+  "beats": [
+    { "frame": 0, "kind": "downbeat" },
+    { "frame": 15, "kind": "beat" },
+    { "frame": 30, "kind": "beat" }
+  ],
+  "slots": [
+    { "id": "hook", "startFrame": 0, "endFrame": 24, "intent": "hook" },
+    { "id": "body", "startFrame": 24, "endFrame": 288, "intent": "demonstration" },
+    { "id": "cta", "startFrame": 288, "endFrame": 300, "intent": "call-to-action" }
+  ],
+  "overlays": [
+    {
+      "id": "title",
+      "text": "Synthetic title",
+      "startFrame": 6,
+      "endFrame": 48,
+      "position": { "x": 0.1, "y": 0.15, "width": 0.8, "height": 0.1 }
+    }
+  ],
+  "transitions": [
+    { "atFrame": 24, "kind": "cut" },
+    { "atFrame": 144, "kind": "dissolve" }
+  ],
+  "audio": { "type": "speech" },
+  "languages": ["en"]
+}

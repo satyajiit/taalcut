@@ -1,0 +1,68 @@
+{
+  "name": "@taalcut-vendor/react-bits",
+  "version": "0.0.0-e2eb04d",
+  "private": true,
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "description": "PromptBar, ThoughtLine, StatusMark, CallChip and WarmTooltip from React Bits (MIT + Commons Clause), vendored for @taalcut/ui. Styling adapted to Taalcut tokens; see the upstream field and upstream/ for the originals.",
+  "upstream": {
+    "repository": "https://github.com/DavidHDev/react-bits",
+    "commit": "e2eb04d89d5be5a633dba7b2d4adfd274e053767",
+    "fetched": "2026-10-12",
+    "files": {
+      "src/PromptBar.tsx": "src/ts-tailwind/Micro/PromptBar/PromptBar.tsx (sha256 05077137eb4ea35737f48cdeeed6aa9f0395a66b01f21929b3e7b00bdc5a8768)",
+      "src/ThoughtLine.tsx": "src/ts-tailwind/Micro/ThoughtLine/ThoughtLine.tsx (sha256 f281754454e972db7fcb91488fb03d2fb1a6dcaa2b87f4ce02625a7ab8efd38c)",
+      "src/StatusMark.tsx": "src/ts-tailwind/Micro/StatusMark/StatusMark.tsx (sha256 6e14849c0719d472104dad43ad21199afab382c9c649e24e71ccc2b278c4bb7d, fetched 2026-10-13)",
+      "src/CallChip.tsx": "src/ts-tailwind/Micro/CallChip/CallChip.tsx (sha256 078281b1efe53e74082357fe7bcaafc8495e850c13b6a2ec041abcb12b81041a, fetched 2026-10-13)",
+      "src/WarmTooltip.tsx": "src/ts-tailwind/Micro/WarmTooltip/WarmTooltip.tsx (sha256 97160960ee374e2f68151867a30af2c9327899a3f3188c225874a4c32c5e2acd, fetched 2026-10-13)"
+    },
+    "changes": [
+      "Colours, radii and type sizes read Taalcut design tokens (CSS variables) instead of hard-coded values.",
+      "Keyframes moved from an inline <style> element to react-bits.css, because the app's CSP (style-src 'self') blocks inline styles.",
+      "Hugeicons replaced with the matching Lucide icons, the icon set the rest of the UI uses.",
+      "Every visible and accessible string can be passed in (labels prop), so the app can translate it; English defaults kept.",
+      "Type-only edits for the repository's stricter compiler settings (noUncheckedIndexedAccess). No behaviour change.",
+      "StatusMark and CallChip: springs replaced by tweens on the motion tokens (DESIGN.md: springs only for drags), every `ease` replaced by the ease tokens, CallChip's glyph roll drops its blur filter (transform and opacity only) and its error shake defaults to 0. StatusMark's keyframes moved to react-bits.css (CSP).",
+      "CallChip: the retry button gets a visible focus ring on the chip (it was outline-none with no replacement); Hugeicons replaced with the matching Lucide icons; the timer and the spoken status can be formatted and translated (formatElapsed, labels); reading the fill's live position falls back to the last set value where DOMMatrix doesn't exist (tests); `labels.describe` may return a React node (so the file name it reads out can be marked as data, not translated), the argument is marked `data-user-content`, and the argument and timer drop their reduced opacity so small text keeps 4.5:1 contrast; the glyph roll is masked with paint containment instead of overflow: hidden, and the retry button covers the chip exactly (its 5 px outset was clipped by the chip anyway), so nothing overflows the chip.",
+      "PromptBar (2026-10-13): focus-visible rings on every button and on the bar while the text box is focused; the placeholder uses ink-3 (4.5:1); transitions use the ease tokens; the menu highlight and the effort slider move with transform instead of top, height, left and width; the send button is a neutral ink fill and Stop stays neutral (marigold is the screen's one primary action, DESIGN.md); the effort button shows no sparkle.",
+      "ThoughtLine (2026-10-13): the toggle button gets a focus-visible ring; transitions use the ease tokens.",
+      "PromptBar (2026-10-13): new props model (the chosen model, controlled), onModelChange, defaultDraft (text in the box when it first renders) and sparks (false turns the send particles off). Upstream behaviour is unchanged when they are left out.",
+      "PromptBar, ThoughtLine, CallChip (2026-10-13, focus fix): in Tailwind v4 `outline-none` cancels a later `focus-visible:outline-2`, so the earlier rings drew nothing. PromptBar's and ThoughtLine's controls drop `outline-none` and their own ring classes and take the app's base :focus-visible ring (instant, hidden in an inactive window); CallChip's ring on the chip sets `outline-solid`; the composer bar's ring and CallChip's hide in an inactive window.",
+      "WarmTooltip (2026-10-13, the sidebar rail's tooltips): quiet motion per DESIGN.md. Travelling to a neighbour is a tween on the ease-out token (upstream: a spring with 0.1 bounce) and only the position glides; the box takes its new width and height at once instead of animating them. No blur anywhere (the pop and the content swap use transform and opacity only; popBlur defaults to 0 and is ignored), the swap's shift is 6 px over 120 ms. Colours, shadow and easing read the app's tokens (ink chip with canvas text, --shadow-md, --ease-out); sizes match the app's tooltip (12 px, 8 × 4 px padding); defaults: no arrow, a 800 ms cold delay, 220 ms travel, 150 ms pop at 0.96 scale. Behaviour is otherwise upstream's: focus-visible opens at once, Escape closes, the open tooltip describes its trigger (aria-describedby). Type-only: tuple parameters destructured from number[] default to 0 (noUncheckedIndexedAccess); no behaviour change.",
+      "PromptBar (2026-10-13, composer round): the model menu can group its rows under headings (PromptBarModel.group) and end in an action row (modelAction, e.g. \"Connect more…\"); the model button can show a detail after the name and take its own label (modelLabel), its name is translate=\"no\", and it reads \"Model: <name>\" (visible text plus a hidden prefix, so the accessible name contains the label) instead of an aria-label; efforts may be objects with a description and disabled (the model has no such level: hollow stop, passed by keys and the pointer, the nearest level taken instead), a controlled effort key and a note under the slider (effortNote); the effort button shows a small beat meter instead of the sparkle and reads \"Thinking: <level>\"; the help icon gives way to the level's description; menus opened from the keyboard move focus into the menu (rows with roving tabindex, arrow keys, Home, End, Escape back to the button, the slider for effort) and the text box points at the active row (aria-activedescendant, aria-controls); a menu opens below the bar when it fits better there (keyframe prompt-bar-drop) and never past its scroll box; the bar and menus can take a hairline (rule, menuRule), secondary and muted text colours (secondaryColor, mutedColor) and the max-effort fill (sparkWash); a click on a bar button no longer also focuses the text box; the menu glow moves inside the list's own scroll box.",
+      "PromptBar (2026-10-13, selection chips): an attachmentsSlot prop draws the app's own content inside the bar, above the text box (the composer's selection chips, P2-M7). Upstream behaviour is unchanged when it is left out.",
+      "PromptBar (2026-10-15, recipes): a toolsSlot prop draws the app's own controls in the bar's tool row, after the model and thinking buttons (the composer's Recipes menu, P3-V11). Upstream behaviour is unchanged when it is left out.",
+      "PromptBar (2026-10-27, UX3-AGT): the effort button's beat meter thins its bars past four levels (up to seven, a model's own thinking levels), so a gap stays between them.",
+      "CallChip (2026-10-31, FIX-TOOLGROUPS): an optional startedAt (epoch ms) starts the timer from when the work began instead of from when the status last turned running, so a group of calls that pauses between them keeps one clock. Upstream behaviour is unchanged when it is left out.",
+      "PromptBar (2026-11-01, EDT1): the row under the text box (model, effort, tools, send) wraps when the bar is narrower than it, as in the editor's docked chat, instead of pushing Send out of the bar."
+    ]
+  },
+  "files": [
+    "src"
+  ],
+  "exports": {
+    "./prompt-bar": "./src/PromptBar.tsx",
+    "./thought-line": "./src/ThoughtLine.tsx",
+    "./status-mark": "./src/StatusMark.tsx",
+    "./call-chip": "./src/CallChip.tsx",
+    "./styles.css": "./src/react-bits.css",
+    "./warm-tooltip": "./src/WarmTooltip.tsx"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "lucide-react": "1.55.0",
+    "motion": "14.1.0"
+  },
+  "peerDependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  }
+}

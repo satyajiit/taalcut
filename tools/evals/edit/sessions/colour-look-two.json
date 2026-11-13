@@ -1,0 +1,363 @@
+{
+ "caseId": "colour-look-two",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DHTT2T6BKMXNDTSWH6VV6Y",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I need to identify which clips show the beach, then apply a vintage look to both.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "AuenDqzn8roy1tJEUwadJJxsmfEkBebU",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I need to identify which clips show the beach, then apply a vintage look to both.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "AuenDqzn8roy1tJEUwadJJxsmfEkBebU",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11732,
+      "output": 62,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11794,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603758173,
+     "responseId": "chatcmpl-ff639e5264374117a02592b7aa758f10",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10004
+    }
+   },
+   "text": "I need to identify which clips show the beach, then apply a vintage look to both.\n\n",
+   "toolCalls": [
+    {
+     "id": "AuenDqzn8roy1tJEUwadJJxsmfEkBebU",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11732,
+    "outputTokens": 62,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11794,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHV3VKWYCJV4XS4E2CCMT4",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "The beach shots are clips 4 and 5. I'll apply a vintage look to both.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "l0vz3FkQeOMmQaQ5pKcUJ2ulTmb6Us0Y",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clips": [
+         4,
+         5
+        ],
+        "look": "vintage",
+        "lookStrength": 0.8,
+        "reset": false
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "The beach shots are clips 4 and 5. I'll apply a vintage look to both.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "l0vz3FkQeOMmQaQ5pKcUJ2ulTmb6Us0Y",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clips": [
+         4,
+         5
+        ],
+        "look": "vintage",
+        "lookStrength": 0.8,
+        "reset": false
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1585,
+      "output": 155,
+      "cacheRead": 11732,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13472,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603768181,
+     "responseId": "chatcmpl-eaeafb9df2d64325a1778076f717a879",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4993
+    }
+   },
+   "text": "The beach shots are clips 4 and 5. I'll apply a vintage look to both.\n\n",
+   "toolCalls": [
+    {
+     "id": "l0vz3FkQeOMmQaQ5pKcUJ2ulTmb6Us0Y",
+     "name": "timeline_setGrade",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clips": [
+       4,
+       5
+      ],
+      "look": "vintage",
+      "lookStrength": 0.8,
+      "reset": false
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1585,
+    "outputTokens": 155,
+    "cachedInputTokens": 11732,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13472,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHV8R03JF3GAST31FHHMW2",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Both beach shots now have a vintage look."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Both beach shots now have a vintage look."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 199,
+      "output": 9,
+      "cacheRead": 13317,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13525,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793603773188,
+     "responseId": "chatcmpl-6a2b161eaada44b9a8f97b194e3d618e",
+     "rawStopReason": "stop",
+     "durationMs": 629
+    }
+   },
+   "text": "Both beach shots now have a vintage look.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 199,
+    "outputTokens": 9,
+    "cachedInputTokens": 13317,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13525,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHV9BWDKYH3R9HNVY2WKRP",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "rvR27rmynDcygQqxxzDYmvkPGFog6Ylf",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "rvR27rmynDcygQqxxzDYmvkPGFog6Ylf",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13605,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13660,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603773824,
+     "responseId": "chatcmpl-70618babf4b54370971a2daa185e04f2",
+     "rawStopReason": "tool_calls",
+     "durationMs": 12628
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "rvR27rmynDcygQqxxzDYmvkPGFog6Ylf",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13605,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13660,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

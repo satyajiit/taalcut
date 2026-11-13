@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "levels": [
+    { "minEnergy": 0.85, "beatsPerClip": 1 },
+    { "minEnergy": 0.65, "beatsPerClip": 2 },
+    { "minEnergy": 0.4, "beatsPerClip": 4 },
+    { "minEnergy": 0.2, "beatsPerClip": 8 },
+    { "minEnergy": 0, "beatsPerClip": 16 }
+  ]
+}

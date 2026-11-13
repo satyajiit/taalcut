@@ -1,0 +1,28 @@
+{
+  "description": "MacBook Air (M2, 2022), 16 GB, 10-core GPU, macOS Sequoia 15.1",
+  "platform": "darwin",
+  "arch": "arm64",
+  "totalmem": 17179869184,
+  "freeDiskBytes": 182536110080,
+  "commands": {
+    "sysctl": "machdep.cpu.brand_string: Apple M2\nhw.model: Mac14,2\nhw.memsize: 17179869184\nhw.ncpu: 8\nhw.perflevel0.physicalcpu: 4\nhw.perflevel1.physicalcpu: 4\n",
+    "system_profiler": "{\n  \"SPDisplaysDataType\" : [\n    {\n      \"_name\" : \"Apple M2\",\n      \"spdisplays_mtlgpufamilysupport\" : \"spdisplays_metal3\",\n      \"spdisplays_vendor\" : \"sppci_vendor_Apple\",\n      \"sppci_bus\" : \"spdisplays_builtin\",\n      \"sppci_cores\" : \"10\",\n      \"sppci_device_type\" : \"spdisplays_gpu\",\n      \"sppci_model\" : \"Apple M2\"\n    }\n  ]\n}\n",
+    "sw_vers": "15.1\n"
+  },
+  "expected": {
+    "gpus": [
+      {
+        "name": "Apple M2",
+        "vendor": "apple",
+        "cores": 10,
+        "unifiedMemory": true,
+        "apis": ["metal"],
+        "metalFamily": "metal3"
+      }
+    ],
+    "neuralEngine": true,
+    "backends": ["metal", "mlx", "coreml", "ane", "webgpu", "cpu"],
+    "tier": "recommended",
+    "shortfalls": []
+  }
+}

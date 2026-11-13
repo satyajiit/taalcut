@@ -1,0 +1,6 @@
+{
+  "id": "v1_interaction_0001",
+  "model": "gemini-nano-banana-2.1",
+  "output_image": { "data": "{{png:1536x2752}}", "mime_type": "image/png" },
+  "usage": { "total_output_tokens": 1680 }
+}

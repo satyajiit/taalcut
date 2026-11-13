@@ -1,0 +1,23 @@
+{
+  "name": "@taalcut/agent",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Agent loop, skills, memory, soul, budgets, event log.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@taalcut/core": "workspace:*",
+    "@taalcut/models": "workspace:*",
+    "@taalcut/tools": "workspace:*",
+    "ulid": "3.0.2",
+    "zod": "^4.6.6"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "note": "Written from Cloudflare's documented Clef curl and envelope (https://developers.cloudflare.com/workers-ai/models/clef-flash/, 2026-10-14); not a live recording.",
+  "request": {
+    "url": "https://api.cloudflare.com/client/v4/accounts/0123456789abcdef0123456789abcdef/ai/run/@cf/cloudflare/clef-flash",
+    "model": "clef-flash"
+  },
+  "status": 200,
+  "response": {
+    "success": true,
+    "errors": [],
+    "result": {
+      "model": "clef-flash",
+      "answers": {
+        "family": {
+          "type": "choice",
+          "choice": "library",
+          "probabilities": { "none": 0.1, "timeline": 0.2, "library": 0.7 },
+          "confidence": 0.7
+        }
+      },
+      "usage": { "input_tokens": 380, "output_tokens": 0 }
+    }
+  }
+}

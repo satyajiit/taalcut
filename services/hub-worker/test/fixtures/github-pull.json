@@ -1,0 +1,9 @@
+{
+  "number": 17,
+  "state": "open",
+  "merged": false,
+  "html_url": "https://example.invalid/taalcut/hub/pull/17",
+  "title": "Template: Weekend trip by ada",
+  "head": { "ref": "submit/01ARZ3NDEKTSV4RRFFQ69G5FAV-v1" },
+  "base": { "ref": "main" }
+}

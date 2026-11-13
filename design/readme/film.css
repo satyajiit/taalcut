@@ -1,0 +1,60 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+
+/* The film's own poster on paper, with a play button: the README links this image to the film on YouTube. */
+.film {
+  padding: 40px 40px 0;
+}
+.film .poster {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 18px 40px rgb(33 26 19 / 18%);
+}
+.film .poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.film .play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.film .play span {
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: var(--marigold);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 45%);
+}
+.film .play svg {
+  width: 52px;
+  height: 52px;
+  margin-left: 8px;
+  fill: var(--ink);
+}
+.film .caption {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 26px 6px 30px;
+  font-size: 30px;
+  color: var(--ink-2);
+}
+.film .caption strong {
+  font-size: 36px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.film .caption .where {
+  margin-left: auto;
+  font-size: 26px;
+  color: var(--ink-3);
+}

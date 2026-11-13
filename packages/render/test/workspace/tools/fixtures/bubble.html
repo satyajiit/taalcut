@@ -1,0 +1,51 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"message","type":"string","label":"Message","default":"Are we still on for the lake?"},{"id":"fill","type":"color","label":"Fill","default":"#2f6df6"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="bubble-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #bubble {
+          position: absolute;
+          left: 96px;
+          top: 520px;
+          width: fit-content;
+          max-width: 760px;
+          padding: 28px 40px;
+          border-radius: 44px;
+          background: var(--fill);
+        }
+        #message {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          font-size: 54px;
+          font-weight: 600;
+          line-height: 1.2;
+          color: #ffffff;
+          text-wrap: balance;
+        }
+      </style>
+      <div id="root" data-composition-id="bubble" data-width="1080" data-height="1920" data-duration="3">
+        <div id="bubble">
+          <p id="message" data-var-text="message">Are we still on for the lake?</p>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.from('#bubble', { y: 60, scale: 0.9, opacity: 0, duration: 0.45, ease: 'power3.out' }, 0);
+        tl.addLabel('exit', 2.6);
+        tl.to('#bubble', { opacity: 0, y: -30, duration: 0.3, ease: 'power2.in' }, 'exit');
+        window.__timelines['bubble'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "@taalcut/bench-footage",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "The indexing bench's synthetic footage sets: a seeded plan, the FFmpeg and say runs that make it, and its manifest.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage",
+    "generate": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "zod": "4.6.6"
+  }
+}

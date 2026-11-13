@@ -1,0 +1,448 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-12 23:26+0530\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.more"
+msgstr "{count, plural, one {# more} other {# more}}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+msgid "notify.mcp.approval.title"
+msgstr "{name} is waiting for you"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.needsAttention.body"
+msgstr "{name} missed a check. Open Taalcut to see what to fix."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.ready.body"
+msgstr "{name} passed its checks and is in Renders."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.title"
+msgstr "A product task needs attention"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.about"
+msgstr "About {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.resetZoom"
+msgstr "Actual Size"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.body"
+msgstr "Add new product information or adjust the topics in Products."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go.agent"
+msgstr "Agent"
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+msgid "menu.view.back"
+msgstr "Back"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.beats"
+msgstr "Beats"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window.front"
+msgstr "Bring All to Front"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window.close"
+msgstr "Close Window"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.copy"
+msgstr "Copy"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.jobs"
+msgstr "Couldn’t download the models for {jobs}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+msgid "notify.downloads.stopped.everything.computer"
+msgstr "Couldn’t download the models this computer needs"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.everything"
+msgstr "Couldn’t download the models this Mac needs"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.cut"
+msgstr "Cut"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.delete"
+msgstr "Delete"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit"
+msgstr "Edit"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+msgid "notify.downloads.ready.body.computer"
+msgstr "Everything this computer needs has downloaded. Its models work offline from now on."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.body"
+msgstr "Everything this Mac needs has downloaded. Its models work offline from now on."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.failed.body"
+msgstr "Exporting {name} stopped. Open Taalcut to try again."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.file"
+msgstr "File"
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+msgid "menu.view.forward"
+msgstr "Forward"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go"
+msgstr "Go"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help"
+msgstr "Help"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.hide"
+msgstr "Hide {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.hideOthers"
+msgstr "Hide Others"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+msgid "notify.mcp.approval.body"
+msgstr "It asked to do something that needs your approval. Open Taalcut to approve or decline it."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go.library"
+msgstr "Library"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go.make"
+msgstr "Make"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window.minimize"
+msgstr "Minimize"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.title"
+msgstr "New product video ideas"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.title"
+msgstr "No fresh product ideas found"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.body"
+msgstr "Open Products to review what happened and retry."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.body"
+msgstr "Open Products to see the published posts."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.paste"
+msgstr "Paste"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.pasteAndMatchStyle"
+msgstr "Paste and Match Style"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.quit"
+msgstr "Quit {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.redo"
+msgstr "Redo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.reload"
+msgstr "Reload"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help.reportIssue"
+msgstr "Report an Issue on GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help.requestFeature"
+msgstr "Request a Feature on GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.body"
+msgstr "Review the shortlist in Products."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.body"
+msgstr "Review the video and publishing details in Products."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.search"
+msgstr "Search"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.selectAll"
+msgstr "Select All"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help.feedback"
+msgstr "Send Feedback…"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.services"
+msgstr "Services"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.other"
+msgstr "Settings › Models says why, with Try again."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.settings"
+msgstr "Settings…"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.shots"
+msgstr "Shots"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.showAll"
+msgstr "Show All"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.sounds"
+msgstr "Sound effects"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.speech"
+msgstr "Speech"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help.github"
+msgstr "Star {appName} on GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+msgid "macos.localNetworkUsage"
+msgstr "Taalcut checks that this Mac can be reached on your Wi-Fi so your phone can send videos. Phones can still send if you turn this off."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.manifest"
+msgstr "Taalcut couldn’t verify its list of models. Update Taalcut, then try again."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.title"
+msgstr "Taalcut is ready"
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+msgid "macos.photoLibraryUsage"
+msgstr "Taalcut reads the photos and videos you choose from Apple Photos or a connected iPhone or iPad. Your originals stay unchanged."
+
+#. js-lingui-explicit-id
+#: src/main/voice/microphone-note.ts
+msgid "macos.microphoneUsage"
+msgstr "Taalcut records your voice only when you read the consent line to make a voice of your own. The recording stays on this Mac until you create that voice."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go.templates"
+msgstr "Templates"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.text"
+msgstr "Text in frames"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.network"
+msgstr "The connection kept dropping. Check your internet connection, then try again."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.refused"
+msgstr "The download server refused them. Try again later."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.different"
+msgstr "The server sent different files than the ones Taalcut expects. Try again later."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.install"
+msgstr "They downloaded but couldn’t be installed. Try again."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+msgid "notify.downloads.reason.space.computer"
+msgstr "This computer doesn’t have enough free space for them. Free up some space, then try again."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.space"
+msgstr "This Mac doesn’t have enough free space for them. Free up some space, then try again."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.titles"
+msgstr "Titles"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.toggleDevTools"
+msgstr "Toggle Developer Tools"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.fullScreen"
+msgstr "Toggle Full Screen"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.sidebar"
+msgstr "Toggle Sidebar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.undo"
+msgstr "Undo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view"
+msgstr "View"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.body"
+msgstr "Watch the draft and ask Taal for changes."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window"
+msgstr "Window"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.writing"
+msgstr "Writing"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.title"
+msgstr "Your approval is needed"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.title"
+msgstr "Your product video is ready to review"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.title"
+msgstr "Your product video was published"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.ready.title"
+msgstr "Your video is ready"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.needsAttention.title"
+msgstr "Your video needs a look"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.failed.title"
+msgstr "Your video wasn’t made"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window.zoom"
+msgstr "Zoom"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.zoomIn"
+msgstr "Zoom In"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.zoomOut"
+msgstr "Zoom Out"

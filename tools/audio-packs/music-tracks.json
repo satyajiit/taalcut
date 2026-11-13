@@ -1,0 +1,5 @@
+{
+  "$comment": "The Taalcut music pack's track list (packages/audio SPEC P3.5). Empty until the product owner picks the CC0 tracks; build-music-pack.mjs refuses an empty list, so no music-pack component exists yet and the app hides the option (audio.music_library_empty). Each entry: id (a-z0-9-), title, file (the downloaded file's name inside --from), licenceFile (the track's own licence or dedication text, saved from its page, inside --from), bpm, moods (lowercase words), sourceUrl, dedicationUrl, attribution (optional).",
+  "packVersion": "1.0.0",
+  "tracks": []
+}

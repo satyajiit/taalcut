@@ -1,0 +1,642 @@
+{
+  "$comment": "Written by cli-lock.mjs refresh from an npm package-lock.json of hyperframes@0.8.209. Every package the hyperframes-cli component unpacks, by its path in node_modules; a package with platforms is installed only on those.",
+  "hyperframes": "0.8.209",
+  "packages": [
+    {
+      "path": "node_modules/@esbuild/darwin-arm64",
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.28.2",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.28.2.tgz",
+      "size": 4434422,
+      "sha256": "1980cde09749094452b20d36ff267585ccb3f72749c7bc97291cd9996ccf5a2a",
+      "platforms": [
+        "darwin-arm64"
+      ]
+    },
+    {
+      "path": "node_modules/@esbuild/linux-x64",
+      "name": "@esbuild/linux-x64",
+      "version": "0.28.2",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.28.2.tgz",
+      "size": 4741809,
+      "sha256": "9573bb2233aab0f9ea7647d5cca9726113cc1768de61d66b17267f4db84488f6",
+      "platforms": [
+        "linux-x64"
+      ]
+    },
+    {
+      "path": "node_modules/@hono/node-server",
+      "name": "@hono/node-server",
+      "version": "2.1.6",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/@hono/node-server/-/node-server-2.1.6.tgz",
+      "size": 38206,
+      "sha256": "40f12405cff03c16be6a7f32bdb2b9e84dbe9bd8c001f0ad4a0b04023b59c908"
+    },
+    {
+      "path": "node_modules/@puppeteer/browsers",
+      "name": "@puppeteer/browsers",
+      "version": "3.2.6",
+      "license": "Apache-2.0",
+      "url": "https://registry.npmjs.org/@puppeteer/browsers/-/browsers-3.2.6.tgz",
+      "size": 96807,
+      "sha256": "ec4a0cad227d319cb0d4f4ef5be6552dbad91df834e9b7eb053f3ca764551f89"
+    },
+    {
+      "path": "node_modules/@swc/helpers",
+      "name": "@swc/helpers",
+      "version": "0.5.23",
+      "license": "Apache-2.0",
+      "url": "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.23.tgz",
+      "size": 64793,
+      "sha256": "3de0ff851b7c1d1c7d79655750b18a3b48cf59f56c8fec7bf8a29b250405b945"
+    },
+    {
+      "path": "node_modules/acorn",
+      "name": "acorn",
+      "version": "8.19.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/acorn/-/acorn-8.19.0.tgz",
+      "size": 134282,
+      "sha256": "c6fad21ffa1f2ba20338bf1dde1de911c2093c1aaf7b3af17c477661bd3bfaaf"
+    },
+    {
+      "path": "node_modules/adm-zip",
+      "name": "adm-zip",
+      "version": "0.6.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.6.1.tgz",
+      "size": 35489,
+      "sha256": "8625031e89912267a5a093fc1e322022d5028b73b45c3274781bc1cf74ee4e82"
+    },
+    {
+      "path": "node_modules/ansi-regex",
+      "name": "ansi-regex",
+      "version": "6.5.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.5.0.tgz",
+      "size": 3507,
+      "sha256": "9185245d936cfcf4df54de0220a06c691686a41bbb55e110d3f23e038134648e"
+    },
+    {
+      "path": "node_modules/ansi-styles",
+      "name": "ansi-styles",
+      "version": "6.2.3",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-6.2.3.tgz",
+      "size": 5836,
+      "sha256": "e939cf5138d7a5d4e34100acd0153577b2953305931157a1cfe9faa56383911b"
+    },
+    {
+      "path": "node_modules/base64-js",
+      "name": "base64-js",
+      "version": "1.5.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz",
+      "size": 4109,
+      "sha256": "b1b7a945b52685269083425216d6597e33d97bf21699d656e92fdb3eb5210a85"
+    },
+    {
+      "path": "node_modules/brotli",
+      "name": "brotli",
+      "version": "1.3.3",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/brotli/-/brotli-1.3.3.tgz",
+      "size": 416657,
+      "sha256": "3c7c260f6263df95fee49a9119e9fd21227d628b6c9d99080a75edfd9e2bdb24"
+    },
+    {
+      "path": "node_modules/bundle-name",
+      "name": "bundle-name",
+      "version": "4.1.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/bundle-name/-/bundle-name-4.1.1.tgz",
+      "size": 1883,
+      "sha256": "f6100d53bf456b81a380c824e7e3fbfe70357f2d6bde9c7de24a9d9ce39836da"
+    },
+    {
+      "path": "node_modules/chromium-bidi",
+      "name": "chromium-bidi",
+      "version": "157.0.8090-0",
+      "license": "Apache-2.0",
+      "url": "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-157.0.8090-0.tgz",
+      "size": 998413,
+      "sha256": "700e74e65c4244e1820fe3bb2392d35e4641d37b423be58ab7dd4b07b8fcb514"
+    },
+    {
+      "path": "node_modules/citty",
+      "name": "citty",
+      "version": "0.2.2",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/citty/-/citty-0.2.2.tgz",
+      "size": 10298,
+      "sha256": "fe93b8b2e27cc4eb109fd9f4f69f31e4b2887bbb80f6d43a8b1b99a4a9712d01"
+    },
+    {
+      "path": "node_modules/cliui",
+      "name": "cliui",
+      "version": "9.0.1",
+      "license": "ISC",
+      "url": "https://registry.npmjs.org/cliui/-/cliui-9.0.1.tgz",
+      "size": 19175,
+      "sha256": "26d72549682051eb3e6ae24514ab8d15d21e2d7a54f3a58b0ecb58fe4c5971cd"
+    },
+    {
+      "path": "node_modules/cliui/node_modules/string-width",
+      "name": "string-width",
+      "version": "7.2.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/string-width/-/string-width-7.2.0.tgz",
+      "size": 2989,
+      "sha256": "3e90901a98cadef6986fe2953e6d181f49730d81c7855776a6337fef93bbf1f3"
+    },
+    {
+      "path": "node_modules/clone",
+      "name": "clone",
+      "version": "2.1.2",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/clone/-/clone-2.1.2.tgz",
+      "size": 5814,
+      "sha256": "7df63a618a362185c642f0a65db6f654e586fa727543872b5ba65e59d604e93d"
+    },
+    {
+      "path": "node_modules/compare-versions",
+      "name": "compare-versions",
+      "version": "6.1.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/compare-versions/-/compare-versions-6.1.1.tgz",
+      "size": 11531,
+      "sha256": "0684b34270378cae9de9573fcd0e0677ede9c50ca09a66f095d002987df191db"
+    },
+    {
+      "path": "node_modules/css-tree",
+      "name": "css-tree",
+      "version": "3.2.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/css-tree/-/css-tree-3.2.1.tgz",
+      "size": 316943,
+      "sha256": "4c06bfe733d006103a4c070dcf8e0a3b2eb6b6a83e20e21c32d2d3b9c3ffae0a"
+    },
+    {
+      "path": "node_modules/debug",
+      "name": "debug",
+      "version": "4.4.3",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+      "size": 13449,
+      "sha256": "89c1ac9c946ee8905a875837114528e97eeae35e03be3190584b2216af43e4a7"
+    },
+    {
+      "path": "node_modules/default-browser",
+      "name": "default-browser",
+      "version": "5.5.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/default-browser/-/default-browser-5.5.1.tgz",
+      "size": 3165,
+      "sha256": "221997185065b746a870ddd6f1ed85aaeeaf666183ee927d0ab9a6fe29f1be26"
+    },
+    {
+      "path": "node_modules/default-browser-id",
+      "name": "default-browser-id",
+      "version": "5.0.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/default-browser-id/-/default-browser-id-5.0.1.tgz",
+      "size": 1811,
+      "sha256": "3c94fbe0d90b610de6dc068180c780cbb7ef0ade6d2f3a7b5401f99f215d7429"
+    },
+    {
+      "path": "node_modules/define-lazy-prop",
+      "name": "define-lazy-prop",
+      "version": "3.0.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/define-lazy-prop/-/define-lazy-prop-3.0.0.tgz",
+      "size": 2063,
+      "sha256": "bbe9fe67a229c64ff9b8c77ace12278e2d44048a2a5af96e5fc95abbc94c49b5"
+    },
+    {
+      "path": "node_modules/devtools-protocol",
+      "name": "devtools-protocol",
+      "version": "0.0.1704951",
+      "license": "BSD-3-Clause",
+      "url": "https://registry.npmjs.org/devtools-protocol/-/devtools-protocol-0.0.1704951.tgz",
+      "size": 556601,
+      "sha256": "91d710b3edccb74ac3c169bc433d95030cf3c3da930127002f6878082db471e3"
+    },
+    {
+      "path": "node_modules/dfa",
+      "name": "dfa",
+      "version": "1.2.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/dfa/-/dfa-1.2.0.tgz",
+      "size": 29338,
+      "sha256": "d781eb3a307ab6aa2d97028f695b17dbeadf6fd27788c333b1fb96d18d2a23ad"
+    },
+    {
+      "path": "node_modules/emoji-regex",
+      "name": "emoji-regex",
+      "version": "10.6.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz",
+      "size": 5610,
+      "sha256": "9f40e54c0586f30882ece0ee0d22654394b89321e89cb55e8faf12ed8ccff981"
+    },
+    {
+      "path": "node_modules/esbuild",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/esbuild/-/esbuild-0.28.2.tgz",
+      "size": 34207,
+      "sha256": "e045f94c235c7adc50e77ba2a579c7bec41b496b6b47c3a7845f7c1e19959a88"
+    },
+    {
+      "path": "node_modules/escalade",
+      "name": "escalade",
+      "version": "3.2.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/escalade/-/escalade-3.2.0.tgz",
+      "size": 4483,
+      "sha256": "ba2755afc0e6c6705326711fd218ebe107a527eccbd6485155fde98ed000bee7"
+    },
+    {
+      "path": "node_modules/fast-deep-equal",
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
+      "size": 3656,
+      "sha256": "b019a0980f27638dc3f85836b0e478f188e00d7a6e5852c0819fa86f56e47b8f"
+    },
+    {
+      "path": "node_modules/fontkit",
+      "name": "fontkit",
+      "version": "2.0.4",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/fontkit/-/fontkit-2.0.4.tgz",
+      "size": 1172861,
+      "sha256": "f686a9515af33fce16ab4bffe50570728197e53165068548c6f75a1793797a08"
+    },
+    {
+      "path": "node_modules/get-caller-file",
+      "name": "get-caller-file",
+      "version": "2.0.5",
+      "license": "ISC",
+      "url": "https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz",
+      "size": 2383,
+      "sha256": "7b13e1c81949ff4c1baae4ac4e34990492d5e8a86dab7e3b90027b1f5126935f"
+    },
+    {
+      "path": "node_modules/get-east-asian-width",
+      "name": "get-east-asian-width",
+      "version": "1.7.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/get-east-asian-width/-/get-east-asian-width-1.7.0.tgz",
+      "size": 5431,
+      "sha256": "371c7b094731ec5848025a7139eb05facc23cf18bd56ed8f755364e4b90ebd35"
+    },
+    {
+      "path": "node_modules/giget",
+      "name": "giget",
+      "version": "3.3.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/giget/-/giget-3.3.1.tgz",
+      "size": 51726,
+      "sha256": "a3c77c6d7870c707b8af103c1dac70d5efb2b36c76686cc60318b7dc55e3807c"
+    },
+    {
+      "path": "node_modules/hono",
+      "name": "hono",
+      "version": "4.13.16",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/hono/-/hono-4.13.16.tgz",
+      "size": 246805,
+      "sha256": "095288e2df8f12f754bdeeff8ac6ac3d5035807073e47ac828371d3d6295cd40"
+    },
+    {
+      "path": "node_modules/hyperframes",
+      "name": "hyperframes",
+      "version": "0.8.209",
+      "license": "Apache-2.0",
+      "url": "https://registry.npmjs.org/hyperframes/-/hyperframes-0.8.209.tgz",
+      "size": 7714949,
+      "sha256": "bf592d7117b7926decd62a5241cf5aea22805963378a45795d0d0c674fea3702"
+    },
+    {
+      "path": "node_modules/ignore",
+      "name": "ignore",
+      "version": "5.3.2",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/ignore/-/ignore-5.3.2.tgz",
+      "size": 15266,
+      "sha256": "8e9652205f5fca36dec78e11650ed998e639f5744600e1dbfc024cd627eed8bd"
+    },
+    {
+      "path": "node_modules/is-docker",
+      "name": "is-docker",
+      "version": "3.0.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/is-docker/-/is-docker-3.0.0.tgz",
+      "size": 1721,
+      "sha256": "1a230b0b25c81eff06bdee3856a742fd17260169b0bf958de9368c4b3ce2ddee"
+    },
+    {
+      "path": "node_modules/is-inside-container",
+      "name": "is-inside-container",
+      "version": "1.0.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/is-inside-container/-/is-inside-container-1.0.0.tgz",
+      "size": 1821,
+      "sha256": "dbde95b8434fc4757624974d4139c4f32391d08c4153565ae91a5f3fd772e07b"
+    },
+    {
+      "path": "node_modules/is-wsl",
+      "name": "is-wsl",
+      "version": "3.1.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/is-wsl/-/is-wsl-3.1.1.tgz",
+      "size": 1912,
+      "sha256": "f0f93f9796c2e768a487a35bbe8f96c0b703edeb01add088686ba91a72b92eb2"
+    },
+    {
+      "path": "node_modules/mdn-data",
+      "name": "mdn-data",
+      "version": "2.27.1",
+      "license": "CC0-1.0",
+      "url": "https://registry.npmjs.org/mdn-data/-/mdn-data-2.27.1.tgz",
+      "size": 102934,
+      "sha256": "63985bd4ce64e9a0142d70465c3a7f54c488f3ef6da3f9512d54a728cde46870"
+    },
+    {
+      "path": "node_modules/mitt",
+      "name": "mitt",
+      "version": "3.0.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/mitt/-/mitt-3.0.1.tgz",
+      "size": 6147,
+      "sha256": "2ef69c669574ad5b86fdb8b30aed8c8c1705931f19a68bc4b1b234c6d26d7306"
+    },
+    {
+      "path": "node_modules/modern-tar",
+      "name": "modern-tar",
+      "version": "0.8.6",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/modern-tar/-/modern-tar-0.8.6.tgz",
+      "size": 26236,
+      "sha256": "01e33277ed2cb17b4f55f3d24c58663eda6b1970c8b1c0f9d9627aea0a4ae75c"
+    },
+    {
+      "path": "node_modules/ms",
+      "name": "ms",
+      "version": "2.1.3",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+      "size": 2967,
+      "sha256": "f6616e15e530ed552f9daa2d3ce71963947c6bc7c98c9b64fd3e673fd02622c6"
+    },
+    {
+      "path": "node_modules/nanoid",
+      "name": "nanoid",
+      "version": "3.3.20",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.20.tgz",
+      "size": 5721,
+      "sha256": "5ae134779aa22c2c04b691d361bc1f3c004c354e81c7ee166ea1c6e848eedc4f"
+    },
+    {
+      "path": "node_modules/open",
+      "name": "open",
+      "version": "10.2.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/open/-/open-10.2.0.tgz",
+      "size": 15470,
+      "sha256": "b5b60d1271802682a5c8e0ed1cc8e825d3be7fd610afaaf3d4d8ce799e825be9"
+    },
+    {
+      "path": "node_modules/pako",
+      "name": "pako",
+      "version": "0.2.9",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/pako/-/pako-0.2.9.tgz",
+      "size": 194692,
+      "sha256": "4a9319f1b7d155022ae088ff67d4bb739f81d29c8f82b7e6bde6bce461c3cd9f"
+    },
+    {
+      "path": "node_modules/pend",
+      "name": "pend",
+      "version": "1.2.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/pend/-/pend-1.2.0.tgz",
+      "size": 2308,
+      "sha256": "a12f279b25a9df710b52a9892bad00bdeeb862a9b5d1e4f4db77131129436d7f"
+    },
+    {
+      "path": "node_modules/picocolors",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "license": "ISC",
+      "url": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+      "size": 2625,
+      "sha256": "d3aedb2807967b7eb37fd11b03b7e3701e725af79c650d0812ff7213f8f882d9"
+    },
+    {
+      "path": "node_modules/postcss",
+      "name": "postcss",
+      "version": "8.5.32",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/postcss/-/postcss-8.5.32.tgz",
+      "size": 52987,
+      "sha256": "8e8eb3453860bfc35cd0e51653a3565980a2d83e4ddcf93f8fa5455754cf9066"
+    },
+    {
+      "path": "node_modules/puppeteer-core",
+      "name": "puppeteer-core",
+      "version": "25.16.0",
+      "license": "Apache-2.0",
+      "url": "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-25.16.0.tgz",
+      "size": 1198931,
+      "sha256": "9e4b26afab4af544ec25a2ca67c463a5669e8a656d85d3a264832491185702e3"
+    },
+    {
+      "path": "node_modules/restructure",
+      "name": "restructure",
+      "version": "3.0.2",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/restructure/-/restructure-3.0.2.tgz",
+      "size": 35779,
+      "sha256": "11c295b72e9326606649d26bde924942dd560183e0d6395564dbb54254134b41"
+    },
+    {
+      "path": "node_modules/run-applescript",
+      "name": "run-applescript",
+      "version": "7.1.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/run-applescript/-/run-applescript-7.1.0.tgz",
+      "size": 2193,
+      "sha256": "d29ace7117aaa0d6b119027e9a157c238e6899bbb35d03f508ae8d4fa9ca8c9d"
+    },
+    {
+      "path": "node_modules/source-map-js",
+      "name": "source-map-js",
+      "version": "1.2.2",
+      "license": "BSD-3-Clause",
+      "url": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.2.tgz",
+      "size": 36349,
+      "sha256": "05c8cf8e7c3a6b56cada7668fe9342b10f4b625efc92aba9ba05b9e8fe4d71a3"
+    },
+    {
+      "path": "node_modules/string-width",
+      "name": "string-width",
+      "version": "8.3.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/string-width/-/string-width-8.3.0.tgz",
+      "size": 4510,
+      "sha256": "b9332abee5a45017221999b9133d77f092b81d0b1d747fc030abe1119a148339"
+    },
+    {
+      "path": "node_modules/strip-ansi",
+      "name": "strip-ansi",
+      "version": "7.2.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.2.0.tgz",
+      "size": 2156,
+      "sha256": "2fa01de86a5022ef32773abbc4e84a53a1c5d31f5a5cbf03ed2575f10408543f"
+    },
+    {
+      "path": "node_modules/tiny-inflate",
+      "name": "tiny-inflate",
+      "version": "1.0.3",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/tiny-inflate/-/tiny-inflate-1.0.3.tgz",
+      "size": 15562,
+      "sha256": "73932b339424e5ffaeaf043e6481229cab407ee277b2a01fa23938dfad6a8f4e"
+    },
+    {
+      "path": "node_modules/tslib",
+      "name": "tslib",
+      "version": "2.9.1",
+      "license": "0BSD",
+      "url": "https://registry.npmjs.org/tslib/-/tslib-2.9.1.tgz",
+      "size": 19229,
+      "sha256": "8092ae46b512c361b086443cc1b6ae94bfe2587b75034663e4b89d24ba40670a"
+    },
+    {
+      "path": "node_modules/typed-query-selector",
+      "name": "typed-query-selector",
+      "version": "2.12.3",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/typed-query-selector/-/typed-query-selector-2.12.3.tgz",
+      "size": 6554,
+      "sha256": "615e810b2ecd226e7bd51d6e534cfa2b791892a12375f82c2f68a45ca8e0b3c3"
+    },
+    {
+      "path": "node_modules/unicode-properties",
+      "name": "unicode-properties",
+      "version": "1.4.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/unicode-properties/-/unicode-properties-1.4.1.tgz",
+      "size": 30825,
+      "sha256": "dffa8478c712c4d6938cf72e3778f4d652e5d28285e4bc1ea4b2922fa5849962"
+    },
+    {
+      "path": "node_modules/unicode-trie",
+      "name": "unicode-trie",
+      "version": "2.0.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/unicode-trie/-/unicode-trie-2.0.0.tgz",
+      "size": 12320,
+      "sha256": "7db9750429590d5ec42bd544b5ee7b69e6b1f39beafec1d8e5c1635096deceb5"
+    },
+    {
+      "path": "node_modules/webdriver-bidi-protocol",
+      "name": "webdriver-bidi-protocol",
+      "version": "1.0.1",
+      "license": "Apache-2.0",
+      "url": "https://registry.npmjs.org/webdriver-bidi-protocol/-/webdriver-bidi-protocol-1.0.1.tgz",
+      "size": 38632,
+      "sha256": "c2032e52b6b42ce6f2560d1ab6e0490037e8399400b3438784a6dcc2fbdccb54"
+    },
+    {
+      "path": "node_modules/wrap-ansi",
+      "name": "wrap-ansi",
+      "version": "9.0.2",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-9.0.2.tgz",
+      "size": 4316,
+      "sha256": "0a42a5c5cee0936544691a75aa7aef11620971c961988473f99b5a6540f78e7e"
+    },
+    {
+      "path": "node_modules/wrap-ansi/node_modules/string-width",
+      "name": "string-width",
+      "version": "7.2.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/string-width/-/string-width-7.2.0.tgz",
+      "size": 2989,
+      "sha256": "3e90901a98cadef6986fe2953e6d181f49730d81c7855776a6337fef93bbf1f3"
+    },
+    {
+      "path": "node_modules/ws",
+      "name": "ws",
+      "version": "8.22.1",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/ws/-/ws-8.22.1.tgz",
+      "size": 35214,
+      "sha256": "a5cdb19c7090b816ffc109b6d928d352aa2bce73e38f73bd9678d484a62d2f75"
+    },
+    {
+      "path": "node_modules/wsl-utils",
+      "name": "wsl-utils",
+      "version": "0.1.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/wsl-utils/-/wsl-utils-0.1.0.tgz",
+      "size": 2287,
+      "sha256": "d2cbb69eb9d502a5248d79232b18d7fcbf23c9d33b8045f9bc01250650d98dd4"
+    },
+    {
+      "path": "node_modules/y18n",
+      "name": "y18n",
+      "version": "5.0.8",
+      "license": "ISC",
+      "url": "https://registry.npmjs.org/y18n/-/y18n-5.0.8.tgz",
+      "size": 6157,
+      "sha256": "d43743bad3a7cb3af5d3b6bf70fd32fe3923ea86e4148109c6dd0126deada769"
+    },
+    {
+      "path": "node_modules/yargs",
+      "name": "yargs",
+      "version": "18.2.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/yargs/-/yargs-18.2.0.tgz",
+      "size": 48841,
+      "sha256": "44ddd9d39e41a7d73dd794b6d229f2b92fd655d394ef59e2ca34d31df6181d13"
+    },
+    {
+      "path": "node_modules/yargs-parser",
+      "name": "yargs-parser",
+      "version": "22.0.0",
+      "license": "ISC",
+      "url": "https://registry.npmjs.org/yargs-parser/-/yargs-parser-22.0.0.tgz",
+      "size": 21743,
+      "sha256": "2b640247b9ca6f540c708dfea99bafeae59a46db66f491fb5b6d55fce1614d65"
+    },
+    {
+      "path": "node_modules/yauzl",
+      "name": "yauzl",
+      "version": "3.4.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/yauzl/-/yauzl-3.4.0.tgz",
+      "size": 31577,
+      "sha256": "ec962fa3205d4be5849f0fc3bebd0492b0abe8acf402656fd80490531fa8ba88"
+    },
+    {
+      "path": "node_modules/zod",
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/zod/-/zod-4.6.7.tgz",
+      "size": 1141941,
+      "sha256": "84efd155bed93270286e793fc951be270b536cbd5b0eeb111f0fa3967201d698"
+    }
+  ]
+}

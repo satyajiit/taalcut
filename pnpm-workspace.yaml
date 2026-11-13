@@ -1,0 +1,87 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+packages:
+  - apps/*
+  - packages/*
+  - tools/evals
+  - tools/bench-footage
+  - website
+  - services/*
+  - hub
+  # Vendored code (third_party/*/README.md says what changed upstream). Linked, never copied: a `file:`
+  # dependency is a snapshot taken at install time, so a later source change wouldn't reach the app or its
+  # tests (scripts/check-vendored.mjs fails on one).
+  - third_party/*
+
+# Packages allowed to run install scripts (pnpm 11 blocks them by default).
+allowBuilds:
+  # Electron 45 has no install hook; fetch its binary explicitly with install-electron.
+  electron: false
+  esbuild: true
+  '@google/genai': false
+  protobufjs: false
+  electron-winstaller: false
+  # @hyperframes/producer depends on puppeteer; Taalcut never lets it download a browser (the pinned
+  # chrome-headless-shell is a component, packages/render SPEC section 4).
+  puppeteer: false
+  onnxruntime-node: true
+  # Miniflare (hub Worker tests) ships its runtime through workerd's install script.
+  workerd: true
+  # The website's Firebase SDK: its postinstall only bakes Firebase App Hosting's FIREBASE_WEBAPP_CONFIG into the
+  # package; the site reads its config from NEXT_PUBLIC_* at build time instead (website/SPEC.md).
+  '@firebase/util': false
+  core-js: true
+
+# transformers.js imports sharp at load; vision never calls it (frames arrive as raw RGB at the
+# processor's size), and sharp's prebuilt libvips is LGPL-3.0. A stub stands in (packages/vision/stubs/sharp).
+overrides:
+  sharp: link:./packages/vision/stubs/sharp
+  # @sentry/node 11 (under @sentry/electron 8, the crash reports' SDK) declares its bundler plugins as a
+  # dependency, and they depend on the Sentry CLI (`sentry`, FSL-1.1, not open source). Both are build-time tools:
+  # the SDK's runtime never loads them (apps/desktop/test/crash-sdk-graph.test.ts bundles it and fails if it
+  # does), so they are left out of the tree and the app.
+  '@sentry/bundler-plugins': '-'
+  # next's optional image optimiser. The website exports with images.unoptimized and draws its social cards with
+  # next/og's own resvg, so sharp (and the stub above, which throws) is left out for next.
+  'next>sharp': '-'
+  # Firebase 13.2 still pins grpc-js to the vulnerable 1.9 line. Keep this exception scoped to its
+  # Firestore client; 1.13.6 fixes GHSA-m9gg-hp2v-232j and GHSA-f596-whhp-79r4 within gRPC's 1.x API.
+  '@firebase/firestore>@grpc/grpc-js': 1.13.6
+  # Same-major security fixes for nested exact pins; the selectors only replace audited vulnerable versions.
+  # Cloudflare's test harness pins zod/undici; jsdom and electron-builder also retain older undici copies.
+  'zod@4.6.5': 4.6.6
+  'undici@6.29.0': 6.29.1
+  'undici@7.29.1': 7.30.2
+  'undici@8.11.2': 8.12.4
+  'body-parser@2.3.0': 2.4.0
+  'qs@6.16.0': 6.16.1
+  'compression@1.8.1': 1.8.2
+
+# pnpm 11 holds back very new releases. These pins are deliberate (PRD 6.4).
+minimumReleaseAgeExclude:
+  # Current stable Electron, reviewed against its official release notes for the release (2026-11-11).
+  - electron@45.3.0
+  - '@vitest/coverage-v8@5.0.4'
+  - '@vitest/mocker@5.0.4'
+  - '@vitest/spy@5.0.4'
+  - vitest@5.0.4
+  - wrangler@4.150.0
+  - '@cloudflare/vitest-plugin@1.4.1'
+  - '@orpc/client@1.15.6'
+  - '@orpc/contract@1.15.6'
+  - '@orpc/interop@1.15.6'
+  - '@orpc/server@1.15.6'
+  - '@orpc/shared@1.15.6'
+  - '@orpc/standard-server-aws-lambda@1.15.6'
+  - '@orpc/standard-server-fastify@1.15.6'
+  - '@orpc/standard-server-fetch@1.15.6'
+  - '@orpc/standard-server-node@1.15.6'
+  - '@orpc/standard-server-peer@1.15.6'
+  - '@orpc/standard-server@1.15.6'
+  - miniflare@5.20261006.2-beta
+
+patchedDependencies:
+  '@earendil-works/pi-ai@1.4.0': patches/@earendil-works__pi-ai@1.4.0.patch
+  '@google/genai@2.21.0': patches/@google__genai@2.21.0.patch
+  '@hyperframes/engine@0.8.209': patches/@hyperframes__engine@0.8.209.patch
+  '@puppeteer/browsers@3.2.4': patches/@puppeteer__browsers@3.2.4.patch

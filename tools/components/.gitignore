@@ -1,0 +1,2 @@
+# Component builds and the sha256-addressed cache of pinned sources (tools/components/hosting). Never commit them.
+/.cache/

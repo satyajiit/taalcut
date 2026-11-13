@@ -1,0 +1,45 @@
+diff --git a/dist/node/index.mjs b/dist/node/index.mjs
+index 778e997b6bbedb7e09ac41c689889fcc5225243f..d09284d01614c519e24e951928b604ecc9342642 100644
+--- a/dist/node/index.mjs
++++ b/dist/node/index.mjs
+@@ -13866,7 +13866,7 @@ class ApiClient {
+         });
+     }
+     async apiCall(url, requestInit, retryOptions, timeout, abortSignal) {
+-        var _a, _b, _c, _d, _e, _f;
++        var _a, _b, _c, _d, _e, _f, _g;
+         const retryableStatusCodes = (_a = retryOptions === null || retryOptions === void 0 ? void 0 : retryOptions.httpStatusCodes) !== null && _a !== void 0 ? _a : DEFAULT_RETRY_HTTP_STATUS_CODES;
+         const runFetch = async () => {
+             // A fresh signal per attempt, so that `timeout` bounds this attempt
+@@ -13874,7 +13874,7 @@ class ApiClient {
+             const attempt = createAttemptSignal(timeout, abortSignal);
+             let response;
+             try {
+-                response = await fetch(url, Object.assign(Object.assign({}, requestInit), { signal: attempt.signal }));
++                response = await ((_g = this.clientOptions.fetch) !== null && _g !== void 0 ? _g : fetch)(url, Object.assign(Object.assign({}, requestInit), { signal: attempt.signal }));
+             }
+             catch (e) {
+                 attempt.dispose();
+@@ -26298,6 +26298,7 @@ class GoogleGenAI {
+             apiKey: this.apiKey,
+             vertexai: this.vertexai,
+             httpOptions: this.httpOptions,
++            fetch: options.fetch,
+             userAgentExtra: LANGUAGE_LABEL_PREFIX + process.version,
+             uploader: new NodeUploader(),
+             downloader: new NodeDownloader(),
+diff --git a/dist/node/node.d.ts b/dist/node/node.d.ts
+index 09744c080704de9ca0ba6a382a596b81fe47e445..7025685eb59af4282e917a1afe76c4a45912722f 100644
+--- a/dist/node/node.d.ts
++++ b/dist/node/node.d.ts
+@@ -6860,6 +6860,10 @@ export declare interface GoogleGenAIOptions {
+      * Optional. A set of customizable configuration for HTTP requests.
+      */
+     httpOptions?: HttpOptions;
++    /**
++     * Optional. The fetch used for API requests, instead of the global one.
++     */
++    fetch?: typeof globalThis.fetch;
+ }
+ 
+ declare interface GoogleGenAIParentClient {

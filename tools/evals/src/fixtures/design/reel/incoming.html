@@ -1,0 +1,51 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"text","type":"string","label":"Words","default":"Are you coming tonight?"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="incoming-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #card {
+          position: absolute;
+          left: 80px;
+          top: 600px;
+          width: fit-content;
+          max-width: 720px;
+          padding: 28px 40px;
+          border-radius: 44px;
+          background: #ffffff;
+        }
+        #words {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          font-size: 54px;
+          font-weight: 500;
+          line-height: 1.2;
+          color: #111111;
+          white-space: nowrap;
+        }
+      </style>
+      <div id="root" data-composition-id="incoming" data-width="1080" data-height="1920" data-duration="3">
+        <div id="card">
+          <p id="words" data-var-text="text">Are you coming tonight?</p>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.from('#card', { opacity: 0, scale: 0.8, duration: 0.35, ease: 'back.out(1.6)' }, 0);
+        tl.addLabel('exit', 2.6);
+        tl.to('#card', { opacity: 0, duration: 0.3, ease: 'power2.in' }, 'exit');
+        window.__timelines['incoming'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

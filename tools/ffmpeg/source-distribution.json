@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "url": "https://components.taalcut.app/ffmpeg/9.0.2/source/ffmpeg-9.0.2-source-a4222524587617f5.tar.zst",
+  "sha256": "a4222524587617f501d53568670ad91d071f6a01de9b15f22449930ff46503ae",
+  "size": 169641883,
+  "extractedSize": 221859350,
+  "license": "LGPL-2.1-or-later AND AGPL-3.0-or-later AND LicenseRef-ThirdParty",
+  "platforms": [
+    {
+      "platform": "darwin-arm64",
+      "buildinfoSha256": "c7aa508eb78f1e30d6ee6adc6a71ec251ca04cd65c96abbeb281cda68b6f0f81",
+      "outputs": [
+        {
+          "name": "ffmpeg",
+          "sha256": "943cd65c1030a1295e625a92e485564469868d1f88e4f1047b50a29904e22801"
+        },
+        {
+          "name": "ffprobe",
+          "sha256": "342270f972884b4bc2ed574d5a561f370a25f4bdb04e7da02de0fd215e08ccca"
+        },
+        {
+          "name": "MoltenVK_icd.json",
+          "sha256": "578ff08cd0d8734619357541771a5abc9c3470ca300030219a971a9e9dbbe466"
+        },
+        {
+          "name": "libMoltenVK.dylib",
+          "sha256": "2d6104e391b035d3a512751d2e8e054f6d783ce68ddf6c53611907234ff05193"
+        }
+      ]
+    },
+    {
+      "platform": "linux-x64",
+      "buildinfoSha256": "bc13c439ceb05a428420874213ce7ab22615e0320aaad0248e94b80dbbe0d2f6",
+      "outputs": [
+        {
+          "name": "ffmpeg",
+          "sha256": "1a64540023df511c011ab2b26b99bdcec711cda87ddc1597090ea25f561dc3ac"
+        },
+        {
+          "name": "ffprobe",
+          "sha256": "0460b4f0ece7f6232db6d615e3243b4456eff45c1cf354b46fe88021645c1cb8"
+        },
+        {
+          "name": "libavcodec.so.63",
+          "sha256": "a971861c077d0e4ef437fd861a6b598ffd37630468af213b90d51f6a398e41a3"
+        },
+        {
+          "name": "libavdevice.so.63",
+          "sha256": "c24083b39802267359a41dd159ed8318a7e88ad7c04e57e59fa77649f907de4f"
+        },
+        {
+          "name": "libavfilter.so.12",
+          "sha256": "2b076e0e9f57f822396a2d3132853d53bf6868edf0a3ebf359fb866f41a3229e"
+        },
+        {
+          "name": "libavformat.so.63",
+          "sha256": "42d65e6edf1059284f842686fba1a319bac0137e7105350fed57f75c69307d67"
+        },
+        {
+          "name": "libavutil.so.61",
+          "sha256": "d6c538f8bfc091398075741343c09881716f86c553fec753ae909511601a0c61"
+        },
+        {
+          "name": "libswresample.so.7",
+          "sha256": "c07c94483d1df1eb9d95046cf72307e8b4435f8ca28fb691639196fef1616af9"
+        },
+        {
+          "name": "libswscale.so.10",
+          "sha256": "6d9c67cc41a32ddab6b9466c849423682592716943ba9f793b26c9f9d435f430"
+        }
+      ]
+    }
+  ],
+  "instructions": "Extract the archive, read tools/ffmpeg/README.md and SOURCE.md, then run build.sh (macOS) or build-linux.sh (Linux). The included .build/src archives are checked by SHA-256 and reused without fetching upstream source."
+}

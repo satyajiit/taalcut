@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-10-12T15:44:37.857Z",
+  "machine": {
+    "cpu": "Apple M5 Max",
+    "cores": 18,
+    "memoryGb": 64,
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v24.18.1",
+    "sqlite": "3.53.1",
+    "sqliteVec": "v0.1.9"
+  },
+  "database": {
+    "migrations": 6,
+    "vectors": 100000,
+    "dimensions": 768,
+    "fileMb": 318.48
+  },
+  "createAndMigrateMs": 30.01,
+  "openMs": {
+    "note": "fresh process, OS file cache warm",
+    "quickCheck": {
+      "median": 42.74,
+      "runs": [35.5, 63.52, 41.84, 44.25, 42.74]
+    },
+    "noCheck": {
+      "median": 7.92,
+      "runs": [9.66, 6.37, 7.99, 7.33, 7.92]
+    }
+  },
+  "knn": {
+    "k": 10,
+    "queries": 30,
+    "medianMs": 17.03,
+    "p95Ms": 17.65,
+    "minMs": 15.98,
+    "filteredMs": 13.36
+  },
+  "vectorLoadSeconds": 7.46
+}

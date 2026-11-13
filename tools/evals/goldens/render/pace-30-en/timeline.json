@@ -1,0 +1,38 @@
+{
+  "id": "pace-30-en",
+  "synthetic": true,
+  "note": "Synthetic plan. Media is generated at test time.",
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "width": 80,
+  "height": 24,
+  "cellSize": 2,
+  "clips": [
+    {
+      "clipId": 5,
+      "color": "#ff595e",
+      "inFrame": 0,
+      "frames": 450
+    },
+    {
+      "clipId": 6,
+      "color": "#ffca3a",
+      "inFrame": 0,
+      "frames": 450
+    }
+  ],
+  "beats": [
+    0,
+    450
+  ],
+  "overlays": [],
+  "captions": [
+    {
+      "text": "Again",
+      "startFrame": 0,
+      "language": "en"
+    }
+  ]
+}

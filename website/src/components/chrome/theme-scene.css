@@ -1,0 +1,52 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* The theme switch made with the toggle (theme-transition.ts), from the app's styles.css: the old page stays as a
+ * picture while the new theme comes in over it. Only while html[data-theme-transition] is set, so no other view
+ * transition is touched. Nightfall and daybreak (theme-scene.ts): the new picture is masked by a soft horizon three
+ * windows tall that slides down (dusk) or up (light); the sun, moon and stars are their own layers, moved from script
+ * on transform and opacity. "fade": a crossfade. Reduced motion: a 150 ms crossfade, no horizon. */
+
+:root[data-theme-transition]::view-transition-old(root),
+:root[data-theme-transition]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+:root[data-theme-transition]::view-transition-group(*.tc-scene),
+:root[data-theme-transition]::view-transition-image-pair(*.tc-scene) {
+  animation: none;
+}
+:root[data-theme-transition]::view-transition-new(*.tc-scene) {
+  animation: none;
+  opacity: 0;
+}
+:root:is([data-theme-transition='nightfall'], [data-theme-transition='daybreak'])::view-transition-new(root) {
+  /* The soft band is 25% of the window (theme-scene.ts SOFT), in the middle of the three. A mask, never a fill. */
+  mask-image: linear-gradient(to bottom, black 45.833%, transparent 54.167%);
+  mask-size: 100% 300vh;
+  mask-repeat: no-repeat;
+  mask-position: 0 -162.5vh;
+}
+:root[data-theme-transition='daybreak']::view-transition-new(root) {
+  mask-image: linear-gradient(to top, black 45.833%, transparent 54.167%);
+  mask-position: 0 -37.5vh;
+}
+:root[data-theme-transition='fade']::view-transition-new(root) {
+  animation: tc-theme-in var(--dur-short) var(--ease-in-out) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme-transition]::view-transition-new(root) {
+    mask-image: none;
+    animation: tc-theme-in 150ms linear both;
+  }
+}
+@keyframes tc-theme-in {
+  from {
+    opacity: 0;
+  }
+}
+/* The scene's elements, once their time is up: never drawn in the page itself. */
+@keyframes tc-scene-done {
+  to {
+    visibility: hidden;
+  }
+}

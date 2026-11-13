@@ -1,0 +1,28 @@
+{
+  "name": "@taalcut/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Domain types, DI tokens, event bus, result/error types, IPC contracts, command definitions. Depends on no other Taalcut package. One owner at a time.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./hub": "./src/hub/index.ts"
+  },
+  "sideEffects": [
+    "**/basics/zod-config.ts"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@orpc/client": "1.15.6",
+    "@orpc/contract": "1.15.6",
+    "@orpc/server": "1.15.6",
+    "awilix": "13.0.5",
+    "ulid": "3.0.2",
+    "zod": "^4.6.6"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "note": "Written from TypeSafe's documented shape (https://docs.typesafe.ai/api.md, 2026-10-14); not a live recording. Re-record with a key (TAALCUT_RECORD=1) when one exists.",
+  "request": { "url": "https://api.typesafe.ai/v1/systemone", "model": "jev-1.13.0" },
+  "status": 200,
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "family": {
+        "type": "choice",
+        "choice": "timeline",
+        "probabilities": { "none": 0.04, "timeline": 0.91, "library": 0.05 },
+        "confidence": 0.91
+      }
+    },
+    "usage": { "input_tokens": 412, "output_tokens": 0 }
+  }
+}

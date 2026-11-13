@@ -1,0 +1,50 @@
+{
+  "description": "Laptop: Intel Core i7-13700H (14 cores, 20 threads), 32 GB, Intel Iris Xe + GeForce RTX 4060 Laptop 8 GB; one CPU, so CIM's list arrives as one object",
+  "provenance": "Constructed, not captured: shaped like PowerShell 5.1's `ConvertTo-Json -Compress` of the probe's CIM script and nvidia-smi's `--format=csv` output as NVIDIA documents it. No Windows machine was available in round IX.",
+  "commands": {
+    "powershell": "{\"cpu\":{\"Name\":\"13th Gen Intel(R) Core(TM) i7-13700H\",\"NumberOfCores\":14,\"NumberOfLogicalProcessors\":20},\"os\":{\"Version\":\"10.0.22631\",\"Caption\":\"Microsoft Windows 11 Home\"},\"memory\":34052747264,\"gpus\":[{\"Name\":\"Intel(R) Iris(R) Xe Graphics\",\"AdapterCompatibility\":\"Intel Corporation\",\"AdapterRAM\":134217728,\"DriverVersion\":\"31.0.101.5186\"},{\"Name\":\"NVIDIA GeForce RTX 4060 Laptop GPU\",\"AdapterCompatibility\":\"NVIDIA\",\"AdapterRAM\":4293918720,\"DriverVersion\":\"32.0.15.5612\"}],\"adapterMemory\":[{\"DriverDesc\":\"Intel(R) Iris(R) Xe Graphics\",\"Bytes\":134217728},{\"DriverDesc\":\"NVIDIA GeForce RTX 4060 Laptop GPU\",\"Bytes\":8589934592}]}",
+    "nvidiaSmi": "index, name, memory.total [MiB], memory.used [MiB], driver_version, compute_cap, pci.bus_id\n0, NVIDIA GeForce RTX 4060 Laptop GPU, 8188 MiB, 412 MiB, 556.12, 8.9, 00000000:01:00.0\n"
+  },
+  "expected": {
+    "chip": "13th Gen Intel(R) Core(TM) i7-13700H",
+    "memoryBytes": 34052747264,
+    "cpuCores": {
+      "total": 20
+    },
+    "osVersion": "10.0.22631",
+    "osName": "Microsoft Windows 11 Home",
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "vendor": "nvidia",
+        "vramBytes": 8585740288,
+        "unifiedMemory": false,
+        "apis": ["cuda", "directml", "vulkan"],
+        "vramFreeBytes": 8153726976,
+        "driverVersion": "556.12",
+        "computeCapability": "8.9",
+        "index": 0,
+        "cudaDeviceId": 0,
+        "pciBusId": "0000:01:00.0"
+      },
+      {
+        "name": "Intel(R) Iris(R) Xe Graphics",
+        "vendor": "intel",
+        "vramBytes": 134217728,
+        "unifiedMemory": false,
+        "apis": ["directml", "vulkan"],
+        "driverVersion": "31.0.101.5186"
+      }
+    ],
+    "tier": "recommended",
+    "shortfalls": ["gpu_driver_old"],
+    "profile": "nvidia",
+    "classes": {
+      "cpu": 5,
+      "video": 2,
+      "gpu": 2,
+      "npu": 1
+    },
+    "videoEngine": "nvidia"
+  }
+}

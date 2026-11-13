@@ -1,0 +1,29 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Taalcut
+Source: https://taalcut.app
+
+Files: *
+Copyright: 2026 Taalcut contributors
+License: AGPL-3.0-or-later
+ The full text is in /usr/share/doc/taalcut/LICENSE.
+
+Files: opt/Taalcut/resources/app.asar opt/Taalcut/resources/app.asar.unpacked/*
+Copyright: Their authors
+License: various
+ The JavaScript packages and native modules the app ships, with their licences,
+ are listed in /usr/share/doc/taalcut/NOTICE.
+
+Files: opt/Taalcut/taalcut opt/Taalcut/*.so* opt/Taalcut/*.pak opt/Taalcut/*.bin opt/Taalcut/chrome*
+Copyright: GitHub Inc., the Electron contributors, The Chromium Authors
+License: MIT and BSD-3-Clause and others
+ Electron's licence is /opt/Taalcut/LICENSE.electron.txt; Chromium's and its
+ third parties' are /opt/Taalcut/LICENSES.chromium.html.
+
+Files: opt/Taalcut/resources/ffmpeg/*
+Copyright: The FFmpeg developers, and the authors of the libraries built in
+License: LGPL-2.1-or-later and others
+ FFmpeg 9.0.2 is built by Taalcut from source (tools/ffmpeg/build-linux.sh),
+ LGPL, shared. FFmpeg's licence is /opt/Taalcut/resources/ffmpeg/LICENSE.txt;
+ the libraries linked into it and their licences are in
+ /opt/Taalcut/resources/ffmpeg/LICENSES/ (INDEX.txt). BUILDINFO.json beside
+ them names the exact build, its pinned sources and its configure line.

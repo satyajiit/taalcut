@@ -1,0 +1,60 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"name","type":"string","label":"Name","default":"Rhea Banerjee"},{"id":"role","type":"string","label":"Role","default":"Made-up title"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="lowerthird-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #bar {
+          position: absolute;
+          left: 60px;
+          top: 1400px;
+          padding: 24px 40px;
+          background: #1d3557;
+          border-radius: 18px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        #name {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          font-size: 76px;
+          font-weight: 700;
+          color: #ffffff;
+        }
+        #role {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          font-size: 54px;
+          color: #a8dadc;
+        }
+      </style>
+      <div id="root" data-composition-id="lowerthird" data-width="1080" data-height="1920" data-duration="4">
+        <div id="bar">
+          <p id="name" data-var-text="name">Rhea Banerjee</p>
+          <p id="role" data-var-text="role">Made-up title</p>
+        </div>
+      </div>
+      <script>
+        gsap.registerPlugin(SplitText, DrawSVGPlugin);
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.from('#bar', { xPercent: -120, duration: 0.6, ease: 'power3.out' }, 0.1);
+        tl.from('#name', { opacity: 0, y: 20, duration: 0.4, delay: 0.2 }, 0.3);
+        tl.from('#role', { opacity: 0, y: 20, duration: 0.4 }, '>-0.2');
+        tl.addLabel('exit', 3.3);
+        tl.to('#bar', { xPercent: -120, duration: 0.5, ease: 'power2.in' }, 'exit');
+        window.__timelines['lowerthird'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

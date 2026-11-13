@@ -1,0 +1,448 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-12 23:26+0530\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en-XA\n"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.more"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+msgid "notify.mcp.approval.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.needsAttention.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.ready.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.about"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.resetZoom"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go.agent"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+msgid "menu.view.back"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.beats"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window.front"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window.close"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.copy"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.jobs"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+msgid "notify.downloads.stopped.everything.computer"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.everything"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.cut"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.delete"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+msgid "notify.downloads.ready.body.computer"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.failed.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.file"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+msgid "menu.view.forward"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.hide"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.hideOthers"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+msgid "notify.mcp.approval.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go.library"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go.make"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window.minimize"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.paste"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.pasteAndMatchStyle"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.quit"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.redo"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.reload"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help.reportIssue"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help.requestFeature"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.search"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.selectAll"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help.feedback"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.services"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.other"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.settings"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.shots"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.app.showAll"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.sounds"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.speech"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+msgid "menu.help.github"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+msgid "macos.localNetworkUsage"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.manifest"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+msgid "macos.photoLibraryUsage"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/voice/microphone-note.ts
+msgid "macos.microphoneUsage"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.go.templates"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.text"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.network"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.refused"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.different"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.install"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+msgid "notify.downloads.reason.space.computer"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.space"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.titles"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.toggleDevTools"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.fullScreen"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.sidebar"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.edit.undo"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.writing"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.ready.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.needsAttention.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+msgid "notify.render.failed.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.window.zoom"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.zoomIn"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+msgid "menu.view.zoomOut"
+msgstr ""

@@ -1,0 +1,97 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* system: DESIGN.md v0.6, UX4 shell */
+/* The app's entry stylesheet (DESIGN.md, "Exports"). Tokens are imported, never
+ * copied: edit design/tokens/source.mjs and rebuild them instead. */
+@import 'tailwindcss';
+@import '../../../design/tokens/tailwind.css';
+@import '../../../design/tokens/base.css';
+@import '@taalcut/ui/styles.css';
+/* The page grid the window bar and every page share (UX4): named widths, one gutter, the column's edges. */
+@import '../../../packages/ui/src/window/page-grid.css';
+/* Kaatu's breath, on the compositor (UX4). */
+@import '../../../packages/ui/src/brand/kaatu.css';
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+}
+
+/* The clip page's shared element (UX2, DESIGN.md v0.5): opening a clip grows its Library tile's frame into the
+ * viewer, and going back shrinks it into the tile (features/library/clip/clip-transition.ts). The page swaps at
+ * once underneath; only the frame moves, on --ease-out over --dur-long. Reduced motion: the frame doesn't
+ * travel, the two pictures crossfade in 150 ms. */
+:root[data-clip-moving]::view-transition-old(root),
+:root[data-clip-moving]::view-transition-new(root) {
+  animation: none;
+}
+::view-transition-group(*.clip-frame) {
+  animation-duration: var(--dur-long);
+  animation-timing-function: var(--ease-out);
+}
+/* The tile's frame and the viewer's differ in shape: both pictures fill the moving frame and are cut to it. */
+::view-transition-image-pair(*.clip-frame) {
+  overflow: clip;
+  border-radius: var(--radius-md);
+}
+::view-transition-old(*.clip-frame),
+::view-transition-new(*.clip-frame) {
+  block-size: 100%;
+  object-fit: cover;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*.clip-frame) {
+    animation-duration: 0s;
+  }
+  ::view-transition-old(*.clip-frame),
+  ::view-transition-new(*.clip-frame) {
+    animation-duration: 150ms;
+  }
+}
+
+/* The page turn (UX4, shell/nav/page-turn.ts): going to another page in the shell, its region (the scrolling
+ * area beside the sidebar, here or in Settings) crossfades with a short rise while the window bar and the sidebar
+ * stay still. The region carries a transition name only during a turn, so the theme's scene and the clip's frame
+ * never capture it. Exit is quicker than entry. Reduced motion: a 150 ms crossfade, no rise. */
+:root:active-view-transition-type(page) [data-slot='scroll-area']:has(> main) {
+  view-transition-name: page;
+}
+:root:active-view-transition-type(page)::view-transition-group(root),
+:root:active-view-transition-type(page)::view-transition-old(root),
+:root:active-view-transition-type(page)::view-transition-new(root),
+:root:active-view-transition-type(page)::view-transition-group(page) {
+  animation: none;
+}
+:root:active-view-transition-type(page)::view-transition-old(page) {
+  animation: tc-page-out var(--dur-micro) var(--ease-in) both;
+}
+:root:active-view-transition-type(page)::view-transition-new(page) {
+  animation: tc-page-in var(--dur-short) var(--ease-out) both;
+}
+@keyframes tc-page-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes tc-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+@keyframes tc-page-fade {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:active-view-transition-type(page)::view-transition-old(page) {
+    animation: tc-page-out 150ms linear both;
+  }
+  :root:active-view-transition-type(page)::view-transition-new(page) {
+    animation: tc-page-fade 150ms linear both;
+  }
+}

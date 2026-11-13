@@ -1,0 +1,451 @@
+{
+ "caseId": "speed-double",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DHHFMQGJGCW17K8KK4D38A",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I’ll speed up clip 2 (the dog clip) to 2x.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "rAllxk4ogHFt9saraslWWYqKuYUquaiW",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "2",
+        "revision": 3,
+        "speed": 2,
+        "fit": "media"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I’ll speed up clip 2 (the dog clip) to 2x.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "rAllxk4ogHFt9saraslWWYqKuYUquaiW",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "2",
+        "revision": 3,
+        "speed": 2,
+        "fit": "media"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11172,
+      "output": 142,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11314,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603452571,
+     "responseId": "chatcmpl-b2392149119c4ced804e82600c0da5d8",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11267
+    }
+   },
+   "text": "I’ll speed up clip 2 (the dog clip) to 2x.\n\n",
+   "toolCalls": [
+    {
+     "id": "rAllxk4ogHFt9saraslWWYqKuYUquaiW",
+     "name": "timeline_setSpeed",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "2",
+      "revision": 3,
+      "speed": 2,
+      "fit": "media"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11172,
+    "outputTokens": 142,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11314,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHHTN3BVQX0CZV23MKBK11",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "d5nmV3oL44BTVr8L4a9cw56w0eYBeSuE",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "d5nmV3oL44BTVr8L4a9cw56w0eYBeSuE",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 213,
+      "output": 43,
+      "cacheRead": 11172,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11428,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603463849,
+     "responseId": "chatcmpl-72880c2980224cf4a2a9e82b3cf3b300",
+     "rawStopReason": "tool_calls",
+     "durationMs": 1456
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "d5nmV3oL44BTVr8L4a9cw56w0eYBeSuE",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 213,
+    "outputTokens": 43,
+    "cachedInputTokens": 11172,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11428,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHHW2ZMCQXTWZ40PW4NW8X",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 5 is the dog clip. I'll set it to 2x speed.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "p6tJusfQ2t2ueLo2JiRDAWVEIeKXb9b4",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "5",
+        "revision": 3,
+        "speed": 2,
+        "fit": "media"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 5 is the dog clip. I'll set it to 2x speed.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "p6tJusfQ2t2ueLo2JiRDAWVEIeKXb9b4",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "5",
+        "revision": 3,
+        "speed": 2,
+        "fit": "media"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1566,
+      "output": 143,
+      "cacheRead": 11385,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13094,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603465316,
+     "responseId": "chatcmpl-b177094b1b9f463a9db1a637ff70ec71",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4534
+    }
+   },
+   "text": "Clip 5 is the dog clip. I'll set it to 2x speed.\n\n",
+   "toolCalls": [
+    {
+     "id": "p6tJusfQ2t2ueLo2JiRDAWVEIeKXb9b4",
+     "name": "timeline_setSpeed",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "5",
+      "revision": 3,
+      "speed": 2,
+      "fit": "media"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1566,
+    "outputTokens": 143,
+    "cachedInputTokens": 11385,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13094,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHJ0H8Y1CPXZEBDSZGMT4X",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 5 now plays at double speed."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 5 now plays at double speed."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 187,
+      "output": 9,
+      "cacheRead": 12951,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13147,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793603469870,
+     "responseId": "chatcmpl-cd08c5ba56de425e85eaed60ce3c6217",
+     "rawStopReason": "stop",
+     "durationMs": 669
+    }
+   },
+   "text": "Clip 5 now plays at double speed.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 187,
+    "outputTokens": 9,
+    "cachedInputTokens": 12951,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13147,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHJ16EB1JDQE51T7QJQRN2",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "QD7P1pfQoKsoc4PtkTWjbOoxW7PpriMZ",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "QD7P1pfQoKsoc4PtkTWjbOoxW7PpriMZ",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13224,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13279,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603470547,
+     "responseId": "chatcmpl-5a0fecc3504a4bbd9691356cbd14e0c9",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10727
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "QD7P1pfQoKsoc4PtkTWjbOoxW7PpriMZ",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13224,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13279,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

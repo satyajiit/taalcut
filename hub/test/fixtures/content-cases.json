@@ -1,0 +1,3360 @@
+{
+  "cases": [
+    {
+      "case": "clean",
+      "schema": false,
+      "problems": [],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "ids with nine digits in a row and clean prose",
+      "schema": false,
+      "problems": [],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEK0123456789ABCDEF",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": {
+          "id": "01BRZ3NDEK0123456789ABCDEF",
+          "version": 1
+        },
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "an id that is not a ULID gets the prose rules",
+      "schema": true,
+      "problems": [
+        {
+          "path": "id",
+          "rule": "phone"
+        }
+      ],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "call 0123456789",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "a URL as a key",
+      "schema": true,
+      "problems": [
+        {
+          "path": "structure.slots.0.intent.https://cdn.example/clip.mp4",
+          "rule": "url"
+        }
+      ],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4,
+                "https://cdn.example/clip.mp4": "x"
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "a nested unknown key with a phone number",
+      "schema": true,
+      "problems": [
+        {
+          "path": "structure.canvas.contact",
+          "rule": "phone"
+        }
+      ],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            },
+            "contact": "+44 20 7946 0958"
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "frames at the top level",
+      "schema": true,
+      "problems": [
+        {
+          "path": "frames.0.jpeg",
+          "rule": "encoded"
+        }
+      ],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null,
+        "frames": [
+          {
+            "at": 0,
+            "jpeg": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk"
+          }
+        ]
+      }
+    },
+    {
+      "case": "file paths",
+      "schema": false,
+      "problems": [
+        {
+          "path": "description",
+          "rule": "path"
+        },
+        {
+          "path": "structure.slots.1.intent.place",
+          "rule": "path"
+        },
+        {
+          "path": "structure.slots.2.intent.subject",
+          "rule": "path"
+        }
+      ],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "cut from /Users/ada/Movies/trip",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "C:\\clips\\beach",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "see ~/Movies/old/",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "links, email, handle",
+      "schema": false,
+      "problems": [
+        {
+          "path": "description",
+          "rule": "www"
+        },
+        {
+          "path": "description",
+          "rule": "domain"
+        },
+        {
+          "path": "description",
+          "rule": "email"
+        },
+        {
+          "path": "structure.slots.0.intent.text",
+          "rule": "handle"
+        }
+      ],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "see www.example.com or ada@example.org",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "@ada_lane walks in",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "encoded run, data URI, control character",
+      "schema": false,
+      "problems": [
+        {
+          "path": "description",
+          "rule": "dataUri"
+        },
+        {
+          "path": "structure.slots.0.intent.subject",
+          "rule": "encoded"
+        },
+        {
+          "path": "structure.slots.1.intent.text",
+          "rule": "control"
+        }
+      ],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "data:image/png;base64,iVBOR",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVphYmNkZWZn",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "a\u0007b",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "not NFC",
+      "schema": false,
+      "problems": [
+        {
+          "path": "name",
+          "rule": "notNfc"
+        }
+      ],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Café trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "a rate not written reduced",
+      "schema": true,
+      "problems": [],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 60,
+              "den": 2
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 60,
+              "den": 2
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 60,
+                  "den": 2
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 60,
+                  "den": 2
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 60,
+                  "den": 2
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 60,
+                  "den": 2
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 60,
+                  "den": 2
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 60,
+                  "den": 2
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 60,
+                "den": 2
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 60,
+                "den": 2
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 60,
+                "den": 2
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 60,
+                "den": 2
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 60,
+                "den": 2
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "a text box that leaves the frame",
+      "schema": true,
+      "problems": [],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [
+            {
+              "role": "title",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "slotIndex": 0,
+              "box": {
+                "x": 0.8,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.1
+              },
+              "appearance": {
+                "size": 0.05,
+                "align": "center",
+                "case": "mixed",
+                "background": "none"
+              },
+              "styleKey": "title",
+              "reveal": "fade",
+              "language": "en",
+              "placeholder": "{title}",
+              "words": 3,
+              "chars": 14
+            }
+          ],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "a text box inside the frame",
+      "schema": false,
+      "problems": [],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [
+            {
+              "role": "title",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "slotIndex": 0,
+              "box": {
+                "x": 0.1,
+                "y": 0.1,
+                "width": 0.8,
+                "height": 0.1
+              },
+              "appearance": {
+                "size": 0.05,
+                "align": "center",
+                "case": "mixed",
+                "background": "none"
+              },
+              "styleKey": "title",
+              "reveal": "fade",
+              "language": "en",
+              "placeholder": "{title}",
+              "words": 3,
+              "chars": 14
+            }
+          ],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "a blank name",
+      "schema": true,
+      "problems": [],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "   ",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": null
+      }
+    },
+    {
+      "case": "sixteen text styles",
+      "schema": false,
+      "problems": [],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": {
+          "colours": {
+            "primary": "#112233",
+            "secondary": "#445566",
+            "accent": "#778899",
+            "text": "#ffffff",
+            "background": "#000000"
+          },
+          "fonts": {
+            "heading": {
+              "family": "poppins",
+              "weight": 700
+            },
+            "body": {
+              "family": "notoSans",
+              "weight": 400
+            }
+          },
+          "captions": null,
+          "textStyles": {
+            "style0": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style1": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style2": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style3": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style4": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style5": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style6": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style7": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style8": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style9": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style10": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style11": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style12": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style13": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style14": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style15": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "case": "seventeen text styles",
+      "schema": true,
+      "problems": [],
+      "document": {
+        "format": "taalcut.template",
+        "formatVersion": 0,
+        "licence": "CC0-1.0",
+        "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "version": 1,
+        "name": "Weekend trip",
+        "description": "A short vlog structure",
+        "handle": "ada",
+        "language": "en",
+        "tags": [
+          "vlog"
+        ],
+        "formatId": "vlog",
+        "trendFreshness": null,
+        "forkedFrom": null,
+        "structure": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "duration": {
+            "value": 90,
+            "rate": {
+              "num": 30,
+              "den": 1
+            }
+          },
+          "slots": [
+            {
+              "role": "hook",
+              "name": "Open",
+              "start": {
+                "value": 0,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Open shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.4
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "body",
+              "name": "Walk",
+              "start": {
+                "value": 30,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 45,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "Walk shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.6
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            },
+            {
+              "role": "outro",
+              "name": "End",
+              "start": {
+                "value": 75,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "duration": {
+                "value": 15,
+                "rate": {
+                  "num": 30,
+                  "den": 1
+                }
+              },
+              "intent": {
+                "text": "End shot of a quiet street",
+                "shotType": "wide",
+                "motion": "static",
+                "subject": "street",
+                "people": 0,
+                "place": "city",
+                "energy": 0.3
+              },
+              "beatAnchor": null,
+              "transitionIn": null,
+              "speedRamp": null
+            }
+          ],
+          "beatMap": null,
+          "text": [],
+          "audio": {
+            "kind": "music",
+            "loudnessLufs": -14,
+            "speechCoverage": 0,
+            "speechLanguage": null
+          },
+          "pacing": {
+            "shotCount": 3,
+            "meanShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "medianShot": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "shortestShot": {
+              "value": 15,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "longestShot": {
+              "value": 45,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "hookEnd": {
+              "value": 30,
+              "rate": {
+                "num": 30,
+                "den": 1
+              }
+            },
+            "cutsOnBeat": null
+          }
+        },
+        "style": {
+          "colours": {
+            "primary": "#112233",
+            "secondary": "#445566",
+            "accent": "#778899",
+            "text": "#ffffff",
+            "background": "#000000"
+          },
+          "fonts": {
+            "heading": {
+              "family": "poppins",
+              "weight": 700
+            },
+            "body": {
+              "family": "notoSans",
+              "weight": 400
+            }
+          },
+          "captions": null,
+          "textStyles": {
+            "style0": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style1": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style2": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style3": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style4": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style5": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style6": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style7": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style8": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style9": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style10": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style11": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style12": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style13": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style14": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style15": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            },
+            "style16": {
+              "font": {
+                "family": "poppins",
+                "weight": 700
+              },
+              "colour": "#ffffff",
+              "background": null,
+              "stroke": null
+            }
+          }
+        }
+      }
+    }
+  ]
+}

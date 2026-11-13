@@ -1,0 +1,36 @@
+<!doctype html>
+<html
+  lang="en"
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="pulse-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #dot {
+          position: absolute;
+          left: 465px;
+          top: 885px;
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          background: #f4a261;
+        }
+      </style>
+      <div id="root" data-composition-id="pulse" data-width="1080" data-height="1920" data-duration="4">
+        <div id="dot"></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.to('#dot', { scale: 1.6, opacity: 0.5, duration: 0.5, repeat: 3, yoyo: true, repeatDelay: 0.1, ease: 'sine.inOut' }, 0.2);
+        tl.to('#dot', { y: 300, duration: 0.6 });
+        window.__timelines['pulse'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

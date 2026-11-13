@@ -1,0 +1,24 @@
+{
+  "update": "editor-catalogue-rerecord-2026-11",
+  "provider": "documented in-process deterministic stand-in",
+  "upstreamCalls": 0,
+  "note": "Both real Electron editor journeys were re-recorded through their documented TAALCUT_RECORD path. Recorder timestamps are unchanged. Original and new response envelope digests are identical; current request offers and catalogue hashes were captured by the app.",
+  "sessions": {
+    "edit-chat": {
+      "sourceRecordedAt": "2026-11-05T11:50:15.755Z",
+      "recordedAt": "2026-11-05T20:41:49.632Z",
+      "interactionCount": 4,
+      "editorOfferRequests": [0, 1, 2],
+      "sourceResponseSha256": "66432aa9d7ccfdb69053f5e9474518deec6dc34ef663a30928f96635bdf733f8",
+      "responseSha256": "66432aa9d7ccfdb69053f5e9474518deec6dc34ef663a30928f96635bdf733f8"
+    },
+    "edit-design": {
+      "sourceRecordedAt": "2026-11-05T11:51:42.204Z",
+      "recordedAt": "2026-11-05T20:49:10.937Z",
+      "interactionCount": 9,
+      "editorOfferRequests": [0, 1, 2],
+      "sourceResponseSha256": "9fa5efd5e8c1731636a59231db216660a2732933956f8d8a8da8f436d4d70aeb",
+      "responseSha256": "9fa5efd5e8c1731636a59231db216660a2732933956f8d8a8da8f436d4d70aeb"
+    }
+  }
+}

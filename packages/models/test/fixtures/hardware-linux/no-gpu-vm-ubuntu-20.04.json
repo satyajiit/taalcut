@@ -1,0 +1,36 @@
+{
+  "description": "Cloud VM: 4 vCPUs (Xeon), 8 GB, no GPU (a simpledrm console only), no Vulkan loader, Ubuntu 20.04.6 LTS",
+  "provenance": "Constructed, not captured: shaped like the files and nvidia-smi output recorded on the LNX1 host (rtx4090-uhd770-ubuntu-24.04.json), with this machine's devices. No such machine was available.",
+  "files": {
+    "/proc/cpuinfo": "processor\t: 0\nmodel name\t: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz\n\nprocessor\t: 1\nmodel name\t: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz\n\nprocessor\t: 2\nmodel name\t: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz\n\nprocessor\t: 3\nmodel name\t: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz\n\n",
+    "/proc/meminfo": "MemTotal:       8136932 kB\nMemFree:         2712310 kB\nMemAvailable:   4068466 kB\n",
+    "/etc/os-release": "NAME=\"Ubuntu\"\nVERSION=\"20.04.6 LTS (Focal Fossa)\"\nID=ubuntu\nID_LIKE=debian\nPRETTY_NAME=\"Ubuntu 20.04.6 LTS\"\nVERSION_ID=\"20.04\"\n",
+    "/sys/class/drm/card0/device/uevent": "DRIVER=simple-framebuffer\nMODALIAS=platform:simple-framebuffer\n",
+    "/sys/class/drm/version": "drm 1.1.0 20060810\n"
+  },
+  "commands": {
+    "nvidiaSmi": null
+  },
+  "freeDiskBytes": 64424509440,
+  "expected": {
+    "chip": "Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz",
+    "memoryBytes": 8332218368,
+    "cpuCores": {
+      "total": 4
+    },
+    "osVersion": "20.04",
+    "osName": "Ubuntu 20.04.6 LTS",
+    "gpus": [],
+    "backends": ["cpu"],
+    "tier": "minimum",
+    "shortfalls": ["os_too_old", "no_gpu_for_local_models"],
+    "profile": "no-accelerator",
+    "classes": {
+      "cpu": 1,
+      "video": 1,
+      "gpu": 1,
+      "npu": 1
+    },
+    "videoEngine": "none"
+  }
+}

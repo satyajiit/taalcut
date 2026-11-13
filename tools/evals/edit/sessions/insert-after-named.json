@@ -1,0 +1,478 @@
+{
+ "caseId": "insert-after-named",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DH8P2C5QV2T5SY8TM72MZ4",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "2fqetKNomwZVZ8TniQW3CWNed0tjldeM",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "2fqetKNomwZVZ8TniQW3CWNed0tjldeM",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11357,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11413,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603164238,
+     "responseId": "chatcmpl-6b045299406e4c70b1f5d3a926f02775",
+     "rawStopReason": "tool_calls",
+     "durationMs": 9911
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "2fqetKNomwZVZ8TniQW3CWNed0tjldeM",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11357,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11413,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DH8ZR8YXJH8JQ6VTWZVJG0",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I'll search for the boat harbour shot in the library and insert it after the dog clip.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "N7MBKQhwKiL6e9BuApPTo5bv6KJa68g3",
+       "name": "findTools",
+       "arguments": {
+        "query": "library.search"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I'll search for the boat harbour shot in the library and insert it after the dog clip.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "N7MBKQhwKiL6e9BuApPTo5bv6KJa68g3",
+       "name": "findTools",
+       "arguments": {
+        "query": "library.search"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 46,
+      "cacheRead": 11357,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13018,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603174155,
+     "responseId": "chatcmpl-ebe241d64dd14625b38b2552a6570e2b",
+     "rawStopReason": "tool_calls",
+     "durationMs": 2580
+    }
+   },
+   "text": "I'll search for the boat harbour shot in the library and insert it after the dog clip.\n\n",
+   "toolCalls": [
+    {
+     "id": "N7MBKQhwKiL6e9BuApPTo5bv6KJa68g3",
+     "name": "findTools",
+     "arguments": {
+      "query": "library.search"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 46,
+    "cachedInputTokens": 11357,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13018,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DH9293A1PXCDRFKFYG9BDS",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "m5bBNYvEErY0N6Dfwc3pFCYNGO4W6PBP",
+       "name": "library_search",
+       "arguments": {
+        "query": "boats in the harbour",
+        "limit": 10
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "m5bBNYvEErY0N6Dfwc3pFCYNGO4W6PBP",
+       "name": "library_search",
+       "arguments": {
+        "query": "boats in the harbour",
+        "limit": 10
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13972,
+      "output": 41,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14013,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603176743,
+     "responseId": "chatcmpl-3719f480f2234c9a904dc5a8700fe280",
+     "rawStopReason": "tool_calls",
+     "durationMs": 12253
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "m5bBNYvEErY0N6Dfwc3pFCYNGO4W6PBP",
+     "name": "library_search",
+     "arguments": {
+      "query": "boats in the harbour",
+      "limit": 10
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13972,
+    "outputTokens": 41,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14013,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DH9E85BD21TC2TP9K5K8D6",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Found the boat harbour shot. Now I'll insert it after clip 5 (the dog).\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "Y2YF5k65BcrkhvtRWDtRpPwO7ezxsyLC",
+       "name": "timeline_insertClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "media": {
+         "assetId": "01K8EAEKTKWMXHM1K4MJ6QJCYE",
+         "kind": "video",
+         "shotId": "01K8ESR85PET5N4RJ9CAFS8D2X"
+        },
+        "position": {
+         "clip": 5,
+         "kind": "after"
+        },
+        "revision": 3
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Found the boat harbour shot. Now I'll insert it after clip 5 (the dog).\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "Y2YF5k65BcrkhvtRWDtRpPwO7ezxsyLC",
+       "name": "timeline_insertClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "media": {
+         "assetId": "01K8EAEKTKWMXHM1K4MJ6QJCYE",
+         "kind": "video",
+         "shotId": "01K8ESR85PET5N4RJ9CAFS8D2X"
+        },
+        "position": {
+         "clip": 5,
+         "kind": "after"
+        },
+        "revision": 3
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 567,
+      "output": 200,
+      "cacheRead": 13972,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14739,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603188998,
+     "responseId": "chatcmpl-a914ba1f4c154b50b83bbf98654892af",
+     "rawStopReason": "tool_calls",
+     "durationMs": 5682
+    }
+   },
+   "text": "Found the boat harbour shot. Now I'll insert it after clip 5 (the dog).\n\n",
+   "toolCalls": [
+    {
+     "id": "Y2YF5k65BcrkhvtRWDtRpPwO7ezxsyLC",
+     "name": "timeline_insertClip",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "media": {
+       "assetId": "01K8EAEKTKWMXHM1K4MJ6QJCYE",
+       "kind": "video",
+       "shotId": "01K8ESR85PET5N4RJ9CAFS8D2X"
+      },
+      "position": {
+       "clip": 5,
+       "kind": "after"
+      },
+      "revision": 3
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 567,
+    "outputTokens": 200,
+    "cachedInputTokens": 13972,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14739,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DH9KT2WTKQDARKF4GRY3G7",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "bIB9lCWICDp1qUNq1DsjHfsrFqhLg6ZB",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "bIB9lCWICDp1qUNq1DsjHfsrFqhLg6ZB",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 266,
+      "output": 55,
+      "cacheRead": 14539,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14860,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603194693,
+     "responseId": "chatcmpl-3c4edc24d3254feaa26527e31d4401a6",
+     "rawStopReason": "tool_calls",
+     "durationMs": 1684
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "bIB9lCWICDp1qUNq1DsjHfsrFqhLg6ZB",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 266,
+    "outputTokens": 55,
+    "cachedInputTokens": 14539,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14860,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

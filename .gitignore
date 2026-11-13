@@ -1,0 +1,47 @@
+# Dependencies and build output
+node_modules/
+dist/
+out/
+build/
+release/
+coverage/
+*.tsbuildinfo
+.turbo/
+.vite/
+
+# Local-only working areas
+.spikes/
+.claude/worktrees/
+tools/ffmpeg/.build/
+tools/ffmpeg/dist/
+tools/whisper/.build/
+tools/whisper/dist/
+
+# Weights fetched once for local audio eval. Never commit them.
+packages/audio/.cache/
+# Caption fonts and the pinned headless shell fetched for render's development and tests.
+packages/render/.cache/
+# Weights fetched once for local vision runs (EmbeddingGemma 2, PP-OCRv5). Never commit them.
+packages/vision/.cache/
+.taalcut-dev/
+.playwright-mcp/
+*.log
+
+# Secrets and local env
+.env
+.env.*
+!.env.example
+*.p12
+*.p8
+
+# OS and editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+__pycache__/
+
+# The website's build, generated types and copied brand files: website/.gitignore.
+
+# LLVM coverage output that Electron and native test runs drop in the working directory
+*.profraw

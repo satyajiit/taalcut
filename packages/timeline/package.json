@@ -1,0 +1,24 @@
+{
+  "name": "@taalcut/timeline",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Timeline model (OpenTimelineIO-compatible), casting, beat-sync.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./src/test-support.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "interchange:fixture": "tsx scripts/interchange-fixture.ts",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@taalcut/core": "workspace:*",
+    "@taalcut/library": "workspace:*",
+    "@taalcut/templates": "workspace:*",
+    "zod": "^4.6.6"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "description": "Desktop: AMD Ryzen 9 7950X (16 cores, 32 threads), 64 GB, GeForce RTX 4090 24 GB, Windows 11 24H2",
+  "provenance": "Constructed, not captured: shaped like PowerShell 5.1's `ConvertTo-Json -Compress` of the probe's CIM script and nvidia-smi's `--format=csv` output as NVIDIA documents it. No Windows machine was available in round IX.",
+  "commands": {
+    "powershell": "{\"cpu\":[{\"Name\":\"AMD Ryzen 9 7950X 16-Core Processor            \",\"NumberOfCores\":16,\"NumberOfLogicalProcessors\":32}],\"os\":{\"Version\":\"10.0.26100\",\"Caption\":\"Microsoft Windows 11 Pro\"},\"memory\":68719476736,\"gpus\":[{\"Name\":\"NVIDIA GeForce RTX 4090\",\"AdapterCompatibility\":\"NVIDIA\",\"AdapterRAM\":4293918720,\"DriverVersion\":\"32.0.15.6094\"}],\"adapterMemory\":[{\"DriverDesc\":\"NVIDIA GeForce RTX 4090\",\"Bytes\":25757220864}]}",
+    "nvidiaSmi": "index, name, memory.total [MiB], memory.used [MiB], driver_version, compute_cap, pci.bus_id\r\n0, NVIDIA GeForce RTX 4090, 24564 MiB, 1203 MiB, 581.57, 8.9, 00000000:01:00.0\r\n"
+  },
+  "expected": {
+    "chip": "AMD Ryzen 9 7950X 16-Core Processor",
+    "memoryBytes": 68719476736,
+    "cpuCores": {
+      "total": 32
+    },
+    "osVersion": "10.0.26100",
+    "osName": "Microsoft Windows 11 Pro",
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 4090",
+        "vendor": "nvidia",
+        "vramBytes": 25757220864,
+        "unifiedMemory": false,
+        "apis": ["cuda", "directml", "vulkan"],
+        "vramFreeBytes": 24495783936,
+        "driverVersion": "581.57",
+        "computeCapability": "8.9",
+        "index": 0,
+        "cudaDeviceId": 0,
+        "pciBusId": "0000:01:00.0"
+      }
+    ],
+    "tier": "high",
+    "shortfalls": [],
+    "profile": "nvidia",
+    "classes": {
+      "cpu": 8,
+      "video": 3,
+      "gpu": 3,
+      "npu": 1
+    },
+    "videoEngine": "nvidia"
+  }
+}

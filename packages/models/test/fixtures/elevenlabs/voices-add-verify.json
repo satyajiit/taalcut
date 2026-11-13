@@ -1,0 +1,5 @@
+{
+  "$comment": "POST /v1/voices/add when the provider wants the voice verified.",
+  "voice_id": "myClone000000000000b",
+  "requires_verification": true
+}

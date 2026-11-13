@@ -1,0 +1,25 @@
+{
+  "name": "@taalcut/jobs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Durable job engine (G7) and component/model download manager (G13). Runs in the jobs utility process.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests",
+    "schema:export": "tsx scripts/export-manifest-schema.ts",
+    "manifest:verify": "tsx scripts/verify-manifest.ts"
+  },
+  "dependencies": {
+    "@taalcut/core": "workspace:*",
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15"
+  }
+}

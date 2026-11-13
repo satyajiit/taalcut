@@ -1,0 +1,24 @@
+{
+  "name": "@taalcut/media",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "FFmpeg wrapper, probe, normalise, proxies, hardware encode selection.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./src/test-support.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests",
+    "lab": "tsx src/lab.ts",
+    "bench:thumbnail": "tsx scripts/bench-thumbnail.ts",
+    "bench:filmstrip": "tsx scripts/bench-filmstrip.ts"
+  },
+  "dependencies": {
+    "@taalcut/core": "workspace:*",
+    "zod": "^4.6.6"
+  }
+}

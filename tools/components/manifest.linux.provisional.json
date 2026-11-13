@@ -1,0 +1,410 @@
+{
+  "$comment": "LNX1-CMP: the linux-x64 builds, hosted since 2026-10-28 (UX3; signed manifest sequence 18). Built on a Linux host by hosting/build.mjs --platform linux-x64 (hosting/plan/linux.mjs; the pack scripts in tools/components/linux and tools/whisper/build-linux.sh), uploaded and written back by write-manifest.mjs (README.md, \"Linux builds\"). Accelerator builds are their own components, picked through their base's variants where the machine meets their requires; the CUDA ones load cuda-runtime-13.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "cuda-runtime-13",
+      "name": "CUDA runtime 13",
+      "version": "13.4.3-cudnn9.27.0",
+      "kind": "runtime",
+      "tiers": [],
+      "licence": {
+        "spdx": "LicenseRef-NVIDIA-CUDA-Toolkit-EULA AND LicenseRef-NVIDIA-cuDNN",
+        "notice": {
+          "url": "https://components.taalcut.app/cuda-runtime-13/13.4.3-cudnn9.27.0/NOTICE-a03bc73d5dfaf49b.txt",
+          "size": 99775,
+          "sha256": "a03bc73d5dfaf49bb3a6f6598a1ab4c336a785b36c29c027df20a5efa5cc01c2"
+        },
+        "attribution": "© NVIDIA Corporation. CUDA 13.4.3 runtime libraries (cudart, cuBLAS, cuBLASLt, cuRAND, NVRTC) and cuDNN 9.27.0, made and owned by NVIDIA Corporation and licensed to you by NVIDIA under the CUDA Toolkit End User License Agreement and the NVIDIA cuDNN Software License Agreement. Unchanged; downloaded and installed by Taalcut at your request, after you accept NVIDIA's terms.",
+        "acceptance": {
+          "owner": "NVIDIA Corporation",
+          "termsVersion": "2026-10-27",
+          "documents": [
+            {
+              "title": "CUDA Toolkit End User License Agreement",
+              "url": "https://docs.nvidia.com/cuda/eula/index.html"
+            },
+            {
+              "title": "NVIDIA cuDNN Software License Agreement",
+              "url": "https://docs.nvidia.com/deeplearning/cudnn/latest/reference/eula.html"
+            }
+          ]
+        }
+      },
+      "dependencies": [],
+      "requires": {
+        "gpuApi": "cuda",
+        "minDriver": "580",
+        "minComputeCapability": "7.5"
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": [
+            "https://components.taalcut.app/cuda-runtime-13/13.4.3-cudnn9.27.0/cuda-runtime-13.4.3-cudnn9.27.0-linux-x64.tar.zst"
+          ],
+          "sha256": "837da78cbfae3a09702863b98c3317792e5e84076352af84db63261a25098f79",
+          "size": 968041808,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 1777118009
+          }
+        }
+      ]
+    },
+    {
+      "id": "onnxruntime-cuda",
+      "name": "ONNX Runtime (CUDA)",
+      "version": "1.30.0",
+      "kind": "runtime",
+      "tiers": [],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/onnxruntime-cuda/1.30.0/NOTICE-fc1d452612e1d1ed.txt",
+          "size": 340675,
+          "sha256": "fc1d452612e1d1edbec642f39ef5234d5dd4893cbc27763e190a61c3003f6d7c"
+        },
+        "attribution": "ONNX Runtime, Copyright (c) Microsoft Corporation. MIT licence. The linux-x64 binding of onnxruntime-node 1.30.0 with the CUDA execution provider of Microsoft.ML.OnnxRuntime.Gpu.Linux 1.30.0."
+      },
+      "dependencies": ["cuda-runtime-13"],
+      "requires": {
+        "gpuApi": "cuda",
+        "minDriver": "580",
+        "minComputeCapability": "7.5"
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": [
+            "https://components.taalcut.app/onnxruntime-cuda/1.30.0/onnxruntime-node-1.30.0-cuda13-linux-x64.tar.zst"
+          ],
+          "sha256": "408673208f967bf86c274e4a75bd2e0dbf29365ab6b99ffcb3a8fcc4bdf9f96f",
+          "size": 191649663,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 318286632
+          }
+        }
+      ]
+    },
+    {
+      "id": "local-llm-runtime-cuda",
+      "name": "llama.cpp server (CUDA)",
+      "version": "b11571",
+      "kind": "runtime",
+      "tiers": [],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-runtime-cuda/b11571/NOTICE-310dbd4646579b82.txt",
+          "size": 4695,
+          "sha256": "310dbd4646579b82dfe380c3ab39289a3b0c1b16fe0a15b37ce0b5e66dc8d9d1"
+        },
+        "attribution": "llama.cpp and ggml, Copyright (c) 2023-2026 The ggml authors. MIT licence. Upstream's ubuntu-cuda-13.4-x64 build."
+      },
+      "dependencies": ["cuda-runtime-13"],
+      "requires": {
+        "gpuApi": "cuda",
+        "minDriver": "580",
+        "minComputeCapability": "7.5",
+        "minGlibc": "2.38"
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": [
+            "https://components.taalcut.app/local-llm-runtime-cuda/b11571/llama-b11571-bin-ubuntu-cuda-13.4-x64.tar.gz"
+          ],
+          "sha256": "42f31a6b1fba358c68b66de956216291571ec3bc3db6f5e8972a797751ee6c28",
+          "size": 152485973,
+          "install": {
+            "type": "archive",
+            "format": "tar.gz",
+            "stripComponents": 1,
+            "extractedSize": 208676094
+          }
+        }
+      ]
+    },
+    {
+      "id": "local-llm-runtime-vulkan",
+      "name": "llama.cpp server (Vulkan)",
+      "version": "b11571",
+      "kind": "runtime",
+      "tiers": [],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-runtime-vulkan/b11571/NOTICE-f3f1a5ce09bd7b35.txt",
+          "size": 4630,
+          "sha256": "f3f1a5ce09bd7b3561d800949d393d81d9af2c4d54e8226af1ce694a31768117"
+        },
+        "attribution": "llama.cpp and ggml, Copyright (c) 2023-2026 The ggml authors. MIT licence. Upstream's ubuntu-vulkan-x64 build."
+      },
+      "dependencies": [],
+      "requires": {
+        "gpuApi": "vulkan"
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": [
+            "https://components.taalcut.app/local-llm-runtime-vulkan/b11571/llama-b11571-bin-ubuntu-vulkan-x64.tar.gz"
+          ],
+          "sha256": "39dc4772a26b0c8e45a80aa5e2a508886f98bdb5856758a28bf1c5d7a9c31303",
+          "size": 30287313,
+          "install": {
+            "type": "archive",
+            "format": "tar.gz",
+            "stripComponents": 1,
+            "extractedSize": 86325766
+          }
+        }
+      ]
+    },
+    {
+      "id": "whisper-server-cuda",
+      "name": "whisper.cpp server (CUDA)",
+      "version": "1.9.5-d1be6fde",
+      "kind": "runtime",
+      "tiers": [],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/whisper-server-cuda/1.9.5-d1be6fde/NOTICE-549c794b755262f2.txt",
+          "size": 4891,
+          "sha256": "549c794b755262f248b3b07410bfdd876e2ae61298f9d50ec200497b3f295865"
+        },
+        "attribution": "whisper.cpp by Georgi Gerganov and contributors, MIT licence. whisper-server built with CUDA."
+      },
+      "dependencies": ["cuda-runtime-13"],
+      "requires": {
+        "gpuApi": "cuda",
+        "minDriver": "580",
+        "minComputeCapability": "7.5"
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": [
+            "https://components.taalcut.app/whisper-server-cuda/1.9.5-d1be6fde/whisper-server-1.9.5-cuda13-linux-x64.tar.zst"
+          ],
+          "sha256": "1a5c854ae164bef4197b134222a351f25a88b649283f69bfad38181e3aeba415",
+          "size": 126304640,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 161517567
+          }
+        }
+      ]
+    },
+    {
+      "id": "ppocr-v5-latin",
+      "name": "PP-OCRv5 Latin",
+      "version": "v5-mobile-89d3a50e-e6f4fa85",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/ppocr-v5-latin/v5-mobile-89d3a50e-e6f4fa85/NOTICE-1c5688c6ae32953d.txt",
+          "size": 12095,
+          "sha256": "1c5688c6ae32953d92e52581aba6e120f3f2f1c2bd660e5930ee5652684096cb"
+        },
+        "attribution": "PP-OCRv5 mobile text detection and latin_PP-OCRv5_mobile_rec by PaddlePaddle (PaddleOCR), Apache-2.0. ONNX exports by PaddlePaddle."
+      },
+      "dependencies": ["onnxruntime"],
+      "requires": {
+        "platform": "linux"
+      },
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/ppocr-v5-latin/v5-mobile-89d3a50e-e6f4fa85/ppocr-v5-latin-89d3a50e-e6f4fa85.tar.zst"
+          ],
+          "sha256": "cdd4cdcfffd473eccafb64a7a6f1469f46805c4d83d853c56065cff8898a0dbb",
+          "size": 11853847,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 12881387
+          }
+        }
+      ]
+    }
+  ],
+  "extend": {
+    "onnxruntime": {
+      "variants": ["onnxruntime-cuda"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/onnxruntime/1.30.0/NOTICE-25a922babc7924e8.txt",
+          "size": 341337,
+          "sha256": "25a922babc7924e81787f9991900057e6fb8cd5565569171371576bc9479909e"
+        },
+        "attribution": "ONNX Runtime, Copyright (c) Microsoft Corporation. MIT licence. The darwin arm64 and linux-x64 bindings of onnxruntime-node 1.30.0."
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": [
+            "https://components.taalcut.app/onnxruntime/1.30.0/onnxruntime-node-1.30.0-linux-x64.tar.zst"
+          ],
+          "sha256": "5c8b502b342826826cbb3d30546a94d513fe604ad652cdc47ff35adf9fcd981c",
+          "size": 13679458,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 46218000
+          }
+        }
+      ]
+    },
+    "local-llm-runtime": {
+      "variants": ["local-llm-runtime-cuda", "local-llm-runtime-vulkan"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-runtime/b11571/NOTICE-07c99851f2ac74a6.txt",
+          "size": 19779,
+          "sha256": "07c99851f2ac74a69845dc4b7b2fdd5118c90ec58674c470a686a84d8c625510"
+        },
+        "attribution": "llama.cpp and ggml, Copyright (c) 2023-2026 The ggml authors. MIT licence."
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": [
+            "https://components.taalcut.app/local-llm-runtime/b11571/llama-b11571-bin-ubuntu-x64.tar.gz"
+          ],
+          "sha256": "f955f2eb69357c2b0a2ed3f796652a24763d7e068be3ab30fcc4e12c92d0f4be",
+          "size": 17725590,
+          "install": {
+            "type": "archive",
+            "format": "tar.gz",
+            "stripComponents": 1,
+            "extractedSize": 45831798
+          }
+        }
+      ]
+    },
+    "whisper-cpp": {
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/whisper-cpp/1.9.5-d1be6fde/NOTICE-0f72cb059298f012.txt",
+          "size": 2480,
+          "sha256": "0f72cb059298f0125c42611ce788186dbc630438082426a13cb1eecf18c97004"
+        },
+        "attribution": "whisper.cpp by Georgi Gerganov and contributors, MIT licence. whisper-cli built with Metal (macOS) and for the CPU (Linux)."
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": ["https://components.taalcut.app/whisper-cpp/1.9.5-d1be6fde/whisper-cli-linux-x64"],
+          "sha256": "e8211eed0e0069614f6068b21e30833381bbde603b7fd6d5181d3182fcb9fd60",
+          "size": 4395992,
+          "install": {
+            "type": "file",
+            "fileName": "whisper-cli",
+            "executable": true
+          }
+        }
+      ]
+    },
+    "whisper-server": {
+      "variants": ["whisper-server-cuda"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/whisper-server/1.9.5-d1be6fde/NOTICE-24776cfa5d6a901d.txt",
+          "size": 5243,
+          "sha256": "24776cfa5d6a901da9cd81034f629b2aec2999280818e4920d1c8ef23a45fc53"
+        },
+        "attribution": "whisper.cpp by Georgi Gerganov and contributors, MIT licence. whisper-server built with Metal (macOS) and for the CPU (Linux)."
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": ["https://components.taalcut.app/whisper-server/1.9.5-d1be6fde/whisper-server-linux-x64"],
+          "sha256": "7da0a2156781ffc06cc147c4b195caae7e6f7e6d1e1fbfafb9755ef9d5e895df",
+          "size": 4752552,
+          "install": {
+            "type": "file",
+            "fileName": "whisper-server",
+            "executable": true
+          }
+        }
+      ]
+    },
+    "embeddinggemma-2-coreml": {
+      "requires": {
+        "platform": "darwin",
+        "minOsVersion": "15"
+      }
+    },
+    "hyperframes-headless-shell": {
+      "licence": {
+        "spdx": "BSD-3-Clause",
+        "notice": {
+          "url": "https://components.taalcut.app/hyperframes-headless-shell/157.0.8103.50/NOTICE-d48a7e059369b295.txt",
+          "size": 4433824,
+          "sha256": "d48a7e059369b29540fcc98538987a52133d3081f9005fd398ce7da8a12171dd"
+        },
+        "attribution": "Chromium (chrome-headless-shell from Chrome for Testing), BSD-3-Clause; bundled third-party notices are in LICENSE.headless_shell inside the component."
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": [
+            "https://components.taalcut.app/hyperframes-headless-shell/157.0.8103.50/chrome-headless-shell-157.0.8103.50-linux64.tar.zst"
+          ],
+          "sha256": "70ec61c727bda1eef775fc84a32dee386282e9c285f5e57c1a333aa362c21d0e",
+          "size": 89494803,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 289833043
+          }
+        }
+      ]
+    },
+    "c2pa-sidecar": {
+      "licence": {
+        "spdx": "AGPL-3.0-or-later AND (MIT OR Apache-2.0)",
+        "notice": {
+          "url": "https://components.taalcut.app/c2pa-sidecar/1.0.0/NOTICE-9946a24eef59d9fd.txt",
+          "size": 4110750,
+          "sha256": "9946a24eef59d9fdfbd0d5a2fcda71e873fb9482cd059dcab498f6ae6c0fa60e"
+        },
+        "attribution": "taalcut-c2pa (AGPL-3.0-or-later) statically links the c2pa crate 0.91.2 by Adobe and the Content Authenticity Initiative (MIT OR Apache-2.0); both licence texts, the test certificate's source and the licences of every crate linked in are in LICENSES/ inside the component."
+      },
+      "artifacts": [
+        {
+          "platform": "linux-x64",
+          "urls": ["https://components.taalcut.app/c2pa-sidecar/1.0.0/c2pa-sidecar-1.0.0-linux-x64.tar.zst"],
+          "sha256": "66c403ce30e843a57632a97519969832914c2d70f4d05c136699cced02482b08",
+          "size": 3968190,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 14696247
+          }
+        }
+      ]
+    }
+  }
+}

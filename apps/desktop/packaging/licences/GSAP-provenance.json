@@ -1,0 +1,19 @@
+{
+  "package": "gsap",
+  "version": "3.15.0",
+  "source": "https://gsap.com/community/standard-license/",
+  "retrieved": "2026-11-11",
+  "effectiveDate": "2025-04-30",
+  "lastModifiedDate": "2025-05-30",
+  "sourceHtmlSha256": "8db5af0d83270c64b35e21513f3dfb09735d327271eb61a74c63e9cc4618c89c",
+  "licenseTextSha256": "1e91b7bf6177f884a4140086d07dd3a952fdf60fc298efe761b68f4f4bbf949b",
+  "extraction": "Visible text of the official page license element, including all six sections, FAQ, dates and copyright; HTML tags removed, whitespace wrapped, ordered-list letters preserved. No terms rewritten. Links appear below in original order.",
+  "links": [
+    "https://gsap.com",
+    "https://webflow.com",
+    "https://webflow.com/legal/terms",
+    "https://gsap.com/contact",
+    "https://gsap.com/docs/v3/Plugins/SplitText/",
+    "https://gsap.com/docs/v3/Plugins/MorphSVGPlugin"
+  ]
+}

@@ -1,0 +1,138 @@
+diff --git a/lib/launch.d.ts b/lib/launch.d.ts
+index 9be28f85d4b1b06b06d9efc527b4feb8e9c72e6f..409ba4d8f917abf2c9a1ee26ed5d8884d9162156 100644
+--- a/lib/launch.d.ts
++++ b/lib/launch.d.ts
+@@ -150,6 +150,11 @@ export declare const CDP_WEBSOCKET_ENDPOINT_REGEX: RegExp;
+  * @public
+  */
+ export declare const WEBDRIVER_BIDI_WEBSOCKET_ENDPOINT_REGEX: RegExp;
++/**
++ * Taalcut (IX3-F8): calls `listener` with the ChildProcess of every browser launched from now on, synchronously,
++ * right after it is spawned (before the launch waits for its DevTools endpoint). Returns the unsubscribe.
++ */
++export declare function onBrowserSpawn(listener: (browser: childProcess.ChildProcess) => void): () => void;
+ /**
+  * @public
+  */
+diff --git a/lib/launch.js b/lib/launch.js
+index 351dfcdda200e2a414ce5a05c6ac27f9383c01af..390c033ddc39f06b7d2220afd310133db3ce83aa 100644
+--- a/lib/launch.js
++++ b/lib/launch.js
+@@ -118,12 +118,37 @@ function unsubscribeFromProcessEvent(event, handler) {
+ /**
+  * @public
+  */
++/**
++ * Taalcut (IX3-K2): Chrome's GPU process decodes video on VideoToolbox, and killing a process stuck in VideoToolbox
++ * preceded two watchdog resets of a Mac. On macOS and Linux the browser gets one SIGTERM (Chrome shuts down in order
++ * and ends its own children; a second SIGTERM would end it where it stands), never SIGKILL; one still running a
++ * minute later is reported once as a stall and left to exit. One SIGTERM in all: none here when the host has already
++ * sent it (ChildProcess.killed, IX3-F9).
++ */
++const BROWSER_STALL_AFTER_MS = 60_000;
++/**
++ * Taalcut (IX3-F8): who is told of each browser process on the turn it is spawned, before the launch waits for the
++ * browser's DevTools endpoint (up to its launch timeout). A host records its pid in a hardware session slot there, so a
++ * quit or a crash during that wait still leaves the browser on the slot.
++ */
++const browserSpawnListeners = new Set();
++/**
++ * Taalcut (IX3-F8): calls `listener` with the ChildProcess of every browser launched from now on, synchronously,
++ * right after it is spawned. Returns the unsubscribe.
++ */
++export function onBrowserSpawn(listener) {
++    browserSpawnListeners.add(listener);
++    return () => {
++        browserSpawnListeners.delete(listener);
++    };
++}
+ export class Process {
+     #executablePath;
+     #args;
+     #logger;
+     #browserProcess;
+     #exited = false;
++    #terminated = false;
+     // The browser process can be closed externally or from the driver process. We
+     // need to invoke the hooks only once though but we don't know how many times
+     // we will be invoked.
+@@ -176,6 +201,14 @@ export class Process {
+             env,
+             stdio,
+         });
++        for (const listener of browserSpawnListeners) {
++            try {
++                listener(this.#browserProcess);
++            }
++            catch (error) {
++                console.error(`[puppeteer] a browser spawn listener failed: ${String(error)}`);
++            }
++        }
+         this.#recordStream(this.#browserProcess.stderr);
+         this.#recordStream(this.#browserProcess.stdout);
+         this.#logger?.(`Launched ${this.#browserProcess.pid}`);
+@@ -282,20 +315,24 @@ export class Process {
+                         this.#browserProcess.kill();
+                     }
+                 }
+-                else {
+-                    // on linux the process group can be killed with the group id prefixed with
+-                    // a minus sign. The process group id is the group leader's pid.
+-                    const processGroupId = -this.#browserProcess.pid;
+-                    try {
+-                        process.kill(processGroupId, 'SIGKILL');
+-                    }
+-                    catch (error) {
+-                        this.#logger?.(`Killing ${this.#browserProcess.pid} using process.kill failed`, error);
+-                        // Killing the process group can fail due e.g. to missing permissions.
+-                        // Let's kill the process via Node API. This delays killing of all child
+-                        // processes of `this.proc` until the main Node.js process dies.
+-                        this.#browserProcess.kill('SIGKILL');
+-                    }
++                else if (this.#browserProcess.killed) {
++                    // Taalcut (IX3-F9): the host already sent this browser its one SIGTERM (the engine's
++                    // stopBrowserProcess, when a close missed its deadline). One owner of the signal: a second
++                    // would end it where it stands.
++                    this.#terminated = true;
++                }
++                else if (!this.#terminated) {
++                    this.#terminated = true;
++                    this.#browserProcess.kill('SIGTERM');
++                    const pid = this.#browserProcess.pid;
++                    const stall = setTimeout(() => {
++                        if (this.#exited)
++                            return;
++                        console.warn(`[puppeteer] stall: pid ${pid} (${this.#executablePath}) has not exited ` +
++                            `${BROWSER_STALL_AFTER_MS / 1000} s after it was stopped; it may hold a hardware video ` +
++                            'session, so it is left running and never killed');
++                    }, BROWSER_STALL_AFTER_MS);
++                    stall.unref?.();
+                 }
+             }
+             catch (error) {
+diff --git a/lib/main.d.ts b/lib/main.d.ts
+index decaf02d79a2dcd2e1450cfbc9f4d0693bfbff84..7027387340f65a6c1e8d52d393ea10ed016270ce 100644
+--- a/lib/main.d.ts
++++ b/lib/main.d.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ export type { LaunchOptions, ComputeExecutablePathOptions as Options, SystemOptions, } from './launch.js';
+-export { launch, computeExecutablePath, computeSystemExecutablePath, TimeoutError, CDP_WEBSOCKET_ENDPOINT_REGEX, WEBDRIVER_BIDI_WEBSOCKET_ENDPOINT_REGEX, Process, } from './launch.js';
++export { launch, computeExecutablePath, computeSystemExecutablePath, TimeoutError, CDP_WEBSOCKET_ENDPOINT_REGEX, WEBDRIVER_BIDI_WEBSOCKET_ENDPOINT_REGEX, Process, onBrowserSpawn, } from './launch.js';
+ export type { InstallOptions, GetInstalledBrowsersOptions, UninstallOptions, } from './install.js';
+ export { install, getInstalledBrowsers, canDownload, uninstall, getDownloadUrl, } from './install.js';
+ export { detectBrowserPlatform } from './detectPlatform.js';
+diff --git a/lib/main.js b/lib/main.js
+index 5849413eeac8cde53f9fbd9da38a18a2dcc75c83..12d4550e5836d2f6f72f3ad55c019619a05d2140 100644
+--- a/lib/main.js
++++ b/lib/main.js
+@@ -3,7 +3,7 @@
+  * Copyright 2023 Google Inc.
+  * SPDX-License-Identifier: Apache-2.0
+  */
+-export { launch, computeExecutablePath, computeSystemExecutablePath, TimeoutError, CDP_WEBSOCKET_ENDPOINT_REGEX, WEBDRIVER_BIDI_WEBSOCKET_ENDPOINT_REGEX, Process, } from './launch.js';
++export { launch, computeExecutablePath, computeSystemExecutablePath, TimeoutError, CDP_WEBSOCKET_ENDPOINT_REGEX, WEBDRIVER_BIDI_WEBSOCKET_ENDPOINT_REGEX, Process, onBrowserSpawn, } from './launch.js';
+ export { install, getInstalledBrowsers, canDownload, uninstall, getDownloadUrl, } from './install.js';
+ export { detectBrowserPlatform } from './detectPlatform.js';
+ export { resolveBuildId, Browser, BrowserPlatform, ChromeReleaseChannel, createProfile, getVersionComparator, resolveDefaultUserDataDir, } from './browser-data/browser-data.js';

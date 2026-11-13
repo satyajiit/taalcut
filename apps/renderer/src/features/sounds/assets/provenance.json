@@ -1,0 +1,103 @@
+{
+  "authoring": {
+    "library": "tone",
+    "version": "15.1.22",
+    "libraryLicence": "MIT",
+    "recipe": "tone-interface-recipes.mjs",
+    "outputLicence": "AGPL-3.0-or-later",
+    "sampleRate": 48000,
+    "channels": 1,
+    "oscillator": "sine",
+    "filterHz": 2000
+  },
+  "chromium": "156.0.8078.4",
+  "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "manifestSha256": "35c8871020a55d5dd2775c1bff97568df6bb7cb40d03e562d31d6bfd5a5a87df",
+  "recipeSha256": "ea7d6b15bc737dd7613e8cea79fc30d997d81cce11d176630cf226301cae9ac6",
+  "sounds": [
+    {
+      "name": "promptSent",
+      "pcmSha256": "53290554a13868c1d819d0e0511caf29bc426900894ab4f5b9f04dbb5b0ecfd7",
+      "file": "prompt-sent.m4a",
+      "source": "Tone.Offline 15.1.22",
+      "ms": 100,
+      "channels": 1,
+      "lufs": -27.7,
+      "dbtp": -4.5,
+      "bytes": 1993,
+      "sha256": "93f35c912772df508058000613fa30633a88bb1b9d98240352e366dbbdd75745"
+    },
+    {
+      "name": "editApplied",
+      "pcmSha256": "36b9023d0e798f529395238716b8a0ebf8803cd7f6b99753e0a8a1ea1dab6b26",
+      "file": "edit-applied.m4a",
+      "source": "Tone.Offline 15.1.22",
+      "ms": 140,
+      "channels": 1,
+      "lufs": -27.6,
+      "dbtp": -4.4,
+      "bytes": 2181,
+      "sha256": "4b1b8848453db754ff60a02a975f37644d6ee0992018412d43441e20d20c92cf"
+    },
+    {
+      "name": "undo",
+      "pcmSha256": "df2bcea034626b59d91dafd9ea16c35961061e69e9877f0b7d80a45eadf7a434",
+      "file": "undo.m4a",
+      "source": "Tone.Offline 15.1.22",
+      "ms": 160,
+      "channels": 1,
+      "lufs": -27.8,
+      "dbtp": -7.2,
+      "bytes": 2646,
+      "sha256": "f8596d2ab0be58b7f01f5f18908675640e067098245791055cddf421d450dbca"
+    },
+    {
+      "name": "redo",
+      "pcmSha256": "fa895c17ac59d55217ae5487bbf81cd6723cc524fdf1d7737bee8b49c5498466",
+      "file": "redo.m4a",
+      "source": "Tone.Offline 15.1.22",
+      "ms": 160,
+      "channels": 1,
+      "lufs": -27.9,
+      "dbtp": -7.7,
+      "bytes": 2671,
+      "sha256": "688cc0edf183849b458a3849ec2002c41bc6b154d1dcc1ff899b4aecefe1ecec"
+    },
+    {
+      "name": "importDone",
+      "pcmSha256": "337d26be4aa0135c07c4c9acaac61b356f78254fc989beafecab6273b65cd9d5",
+      "file": "import-done.m4a",
+      "source": "Tone.Offline 15.1.22",
+      "ms": 280,
+      "channels": 1,
+      "lufs": -24.4,
+      "dbtp": -3.1,
+      "bytes": 3428,
+      "sha256": "9d154454ab739901b8da0daf356869b8f759d179bc0cdc3e685b3e5e98499cec"
+    },
+    {
+      "name": "draftAssembled",
+      "pcmSha256": "76bdc6dc7e13cb70aa675624bb9def6b052672f4aaf814cf437dc9a03fd96667",
+      "file": "draft-assembled.m4a",
+      "source": "Tone.Offline 15.1.22",
+      "ms": 360,
+      "channels": 1,
+      "lufs": -24.4,
+      "dbtp": -3.2,
+      "bytes": 4169,
+      "sha256": "5a89039d3712f4deab0e6f5b277f198418b4a56de61e8ae35fa953f27d0713d6"
+    },
+    {
+      "name": "complete",
+      "pcmSha256": "d942f18252c145299ffbc5fda5359c39ecd7cffa06548da27d708d1d81dc163e",
+      "file": "complete.m4a",
+      "source": "Tone.Offline 15.1.22",
+      "ms": 480,
+      "channels": 1,
+      "lufs": -23.2,
+      "dbtp": -3,
+      "bytes": 5959,
+      "sha256": "47a8ba488015a64796aa61716bceccbb9aa0579ae79d043203d311a368757082"
+    }
+  ]
+}

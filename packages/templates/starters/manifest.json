@@ -1,0 +1,158 @@
+[
+  {
+    "descriptionKey": "starters.weekend-trip.description",
+    "file": "weekend-trip.json",
+    "formatId": "vlog",
+    "id": "weekend-trip",
+    "locales": "all",
+    "nameKey": "starters.weekend-trip.name",
+    "needs": "many-clips",
+    "order": 0
+  },
+  {
+    "descriptionKey": "starters.my-day.description",
+    "file": "my-day.json",
+    "formatId": "dayInTheLife",
+    "id": "my-day",
+    "locales": "all",
+    "nameKey": "starters.my-day.name",
+    "needs": "day-clips",
+    "order": 1
+  },
+  {
+    "descriptionKey": "starters.quick-tip.description",
+    "file": "quick-tip.json",
+    "formatId": "talkingHead",
+    "id": "quick-tip",
+    "locales": "all",
+    "nameKey": "starters.quick-tip.name",
+    "needs": "talking",
+    "order": 2
+  },
+  {
+    "descriptionKey": "starters.product-in-30-seconds.description",
+    "file": "product-in-30-seconds.json",
+    "formatId": "ugcAd",
+    "id": "product-in-30-seconds",
+    "locales": "all",
+    "nameKey": "starters.product-in-30-seconds.name",
+    "needs": "product",
+    "order": 3
+  },
+  {
+    "descriptionKey": "starters.glow-up.description",
+    "file": "glow-up.json",
+    "formatId": "beforeAfter",
+    "id": "glow-up",
+    "locales": "all",
+    "nameKey": "starters.glow-up.name",
+    "needs": "two-clips",
+    "order": 4
+  },
+  {
+    "descriptionKey": "starters.best-moments.description",
+    "file": "best-moments.json",
+    "formatId": "highlightReel",
+    "id": "best-moments",
+    "locales": "all",
+    "nameKey": "starters.best-moments.name",
+    "needs": "many-clips",
+    "order": 5
+  },
+  {
+    "descriptionKey": "starters.recipe-in-30-seconds.description",
+    "file": "recipe-in-30-seconds.json",
+    "formatId": "tutorial",
+    "id": "recipe-in-30-seconds",
+    "locales": [
+      "en"
+    ],
+    "nameKey": "starters.recipe-in-30-seconds.name",
+    "needs": "steps",
+    "order": 6
+  },
+  {
+    "descriptionKey": "starters.podcast-moment.description",
+    "file": "podcast-moment.json",
+    "formatId": "podcastClip",
+    "id": "podcast-moment",
+    "locales": [
+      "en"
+    ],
+    "nameKey": "starters.podcast-moment.name",
+    "needs": "conversation",
+    "order": 7
+  },
+  {
+    "descriptionKey": "starters.festival-vlog.description",
+    "file": "festival-vlog.json",
+    "formatId": "vlog",
+    "id": "festival-vlog",
+    "locales": [
+      "hi"
+    ],
+    "nameKey": "starters.festival-vlog.name",
+    "needs": "many-clips",
+    "order": 8
+  },
+  {
+    "descriptionKey": "starters.wedding-highlights.description",
+    "file": "wedding-highlights.json",
+    "formatId": "highlightReel",
+    "id": "wedding-highlights",
+    "locales": [
+      "hi"
+    ],
+    "nameKey": "starters.wedding-highlights.name",
+    "needs": "many-clips",
+    "order": 9
+  },
+  {
+    "descriptionKey": "starters.receta-rapida.description",
+    "file": "receta-rapida.json",
+    "formatId": "tutorial",
+    "id": "receta-rapida",
+    "locales": [
+      "es"
+    ],
+    "nameKey": "starters.receta-rapida.name",
+    "needs": "steps",
+    "order": 10
+  },
+  {
+    "descriptionKey": "starters.golazos.description",
+    "file": "golazos.json",
+    "formatId": "highlightReel",
+    "id": "golazos",
+    "locales": [
+      "es"
+    ],
+    "nameKey": "starters.golazos.name",
+    "needs": "many-clips",
+    "order": 11
+  },
+  {
+    "descriptionKey": "starters.role-de-fim-de-semana.description",
+    "file": "role-de-fim-de-semana.json",
+    "formatId": "vlog",
+    "id": "role-de-fim-de-semana",
+    "locales": [
+      "pt-BR"
+    ],
+    "nameKey": "starters.role-de-fim-de-semana.name",
+    "needs": "many-clips",
+    "order": 12
+  },
+  {
+    "descriptionKey": "starters.receita-rapida.description",
+    "file": "receita-rapida.json",
+    "formatId": "tutorial",
+    "id": "receita-rapida",
+    "locales": [
+      "pt-BR"
+    ],
+    "nameKey": "starters.receita-rapida.name",
+    "needs": "steps",
+    "order": 13
+  }
+]

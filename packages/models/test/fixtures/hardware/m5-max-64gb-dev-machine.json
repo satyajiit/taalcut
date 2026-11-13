@@ -1,0 +1,28 @@
+{
+  "description": "Real output captured 2026-10-12 on the development Mac (M5 Max, 64 GB, 40-core GPU, macOS 26.7.1). Display serial numbers removed",
+  "platform": "darwin",
+  "arch": "arm64",
+  "totalmem": 68719476736,
+  "freeDiskBytes": 30792478720,
+  "commands": {
+    "sysctl": "machdep.cpu.brand_string: Apple M5 Max\nhw.model: Mac17,7\nhw.memsize: 68719476736\nhw.ncpu: 18\nhw.perflevel0.physicalcpu: 6\nhw.perflevel1.physicalcpu: 12\n",
+    "system_profiler": "{\"SPDisplaysDataType\": [{\"_name\": \"Apple M5 Max\", \"spdisplays_mtlgpufamilysupport\": \"spdisplays_metal4\", \"spdisplays_vendor\": \"sppci_vendor_Apple\", \"sppci_bus\": \"spdisplays_builtin\", \"sppci_cores\": \"40\", \"sppci_device_type\": \"spdisplays_gpu\", \"sppci_model\": \"Apple M5 Max\"}]}\n",
+    "sw_vers": "26.7.1\n"
+  },
+  "expected": {
+    "gpus": [
+      {
+        "name": "Apple M5 Max",
+        "vendor": "apple",
+        "cores": 40,
+        "unifiedMemory": true,
+        "apis": ["metal"],
+        "metalFamily": "metal4"
+      }
+    ],
+    "neuralEngine": true,
+    "backends": ["metal", "mlx", "coreml", "ane", "webgpu", "cpu"],
+    "tier": "high",
+    "shortfalls": []
+  }
+}

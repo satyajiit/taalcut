@@ -1,0 +1,1069 @@
+{
+ "caseId": "graphics-add-lower-third",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": false,
+  "why": "it comes on at no time"
+ },
+ "turns": [
+  {
+   "callId": "01M6FSBX6DKN7VATH414DJD0ZF",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "yx1B4Ci5zV54feE238JxVkojMgCVUClP",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": []
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "yx1B4Ci5zV54feE238JxVkojMgCVUClP",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": []
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10656,
+      "output": 106,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10762,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678767757,
+     "responseId": "chatcmpl-0844dfff2fbe4cd1b8e773691752532e",
+     "rawStopReason": "tool_calls",
+     "durationMs": 17015
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "yx1B4Ci5zV54feE238JxVkojMgCVUClP",
+     "name": "graphics_design",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "request": "lower third, Day two, at six seconds",
+      "itemIds": []
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10656,
+    "outputTokens": 106,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10762,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSCE89KWVCAYZ04SEC8C5M",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I’ll add a lower third saying “Day two” starting at six seconds on clip 2 (the one that plays at 6s).\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "sJpkQdoircED9MNSSaiqXAob2XW0fjVY",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": [
+         "01K8EMA4S9KZD1K0EWMA1WR89A"
+        ]
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I’ll add a lower third saying “Day two” starting at six seconds on clip 2 (the one that plays at 6s).\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "sJpkQdoircED9MNSSaiqXAob2XW0fjVY",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": [
+         "01K8EMA4S9KZD1K0EWMA1WR89A"
+        ]
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 224,
+      "output": 158,
+      "cacheRead": 10656,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11038,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678784779,
+     "responseId": "chatcmpl-3988b94d68eb4e059c262c39ec686603",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4385
+    }
+   },
+   "text": "I’ll add a lower third saying “Day two” starting at six seconds on clip 2 (the one that plays at 6s).\n\n",
+   "toolCalls": [
+    {
+     "id": "sJpkQdoircED9MNSSaiqXAob2XW0fjVY",
+     "name": "graphics_design",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "request": "lower third, Day two, at six seconds",
+      "itemIds": [
+       "01K8EMA4S9KZD1K0EWMA1WR89A"
+      ]
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 224,
+    "outputTokens": 158,
+    "cachedInputTokens": 10656,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11038,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSCJHHHYBST3MMJN7QKV5F",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "yPuEI2GRw87yDi0v7LWU5DNRMRN54MBP",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": [
+         "01K8EGQP9BJV22N684JHD49Y1P"
+        ]
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "yPuEI2GRw87yDi0v7LWU5DNRMRN54MBP",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": [
+         "01K8EGQP9BJV22N684JHD49Y1P"
+        ]
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 215,
+      "output": 129,
+      "cacheRead": 10880,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11224,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678789171,
+     "responseId": "chatcmpl-abee8288f02546c0861982285f419f30",
+     "rawStopReason": "tool_calls",
+     "durationMs": 3923
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "yPuEI2GRw87yDi0v7LWU5DNRMRN54MBP",
+     "name": "graphics_design",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "request": "lower third, Day two, at six seconds",
+      "itemIds": [
+       "01K8EGQP9BJV22N684JHD49Y1P"
+      ]
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 215,
+    "outputTokens": 129,
+    "cachedInputTokens": 10880,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11224,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSCPCCF4G39KVCFNTSJ6M8",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "A lower third saying “Day two” is on its way at six seconds."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "A lower third saying “Day two” is on its way at six seconds."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 326,
+      "output": 16,
+      "cacheRead": 11095,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11437,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793678793103,
+     "responseId": "chatcmpl-44c04376166746648e76c7e6059d6359",
+     "rawStopReason": "stop",
+     "durationMs": 1830
+    }
+   },
+   "text": "A lower third saying “Day two” is on its way at six seconds.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 326,
+    "outputTokens": 16,
+    "cachedInputTokens": 11095,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11437,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSCR5N9AS2BX0QP9X7G0MJ",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "9NGWvPBaqVA85PNlaLMDJb8oKFU1Fbo9",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "9NGWvPBaqVA85PNlaLMDJb8oKFU1Fbo9",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11512,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11567,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678794935,
+     "responseId": "chatcmpl-d2537c512a21478286b03856183a1766",
+     "rawStopReason": "tool_calls",
+     "durationMs": 15083
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "9NGWvPBaqVA85PNlaLMDJb8oKFU1Fbo9",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11512,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11567,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSD6X981N0YHMY4T1TBBAE",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "VypNWMw3KPrnQHYqwYY21ZbpA7T9IlMW",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "VypNWMw3KPrnQHYqwYY21ZbpA7T9IlMW",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11549,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11604,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678810029,
+     "responseId": "chatcmpl-d1b6e666f987464da88f6158be03e366",
+     "rawStopReason": "tool_calls",
+     "durationMs": 13374
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "VypNWMw3KPrnQHYqwYY21ZbpA7T9IlMW",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 3
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11549,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11604,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSDKZEENRD6EZF36JV8ETH",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "YrR8LEtmzeODB5yeIOXp1Rx2YsaVHUH1",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "YrR8LEtmzeODB5yeIOXp1Rx2YsaVHUH1",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11689,
+      "output": 43,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11732,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678823407,
+     "responseId": "chatcmpl-71997a26c5f54cec99d0829bf840331b",
+     "rawStopReason": "tool_calls",
+     "durationMs": 14127
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "YrR8LEtmzeODB5yeIOXp1Rx2YsaVHUH1",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11689,
+    "outputTokens": 43,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11732,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSE1S3Y8VM3ZGCKGCBH5AM",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I see—clip 2 starts at 2s, so 6s is inside clip 4. I’ll add the lower third “Day two” at 6s on clip 4.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "CiPKzDW4wQwgCKNelA4DOPE4XxCqHeGr",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": [
+         "01K8EMAJZ5P8KBX0QPNG2AFCF1"
+        ]
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I see—clip 2 starts at 2s, so 6s is inside clip 4. I’ll add the lower third “Day two” at 6s on clip 4.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "CiPKzDW4wQwgCKNelA4DOPE4XxCqHeGr",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": [
+         "01K8EMAJZ5P8KBX0QPNG2AFCF1"
+        ]
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1602,
+      "output": 169,
+      "cacheRead": 11689,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13460,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678837540,
+     "responseId": "chatcmpl-b564127ab6c3491ea108a49c654658e3",
+     "rawStopReason": "tool_calls",
+     "durationMs": 9771
+    }
+   },
+   "text": "I see—clip 2 starts at 2s, so 6s is inside clip 4. I’ll add the lower third “Day two” at 6s on clip 4.\n\n",
+   "toolCalls": [
+    {
+     "id": "CiPKzDW4wQwgCKNelA4DOPE4XxCqHeGr",
+     "name": "graphics_design",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "request": "lower third, Day two, at six seconds",
+      "itemIds": [
+       "01K8EMAJZ5P8KBX0QPNG2AFCF1"
+      ]
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1602,
+    "outputTokens": 169,
+    "cachedInputTokens": 11689,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13460,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSEBAKDHES5JACTZNHT3EW",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "That clip’s itemId is for video, not a graphic. I need to check the current graphics list first.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "mvzuiVXlY9hw18riFURgUseA1iJo25Pw",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": []
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "That clip’s itemId is for video, not a graphic. I need to check the current graphics list first.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "mvzuiVXlY9hw18riFURgUseA1iJo25Pw",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": []
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 225,
+      "output": 129,
+      "cacheRead": 13291,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13645,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678847317,
+     "responseId": "chatcmpl-abb0a98921a94e7ab22a2aa7f3d0a535",
+     "rawStopReason": "tool_calls",
+     "durationMs": 7394
+    }
+   },
+   "text": "That clip’s itemId is for video, not a graphic. I need to check the current graphics list first.\n\n",
+   "toolCalls": [
+    {
+     "id": "mvzuiVXlY9hw18riFURgUseA1iJo25Pw",
+     "name": "graphics_design",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "request": "lower third, Day two, at six seconds",
+      "itemIds": []
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 225,
+    "outputTokens": 129,
+    "cachedInputTokens": 13291,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13645,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSEJHSCH56HZDNE67ZRAFQ",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "Wwz4drBwjTfEWZZc7dZUGDP8Izq12dD2",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": [
+         "01K8EGQP9BJV22N684JHD49Y1P"
+        ]
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "Wwz4drBwjTfEWZZc7dZUGDP8Izq12dD2",
+       "name": "graphics_design",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "request": "lower third, Day two, at six seconds",
+        "itemIds": [
+         "01K8EGQP9BJV22N684JHD49Y1P"
+        ]
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 247,
+      "output": 129,
+      "cacheRead": 13516,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13892,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678854715,
+     "responseId": "chatcmpl-54239ba6833346fe9c1c7440e63ed8c0",
+     "rawStopReason": "tool_calls",
+     "durationMs": 12235
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "Wwz4drBwjTfEWZZc7dZUGDP8Izq12dD2",
+     "name": "graphics_design",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "request": "lower third, Day two, at six seconds",
+      "itemIds": [
+       "01K8EGQP9BJV22N684JHD49Y1P"
+      ]
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 247,
+    "outputTokens": 129,
+    "cachedInputTokens": 13516,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13892,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSEYGAB8DDZXCGVK9G8301",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "A lower third saying “Day two” is on its way at six seconds."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "A lower third saying “Day two” is on its way at six seconds."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 326,
+      "output": 16,
+      "cacheRead": 13763,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14105,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793678866955,
+     "responseId": "chatcmpl-a4d4108497ab467d96f918b8c18778ba",
+     "rawStopReason": "stop",
+     "durationMs": 1453
+    }
+   },
+   "text": "A lower third saying “Day two” is on its way at six seconds.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 326,
+    "outputTokens": 16,
+    "cachedInputTokens": 13763,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14105,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FSEZXTKWFR9S1HE0J74TWS",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "RrWJdGAzkKETYHFKGEIgRbBYjNEDK336",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "RrWJdGAzkKETYHFKGEIgRbBYjNEDK336",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11313,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11368,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793678868410,
+     "responseId": "chatcmpl-e0d45a2da499465592a336eafa981051",
+     "rawStopReason": "tool_calls",
+     "durationMs": 22400
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "RrWJdGAzkKETYHFKGEIgRbBYjNEDK336",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 3
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11313,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11368,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

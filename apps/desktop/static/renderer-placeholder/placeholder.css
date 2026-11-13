@@ -1,0 +1,26 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+
+/* Canvas and ink from design/tokens (theme-meta.json); the placeholder has no token build. */
+:root {
+  color-scheme: light dark;
+  background: #faf6f1;
+  color: #2a2420;
+  font:
+    15px/1.5 -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background: #181715;
+    color: #e3e1de;
+  }
+}
+
+main {
+  max-width: 36rem;
+  margin: 20vh auto 0;
+  padding: 0 1.5rem;
+}

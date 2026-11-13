@@ -1,0 +1,24 @@
+earshot data, vendored in Taalcut (third_party/earshot)
+
+earshot 0.4.0 (https://github.com/Leonxlnx/earshot), commit ff41f0788ae56896fd59879ab03858d223c06a53.
+Copyright (c) 2026 Leon Lin. MIT licence: see LICENSE. The files under data/, kits/ and docs/ are unchanged.
+
+docs/CREDITS_FIT.md credits the CC0 1.0 recordings upstream measured its 15 fitted sounds from. A fit stores the
+structure of a sound, not its samples; no recording is part of this package.
+
+The models and labels @taalcut/audio uses with this data, downloaded as separate components (tools/components),
+not part of this package:
+
+- CLAP, laion/larger_clap_general (https://huggingface.co/laion/larger_clap_general, revision
+  16c8cc3159a3c8a31e8ff5ef1f66b0d9ab3667db; ONNX export Xenova/larger_clap_general). Apache License 2.0, by LAION
+  (LAION-AI/CLAP). https://www.apache.org/licenses/LICENSE-2.0
+
+- AST, MIT/ast-finetuned-audioset-10-10-0.4593 (https://huggingface.co/MIT/ast-finetuned-audioset-10-10-0.4593,
+  revision f826b80d28226b62986cc218e5cec390b1096902; ONNX export Xenova/ast-finetuned-audioset-10-10-0.4593).
+  BSD 3-Clause License, copyright (c) 2021 Yuan Gong (YuanGongND/ast).
+  https://opensource.org/license/bsd-3-clause
+
+- AudioSet class label names (the 527 names in the AST model's id2label, from AudioSet's class_labels_indices.csv),
+  by Google LLC (https://research.google.com/audioset/), licensed under Creative Commons Attribution 4.0
+  International (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/). Used unchanged as label names only.
+  Nothing from the AudioSet ontology file (ontology.json) is used.

@@ -1,0 +1,8 @@
+# Everything the scripts make on the way to .github/media: stills cut from the demonstration footage, app captures,
+# the loop's render and the HyperFrames CLI's own folders.
+build/
+how-it-works/assets/
+how-it-works/renders/
+how-it-works/snapshots/
+how-it-works/.hyperframes/
+how-it-works/node_modules/

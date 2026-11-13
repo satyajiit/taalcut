@@ -1,0 +1,358 @@
+{
+ "caseId": "text-move-title",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJ4DCG4FMJ9D2BXKS5MZ3K",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "BAI7bSTlJu6ABGeys8U42iG7y8jfCyVa",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "BAI7bSTlJu6ABGeys8U42iG7y8jfCyVa",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11766,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11822,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604072849,
+     "responseId": "chatcmpl-80a9a76ee3a149f7a7da24f254a09f64",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10316
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "BAI7bSTlJu6ABGeys8U42iG7y8jfCyVa",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11766,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11822,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ4QEZWBCYKVPNAA8FCPWC",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I found the \"Weekend ride\" title at the top of the frame (itemId: 01K8EMG6WPJWXT1DBN5JEGTD8J). I'll move it down to the bottom safe area.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "mlBQm7x0FWuTkPAGkQ5NIG1twpzITBJn",
+       "name": "timeline_moveText",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "itemId": "01K8EMG6WPJWXT1DBN5JEGTD8J",
+        "box": {
+         "height": 0.15,
+         "width": 0.8,
+         "x": 0.1,
+         "y": 0.75
+        }
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I found the \"Weekend ride\" title at the top of the frame (itemId: 01K8EMG6WPJWXT1DBN5JEGTD8J). I'll move it down to the bottom safe area.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "mlBQm7x0FWuTkPAGkQ5NIG1twpzITBJn",
+       "name": "timeline_moveText",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "itemId": "01K8EMG6WPJWXT1DBN5JEGTD8J",
+        "box": {
+         "height": 0.15,
+         "width": 0.8,
+         "x": 0.1,
+         "y": 0.75
+        }
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 204,
+      "cacheRead": 11766,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13585,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604083168,
+     "responseId": "chatcmpl-683a0563735046b4a756a40240d2eae9",
+     "rawStopReason": "tool_calls",
+     "durationMs": 6242
+    }
+   },
+   "text": "I found the \"Weekend ride\" title at the top of the frame (itemId: 01K8EMG6WPJWXT1DBN5JEGTD8J). I'll move it down to the bottom safe area.\n\n",
+   "toolCalls": [
+    {
+     "id": "mlBQm7x0FWuTkPAGkQ5NIG1twpzITBJn",
+     "name": "timeline_moveText",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "itemId": "01K8EMG6WPJWXT1DBN5JEGTD8J",
+      "box": {
+       "height": 0.15,
+       "width": 0.8,
+       "x": 0.1,
+       "y": 0.75
+      }
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 204,
+    "cachedInputTokens": 11766,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13585,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ4XJ4ZZ2NK0HDWMPFGZ3K",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Done. The \"Weekend ride\" title is now positioned near the bottom of the frame."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Done. The \"Weekend ride\" title is now positioned near the bottom of the frame."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 248,
+      "output": 19,
+      "cacheRead": 13381,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13648,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604089414,
+     "responseId": "chatcmpl-c4cbdf03a70643188af07450a9b76c6f",
+     "rawStopReason": "stop",
+     "durationMs": 792
+    }
+   },
+   "text": "Done. The \"Weekend ride\" title is now positioned near the bottom of the frame.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 248,
+    "outputTokens": 19,
+    "cachedInputTokens": 13381,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13648,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ4YAYCGJKA3XM2VAK6MJE",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "4Wa24DzapYZYbUKZPRnfjrcDRgiNqNwu",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "4Wa24DzapYZYbUKZPRnfjrcDRgiNqNwu",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13727,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13782,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604090207,
+     "responseId": "chatcmpl-e5b00a1f8af1442ba0912a4b900b08ba",
+     "rawStopReason": "tool_calls",
+     "durationMs": 13301
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "4Wa24DzapYZYbUKZPRnfjrcDRgiNqNwu",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13727,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13782,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

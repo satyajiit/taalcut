@@ -1,0 +1,919 @@
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 7b4a0d892971ee4b17012d1547edf4f1e32a398a..ebfb5185641d0443c67c15c3eabf092eaf4c760a 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -35,7 +35,7 @@ export { SDR_RGB_TO_BT709_FILTER, SDR_RGB_TO_TAGGED_BT709_FILTER, } from "./util
+ export { DEFAULT_VP9_CPU_USED, MAX_VP9_CPU_USED, MIN_VP9_CPU_USED, normalizeVp9CpuUsed, } from "./services/vp9Options.js";
+ export { getCgroupMemoryLimitMb, getSystemTotalMb, isLowMemorySystem, LOW_MEMORY_TOTAL_MB_THRESHOLD, } from "./services/systemMemory.js";
+ export { chromeMajorCeiling } from "./services/chromeHostCeiling.js";
+-export { acquireBrowser, setHostHandlesSigint, releaseBrowser, drainBrowserPool, closeBrowserPool, resolveHeadlessShellPath, resolveBrowserGpuMode, buildChromeArgs, compositionRequiresWebGpu, assertWebGpuAdapterAvailable, usesSoftwareWebGpu, WebGpuUnavailableError, ENABLE_BROWSER_POOL, BrowserLeasePool, type GpuProbeLifecycle, type BuildChromeArgsOptions, type BrowserLaunchFingerprint, type BrowserLease, type BrowserPoolState, type CaptureMode, type AcquiredBrowser, } from "./services/browserManager.js";
++export { acquireBrowser, setHostHandlesSigint, releaseBrowser, drainBrowserPool, closeBrowserPool, resolveHeadlessShellPath, resolveBrowserGpuMode, browserGpuProbe, chromeSandboxArgs, TAALCUT_OFFLINE_ARGS, buildChromeArgs, compositionRequiresWebGpu, assertWebGpuAdapterAvailable, usesSoftwareWebGpu, WebGpuUnavailableError, ENABLE_BROWSER_POOL, BrowserLeasePool, type GpuProbeLifecycle, type BuildChromeArgsOptions, type BrowserLaunchFingerprint, type BrowserLease, type BrowserPoolState, type CaptureMode, type AcquiredBrowser, } from "./services/browserManager.js";
+ export { augmentProtocolTimeoutError, isProtocolTimeoutError, } from "./services/protocolTimeoutErrorHint.js";
+ export { augmentPageNavigationTimeoutError, isPageNavigationTimeoutError, type NavigationTimeoutHintContext, } from "./services/pageNavigationTimeoutErrorHint.js";
+ export { createCaptureSession, initializeSession, closeCaptureSession, captureFrame, captureFrameToBuffer, captureFrameToBufferPipelined, captureFramesBatchPipelined, DrawElementVerificationError, isDrawElementVerificationError, getDrawElementVerificationDetails, type DrawElementVerificationDetails, recaptureDrawElementFrameForVerify, completeDeferredDrawElementInit, writeCapturedFrame, discardWarmupCapture, getCompositionDuration, getCapturePerfSummary, percentileOf, prepareCaptureSessionForReuse, deriveBeginFrameProbeTimeTicks, type CaptureSession, isTransientBrowserError, isMemoryExhaustionError, type BeforeCaptureHook, type DiscardWarmupInnerCapture, type StaticVerificationOutcome, VfxFailureError, waitForImagesReady, evaluateHfDiagnostic, buildZeroDurationDiagnostic, } from "./services/frameCapture.js";
+@@ -44,6 +44,8 @@ export { createChromeMemorySampler, type ChromeMemoryStats, } from "./services/c
+ export { installMediaRenderIdBridge } from "./services/mediaRenderIdBridge.js";
+ export { beginFrameCapture, pageScreenshotCapture, getCdpSession, injectVideoFramesBatch, syncVideoFrameVisibility, cdpSessionCache, probeBeginFrameLiveness, initTransparentBackground, capturesAlpha, captureAlphaPng, applyDomLayerMask, removeDomLayerMask, DOM_LAYER_MASK_STYLE_ID, type BeginFrameResult, } from "./services/screenshotService.js";
+ export { buildEncoderArgs, encodeFramesFromDir, buildConcatArgs, concatVideoFiles, encodeFramesChunkedConcat, muxVideoWithAudio, applyFaststart, packageHls, detectGpuEncoder, ENCODER_PRESETS, getEncoderPreset, appendRateCapArgs, keyframeIntervalToGopSize, HLS_MASTER_PLAYLIST, HLS_VIDEO_PLAYLIST, HLS_AUDIO_PLAYLIST, type GpuEncoder, type PackageHlsOptions, } from "./services/chunkEncoder.js";
++// Taalcut (IX3-F5, H3): the GPU encoder probes' exits, for the caller's hardware session lease.
++export { gpuProbesExited } from "./utils/gpuEncoder.js";
+ export type { EncoderOptions, EncodeResult, MuxResult } from "./services/chunkEncoder.types.js";
+ export { spawnStreamingEncoder, createFrameReorderBuffer, type StreamingEncoder, type StreamingEncoderOptions, type StreamingEncoderResult, type FrameReorderBuffer, } from "./services/streamingEncoder.js";
+ export { parseVideoElements, parseImageElements, extractVideoFramesRange, extractAllVideoFrames, isVideoPastTimelineEnd, resolveTimelineExtractionWindow, resolveVideoExtractionWindow, rebaseVideoToWindow, resolveFinalFrameExtractionWindow, resolveFrameFormat, resolveVideoExtractionDuration, resolvePlayableVideoDuration, extractionFrameCountForDuration, resolveProjectRelativeSrc, getFrameAtTime, isVideoHiddenBeforeStreamStart, createFrameLookupTable, FrameLookupTable, analyzeClipMediaFit, classifyVideoExtractionError, isVideoSourceExtractionError, runVideoExtractionWithRetry, safeVideoExtractionSourceIdentity, VideoSourceExtractionError, type VideoElement, type ImageElement, type ExtractedFrames, type DeferredFrameRange, type FrameRange, type ExtractionOptions, type ExtractionResult, type ExtractionPhaseBreakdown, type TimelineExtractionWindow, type VideoExtractionFailure, type VideoExtractionFailureKind, type VideoExtractionFailureGroupDetails, type VideoExtractionFailureRetry, type VideoExtractionFailureStatusClass, type SafeVideoExtractionSourceIdentity, type VideoFrameFormat, VIDEO_FRAME_FORMATS, isVideoFrameFormat, EXTRACT_CACHE_MIN_AGE_MS, sdrCanvasColourFilters, } from "./services/videoFrameExtractor.js";
+@@ -75,6 +77,9 @@ export { assertConfiguredFfmpegBinariesExist, getFfmpegBinary, getFfprobeBinary,
+ export { trackChildProcess, killTrackedProcesses } from "./utils/processTracker.js";
+ export { renameWithRetry, renameWithRetryAsync } from "@hyperframes/core/rename-retry";
+ export { removeScratch, collectScratchLeftovers } from "@hyperframes/core/remove-scratch";
++// Taalcut (IX3-F7, IX3-F8): every process the engine runs, by pid as it starts (a browser at its spawn), for the
++// caller's hardware session lease.
++export { onChildProcess, watchBrowserSpawns, puppeteerBrowsersEntry } from "./utils/processTracker.js";
+ export { psnrDb, resolveDeVerifyMinDb } from "./utils/psnr.js";
+ export { decodePng, decodePngToRgb48le, blitRgba8OverRgb48le, blitRgb48leRegion, blitRgb48leAffine, parseTransformMatrix, roundedRectAlpha, resampleRgb48leObjectFit, normalizeObjectFit, type ObjectFit, } from "./utils/alphaBlit.js";
+ export { groupIntoLayers, type CompositeLayer } from "./utils/layerCompositor.js";
+diff --git a/dist/index.js b/dist/index.js
+index 636902ff1e51d0773d491176d5703e95af8bf706..b6b8f750f229eb67a4b55333554a647fd40c27eb 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -36,7 +36,7 @@ export { DEFAULT_VP9_CPU_USED, MAX_VP9_CPU_USED, MIN_VP9_CPU_USED, normalizeVp9C
+ export { getCgroupMemoryLimitMb, getSystemTotalMb, isLowMemorySystem, LOW_MEMORY_TOTAL_MB_THRESHOLD, } from "./services/systemMemory.js";
+ // ── Browser management ─────────────────────────────────────────────────────────
+ export { chromeMajorCeiling } from "./services/chromeHostCeiling.js";
+-export { acquireBrowser, setHostHandlesSigint, releaseBrowser, drainBrowserPool, closeBrowserPool, resolveHeadlessShellPath, resolveBrowserGpuMode, buildChromeArgs, compositionRequiresWebGpu, assertWebGpuAdapterAvailable, usesSoftwareWebGpu, WebGpuUnavailableError, ENABLE_BROWSER_POOL, BrowserLeasePool, } from "./services/browserManager.js";
++export { acquireBrowser, setHostHandlesSigint, releaseBrowser, drainBrowserPool, closeBrowserPool, resolveHeadlessShellPath, resolveBrowserGpuMode, browserGpuProbe, chromeSandboxArgs, TAALCUT_OFFLINE_ARGS, buildChromeArgs, compositionRequiresWebGpu, assertWebGpuAdapterAvailable, usesSoftwareWebGpu, WebGpuUnavailableError, ENABLE_BROWSER_POOL, BrowserLeasePool, } from "./services/browserManager.js";
+ export { augmentProtocolTimeoutError, isProtocolTimeoutError, } from "./services/protocolTimeoutErrorHint.js";
+ export { augmentPageNavigationTimeoutError, isPageNavigationTimeoutError, } from "./services/pageNavigationTimeoutErrorHint.js";
+ // ── Frame capture pipeline ──────────────────────────────────────────────────────
+@@ -48,6 +48,8 @@ export { installMediaRenderIdBridge } from "./services/mediaRenderIdBridge.js";
+ export { beginFrameCapture, pageScreenshotCapture, getCdpSession, injectVideoFramesBatch, syncVideoFrameVisibility, cdpSessionCache, probeBeginFrameLiveness, initTransparentBackground, capturesAlpha, captureAlphaPng, applyDomLayerMask, removeDomLayerMask, DOM_LAYER_MASK_STYLE_ID, } from "./services/screenshotService.js";
+ // ── Encoding ───────────────────────────────────────────────────────────────────
+ export { buildEncoderArgs, encodeFramesFromDir, buildConcatArgs, concatVideoFiles, encodeFramesChunkedConcat, muxVideoWithAudio, applyFaststart, packageHls, detectGpuEncoder, ENCODER_PRESETS, getEncoderPreset, appendRateCapArgs, keyframeIntervalToGopSize, HLS_MASTER_PLAYLIST, HLS_VIDEO_PLAYLIST, HLS_AUDIO_PLAYLIST, } from "./services/chunkEncoder.js";
++// Taalcut (IX3-F5, H3): the GPU encoder probes' exits, for the caller's hardware session lease.
++export { gpuProbesExited } from "./utils/gpuEncoder.js";
+ export { spawnStreamingEncoder, createFrameReorderBuffer, } from "./services/streamingEncoder.js";
+ // ── Media processing ───────────────────────────────────────────────────────────
+ export { parseVideoElements, parseImageElements, extractVideoFramesRange, extractAllVideoFrames, isVideoPastTimelineEnd, resolveTimelineExtractionWindow, resolveVideoExtractionWindow, rebaseVideoToWindow, resolveFinalFrameExtractionWindow, resolveFrameFormat, resolveVideoExtractionDuration, resolvePlayableVideoDuration, extractionFrameCountForDuration, resolveProjectRelativeSrc, getFrameAtTime, isVideoHiddenBeforeStreamStart, createFrameLookupTable, FrameLookupTable, analyzeClipMediaFit, classifyVideoExtractionError, isVideoSourceExtractionError, runVideoExtractionWithRetry, safeVideoExtractionSourceIdentity, VideoSourceExtractionError, VIDEO_FRAME_FORMATS, isVideoFrameFormat, EXTRACT_CACHE_MIN_AGE_MS, sdrCanvasColourFilters, } from "./services/videoFrameExtractor.js";
+@@ -79,6 +81,9 @@ export { assertConfiguredFfmpegBinariesExist, getFfmpegBinary, getFfprobeBinary,
+ export { trackChildProcess, killTrackedProcesses } from "./utils/processTracker.js";
+ export { renameWithRetry, renameWithRetryAsync } from "@hyperframes/core/rename-retry";
+ export { removeScratch, collectScratchLeftovers } from "@hyperframes/core/remove-scratch";
++// Taalcut (IX3-F7, IX3-F8): every process the engine runs, by pid as it starts (a browser at its spawn), for the
++// caller's hardware session lease.
++export { onChildProcess, watchBrowserSpawns, puppeteerBrowsersEntry } from "./utils/processTracker.js";
+ // drawElement self-verify comparison — shared by the streaming drain
+ // (producer) and the parallel disk-path verify (parallelCoordinator).
+ export { psnrDb, resolveDeVerifyMinDb } from "./utils/psnr.js";
+diff --git a/dist/services/browserManager.d.ts b/dist/services/browserManager.d.ts
+index daa2563b05f091ca677977213b58b98e8a99e469..f1e066d170b1d98021a1c055e5d041ddfe33e67d 100644
+--- a/dist/services/browserManager.d.ts
++++ b/dist/services/browserManager.d.ts
+@@ -59,6 +59,15 @@ export declare const _probeBeginFrameSupportForTests: typeof probeBeginFrameSupp
+ export declare const _closeBrowserAfterFailedProbeForTests: typeof closeBrowserAfterFailedProbe;
+ /** Test-only: reset the cached probe result. */
+ export declare function _resetAutoBrowserGpuModeCacheForTests(): void;
++/** Taalcut (LNX1-RND): the sandbox flags HyperFrames launches with, or none when HYPERFRAMES_CHROME_SANDBOX=1. */
++export declare function chromeSandboxArgs(): string[];
++/** Taalcut (LNX1-RND): what the process's GPU probe saw, or null before any probe started. */
++export declare function browserGpuProbe(): Promise<{
++    mode: "software" | "hardware";
++    cause?: "no-gpu" | "probe-error";
++    vendor?: string;
++    renderer?: string;
++}> | null;
+ /** True when a `resolvedMode` render must launch without WAYLAND_DISPLAY to reach the GPU. */
+ export declare function captureWithoutWaylandDisplay(resolvedMode: "software" | "hardware"): Promise<boolean>;
+ export declare function resolveBrowserGpuMode(mode: EngineConfig["browserGpuMode"], options?: GpuProbeOptions): Promise<"software" | "hardware">;
+@@ -97,6 +106,8 @@ type GpuConfig = Partial<Pick<EngineConfig, "browserGpuMode" | "disableGpu" | "c
+  * SwiftShader draws canvas WebGPU only via Vulkan with GPU compositing on, and not at all under --disable-gpu.
+  */
+ export declare function usesSoftwareWebGpu(requiresWebGpu: boolean | undefined, config?: GpuConfig): boolean;
++/** Taalcut (HFW1): the args that leave a launched browser no route off the machine but loopback. */
++export declare const TAALCUT_OFFLINE_ARGS: readonly string[];
+ export declare function buildChromeArgs(options: BuildChromeArgsOptions, config?: GpuConfig): string[];
+ /** Does the root, or a mounted root (data-hf-inner-root once bundled), declare `data-requires-webgpu`? */
+ export declare function compositionRequiresWebGpu(html: string): boolean;
+diff --git a/dist/services/browserManager.js b/dist/services/browserManager.js
+index e63332ce62774085282c0565b30d140b9e2a4d2f..effa8d82ba5d6dd6166604d5af3ec0a8e82d202d 100644
+--- a/dist/services/browserManager.js
++++ b/dist/services/browserManager.js
+@@ -18,6 +18,7 @@ import { DEFAULT_CONFIG } from "../config.js";
+ import { getSystemTotalMb, LOW_MEMORY_TOTAL_MB_THRESHOLD } from "./systemMemory.js";
+ import { describeWslGpuAccess, detectWsl } from "./wslHost.js";
+ import { BrowserLeasePool, } from "./browserLeasePool.js";
++import { trackBrowserProcess, watchBrowserSpawns } from "../utils/processTracker.js";
+ export { BrowserLeasePool } from "./browserLeasePool.js";
+ let _puppeteer;
+ let hostHandlesSigint = false;
+@@ -37,6 +38,8 @@ function isSoftwareWebGlRenderer(rendererInfo) {
+         renderer.includes("software rasterizer"));
+ }
+ async function getPuppeteer() {
++    // Taalcut (IX3-F8): every launch gets Puppeteer here, so each browser is followed at its spawn.
++    await watchBrowserSpawns();
+     if (_puppeteer)
+         return _puppeteer;
+     try {
+@@ -68,6 +71,8 @@ async function probeHardwareWebGlInfo(ppt, options) {
+         probeBrowser = options.probeLifecycle
+             ? await options.probeLifecycle.launch(ppt, launchOptions)
+             : await ppt.launch(launchOptions);
++        // Taalcut (IX3-F7, IX3-F8): followed at its spawn already; this covers a launcher without the hook.
++        trackBrowserProcess(probeBrowser.process());
+         return await rejectAfter(readWebGlInfo(probeBrowser), GPU_PROBE_TIMEOUT_MS, `GPU probe page did not answer within ${GPU_PROBE_TIMEOUT_MS}ms`);
+     }
+     finally {
+@@ -289,18 +294,38 @@ async function settleWithin(operation, timeoutMs) {
+             clearTimeout(timeout);
+     }
+ }
+-async function closeBrowserAfterFailedProbe(browser, timeoutMs = BEGINFRAME_PROBE_CLEANUP_TIMEOUT_MS) {
+-    if (await settleWithin(browser.close(), timeoutMs))
++/**
++ * Taalcut (IX3-K2): Chrome's GPU process decodes video on VideoToolbox, and killing a process stuck in VideoToolbox
++ * preceded two watchdog resets of a Mac. The browser gets one SIGTERM (Chrome shuts down in order and ends its own
++ * children; a second SIGTERM would end it where it stands), never SIGKILL; one still running a minute later is
++ * reported once as a stall and left to exit.
++ */
++const BROWSER_STALL_AFTER_MS = 60_000;
++function stopBrowserProcess(proc, reason) {
++    if (!proc || proc.killed || proc.exitCode !== null || proc.signalCode !== null)
+         return;
+-    // A wedged CDP transport can make graceful close inherit Puppeteer's
+-    // multi-minute protocol timeout. Kill the owned process and disconnect so
+-    // screenshot fallback can launch promptly.
+     try {
+-        browser.process()?.kill("SIGKILL");
++        proc.kill("SIGTERM");
+     }
+     catch {
+-        // Best effort; disconnect below still releases Puppeteer's transport.
++        return;
+     }
++    const stall = setTimeout(() => {
++        if (proc.exitCode !== null || proc.signalCode !== null)
++            return;
++        console.warn(`[hyperframes] stall: pid ${String(proc.pid)} (${proc.spawnfile}) has not exited ` +
++            `${BROWSER_STALL_AFTER_MS / 1000} s after it was stopped (${reason}); it may hold a hardware video ` +
++            "session, so it is left running and never killed");
++    }, BROWSER_STALL_AFTER_MS);
++    stall.unref?.();
++}
++async function closeBrowserAfterFailedProbe(browser, timeoutMs = BEGINFRAME_PROBE_CLEANUP_TIMEOUT_MS) {
++    if (await settleWithin(browser.close(), timeoutMs))
++        return;
++    // A wedged CDP transport can make graceful close inherit Puppeteer's
++    // multi-minute protocol timeout. Stop the owned process (never SIGKILL) and
++    // disconnect so screenshot fallback can launch promptly.
++    stopBrowserProcess(browser.process(), "beginFrame probe cleanup");
+     await settleWithin(browser.disconnect(), timeoutMs);
+ }
+ // The probe keeps its renderer setup, bounded CDP sequence, PNG validation,
+@@ -406,10 +431,19 @@ async function getPuppeteerOrNull() {
+         return null;
+     }
+ }
++/**
++ * Taalcut (LNX1-RND): Chrome's sandbox stays on when the host asks (HYPERFRAMES_CHROME_SANDBOX=1, on Linux where an
++ * AppArmor profile lets the shell make its user namespace); otherwise HyperFrames' unsandboxed launch. The zygote is
++ * part of the sandbox, so `--no-zygote` goes with `--no-sandbox`.
++ */
++export function chromeSandboxArgs() {
++    return process.env.HYPERFRAMES_CHROME_SANDBOX === "1"
++        ? []
++        : ["--no-sandbox", "--disable-setuid-sandbox", "--no-zygote"];
++}
+ function getHardwareGpuProbeArgs(platform) {
+     return [
+-        "--no-sandbox",
+-        "--disable-setuid-sandbox",
++        ...chromeSandboxArgs(),
+         "--disable-dev-shm-usage",
+         "--enable-webgl",
+         "--ignore-gpu-blocklist",
+@@ -460,7 +494,9 @@ async function probeWebGlMode(ppt, options, env, label = "") {
+         });
+         const resolved = resolveWebGlProbeMode(info);
+         logResolvedBrowserGpuMode(resolved, label + describeWebGlProbe(info));
+-        return resolved === "hardware" ? { mode: "hardware" } : { mode: "software", cause: "no-gpu" };
++        // Taalcut (LNX1-RND): the renderer string goes with the answer, for the host's render log.
++        const seen = { vendor: info.vendor ?? "", renderer: info.renderer ?? "" };
++        return resolved === "hardware" ? { mode: "hardware", ...seen } : { mode: "software", cause: "no-gpu", ...seen };
+     }
+     catch (err) {
+         logResolvedBrowserGpuMode("software", label + formatProbeFailure(err));
+@@ -527,6 +563,14 @@ function wslAccess(options) {
+  * safe failure mode; misclassifying toward hardware would error on the real
+  * render.
+  */
++/**
++ * Taalcut (LNX1-RND): what the process's GPU probe saw (mode, and the WebGL vendor and renderer when it ran), or
++ * null before any probe started. The probe runs once per process, for `"auto"` and `"hardware"` alike; an aborted
++ * one is dropped from the cache (sharedGpuProbe), so this never answers with it.
++ */
++export function browserGpuProbe() {
++    return _autoBrowserGpuModeCache ?? null;
++}
+ async function sharedGpuProbe(options) {
+     const shared = (_autoBrowserGpuModeCache ??= probeAutoBrowserGpuMode(options));
+     const outcome = await shared;
+@@ -696,6 +740,10 @@ async function launchBrowser(fingerprint) {
+         env,
+         timeout: fingerprint.browserTimeoutMs,
+         protocolTimeout: fingerprint.protocolTimeoutMs,
++    }).then((launched) => {
++        // Taalcut (IX3-F7, IX3-F8): followed at its spawn already; this covers a launcher without the hook.
++        trackBrowserProcess(launched.process());
++        return launched;
+     }).catch(async (error) => {
+         const remediation = process.platform === "darwin" &&
+             sandboxDeniedRemediation(error instanceof Error ? error.message : "");
+@@ -747,14 +795,8 @@ function forceCloseBrowserProcess(browser) {
+     const proc = browser.process?.();
+     for (const stream of proc?.stdio ?? [])
+         stream?.on("error", () => { });
+-    if (proc && !proc.killed) {
+-        try {
+-            proc.kill("SIGKILL");
+-        }
+-        catch {
+-            // Best-effort cleanup.
+-        }
+-    }
++    // Taalcut (IX3-K2): SIGTERM, never SIGKILL (stopBrowserProcess).
++    stopBrowserProcess(proc, "force close");
+     try {
+         browser.disconnect();
+     }
+@@ -847,6 +889,11 @@ export function usesSoftwareWebGpu(requiresWebGpu, config) {
+         !(config.disableGpu ?? DEFAULT_CONFIG.disableGpu) &&
+         (config.browserGpuMode ?? DEFAULT_CONFIG.browserGpuMode) === "software");
+ }
++// Taalcut (HFW1): every browser the engine launches has no route off the machine.
++export const TAALCUT_OFFLINE_ARGS = [
++    "--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE localhost, EXCLUDE 127.0.0.1",
++    "--proxy-server=http://127.0.0.1:9",
++];
+ export function buildChromeArgs(options, config) {
+     const platform = options.platform ?? process.platform;
+     const gpuDisabled = config?.disableGpu ?? DEFAULT_CONFIG.disableGpu;
+@@ -859,8 +906,12 @@ export function buildChromeArgs(options, config) {
+     // appear in Puppeteer's defaults, Playwright, Remotion, and Chrome's own
+     // headless-shell guidance.
+     const chromeArgs = [
+-        "--no-sandbox",
+-        "--disable-setuid-sandbox",
++        // Taalcut (LNX1-RND): the sandbox flags, or none (chromeSandboxArgs).
++        ...chromeSandboxArgs().filter((arg) => arg !== "--no-zygote"),
++        // Taalcut (HFW1): no network route but loopback, where the producer's file server is. Names resolve to
++        // nothing and every other request goes to a closed proxy port; Chrome's own loopback bypass keeps
++        // localhost and 127.0.0.1 direct. Defence in depth behind the composition gate.
++        ...TAALCUT_OFFLINE_ARGS,
+         "--disable-dev-shm-usage",
+         softwareWebGpu
+             ? `${CANVAS_DRAW_ELEMENT_FEATURE_FLAG},Vulkan`
+@@ -891,7 +942,7 @@ export function buildChromeArgs(options, config) {
+         "--disable-domain-reliability",
+         "--disable-print-preview",
+         "--no-pings",
+-        "--no-zygote",
++        ...chromeSandboxArgs().filter((arg) => arg === "--no-zygote"),
+         // Memory — scale GPU budget to available system RAM
+         `--force-gpu-mem-available-mb=${getGpuMemBudgetMb()}`,
+         "--disk-cache-size=268435456",
+@@ -1037,13 +1088,17 @@ function getBrowserGpuArgs(mode, platform) {
+         case "win32":
+             return ["--use-gl=angle", "--use-angle=d3d11", "--enable-gpu-rasterization"];
+         case "linux":
+-            // Chrome 131+ headless shell only accepts (gl=angle, angle=gl-egl);
+-            // the old --use-gl=egl causes the GPU process to exit silently.
++            // Taalcut (LNX1-RND): ANGLE on Vulkan, with Skia on Vulkan too. Measured on an RTX 4090 host that also
++            // has an Intel UHD 770 (headless shell 152, NVIDIA 615.71, Mesa 25.2): gl-egl lands on the Intel iGPU
++            // (Mesa's EGL comes first) and rasters a test page at 90-100 ms a frame; Vulkan picks the discrete
++            // GPU, "ANGLE (NVIDIA, Vulkan 1.4.351 (NVIDIA NVIDIA GeForce RTX 4090 ...))", at 56-65 ms, sandbox on.
++            // Puppeteer merges this --enable-features with the launch's other one.
+             // --ignore-gpu-blocklist: the operator explicitly opted into
+             // browserGpuMode="hardware", so trust their driver/GPU choice.
+             return [
+                 "--use-gl=angle",
+-                "--use-angle=gl-egl",
++                "--use-angle=vulkan",
++                "--enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan",
+                 "--enable-gpu-rasterization",
+                 "--ignore-gpu-blocklist",
+                 "--disable-software-rasterizer",
+diff --git a/dist/services/chunkEncoder.js b/dist/services/chunkEncoder.js
+index 11975aca9befce1c5ebb9866caa8b4cc303f0595..a21dde3b810d5e939ad97aa5b6d8763fafa7d142 100644
+--- a/dist/services/chunkEncoder.js
++++ b/dist/services/chunkEncoder.js
+@@ -195,6 +195,14 @@ export function buildEncoderArgs(options, inputArgs, outputPath, gpuEncoder = nu
+                         fps: fpsToNumber(fps),
+                         quality,
+                     }));
++                    // Taalcut: VideoToolbox auto-level can under-declare high-resolution 60 fps H.264.
++                    // Annex A: level 5.1 permits 983040 MB/s; 5.2 permits 2073600 MB/s and 36864 MB/frame.
++                    if (codec === "h264") {
++                        const blocks = Math.ceil(options.width / 16) * Math.ceil(options.height / 16);
++                        const blocksPerSecond = blocks * fpsToNumber(fps);
++                        if (blocks <= 36864 && blocksPerSecond > 983040 && blocksPerSecond <= 2073600)
++                            args.push("-profile:v", "high", "-level:v", "5.2");
++                    }
+                     break;
+                 case "vaapi":
+                     args.unshift("-vaapi_device", "/dev/dri/renderD128");
+diff --git a/dist/services/drawElementService.js b/dist/services/drawElementService.js
+index f267af9c6c490ade6694eb0ce0ec2bed8bb74f8c..e883b67f09039336580ab419b028fb3b75cf58b9 100644
+--- a/dist/services/drawElementService.js
++++ b/dist/services/drawElementService.js
+@@ -38,6 +38,12 @@
+  * string. Keep all three in sync with this constant if it ever changes.
+  */
+ export const DE_CANVAS_NOT_INITIALIZED_CODE = "HF_DE_CANVAS_NOT_INITIALIZED";
++// Taalcut (LRN1-FIX): how long a drawElement capture waits for its frame's canvas `paint` event before it gives up
++// with DE_PAINT_TIMEOUT_CODE (recoverable: the producer re-renders by screenshot). Upstream waited 250 ms and then
++// drew whatever snapshot the canvas last recorded, which is the frame before when nothing has painted since the seek.
++// Below the frame deadline (HF_DE_FRAME_TIMEOUT_MS, 15 s) and the parallel worker's 30 s operation timeout.
++export const DE_PAINT_WAIT_MS = 10_000;
++export const DE_PAINT_TIMEOUT_CODE = "HF_DE_PAINT_TIMEOUT";
+ /**
+  * Resolve which capture mode to use when `useDrawElement` is true.
+  *
+@@ -218,7 +224,16 @@ export async function injectDrawElementCanvas(page, width, height) {
+             throw new Error("drawElement: composition root has no parent node");
+         const canvas = document.createElement("canvas");
+         canvas.id = "__hf_de_canvas";
+-        canvas.setAttribute("layoutsubtree", "");
++        // Taalcut: Chrome 155+ renamed the canvas API and requires an explicit paint root.
++        // Only the composition root is drawable: nested drawable elements would disappear from its snapshot.
++        // https://developer.chrome.com/blog/html-in-canvas-ot-changes
++        if ("content" in HTMLCanvasElement.prototype) {
++            canvas.setAttribute("content", "drawable");
++            root.setAttribute("drawable", "");
++        }
++        else {
++            canvas.setAttribute("layoutsubtree", "");
++        }
+         canvas.width = w;
+         canvas.height = h;
+         canvas.style.cssText = "display:block;position:absolute;top:0;left:0;z-index:0";
+@@ -283,7 +298,7 @@ export async function captureDrawElementFrame(page, width, height, format = "jpe
+ // call (snapshot is fresh), and no further paint would ever arrive — the
+ // wait would burn the fallback timeout on every frame.
+ syncToPaintEvent = true) {
+-    const dataUrl = await page.evaluate(({ w, h, fmt, q, sync, }) => {
++    const dataUrl = await page.evaluate(({ w, h, fmt, q, sync, paintWaitMs, paintTimeoutCode, }) => {
+         const canvas = document.getElementById("__hf_de_canvas");
+         const root = document.querySelector("[data-composition-id]");
+         if (!root) {
+@@ -424,7 +439,11 @@ syncToPaintEvent = true) {
+                             /* leave context unchanged → uncorrected (no worse than before) */
+                         }
+                     }
+-                    ctx.drawElementImage(root, 0, 0);
++                    // Capture must not feed the canvas draw coordinates back into the source DOM geometry.
++                    if (canvas.content === "drawable")
++                        ctx.drawElementImage(root, 0, 0, { preserveElementGeometry: true });
++                    else
++                        ctx.drawElementImage(root, 0, 0);
+                     if (__appliedAlpha)
+                         ctx.globalAlpha = 1;
+                     if (__appliedTransform)
+@@ -480,16 +499,18 @@ syncToPaintEvent = true) {
+             // dirty + requestPaint(), installed by injectDrawElementCanvas — see
+             // __hfDeInvalidate there for the full mechanism/rationale.
+             usedRequestPaint = aw.__hfDeInvalidate?.() === true;
+-            // Safety net: if the paint event doesn't arrive (feature drift /
+-            // throttled page), fall back to an unsynchronized draw after 250 ms —
+-            // worst case one-frame-stale content (the root's alpha may lag its
+-            // transform by that frame) rather than a hung render.
++            // Taalcut (LRN1-FIX): no capture without this frame's paint. Upstream drew after 250 ms without one
++            // (feature drift / throttled page), from the snapshot the canvas last recorded; now the capture waits
++            // for the paint, and one that never comes fails it with DE_PAINT_TIMEOUT_CODE.
+             setTimeout(() => {
++                if (settled)
++                    return;
++                settled = true;
+                 canvas.removeEventListener("paint", onPaint);
+-                drawAndEncode();
+-            }, 250);
++                rejectCapture(new Error(`${paintTimeoutCode}: no canvas paint within ${paintWaitMs} ms`));
++            }, paintWaitMs);
+         });
+-    }, { w: width, h: height, fmt: format, q: quality, sync: syncToPaintEvent });
++    }, { w: width, h: height, fmt: format, q: quality, sync: syncToPaintEvent, paintWaitMs: DE_PAINT_WAIT_MS, paintTimeoutCode: DE_PAINT_TIMEOUT_CODE });
+     const base64 = dataUrl.split(",")[1];
+     if (!base64)
+         throw new Error("drawElement: toDataURL returned no base64 payload");
+@@ -684,7 +705,7 @@ export async function produceDrawElementFrame(page, width, height, quality = 80,
+     void encodeResult.catch(() => { });
+     // Do paint-wait + drawElement composite + createImageBitmap + postMessage.
+     // Resolves as soon as the bitmap is transferred (not when encode is done).
+-    await page.evaluate(({ w, h, q, sync, fid }) => {
++    await page.evaluate(({ w, h, q, sync, fid, paintWaitMs, paintTimeoutCode }) => {
+         const canvas = document.getElementById("__hf_de_canvas");
+         const root = document.querySelector("[data-composition-id]");
+         if (!root) {
+@@ -781,7 +802,10 @@ export async function produceDrawElementFrame(page, width, height, quality = 80,
+                             /* leave context unchanged → uncorrected (no worse than before) */
+                         }
+                     }
+-                    ctx.drawElementImage(root, 0, 0);
++                    if (canvas.content === "drawable")
++                        ctx.drawElementImage(root, 0, 0, { preserveElementGeometry: true });
++                    else
++                        ctx.drawElementImage(root, 0, 0);
+                     if (__appliedAlpha)
+                         ctx.globalAlpha = 1;
+                     if (__appliedTransform)
+@@ -834,12 +858,16 @@ export async function produceDrawElementFrame(page, width, height, quality = 80,
+             // Sentinel dirty + requestPaint() — see __hfDeInvalidate in
+             // injectDrawElementCanvas.
+             usedRequestPaint = aw.__hfDeInvalidate?.() === true;
++            // Taalcut (LRN1-FIX): wait for this frame's paint, as captureDrawElementFrame does.
+             setTimeout(() => {
++                if (settled)
++                    return;
++                settled = true;
+                 canvas.removeEventListener("paint", onPaint);
+-                drawAndKick();
+-            }, 250);
++                rejectCapture(new Error(`${paintTimeoutCode}: no canvas paint within ${paintWaitMs} ms`));
++            }, paintWaitMs);
+         });
+-    }, { w: width, h: height, q: quality, sync: syncToPaintEvent, fid: frameId });
++    }, { w: width, h: height, q: quality, sync: syncToPaintEvent, fid: frameId, paintWaitMs: DE_PAINT_WAIT_MS, paintTimeoutCode: DE_PAINT_TIMEOUT_CODE });
+     return { encodeResult };
+ }
+ /**
+@@ -888,7 +916,7 @@ export async function produceDrawElementFrameBatch(page, times, width, height, q
+         void p.catch(() => { }); // same orphan-rejection guard as produceDrawElementFrame
+         encodeResults.push(p);
+     }
+-    const outcome = await page.evaluate(async ({ frames, w, h, q, }) => {
++    const outcome = await page.evaluate(async ({ frames, w, h, q, paintWaitMs, paintTimeoutCode, }) => {
+         const canvas = document.getElementById("__hf_de_canvas");
+         const root = document.querySelector("[data-composition-id]");
+         if (!root) {
+@@ -908,7 +936,7 @@ export async function produceDrawElementFrameBatch(page, times, width, height, q
+             return { failedAt: 0, error: "drawElement: 2d context unavailable" };
+         const aw = window;
+         let usedRequestPaint = false;
+-        const waitPaint = () => new Promise((res) => {
++        const waitPaint = () => new Promise((res, rej) => {
+             let done = false;
+             const settle = () => {
+                 if (done)
+@@ -921,7 +949,15 @@ export async function produceDrawElementFrameBatch(page, times, width, height, q
+             // Sentinel dirty + requestPaint() — see __hfDeInvalidate in
+             // injectDrawElementCanvas.
+             usedRequestPaint = aw.__hfDeInvalidate?.() === true;
+-            setTimeout(settle, 250);
++            // Taalcut (LRN1-FIX): wait for this frame's paint, as captureDrawElementFrame does; the loop below
++            // reports a paint that never comes as this frame's failure.
++            setTimeout(() => {
++                if (done)
++                    return;
++                done = true;
++                canvas.removeEventListener("paint", settle);
++                rej(new Error(`${paintTimeoutCode}: no canvas paint within ${paintWaitMs} ms`));
++            }, paintWaitMs);
+         });
+         let prevBitmap = Promise.resolve();
+         let prevBitmapIdx = -1;
+@@ -1008,7 +1044,10 @@ export async function produceDrawElementFrameBatch(page, times, width, height, q
+                         /* leave context unchanged → uncorrected (no worse than before) */
+                     }
+                 }
+-                ctx.drawElementImage(root, 0, 0);
++                if (canvas.content === "drawable")
++                    ctx.drawElementImage(root, 0, 0, { preserveElementGeometry: true });
++                else
++                    ctx.drawElementImage(root, 0, 0);
+                 if (appliedAlpha)
+                     ctx.globalAlpha = 1;
+                 if (appliedTransform)
+@@ -1050,7 +1089,7 @@ export async function produceDrawElementFrameBatch(page, times, width, height, q
+             return { failedAt: prevBitmapIdx, error: errMsg(e) };
+         }
+         return { failedAt: null };
+-    }, { frames: times.map((t, i) => ({ t, fid: fids[i] ?? 0 })), w: width, h: height, q: quality });
++    }, { frames: times.map((t, i) => ({ t, fid: fids[i] ?? 0 })), w: width, h: height, q: quality, paintWaitMs: DE_PAINT_WAIT_MS, paintTimeoutCode: DE_PAINT_TIMEOUT_CODE });
+     if (outcome.failedAt !== null) {
+         // Frames >= failedAt never reached the worker — reject their pendings now
+         // so nothing waits 30s on the watchdog.
+diff --git a/dist/services/frameCapture.js b/dist/services/frameCapture.js
+index b526a2d4b67a4f77be87e42712388650a705b363..a595158a2dc0c711cb2c175f1b195e96282aa19e 100644
+--- a/dist/services/frameCapture.js
++++ b/dist/services/frameCapture.js
+@@ -18,7 +18,7 @@ import { describePageMotionBlur, describePageMotionBlurAtEnd, installPageMotionB
+ // ── Extracted modules ───────────────────────────────────────────────────────
+ import { acquireBrowser, releaseBrowser, forceReleaseBrowser, buildChromeArgs, resolveBrowserGpuMode, captureWithoutWaylandDisplay, resolveHeadlessShellPath, compositionRequiresWebGpu, assertWebGpuAdapterAvailable, usesSoftwareWebGpu, } from "./browserManager.js";
+ import { beginFrameCapture, ensureRenderFrameSiblings, getCdpSession, pageContentExceedsCaptureHeight, pageScreenshotCapture, initTransparentBackground, capturesAlpha, shouldDefaultCaptureBeyondViewport, } from "./screenshotService.js";
+-import { classifyGpuRenderer, detectGpuBackend, injectDrawElementCanvas, captureDrawElementFrame, resolveDrawElementCaptureMode, instrumentAcceleratedCanvases, initDrawElementWorkerEncode, cleanupDrawElementWorkerEncode, produceDrawElementFrame, produceDrawElementFrameBatch, DE_CANVAS_NOT_INITIALIZED_CODE, } from "./drawElementService.js";
++import { classifyGpuRenderer, detectGpuBackend, injectDrawElementCanvas, captureDrawElementFrame, resolveDrawElementCaptureMode, instrumentAcceleratedCanvases, initDrawElementWorkerEncode, cleanupDrawElementWorkerEncode, produceDrawElementFrame, produceDrawElementFrameBatch, DE_CANVAS_NOT_INITIALIZED_CODE, DE_PAINT_TIMEOUT_CODE, } from "./drawElementService.js";
+ import { initThreeDProjection, scanCssEffects } from "./threeDProjection.js";
+ import { planRiskFrames, scanCssEffectLiveFrames, riskSessionFits, withFramesAfterCallback, MAX_RISK_FRAME_FRACTION, } from "./riskFrames.js";
+ import { getAvailableMemoryMb } from "./systemMemory.js";
+@@ -3116,7 +3116,23 @@ function isCanvasNotInitializedError(err) {
+  * here once.
+  */
+ function isRecoverableDrawElementError(err) {
+-    return isNoCachedPaintRecordError(err) || isCanvasNotInitializedError(err);
++    return isNoCachedPaintRecordError(err) || isCanvasNotInitializedError(err) || isPaintTimeoutError(err);
++}
++/**
++ * Taalcut (LRN1-FIX): a drawElement capture whose frame's paint never came (DE_PAINT_TIMEOUT_CODE). Recoverable
++ * the same way: the injected page can still show an earlier frame, so the attempt is re-rendered by screenshot.
++ */
++function isPaintTimeoutError(err) {
++    const msg = err instanceof Error ? err.message : String(err);
++    return msg.includes(DE_PAINT_TIMEOUT_CODE);
++}
++/** Taalcut (LRN1-FIX): the reason a recoverable drawElement failure is reported with. */
++function recoverableDrawElementReason(err) {
++    if (isCanvasNotInitializedError(err))
++        return "drawElement canvas not initialized";
++    if (isPaintTimeoutError(err))
++        return "no canvas paint for the frame";
++    return "No cached paint record";
+ }
+ /**
+  * Per-frame deadline for the drawElement capture round-trip.
+@@ -3309,9 +3325,7 @@ async function captureFrameSurface(session, frameIndex, time, seekOptions, heldV
+             // Missing paint records/canvas state require a new screenshot page.
+             if (isRecoverableDrawElementError(err)) {
+                 session.deNcprFallbacks = (session.deNcprFallbacks ?? 0) + 1;
+-                const reason = isCanvasNotInitializedError(err)
+-                    ? "drawElement canvas not initialized"
+-                    : "No cached paint record";
++                const reason = recoverableDrawElementReason(err);
+                 throw new DrawElementCaptureError(frameIndex, reason, err);
+             }
+             else {
+@@ -3682,9 +3696,7 @@ export async function captureFrameToBufferPipelined(session, frameIndex, time) {
+         // The viewport can contain the last injected bitmap, not the sought frame.
+         if (isRecoverableDrawElementError(captureError)) {
+             session.deNcprFallbacks = (session.deNcprFallbacks ?? 0) + 1;
+-            const reason = isCanvasNotInitializedError(captureError)
+-                ? "drawElement canvas not initialized"
+-                : "No cached paint record";
++            const reason = recoverableDrawElementReason(captureError);
+             throw new DrawElementCaptureError(frameIndex, reason, captureError);
+         }
+         throw captureError;
+@@ -3778,9 +3790,7 @@ export async function captureFramesBatchPipelined(session, frameIndices, times)
+         // embeds the same DE_CANVAS_NOT_INITIALIZED_CODE / native paint-record
+         // phrase the per-frame paths match on).
+         if (isRecoverableDrawElementError(error)) {
+-            const reason = isCanvasNotInitializedError(error)
+-                ? "drawElement canvas not initialized"
+-                : "No cached paint record";
++            const reason = recoverableDrawElementReason(error);
+             session.deNcprFallbacks = (session.deNcprFallbacks ?? 0) + 1;
+             throw new DrawElementCaptureError(frameIndices[failedAt] ?? failedAt, reason, error);
+         }
+diff --git a/dist/services/hdrCapture.js b/dist/services/hdrCapture.js
+index bd4eed9e8c8e6827ac5f1ad0cf5b85f4572e4b9f..12a6c2eefac87aae7a40bba458b8089c1e78337c 100644
+--- a/dist/services/hdrCapture.js
++++ b/dist/services/hdrCapture.js
+@@ -20,6 +20,7 @@
+  */
+ import { withHyperframesBrowserMarker } from "@hyperframes/core/browser-marker";
+ import { resolveFullChromePath, ownedLaunchOptions } from "./browserManager.js";
++import { trackBrowserProcess, watchBrowserSpawns } from "../utils/processTracker.js";
+ // ── PQ (SMPTE 2084) OETF ─────────────────────────────────────────────────────
+ const PQ_M1 = 0.1593017578125;
+ const PQ_M2 = 78.84375;
+@@ -180,12 +181,16 @@ export async function launchHdrBrowser(width, height) {
+     if (!chromePath) {
+         throw new Error("[HDR] No Chrome binary found. Install: npx @puppeteer/browsers install chrome@stable");
+     }
++    // Taalcut (IX3-F8): the browser is followed at its spawn.
++    await watchBrowserSpawns();
+     const browser = await ppt.launch({
+         ...ownedLaunchOptions(),
+         headless: false,
+         executablePath: chromePath,
+         args: withHyperframesBrowserMarker(buildHdrChromeArgs(width, height)),
+     });
++    // Taalcut (IX3-F7, IX3-F8): followed at its spawn already; this covers a launcher without the hook.
++    trackBrowserProcess(browser.process());
+     const page = await browser.newPage();
+     await page.setViewport({ width, height });
+     return { browser, page };
+diff --git a/dist/services/streamingEncoder.js b/dist/services/streamingEncoder.js
+index 482332a06bf4c3b1efd99b26f99e32b1cf1f29ed..85648ab9f839eaa2bf6e0ebdac016a7aee9bf9b4 100644
+--- a/dist/services/streamingEncoder.js
++++ b/dist/services/streamingEncoder.js
+@@ -142,6 +142,14 @@ export function buildStreamingArgs(options, outputPath, gpuEncoder = null) {
+                         fps: fpsToNumber(fps),
+                         quality,
+                     }));
++                    // Taalcut: VideoToolbox auto-level can under-declare high-resolution 60 fps H.264.
++                    // Annex A: level 5.1 permits 983040 MB/s; 5.2 permits 2073600 MB/s and 36864 MB/frame.
++                    if (codec === "h264") {
++                        const blocks = Math.ceil(options.width / 16) * Math.ceil(options.height / 16);
++                        const blocksPerSecond = blocks * fpsToNumber(fps);
++                        if (blocks <= 36864 && blocksPerSecond > 983040 && blocksPerSecond <= 2073600)
++                            args.push("-profile:v", "high", "-level:v", "5.2");
++                    }
+                     break;
+                 case "vaapi":
+                     args.unshift("-vaapi_device", "/dev/dri/renderD128");
+diff --git a/dist/utils/gpuEncoder.d.ts b/dist/utils/gpuEncoder.d.ts
+index 36f801d386f17c8d6e97655b50f1d105d8cf6aca..3493ca65ef2cd73169eacf2cac8c9527a2d0a1f9 100644
+--- a/dist/utils/gpuEncoder.d.ts
++++ b/dist/utils/gpuEncoder.d.ts
+@@ -19,6 +19,8 @@ export declare function buildVideoToolboxRateControlArgs(input: {
+     quality: number;
+ }): string[];
+ export declare function getProbeArgs(encoder: ConcreteGpuEncoder): string[];
++/** Taalcut (IX3-F5, H3): resolves once every GPU encoder probe started so far has exited; null when none runs. */
++export declare function gpuProbesExited(): Promise<void> | null;
+ /**
+  * Translate a libx264-style `-preset` value to one accepted by the given
+  * GPU encoder.
+diff --git a/dist/utils/gpuEncoder.js b/dist/utils/gpuEncoder.js
+index 2b609fd85aec4de518da3e16e6e28ab26d636b35..4b9c356b4f3d2d18bb87f7b8a79c817583d9d73b 100644
+--- a/dist/utils/gpuEncoder.js
++++ b/dist/utils/gpuEncoder.js
+@@ -23,8 +23,19 @@ const H264_ENCODER_BY_GPU = {
+     qsv: "h264_qsv",
+     amf: "h264_amf",
+ };
+-const GPU_PROBE_TIMEOUT_MS = 2000;
+-const GPU_PROBE_KILL_GRACE_MS = 1000;
++// Taalcut (UX2): how long a trial encode may take before the encoder counts as unusable. It is about a hung
++// session, not a busy machine: under a full load a probe takes 2 to 6 s (FFmpeg's start), and a verdict past 2 s
++// was cached as "no GPU encoder" for the whole process. The same 30 s as the encoder list's own deadline.
++const GPU_PROBE_TIMEOUT_MS = 30_000;
++// Taalcut (IX3-K2): how long after the deadline a probe still running is reported once as a stall.
++const GPU_PROBE_STALL_AFTER_MS = 60_000;
++// Taalcut (IX3-F5, H3): the exits of the probes still running. A probe past its deadline is never killed, so
++// whoever holds a hardware session for the work that started it keeps holding it until the probe has exited.
++const runningProbes = new Set();
++/** Taalcut (IX3-F5, H3): resolves once every GPU encoder probe started so far has exited; null when none runs. */
++export function gpuProbesExited() {
++    return runningProbes.size === 0 ? null : Promise.all([...runningProbes]).then(() => undefined);
++}
+ export function getCompiledGpuEncoders(ffmpegEncodersStdout) {
+     return GPU_ENCODER_CANDIDATES.filter((encoder) => ffmpegEncodersStdout.includes(H264_ENCODER_BY_GPU[encoder]));
+ }
+@@ -65,6 +76,12 @@ export async function detectGpuEncoder() {
+ }
+ let cachedGpuEncoder = undefined;
+ export async function getCachedGpuEncoder() {
++    // Taalcut (LNX1-RND): the host already chose and proved the encoder (media's hardware video table: NVENC on an
++    // NVIDIA machine, VideoToolbox on a Mac, VA-API only where media enables it), so no detection and no probe.
++    // HYPERFRAMES_GPU_ENCODER names the family; "none" means no GPU encoder.
++    const pinned = process.env.HYPERFRAMES_GPU_ENCODER;
++    if (pinned !== undefined && pinned !== "")
++        return GPU_ENCODER_CANDIDATES.includes(pinned) ? pinned : null;
+     if (cachedGpuEncoder === undefined) {
+         cachedGpuEncoder = await detectGpuEncoder();
+     }
+@@ -144,10 +161,31 @@ async function canUseGpuEncoder(encoder) {
+         windowsHide: true,
+     });
+     trackChildProcess(ffmpeg);
+-    const outcome = await new ManagedChildProcess(ffmpeg, {
+-        deadlineAtMs: Date.now() + GPU_PROBE_TIMEOUT_MS,
+-        terminationGraceMs: GPU_PROBE_KILL_GRACE_MS,
+-    }).wait();
++    // Taalcut (IX3-K2): the trial encode holds a VideoToolbox session, and killing one stuck in VideoToolbox
++    // preceded two watchdog resets of a Mac. The deadline stops waiting (no GPU encoder), never the process: it is
++    // left to exit, and reported once as a stall if it still runs a minute later.
++    const managed = new ManagedChildProcess(ffmpeg, {});
++    // wait() only resolves (spawn errors and exits alike).
++    const exited = managed.wait().then(() => undefined);
++    runningProbes.add(exited);
++    void exited.then(() => runningProbes.delete(exited));
++    let deadline;
++    const timedOut = new Promise((resolve) => {
++        deadline = setTimeout(() => resolve(undefined), GPU_PROBE_TIMEOUT_MS);
++    });
++    const settled = await Promise.race([managed.wait(), timedOut]);
++    clearTimeout(deadline);
++    if (settled === undefined) {
++        const stall = setTimeout(() => {
++            if (managed.isSettled)
++                return;
++            console.warn(`[hyperframes] stall: pid ${String(ffmpeg.pid)} (${encoder} GPU encoder probe) has not exited ` +
++                `${Math.round((GPU_PROBE_TIMEOUT_MS + GPU_PROBE_STALL_AFTER_MS) / 1000)} s after it started; it may ` +
++                "hold a hardware video session, so it is left running and never killed");
++        }, GPU_PROBE_STALL_AFTER_MS);
++        stall.unref?.();
++    }
++    const outcome = settled ?? { reason: "deadline", exitCode: null, signal: null, stderr: "" };
+     const usable = outcome.reason === "exit" && outcome.exitCode === 0;
+     logGpuProbeFailure(encoder, {
+         code: outcome.exitCode,
+diff --git a/dist/utils/managedChildProcess.js b/dist/utils/managedChildProcess.js
+index 2efef932f5da6640eb3c94958d97b81961f491b4..d5af0c90264ed4b59e47cdeb2af9513d93b8cbb0 100644
+--- a/dist/utils/managedChildProcess.js
++++ b/dist/utils/managedChildProcess.js
+@@ -1,6 +1,8 @@
+ import { StringDecoder } from "node:string_decoder";
+ import { redactUrlQueryStrings } from "@hyperframes/core";
+ const DEFAULT_TERMINATION_GRACE_MS = 2_000;
++// Taalcut (IX3-K2): how long after the SIGTERM a child still running is reported once as a stall.
++const STALL_AFTER_MS = 60_000;
+ const DEFAULT_STDERR_MAX_BYTES = 64 * 1024;
+ const RAW_STDERR_SLACK_FACTOR = 2;
+ /** Owns cancellation, escalation, stderr and reaping for one child process. */
+@@ -115,23 +117,26 @@ export class ManagedChildProcess {
+         if (this.settled || this.requestedReason)
+             return;
+         this.requestedReason = reason;
++        // Taalcut (IX3-K2): every child here is FFmpeg or ffprobe, and an FFmpeg may hold a VideoToolbox session;
++        // killing one stuck in VideoToolbox preceded two watchdog resets of a Mac. So one SIGTERM (FFmpeg traps it
++        // and finishes in order; its fourth signal would be a hard exit), never SIGKILL: a child still running
++        // past the grace is reported once as a stall and left to exit, and wait() resolves when it does.
+         try {
+             this.child.kill("SIGTERM");
+         }
+         catch {
+-            // A close/error event owns settlement; escalation remains the backstop.
++            // A close/error event owns settlement.
+         }
+         const graceMs = this.options.terminationGraceMs ?? DEFAULT_TERMINATION_GRACE_MS;
++        const stallAfterMs = Math.max(0, graceMs, STALL_AFTER_MS);
+         this.escalationTimer = setTimeout(() => {
+             if (this.settled)
+                 return;
+-            try {
+-                this.child.kill("SIGKILL");
+-            }
+-            catch {
+-                // The child may have exited between the settled check and kill.
+-            }
+-        }, Math.max(0, graceMs));
++            const args = (this.child.spawnargs ?? []).slice(1, 41).join(" ");
++            console.warn(`[hyperframes] stall: pid ${String(this.child.pid)} (${this.child.spawnfile} ${args}) has not ` +
++                `exited ${Math.round(stallAfterMs / 1000)} s after it was stopped (${reason}); it may hold a hardware ` +
++                "video session, so it is left running and never killed");
++        }, stallAfterMs);
+         this.escalationTimer.unref?.();
+     }
+     settle(outcome) {
+diff --git a/dist/utils/processTracker.d.ts b/dist/utils/processTracker.d.ts
+index d1f268fba3a3c4605bccc71e10a5fab0b9903934..85b5406c5e5fdb13b6ff0a00c9846f1a1152f74f 100644
+--- a/dist/utils/processTracker.d.ts
++++ b/dist/utils/processTracker.d.ts
+@@ -1,7 +1,22 @@
+ import type { ChildProcess } from "node:child_process";
++/**
++ * Taalcut (IX3-F7): tells `listener` of every process the engine runs as it starts (synchronously, at its spawn or
++ * its browser launch) and as it exits; the ones already running first. Returns the unsubscribe.
++ */
++export declare function onChildProcess(listener: (pid: number, event: "spawn" | "exit") => void): () => void;
++/** Taalcut (IX3-F7): a browser the engine launched; followed here only if the spawn hook (IX3-F8) missed it. */
++export declare function trackBrowserProcess(proc: ChildProcess | null | undefined): void;
++/** Taalcut (IX3-F8): the @puppeteer/browsers module that the engine's Puppeteer launches browsers with. */
++export declare function puppeteerBrowsersEntry(): string;
++/**
++ * Taalcut (IX3-F8): follows every browser Puppeteer spawns on the turn it is spawned (before its launch waits for
++ * DevTools). Every launch awaits this first. Never rejects.
++ */
++export declare function watchBrowserSpawns(): Promise<void>;
+ export declare function trackChildProcess(proc: ChildProcess): void;
+ /**
+- * SIGTERM all tracked child processes, then SIGKILL any that survive
+- * after a short grace period.
++ * SIGTERM all tracked child processes. Taalcut (IX3-K2): never SIGKILL them
++ * (they are FFmpeg runs that may hold a VideoToolbox session); survivors are
++ * left to exit.
+  */
+ export declare function killTrackedProcesses(): void;
+diff --git a/dist/utils/processTracker.js b/dist/utils/processTracker.js
+index 2e9a77e46dccbe1c9ea9a729a2e8ecdec967629f..855edeb2f11ed28c4778cdcd1345894bb43b0f4a 100644
+--- a/dist/utils/processTracker.js
++++ b/dist/utils/processTracker.js
+@@ -1,21 +1,108 @@
++import { createRequire } from "node:module";
++import { pathToFileURL } from "node:url";
+ const tracked = new Set();
++// Taalcut (IX3-F7): the pid of every process the engine runs (FFmpeg, ffprobe, the GPU encoder probe, Chrome) while
++// it runs, and who is told as each one starts and exits. A hardware session lease writes the pid to disk at once, so
++// a quit or a crash of the host leaves its slot held while that process may be in VideoToolbox.
++const running = new Set();
++const followed = new WeakSet();
++const childListeners = new Set();
++function tell(listener, pid, event) {
++    try {
++        listener(pid, event);
++    }
++    catch (error) {
++        console.error(`[hyperframes] a child process listener failed: ${String(error)}`);
++    }
++}
++function follow(proc) {
++    const pid = proc?.pid;
++    if (pid === undefined || followed.has(proc) || proc.exitCode !== null || proc.signalCode !== null)
++        return;
++    followed.add(proc);
++    running.add(pid);
++    for (const listener of childListeners)
++        tell(listener, pid, "spawn");
++    proc.once("exit", () => {
++        if (!running.delete(pid))
++            return;
++        for (const listener of childListeners)
++            tell(listener, pid, "exit");
++    });
++}
++/**
++ * Taalcut (IX3-F7): tells `listener` of every process the engine runs as it starts (synchronously, at its spawn or
++ * its browser launch) and as it exits; the ones already running first. Returns the unsubscribe.
++ */
++export function onChildProcess(listener) {
++    for (const pid of running)
++        tell(listener, pid, "spawn");
++    childListeners.add(listener);
++    return () => {
++        childListeners.delete(listener);
++    };
++}
++/**
++ * Taalcut (IX3-F7): a browser the engine launched; it may decode video in hardware. Since IX3-F8 a browser is followed
++ * at its spawn (watchBrowserSpawns), so this only follows one that the spawn hook missed.
++ */
++export function trackBrowserProcess(proc) {
++    follow(proc);
++}
++/**
++ * Taalcut (IX3-F8): the @puppeteer/browsers module that the engine's Puppeteer launches browsers with. The engine
++ * imports "puppeteer", else "puppeteer-core"; either launches through puppeteer-core, which imports
++ * @puppeteer/browsers from its own folder. Resolving the same chain gives the same file, so the same module.
++ */
++export function puppeteerBrowsersEntry() {
++    const fromEngine = createRequire(import.meta.url);
++    let launcher;
++    try {
++        launcher = fromEngine.resolve("puppeteer");
++    }
++    catch {
++        launcher = fromEngine.resolve("puppeteer-core");
++    }
++    const core = createRequire(launcher).resolve("puppeteer-core");
++    return createRequire(core).resolve("@puppeteer/browsers");
++}
++let browserSpawns;
++async function followBrowserSpawns() {
++    const browsers = await import(pathToFileURL(puppeteerBrowsersEntry()).href);
++    if (typeof browsers.onBrowserSpawn !== "function") {
++        throw new Error("@puppeteer/browsers has no onBrowserSpawn (patches/@puppeteer__browsers@3.2.4.patch)");
++    }
++    browsers.onBrowserSpawn(follow);
++}
++/**
++ * Taalcut (IX3-F8): follows every browser Puppeteer spawns on the turn it is spawned, before the launch waits for the
++ * browser's DevTools endpoint (up to its launch timeout), so a host's hardware session slot names it during that
++ * wait too. Every launch awaits this first. Resolves once subscribed, and never rejects: without the hook, a browser
++ * is followed once its launch resolves (trackBrowserProcess), and that is logged.
++ */
++export function watchBrowserSpawns() {
++    browserSpawns ??= followBrowserSpawns().catch((error) => {
++        console.error(`[hyperframes] browsers are followed only once their launch resolves: ${String(error)}`);
++    });
++    return browserSpawns;
++}
+ export function trackChildProcess(proc) {
+     tracked.add(proc);
++    follow(proc);
+     const remove = () => tracked.delete(proc);
+     proc.once("exit", remove);
+     proc.once("close", remove);
+ }
+ /**
+- * SIGTERM all tracked child processes, then SIGKILL any that survive
+- * after a short grace period.
++ * SIGTERM all tracked child processes. Taalcut (IX3-K2): never SIGKILL them
++ * (they are FFmpeg runs that may hold a VideoToolbox session); survivors are
++ * left to exit.
+  */
+ export function killTrackedProcesses() {
+-    const alive = [];
+     for (const proc of tracked) {
+         if (!proc.killed) {
+             try {
+                 proc.kill("SIGTERM");
+-                alive.push(proc);
+             }
+             catch {
+                 // Already exited between the check and the kill.
+@@ -23,16 +110,4 @@ export function killTrackedProcesses() {
+         }
+     }
+     tracked.clear();
+-    if (alive.length === 0)
+-        return;
+-    setTimeout(() => {
+-        for (const proc of alive) {
+-            try {
+-                proc.kill("SIGKILL");
+-            }
+-            catch {
+-                // Already exited.
+-            }
+-        }
+-    }, 500).unref();
+ }

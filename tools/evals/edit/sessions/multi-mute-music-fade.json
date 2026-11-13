@@ -1,0 +1,398 @@
+{
+ "caseId": "multi-mute-music-fade",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJCBNMZACSS63XQ8PJM84D",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "GdiedBYUMLwMhQLjmBQlIx98B17xZrmG",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "GdiedBYUMLwMhQLjmBQlIx98B17xZrmG",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 9907,
+      "output": 43,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 9950,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604333236,
+     "responseId": "chatcmpl-f16bafefa66e4cdc90e108e5108b5c2e",
+     "rawStopReason": "tool_calls",
+     "durationMs": 9152
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "GdiedBYUMLwMhQLjmBQlIx98B17xZrmG",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 9907,
+    "outputTokens": 43,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 9950,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJCMKPZRRY0H146DB6FRX2",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 4 is the waves; I’ll mute its sound and fade the music in over one second.\n\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "6CKCVFgXJRCJX3RBicKALB5gwFIMIorQ",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "clips": [
+          4
+         ],
+         "kind": "clips"
+        },
+        "muted": true
+       }
+      }
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "3pxexUVPuQXpjNMvjg867E5maV6aZMij",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "kind": "sound",
+         "sound": "music"
+        },
+        "fadeInSeconds": 1
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 4 is the waves; I’ll mute its sound and fade the music in over one second.\n\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "6CKCVFgXJRCJX3RBicKALB5gwFIMIorQ",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "clips": [
+          4
+         ],
+         "kind": "clips"
+        },
+        "muted": true
+       }
+      },
+      {
+       "type": "toolCall",
+       "id": "3pxexUVPuQXpjNMvjg867E5maV6aZMij",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "kind": "sound",
+         "sound": "music"
+        },
+        "fadeInSeconds": 1
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1566,
+      "output": 249,
+      "cacheRead": 9907,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11722,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604342391,
+     "responseId": "chatcmpl-742e7af03aad4e91b0c984496b51e2c4",
+     "rawStopReason": "tool_calls",
+     "durationMs": 7053
+    }
+   },
+   "text": "Clip 4 is the waves; I’ll mute its sound and fade the music in over one second.\n\n\n",
+   "toolCalls": [
+    {
+     "id": "6CKCVFgXJRCJX3RBicKALB5gwFIMIorQ",
+     "name": "audio_setVolume",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "of": {
+       "clips": [
+        4
+       ],
+       "kind": "clips"
+      },
+      "muted": true
+     }
+    },
+    {
+     "id": "3pxexUVPuQXpjNMvjg867E5maV6aZMij",
+     "name": "audio_setVolume",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "of": {
+       "kind": "sound",
+       "sound": "music"
+      },
+      "fadeInSeconds": 1
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1566,
+    "outputTokens": 249,
+    "cachedInputTokens": 9907,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11722,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJCVGBY5RNF38DKA0K1E3S",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 4 is muted and the music now fades in over one second."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 4 is muted and the music now fades in over one second."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 323,
+      "output": 15,
+      "cacheRead": 11473,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11811,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604349452,
+     "responseId": "chatcmpl-bb0359adb7e24303be03ac6740c0f958",
+     "rawStopReason": "stop",
+     "durationMs": 813
+    }
+   },
+   "text": "Clip 4 is muted and the music now fades in over one second.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 323,
+    "outputTokens": 15,
+    "cachedInputTokens": 11473,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11811,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJCW9T52F00C8FV7TEAC8E",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "mDdHSHJqetgAsJTarBP9qh9AJ4563MPQ",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "mDdHSHJqetgAsJTarBP9qh9AJ4563MPQ",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11891,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11946,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604350267,
+     "responseId": "chatcmpl-bf3c4527065f4ff4809473dfcb12114d",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11862
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "mDdHSHJqetgAsJTarBP9qh9AJ4563MPQ",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11891,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11946,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

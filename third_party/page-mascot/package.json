@@ -1,0 +1,39 @@
+{
+  "name": "@taalcut-vendor/page-mascot",
+  "version": "0.1.0-76a44ed",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "The Mascot component from page-mascot (MIT, Kamran Ahmed), vendored for @taalcut/ui's Kaatu as its sprite stage. Adapted for Taalcut; see the upstream field and upstream/ for the original.",
+  "upstream": {
+    "repository": "https://github.com/nilbuild/page-mascot",
+    "commit": "76a44ed9180063bf4852b9dd724b656f4a828ac7",
+    "fetched": "2026-10-13",
+    "files": {
+      "src/mascot.tsx": "src/mascot.tsx (sha256 c0710682c1c7fb6cae82797d66870bc8188ce3f02f80b5b3ebd57e8c6f4c8dd2)",
+      "LICENSE": "LICENSE (sha256 33da9fbdab1e00d5207e293521bc8e0393cb65cdc6a2e552e9abd7319670adb7)"
+    },
+    "changes": [
+      "Cut down to the sprite stage. It takes any number of 3x3 sheets (sheets) and shows one frame ({ sheet, cell }) as stacked layers, one per sheet, always mounted so every sheet is fetched up front. What to show and when (moods, blinks, thinking, the click reaction and its squash) moved to Taalcut's Kaatu player in packages/ui/src/brand, which is Taalcut's own code.",
+      "Upstream's pointer tracking (eight sectors, hysteresis, a dead zone, fine pointers only) is kept and reports the direction through onLook while track is true, instead of setting the head itself. DIRECTIONS and MascotDirection are exported.",
+      "No <button>: the root is a <span> a pointer can still poke (onPoke). With a label it is an image with that name (role img, aria-label); without one it is decorative and aria-hidden. Upstream's 'Boop the …' label was English-only and put a control with no function in the tab order on every page.",
+      "onHover reports the pointer coming onto and leaving the drawing; stageRef exposes the inner element, whose transform origin is the seat (50% 75%), for the caller's body motions; data passes data-* attributes to the root, for tests.",
+      "Only opacity may transition on the layers, so a page-wide transition duration (Taalcut's reduced-motion base layer gives every element one) cannot slide a sheet through neighbouring frames. The sheet shown just before keeps its frame while the two crossfade.",
+      "The sheet URLs are quoted inside url(). Type-only edits for the repository's stricter compiler settings (noUncheckedIndexedAccess); matchMedia is guarded for test environments without it (jsdom)."
+    ]
+  },
+  "files": [
+    "src"
+  ],
+  "exports": {
+    "./mascot": "./src/mascot.tsx"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "react": "19.3.0"
+  }
+}

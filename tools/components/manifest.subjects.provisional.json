@@ -1,0 +1,46 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "Poses, faces and people without the mac helper (FRM1-SUB, vision's src/subjects): hosted at components.taalcut.app since 2026-11-11, included in the production manifest and verified by a complete public SHA-256 download. One archive, made by tools/components/pack-subjects-onnx.sh, two ONNX files at its root. rtmo_s_coco.onnx: RTMO-s (Lu et al. 2024) from MMPose's COCO checkpoint rtmo-s_8xb32-600e_coco-640x640-8db55a59_20231211.pth (download.openmmlab.com, sha256 8db55a5974d4d31164cc327805c57932cc7b4f79874b5e5bfbbfa32a7d4e5b05), MMPose Apache-2.0; exported with mmdeploy 1.3.1 (commit bc75c9d6c8940aa03d0e1e5b5962bd930478ba77, Apache-2.0) to 39667335 bytes, sha256 4b5d3e663769effa29df3538f29f66584135f662031109ddd6794b738ebf11c7, then its six grouped convolutions rewritten as the same dense ones (onnxruntime's WebGPU provider computes them wrongly): 43586517 bytes, sha256 191f8f2c87dddbb875102b61cf788ec3810a570efc40595f743220aae72adc83. Trained on COCO train2017 keypoints only; its backbone was initialised from mmdetection's yolox_s_8x8_300e_coco, trained from scratch on COCO 2017. yolox_nano.onnx: YOLOX-Nano by Megvii, github.com/Megvii-BaseDetection/YOLOX release 0.1.1rc0 (tag commit e1052df71842031413f6030723c3607b839c80ce), Apache-2.0; 3659407 bytes, sha256 c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d, unchanged; trained on COCO 2017. COCO's annotations are CC BY 4.0, its images under their Flickr licences. Eval: tools/evals/src/subjects/onnx.ts.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "subjects-onnx",
+      "name": "Subject detection (RTMO-s poses, YOLOX-Nano)",
+      "version": "2.0.0-rtmo-s-191f8f2c-nano-c789161e",
+      "kind": "model",
+      "tiers": [
+        "minimum",
+        "recommended",
+        "high"
+      ],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/subjects-onnx/2.0.0-rtmo-s-191f8f2c-nano-c789161e/NOTICE-7861b4358fb0bccc.txt",
+          "size": 23924,
+          "sha256": "7861b4358fb0bccc9a8a23eb83b0cc6135517f197005ead62c94152abb2e6aaa"
+        },
+        "attribution": "RTMO-s pose estimator from MMPose (open-mmlab/mmpose), Apache-2.0, exported to ONNX by Taalcut with mmdeploy (Apache-2.0). YOLOX-Nano object detector by Megvii (Megvii-BaseDetection/YOLOX), Apache-2.0, hosted unchanged."
+      },
+      "dependencies": [
+        "onnxruntime"
+      ],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/subjects-onnx/2.0.0-rtmo-s-191f8f2c-nano-c789161e/subjects-onnx-rtmo-s-coco-yolox-nano.tar.zst"
+          ],
+          "sha256": "4759fe20866b0a445271a4431e3da7a62f7e83e5716b9c70e107441b364f26c1",
+          "size": 39772963,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 47245924
+          }
+        }
+      ]
+    }
+  ]
+}

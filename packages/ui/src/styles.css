@@ -1,0 +1,244 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* Hallmark · system: DESIGN.md v0.2 */
+/* @taalcut/ui styles. The app's entry stylesheet imports this after Tailwind and
+ * the design tokens:
+ *   @import "tailwindcss";
+ *   @import "<repo>/design/tokens/tailwind.css";
+ *   @import "<repo>/design/tokens/base.css";
+ *   @import "@taalcut/ui/styles.css";
+ */
+
+/* React Bits keyframes (PromptBar, ThoughtLine): a stylesheet, not inline <style>. */
+@import '@taalcut-vendor/react-bits/styles.css';
+
+/* Type roles (UX4): type-page-title, type-section, type-body, type-meta… (design/tokens/roles.css). */
+@import '../../../design/tokens/roles.css';
+
+/* Tailwind does not scan workspace packages on its own, nor the vendored React
+ * Bits sources (a linked workspace package outside this one). */
+@source "./";
+@source "../../../third_party/react-bits/src";
+
+/* Quiet motion (DESIGN.md): transform and opacity only, no bounce. Reduced
+ * motion turns every animation into a 150 ms fade in base.css. */
+@theme {
+  /* The window (DESIGN.md, "Window"): the 52 px toolbar, and the band the
+   * traffic controls sit in when no sidebar is beside them. */
+  --spacing-toolbar: 3.25rem;
+  --spacing-window-inset: 5.25rem;
+
+  --animate-enter: tc-enter var(--dur-short) var(--ease-out);
+  --animate-exit: tc-exit var(--dur-micro) var(--ease-in) forwards;
+  --animate-fade-in: tc-fade-in var(--dur-short) var(--ease-out);
+  --animate-fade-out: tc-fade-out var(--dur-micro) var(--ease-in) forwards;
+
+  @keyframes tc-enter {
+    from {
+      opacity: 0;
+      transform: translateY(4px) scale(0.98);
+    }
+  }
+  @keyframes tc-exit {
+    to {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  }
+  @keyframes tc-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes tc-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+/* The window stops being the active one (another app or window is in front):
+ * html[data-window-active="false"], set by the app shell. Controls go hollow,
+ * titles and icons go to ink-3, accents go neutral. */
+@custom-variant window-inactive (&:where([data-window-active='false'], [data-window-active='false'] *));
+
+/* Window drag regions (Electron). Drag swallows pointer events, so anything
+ * clickable inside one is app-no-drag; text in a drag region can't be selected. */
+@utility app-drag {
+  -webkit-app-region: drag;
+  user-select: none;
+}
+@utility app-no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Native scrolling with thin, token-coloured bars. ScrollArea uses this instead
+ * of Radix's ScrollArea, which injects an inline <style> the CSP blocks. */
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule-strong) transparent;
+}
+
+/* Skeleton bones (boneyard-js renders them solid; the pulse is ours, because
+ * its own pulse is an inline <style> the CSP blocks). */
+.tc-bone {
+  animation: tc-bone-pulse 1.6s var(--ease-in-out) infinite;
+}
+@keyframes tc-bone-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Global loader: fades in after 120 ms so quick work never flashes it, then a
+ * marigold segment slides across. */
+.tc-global-loader {
+  opacity: 0;
+  animation: tc-loader-in var(--dur-short) var(--ease-out) 120ms forwards;
+}
+@keyframes tc-loader-in {
+  to {
+    opacity: 1;
+  }
+}
+/* The indeterminate bar: a third of the track sweeps from off the left edge to
+ * off the right one. The element itself spans the whole track and never moves
+ * (whatever width class it carries), and a clip shows the moving third, rounded
+ * like a pill. A moved box would stick out of the track for part of each cycle,
+ * widening it (and the pseudo-locale check's "text that does not fit"). The
+ * clip follows --tc-loader-x, the third's left edge as a share of the track,
+ * animated with the one easing over the whole sweep. */
+@property --tc-loader-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: -33.333%;
+}
+.tc-global-loader-bar {
+  width: 100%;
+  clip-path: inset(
+    0 calc(100% - clamp(0%, var(--tc-loader-x) + 33.333%, 100%)) 0 clamp(0%, var(--tc-loader-x), 100%) round
+      9999px
+  );
+  animation: tc-loader-slide 1.2s var(--ease-in-out) infinite;
+}
+@keyframes tc-loader-slide {
+  from {
+    --tc-loader-x: -33.333%;
+  }
+  to {
+    --tc-loader-x: 100%;
+  }
+}
+
+/* Reduced motion: no sliding, but the bar keeps saying work is happening, as a
+ * slow fade over the whole track (base.css keeps loaders running). Anything
+ * that enters or leaves with animate-enter/-exit fades instead of moving. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animate-enter: tc-fade-in 150ms linear;
+    --animate-exit: tc-fade-out 150ms linear forwards;
+  }
+  .tc-global-loader-bar {
+    clip-path: none;
+    animation-name: tc-bone-pulse;
+  }
+}
+
+/* The caret after text that is still streaming in. */
+.tc-caret {
+  animation: tc-caret-blink 1s steps(2, jump-none) infinite;
+}
+@keyframes tc-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* The theme switch you make (theme/theme-transition.ts): the old window stays
+ * as a picture while the new theme comes in over it. Only while
+ * html[data-theme-transition] is set, so no other view transition is touched.
+ * Nightfall and daybreak (theme/theme-scene.ts): the new picture is masked by a
+ * soft horizon three windows tall that slides down (dusk) or up (light), and
+ * the sun, moon, stars and glows are their own layers, moved from script on
+ * transform and opacity. "fade": a crossfade (⌘K, the menu, Match the Mac).
+ * Reduced motion: a 150 ms crossfade. */
+:root[data-theme-transition]::view-transition-old(root),
+:root[data-theme-transition]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+:root[data-theme-transition]::view-transition-group(*.tc-scene),
+:root[data-theme-transition]::view-transition-image-pair(*.tc-scene) {
+  animation: none;
+}
+:root[data-theme-transition]::view-transition-new(*.tc-scene) {
+  animation: none;
+  opacity: 0;
+}
+:root:is([data-theme-transition='nightfall'], [data-theme-transition='daybreak'])::view-transition-new(root) {
+  /* The soft band is 25% of the window (theme-scene.ts SOFT), in the middle of the three. */
+  mask-image: linear-gradient(to bottom, black 45.833%, transparent 54.167%);
+  mask-size: 100% 300vh;
+  mask-repeat: no-repeat;
+  mask-position: 0 -162.5vh;
+}
+:root[data-theme-transition='daybreak']::view-transition-new(root) {
+  mask-image: linear-gradient(to top, black 45.833%, transparent 54.167%);
+  mask-position: 0 -37.5vh;
+}
+:root[data-theme-transition='fade']::view-transition-new(root) {
+  animation: tc-theme-in var(--dur-short) var(--ease-in-out) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme-transition]::view-transition-new(root) {
+    mask-image: none;
+    animation: tc-theme-in 150ms linear both;
+  }
+}
+@keyframes tc-theme-in {
+  from {
+    opacity: 0;
+  }
+}
+/* The scene's elements, once their time is up (theme-scene.ts): never drawn in the page itself. */
+@keyframes tc-scene-done {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* The sidebar's fold (sidebar/sidebar-fold.tsx): what only the open sidebar
+ * shows fades as it folds, by CSS transition on opacity and transform, so no
+ * script runs per frame. Out within the first 40% of the fold; back over its
+ * second half. The current row's mark becomes the icon's square the same way:
+ * the row-wide mark fades as the icon-sized one appears. */
+:root {
+  --fold-out: calc(var(--dur-short) * 0.4);
+  --fold-in: calc(var(--dur-short) * 0.6);
+  --fold-in-delay: calc(var(--dur-short) * 0.3);
+}
+[data-slot='fold-label'],
+[data-slot='fold-fade'],
+[data-slot='current-row-mark'],
+[data-slot='current-icon-mark'] {
+  transition:
+    opacity var(--fold-in) var(--ease-out) var(--fold-in-delay),
+    transform var(--fold-in) var(--ease-out) var(--fold-in-delay);
+}
+[data-slot='current-icon-mark'] {
+  opacity: 0;
+}
+[data-slot='sidebar'][data-collapsed]
+  :is([data-slot='fold-label'], [data-slot='fold-fade'], [data-slot='current-row-mark']) {
+  opacity: 0;
+  transition:
+    opacity var(--fold-out) var(--ease-out),
+    transform var(--fold-out) var(--ease-out);
+}
+[data-slot='sidebar'][data-collapsed] [data-slot='fold-label'] {
+  transform: translateX(-4px);
+}
+[data-slot='sidebar'][data-collapsed] [data-slot='current-icon-mark'] {
+  opacity: 1;
+  transition: opacity var(--fold-out) var(--ease-out);
+}

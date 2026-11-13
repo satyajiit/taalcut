@@ -1,0 +1,42 @@
+{
+  "$comment": "Error bodies as ElevenLabs sends them (detail object or a validation list); the key in invalid_api_key is the test key, to prove scrubbing.",
+  "invalid_api_key": {
+    "detail": {
+      "status": "invalid_api_key",
+      "message": "Invalid API key: sk_3f2a9c0d1e4b5a6978c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4"
+    }
+  },
+  "quota_exceeded": {
+    "detail": {
+      "status": "quota_exceeded",
+      "message": "This request exceeds your quota of 10000. You have 12 credits remaining."
+    }
+  },
+  "too_many_concurrent_requests": {
+    "detail": {
+      "status": "too_many_concurrent_requests",
+      "message": "Too many concurrent requests."
+    }
+  },
+  "validation": {
+    "detail": [
+      {
+        "loc": ["body", "text"],
+        "msg": "Field required",
+        "type": "missing"
+      }
+    ]
+  },
+  "payment_required": {
+    "detail": {
+      "status": "payment_required",
+      "message": "The Music API requires a paid plan."
+    }
+  },
+  "system_busy": {
+    "detail": {
+      "status": "system_busy",
+      "message": "The system is busy."
+    }
+  }
+}

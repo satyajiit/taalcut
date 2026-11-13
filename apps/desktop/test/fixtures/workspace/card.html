@@ -1,0 +1,49 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"words","type":"string","label":"Words","default":"Lorem ipsum"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="card-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #card {
+          position: absolute;
+          left: 120px;
+          right: 120px;
+          top: 760px;
+          padding: 32px 40px;
+          border-radius: 28px;
+          background: #20242c;
+        }
+        #words {
+          margin: 0;
+          font-family: 'Anton', sans-serif;
+          font-size: 72px;
+          color: #f4f1ea;
+          max-width: 100%;
+          text-wrap: balance;
+        }
+      </style>
+      <div id="root" data-composition-id="card" data-width="1080" data-height="1920" data-duration="3">
+        <div id="card">
+          <p id="words" data-var-text="words">Lorem ipsum</p>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.from('#card', { opacity: 0, y: 40, duration: 0.4, ease: 'power2.out' }, 0);
+        tl.addLabel('exit', 2.6);
+        tl.to('#card', { opacity: 0, duration: 0.4, ease: 'power2.in' }, 'exit');
+        window.__timelines['card'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

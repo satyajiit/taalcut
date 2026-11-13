@@ -1,0 +1,474 @@
+{
+ "caseId": "comment-graphic-words",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6FV8NVGBEXZ4F1KFWPBNF9V",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "mTvNZpOy0lfgE94u5EsOc5rQn1VNfYrx",
+       "name": "graphics_edit",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3,
+        "itemId": "01K8EGQP9BJV22N684JHD49Y1P",
+        "params": {
+         "params": "text: First morning"
+        }
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "mTvNZpOy0lfgE94u5EsOc5rQn1VNfYrx",
+       "name": "graphics_edit",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3,
+        "itemId": "01K8EGQP9BJV22N684JHD49Y1P",
+        "params": {
+         "params": "text: First morning"
+        }
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11136,
+      "output": 139,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11275,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793680758641,
+     "responseId": "chatcmpl-757d6d85ab624c56a1aad152670064ad",
+     "rawStopReason": "tool_calls",
+     "durationMs": 7049
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "mTvNZpOy0lfgE94u5EsOc5rQn1VNfYrx",
+     "name": "graphics_edit",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 3,
+      "itemId": "01K8EGQP9BJV22N684JHD49Y1P",
+      "params": {
+       "params": "text: First morning"
+      }
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11136,
+    "outputTokens": 139,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11275,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FV8WQXT5ASBWFYKHKCAD9B",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "7QiJ43vdj8JNrds39weX2VpWXnionCex",
+       "name": "graphics_list",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "7QiJ43vdj8JNrds39weX2VpWXnionCex",
+       "name": "graphics_list",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 174,
+      "output": 43,
+      "cacheRead": 11136,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11353,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793680765695,
+     "responseId": "chatcmpl-17ddc4e17a7449c8b79e46722b0b08a6",
+     "rawStopReason": "tool_calls",
+     "durationMs": 694
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "7QiJ43vdj8JNrds39weX2VpWXnionCex",
+     "name": "graphics_list",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 174,
+    "outputTokens": 43,
+    "cachedInputTokens": 11136,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11353,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FV8XDPKFTTJG89GQ46X87C",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "s7cLTMRpfUT05c5KkABiyl82gHiALRCE",
+       "name": "graphics_edit",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3,
+        "itemId": "01K8EGQP9BJV22N684JHD49Y1P",
+        "params": {
+         "title": "First morning"
+        }
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "s7cLTMRpfUT05c5KkABiyl82gHiALRCE",
+       "name": "graphics_edit",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 3,
+        "itemId": "01K8EGQP9BJV22N684JHD49Y1P",
+        "params": {
+         "title": "First morning"
+        }
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 219,
+      "output": 137,
+      "cacheRead": 11310,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11666,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793680766391,
+     "responseId": "chatcmpl-7fd09cc18f8c4730bed93887c9b6d443",
+     "rawStopReason": "tool_calls",
+     "durationMs": 1892
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "s7cLTMRpfUT05c5KkABiyl82gHiALRCE",
+     "name": "graphics_edit",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 3,
+      "itemId": "01K8EGQP9BJV22N684JHD49Y1P",
+      "params": {
+       "title": "First morning"
+      }
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 219,
+    "outputTokens": 137,
+    "cachedInputTokens": 11310,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11666,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FV8Z8YPTD4H3F4KWGAM5C1",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "FJLXkaA1BhPXPEZdygaFoLl2tZM7jp8x",
+       "name": "comments_reply",
+       "arguments": {
+        "commentId": "01K8EKK60SFWE1Y31B7PEGBS3P",
+        "reply": "Graphic now says First morning.",
+        "status": "resolved",
+        "changed": [
+         "01K8EGQP9BJV22N684JHD49Y1P"
+        ]
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "FJLXkaA1BhPXPEZdygaFoLl2tZM7jp8x",
+       "name": "comments_reply",
+       "arguments": {
+        "commentId": "01K8EKK60SFWE1Y31B7PEGBS3P",
+        "reply": "Graphic now says First morning.",
+        "status": "resolved",
+        "changed": [
+         "01K8EGQP9BJV22N684JHD49Y1P"
+        ]
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 183,
+      "output": 110,
+      "cacheRead": 11529,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11822,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793680768287,
+     "responseId": "chatcmpl-4265931d8bd74f328ea807fd50b4fb90",
+     "rawStopReason": "tool_calls",
+     "durationMs": 1597
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "FJLXkaA1BhPXPEZdygaFoLl2tZM7jp8x",
+     "name": "comments_reply",
+     "arguments": {
+      "commentId": "01K8EKK60SFWE1Y31B7PEGBS3P",
+      "reply": "Graphic now says First morning.",
+      "status": "resolved",
+      "changed": [
+       "01K8EGQP9BJV22N684JHD49Y1P"
+      ]
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 183,
+    "outputTokens": 110,
+    "cachedInputTokens": 11529,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11822,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6FV90TYWMP4AB7JVBGV9MCF",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "wrTAfoGyummzDi69FFR8fOu5KABhUbIt",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "wrTAfoGyummzDi69FFR8fOu5KABhUbIt",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 158,
+      "output": 55,
+      "cacheRead": 11712,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11925,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793680769887,
+     "responseId": "chatcmpl-822c603d268e4338abf0b07c1ca48b22",
+     "rawStopReason": "tool_calls",
+     "durationMs": 858
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "wrTAfoGyummzDi69FFR8fOu5KABhUbIt",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 158,
+    "outputTokens": 55,
+    "cachedInputTokens": 11712,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11925,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

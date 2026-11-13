@@ -1,0 +1,4 @@
+/* Generated from main's catalogue by i18n:extract (packaging/info-plist-strings.ts). Do not edit. */
+"NSLocalNetworkUsageDescription" = "Taalcut जाँचता है कि आपके Wi-Fi पर यह Mac मिल सकता है या नहीं, ताकि आपका फ़ोन वीडियो भेज सके। इसे बंद करने पर भी फ़ोन वीडियो भेज सकते हैं।";
+"NSMicrophoneUsageDescription" = "Taalcut आपकी आवाज़ सिर्फ़ तब रिकॉर्ड करता है, जब आप अपनी खुद की आवाज़ बनाने के लिए सहमति वाली लाइन पढ़ते हैं। जब तक आप वह आवाज़ नहीं बनाते, रिकॉर्डिंग इसी Mac पर रहती है।";
+"NSPhotoLibraryUsageDescription" = "Taalcut Apple Photos या जुड़े हुए iPhone या iPad से आपकी चुनी हुई फ़ोटो और वीडियो पढ़ता है। आपके मूल फ़ाइलों में कोई बदलाव नहीं होता।";

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- Copyright (C) 2026 Taalcut contributors -->
+<!--
+  Local ad-hoc builds only (never shipped). entitlements.mac.plist plus
+  disable-library-validation: with hardened runtime, macOS only loads
+  frameworks signed by the same team, and ad-hoc signatures have no team.
+-->
+<plist version="1.0">
+  <dict>
+    <!-- V8 compiles JavaScript to machine code at run time (JIT). -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <!-- The voice consent card records the person's own voice (P3-B6); Info.plist says why. -->
+    <key>com.apple.security.device.audio-input</key>
+    <true/>
+    <key>com.apple.security.personal-information.photos-library</key>
+    <true/>
+    <!-- Ad-hoc only: let the ad-hoc main binary load the ad-hoc Electron Framework. -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+  </dict>
+</plist>

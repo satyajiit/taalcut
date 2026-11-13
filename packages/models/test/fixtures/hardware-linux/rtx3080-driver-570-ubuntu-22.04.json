@@ -1,0 +1,74 @@
+{
+  "description": "Desktop: Intel Core i7-12700K (8P+4E, 20 threads), 32 GB, GeForce RTX 3080 10 GB on driver 570.172.08 (older than CUDA 13 needs), iGPU off, Ubuntu 22.04.5 LTS",
+  "provenance": "Constructed, not captured: shaped like the files and nvidia-smi output recorded on the LNX1 host (rtx4090-uhd770-ubuntu-24.04.json), with this machine's devices. No such machine was available.",
+  "files": {
+    "/proc/cpuinfo": "processor\t: 0\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 1\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 2\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 3\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 4\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 5\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 6\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 7\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 8\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 9\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 10\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 11\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 12\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 13\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 14\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 15\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 16\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 17\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 18\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\nprocessor\t: 19\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-12700K\n\n",
+    "/proc/meminfo": "MemTotal:       32719584 kB\nMemFree:         10906528 kB\nMemAvailable:   16359792 kB\n",
+    "/etc/os-release": "PRETTY_NAME=\"Ubuntu 22.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"22.04\"\nVERSION=\"22.04.5 LTS (Jammy Jellyfish)\"\nID=ubuntu\nID_LIKE=debian\n",
+    "/sys/devices/cpu_core/cpus": "0-15\n",
+    "/sys/devices/cpu_atom/cpus": "16-19\n",
+    "/usr/lib/x86_64-linux-gnu/libvulkan.so.1": "",
+    "/usr/bin/nvidia-smi": "",
+    "/sys/class/drm/card0/device/vendor": "0x10de\n",
+    "/sys/class/drm/card0/device/device": "0x2206\n",
+    "/sys/class/drm/card0/device/uevent": "DRIVER=nvidia\nPCI_CLASS=30000\nPCI_ID=10DE:2206\nPCI_SUBSYS_ID=3842:3895\nPCI_SLOT_NAME=0000:01:00.0\nMODALIAS=pci:v000010DEd00002206sv00001462sd00007D86bc03sc00i00\n",
+    "/dev/dri/card0": "",
+    "/sys/class/drm/renderD128/device/vendor": "0x10de\n",
+    "/sys/class/drm/renderD128/device/device": "0x2206\n",
+    "/sys/class/drm/renderD128/device/uevent": "DRIVER=nvidia\nPCI_CLASS=30000\nPCI_ID=10DE:2206\nPCI_SUBSYS_ID=3842:3895\nPCI_SLOT_NAME=0000:01:00.0\nMODALIAS=pci:v000010DEd00002206sv00001462sd00007D86bc03sc00i00\n",
+    "/dev/dri/renderD128": "",
+    "/usr/share/vulkan/icd.d/intel_hasvk_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_intel_hasvk.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/intel_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_intel.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/lvp_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_lvp.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/nouveau_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_nouveau.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/radeon_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_radeon.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/virtio_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_virtio.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/nvidia_icd.json": "{\n    \"file_format_version\" : \"1.0.1\",\n    \"ICD\": {\n        \"library_path\": \"libGLX_nvidia.so.0\",\n        \"api_version\" : \"1.4.351\"\n    }\n}\n"
+  },
+  "commands": {
+    "nvidiaSmi": {
+      "stdout": "index, name, memory.total [MiB], memory.used [MiB], driver_version, compute_cap, pci.bus_id\n0, NVIDIA GeForce RTX 3080, 10240 MiB, 512 MiB, 570.172.08, 8.6, 00000000:01:00.0\n",
+      "exitCode": 0
+    }
+  },
+  "freeDiskBytes": 322122547200,
+  "expected": {
+    "chip": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "memoryBytes": 33504854016,
+    "cpuCores": {
+      "total": 20,
+      "performance": 16,
+      "efficiency": 4
+    },
+    "osVersion": "22.04",
+    "osName": "Ubuntu 22.04.5 LTS",
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 3080",
+        "vendor": "nvidia",
+        "vramBytes": 10737418240,
+        "vramFreeBytes": 10200547328,
+        "unifiedMemory": false,
+        "apis": ["cuda", "vulkan"],
+        "driverVersion": "570.172.08",
+        "computeCapability": "8.6",
+        "index": 0,
+        "cudaDeviceId": 0,
+        "pciBusId": "0000:01:00.0",
+        "renderNode": "/dev/dri/renderD128",
+        "kernelDriver": "nvidia"
+      }
+    ],
+    "backends": ["vulkan", "webgpu", "cpu"],
+    "tier": "recommended",
+    "shortfalls": ["gpu_driver_old"],
+    "profile": "nvidia",
+    "classes": {
+      "cpu": 4,
+      "video": 2,
+      "gpu": 2,
+      "npu": 1
+    },
+    "videoEngine": "nvidia"
+  }
+}

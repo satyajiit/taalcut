@@ -1,0 +1,1137 @@
+{
+  "description": "",
+  "forkedFrom": null,
+  "format": "taalcut.template",
+  "formatId": "tutorial",
+  "formatVersion": 0,
+  "handle": "taalcut",
+  "id": "01HZZZZZZZZZZZZZZZ0000004D",
+  "language": "en",
+  "licence": "CC0-1.0",
+  "name": "recipe-in-30-seconds",
+  "structure": {
+    "audio": {
+      "kind": "voice",
+      "loudnessLufs": null,
+      "speechCoverage": null,
+      "speechLanguage": null
+    },
+    "beatMap": {
+      "beats": [
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 0
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 18
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 36
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 54
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 72
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 90
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 126
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 144
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 162
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 180
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 198
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 216
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 234
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 252
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 270
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 288
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 306
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 324
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 342
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 360
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 378
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 396
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 414
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 432
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 450
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 468
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 486
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 504
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 522
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 540
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 558
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 576
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 594
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 612
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 630
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 648
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 666
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 684
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 702
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 720
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 738
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 756
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 774
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 792
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 810
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 828
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 846
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 864
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 882
+        }
+      ],
+      "beatsPerBar": 4,
+      "bpm": 100,
+      "confidence": 1,
+      "downbeats": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48
+      ],
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "source": "format"
+    },
+    "canvas": {
+      "height": 1920,
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "width": 1080
+    },
+    "duration": {
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "value": 900
+    },
+    "pacing": {
+      "cutsOnBeat": 1,
+      "hookEnd": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 36
+      },
+      "longestShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 126
+      },
+      "meanShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 90
+      },
+      "medianShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 108
+      },
+      "shortestShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 36
+      },
+      "shotCount": 10
+    },
+    "slots": [
+      {
+        "beatAnchor": {
+          "beatIndex": 0,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 36
+        },
+        "intent": {
+          "energy": 0.85,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": "the finished result",
+          "text": "Hook: the finished result first"
+        },
+        "name": null,
+        "role": "hook",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 0
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 2,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 72
+        },
+        "intent": {
+          "energy": 0.4,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "wide",
+          "subject": "what you need",
+          "text": "Intro: what you need, wide or overhead"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 36
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 6,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 126
+        },
+        "intent": {
+          "energy": 0.5,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "detail",
+          "subject": "the step",
+          "text": "Step: hands or screen"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 13,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "intent": {
+          "energy": 0.5,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": "the step",
+          "text": "Step: hands or screen"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 234
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 19,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "intent": {
+          "energy": 0.5,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "screen",
+          "subject": "the step",
+          "text": "Step: hands or screen"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 342
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 25,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "intent": {
+          "energy": 0.5,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "detail",
+          "subject": "the step",
+          "text": "Step: hands or screen"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 450
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 31,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "intent": {
+          "energy": 0.5,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": "the step",
+          "text": "Step: hands or screen"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 558
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 37,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "intent": {
+          "energy": 0.5,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "screen",
+          "subject": "the step",
+          "text": "Step: hands or screen"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 666
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 43,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 72
+        },
+        "intent": {
+          "energy": 0.8,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": "the finished thing",
+          "text": "Result: the finished thing"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 774
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 47,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 54
+        },
+        "intent": {
+          "energy": 0.4,
+          "motion": "static",
+          "people": 1,
+          "place": null,
+          "shotType": "medium",
+          "subject": null,
+          "text": "Outro: a last look and the ask"
+        },
+        "name": null,
+        "role": "outro",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 846
+        },
+        "transitionIn": null
+      }
+    ],
+    "text": [
+      {
+        "appearance": {
+          "align": "center",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.05
+        },
+        "box": {
+          "height": 0.08,
+          "width": 0.54,
+          "x": 0.13,
+          "y": 0.17
+        },
+        "chars": 7,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 72
+        },
+        "language": null,
+        "placeholder": "{title}",
+        "reveal": "fade",
+        "role": "title",
+        "slotIndex": 1,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 36
+        },
+        "styleKey": "title",
+        "words": 1
+      },
+      {
+        "appearance": {
+          "align": "left",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.03
+        },
+        "box": {
+          "height": 0.06,
+          "width": 0.48,
+          "x": 0.13,
+          "y": 0.56
+        },
+        "chars": 6,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 126
+        },
+        "language": null,
+        "placeholder": "{label}",
+        "reveal": "fade",
+        "role": "label",
+        "slotIndex": 2,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "styleKey": "label",
+        "words": 1
+      },
+      {
+        "appearance": {
+          "align": "left",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.03
+        },
+        "box": {
+          "height": 0.06,
+          "width": 0.48,
+          "x": 0.13,
+          "y": 0.56
+        },
+        "chars": 6,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "language": null,
+        "placeholder": "{label}",
+        "reveal": "fade",
+        "role": "label",
+        "slotIndex": 3,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 234
+        },
+        "styleKey": "label",
+        "words": 1
+      },
+      {
+        "appearance": {
+          "align": "left",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.03
+        },
+        "box": {
+          "height": 0.06,
+          "width": 0.48,
+          "x": 0.13,
+          "y": 0.56
+        },
+        "chars": 6,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "language": null,
+        "placeholder": "{label}",
+        "reveal": "fade",
+        "role": "label",
+        "slotIndex": 4,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 342
+        },
+        "styleKey": "label",
+        "words": 1
+      },
+      {
+        "appearance": {
+          "align": "left",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.03
+        },
+        "box": {
+          "height": 0.06,
+          "width": 0.48,
+          "x": 0.13,
+          "y": 0.56
+        },
+        "chars": 6,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "language": null,
+        "placeholder": "{label}",
+        "reveal": "fade",
+        "role": "label",
+        "slotIndex": 5,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 450
+        },
+        "styleKey": "label",
+        "words": 1
+      },
+      {
+        "appearance": {
+          "align": "left",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.03
+        },
+        "box": {
+          "height": 0.06,
+          "width": 0.48,
+          "x": 0.13,
+          "y": 0.56
+        },
+        "chars": 6,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "language": null,
+        "placeholder": "{label}",
+        "reveal": "fade",
+        "role": "label",
+        "slotIndex": 6,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 558
+        },
+        "styleKey": "label",
+        "words": 1
+      },
+      {
+        "appearance": {
+          "align": "left",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.03
+        },
+        "box": {
+          "height": 0.06,
+          "width": 0.48,
+          "x": 0.13,
+          "y": 0.56
+        },
+        "chars": 6,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 108
+        },
+        "language": null,
+        "placeholder": "{label}",
+        "reveal": "fade",
+        "role": "label",
+        "slotIndex": 7,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 666
+        },
+        "styleKey": "label",
+        "words": 1
+      },
+      {
+        "appearance": {
+          "align": "left",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.03
+        },
+        "box": {
+          "height": 0.08,
+          "width": 0.54,
+          "x": 0.13,
+          "y": 0.46
+        },
+        "chars": 5,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 54
+        },
+        "language": null,
+        "placeholder": "{cta}",
+        "reveal": "fade",
+        "role": "cta",
+        "slotIndex": 9,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 846
+        },
+        "styleKey": "cta",
+        "words": 1
+      }
+    ]
+  },
+  "style": null,
+  "tags": [],
+  "trendFreshness": null,
+  "version": 1
+}

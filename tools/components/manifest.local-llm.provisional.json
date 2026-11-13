@@ -1,0 +1,136 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "The embedded local language and vision runtime (spike 08, docs/spikes/08-local-inference-runtime.md): llama.cpp's server for macOS arm64, the Recommended tier's Qwen3.5 4B weights and projector, and the Minimum tier's 0.8B text weights (J8b, section 9). Hosted at components.taalcut.app by tools/components/hosting (README.md, \"Releasing components\"; hosting/plan.mjs pins each source). local-llm-runtime is llama.cpp's own b11571 macOS arm64 release archive (12111943 bytes, sha256 d8b8000c6a534b258516686337fd2cb50b3b8060730a00029c8381048c76fbea) with every Mach-O re-signed with Taalcut's Developer ID (team WW382UC8JD, hardened runtime, secure timestamp) and repacked as tar.zst, its llama-b11571/ folder kept (stripComponents 1). The weights are hosted unchanged: the 4B and its projector are the Ollama library's qwen3.5:4b blobs (their sha256 is their name), and the 0.8B is unsloth/Qwen3.5-0.8B-GGUF at revision 6ab461498e2023f6e3c1baea90a8f0fe38ab64d0 (Hugging Face's LFS digest, the bytes spike 08 measured). Component ids match packages/models/src/local-runtime/llama-cpp-spec.ts.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "local-llm-runtime",
+      "name": "llama.cpp server",
+      "version": "b11571",
+      "kind": "runtime",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-runtime/b11571/NOTICE-07c99851f2ac74a6.txt",
+          "size": 19779,
+          "sha256": "07c99851f2ac74a69845dc4b7b2fdd5118c90ec58674c470a686a84d8c625510"
+        },
+        "attribution": "llama.cpp and ggml, Copyright (c) 2023-2026 The ggml authors. MIT licence."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/local-llm-runtime/b11571/llama-b11571-bin-macos-arm64.tar.zst"
+          ],
+          "sha256": "3d54d5b3d387e2dbe2d1dbf66bdb1e7ba2cefd9db77bb80fe5388202ff2a7c59",
+          "size": 8734674,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 1,
+            "extractedSize": 32612726
+          }
+        }
+      ]
+    },
+    {
+      "id": "local-llm-qwen3-5-4b",
+      "name": "Qwen3.5 4B (GGUF Q4_K_M)",
+      "version": "q4_k_m-a9d0a3e1",
+      "kind": "model",
+      "tiers": ["recommended", "high"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-qwen3-5-4b/q4_k_m-a9d0a3e1/NOTICE-5aa17b588130d45e.txt",
+          "size": 11951,
+          "sha256": "5aa17b588130d45eb32efd6fd29c2de0fd13060d86dfb5d8d73467f9788d2281"
+        },
+        "attribution": "Qwen3.5-4B by the Qwen team, Alibaba Cloud. Apache-2.0. Converted to GGUF and quantised to Q4_K_M (Ollama library build of qwen3.5:4b)."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/local-llm-qwen3-5-4b/q4_k_m-a9d0a3e1/qwen3.5-4b-q4_k_m.gguf"
+          ],
+          "sha256": "a9d0a3e1d8c91732a3812becd31f8d4a8ff57414903f226306069f0437e2ac50",
+          "size": 2648593216,
+          "install": {
+            "type": "file",
+            "fileName": "qwen3.5-4b-q4_k_m.gguf",
+            "executable": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "local-llm-qwen3-5-4b-mmproj",
+      "name": "Qwen3.5 4B vision projector (GGUF BF16)",
+      "version": "bf16-e56a899b",
+      "kind": "model",
+      "tiers": ["recommended", "high"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-qwen3-5-4b-mmproj/bf16-e56a899b/NOTICE-8be729d9a2d93632.txt",
+          "size": 12003,
+          "sha256": "8be729d9a2d93632ca35f6353e769cef3f208f28caa5915ebe174a7293ef6688"
+        },
+        "attribution": "Qwen3.5-4B vision encoder by the Qwen team, Alibaba Cloud. Apache-2.0. Converted to a GGUF multimodal projector in BF16 (Ollama library build of qwen3.5:4b)."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/local-llm-qwen3-5-4b-mmproj/bf16-e56a899b/qwen3.5-4b-mmproj-bf16.gguf"
+          ],
+          "sha256": "e56a899b1540860385465756dd308c84417410b94dbc1c380adffd20a921ca60",
+          "size": 675569120,
+          "install": {
+            "type": "file",
+            "fileName": "qwen3.5-4b-mmproj-bf16.gguf",
+            "executable": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "local-llm-qwen3-5-0-8b",
+      "name": "Qwen3.5 0.8B (GGUF Q4_K_M)",
+      "version": "q4_k_m-bd258782",
+      "kind": "model",
+      "tiers": ["minimum"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-qwen3-5-0-8b/q4_k_m-bd258782/NOTICE-1c00b31ba055226b.txt",
+          "size": 11967,
+          "sha256": "1c00b31ba055226bd2d2fde1693520703339cb7180efab10db73046d910f5a0f"
+        },
+        "attribution": "Qwen3.5-0.8B by the Qwen team, Alibaba Cloud. Apache-2.0. Converted to GGUF and quantised to Q4_K_M by Unsloth (unsloth/Qwen3.5-0.8B-GGUF)."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/local-llm-qwen3-5-0-8b/q4_k_m-bd258782/Qwen3.5-0.8B-Q4_K_M.gguf"
+          ],
+          "sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+          "size": 532517120,
+          "install": {
+            "type": "file",
+            "fileName": "qwen3.5-0.8b-q4_k_m.gguf",
+            "executable": false
+          }
+        }
+      ]
+    }
+  ]
+}

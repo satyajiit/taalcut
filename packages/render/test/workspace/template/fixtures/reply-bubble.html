@@ -1,0 +1,71 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"text","type":"string","label":"Words","default":"Sounds good to me"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="reply-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #bubble {
+          position: absolute;
+          right: 65px;
+          top: 884px;
+          display: flex;
+          align-items: flex-end;
+          gap: 14px;
+          width: fit-content;
+          max-width: 900px;
+          padding: 20px 26px 20px 34px;
+          border-radius: 32px 32px 8px 32px;
+          background: #d9fdd3;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+          transform-origin: 100% 100%;
+        }
+        #words {
+          margin: 0;
+          font-family: 'Noto Sans', sans-serif;
+          font-size: 52px;
+          font-weight: 400;
+          line-height: 1.2;
+          color: #111111;
+          white-space: nowrap;
+        }
+        #ticks {
+          width: 34px;
+          height: 20px;
+          flex: none;
+        }
+        #ticks path {
+          fill: none;
+          stroke: #53bdeb;
+          stroke-width: 3;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+      </style>
+      <div id="root" data-composition-id="reply" data-width="1080" data-height="1920" data-duration="2.5">
+        <div id="bubble">
+          <p id="words" data-var-text="text">Sounds good to me</p>
+          <svg id="ticks" viewBox="0 0 34 20" aria-hidden="true">
+            <path d="M2 11 L8 17 L20 3" />
+            <path d="M14 15 L16 17 L30 3" />
+          </svg>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from('#bubble', { scale: 0.4, opacity: 0, duration: 0.12, ease: 'back.out(2)' }, 0);
+        tl.addLabel('enter', 0.12);
+        tl.addLabel('exit', 2.5);
+        window.__timelines['reply'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

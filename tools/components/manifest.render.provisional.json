@@ -1,0 +1,73 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "Render components, hosted at components.taalcut.app by tools/components/hosting. The security-maintained Chrome for Testing stable headless shell 157.0.8103.50 is selected through explicit chromePath and expectedChromiumMajor settings; it supersedes HyperFrames' older default. Its official mac-arm64 zip is 104775379 bytes, SHA256 082e3fe8fcfac75aec2ef0949d70e8d2254a99ea465450e287e6c06a3f1863ed, checked before extraction. fetch-shell.mjs signs every Mach-O with Matterward Labs' Developer ID (WW382UC8JD, hardened runtime, secure timestamp, allow-jit only for the shell), packs tar.zst and retains every upstream licence text. Both platform files and the complete corresponding source are named in the component notice. Security, compatibility and notarization evidence: RELEASE-2026-11-11.md. c2pa-sidecar 1.0.0 (P3-V7) is taalcut-c2pa built from native/c2pa-sidecar on the c2pa crate =0.91.2 (MIT OR Apache-2.0) with the SDK's ES256 TEST certificate (a test issuer, not publicly trusted) by native/c2pa-sidecar/build.sh (cargo build --release --locked), then signed with the Developer ID (hardened runtime, secure timestamp) and packed as tar.zst by hosting/build.mjs with LICENSES/: the c2pa crate's licences, the test certificate's source and THIRD-PARTY-CRATES.txt (every crate linked in, with its licence texts, from cargo metadata). Both are notarised by Apple (hosting/notarize.mjs). The sources of their copyleft pieces are hosted beside them under source/: Chromium's official 157.0.8103.50 source release (Blink and WebKit, FFmpeg and libusbx under the LGPL, the symphonia crates under the MPL-2.0) and taalcut-c2pa's own (AGPL-3.0-or-later).",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "hyperframes-headless-shell",
+      "name": "Chrome headless shell (render engine)",
+      "version": "157.0.8103.50",
+      "kind": "tool",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "BSD-3-Clause",
+        "notice": {
+          "url": "https://components.taalcut.app/hyperframes-headless-shell/157.0.8103.50/NOTICE-d48a7e059369b295.txt",
+          "size": 4433824,
+          "sha256": "d48a7e059369b29540fcc98538987a52133d3081f9005fd398ce7da8a12171dd"
+        },
+        "attribution": "Chromium (chrome-headless-shell from Chrome for Testing), BSD-3-Clause; bundled third-party notices are in LICENSE.headless_shell inside the component."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/hyperframes-headless-shell/157.0.8103.50/chrome-headless-shell-157.0.8103.50-mac-arm64.tar.zst"
+          ],
+          "sha256": "7a080da5986b3f18cd423193aae9ee41e318ce96196195205c87a7d320b59769",
+          "size": 74003116,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 213708206
+          }
+        }
+      ]
+    },
+    {
+      "id": "c2pa-sidecar",
+      "name": "Content Credentials (C2PA) signer and reader",
+      "version": "1.0.0",
+      "kind": "tool",
+      "tiers": [],
+      "licence": {
+        "spdx": "AGPL-3.0-or-later AND (MIT OR Apache-2.0)",
+        "notice": {
+          "url": "https://components.taalcut.app/c2pa-sidecar/1.0.0/NOTICE-9946a24eef59d9fd.txt",
+          "size": 4110750,
+          "sha256": "9946a24eef59d9fdfbd0d5a2fcda71e873fb9482cd059dcab498f6ae6c0fa60e"
+        },
+        "attribution": "taalcut-c2pa (AGPL-3.0-or-later) statically links the c2pa crate 0.91.2 by Adobe and the Content Authenticity Initiative (MIT OR Apache-2.0); both licence texts, the test certificate's source and the licences of every crate linked in are in LICENSES/ inside the component."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/c2pa-sidecar/1.0.0/c2pa-sidecar-1.0.0-darwin-arm64.tar.zst"
+          ],
+          "sha256": "9663b529b3f9693a188b590b3f62d367d9ed5fb19ac1d989c3b586f352eabc19",
+          "size": 3569213,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 12810389
+          }
+        }
+      ]
+    }
+  ]
+}

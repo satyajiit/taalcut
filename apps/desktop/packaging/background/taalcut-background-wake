@@ -1,0 +1,8 @@
+#!/bin/sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+# LaunchServices owns the application, so unregistering this short-lived agent cannot terminate its GUI.
+set -eu
+bundle=$(CDPATH= cd "$(/usr/bin/dirname "$0")/../../.." && pwd -P)
+exec /usr/bin/open -n -g -j -a "$bundle" --args --taalcut-background

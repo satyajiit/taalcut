@@ -1,0 +1,29 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "stream",
+  "agentGuidance": false,
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "out/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["transit"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["transit"],
+      "env": ["TAALCUT_TEST_CORES", "TAALCUT_SHELL_TOOLCHAIN_DIR", "TAALCUT_SFX_BANK_WORK"],
+      "outputs": [],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/design/tokens/**", "$TURBO_ROOT$/tools/components/*.json"]
+    },
+    "test:coverage": {
+      "dependsOn": ["transit"],
+      "env": ["TAALCUT_TEST_CORES", "TAALCUT_SHELL_TOOLCHAIN_DIR", "TAALCUT_SFX_BANK_WORK"],
+      "outputs": ["coverage/**"]
+    },
+    "transit": {
+      "dependsOn": ["^transit"]
+    }
+  }
+}

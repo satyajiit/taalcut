@@ -1,0 +1,26 @@
+; SPDX-License-Identifier: AGPL-3.0-or-later
+; Copyright (C) 2026 Taalcut contributors
+;
+; The reference fetcher's profile (P2-T3): the offline profile, except that
+; it may use the network, fork, and start yt-dlp, Deno and the bundled FFmpeg
+; pair, and read the components' folders. yt-dlp is a PyInstaller onedir build
+; (the executable beside its _internal/ folder, nothing unpacked at run time);
+; its bootloader resolves its own path, which reads the metadata of every
+; folder above it, so those folders' metadata (not their contents) is
+; readable. TMPDIR and DENO_DIR point inside the experiment. Later rules win.
+(version 1)
+(allow default)
+(deny process-exec)
+(allow process-exec (literal (param "PROGRAM")) (literal (param "DENO")) (literal (param "FFMPEG"))
+       (literal (param "FFPROBE")))
+(deny file-write*)
+(allow file-write* (subpath (param "SCRATCH")) (literal "/dev/null"))
+(deny file-write* (literal (param "MANIFEST")))
+(deny file-read* (subpath (param "HOME")) (subpath "/Volumes") (subpath "/private/var/folders"))
+(allow file-read* (subpath (param "SCRATCH")) (subpath (param "PROGRAM_DIR")) (subpath (param "DENO_HOME"))
+       (subpath (param "FFMPEG_DIR"))
+       (subpath (param "COMPONENT_0")) (subpath (param "COMPONENT_1")) (subpath (param "COMPONENT_2"))
+       (subpath (param "COMPONENT_3")))
+(allow file-read-metadata (path-ancestors (param "PROGRAM_DIR"))
+       (path-ancestors (param "COMPONENT_0")) (path-ancestors (param "COMPONENT_1"))
+       (path-ancestors (param "COMPONENT_2")) (path-ancestors (param "COMPONENT_3")))

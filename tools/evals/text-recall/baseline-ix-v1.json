@@ -1,0 +1,30 @@
+{
+  "v": 1,
+  "set": "ix-v1",
+  "from": "ix3-b3-ixv1/run-1, ix3-b3-ixv1/run-2, ix3-b3-ixv1/run-3",
+  "takenAt": "2026-10-20T17:34:25.473Z",
+  "minFound": 20,
+  "total": 24,
+  "found": [
+    "city-4k-hevc30-en.mov:39",
+    "city-4k-hevc30-en.mov:FERRY",
+    "city-4k-hevc30-en.mov:PIER",
+    "concert-4k-hevc30-music.mov:LIVE",
+    "concert-4k-hevc30-music.mov:TONIGHT",
+    "desk-1080-h264-en.mp4:2026",
+    "desk-1080-h264-en.mp4:50",
+    "desk-1080-h264-en.mp4:KEYBOARD",
+    "desk-1080-h264-en.mp4:NEW",
+    "desk-1080-h264-en.mp4:OFF",
+    "desk-1080-h264-en.mp4:SALE",
+    "desk-1080-h264-en.mp4:SETUP",
+    "garden-1080-h264-ptbr.mp4:BOTANICO",
+    "garden-1080-h264-ptbr.mp4:JARDIM",
+    "kitchen-1080-h264-en.mp4:CREAM",
+    "kitchen-1080-h264-en.mp4:GARLIC",
+    "kitchen-1080-h264-en.mp4:PASTA",
+    "street-portrait-h264-en.mp4:MARKET",
+    "street-portrait-h264-en.mp4:NIGHT",
+    "studio-1080-h264-hi.mp4:TAKE"
+  ]
+}

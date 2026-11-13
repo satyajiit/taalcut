@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/satyajiit/taalcut/discussions
+    about: Ask a question or float an idea in GitHub Discussions.
+  - name: Report a security vulnerability
+    url: https://github.com/satyajiit/taalcut/security/advisories/new
+    about: Open a private security advisory. Do not file a public issue.

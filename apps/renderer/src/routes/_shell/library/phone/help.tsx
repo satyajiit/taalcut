@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Taalcut contributors
+
+import { createFileRoute, redirect } from '@tanstack/react-router';
+
+export const Route = createFileRoute('/_shell/library/phone/help')({
+  beforeLoad: () => {
+    throw redirect({ to: '/library/import/$method/help', params: { method: 'phone-wifi' }, replace: true });
+  },
+});

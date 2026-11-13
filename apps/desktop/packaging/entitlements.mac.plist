@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- Copyright (C) 2026 Taalcut contributors -->
+<!--
+  Hardened-runtime entitlements for Developer ID builds: the app and its
+  helpers (renderer, GPU, plugin, utility). Keep it minimal; SECURITY.md says
+  why each one is here. Device access is added only with the feature that
+  needs it: the microphone for the voice consent recording (P3-B6).
+-->
+<plist version="1.0">
+  <dict>
+    <!-- V8 compiles JavaScript to machine code at run time (JIT). -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <!-- The voice consent card records the person's own voice (P3-B6); Info.plist says why. -->
+    <key>com.apple.security.device.audio-input</key>
+    <true/>
+    <!-- Read selected originals through the signed PhotoKit helper (LIB2-P). -->
+    <key>com.apple.security.personal-information.photos-library</key>
+    <true/>
+  </dict>
+</plist>

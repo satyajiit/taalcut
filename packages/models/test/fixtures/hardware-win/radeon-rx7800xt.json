@@ -1,0 +1,37 @@
+{
+  "description": "Desktop: AMD Ryzen 7 7700X (8 cores, 16 threads), 32 GB, Radeon RX 7800 XT 16 GB (CIM's AdapterRAM stops at 4 GiB; the registry has the rest)",
+  "provenance": "Constructed, not captured: shaped like PowerShell 5.1's `ConvertTo-Json -Compress` of the probe's CIM script and nvidia-smi's `--format=csv` output as NVIDIA documents it. No Windows machine was available in round IX.",
+  "commands": {
+    "powershell": "{\"cpu\":[{\"Name\":\"AMD Ryzen 7 7700X 8-Core Processor\",\"NumberOfCores\":8,\"NumberOfLogicalProcessors\":16}],\"os\":{\"Version\":\"10.0.22631\",\"Caption\":\"Microsoft Windows 11 Pro\"},\"memory\":34359738368,\"gpus\":[{\"Name\":\"AMD Radeon RX 7800 XT\",\"AdapterCompatibility\":\"Advanced Micro Devices, Inc.\",\"AdapterRAM\":4293918720,\"DriverVersion\":\"31.0.24027.1012\"}],\"adapterMemory\":[{\"DriverDesc\":\"AMD Radeon RX 7800 XT\",\"Bytes\":17163091968}]}",
+    "nvidiaSmi": null
+  },
+  "expected": {
+    "chip": "AMD Ryzen 7 7700X 8-Core Processor",
+    "memoryBytes": 34359738368,
+    "cpuCores": {
+      "total": 16
+    },
+    "osVersion": "10.0.22631",
+    "osName": "Microsoft Windows 11 Pro",
+    "gpus": [
+      {
+        "name": "AMD Radeon RX 7800 XT",
+        "vendor": "amd",
+        "vramBytes": 17163091968,
+        "unifiedMemory": false,
+        "apis": ["directml", "vulkan"],
+        "driverVersion": "31.0.24027.1012"
+      }
+    ],
+    "tier": "high",
+    "shortfalls": [],
+    "profile": "other-gpu",
+    "classes": {
+      "cpu": 4,
+      "video": 2,
+      "gpu": 1,
+      "npu": 1
+    },
+    "videoEngine": "amd"
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "format": "taalcut-model-cassette",
+  "version": 1,
+  "recordedAt": "2026-10-12T13:13:31.813Z",
+  "note": "Recorded by @taalcut/models. Secrets are scrubbed. Re-record with TAALCUT_RECORD=1.",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11434/v1/chat/completions",
+        "match": "POST /v1/chat/completions sha256:0534a196bf6c736e",
+        "headers": {
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
+        "body": {
+          "model": "qwen3:0.6b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are a video editing assistant. When the user asks for clips, call find_clips."
+            },
+            {
+              "role": "user",
+              "content": "Find clips of the beach at sunset."
+            }
+          ],
+          "stream": true,
+          "stream_options": {
+            "include_usage": true
+          },
+          "max_completion_tokens": 1024,
+          "temperature": 0,
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "find_clips",
+                "description": "Search the video library for clips that match a description.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "What the clips should show"
+                    }
+                  },
+                  "required": ["query"]
+                }
+              }
+            }
+          ],
+          "reasoning_effort": "none"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/event-stream"
+        },
+        "chunks": [
+          "data: {\"id\":\"chatcmpl-948\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"call_dypleppl\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"find_clips\",\"arguments\":\"{\\\"query\\\":\\\"beach at sunset\\\"}\"}}]},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-948\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"tool_calls\"}]}\n\n",
+          "data: {\"id\":\"chatcmpl-948\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[],\"usage\":{\"prompt_tokens\":177,\"prompt_tokens_details\":{\"cached_tokens\":173},\"completion_tokens\":24,\"total_tokens\":201},\"timings\":{\"prompt_n\":177,\"prompt_ms\":430,\"prompt_per_token_ms\":2.4293785310734464,\"prompt_per_second\":411.6279069767442,\"predicted_n\":24,\"predicted_ms\":137,\"predicted_per_token_ms\":5.708333333333333,\"predicted_per_second\":175.1824817518248}}\n\n",
+          "data: [DONE]\n\n"
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11434/v1/chat/completions",
+        "match": "POST /v1/chat/completions sha256:9a63edb101607ee5",
+        "headers": {
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
+        "body": {
+          "model": "qwen3:0.6b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are a video editing assistant. When the user asks for clips, call find_clips."
+            },
+            {
+              "role": "user",
+              "content": "Find clips of the beach at sunset."
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_dypleppl",
+                  "type": "function",
+                  "function": {
+                    "name": "find_clips",
+                    "arguments": "{\"query\":\"beach at sunset\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "Found 3 clips: beach_sunset_01.mov (12 s), beach_sunset_02.mov (8 s), pier_dusk.mov (15 s).",
+              "tool_call_id": "call_dypleppl"
+            }
+          ],
+          "stream": true,
+          "stream_options": {
+            "include_usage": true
+          },
+          "max_completion_tokens": 1024,
+          "temperature": 0,
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "find_clips",
+                "description": "Search the video library for clips that match a description.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "What the clips should show"
+                    }
+                  },
+                  "required": ["query"]
+                }
+              }
+            }
+          ],
+          "reasoning_effort": "none"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/event-stream"
+        },
+        "chunks": [
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"Here\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" are\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" the\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" clips\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" you\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" requested\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\":\\n\\n\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"1\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\".\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" **\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"be\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"ach\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"_s\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"unset\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"_\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"0\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"1\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\".mov\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"**\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" (\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"1\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"2\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" seconds\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\")\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"  \\n\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"2\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\".\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" **\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"be\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"ach\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"_s\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"unset\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"_\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"0\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"2\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\".mov\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"**\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" (\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"8\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" seconds\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\")\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"  \\n\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"3\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\".\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" **\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"p\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"ier\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"_d\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"usk\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\".mov\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"**\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" (\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"1\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"5\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\" seconds\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\")\"},\"finish_reason\":null}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}]}\n\n",
+          "data: {\"id\":\"chatcmpl-666\",\"object\":\"chat.completion.chunk\",\"created\":1791810811,\"model\":\"qwen3:0.6b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[],\"usage\":{\"prompt_tokens\":249,\"prompt_tokens_details\":{\"cached_tokens\":173},\"completion_tokens\":57,\"total_tokens\":306},\"timings\":{\"prompt_n\":249,\"prompt_ms\":17,\"prompt_per_token_ms\":0.06827309236947791,\"prompt_per_second\":14647.058823529413,\"predicted_n\":57,\"predicted_ms\":396,\"predicted_per_token_ms\":6.947368421052632,\"predicted_per_second\":143.93939393939394}}\n\n",
+          "data: [DONE]\n\n"
+        ]
+      }
+    }
+  ]
+}
