@@ -40,7 +40,7 @@
     "@lingui/react": "6.9.1",
     "@taalcut/core": "workspace:*",
     "@taalcut/ui": "workspace:*",
-    "@tanstack/react-router": "1.170.42",
+    "@tanstack/react-router": "1.170.46",
     "lucide-react": "1.55.0",
     "qr": "0.7.2",
     "react": "19.3.0",
