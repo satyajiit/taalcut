@@ -1,0 +1,335 @@
+{
+ "caseId": "text-title",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJ2W9N2ZXZFKM9D1Z1YEZH",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "wf79M4GoUxwAb9898sRYNF1IVb7qR2IZ",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "wf79M4GoUxwAb9898sRYNF1IVb7qR2IZ",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11672,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11728,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604022582,
+     "responseId": "chatcmpl-2fe190933fe04a85a63b7f210e6006ae",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10612
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "wf79M4GoUxwAb9898sRYNF1IVb7qR2IZ",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11672,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11728,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ36NCRBH03ZYVFE0VGY6W",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "2IiWzniJUoy5XZa3pEHHScQgcR2P8AGW",
+       "name": "timeline_editText",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "itemId": "01K8EMG6WPJWXT1DBN5JEGTD8J",
+        "text": "Sunday ride"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "2IiWzniJUoy5XZa3pEHHScQgcR2P8AGW",
+       "name": "timeline_editText",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "itemId": "01K8EMG6WPJWXT1DBN5JEGTD8J",
+        "text": "Sunday ride"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 119,
+      "cacheRead": 11672,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13406,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604033197,
+     "responseId": "chatcmpl-f93aa509e8cc411a9ed653a781b0ccd0",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4475
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "2IiWzniJUoy5XZa3pEHHScQgcR2P8AGW",
+     "name": "timeline_editText",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "itemId": "01K8EMG6WPJWXT1DBN5JEGTD8J",
+      "text": "Sunday ride"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 119,
+    "cachedInputTokens": 11672,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13406,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ3B1CKZ5CARN1G3XKJ9ST",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Done—changed the title from \"Weekend ride\" to \"Sunday ride\"."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Done—changed the title from \"Weekend ride\" to \"Sunday ride\"."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 163,
+      "output": 16,
+      "cacheRead": 13287,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13466,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604037677,
+     "responseId": "chatcmpl-8f800d37b8474cacbf0b0d61d02a7637",
+     "rawStopReason": "stop",
+     "durationMs": 760
+    }
+   },
+   "text": "Done—changed the title from \"Weekend ride\" to \"Sunday ride\".",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 163,
+    "outputTokens": 16,
+    "cachedInputTokens": 13287,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13466,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ3BS5YT918R096V5Y3B8H",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "4Tl1dggZzzymsQlBAg2hxTMkrwnAq6Ol",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "4Tl1dggZzzymsQlBAg2hxTMkrwnAq6Ol",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13546,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13601,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604038439,
+     "responseId": "chatcmpl-d79ed8cd771847b2847b926b789204dd",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11143
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "4Tl1dggZzzymsQlBAg2hxTMkrwnAq6Ol",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13546,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13601,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

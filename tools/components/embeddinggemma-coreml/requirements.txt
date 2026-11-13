@@ -1,0 +1,5 @@
+# Pinned for pack-embeddinggemma-coreml.sh (the versions the shipped archive was built with).
+numpy==2.5.4
+onnx==1.23.2
+protobuf==7.36.2
+coremltools==9.0

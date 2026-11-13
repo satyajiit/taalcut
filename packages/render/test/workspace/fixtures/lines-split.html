@@ -1,0 +1,41 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"body","type":"string","label":"Body","default":"Three short lines of made-up words rise one after another here"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="lines-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #copy {
+          position: absolute;
+          left: 100px;
+          right: 100px;
+          top: 760px;
+          margin: 0;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 110px;
+          line-height: 1.1;
+          color: #ffffff;
+        }
+      </style>
+      <div id="root" data-composition-id="lines" data-width="1080" data-height="1920" data-duration="4">
+        <p id="copy" data-var-text="body">Three short lines of made-up words rise one after another here</p>
+      </div>
+      <script>
+        gsap.registerPlugin(SplitText);
+        const tl = gsap.timeline({ paused: true });
+        const split = SplitText.create('#copy', { type: 'lines', mask: 'lines' });
+        tl.from(split.lines, { yPercent: 100, duration: 0.7, ease: 'power3.out', stagger: 0.15 }, 0.3);
+        tl.to('#copy', { opacity: 0, duration: 0.4 }, 3.4);
+        window.__timelines['lines'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

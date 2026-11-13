@@ -1,0 +1,20 @@
+{
+  "$comment": "The JSON part of POST /v1/music/detailed's multipart/mixed answer (fields trimmed).",
+  "composition_plan": {
+    "chunks": [
+      {
+        "text": "hook",
+        "duration_ms": 8000,
+        "positive_styles": ["96 BPM", "4/4", "instrumental"],
+        "negative_styles": ["vocals"]
+      }
+    ]
+  },
+  "song_metadata": {
+    "title": "Untitled",
+    "description": "",
+    "genres": ["electronic"],
+    "languages": [],
+    "is_explicit": false
+  }
+}

@@ -1,0 +1,189 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Website
+
+# Tests taalcut.app (website/) and deploys it to Firebase Hosting with its Firestore rules
+# (website/SPEC.md, "Waitlist, contact and hosting").
+#
+# OFF until the PO turns it on. Every job is skipped unless the repository variable
+# TAALCUT_WEB_DEPLOY_ENABLED is "true", so a push, a pull request or a manual run does nothing before
+# then. Turning it on is a PO action; no agent runs this workflow or sets the variable:
+#   1. Repository variables (public by design: they ship inside the page):
+#        NEXT_PUBLIC_FIREBASE_API_KEY, NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN, NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+#        NEXT_PUBLIC_FIREBASE_APP_ID, NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_KEY, and optionally
+#        NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID (visit analytics; without it the site counts nothing)
+#   2. Repository secret FIREBASE_SERVICE_ACCOUNT: the JSON key of a service account that may deploy
+#      Hosting and Firestore rules (Firebase Hosting Admin, Firebase Rules Admin, Service Usage Consumer).
+#   3. gh variable set TAALCUT_WEB_DEPLOY_ENABLED --body true
+# The deploy job refuses to build without the five variables: a build without them shows the closed
+# waitlist, which must never reach taalcut.app by accident.
+on:
+  push:
+    branches: [main]
+    paths:
+      - website/**
+      - design/tokens/**
+      - design/logo/**
+      - packages/ui/src/brand/**
+      - packages/ui/src/theme/art/**
+      - pnpm-lock.yaml
+      - .github/workflows/website.yml
+  pull_request:
+    paths:
+      - website/**
+      - design/tokens/**
+      - pnpm-lock.yaml
+      - .github/workflows/website.yml
+  workflow_dispatch:
+
+concurrency:
+  group: website-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions: {}
+
+env:
+  # firebase-tools runs through npx at this exact version, here and in website/package.json.
+  FIREBASE_TOOLS: firebase-tools@15.26.0
+
+jobs:
+  test:
+    name: test the site
+    if: vars.TAALCUT_WEB_DEPLOY_ENABLED == 'true'
+    # The site needs no Mac: Linux minutes are a tenth of macOS ones.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          version: 11.22.0
+          standalone: true
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install the website's dependencies
+        run: pnpm install --frozen-lockfile --filter @taalcut/website
+
+      # The Firestore emulator needs Java 21; the runner image ships it beside its default Java.
+      - name: Use Java 21
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME_21_X64" >> "$GITHUB_ENV"
+          echo "$JAVA_HOME_21_X64/bin" >> "$GITHUB_PATH"
+
+      - name: Install Chromium's shell and its system libraries
+        run: pnpm --filter @taalcut/website exec playwright install --with-deps --only-shell chromium
+
+      - name: Unit tests
+        run: pnpm --filter @taalcut/website test
+
+      - name: Firestore rules against the emulator
+        run: pnpm --filter @taalcut/website test:rules
+
+      # A build without Firebase config: every page, axe in both themes, reflow, the closed forms.
+      - name: End-to-end, closed build
+        run: pnpm --filter @taalcut/website e2e
+
+      # A build pointed at the emulator: join, a repeat sign-up, a bad address, offline, contact.
+      - name: End-to-end, the forms against the emulator
+        run: pnpm --filter @taalcut/website e2e:waitlist
+
+  deploy:
+    name: deploy to Firebase Hosting
+    needs: test
+    if: vars.TAALCUT_WEB_DEPLOY_ENABLED == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    # One deploy at a time; a newer run waits rather than cancelling one that is publishing.
+    concurrency:
+      group: website-deploy
+      cancel-in-progress: false
+    environment:
+      name: taalcut.app
+      url: https://taalcut.app
+    env:
+      NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+      NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}
+      NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_KEY: ${{ vars.NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_KEY }}
+      NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+    steps:
+      - name: Refuse to build without Firebase config
+        run: |
+          missing=0
+          for name in NEXT_PUBLIC_FIREBASE_API_KEY NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN NEXT_PUBLIC_FIREBASE_PROJECT_ID \
+            NEXT_PUBLIC_FIREBASE_APP_ID NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_KEY; do
+            value="${!name}"
+            if [ -z "${value//[[:space:]]/}" ]; then
+              echo "::error::The repository variable $name is empty. The site would ship a closed waitlist."
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          version: 11.22.0
+          standalone: true
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install the website's dependencies
+        run: pnpm install --frozen-lockfile --filter @taalcut/website
+
+      # next build, then scripts/csp.mjs writes website/firebase.json with each page's hashed CSP.
+      - name: Build
+        run: pnpm --filter @taalcut/website build
+
+      - name: Check the hosting config carries a live policy
+        run: |
+          config=website/firebase.json
+          test -s "$config" || { echo "::error::$config was not written"; exit 1; }
+          grep -q 'Content-Security-Policy' "$config" || { echo "::error::$config has no CSP"; exit 1; }
+          grep -q 'https://firestore.googleapis.com' "$config" || { echo "::error::the CSP has no Firestore host: not a live build"; exit 1; }
+
+      - name: Deploy Hosting and the Firestore rules
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          set -euo pipefail
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "::error::The FIREBASE_SERVICE_ACCOUNT secret is missing."
+            exit 1
+          fi
+          key="$RUNNER_TEMP/firebase-deployer.json"
+          umask 077
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$key"
+          trap 'rm -f "$key"' EXIT
+          GOOGLE_APPLICATION_CREDENTIALS="$key" npx --yes "$FIREBASE_TOOLS" deploy \
+            --only hosting,firestore:rules,firestore:indexes \
+            --project "$NEXT_PUBLIC_FIREBASE_PROJECT_ID" \
+            --config website/firebase.json \
+            --non-interactive

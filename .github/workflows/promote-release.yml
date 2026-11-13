@@ -1,0 +1,65 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Promote release
+
+# Raises a staged rollout (P3-B9, docs/release.md "Staged rollout"): 10 → 50 → 100, where 100 removes
+# stagingPercentage. Refuses unless the version is what the channel serves, and never lowers a stage (use
+# pull-release.yml to stop a bad build). Manual only, behind the `release` environment. The logic is
+# scripts/rollout/rollout.ts (release-workflows.test.ts).
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Public channel
+        required: true
+        type: choice
+        options: [beta, stable]
+      version:
+        description: The version the channel serves now
+        required: true
+        type: string
+      stage:
+        description: New stage in percent
+        required: true
+        type: choice
+        options: ['50', '100']
+
+concurrency:
+  group: release-channels
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  promote:
+    name: raise the rollout
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: release
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CHANNEL: ${{ inputs.channel }}
+      VERSION: ${{ inputs.version }}
+      STAGE: ${{ inputs.stage }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+
+      - name: Promote
+        env:
+          # Re-signs the channel file it rewrites (security review SB-19); only this step sees it.
+          TAALCUT_UPDATE_SIGNING_KEY: ${{ secrets.TAALCUT_UPDATE_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-beta\.[0-9]+)?$ ]] || { echo "::error::bad version"; exit 1; }
+          node scripts/release.mjs promote --repo "$GITHUB_REPOSITORY" --channel "$CHANNEL" --version "$VERSION" --stage "$STAGE"

@@ -1,0 +1,44 @@
+{
+  "id": "cut-60-es",
+  "synthetic": true,
+  "note": "Synthetic plan. Media is generated at test time.",
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "width": 80,
+  "height": 24,
+  "cellSize": 2,
+  "clips": [
+    {
+      "clipId": 1,
+      "color": "#c1121f",
+      "inFrame": 0,
+      "frames": 600
+    },
+    {
+      "clipId": 2,
+      "color": "#669bbc",
+      "inFrame": 0,
+      "frames": 1200
+    }
+  ],
+  "beats": [
+    0,
+    600,
+    1200
+  ],
+  "overlays": [],
+  "captions": [
+    {
+      "text": "Hola",
+      "startFrame": 60,
+      "language": "es"
+    }
+  ],
+  "transition": {
+    "atClipIndex": 1,
+    "kind": "dissolve",
+    "frames": 8
+  }
+}

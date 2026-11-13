@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+name: Report a template
+description: Report a hub template. Maintainers add hub:<id> if it is missing, then the label hidden to drop it from the index.
+labels: [report]
+body:
+  - type: input
+    id: hub-id
+    attributes:
+      label: Hub id
+      description: The 26-character template id.
+    validations:
+      required: true
+  - type: dropdown
+    id: reason
+    attributes:
+      label: Reason
+      options:
+        - copyright
+        - personalInfo
+        - spam
+        - offensive
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: note
+    attributes:
+      label: Note
+      description: Optional. No links, email addresses or handles.
+    validations:
+      required: false

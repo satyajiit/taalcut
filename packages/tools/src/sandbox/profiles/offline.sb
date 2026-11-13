@@ -1,0 +1,27 @@
+; SPDX-License-Identifier: AGPL-3.0-or-later
+; Copyright (C) 2026 Taalcut contributors
+;
+; The experiment sandbox's offline profile (P2-T2): FFmpeg, ffprobe and the
+; mac helper's OCR. No network, no other programs, writes only to the
+; experiment (its manifest excepted), no reads of the home folder, external
+; volumes or per-user temp folders beyond the experiment, the program's own
+; folder and the granted inputs. Paths arrive only as params, never as built
+; strings. Later rules win over earlier ones, which is what lets the allows
+; below carve the experiment out of the denied folders.
+(version 1)
+(allow default)
+(deny network*)
+(deny process-fork)
+(deny process-exec)
+(allow process-exec (literal (param "PROGRAM")))
+(deny file-write*)
+(allow file-write* (subpath (param "SCRATCH")) (literal "/dev/null"))
+(deny file-write* (literal (param "MANIFEST")))
+(deny file-read* (subpath (param "HOME")) (subpath "/Volumes") (subpath "/private/var/folders"))
+(allow file-read* (subpath (param "SCRATCH")) (subpath (param "PROGRAM_DIR"))
+       (literal (param "INPUT_0")) (literal (param "INPUT_1")) (literal (param "INPUT_2"))
+       (literal (param "INPUT_3")) (literal (param "INPUT_4")) (literal (param "INPUT_5"))
+       (literal (param "INPUT_6")) (literal (param "INPUT_7")) (literal (param "INPUT_8"))
+       (literal (param "INPUT_9")) (literal (param "INPUT_10")) (literal (param "INPUT_11"))
+       (literal (param "INPUT_12")) (literal (param "INPUT_13")) (literal (param "INPUT_14"))
+       (literal (param "INPUT_15")))

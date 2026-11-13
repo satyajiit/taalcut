@@ -1,0 +1,305 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* Hallmark · genre: atmospheric studio app · design-system: DESIGN.md v0.3 (+ v0.4 UX1 phone page) · designed-as-app
+ * The file lists (sending and done), the guide, the condition screens and the page's motion.
+ * component: row actions (pause, resume, stop, remove, try again) · states: default · hover · focus (base ring)
+ *   · active (gives 2 %, none under reduced motion) · disabled · loading (the row's own status) · error (the row's reason, vermilion
+ *   icon) · success (the row settles to Added) · contrast: DESIGN.md tokens only */
+
+/* Hairline rows like the Mac's own list: a status icon, the name, a status line, and while sending a bar
+ * and a meter in JetBrains Mono (its numbers change in place). Actions sit at the right of the name and
+ * status, 44 px each; the bar, meter and reason run on under them to the row's edge. */
+.rows {
+  list-style: none;
+}
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: var(--space-sm);
+  row-gap: var(--space-2xs);
+  align-items: start;
+  padding-block: var(--space-md);
+}
+.row + .row {
+  border-top: var(--rule-hair) solid var(--color-rule-subtle);
+}
+.status-icon {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: calc((var(--text-md--line-height) - 1.25rem) / 2);
+  color: var(--color-ink-2);
+}
+.row-body {
+  display: contents;
+}
+.row-name {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  font-weight: var(--font-weight-medium);
+  overflow-wrap: anywhere;
+}
+.row-status {
+  grid-column: 2;
+  grid-row: 2;
+}
+.row .bar,
+.row-meter,
+.row-reason,
+.row-retry {
+  grid-column: 2 / -1;
+  min-width: 0;
+}
+.row-status,
+.row-reason,
+.row-meter {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-ink-2);
+}
+.row-status {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-xs);
+}
+.row-size {
+  color: var(--color-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.row-size::before {
+  content: '·';
+  margin-inline-end: var(--space-xs);
+}
+.row-meter {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums slashed-zero;
+  color: var(--color-ink-2);
+}
+.row-reason:empty,
+.row-meter:empty {
+  display: none;
+}
+.row-retry {
+  justify-self: start;
+  margin-inline-start: calc(-1 * var(--space-sm));
+}
+.row-retry .icon { width: 1rem; height: 1rem; }
+.row-actions {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  align-self: center;
+  display: flex;
+}
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-ink-2);
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+@media (hover: hover) {
+  .icon-button:hover { background: var(--color-hover); color: var(--color-ink); }
+}
+.icon-button:active { transform: scale(0.98); background: var(--color-pressed); }
+@media (prefers-reduced-motion: reduce) {
+  .icon-button:active { transform: none; }
+}
+.icon-button:disabled { color: var(--color-ink-disabled); cursor: not-allowed; transform: none; }
+
+/* The bar: neutral, scaled with transform (DESIGN.md "Progress"). The real <progress> lies over it. */
+.bar,
+.overall {
+  position: relative;
+  height: var(--space-2xs);
+  margin-block: var(--space-2xs);
+  border-radius: var(--radius-pill);
+  background: var(--color-rule);
+  overflow: hidden;
+}
+.bar::before,
+.overall::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--color-ink-2);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left center;
+}
+.bar progress {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.row:not(:is([data-state='sending'], [data-state='paused'], [data-state='held'])) .bar {
+  display: none;
+}
+
+/* Status: always an icon and a word, coloured by what it means. */
+.row:is([data-state='imported'], [data-state='added']) .status-icon,
+.row:is([data-state='imported'], [data-state='added']) .row-state {
+  color: var(--color-success-strong);
+}
+.row:is([data-state='failed'], [data-state='rejected']) .status-icon,
+.row:is([data-state='failed'], [data-state='rejected']) .row-state {
+  color: var(--color-danger-strong);
+}
+.row[data-state='paused'] .status-icon,
+.row[data-state='paused'] .row-state,
+.row[data-verdict='likely'] .row-reason {
+  color: var(--color-warning-strong);
+}
+.row:is([data-state='cancelled'], [data-state='ghost']) .status-icon {
+  color: var(--color-ink-3);
+}
+.row-state {
+  font-weight: var(--font-weight-medium);
+}
+
+/* The summary over the list and the overall bar under it. */
+.summary {
+  font-variant-numeric: tabular-nums;
+}
+.overall {
+  margin-block: calc(var(--space-xs) - var(--space-lg)) 0;
+}
+.group {
+  display: grid;
+  gap: var(--space-2xs);
+}
+.group h2 {
+  padding-bottom: var(--space-2xs);
+  border-bottom: var(--rule-hair) solid var(--color-rule-subtle);
+}
+
+/* The iOS guide: a disclosure with its steps numbered. */
+.guide summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 2.75rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ink-2);
+  cursor: pointer;
+  list-style: none;
+}
+.guide summary::-webkit-details-marker { display: none; }
+.guide summary::before {
+  content: '';
+  width: 0.4rem;
+  height: 0.4rem;
+  border: solid currentColor;
+  border-width: 0 var(--rule-fine) var(--rule-fine) 0;
+  transform: rotate(-45deg);
+  transition: transform var(--dur-micro) var(--ease-out);
+}
+.guide[open] summary::before { transform: rotate(45deg); }
+.guide ol {
+  display: grid;
+  gap: var(--space-xs);
+  padding-inline-start: var(--space-lg);
+  color: var(--color-ink-2);
+}
+.guide li::marker {
+  color: var(--color-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The line on the choose step that leads back to what is sending or what arrived. */
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-sm);
+  color: var(--color-ink-2);
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 2.75rem;
+  color: var(--color-ink);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rule-strong);
+  text-underline-offset: 0.2em;
+  white-space: nowrap;
+}
+.link .icon { width: 1rem; height: 1rem; }
+@media (hover: hover) {
+  .link:hover { text-decoration-color: currentColor; }
+}
+
+/* Spinners are loaders: base.css keeps .animate-spin turning, slower, under reduced motion. */
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+.checking .icon { color: var(--color-ink-3); }
+@keyframes spin {
+  to { transform: rotate(1turn); }
+}
+
+/* Motion. The lockup counts itself in once a visit (the logo's count-in: beats 1, 3, 6 and 8, the empty beat
+ * fading in, then the landing); a step that arrives rises 8 px and fades in; the beat that becomes current
+ * fills; a new row arrives the same way; bars scale. Under reduced motion each becomes a 150 ms fade. */
+@media (prefers-reduced-motion: no-preference) {
+  .lockup[data-intro] .arc {
+    animation: arc-fade 90ms var(--ease-out) both, arc-drop 380ms var(--ease-out) both;
+  }
+  .lockup[data-intro] .arc-1 { --dx: 9.7px; --dy: -12.7px; }
+  .lockup[data-intro] .arc-2 { --dx: 12.7px; --dy: 9.7px; animation-delay: 250ms; }
+  .lockup[data-intro] .arc-3 { animation: arc-fade 280ms var(--ease-in-out) 625ms both; }
+  .lockup[data-intro] .arc-4 { --dx: -12.7px; --dy: -9.7px; animation-delay: 875ms; }
+  .lockup[data-intro] .arc-1 {
+    animation: arc-fade 90ms var(--ease-out) both, arc-drop 380ms var(--ease-out) both,
+      arc-land 610ms var(--ease-out) 1250ms;
+  }
+  .lockup[data-intro] .wordmark {
+    animation: arc-fade 240ms var(--ease-out) 1290ms both, word-slide 420ms var(--ease-out) 1290ms both;
+  }
+  .screen[data-arrive],
+  .row[data-arrive] {
+    animation: arrive var(--dur-short) var(--ease-out) both;
+  }
+  .beats li[data-arrive]::before {
+    animation: beat-fill var(--dur-short) var(--ease-out) both;
+  }
+  .bar::before,
+  .overall::before {
+    transition: transform var(--dur-short) var(--ease-out);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lockup[data-intro],
+  .screen[data-arrive],
+  .row[data-arrive] {
+    animation: fade 150ms linear both;
+  }
+}
+@keyframes arc-fade { from { opacity: 0; } }
+@keyframes arc-drop { from { transform: translate(var(--dx, 0), var(--dy, 0)); } }
+@keyframes arc-land {
+  15% { transform: translate(7.3px, -9.5px); }
+}
+@keyframes word-slide { from { transform: translateX(-10px); } }
+@keyframes arrive { from { opacity: 0; transform: translateY(var(--space-xs)); } }
+@keyframes beat-fill { from { transform: scaleX(0.25); } }
+@keyframes fade { from { opacity: 0; } }
+
+@media (forced-colors: active) {
+  .bar,
+  .overall { outline: 1px solid CanvasText; }
+  .bar::before,
+  .overall::before { forced-color-adjust: none; background: Highlight; }
+  .beats li[data-state='current']::before { forced-color-adjust: none; background: Highlight; }
+  .digit { border-color: CanvasText; }
+}

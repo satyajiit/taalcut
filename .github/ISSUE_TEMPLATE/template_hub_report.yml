@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Template hub report
+description: Report a shared template for moderation. Structure only. Do not attach media.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this to ask maintainers to look at a shared template. Describe the
+        structure. Do not attach footage, images, audio, or other media.
+
+  - type: input
+    id: template
+    attributes:
+      label: Template id or link
+      description: The template id, or a link to the shared template.
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-is-wrong
+    attributes:
+      label: What is wrong
+      description: What should be hidden or fixed, in words. No media.
+    validations:
+      required: true
+
+  - type: input
+    id: policy
+    attributes:
+      label: Which policy
+      description: The policy you think this breaks, if you know. Leave blank if you do not.
+    validations:
+      required: false

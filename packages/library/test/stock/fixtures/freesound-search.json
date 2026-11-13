@@ -1,0 +1,59 @@
+{
+  "count": 5,
+  "next": null,
+  "results": [
+    {
+      "id": 1,
+      "name": "Rain",
+      "username": "ada",
+      "license": "Creative Commons 0",
+      "url": "https://freesound.org/people/ada/sounds/1/",
+      "duration": 2.5,
+      "type": "mp3",
+      "previews": {
+        "preview-hq-mp3": "https://freesound.org/data/previews/1_hq.mp3",
+        "preview-lq-mp3": "https://freesound.org/data/previews/1_lq.mp3"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Bell",
+      "username": "ben",
+      "license": "Attribution",
+      "url": "https://freesound.org/people/ben/sounds/2/",
+      "duration": 1.2,
+      "type": "wav",
+      "previews": { "preview-hq-mp3": "https://freesound.org/data/previews/2_hq.mp3" }
+    },
+    {
+      "id": 3,
+      "name": "Jingle",
+      "username": "cara",
+      "license": "Attribution NonCommercial",
+      "url": "https://freesound.org/people/cara/sounds/3/",
+      "duration": 3,
+      "type": "mp3",
+      "previews": { "preview-hq-mp3": "https://freesound.org/data/previews/3_hq.mp3" }
+    },
+    {
+      "id": 4,
+      "name": "Chop",
+      "username": "dina",
+      "license": "Sampling+",
+      "url": "https://freesound.org/people/dina/sounds/4/",
+      "duration": 0.4,
+      "type": "aiff",
+      "previews": { "preview-hq-mp3": "https://freesound.org/data/previews/4_hq.mp3" }
+    },
+    {
+      "id": 5,
+      "name": "Mystery",
+      "username": "erin",
+      "license": "Some Other Deed",
+      "url": "https://freesound.org/people/erin/sounds/5/",
+      "duration": 1,
+      "type": "wav",
+      "previews": { "preview-hq-mp3": "https://freesound.org/data/previews/5_hq.mp3" }
+    }
+  ]
+}

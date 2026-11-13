@@ -1,0 +1,350 @@
+{
+ "caseId": "sound-unmute-named",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJ22SX10WC21D8NHDB87J1",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "CiXvoYLMhiSgUFCj8sXFllWgKuiM11Hk",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "CiXvoYLMhiSgUFCj8sXFllWgKuiM11Hk",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10186,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10242,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603996477,
+     "responseId": "chatcmpl-4fc8466fea1d4791802391a471ab58ba",
+     "rawStopReason": "tool_calls",
+     "durationMs": 9637
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "CiXvoYLMhiSgUFCj8sXFllWgKuiM11Hk",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10186,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10242,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ2C74GBKA05D37F4FXDKS",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "5NdvkrbUKoLkIaKZffj4cTpqPbRSCZI3",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "clips": [
+          2
+         ],
+         "kind": "clips"
+        },
+        "muted": false
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "5NdvkrbUKoLkIaKZffj4cTpqPbRSCZI3",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "clips": [
+          2
+         ],
+         "kind": "clips"
+        },
+        "muted": false
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 113,
+      "cacheRead": 10186,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11914,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604006117,
+     "responseId": "chatcmpl-d2b73b11de2840d48a339e7765bebe8c",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4155
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "5NdvkrbUKoLkIaKZffj4cTpqPbRSCZI3",
+     "name": "audio_setVolume",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "of": {
+       "clips": [
+        2
+       ],
+       "kind": "clips"
+      },
+      "muted": false
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 113,
+    "cachedInputTokens": 10186,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11914,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ2G949EF4MNFCTKXDWET3",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Done. I turned the sound back on for the coffee clip."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Done. I turned the sound back on for the coffee clip."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 157,
+      "output": 13,
+      "cacheRead": 11801,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11971,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604010277,
+     "responseId": "chatcmpl-7da2d6e5c68e42b998ac75c871a8f09c",
+     "rawStopReason": "stop",
+     "durationMs": 663
+    }
+   },
+   "text": "Done. I turned the sound back on for the coffee clip.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 157,
+    "outputTokens": 13,
+    "cachedInputTokens": 11801,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11971,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJ2GXX8CADAGM0P6FNYK1M",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "40QoTA9BQLKS9Om77YVukkQAeU01Gpht",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "40QoTA9BQLKS9Om77YVukkQAeU01Gpht",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 12052,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12107,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604010942,
+     "responseId": "chatcmpl-af53090b77a14b649c6cf7a9b8a3595b",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11621
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "40QoTA9BQLKS9Om77YVukkQAeU01Gpht",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 12052,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12107,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

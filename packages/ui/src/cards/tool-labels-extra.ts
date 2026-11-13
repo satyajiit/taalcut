@@ -1,0 +1,158 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Taalcut contributors
+
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+
+/**
+ * Additional plain-language tool names so every workspace, motion design,
+ * timeline, vision, audio, stock, template, hub and plugin tool has a warm
+ * human-readable step name instead of falling back to "A step".
+ */
+export const EXTRA_TOOL_LABELS: Readonly<Record<string, MessageDescriptor>> = {
+  'products.list': msg`Find your products`,
+  'products.knowledge': msg`Read shared product knowledge`,
+  'products.research': msg`Find fresh product video ideas`,
+  'products.choose': msg`Create a video from this idea`,
+  'shorts.generate': msg`Create a short from your video`,
+  'shorts.createProject': msg`Set up the short project`,
+  'shorts.importSource': msg`Import the long video`,
+  'shorts.get': msg`Check short progress`,
+  // Workspace & HyperFrames motion compositions
+  'workspace.list': msg`List workspace files`,
+  'workspace.files': msg`List workspace files`,
+  'workspace.read': msg`Read a workspace file`,
+  'workspace.new': msg`Create a motion graphic`,
+  'workspace.write': msg`Write a workspace file`,
+  'workspace.patch': msg`Edit a workspace file`,
+  'workspace.delete': msg`Delete a workspace file`,
+  'workspace.move': msg`Move a workspace file`,
+  'workspace.search': msg`Search workspace files`,
+  'workspace.lint': msg`Check the motion graphic`,
+  'workspace.render': msg`Render a motion graphic`,
+  'workspace.renderOver': msg`Preview motion graphic on the clip`,
+  'workspace.place': msg`Place motion graphic on the video`,
+  'workspace.replace': msg`Update motion graphic on the video`,
+  'workspace.open': msg`Open in the workspace`,
+  'workspace.exec': msg`Run a workspace command`,
+  'workspace.importMedia': msg`Add media to the workspace`,
+  'workspace.promote': msg`Save as a reusable graphic`,
+  'workspace.docs': msg`Read the motion graphic guide`,
+
+  // Design, graphics & sandbox
+  'images.generateThumbnail': msg`Generate video thumbnail`,
+  'design.done': msg`Finish the graphic design`,
+  'design.none': msg`Keep the video without extra graphics`,
+  'graphics.list': msg`List motion graphics`,
+  'graphics.design': msg`Design a motion graphic`,
+  'graphics.placeComposition': msg`Place a motion graphic`,
+  'graphics.setComposition': msg`Update a motion graphic`,
+  'graphics.edit': msg`Edit a motion graphic`,
+  'graphics.remove': msg`Remove a motion graphic`,
+  'graphics.useProposal': msg`Use a graphic style`,
+  'sandbox.files': msg`Check sandbox files`,
+  'sandbox.run': msg`Run in the sandbox`,
+
+  // Timeline assembly, variants & refinements
+  'timeline.get': msg`Read the timeline`,
+  'timeline.findAlternates': msg`Find alternate clips`,
+  'timeline.assemble': msg`Assemble the timeline`,
+  'timeline.gaps': msg`Check for missing shots`,
+  'timeline.makeVariants': msg`Make video versions`,
+  'timeline.fitTemplates': msg`Try templates on your clips`,
+  'timeline.applyStyleToMany': msg`Apply style across clips`,
+  'timeline.captureFrame': msg`Capture a video frame`,
+  'timeline.editText': msg`Edit text on the video`,
+  'timeline.moveText': msg`Move text on the video`,
+  'timeline.lockClip': msg`Lock a clip in place`,
+  'timeline.applyCast': msg`Place the chosen clips`,
+  'timeline.setClipFit': msg`Fit the clip to the frame`,
+  'timeline.resyncBeats': msg`Snap cuts to the beat`,
+  'timeline.trimToDuration': msg`Trim to target length`,
+  'timeline.setReframe': msg`Reframe the shot`,
+  'timeline.insertClip': msg`Insert a clip`,
+  'timeline.duplicateClip': msg`Duplicate a clip`,
+  'timeline.removeTransition': msg`Remove a transition`,
+  'timeline.setGrade': msg`Adjust the colour grade`,
+  'timeline.addMarker': msg`Add a timeline marker`,
+  'timeline.slipClip': msg`Slip the clip timing`,
+  'timeline.exportInterchange': msg`Export for another editor`,
+  'timeline.planEnergyCurve': msg`Plan the pacing curve`,
+  'timeline.applyEnergyCurve': msg`Apply the pacing curve`,
+  'timeline.planCleanup': msg`Plan timeline cleanup`,
+
+  // Render, QA & video review
+  'render.draft': msg`Render a quick preview`,
+  'render.export': msg`Export the video`,
+  'render.exportBatch': msg`Export all versions`,
+  'render.getQaReport': msg`Check the quality report`,
+  'render.list': msg`List exports`,
+  'render.listPresets': msg`List export presets`,
+  'render.setExportPreset': msg`Choose an export preset`,
+  'render.status': msg`Check export progress`,
+  'video.done': msg`Finish checking the video`,
+
+  // Vision & cut detection
+  'vision.contactSheet': msg`Build a contact sheet of frames`,
+  'vision.detectCuts': msg`Detect scene cuts`,
+  'vision.confirmCuts': msg`Confirm the scene cuts`,
+  'vision.readText': msg`Read on-screen text`,
+  'vision.matchLook': msg`Match the visual look`,
+
+  // Audio, captions, music, sound effects & voice
+  'audio.analyzeCleanup': msg`Check audio for noise`,
+  'audio.classifyAudio': msg`Identify the audio type`,
+  'audio.measureLoudness': msg`Measure audio loudness`,
+  'audio.trackBeats': msg`Track the music beats`,
+  'audio.setVolume': msg`Adjust clip volume`,
+  'audio.trim': msg`Trim the audio`,
+  'audio.move': msg`Move the audio clip`,
+  // EAR1: listening (audio.cloudCritique uploads the sound, after its own consent card)
+  'audio.listen': msg`Listen to the sound`,
+  'audio.findMoment': msg`Find a sound in a recording`,
+  'audio.compare': msg`Compare two sounds`,
+  'audio.critique': msg`Check the sound mix`,
+  'audio.cloudCritique': msg`Get a cloud opinion on the sound`,
+  'sfx.searchSounds': msg`Search for sound effects`,
+  'captions.translate': msg`Translate captions`,
+  'music.findLibraryTrack': msg`Find a music track`,
+  'music.useLibraryTrack': msg`Place music on the video`,
+  'music.setDucking': msg`Balance music under speech`,
+  'sfx.addHits': msg`Add sound effects on transitions`,
+  'sfx.generateHit': msg`Create a sound effect`,
+  'voice.editLine': msg`Edit a voice-over line`,
+  'voice.finalize': msg`Finish the voice-over`,
+  'voice.generate': msg`Generate voice-over audio`,
+  'voice.place': msg`Place voice-over on the timeline`,
+  'voice.fitScript': msg`Fit the script to the timing`,
+
+  // Stock & library helpers
+  'stock.import': msg`Download stock footage`,
+  'stock.search': msg`Search stock footage`,
+  'library.findSimilar': msg`Find similar clips`,
+  'library.importStatus': msg`Check clip import progress`,
+  'library.listFiles': msg`List files in folder`,
+
+  // Templates & Saved reels
+  'templates.abandonBreakdown': msg`Stop reading the reel`,
+  'templates.approveSlots': msg`Approve the template slots`,
+  'templates.dropSlot': msg`Remove a template slot`,
+  'templates.editIntent': msg`Edit a slot description`,
+  'templates.mergeSlots': msg`Merge template slots`,
+  'templates.renameSlot': msg`Rename a template slot`,
+  'templates.listInstagramCollections': msg`List Instagram collections`,
+  'templates.listInstagramSavedReels': msg`List Instagram Saved reels`,
+  'templates.planFromFormat': msg`Plan the video structure`,
+  'templates.search': msg`Search templates`,
+
+  // Hub & plugins
+  'hub.fork': msg`Customise a template`,
+  'hub.openShare': msg`Open a shared template`,
+  'plugins.callExternal': msg`Run a connected plugin`,
+  'plugins.callRead': msg`Read from a connected plugin`,
+  'plugins.describe': msg`Read plugin details`,
+  'plugins.list': msg`List connected plugins`,
+  'plugins.listTools': msg`List plugin actions`,
+  'plugins.readSkill': msg`Read a plugin guide`,
+  'plugins.requestSetup': msg`Ask to connect a plugin`,
+};

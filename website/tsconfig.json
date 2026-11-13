@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.dom.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "types": ["node"],
+    "allowJs": false,
+    "incremental": true,
+    "paths": { "#components/*": ["./src/components/*"] },
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["next-env.d.ts", "src/**/*", "test/**/*", "scripts/**/*", "firebase/**/*.ts", "*.ts", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", "out", ".next"]
+}

@@ -1,0 +1,10 @@
+{
+  "$license": "SPDX-License-Identifier: AGPL-3.0-or-later",
+  "$copyright": "Copyright (C) 2026 Taalcut contributors",
+  "$description": "Window background per theme for Electron (prevents a flash before first paint) and theme-color for web pages. Generated.",
+  "canvas": {
+    "light": "#faf6f1",
+    "dark": "#181715"
+  },
+  "viewer": "#1b1a1a"
+}

@@ -1,0 +1,927 @@
+{
+  "description": "",
+  "forkedFrom": null,
+  "format": "taalcut.template",
+  "formatId": "highlightReel",
+  "formatVersion": 0,
+  "handle": "taalcut",
+  "id": "01HZZZZZZZZZZZZZZZ0000007K",
+  "language": "es",
+  "licence": "CC0-1.0",
+  "name": "golazos",
+  "structure": {
+    "audio": {
+      "kind": "music",
+      "loudnessLufs": null,
+      "speechCoverage": null,
+      "speechLanguage": null
+    },
+    "beatMap": {
+      "beats": [
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 0
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 13
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 26
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 39
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 51
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 64
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 77
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 90
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 103
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 116
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 129
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 141
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 154
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 167
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 180
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 193
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 206
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 219
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 231
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 244
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 257
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 270
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 283
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 296
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 309
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 321
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 334
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 347
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 360
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 373
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 386
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 399
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 411
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 424
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 437
+        }
+      ],
+      "beatsPerBar": 4,
+      "bpm": 140,
+      "confidence": 1,
+      "downbeats": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32
+      ],
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "source": "format"
+    },
+    "canvas": {
+      "height": 1920,
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "width": 1080
+    },
+    "duration": {
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "value": 450
+    },
+    "pacing": {
+      "cutsOnBeat": 1,
+      "hookEnd": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 26
+      },
+      "longestShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 52
+      },
+      "meanShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 35
+      },
+      "medianShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 38
+      },
+      "shortestShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 13
+      },
+      "shotCount": 13
+    },
+    "slots": [
+      {
+        "beatAnchor": {
+          "beatIndex": 0,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 26
+        },
+        "intent": {
+          "energy": 1,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": "the peak moment",
+          "text": "Hook: the peak moment"
+        },
+        "name": null,
+        "role": "hook",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 0
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 2,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 38
+        },
+        "intent": {
+          "energy": 0.5,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "medium",
+          "subject": "the action",
+          "text": "Build: action"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 26
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 5,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 39
+        },
+        "intent": {
+          "energy": 0.57,
+          "motion": "tracking",
+          "people": null,
+          "place": null,
+          "shotType": "wide",
+          "subject": "the action",
+          "text": "Build: action"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 64
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 8,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 38
+        },
+        "intent": {
+          "energy": 0.64,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "medium",
+          "subject": "the action",
+          "text": "Build: action"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 103
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 11,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 39
+        },
+        "intent": {
+          "energy": 0.71,
+          "motion": "tracking",
+          "people": null,
+          "place": null,
+          "shotType": "wide",
+          "subject": "the action",
+          "text": "Build: action"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 141
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 14,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 39
+        },
+        "intent": {
+          "energy": 0.78,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "medium",
+          "subject": "the action",
+          "text": "Build: action"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 180
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 17,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 38
+        },
+        "intent": {
+          "energy": 0.85,
+          "motion": "tracking",
+          "people": null,
+          "place": null,
+          "shotType": "wide",
+          "subject": "the action",
+          "text": "Build: action"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 219
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 20,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 13
+        },
+        "intent": {
+          "energy": 1,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": null,
+          "text": "Peak: fastest action"
+        },
+        "name": null,
+        "role": "peak",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 257
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 21,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 13
+        },
+        "intent": {
+          "energy": 1,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": null,
+          "text": "Peak: fastest action"
+        },
+        "name": null,
+        "role": "peak",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 270
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 22,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 13
+        },
+        "intent": {
+          "energy": 1,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": null,
+          "text": "Peak: fastest action"
+        },
+        "name": null,
+        "role": "peak",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 283
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 23,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 51
+        },
+        "intent": {
+          "energy": 0.6,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": "a striking moment",
+          "text": "Slow-down: one striking moment in slow motion"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": {
+          "curve": "ease",
+          "points": [
+            {
+              "at": {
+                "rate": {
+                  "den": 1,
+                  "num": 30
+                },
+                "value": 0
+              },
+              "speed": 1
+            },
+            {
+              "at": {
+                "rate": {
+                  "den": 1,
+                  "num": 30
+                },
+                "value": 25
+              },
+              "speed": 0.5
+            },
+            {
+              "at": {
+                "rate": {
+                  "den": 1,
+                  "num": 30
+                },
+                "value": 51
+              },
+              "speed": 1
+            }
+          ]
+        },
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 296
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 27,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 52
+        },
+        "intent": {
+          "energy": 0.9,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": "the best moment",
+          "text": "Finale: the best moment"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 347
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 31,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 51
+        },
+        "intent": {
+          "energy": 0.3,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "wide",
+          "subject": null,
+          "text": "Outro: calm wide"
+        },
+        "name": null,
+        "role": "outro",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 399
+        },
+        "transitionIn": null
+      }
+    ],
+    "text": [
+      {
+        "appearance": {
+          "align": "center",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.05
+        },
+        "box": {
+          "height": 0.08,
+          "width": 0.54,
+          "x": 0.13,
+          "y": 0.17
+        },
+        "chars": 7,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 38
+        },
+        "language": null,
+        "placeholder": "{title}",
+        "reveal": "fade",
+        "role": "title",
+        "slotIndex": 1,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 26
+        },
+        "styleKey": "title",
+        "words": 1
+      }
+    ]
+  },
+  "style": null,
+  "tags": [],
+  "trendFreshness": null,
+  "version": 1
+}

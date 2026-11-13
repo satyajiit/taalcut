@@ -1,0 +1,50 @@
+/*
+ * Keyframes for PromptBar, ThoughtLine and StatusMark, from React Bits
+ * (https://github.com/DavidHDev/react-bits) at commit
+ * e2eb04d89d5be5a633dba7b2d4adfd274e053767. Copyright (c) 2026 David Haz.
+ * MIT + Commons Clause: see ../LICENSE.md.
+ *
+ * Upstream renders these in an inline <style> element; the app's CSP
+ * (style-src 'self') blocks that, so they ship as a stylesheet instead.
+ */
+@keyframes prompt-bar-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+/* Taalcut: the same pop for a menu that opens below the bar (it has more room there). */
+@keyframes prompt-bar-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+@keyframes prompt-bar-eq {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+@keyframes thought-line-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes thought-line-shimmer {
+  to {
+    background-position: -125% 0;
+  }
+}
+@keyframes sm-breathe {
+  50% {
+    opacity: 0.45;
+  }
+}

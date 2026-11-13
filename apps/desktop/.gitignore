@@ -1,0 +1,3 @@
+# Playwright output (the root .gitignore already covers out/ and release/)
+test-results/
+playwright-report/

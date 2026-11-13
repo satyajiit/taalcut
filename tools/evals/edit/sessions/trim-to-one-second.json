@@ -1,0 +1,653 @@
+{
+ "caseId": "trim-to-one-second",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DHETSR21YP2RD12C1QNEX3",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "u64ERdFrvRKqTIR0ggx6HuDUMBDtM2zY",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "u64ERdFrvRKqTIR0ggx6HuDUMBDtM2zY",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10286,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10342,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603365690,
+     "responseId": "chatcmpl-8e8b4854016b4116bd3eb8d509d1cc07",
+     "rawStopReason": "tool_calls",
+     "durationMs": 8757
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "u64ERdFrvRKqTIR0ggx6HuDUMBDtM2zY",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10286,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10342,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHF3BM7YG0BPSESC7FT5MG",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "qcpjoW8Gqj16qw1m0bu786hdZYbTNzK9",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 5.5
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "qcpjoW8Gqj16qw1m0bu786hdZYbTNzK9",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 5.5
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 58,
+      "cacheRead": 10286,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11959,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603374454,
+     "responseId": "chatcmpl-6d51b4a9987a44469f998b4e41a07cc2",
+     "rawStopReason": "tool_calls",
+     "durationMs": 2721
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "qcpjoW8Gqj16qw1m0bu786hdZYbTNzK9",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 5.5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 58,
+    "cachedInputTokens": 10286,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11959,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHF60YK8CNAPA046EK57CA",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 6 is the skyline shot. I will trim its end to 1 second total.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "dGgqfshjLV6XWG3NlHjmP00UVCUYMyBl",
+       "name": "timeline_trimClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "6",
+        "edge": "end",
+        "by": {
+         "seconds": -2
+        }
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 6 is the skyline shot. I will trim its end to 1 second total.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "dGgqfshjLV6XWG3NlHjmP00UVCUYMyBl",
+       "name": "timeline_trimClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "6",
+        "edge": "end",
+        "by": {
+         "seconds": -2
+        }
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1690,
+      "output": 137,
+      "cacheRead": 11901,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13728,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603377185,
+     "responseId": "chatcmpl-4ab98448dbea4420b10d59872b068979",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4592
+    }
+   },
+   "text": "Clip 6 is the skyline shot. I will trim its end to 1 second total.\n\n",
+   "toolCalls": [
+    {
+     "id": "dGgqfshjLV6XWG3NlHjmP00UVCUYMyBl",
+     "name": "timeline_trimClip",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "6",
+      "edge": "end",
+      "by": {
+       "seconds": -2
+      }
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1690,
+    "outputTokens": 137,
+    "cachedInputTokens": 11901,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13728,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHFAGY46QH95V2AYCWXPTF",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Trimming the end by 2 seconds would leave it at 1 second total (12 - 2 = 10 seconds start, but the clip starts at 10), which is under a frame. I'll trim the start instead to keep the end at 1 second.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "H0Z4RzxBQ5xEHzbLee6kpjb9D8Qi5UkH",
+       "name": "timeline_trimClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "6",
+        "edge": "start",
+        "by": {
+         "seconds": -9
+        }
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Trimming the end by 2 seconds would leave it at 1 second total (12 - 2 = 10 seconds start, but the clip starts at 10), which is under a frame. I'll trim the start instead to keep the end at 1 second.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "H0Z4RzxBQ5xEHzbLee6kpjb9D8Qi5UkH",
+       "name": "timeline_trimClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "6",
+        "edge": "start",
+        "by": {
+         "seconds": -9
+        }
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 166,
+      "output": 176,
+      "cacheRead": 13591,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13933,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603381795,
+     "responseId": "chatcmpl-7752b4c7706d4a32aaf5448800d89203",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4413
+    }
+   },
+   "text": "Trimming the end by 2 seconds would leave it at 1 second total (12 - 2 = 10 seconds start, but the clip starts at 10), which is under a frame. I'll trim the start instead to keep the end at 1 second.\n\n",
+   "toolCalls": [
+    {
+     "id": "H0Z4RzxBQ5xEHzbLee6kpjb9D8Qi5UkH",
+     "name": "timeline_trimClip",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "6",
+      "edge": "start",
+      "by": {
+       "seconds": -9
+      }
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 166,
+    "outputTokens": 176,
+    "cachedInputTokens": 13591,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13933,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHFEVCWAQ5A2CACE5BQNER",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 6 is only 2 seconds long, so I can't trim the start by 9 seconds. I'll trim the end by 1 second instead.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "5Crf2iXtmgYRGax6ksc9TWTNFahQHPYf",
+       "name": "timeline_trimClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "6",
+        "edge": "end",
+        "by": {
+         "seconds": -1
+        }
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 6 is only 2 seconds long, so I can't trim the start by 9 seconds. I'll trim the end by 1 second instead.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "5Crf2iXtmgYRGax6ksc9TWTNFahQHPYf",
+       "name": "timeline_trimClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "6",
+        "edge": "end",
+        "by": {
+         "seconds": -1
+        }
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 213,
+      "output": 150,
+      "cacheRead": 13757,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14120,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603386224,
+     "responseId": "chatcmpl-aa655f244caf48758d0fbb76ee0afa37",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4084
+    }
+   },
+   "text": "Clip 6 is only 2 seconds long, so I can't trim the start by 9 seconds. I'll trim the end by 1 second instead.\n\n",
+   "toolCalls": [
+    {
+     "id": "5Crf2iXtmgYRGax6ksc9TWTNFahQHPYf",
+     "name": "timeline_trimClip",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "6",
+      "edge": "end",
+      "by": {
+       "seconds": -1
+      }
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 213,
+    "outputTokens": 150,
+    "cachedInputTokens": 13757,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14120,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHFJVH0V8KWJZQJAVDP3PM",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 6 now ends 1 second earlier, making the skyline shot 1 second long."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 6 now ends 1 second earlier, making the skyline shot 1 second long."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 194,
+      "output": 19,
+      "cacheRead": 13970,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14183,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793603390324,
+     "responseId": "chatcmpl-409eb5ca7778432ea94357db6ad7ffc1",
+     "rawStopReason": "stop",
+     "durationMs": 892
+    }
+   },
+   "text": "Clip 6 now ends 1 second earlier, making the skyline shot 1 second long.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 194,
+    "outputTokens": 19,
+    "cachedInputTokens": 13970,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14183,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHFKQNRVV1W39RGFC4C6GQ",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "3eZUHOwaB75FsYywjgOui3wBCUy2nc16",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "3eZUHOwaB75FsYywjgOui3wBCUy2nc16",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 14253,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14308,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603391224,
+     "responseId": "chatcmpl-04dea7dd32eb4d5cbf56cc8dd2350a2a",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11960
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "3eZUHOwaB75FsYywjgOui3wBCUy2nc16",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 14253,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14308,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

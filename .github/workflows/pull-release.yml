@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Pull release
+
+# Stops a bad build spreading (P3-B9, docs/release.md "Pulling a bad build"): the channel's yml goes back to an
+# older, unpulled version's history entry, so people who haven't updated stay on the good version; the bad release
+# is marked "(pulled)" with the reason and kept; the fixed-name DMG goes back to the good build and the website is
+# rebuilt. Nobody already on the bad build is moved back: fix forward with a higher version (publish-release.yml).
+# Manual only, behind the `release` environment. The logic is scripts/rollout/rollout.ts
+# (release-workflows.test.ts).
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Public channel
+        required: true
+        type: choice
+        options: [beta, stable]
+      bad-version:
+        description: The version the channel serves now, being pulled
+        required: true
+        type: string
+      to-version:
+        description: The last good version (older, served on this channel before, not pulled)
+        required: true
+        type: string
+      reason:
+        description: One sentence for the bad release's notes
+        required: true
+        type: string
+
+concurrency:
+  group: release-channels
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  pull:
+    name: pull the build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: release
+    permissions:
+      contents: write
+      # Dispatches website.yml.
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CHANNEL: ${{ inputs.channel }}
+      BAD_VERSION: ${{ inputs.bad-version }}
+      TO_VERSION: ${{ inputs.to-version }}
+      REASON: ${{ inputs.reason }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+
+      - name: Pull
+        env:
+          # Re-signs the channel files it rewrites (security review SB-19); only this step sees it.
+          TAALCUT_UPDATE_SIGNING_KEY: ${{ secrets.TAALCUT_UPDATE_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          for version in "$BAD_VERSION" "$TO_VERSION"; do
+            [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-beta\.[0-9]+)?$ ]] || { echo "::error::bad version $version"; exit 1; }
+          done
+          node scripts/release.mjs pull --repo "$GITHUB_REPOSITORY" --channel "$CHANNEL" \
+            --bad-version "$BAD_VERSION" --to-version "$TO_VERSION" --reason "$REASON"
+
+      - name: Rebuild the website
+        run: gh workflow run website.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"

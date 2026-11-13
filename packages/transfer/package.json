@@ -1,0 +1,34 @@
+{
+  "name": "@taalcut/transfer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "LAN server, pairing, resumable uploads, USB device bridges.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/noto-sans-devanagari": "5.3.0",
+    "@fontsource-variable/onest": "5.3.1",
+    "@taalcut/core": "workspace:*",
+    "@taalcut/media": "workspace:*",
+    "@tus/file-store": "2.1.1",
+    "@tus/server": "2.4.6",
+    "@yume-chan/adb": "2.6.4",
+    "@yume-chan/adb-daemon-webusb": "2.3.2",
+    "@yume-chan/adb-server-node-tcp": "2.5.2",
+    "tus-js-client": "4.3.1",
+    "usb": "3.2.1",
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "hash-wasm": "4.12.0"
+  }
+}

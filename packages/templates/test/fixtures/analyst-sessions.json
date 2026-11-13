@@ -1,0 +1,513 @@
+{
+  "about": "Analyst sessions on the synthetic-hard-cuts reel: the model's turns (tool calls, describeFrame answers, handoffs) as recorded fixtures, replayed offline against the real tools. '$a.b' refers to an earlier call's output saved 'as' a; 'fails' is the error code a call is expected to answer with; 'page' is the slots a templates.resolveCuts call answered with when recorded. Disputed cuts are judged one at a time (templates.judgeCut) and the slots written a page at a time (templates.resolveCuts, templates.setIntents); contextWindow is the model's window the pages are sized for (12,288, the smallest a local tier runs with its KV cache at q8_0: pages of 6). The verdict frames assume the pipeline's disputes on that reel (one, at frame 24) and its 8 slots; if the pipeline or the page rule changes, the replay fails on 'page': re-record.",
+  "contextWindow": 12288,
+  "sessions": [
+    {
+      "name": "judges the disputed cut and hands off a clean template",
+      "turns": [
+        {
+          "tool": "templates.fetchReference",
+          "input": {
+            "projectId": "$projectId",
+            "url": "https://www.youtube.com/shorts/abcDEF12345"
+          },
+          "as": "fetch"
+        },
+        {
+          "tool": "templates.breakdown",
+          "input": {
+            "projectId": "$projectId",
+            "experimentId": "$fetch.experimentId"
+          },
+          "as": "breakdown"
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$breakdown.next.before",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$breakdown.next.after",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "templates.judgeCut",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId",
+            "at": 24,
+            "cut": true
+          },
+          "as": "judged"
+        },
+        {
+          "tool": "templates.resolveCuts",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId"
+          },
+          "as": "page0",
+          "page": [0, 1, 2, 3, 4, 5]
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page0.slots.0.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page0.slots.1.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page0.slots.2.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page0.slots.3.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page0.slots.4.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page0.slots.5.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "templates.setIntents",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId",
+            "intents": [
+              {
+                "slotIndex": 0,
+                "role": "hook",
+                "intent": {
+                  "text": "bold full-frame colour with a caption on top",
+                  "shotType": "wide",
+                  "motion": "static",
+                  "subject": "colour field",
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.8
+                }
+              },
+              {
+                "slotIndex": 1,
+                "intent": {
+                  "text": "contrasting colour, same framing",
+                  "shotType": "wide",
+                  "motion": "static",
+                  "subject": "colour field",
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.7
+                }
+              },
+              {
+                "slotIndex": 2,
+                "intent": {
+                  "text": "a two-frame flash cut for punch",
+                  "shotType": "detail",
+                  "motion": "static",
+                  "subject": "colour field",
+                  "people": 0,
+                  "place": null,
+                  "energy": 1
+                }
+              },
+              {
+                "slotIndex": 3,
+                "intent": {
+                  "text": "a longer held shot to breathe",
+                  "shotType": "wide",
+                  "motion": "static",
+                  "subject": "colour field",
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.5
+                }
+              },
+              {
+                "slotIndex": 4,
+                "intent": {
+                  "text": "new colour on the beat",
+                  "shotType": "medium",
+                  "motion": "static",
+                  "subject": "colour field",
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.6
+                }
+              },
+              {
+                "slotIndex": 5,
+                "intent": {
+                  "text": "colour with a lower caption bar",
+                  "shotType": "medium",
+                  "motion": "static",
+                  "subject": "colour field",
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.6
+                }
+              }
+            ]
+          },
+          "as": "written0"
+        },
+        {
+          "tool": "templates.resolveCuts",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId"
+          },
+          "as": "page1",
+          "page": [6, 7]
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page1.slots.0.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page1.slots.1.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "templates.setIntents",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId",
+            "intents": [
+              {
+                "slotIndex": 6,
+                "intent": {
+                  "text": "quick change before the end",
+                  "shotType": "close",
+                  "motion": "static",
+                  "subject": "colour field",
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.8
+                }
+              },
+              {
+                "slotIndex": 7,
+                "role": "outro",
+                "intent": {
+                  "text": "closing colour held to the end",
+                  "shotType": "wide",
+                  "motion": "static",
+                  "subject": "colour field",
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.4
+                }
+              }
+            ]
+          },
+          "as": "written1"
+        },
+        {
+          "tool": "templates.finalise",
+          "input": {
+            "projectId": "$projectId",
+            "breakdownId": "$breakdown.breakdownId",
+            "name": "Fast colour cuts"
+          },
+          "as": "template"
+        },
+        {
+          "handOff": {
+            "templateId": "$template.templateId",
+            "version": "$template.version",
+            "slotCount": "$template.slotCount",
+            "breakdownId": "$breakdown.breakdownId",
+            "unconfirmedCuts": "$template.unconfirmedCuts"
+          },
+          "expect": {
+            "verdict": "pass"
+          }
+        }
+      ]
+    },
+    {
+      "name": "leaves the dispute to the rule and finalises a page early; finalise refuses until every slot is written, the check wants the unconfirmed cut",
+      "turns": [
+        {
+          "tool": "templates.fetchReference",
+          "input": {
+            "projectId": "$projectId",
+            "url": "https://www.youtube.com/shorts/abcDEF12345"
+          },
+          "as": "fetch"
+        },
+        {
+          "tool": "templates.breakdown",
+          "input": {
+            "projectId": "$projectId",
+            "experimentId": "$fetch.experimentId"
+          },
+          "as": "breakdown"
+        },
+        {
+          "tool": "templates.resolveCuts",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId"
+          },
+          "as": "page0",
+          "page": [0, 1, 2, 3, 4, 5]
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page0.slots.0.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "templates.setIntents",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId",
+            "intents": [
+              {
+                "slotIndex": 0,
+                "intent": {
+                  "text": "bold colour opener",
+                  "shotType": "wide",
+                  "motion": "static",
+                  "subject": null,
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.8
+                }
+              },
+              {
+                "slotIndex": 1,
+                "intent": {
+                  "text": "contrasting colour",
+                  "shotType": "wide",
+                  "motion": "static",
+                  "subject": null,
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.7
+                }
+              },
+              {
+                "slotIndex": 2,
+                "intent": {
+                  "text": "flash cut",
+                  "shotType": "detail",
+                  "motion": "static",
+                  "subject": null,
+                  "people": 0,
+                  "place": null,
+                  "energy": 1
+                }
+              },
+              {
+                "slotIndex": 3,
+                "intent": {
+                  "text": "held shot",
+                  "shotType": "wide",
+                  "motion": "static",
+                  "subject": null,
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.5
+                }
+              },
+              {
+                "slotIndex": 4,
+                "intent": {
+                  "text": "colour on the beat",
+                  "shotType": "medium",
+                  "motion": "static",
+                  "subject": null,
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.6
+                }
+              },
+              {
+                "slotIndex": 5,
+                "intent": {
+                  "text": "colour with a caption",
+                  "shotType": "medium",
+                  "motion": "static",
+                  "subject": null,
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.6
+                }
+              }
+            ]
+          }
+        },
+        {
+          "tool": "templates.finalise",
+          "input": {
+            "projectId": "$projectId",
+            "breakdownId": "$breakdown.breakdownId",
+            "name": "Colour cuts"
+          },
+          "fails": "core.validation"
+        },
+        {
+          "tool": "templates.resolveCuts",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId"
+          },
+          "as": "page1",
+          "page": [6, 7]
+        },
+        {
+          "tool": "vision.describeFrame",
+          "input": {
+            "path": "$page1.slots.0.frame",
+            "at": {
+              "value": 0,
+              "rate": 1
+            },
+            "detail": "low"
+          }
+        },
+        {
+          "tool": "templates.setIntents",
+          "input": {
+            "breakdownId": "$breakdown.breakdownId",
+            "intents": [
+              {
+                "slotIndex": 6,
+                "intent": {
+                  "text": "quick change",
+                  "shotType": "close",
+                  "motion": "static",
+                  "subject": null,
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.8
+                }
+              },
+              {
+                "slotIndex": 7,
+                "intent": {
+                  "text": "closing colour held to the end",
+                  "shotType": "wide",
+                  "motion": "static",
+                  "subject": null,
+                  "people": 0,
+                  "place": null,
+                  "energy": 0.4
+                }
+              }
+            ]
+          }
+        },
+        {
+          "tool": "templates.finalise",
+          "input": {
+            "projectId": "$projectId",
+            "breakdownId": "$breakdown.breakdownId",
+            "name": "Colour cuts"
+          },
+          "as": "template"
+        },
+        {
+          "handOff": {
+            "templateId": "$template.templateId",
+            "version": "$template.version",
+            "slotCount": 8,
+            "breakdownId": "$breakdown.breakdownId",
+            "unconfirmedCuts": []
+          },
+          "expect": {
+            "verdict": "retry",
+            "reasonIncludes": ["frames 24"]
+          }
+        },
+        {
+          "handOff": {
+            "templateId": "$template.templateId",
+            "version": "$template.version",
+            "slotCount": 8,
+            "breakdownId": "$breakdown.breakdownId",
+            "unconfirmedCuts": [24]
+          },
+          "expect": {
+            "verdict": "pass"
+          }
+        }
+      ]
+    }
+  ]
+}

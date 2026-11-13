@@ -1,0 +1,508 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-16 00:05+0700\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hi\n"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.more"
+msgstr "{count, plural, one {# अन्य} other {# अन्य}}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+#, fuzzy
+msgid "notify.mcp.approval.title"
+msgstr "{name} आपका इंतज़ार कर रहा है"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.needsAttention.body"
+msgstr "{name} की एक जाँच पास नहीं हुई। क्या ठीक करना है, यह देखने के लिए Taalcut खोलें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.ready.body"
+msgstr "{name} की सभी जाँचें पास हो गईं और यह रेंडर में है।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.title"
+msgstr ""
+
+# review: Menu wording (About/Hide/Quit/Services/Edit-menu items, संपादन, दृश्य, जाएँ) copied from macOS 26's own Hindi system strings (TextEdit, QuickTime Player, Finder).
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.about"
+msgstr "{appName} परिचय"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.resetZoom"
+msgstr "वास्तविक आकार"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.agent"
+msgstr "एजेंट"
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+#, fuzzy
+msgid "menu.view.back"
+msgstr "पीछे"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.beats"
+msgstr "बीट"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.front"
+msgstr "सभी आगे लाएँ"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.close"
+msgstr "विंडो बंद करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.copy"
+msgstr "कॉपी"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.jobs"
+msgstr "{jobs} के मॉडल डाउनलोड नहीं हो पाए"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.stopped.everything.computer"
+msgstr "इस कंप्यूटर के लिए ज़रूरी मॉडल डाउनलोड नहीं हो पाए"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.everything"
+msgstr "इस Mac के लिए ज़रूरी मॉडल डाउनलोड नहीं हो पाए"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.cut"
+msgstr "कट"
+
+# review: macOS's Edit menu says 'डिलीट करें'; the in-app glossary's मिटाएँ is kept for Taalcut's own UI.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.delete"
+msgstr "डिलीट करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit"
+msgstr "संपादन"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.ready.body.computer"
+msgstr "इस कंप्यूटर को जो कुछ चाहिए, वह सब डाउनलोड हो गया है। अब से इसके मॉडल ऑफ़लाइन काम करते हैं।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.body"
+msgstr "इस Mac को जो कुछ चाहिए, वह सब डाउनलोड हो गया है। अब से इसके मॉडल ऑफ़लाइन काम करते हैं।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.failed.body"
+msgstr "{name} का एक्सपोर्ट रुक गया। फिर से कोशिश करने के लिए Taalcut खोलें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.file"
+msgstr "फ़ाइल"
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+#, fuzzy
+msgid "menu.view.forward"
+msgstr "आगे"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go"
+msgstr "जाएँ"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help"
+msgstr "मदद"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.hide"
+msgstr "{appName} छिपाएँ"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.hideOthers"
+msgstr "अन्य छिपाएँ"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+#, fuzzy
+msgid "notify.mcp.approval.body"
+msgstr "इसने कुछ ऐसा करने को कहा है जिसके लिए आपकी मंज़ूरी चाहिए। मंज़ूर या नामंज़ूर करने के लिए Taalcut खोलें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.library"
+msgstr "लाइब्रेरी"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.make"
+msgstr "बनाएँ"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.minimize"
+msgstr "मिनिमाइज़ करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.paste"
+msgstr "पेस्ट"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.pasteAndMatchStyle"
+msgstr "पेस्ट करें और शैली मिलाएँ"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.quit"
+msgstr "{appName} बंद करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.redo"
+msgstr "फिर करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.reload"
+msgstr "फिर लोड करें"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.reportIssue"
+msgstr "GitHub पर समस्या बताएं"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.requestFeature"
+msgstr "GitHub पर फ़ीचर का सुझाव दें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.search"
+msgstr "खोज"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.selectAll"
+msgstr "सभी चुनें"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.feedback"
+msgstr "फ़ीडबैक भेजें…"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.services"
+msgstr "सेवाएँ"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.other"
+msgstr "सेटिंग्स › मॉडल में वजह लिखी है, साथ में ‘फिर से कोशिश करें’ भी।"
+
+# review: macOS app menus use 'सेटिंग…' (system strings); the in-app glossary uses सेटिंग्स for the Settings page.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.settings"
+msgstr "सेटिंग…"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.shots"
+msgstr "शॉट"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.showAll"
+msgstr "सभी दिखाएँ"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.sounds"
+msgstr "साउंड इफ़ेक्ट"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.speech"
+msgstr "बोली"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.github"
+msgstr "GitHub पर {appName} को स्टार दें"
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+#, fuzzy
+msgid "macos.localNetworkUsage"
+msgstr "Taalcut जाँचता है कि आपके Wi-Fi पर यह Mac मिल सकता है या नहीं, ताकि आपका फ़ोन वीडियो भेज सके। इसे बंद करने पर भी फ़ोन वीडियो भेज सकते हैं।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.manifest"
+msgstr "Taalcut अपनी मॉडल सूची की पुष्टि नहीं कर पाया। Taalcut अपडेट करें, फिर से कोशिश करें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.title"
+msgstr "Taalcut तैयार है"
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+#, fuzzy
+msgid "macos.photoLibraryUsage"
+msgstr "Taalcut Apple Photos या जुड़े हुए iPhone या iPad से आपकी चुनी हुई फ़ोटो और वीडियो पढ़ता है। आपके मूल फ़ाइलों में कोई बदलाव नहीं होता।"
+
+#. js-lingui-explicit-id
+#: src/main/voice/microphone-note.ts
+#, fuzzy
+msgid "macos.microphoneUsage"
+msgstr "Taalcut आपकी आवाज़ सिर्फ़ तब रिकॉर्ड करता है, जब आप अपनी खुद की आवाज़ बनाने के लिए सहमति वाली लाइन पढ़ते हैं। जब तक आप वह आवाज़ नहीं बनाते, रिकॉर्डिंग इसी Mac पर रहती है।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.templates"
+msgstr "टेम्पलेट"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.text"
+msgstr "फ़्रेम में लिखा टेक्स्ट"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.network"
+msgstr "कनेक्शन बार-बार टूटता रहा। अपना इंटरनेट कनेक्शन जाँचें, फिर से कोशिश करें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.refused"
+msgstr "डाउनलोड सर्वर ने इन्हें देने से मना कर दिया। कुछ देर बाद फिर से कोशिश करें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.different"
+msgstr "सर्वर ने वे फ़ाइलें नहीं भेजीं जिनकी Taalcut को उम्मीद थी। कुछ देर बाद फिर से कोशिश करें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.install"
+msgstr "ये डाउनलोड हो गए, पर इंस्टॉल नहीं हो पाए। फिर से कोशिश करें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.reason.space.computer"
+msgstr "इस कंप्यूटर पर इनके लिए पर्याप्त खाली जगह नहीं है। थोड़ी जगह खाली करें, फिर से कोशिश करें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.space"
+msgstr "इस Mac पर इनके लिए पर्याप्त खाली जगह नहीं है। थोड़ी जगह खाली करें, फिर से कोशिश करें।"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.titles"
+msgstr "टाइटल"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.toggleDevTools"
+msgstr "डेवलपर टूल टॉगल करें"
+
+# review: macOS has no 'Toggle Full Screen' string (it uses 'फ़ुल स्क्रीन में प्रवेश करें'); follows macOS's own 'साइडबार टॉगल करें' pattern.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.fullScreen"
+msgstr "फ़ुल स्क्रीन टॉगल करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.sidebar"
+msgstr "साइडबार टॉगल करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.undo"
+msgstr "पहले जैसा करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view"
+msgstr "दृश्य"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window"
+msgstr "विंडो"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.writing"
+msgstr "लेखन"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.ready.title"
+msgstr "आपका वीडियो तैयार है"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.needsAttention.title"
+msgstr "आपके वीडियो पर एक नज़र डालें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.failed.title"
+msgstr "आपका वीडियो नहीं बन पाया"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.zoom"
+msgstr "ज़ूम करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.zoomIn"
+msgstr "ज़ूम इन करें"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.zoomOut"
+msgstr "ज़ूम आउट करें"

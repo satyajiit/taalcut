@@ -1,0 +1,1924 @@
+{
+ "version": 1,
+ "protocol": "Whole-head boxes, labelled by looking (FRM1-SUB labelling protocol in the subjects eval README).",
+ "frames": {
+  "tos-26": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.379,
+      "y": 0.087,
+      "width": 0.077,
+      "height": 0.19
+     },
+     "face": "profile"
+    },
+    {
+     "box": {
+      "x": 0.625,
+      "y": 0.127,
+      "width": 0.06,
+      "height": 0.171
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "two people standing at a bridge railing"
+  },
+  "tos-34": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.278,
+      "y": 0.092,
+      "width": 0.072,
+      "height": 0.203
+     },
+     "face": "profile"
+    },
+    {
+     "box": {
+      "x": 0.473,
+      "y": 0.14,
+      "width": 0.094,
+      "height": 0.17
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "two people facing each other on a bridge, one gesturing with a mechanical hand"
+  },
+  "tos-52": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.569,
+      "y": 0.061,
+      "width": 0.171,
+      "height": 0.524
+     },
+     "face": "frontal",
+     "tags": [
+      "glasses"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 0.1,
+      "height": 0.14
+     },
+     "face": "none",
+     "tags": [
+      "cut",
+      "blur"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.855,
+      "y": 0.0,
+      "width": 0.145,
+      "height": 0.22
+     },
+     "face": "none",
+     "tags": [
+      "cut",
+      "blur"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "person in glasses at a lab console, two blurred foreground people seen from behind, cut by the top edge"
+  },
+  "tos-60": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.33,
+      "y": 0.0,
+      "width": 0.315,
+      "height": 0.5
+     },
+     "face": "frontal",
+     "tags": [
+      "cut",
+      "hat"
+     ]
+    }
+   ],
+   "notes": "person with a head-mounted eyepiece behind a brain on a plate; head cut by top edge, chin hidden by the brain (bottom estimated)"
+  },
+  "tos-92": {
+   "heads": [],
+   "notes": "scope view of a hovering ship over rooftops; no people"
+  },
+  "tos-100": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.784,
+      "y": 0.066,
+      "width": 0.066,
+      "height": 0.219
+     },
+     "face": "profile"
+    },
+    {
+     "box": {
+      "x": 0.065,
+      "y": 0.47,
+      "width": 0.175,
+      "height": 0.27
+     },
+     "face": "none",
+     "tags": [
+      "dark"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "soldier aiming a rifle in the background; foreground person lying on a bed with a newspaper over the face, head mostly in shadow"
+  },
+  "tos-120": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.063,
+      "y": 0.42,
+      "width": 0.2,
+      "height": 0.28
+     },
+     "face": "profile"
+    },
+    {
+     "box": {
+      "x": 0.783,
+      "y": 0.04,
+      "width": 0.067,
+      "height": 0.222
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "grey-haired person lying on a bed face up in the foreground; soldier aiming a rifle in the background"
+  },
+  "tos-128": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.237,
+      "y": 0.073,
+      "width": 0.144,
+      "height": 0.362
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.685,
+      "y": 0.482,
+      "width": 0.057,
+      "height": 0.173
+     },
+     "face": "none",
+     "tags": [
+      "blur"
+     ]
+    }
+   ],
+   "notes": "grey-haired person grimacing, hand at the shoulder; soldier with a rifle behind, seen from behind and out of focus"
+  },
+  "tos-144": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.288,
+      "y": 0.019,
+      "width": 0.148,
+      "height": 0.425
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.691,
+      "y": 0.442,
+      "width": 0.059,
+      "height": 0.183
+     },
+     "face": "none",
+     "tags": [
+      "blur"
+     ]
+    }
+   ],
+   "notes": "grey-haired person with head bowed holding a rope; soldier with a rifle behind, seen from behind and out of focus"
+  },
+  "tos-164": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.552,
+      "y": 0.162,
+      "width": 0.148,
+      "height": 0.468
+     },
+     "face": "none"
+    }
+   ],
+   "notes": "grey-haired person seen from behind looking into a cluttered workshop"
+  },
+  "tos-168": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.623,
+      "y": 0.113,
+      "width": 0.074,
+      "height": 0.152
+     },
+     "face": "none"
+    }
+   ],
+   "notes": "grey-haired person walking away into a cluttered workshop, seen from behind"
+  },
+  "tos-176": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.225,
+      "width": 0.097,
+      "height": 0.29
+     },
+     "face": "profile",
+     "tags": [
+      "cut"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.52,
+      "y": 0.011,
+      "width": 0.15,
+      "height": 0.394
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "two people talking in a room with bookshelves; one cut by the left edge"
+  },
+  "tos-188": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.417,
+      "y": 0.332,
+      "width": 0.032,
+      "height": 0.075
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "grey-haired person in a long coat standing in an overgrown room, wide shot"
+  },
+  "tos-196": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.253,
+      "y": 0.073,
+      "width": 0.109,
+      "height": 0.299
+     },
+     "face": "profile",
+     "tags": [
+      "hat"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.442,
+      "y": 0.085,
+      "width": 0.106,
+      "height": 0.297
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.645,
+      "y": 0.312,
+      "width": 0.082,
+      "height": 0.244
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "three people posing together in a room; one wears a head-strap eyepiece"
+  },
+  "tos-204": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.393,
+      "y": 0.052,
+      "width": 0.144,
+      "height": 0.353
+     },
+     "face": "frontal",
+     "tags": [
+      "hat"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.72,
+      "y": 0.29,
+      "width": 0.085,
+      "height": 0.266
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "person with a head-strap eyepiece talking, another person beside in a cluttered room; a third person's head is fully hidden behind the first"
+  },
+  "tos-212": {
+   "heads": [],
+   "notes": "a large machine of tubes and cables in a street before old buildings; no people"
+  },
+  "tos-220": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.4,
+      "y": 0.357,
+      "width": 0.045,
+      "height": 0.126
+     },
+     "face": "none",
+     "tags": [
+      "hat"
+     ]
+    }
+   ],
+   "notes": "person in headphones seen from behind with arms spread before a hazy holographic street scene"
+  },
+  "tos-228": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.118,
+      "y": 0.083,
+      "width": 0.117,
+      "height": 0.322
+     },
+     "face": "frontal",
+     "tags": [
+      "blur"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.425,
+      "y": 0.087,
+      "width": 0.16,
+      "height": 0.508
+     },
+     "face": "frontal",
+     "tags": [
+      "hat"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.731,
+      "y": 0.425,
+      "width": 0.137,
+      "height": 0.375
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "three people in a room; centre person with a head-strap eyepiece sticks out the tongue and points back"
+  },
+  "tos-240": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.181,
+      "y": 0.033,
+      "width": 0.182,
+      "height": 0.532
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.39,
+      "y": 0.088,
+      "width": 0.21,
+      "height": 0.447
+     },
+     "face": "profile",
+     "tags": [
+      "hat"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.778,
+      "y": 0.39,
+      "width": 0.17,
+      "height": 0.39
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "three people in a room; one with a head-strap eyepiece leans in to whisper to a grey-haired person"
+  },
+  "tos-252": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.183,
+      "y": 0.04,
+      "width": 0.179,
+      "height": 0.572
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.42,
+      "y": 0.075,
+      "width": 0.172,
+      "height": 0.48
+     },
+     "face": "profile",
+     "tags": [
+      "hat"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.779,
+      "y": 0.37,
+      "width": 0.173,
+      "height": 0.392
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "three people in a room; one with a head-strap eyepiece talks to a grey-haired person"
+  },
+  "tos-264": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.329,
+      "y": 0.118,
+      "width": 0.045,
+      "height": 0.164
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "semi-transparent person (hologram or dissolve) looking down at the hands on a canal bridge"
+  },
+  "tos-276": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.447,
+      "y": 0.127,
+      "width": 0.109,
+      "height": 0.253
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "person in profile standing on a canal bridge, blurred street behind"
+  },
+  "tos-288": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.282,
+      "y": 0.105,
+      "width": 0.074,
+      "height": 0.193
+     },
+     "face": "none"
+    }
+   ],
+   "notes": "person seen from behind, turned away, on a canal bridge next to a large machine"
+  },
+  "tos-308": {
+   "heads": [],
+   "notes": "close-up of a robot with a holographic wireframe overlay; blurred street behind; no people"
+  },
+  "tos-312": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.225,
+      "y": 0.01,
+      "width": 0.232,
+      "height": 0.62
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.605,
+      "y": 0.12,
+      "width": 0.365,
+      "height": 0.78
+     },
+     "face": "none"
+    }
+   ],
+   "notes": "man facing camera; woman in foreground right seen from behind, ponytail"
+  },
+  "tos-316": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.145,
+      "y": 0.0,
+      "width": 0.425,
+      "height": 0.92
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "close-up of a young man looking off to the right"
+  },
+  "tos-340": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.235,
+      "y": 0.0,
+      "width": 0.235,
+      "height": 0.64
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "man aiming a rifle between balusters; chin hidden by the rifle"
+  },
+  "tos-348": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.465,
+      "y": 0.0,
+      "width": 0.27,
+      "height": 0.7
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.04,
+      "width": 0.015,
+      "height": 0.22
+     },
+     "face": "none",
+     "tags": [
+      "cut",
+      "blur"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "close-up of a woman; pale out-of-focus sliver at the far left edge, possibly a foreground head"
+  },
+  "tos-356": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 0.36,
+      "height": 0.74
+     },
+     "face": "profile",
+     "tags": [
+      "cut",
+      "blur"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.731,
+      "y": 0.84,
+      "width": 0.008,
+      "height": 0.019
+     },
+     "face": "none",
+     "tags": [
+      "blur"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.747,
+      "y": 0.827,
+      "width": 0.01,
+      "height": 0.024
+     },
+     "face": "none",
+     "tags": [
+      "blur"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.765,
+      "y": 0.823,
+      "width": 0.01,
+      "height": 0.026
+     },
+     "face": "none",
+     "tags": [
+      "blur"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "out-of-focus man in profile in the foreground left; robot hand and canal houses; tiny people on the far quay"
+  },
+  "tos-364": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.485,
+      "y": 0.0,
+      "width": 0.337,
+      "height": 0.865
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 0.27,
+      "height": 0.78
+     },
+     "face": "none",
+     "tags": [
+      "cut",
+      "blur"
+     ]
+    }
+   ],
+   "notes": "woman facing camera; out-of-focus man in the foreground left seen from behind; robot hand"
+  },
+  "tos-372": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.368,
+      "y": 0.172,
+      "width": 0.14,
+      "height": 0.403
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.553,
+      "y": 0.165,
+      "width": 0.122,
+      "height": 0.365
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "man with a mechanical eye and a woman speaking into a radio, side by side indoors"
+  },
+  "tos-384": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.468,
+      "y": 0.0,
+      "width": 0.35,
+      "height": 0.945
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 0.27,
+      "height": 0.62
+     },
+     "face": "profile",
+     "tags": [
+      "cut",
+      "blur",
+      "dark"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "close-up of a woman; very dark out-of-focus figure in the foreground left behind a robot arm, back of head not visible"
+  },
+  "tos-400": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.415,
+      "y": 0.0,
+      "width": 0.34,
+      "height": 0.81
+     },
+     "face": "frontal",
+     "tags": [
+      "cut",
+      "glasses"
+     ]
+    }
+   ],
+   "notes": "curly-haired man with damaged glasses facing camera; desk lamp in front"
+  },
+  "tos-408": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 0.385,
+      "height": 0.78
+     },
+     "face": "profile",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "man in profile, eyes closed, a robot hand at his mouth"
+  },
+  "tos-412": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.49,
+      "y": 0.0,
+      "width": 0.345,
+      "height": 0.878
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 0.15,
+      "height": 0.62
+     },
+     "face": "none",
+     "tags": [
+      "cut",
+      "blur",
+      "dark"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "close-up of a woman; dark out-of-focus man in the foreground left, ear visible, face hidden behind a robot camera arm"
+  },
+  "tos-432": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.318,
+      "y": 0.1,
+      "width": 0.102,
+      "height": 0.18
+     },
+     "face": "none"
+    }
+   ],
+   "notes": "man in a fur-collared jacket seen from behind, aiming a rifle over a wall"
+  },
+  "tos-436": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.521,
+      "y": 0.165,
+      "width": 0.046,
+      "height": 0.11
+     },
+     "face": "none"
+    }
+   ],
+   "notes": "man with a backpack seen from behind on a ship's rail; robots around"
+  },
+  "tos-452": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.185,
+      "y": 0.005,
+      "width": 0.19,
+      "height": 0.53
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.533,
+      "y": 0.505,
+      "width": 0.112,
+      "height": 0.29
+     },
+     "face": "frontal",
+     "tags": [
+      "hat",
+      "glasses",
+      "blur"
+     ]
+    }
+   ],
+   "notes": "young man in a light hooded jacket in a workshop; person in a beanie and sunglasses behind him, out of focus"
+  },
+  "tos-496": {
+   "heads": [],
+   "notes": "motion-blurred robots fighting inside a church; no people"
+  },
+  "tos-504": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.56,
+      "y": 0.115,
+      "width": 0.17,
+      "height": 0.5
+     },
+     "face": "frontal",
+     "tags": [
+      "glasses"
+     ]
+    }
+   ],
+   "notes": "curly-haired man in glasses at a workbench behind holographic displays"
+  },
+  "tos-516": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.341,
+      "y": 0.065,
+      "width": 0.078,
+      "height": 0.19
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "young man in profile on a canal bridge, a large robot to the right"
+  },
+  "tos-532": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.204,
+      "y": 0.0,
+      "width": 0.217,
+      "height": 0.585
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "grey-haired bearded man looking down; robot parts behind"
+  },
+  "tos-548": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.428,
+      "y": 0.12,
+      "width": 0.09,
+      "height": 0.195
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "grey-haired man in profile handling a large robot"
+  },
+  "tos-552": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.395,
+      "y": 0.103,
+      "width": 0.127,
+      "height": 0.21
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "grey-haired man in profile handling a large robot"
+  },
+  "tos-564": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.367,
+      "y": 0.035,
+      "width": 0.218,
+      "height": 0.65
+     },
+     "face": "frontal",
+     "tags": [
+      "hat"
+     ]
+    }
+   ],
+   "notes": "man wearing a mechanical eyepiece on a head strap, hand raised at the right"
+  },
+  "tos-716": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.465,
+      "y": 0.03,
+      "width": 0.045,
+      "height": 0.17
+     },
+     "face": "none",
+     "tags": [
+      "hat",
+      "dark",
+      "blur"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "overhead view of a pile of robot scrap; a dark, blurred figure in a blue hood or cap may be lying in it near the top centre"
+  },
+  "tosp33-316": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 1.0,
+      "height": 0.925
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "extreme close-up of a man's face turned about 40 degrees to the right; far eye cut by the frame edge; top, left and right cut"
+  },
+  "tosp62-412": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.105,
+      "y": 0.0,
+      "width": 0.895,
+      "height": 0.86
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "close-up of a woman's face; top of hair and right side cut by the frame"
+  },
+  "tosp0-384": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.45,
+      "y": 0.0,
+      "width": 0.55,
+      "height": 0.635
+     },
+     "face": "none",
+     "tags": [
+      "dark",
+      "blur",
+      "cut"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "very dark, out-of-focus close shot of a person's head and collar on the right; edges can't be placed"
+  },
+  "tosp12-26": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.205,
+      "y": 0.515,
+      "width": 0.045,
+      "height": 0.045
+     },
+     "face": "none",
+     "tags": [
+      "blur"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "blurred canal street; arm and shoulder of a person at the right edge, head out of frame; one tiny blurred shape on the far side that may be a distant person (ignored)"
+  },
+  "tosp30-196": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.12,
+      "y": 0.085,
+      "width": 0.425,
+      "height": 0.275
+     },
+     "face": "profile",
+     "tags": [
+      "hat",
+      "glasses"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.9,
+      "y": 0.09,
+      "width": 0.1,
+      "height": 0.255
+     },
+     "face": "profile",
+     "tags": [
+      "cut"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "man with a head-mounted eyepiece turned right; white-haired man mostly cut off at the right edge"
+  },
+  "tosp20-552": {
+   "heads": [],
+   "notes": "blurred workshop background; back and shoulder of a person in a plaid shirt at the right edge, head out of frame"
+  },
+  "tosp0-240": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.755,
+      "y": 0.055,
+      "width": 0.245,
+      "height": 0.445
+     },
+     "face": "profile",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "white-haired man at the right edge, head side-on with the ear towards the camera and the face beyond the frame; another person's hand on his shoulder"
+  },
+  "tosp45-356": {
+   "heads": [],
+   "notes": "street with houses, blurred grey object in the foreground, skin-coloured blur (likely a finger) at the left edge with foliage above it; no head"
+  },
+  "tosp50-564": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.04,
+      "width": 0.85,
+      "height": 0.635
+     },
+     "face": "frontal",
+     "tags": [
+      "hat",
+      "glasses",
+      "cut"
+     ]
+    }
+   ],
+   "notes": "close-up of a man wearing a head-mounted eyepiece over one eye; left side cut by the frame"
+  },
+  "tosp55-176": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.425,
+      "y": 0.015,
+      "width": 0.56,
+      "height": 0.39
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "bearded man with long grey hair in profile facing left"
+  },
+  "fry-5": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.325,
+      "y": 0.223,
+      "width": 0.495,
+      "height": 0.257
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "woman with long red hair, finger to her lips, in a wood-panelled room. Blurred figures in the background are inside a gilded frame (a painting), so not labelled."
+  },
+  "fry-20": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.145,
+      "y": 0.12,
+      "width": 0.745,
+      "height": 0.408
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "woman talking to camera close up, hand at her hair. Blurred figures in the background are inside a gilded frame (a painting), so not labelled."
+  },
+  "fry-45": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.265,
+      "y": 0.17,
+      "width": 0.51,
+      "height": 0.286
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "woman talking to camera, hands raised. Blurred figures in the background are inside a gilded frame (a painting), so not labelled."
+  },
+  "fry-80": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.27,
+      "y": 0.17,
+      "width": 0.53,
+      "height": 0.307
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "woman talking, head tilted and looking down. Blurred figures in the background are inside a gilded frame (a painting), so not labelled."
+  },
+  "proverbio-2": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.207,
+      "y": 0.155,
+      "width": 0.44,
+      "height": 0.278
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "woman with a bob haircut in a dark coat on a street, holding a knife"
+  },
+  "proverbio-9": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.12,
+      "y": 0.155,
+      "width": 0.475,
+      "height": 0.325
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "same woman looking down with eyes closed, head turned slightly left"
+  },
+  "proverbio-16": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.18,
+      "width": 0.39,
+      "height": 0.355
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "woman at the left edge facing the camera, left side of her head cut by the frame"
+  },
+  "proverbio-20": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.16,
+      "y": 0.125,
+      "width": 0.595,
+      "height": 0.41
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "woman facing the camera close up in front of a shop window"
+  },
+  "proverbio-25": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.005,
+      "y": 0.13,
+      "width": 0.79,
+      "height": 0.605
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "woman smiling into the camera, very close"
+  },
+  "arin-1": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.315,
+      "y": 0.125,
+      "width": 0.39,
+      "height": 0.26
+     },
+     "face": "frontal",
+     "tags": [
+      "blur"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.545,
+      "y": 0.0,
+      "width": 0.14,
+      "height": 0.14
+     },
+     "face": "frontal",
+     "tags": [
+      "blur",
+      "cut"
+     ]
+    }
+   ],
+   "notes": "out-of-focus woman leaning on a red table at a convention stall; a second woman with long dark hair behind her at the top"
+  },
+  "arin-3_5": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.255,
+      "y": 0.185,
+      "width": 0.39,
+      "height": 0.26
+     },
+     "face": "frontal",
+     "tags": [
+      "blur"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.505,
+      "y": 0.05,
+      "width": 0.16,
+      "height": 0.12
+     },
+     "face": "frontal",
+     "tags": [
+      "blur"
+     ]
+    }
+   ],
+   "notes": "out-of-focus woman leaning on a red table at a convention stall, head tilted; a woman with long dark hair behind her; another person's arm at the left edge, head out of frame"
+  },
+  "arin-6": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.42,
+      "y": 0.135,
+      "width": 0.385,
+      "height": 0.255
+     },
+     "face": "profile",
+     "tags": [
+      "blur"
+     ]
+    },
+    {
+     "box": {
+      "x": 0.81,
+      "y": 0.05,
+      "width": 0.165,
+      "height": 0.11
+     },
+     "face": "frontal",
+     "tags": [
+      "blur"
+     ]
+    }
+   ],
+   "notes": "out-of-focus woman laughing, turned to her right, at a convention stall; a woman with long dark hair behind on the right; a person in a red shirt at the left edge with the head out of frame"
+  },
+  "txguard-3": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.272,
+      "y": 0.28,
+      "width": 0.431,
+      "height": 0.322
+     },
+     "face": "frontal",
+     "tags": [
+      "hat"
+     ]
+    }
+   ],
+   "notes": "close selfie, man in orange helmet with camera mount"
+  },
+  "txguard-16": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.265,
+      "y": 0.295,
+      "width": 0.471,
+      "height": 0.362
+     },
+     "face": "frontal",
+     "tags": [
+      "hat"
+     ]
+    }
+   ],
+   "notes": "close selfie, man in orange helmet laughing, trucks behind"
+  },
+  "txguard-28": {
+   "heads": [],
+   "notes": "military truck passing, no people visible; camera holder's arm at lower right"
+  },
+  "txguard-47": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.175,
+      "y": 0.14,
+      "width": 0.565,
+      "height": 0.34
+     },
+     "face": "profile",
+     "tags": [
+      "hat",
+      "blur"
+     ]
+    }
+   ],
+   "notes": "heavy motion blur, man in orange helmet turned to the left"
+  },
+  "txguard-60": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.665,
+      "y": 0.0,
+      "width": 0.335,
+      "height": 0.75
+     },
+     "face": "frontal",
+     "tags": [
+      "cut"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "very close face cut by the right and top edges, armoured vehicle behind"
+  },
+  "txguard-72": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.311,
+      "y": 0.23,
+      "width": 0.512,
+      "height": 0.385
+     },
+     "face": "frontal",
+     "tags": [
+      "hat"
+     ]
+    }
+   ],
+   "notes": "close selfie, man in orange helmet, overcast sky"
+  },
+  "metro-6": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.384,
+      "y": 0.456,
+      "width": 0.013,
+      "height": 0.01
+     },
+     "face": "none",
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.38,
+      "y": 0.489,
+      "width": 0.016,
+      "height": 0.011
+     },
+     "face": "none",
+     "tags": [
+      "hat"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.417,
+      "y": 0.497,
+      "width": 0.014,
+      "height": 0.01
+     },
+     "face": "none",
+     "tags": [
+      "hat"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.45,
+      "y": 0.492,
+      "width": 0.02,
+      "height": 0.011
+     },
+     "face": "none",
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.057,
+      "y": 0.501,
+      "width": 0.024,
+      "height": 0.012
+     },
+     "face": "none",
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.335,
+      "y": 0.518,
+      "width": 0.025,
+      "height": 0.016
+     },
+     "face": "none",
+     "ignore": true
+    }
+   ],
+   "notes": "metro platform, a few tiny distant people standing and one seated, train on the right"
+  },
+  "metro-9": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.747,
+      "y": 0.491,
+      "width": 0.028,
+      "height": 0.019
+     },
+     "face": "frontal",
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.805,
+      "y": 0.494,
+      "width": 0.026,
+      "height": 0.019
+     },
+     "face": "frontal",
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.981,
+      "y": 0.454,
+      "width": 0.019,
+      "height": 0.03
+     },
+     "face": "none",
+     "tags": [
+      "hat",
+      "cut"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "metro passage, two small women walking, person in green hood cut at right edge"
+  },
+  "metro-14": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.694,
+      "y": 0.449,
+      "width": 0.053,
+      "height": 0.035
+     },
+     "face": "none",
+     "tags": [
+      "dark"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.805,
+      "y": 0.417,
+      "width": 0.018,
+      "height": 0.013
+     },
+     "face": "none",
+     "tags": [
+      "dark"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.848,
+      "y": 0.395,
+      "width": 0.03,
+      "height": 0.022
+     },
+     "face": "none",
+     "tags": [
+      "dark"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.888,
+      "y": 0.394,
+      "width": 0.022,
+      "height": 0.018
+     },
+     "face": "none",
+     "tags": [
+      "dark",
+      "hat"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.978,
+      "y": 0.459,
+      "width": 0.022,
+      "height": 0.016
+     },
+     "face": "none",
+     "tags": [
+      "dark",
+      "cut"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.575,
+      "y": 0.461,
+      "width": 0.025,
+      "height": 0.017
+     },
+     "face": "none",
+     "tags": [
+      "dark"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.0,
+      "y": 0.504,
+      "width": 0.016,
+      "height": 0.018
+     },
+     "face": "none",
+     "tags": [
+      "dark",
+      "cut"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "metro hall, woman walking away with red bag, dark head on dark stairs (bottom edge unclear: pink scarf or mask); small silhouettes on the stairs"
+  },
+  "metro-23": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.79,
+      "y": 0.476,
+      "width": 0.024,
+      "height": 0.013
+     },
+     "face": "none",
+     "tags": [
+      "dark",
+      "blur"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.305,
+      "y": 0.481,
+      "width": 0.018,
+      "height": 0.013
+     },
+     "face": "none",
+     "tags": [
+      "dark",
+      "blur"
+     ],
+     "ignore": true
+    },
+    {
+     "box": {
+      "x": 0.347,
+      "y": 0.486,
+      "width": 0.016,
+      "height": 0.011
+     },
+     "face": "none",
+     "tags": [
+      "dark",
+      "blur"
+     ],
+     "ignore": true
+    }
+   ],
+   "notes": "station hall at night, wet floor; three tiny distant people, one under a blue umbrella"
+  },
+  "damon-5": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.432,
+      "y": 0.133,
+      "width": 0.308,
+      "height": 0.252
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "man in black t-shirt facing camera, tiled wall"
+  },
+  "damon-40": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.169,
+      "y": 0.171,
+      "width": 0.446,
+      "height": 0.274
+     },
+     "face": "profile"
+    }
+   ],
+   "notes": "man looking down to the left, head in profile"
+  },
+  "damon-55": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.46,
+      "y": 0.09,
+      "width": 0.435,
+      "height": 0.26
+     },
+     "face": "none"
+    }
+   ],
+   "notes": "man bent over a toilet, back of head toward camera, bucket below"
+  },
+  "damon-60": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.13,
+      "y": 0.0,
+      "width": 0.6,
+      "height": 0.35
+     },
+     "face": "none",
+     "tags": [
+      "cut"
+     ]
+    }
+   ],
+   "notes": "back of a man's head close to camera, cut by the top edge"
+  },
+  "damon-75": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.383,
+      "y": 0.16,
+      "width": 0.272,
+      "height": 0.228
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "man with wet blond hair facing camera outdoors, foliage behind"
+  },
+  "damon-95": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.405,
+      "y": 0.155,
+      "width": 0.3,
+      "height": 0.25
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "man soaked after ice water, eyes closed, facing camera"
+  },
+  "damon-105": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.29,
+      "y": 0.185,
+      "width": 0.38,
+      "height": 0.285
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "man with wet spiky hair holding a red bucket"
+  },
+  "drauzio-4": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.4,
+      "y": 0.278,
+      "width": 0.305,
+      "height": 0.232
+     },
+     "face": "frontal",
+     "tags": [
+      "glasses"
+     ]
+    }
+   ],
+   "notes": "older bald man in glasses at a table, looking down; name lower-third and caption overlaid"
+  },
+  "drauzio-30": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.4,
+      "y": 0.272,
+      "width": 0.3,
+      "height": 0.233
+     },
+     "face": "frontal",
+     "tags": [
+      "glasses"
+     ]
+    }
+   ],
+   "notes": "older bald man in glasses facing camera at a table, caption overlaid"
+  },
+  "zmago-2": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.338,
+      "y": 0.165,
+      "width": 0.127,
+      "height": 0.083
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.627,
+      "y": 0.117,
+      "width": 0.116,
+      "height": 0.092
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "two bald men standing on a path in front of trees, both facing camera"
+  },
+  "zmago-12": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.281,
+      "y": 0.207,
+      "width": 0.133,
+      "height": 0.075
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.594,
+      "y": 0.157,
+      "width": 0.117,
+      "height": 0.092
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "two men on a path; left man tilts his head back, right man smiles at camera"
+  },
+  "zmago-20": {
+   "heads": [
+    {
+     "box": {
+      "x": 0.253,
+      "y": 0.212,
+      "width": 0.138,
+      "height": 0.092
+     },
+     "face": "frontal"
+    },
+    {
+     "box": {
+      "x": 0.58,
+      "y": 0.171,
+      "width": 0.118,
+      "height": 0.091
+     },
+     "face": "frontal"
+    }
+   ],
+   "notes": "two men on a path gesturing at camera, trees behind"
+  }
+ }
+}

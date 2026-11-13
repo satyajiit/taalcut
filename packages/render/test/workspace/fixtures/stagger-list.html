@@ -1,0 +1,49 @@
+<!doctype html>
+<html
+  lang="en"
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="list-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #list {
+          position: absolute;
+          left: 120px;
+          top: 700px;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+        }
+        .item {
+          margin: 0;
+          padding: 18px 30px;
+          border-radius: 14px;
+          background: #ffffff;
+          font-family: 'Poppins', sans-serif;
+          font-size: 52px;
+          color: #222222;
+        }
+      </style>
+      <div id="root" data-composition-id="list" data-width="1080" data-height="1920" data-duration="4">
+        <div id="list">
+          <p class="item">First made-up point</p>
+          <p class="item">Second one</p>
+          <p class="item">And a third</p>
+        </div>
+      </div>
+      <script>
+                const tl = gsap.timeline({ paused: true });
+        tl.from('.item', { x: -80, opacity: 0, duration: 0.5, stagger: 0.2, ease: 'power2.out' }, 0.2);
+        tl.to('#list', { y: -60, duration: 0.6 }, '+=0.3');
+        tl.to('.item', { backgroundColor: '#ffd166', duration: 0.4, stagger: { each: 0.1, from: 'end' } });
+        window.__timelines['list'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

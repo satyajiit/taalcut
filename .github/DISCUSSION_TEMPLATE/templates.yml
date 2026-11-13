@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+# These forms belong to the categories Q&A, Ideas, Show and tell, and Templates in the repository's settings.
+# Enabling Discussions first creates six defaults (Announcements, General, Ideas, Polls, Q&A, Show and tell),
+# which is a larger set than these four. Forms cannot set a category's format: use question-and-answer for
+# Q&A and open-ended for Ideas, Show and tell, and Templates. Polls cannot have a form.
+# The filename must match the category slug GitHub assigns. cli/cli uses q-a, ideas, and show-and-tell.
+# The filename templates.yml assumes GitHub's slug for Templates is templates. Rename this file if GitHub assigns a different slug.
+
+title: "[Templates] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Templates
+
+        Describe a cut you want Taalcut to know. Do not attach the video.
+  - type: textarea
+    id: template
+    attributes:
+      label: What is the template for?
+      description: The kind of video, and who it is for.
+    validations:
+      required: true
+  - type: textarea
+    id: shape
+    attributes:
+      label: What does the cut look like?
+      description: Length, pacing, and what is on screen.
+    validations:
+      required: false

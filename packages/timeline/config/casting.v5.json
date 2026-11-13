@@ -1,0 +1,147 @@
+{
+  "version": "casting.v5",
+  "note": "casting.v5 is casting.v4 (FIX-CAST's intent part and confidence, FIX-STORY's words a slot names, FIX-TRIM's in-points) plus FIX-HOOK: a slot's needs, which the Analyst states, cost each shot that doesn't meet one terms.requiredPenalty while one the slot could take does (by its things' words, or by meaning at needMargin over the pool's median); graphics add no words.",
+  "candidates": {
+    "k": 50,
+    "qualityFloor": 0.45,
+    "relaxedConfidenceCap": 0.2,
+    "storyPoolLimit": 500,
+    "vectorOverfetch": 8
+  },
+  "weights": { "intent": 0.4, "motion": 0.15, "quality": 0.15, "subject": 0.15, "energy": 0.15 },
+  "neutral": { "intent": 0.5, "motion": 0.5, "subject": 0.5 },
+  "intentMatch": {
+    "cosineFloor": 0.6,
+    "cosineCeiling": 0.78,
+    "weights": { "cosine": 1, "light": 1, "facing": 0.8, "setting": 0.3, "shotType": 0.2 },
+    "nextSize": 0.5,
+    "conflict": 0.5,
+    "conflictPenalty": 0.3
+  },
+  "terms": {
+    "weight": 1,
+    "sharpness": 2,
+    "requiredPenalty": 3,
+    "needMargin": 0.04
+  },
+  "motion": {
+    "sameClass": 1,
+    "sameFamily": 0.5,
+    "families": {
+      "static": "still",
+      "pan": "move",
+      "tilt": "move",
+      "push-in": "dolly",
+      "pull-out": "dolly",
+      "handheld": "energy",
+      "tracking": "energy"
+    },
+    "energy": {
+      "static": 0.15,
+      "tilt": 0.4,
+      "pan": 0.45,
+      "pull-out": 0.5,
+      "push-in": 0.55,
+      "handheld": 0.75,
+      "tracking": 0.85
+    }
+  },
+  "subject": { "facesWhenNoneWanted": 0.25, "tagWeight": 0.5 },
+  "energy": { "beatsPerSecondBase": 2, "gainPerBeatPerSecond": 0.1 },
+  "penalties": { "nearDuplicateCosine": 0.85, "nearDuplicate": 0.35, "sameAsset": 0.5, "samePlace": 0.2 },
+  "hook": {
+    "weight": 0.2,
+    "motion": 0.35,
+    "face": 0.25,
+    "novelty": 0.25,
+    "sharpness": 0.15,
+    "story": 0.5,
+    "recentShots": 8,
+    "openingSeconds": 1.5,
+    "openingWeight": 0.25
+  },
+  "beam": { "width": 8 },
+  "inPoint": {
+    "sampleMs": 100,
+    "beatToleranceFrames": 1,
+    "settle": {
+      "steadyFraction": 0.5,
+      "steadySamples": 2,
+      "minSteady": 0.05,
+      "maxSeconds": 1.5,
+      "onsetWeight": 0.6,
+      "stopWeight": 0.4,
+      "alignSlack": 0.15
+    },
+    "bestFrameWeight": 0.1,
+    "recording": {
+      "startSeconds": 1,
+      "endSeconds": 0.5,
+      "startWeight": 2,
+      "endWeight": 1
+    },
+    "slip": {
+      "stepSeconds": 1,
+      "nearWeight": 1,
+      "trackMs": 8000
+    },
+    "subjects": {
+      "movingSpeed": 0.35,
+      "smoothSamples": 3,
+      "steadySeconds": 1,
+      "maxGapSeconds": 1,
+      "sizeRatio": 1.5,
+      "marginSeconds": 0.5,
+      "minConfidence": 0.4,
+      "minFaceHeight": 0.04,
+      "reelMovingShare": 0.5,
+      "movingWords": [
+        "walk",
+        "walks",
+        "walking",
+        "walked",
+        "run",
+        "runs",
+        "running",
+        "jog",
+        "jogging",
+        "stroll",
+        "strolling",
+        "hike",
+        "hiking",
+        "dance",
+        "dances",
+        "dancing",
+        "ride",
+        "rides",
+        "riding",
+        "cycle",
+        "cycling",
+        "skate",
+        "skating",
+        "jump",
+        "jumping",
+        "climb",
+        "climbing",
+        "swim",
+        "swimming",
+        "surf",
+        "surfing",
+        "move",
+        "moving"
+      ],
+      "movingMotions": ["tracking"],
+      "movingEnergy": 0.65,
+      "onsetWeight": 0.8,
+      "straddleWeight": 0.3,
+      "faceWeight": 1.5,
+      "minGain": 0.1,
+      "searchSeconds": 6
+    }
+  },
+  "confidence": { "tau": 0.05, "rerankBelow": 0.5, "alternates": 3, "poorFit": 0.45, "goodFit": 0.75 },
+  "rerank": { "count": 5, "weight": 0.5 },
+  "variants": { "max": 10, "minDifference": 0.3, "reusePenalty": 0.15, "retries": 3 },
+  "story": { "energyBase": 0.25, "energyAmplitude": 0.6 },
+  "tieEpsilon": 1e-9
+}

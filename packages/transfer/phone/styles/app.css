@@ -1,0 +1,306 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* Hallmark · genre: atmospheric studio app · design-system: DESIGN.md v0.3 (+ v0.4 UX1 phone page) · designed-as-app
+ * macrostructure: app steps, no page macrostructure: the lockup, the four steps as a beat rail, one step's
+ *   surface at a time, a plain line on what leaves the phone · enrichment: none (the lockup counts in once)
+ * pre-emit critique: P5 H5 E4 S5 R5 V4 · a creator by their Mac, phone in hand: pair, pick, watch it land
+ * contrast: DESIGN.md tokens only (tokens.css, copied verbatim; test/phone/tokens.test.ts keeps it so) */
+
+/* Taalcut's own faces, served by the Mac (font-src 'self'): Onest, JetBrains Mono and Noto Sans Devanagari, the
+ * lean set. Onest's Latin file is preloaded; the others load only when a page needs their characters. Any other
+ * script falls back to the phone's own fonts. */
+@font-face {
+  font-family: 'Onest Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/assets/onest-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Onest Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/assets/onest-latin-ext.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url('/assets/jetbrains-mono-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Noto Sans Devanagari Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  size-adjust: 98.3%; /* Noto's x-height to Onest's, as in the app (apps/renderer/src/fonts/fonts.css) */
+  src: url('/assets/noto-sans-devanagari.woff2') format('woff2-variations');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF,
+    U+11B00-11B09;
+}
+
+/* The secondary surface (DESIGN.md: a sunken well in light, one step above the canvas in dark). */
+:root {
+  --gutter: clamp(var(--space-md), 5vw, var(--space-lg));
+  --surface-control: var(--color-sunken);
+  --surface-control-hover: var(--color-hover);
+  --surface-control-active: var(--color-pressed);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --surface-control: var(--color-hover);
+    --surface-control-hover: var(--color-pressed);
+    --surface-control-active: var(--color-overlay);
+  }
+}
+
+[hidden] {
+  display: none !important;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font-size: var(--text-md);
+  line-height: var(--text-md--line-height);
+  -webkit-tap-highlight-color: transparent;
+}
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.icon {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* One column, top-left, as wide as a phone and no wider on a tablet. The line on what leaves the phone
+ * sits at the foot of the screen. The page itself scrolls (the browser's own scrolling: momentum, the
+ * address bar folding away, a focused field brought into view), and the top bar stays put. Its height
+ * is measured into --bar-block (screens.mjs), so a focused field or a heading never lands under it. */
+html {
+  scroll-padding-top: var(--bar-block, 7.5rem);
+}
+.shell {
+  --pad-left: max(var(--gutter), env(safe-area-inset-left));
+  --pad-right: max(var(--gutter), env(safe-area-inset-right));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  width: min(100%, 34rem);
+  /* svh first: a browser without dvh still never sizes to the tallest viewport (the 100vh bug). */
+  min-height: 100svh;
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding: 0 var(--pad-right) max(var(--space-lg), env(safe-area-inset-bottom)) var(--pad-left);
+}
+/* The lockup and the steps, held at the top. It reaches the column's edges and the notch, on the canvas,
+ * so what scrolls passes under it; once something has, a hairline closes it off. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-md);
+  margin-inline: calc(-1 * var(--pad-left)) calc(-1 * var(--pad-right));
+  padding: max(var(--space-md), env(safe-area-inset-top)) var(--pad-right) var(--space-sm) var(--pad-left);
+  background: var(--color-canvas);
+}
+.topbar::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  border-bottom: var(--rule-hair) solid var(--color-rule-subtle);
+  opacity: 0;
+  transition: opacity var(--dur-micro) var(--ease-out);
+}
+.topbar[data-scrolled]::after {
+  opacity: 1;
+}
+.masthead {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+/* A phone on its side: the steps sit beside the lockup, so the bar takes one row of a short screen. Short
+ * and wide, not the orientation: an upright phone with its keyboard up is wider than tall too. */
+@media (max-height: 32rem) and (min-width: 40rem) {
+  .topbar {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--space-lg);
+    padding-top: max(var(--space-xs), env(safe-area-inset-top));
+    padding-bottom: var(--space-xs);
+  }
+  .topbar .beats {
+    max-width: 24rem;
+  }
+}
+.lockup {
+  display: block;
+  height: 2.25rem;
+  width: auto;
+}
+.lockup .arc-1 { fill: var(--color-logo-1); }
+.lockup .arc-2 { fill: var(--color-logo-2); }
+.lockup .arc-3 { fill: var(--color-logo-3); }
+.lockup .arc-4 { fill: var(--color-logo-4); }
+.lockup .wordmark { fill: var(--color-logo-ink); }
+
+/* The four steps as beats: this one marigold, passed ones filled, those to come an empty track. */
+.beats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2xs);
+  list-style: none;
+}
+.beats li {
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs);
+  min-width: 0;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ink-3);
+  overflow-wrap: anywhere;
+}
+.beats li::before {
+  content: '';
+  height: 0.1875rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-rule);
+  transform-origin: left center;
+}
+.beats li[data-state='done'] { color: var(--color-ink-2); }
+.beats li[data-state='done']::before { background: var(--color-ink-3); }
+.beats li[data-state='current'] {
+  color: var(--color-ink);
+  font-weight: var(--font-weight-semibold);
+}
+.beats li[data-state='current']::before { background: var(--color-marigold-strong); }
+
+/* A step's surface. Its heading is the page's h1; the description sits close under it. */
+main {
+  display: grid;
+}
+.screen {
+  display: grid;
+  align-content: start;
+  gap: var(--space-lg);
+  min-width: 0;
+}
+.screen:focus { outline: none; }
+h1 {
+  font-size: var(--text-3xl);
+  line-height: var(--text-3xl--line-height);
+  letter-spacing: var(--text-3xl--letter-spacing);
+  font-weight: var(--font-weight-bold);
+}
+h1.display {
+  font-size: var(--text-display);
+  line-height: var(--text-display--line-height);
+  letter-spacing: var(--text-display--letter-spacing);
+}
+h1:focus { outline: none; }
+/* Kaatu on the done screen (UX4): 72 px, sitting just above the heading, arriving once with the screen (8 px rise
+ * and fade; reduced motion: the fade base.css leaves). The frame's own margin is its optical inset. */
+.kaatu {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: calc(var(--space-xs) - var(--space-lg));
+  animation: arrive var(--dur-short) var(--ease-out);
+}
+.kaatu[hidden] { display: none; }
+h2 {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-ink-2);
+}
+.lede {
+  max-width: 45ch;
+  margin-top: calc(var(--space-xs) - var(--space-lg));
+  color: var(--color-ink-2);
+  overflow-wrap: anywhere;
+}
+.label {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ink-2);
+}
+.hint,
+.error,
+.aside,
+.note,
+.checking,
+.strip,
+.foot {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-ink-3);
+}
+.note,
+.checking,
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  color: var(--color-ink-2);
+}
+.note .icon,
+.checking .icon,
+.error .icon {
+  width: 1rem;
+  height: 1rem;
+  margin-block: calc((1lh - 1rem) / 2);
+}
+.error { color: var(--color-danger-strong); font-weight: var(--font-weight-medium); }
+.aside {
+  padding-top: var(--space-md);
+  border-top: var(--rule-hair) solid var(--color-rule-subtle);
+}
+.foot {
+  margin-top: auto;
+  max-width: 45ch;
+}
+#pair-form,
+.field {
+  display: grid;
+  gap: var(--space-lg);
+}
+.field {
+  gap: var(--space-xs);
+}

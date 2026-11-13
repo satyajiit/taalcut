@@ -1,0 +1,59 @@
+{
+  "brand": "Taalcut",
+  "tagline": "Cuts your clips to the rhythm of a reel you love",
+  "brief": "An open-source desktop studio for solo creators worldwide. It studies a reel you love and cuts your own phone footage to its beat and structure. The identity should feel rhythmic, warm, confident and crafted, and stay far from CapCut's black-and-white look.",
+  "adjectives": [
+    "rhythmic",
+    "warm",
+    "confident",
+    "crafted",
+    "open"
+  ],
+  "criteria": "Distinct among creator and media apps, recognisable at 16 px, works in one colour, carries the four accent colours the app uses.",
+  "mockups": [
+    "app-icon",
+    "website",
+    "favicon-tab",
+    "readme",
+    "social",
+    "sticker"
+  ],
+  "nav": [
+    "Features",
+    "Templates",
+    "Download",
+    "GitHub"
+  ],
+  "brand_color": "#FAAB3F",
+  "tile_color": "#15110D",
+  "greyscale": false,
+  "final": true,
+  "deck_title": "final identity",
+  "designer": "Taalcut design",
+  "concepts": [
+    {
+      "name": "Avartan",
+      "symbol": "../svg/taalcut-symbol-two-colour-light.svg",
+      "lockup": "../svg/taalcut-horizontal-two-colour-light.svg",
+      "stacked": "../svg/taalcut-stacked-two-colour-light.svg",
+      "avatar": "../svg/taalcut-symbol-small-two-colour-light.svg",
+      "symbol_on_tile": "../svg/taalcut-symbol-four-colour-dark.svg",
+      "stacked_on_tile": "../svg/taalcut-stacked-four-colour-dark.svg",
+      "symbol_on_dark": "../svg/taalcut-symbol-four-colour-dark.svg",
+      "lockup_on_dark": "../svg/taalcut-horizontal-four-colour-dark.svg",
+      "stacked_on_dark": "../svg/taalcut-stacked-four-colour-dark.svg",
+      "idea": "One rhythm cycle in four beats: each beat's weight follows its accent, and the gaps between them are the cuts.",
+      "rationale": [
+        "Carries both halves of the name: the cycle is the taal, the gaps are the cut",
+        "Four arcs hold the app's four accents: marigold, rose, violet and teal",
+        "A small-size drawing keeps every cut open at 16 px",
+        "Moves naturally: the arcs can pulse to the beat in onboarding and render progress"
+      ]
+    }
+  ],
+  "next_steps": [
+    "Use the two-colour version day to day; keep the four-colour version for the app icon and brand moments",
+    "Commission a professional trademark search in each launch market before public beta",
+    "Apply the icons in the Electron build and the website head (see kit/web/head-snippet.html)"
+  ]
+}

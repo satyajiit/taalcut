@@ -1,0 +1,36 @@
+{
+  "reelId": "sample-es-25",
+  "synthetic": true,
+  "note": "Synthetic sample, not a real reel. Spanish and Brazilian Portuguese music at 25/1.",
+  "source": {
+    "label": "synthetic-music-bed",
+    "durationFrames": 250,
+    "width": 1080,
+    "height": 1920
+  },
+  "frameRate": {
+    "numerator": 25,
+    "denominator": 1
+  },
+  "cuts": [50, 150],
+  "beats": [
+    { "frame": 0, "kind": "downbeat" },
+    { "frame": 25, "kind": "onset" }
+  ],
+  "slots": [
+    { "id": "intro", "startFrame": 0, "endFrame": 50, "intent": "establish" },
+    { "id": "drop", "startFrame": 50, "endFrame": 250, "intent": "chorus" }
+  ],
+  "overlays": [
+    {
+      "id": "label",
+      "text": "Synthetic label",
+      "startFrame": 10,
+      "endFrame": 50,
+      "position": { "x": 0.2, "y": 0.4, "width": 0.6, "height": 0.15 }
+    }
+  ],
+  "transitions": [{ "atFrame": 50, "kind": "dissolve" }],
+  "audio": { "type": "music" },
+  "languages": ["es", "pt-BR"]
+}

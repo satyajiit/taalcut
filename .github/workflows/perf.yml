@@ -1,0 +1,108 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Nightly performance
+
+# Private-repo macOS minutes are billed, so this workflow stays on the H9
+# self-hosted runners. It does not use a GitHub-hosted runner.
+# v1 does not push and does not publish an orphan branch. The JSONL and
+# TRENDS.md are uploaded as artifacts. The local script owns regression detection.
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      file_issues:
+        description: Open or comment on perf-regression issues
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  m1-8gb:
+    name: perf m1-8gb
+    runs-on: [self-hosted, macOS, m1-8gb]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Nightly performance
+        env:
+          FILE_ISSUES: ${{ github.event_name == 'schedule' || inputs.file_issues == true }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          chip="$(sysctl -n machdep.cpu.brand_string 2>/dev/null || echo unknown)"
+          bytes="$(sysctl -n hw.memsize 2>/dev/null || echo 0)"
+          gb="$(awk -v b="$bytes" 'BEGIN { if (b+0 > 0) printf "%d", (b+0)/1073741824 + 0.5; else printf "0" }')"
+          macos="$(sw_vers -productVersion 2>/dev/null || echo unknown)"
+          if [ "$FILE_ISSUES" = "true" ]; then
+            pnpm --filter @taalcut/evals run perf -- --out "$RUNNER_TEMP/m1-8gb.jsonl" --runner m1-8gb --synthetic --commit "$GITHUB_SHA" --chip "$chip" --memory-gb "$gb" --macos "$macos" --trends "$RUNNER_TEMP/TRENDS.md" --file-issues
+          else
+            pnpm --filter @taalcut/evals run perf -- --out "$RUNNER_TEMP/m1-8gb.jsonl" --runner m1-8gb --synthetic --commit "$GITHUB_SHA" --chip "$chip" --memory-gb "$gb" --macos "$macos" --trends "$RUNNER_TEMP/TRENDS.md"
+          fi
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: perf-m1-8gb
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/m1-8gb.jsonl
+            ${{ runner.temp }}/TRENDS.md
+
+  recommended:
+    name: perf recommended
+    runs-on: [self-hosted, macOS, recommended]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      # IX-B4: the indexing bench on ix-v1 at the recommended tier, three runs. Off until the runner has the
+      # FFmpeg build, the on-device models (TAALCUT_COMPONENT_CACHE), the mac helper (native/mac-helper/build.sh,
+      # or the repository variable TAALCUT_MAC_HELPER: the bench fails without one, as the app would read no
+      # on-screen text) and a bench root kept between nights (H9): set the repository variables
+      # TAALCUT_INDEX_BENCH=true and TAALCUT_BENCH_ROOT. Its numbers join the nightly rows below, and it warns
+      # when one is over its budget (tools/evals/perf/index-budgets.json).
+      - name: Indexing bench
+        if: vars.TAALCUT_INDEX_BENCH == 'true'
+        continue-on-error: true
+        env:
+          TAALCUT_BENCH_ROOT: ${{ vars.TAALCUT_BENCH_ROOT }}
+          TAALCUT_MAC_HELPER: ${{ vars.TAALCUT_MAC_HELPER }}
+        run: pnpm bench:index --tier recommended --runs 3 --footage ix-v1 --label "nightly-$GITHUB_RUN_ID"
+      - name: Nightly performance
+        env:
+          FILE_ISSUES: ${{ github.event_name == 'schedule' || inputs.file_issues == true }}
+          GH_TOKEN: ${{ github.token }}
+          TAALCUT_BENCH_ROOT: ${{ vars.TAALCUT_BENCH_ROOT }}
+        run: |
+          set -eu
+          chip="$(sysctl -n machdep.cpu.brand_string 2>/dev/null || echo unknown)"
+          bytes="$(sysctl -n hw.memsize 2>/dev/null || echo 0)"
+          gb="$(awk -v b="$bytes" 'BEGIN { if (b+0 > 0) printf "%d", (b+0)/1073741824 + 0.5; else printf "0" }')"
+          macos="$(sw_vers -productVersion 2>/dev/null || echo unknown)"
+          index=""
+          if [ -n "${TAALCUT_BENCH_ROOT:-}" ] && [ -f "$TAALCUT_BENCH_ROOT/runs/nightly-$GITHUB_RUN_ID/summary.json" ]; then
+            index="$TAALCUT_BENCH_ROOT/runs/nightly-$GITHUB_RUN_ID/summary.json"
+          fi
+          if [ "$FILE_ISSUES" = "true" ]; then
+            pnpm --filter @taalcut/evals run perf -- --out "$RUNNER_TEMP/recommended.jsonl" --runner recommended --synthetic --commit "$GITHUB_SHA" --chip "$chip" --memory-gb "$gb" --macos "$macos" --trends "$RUNNER_TEMP/TRENDS.md" ${index:+--index-summary "$index"} --file-issues
+          else
+            pnpm --filter @taalcut/evals run perf -- --out "$RUNNER_TEMP/recommended.jsonl" --runner recommended --synthetic --commit "$GITHUB_SHA" --chip "$chip" --memory-gb "$gb" --macos "$macos" --trends "$RUNNER_TEMP/TRENDS.md" ${index:+--index-summary "$index"}
+          fi
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: perf-recommended
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/recommended.jsonl
+            ${{ runner.temp }}/TRENDS.md

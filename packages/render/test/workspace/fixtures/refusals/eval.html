@@ -1,0 +1,76 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"title","type":"string","label":"Title","default":"Fresh news today"},{"id":"accent","type":"color","label":"Accent","default":"#ffd23f"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="headline-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #card {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          top: 620px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 18px;
+        }
+        #title {
+          margin: 0;
+          font-family: 'Anton', sans-serif;
+          font-size: 120px;
+          font-weight: 400;
+          line-height: 1.05;
+          color: #ffffff;
+          text-transform: uppercase;
+          max-width: 100%;
+          text-wrap: balance;
+        }
+        #underline {
+          width: 560px;
+          height: 40px;
+          overflow: visible;
+        }
+        #underline-path {
+          fill: none;
+          stroke: var(--accent);
+          stroke-width: 12;
+          stroke-linecap: round;
+        }
+      </style>
+      <div id="root" data-composition-id="headline" data-width="1080" data-height="1920" data-duration="4">
+        <div id="card">
+          <h1 id="title" data-var-text="title">Fresh news today</h1>
+          <svg id="underline" viewBox="0 0 560 40" aria-hidden="true">
+            <path id="underline-path" d="M6 28 C150 6 380 6 554 22" />
+          </svg>
+        </div>
+      </div>
+      <script>
+        gsap.registerPlugin(SplitText, DrawSVGPlugin);
+        const tl = gsap.timeline({ paused: true });
+        const split = SplitText.create('#title', { type: 'words,chars', mask: 'chars' });
+        tl.addLabel('enter', 0);
+        tl.from(split.chars, { yPercent: 110, duration: 0.6, ease: 'power3.out', stagger: 0.025 }, 0.2);
+        tl.fromTo(
+          '#underline-path',
+          { drawSVG: '0%' },
+          { drawSVG: '100%', duration: 0.8, ease: 'power2.inOut' },
+          0.7,
+        );
+        tl.addLabel('exit', 3.4);
+        tl.to('#card', { opacity: 0, y: -40, duration: 0.5, ease: 'power2.in' }, 'exit');
+        eval("tl.to('#card', { x: 1 }, 0)");
+        window.__timelines['headline'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

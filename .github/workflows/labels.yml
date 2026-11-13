@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+# Syncs .github/labels.yml into the repository's labels.
+# crazy-max/ghaction-github-labeler v6.0.0, MIT.
+# https://github.com/crazy-max/ghaction-github-labeler
+# Pinned to the v6.0.0 commit (548a7c3603594ec17c819e1239f281a3b801ab4d).
+# The product owner runs this once the repository is public. This private
+# branch is not main, so a push here does not sync labels.
+# skip-delete stays true so labels that are not in the file are left in place,
+# including GitHub defaults and labels other work adds. Set it to false later
+# only if this file should be the full set.
+
+name: Labels
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/labels.yml
+      - .github/workflows/labels.yml
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  labels:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Sync labels
+        uses: crazy-max/ghaction-github-labeler@548a7c3603594ec17c819e1239f281a3b801ab4d # v6.0.0
+        with:
+          github-token: ${{ github.token }}
+          yaml-file: .github/labels.yml
+          skip-delete: true

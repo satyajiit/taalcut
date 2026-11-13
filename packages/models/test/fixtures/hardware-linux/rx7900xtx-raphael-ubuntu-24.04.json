@@ -1,0 +1,89 @@
+{
+  "description": "Desktop: AMD Ryzen 9 7950X (16 cores, 32 threads), 64 GB, Radeon RX 7900 XTX 24 GB plus the Raphael iGPU (512 MB carve-out), Ubuntu 24.04.1 LTS",
+  "provenance": "Constructed, not captured: shaped like the files and nvidia-smi output recorded on the LNX1 host (rtx4090-uhd770-ubuntu-24.04.json), with this machine's devices. No such machine was available.",
+  "files": {
+    "/proc/cpuinfo": "processor\t: 0\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 1\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 2\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 3\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 4\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 5\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 6\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 7\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 8\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 9\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 10\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 11\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 12\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 13\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 14\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 15\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 16\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 17\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 18\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 19\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 20\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 21\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 22\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 23\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 24\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 25\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 26\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 27\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 28\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 29\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 30\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\nprocessor\t: 31\nmodel name\t: AMD Ryzen 9 7950X 16-Core Processor\n\n",
+    "/proc/meminfo": "MemTotal:       65578716 kB\nMemFree:         21859572 kB\nMemAvailable:   32789358 kB\n",
+    "/etc/os-release": "PRETTY_NAME=\"Ubuntu 24.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.1 LTS (Noble Numbat)\"\nID=ubuntu\nID_LIKE=debian\n",
+    "/usr/lib/x86_64-linux-gnu/libvulkan.so.1": "",
+    "/usr/share/misc/pci.ids": "#\n#\tList of PCI ID's (reduced to the devices this fixture has)\n#\n\n1002  Advanced Micro Devices, Inc. [AMD/ATI]\n\t164e  Raphael\n\t744c  Navi 31 [Radeon RX 7900 XT/7900 XTX/7900M]\n",
+    "/sys/class/drm/card0/device/vendor": "0x1002\n",
+    "/sys/class/drm/card0/device/device": "0x744c\n",
+    "/sys/class/drm/card0/device/uevent": "DRIVER=amdgpu\nPCI_CLASS=30000\nPCI_ID=1002:744C\nPCI_SUBSYS_ID=1DA2:E471\nPCI_SLOT_NAME=0000:03:00.0\nMODALIAS=pci:v00001002d0000744Csv00001462sd00007D86bc03sc00i00\n",
+    "/sys/class/drm/card0/device/mem_info_vram_total": "25753026560\n",
+    "/sys/class/drm/card0/device/mem_info_vram_used": "1073741824\n",
+    "/dev/dri/card0": "",
+    "/sys/class/drm/renderD128/device/vendor": "0x1002\n",
+    "/sys/class/drm/renderD128/device/device": "0x744c\n",
+    "/sys/class/drm/renderD128/device/uevent": "DRIVER=amdgpu\nPCI_CLASS=30000\nPCI_ID=1002:744C\nPCI_SUBSYS_ID=1DA2:E471\nPCI_SLOT_NAME=0000:03:00.0\nMODALIAS=pci:v00001002d0000744Csv00001462sd00007D86bc03sc00i00\n",
+    "/sys/class/drm/renderD128/device/mem_info_vram_total": "25753026560\n",
+    "/sys/class/drm/renderD128/device/mem_info_vram_used": "1073741824\n",
+    "/dev/dri/renderD128": "",
+    "/sys/class/drm/card1/device/vendor": "0x1002\n",
+    "/sys/class/drm/card1/device/device": "0x164e\n",
+    "/sys/class/drm/card1/device/uevent": "DRIVER=amdgpu\nPCI_CLASS=30000\nPCI_ID=1002:164E\nPCI_SUBSYS_ID=1458:D000\nPCI_SLOT_NAME=0000:13:00.0\nMODALIAS=pci:v00001002d0000164Esv00001462sd00007D86bc03sc00i00\n",
+    "/sys/class/drm/card1/device/mem_info_vram_total": "536870912\n",
+    "/sys/class/drm/card1/device/mem_info_vram_used": "104857600\n",
+    "/dev/dri/card1": "",
+    "/sys/class/drm/renderD129/device/vendor": "0x1002\n",
+    "/sys/class/drm/renderD129/device/device": "0x164e\n",
+    "/sys/class/drm/renderD129/device/uevent": "DRIVER=amdgpu\nPCI_CLASS=30000\nPCI_ID=1002:164E\nPCI_SUBSYS_ID=1458:D000\nPCI_SLOT_NAME=0000:13:00.0\nMODALIAS=pci:v00001002d0000164Esv00001462sd00007D86bc03sc00i00\n",
+    "/sys/class/drm/renderD129/device/mem_info_vram_total": "536870912\n",
+    "/sys/class/drm/renderD129/device/mem_info_vram_used": "104857600\n",
+    "/dev/dri/renderD129": "",
+    "/usr/share/vulkan/icd.d/intel_hasvk_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_intel_hasvk.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/intel_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_intel.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/lvp_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_lvp.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/nouveau_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_nouveau.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/radeon_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_radeon.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/virtio_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_virtio.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}"
+  },
+  "commands": {
+    "nvidiaSmi": null
+  },
+  "freeDiskBytes": 322122547200,
+  "expected": {
+    "chip": "AMD Ryzen 9 7950X 16-Core Processor",
+    "memoryBytes": 67152605184,
+    "cpuCores": {
+      "total": 32
+    },
+    "osVersion": "24.04",
+    "osName": "Ubuntu 24.04.1 LTS",
+    "gpus": [
+      {
+        "name": "AMD Radeon RX 7900 XT/7900 XTX/7900M",
+        "vendor": "amd",
+        "vramBytes": 25753026560,
+        "vramFreeBytes": 24679284736,
+        "unifiedMemory": false,
+        "apis": ["vulkan"],
+        "pciBusId": "0000:03:00.0",
+        "renderNode": "/dev/dri/renderD128",
+        "kernelDriver": "amdgpu"
+      },
+      {
+        "name": "AMD Raphael",
+        "vendor": "amd",
+        "vramBytes": 536870912,
+        "vramFreeBytes": 432013312,
+        "unifiedMemory": false,
+        "apis": ["vulkan"],
+        "pciBusId": "0000:13:00.0",
+        "renderNode": "/dev/dri/renderD129",
+        "kernelDriver": "amdgpu"
+      }
+    ],
+    "backends": ["vulkan", "webgpu", "cpu"],
+    "tier": "recommended",
+    "shortfalls": [],
+    "profile": "other-gpu",
+    "classes": {
+      "cpu": 8,
+      "video": 2,
+      "gpu": 1,
+      "npu": 1
+    },
+    "videoEngine": "vaapi"
+  }
+}

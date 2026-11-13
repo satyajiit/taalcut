@@ -1,0 +1,64 @@
+{
+  "description": "Laptop: Intel Core i7-1260P (4P+8E, 16 threads), 16 GB, Iris Xe only, Ubuntu 22.04.4 LTS",
+  "provenance": "Constructed, not captured: shaped like the files and nvidia-smi output recorded on the LNX1 host (rtx4090-uhd770-ubuntu-24.04.json), with this machine's devices. No such machine was available.",
+  "files": {
+    "/proc/cpuinfo": "processor\t: 0\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 1\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 2\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 3\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 4\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 5\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 6\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 7\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 8\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 9\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 10\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 11\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 12\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 13\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 14\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\nprocessor\t: 15\nmodel name\t: 12th Gen Intel(R) Core(TM) i7-1260P\n\n",
+    "/proc/meminfo": "MemTotal:       15999620 kB\nMemFree:         5333206 kB\nMemAvailable:   7999810 kB\n",
+    "/etc/os-release": "PRETTY_NAME=\"Ubuntu 22.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"22.04\"\nVERSION=\"22.04.4 LTS (Jammy Jellyfish)\"\nID=ubuntu\nID_LIKE=debian\n",
+    "/sys/devices/cpu_core/cpus": "0-7\n",
+    "/sys/devices/cpu_atom/cpus": "8-15\n",
+    "/usr/lib/x86_64-linux-gnu/libvulkan.so.1": "",
+    "/usr/share/misc/pci.ids": "#\n#\tList of PCI ID's (reduced to the devices this fixture has)\n#\n\n8086  Intel Corporation\n\t46a6  Alder Lake-P GT2 [Iris Xe Graphics]\n",
+    "/sys/class/drm/card0/device/vendor": "0x8086\n",
+    "/sys/class/drm/card0/device/device": "0x46a6\n",
+    "/sys/class/drm/card0/device/uevent": "DRIVER=i915\nPCI_CLASS=30000\nPCI_ID=8086:46A6\nPCI_SUBSYS_ID=1028:0B19\nPCI_SLOT_NAME=0000:00:02.0\nMODALIAS=pci:v00008086d000046A6sv00001462sd00007D86bc03sc00i00\n",
+    "/dev/dri/card0": "",
+    "/sys/class/drm/renderD128/device/vendor": "0x8086\n",
+    "/sys/class/drm/renderD128/device/device": "0x46a6\n",
+    "/sys/class/drm/renderD128/device/uevent": "DRIVER=i915\nPCI_CLASS=30000\nPCI_ID=8086:46A6\nPCI_SUBSYS_ID=1028:0B19\nPCI_SLOT_NAME=0000:00:02.0\nMODALIAS=pci:v00008086d000046A6sv00001462sd00007D86bc03sc00i00\n",
+    "/dev/dri/renderD128": "",
+    "/usr/share/vulkan/icd.d/intel_hasvk_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_intel_hasvk.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/intel_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_intel.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/lvp_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_lvp.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/nouveau_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_nouveau.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/radeon_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_radeon.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}",
+    "/usr/share/vulkan/icd.d/virtio_icd.json": "{\n    \"ICD\": {\n        \"api_version\": \"1.4.318\",\n        \"library_path\": \"libvulkan_virtio.so\"\n    },\n    \"file_format_version\": \"1.0.1\"\n}"
+  },
+  "commands": {
+    "nvidiaSmi": null
+  },
+  "freeDiskBytes": 322122547200,
+  "expected": {
+    "chip": "12th Gen Intel(R) Core(TM) i7-1260P",
+    "memoryBytes": 16383610880,
+    "cpuCores": {
+      "total": 16,
+      "performance": 8,
+      "efficiency": 8
+    },
+    "osVersion": "22.04",
+    "osName": "Ubuntu 22.04.4 LTS",
+    "gpus": [
+      {
+        "name": "Intel Iris Xe Graphics",
+        "vendor": "intel",
+        "unifiedMemory": false,
+        "apis": ["vulkan"],
+        "pciBusId": "0000:00:02.0",
+        "renderNode": "/dev/dri/renderD128",
+        "kernelDriver": "i915"
+      }
+    ],
+    "backends": ["vulkan", "webgpu", "cpu"],
+    "tier": "minimum",
+    "shortfalls": [],
+    "profile": "other-gpu",
+    "classes": {
+      "cpu": 2,
+      "video": 2,
+      "gpu": 1,
+      "npu": 1
+    },
+    "videoEngine": "vaapi"
+  }
+}

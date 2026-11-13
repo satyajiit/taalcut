@@ -1,0 +1,397 @@
+{
+ "caseId": "multi-slow-fade-out",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJE827FCABWYGPPY4VNF59",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I need to find the clip showing the skyline, then slow it down and fade the music.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "ZHrlnY8VQTMLFNrHy79yRd3NYiTweDwJ",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I need to find the clip showing the skyline, then slow it down and fade the music.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "ZHrlnY8VQTMLFNrHy79yRd3NYiTweDwJ",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10538,
+      "output": 76,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10614,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604395080,
+     "responseId": "chatcmpl-e0658426a7324f87a9b87c14a1da3703",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10517
+    }
+   },
+   "text": "I need to find the clip showing the skyline, then slow it down and fade the music.\n\n",
+   "toolCalls": [
+    {
+     "id": "ZHrlnY8VQTMLFNrHy79yRd3NYiTweDwJ",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10538,
+    "outputTokens": 76,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10614,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJEJAYPK0H7NGGA4HJ1B1Y",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 6 is the skyline. I'll slow it to half speed and then fade the music out.\n\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "KKa4YbRBUIdG1WVFaK6F7YVuTi5lSMpj",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "6",
+        "speed": 0.5,
+        "fit": "media"
+       }
+      }
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "BfgdGZz4pe5tVVONmCENUc6zGkdywNF4",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "kind": "sound",
+         "sound": "music"
+        },
+        "fadeOutSeconds": 2
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 6 is the skyline. I'll slow it to half speed and then fade the music out.\n\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "KKa4YbRBUIdG1WVFaK6F7YVuTi5lSMpj",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "6",
+        "speed": 0.5,
+        "fit": "media"
+       }
+      },
+      {
+       "type": "toolCall",
+       "id": "BfgdGZz4pe5tVVONmCENUc6zGkdywNF4",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "kind": "sound",
+         "sound": "music"
+        },
+        "fadeOutSeconds": 2
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1635,
+      "output": 249,
+      "cacheRead": 10538,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12422,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604405599,
+     "responseId": "chatcmpl-db95c0805ffc4220937a8675239a21d2",
+     "rawStopReason": "tool_calls",
+     "durationMs": 7506
+    }
+   },
+   "text": "Clip 6 is the skyline. I'll slow it to half speed and then fade the music out.\n\n\n",
+   "toolCalls": [
+    {
+     "id": "KKa4YbRBUIdG1WVFaK6F7YVuTi5lSMpj",
+     "name": "timeline_setSpeed",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "6",
+      "speed": 0.5,
+      "fit": "media"
+     }
+    },
+    {
+     "id": "BfgdGZz4pe5tVVONmCENUc6zGkdywNF4",
+     "name": "audio_setVolume",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "of": {
+       "kind": "sound",
+       "sound": "music"
+      },
+      "fadeOutSeconds": 2
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1635,
+    "outputTokens": 249,
+    "cachedInputTokens": 10538,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12422,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJESNSGEEH6TH6DCVCZX4V",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 6 is now at half speed, and the music fades out over 2 seconds."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 6 is now at half speed, and the music fades out over 2 seconds."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 324,
+      "output": 19,
+      "cacheRead": 12173,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12516,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604413114,
+     "responseId": "chatcmpl-bbc4f417abcb486396f0cbb6cfa765f9",
+     "rawStopReason": "stop",
+     "durationMs": 876
+    }
+   },
+   "text": "Clip 6 is now at half speed, and the music fades out over 2 seconds.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 324,
+    "outputTokens": 19,
+    "cachedInputTokens": 12173,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12516,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJETH8V138560Z067Z9F2J",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "UyEnuAks2xHOypt86yWTXSaThQc9POZR",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "UyEnuAks2xHOypt86yWTXSaThQc9POZR",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 12598,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12653,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604413995,
+     "responseId": "chatcmpl-9162a2a936cd46acaff80e6e6ab60bb9",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10568
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "UyEnuAks2xHOypt86yWTXSaThQc9POZR",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 12598,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12653,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

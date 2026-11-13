@@ -1,0 +1,94 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Feature evals
+
+# Path-selected synthetic evals for a pull request. The ci.yml eval job stays as it is.
+on:
+  pull_request:
+
+concurrency:
+  group: feature-evals-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  feature-evals:
+    name: feature evals
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Run selected suites
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          # Setup checks out again at depth 1, so the merge-base range is fetched after it.
+          git fetch --no-tags origin "$BASE" "$HEAD"
+          suites=$(pnpm --filter @taalcut/evals run --silent select-suites -- --base "$BASE" --head "$HEAD")
+          if [ -z "$suites" ]; then
+            echo "No feature eval suites selected."
+            exit 0
+          fi
+          failed=""
+          for suite in $suites; do
+            case "$suite" in
+              reframe|variants|voice|router|interchange|cleanup) ;;
+              *) echo "Unknown suite: $suite" >&2; exit 1 ;;
+            esac
+            root="$RUNNER_TEMP/eval-$suite"
+            labels="$root/labels"
+            predictions="$root/predictions"
+            pnpm --filter @taalcut/evals run "fixtures:$suite" -- --out "$labels"
+            pnpm --filter @taalcut/evals run "predict:$suite" -- --labels "$labels" --out "$predictions"
+            # eval exits 1 when the suite misses its bar; run the rest, then fail the job.
+            if ! pnpm --filter @taalcut/evals run "eval:$suite" -- --labels "$labels" --predictions "$predictions" --out "$root/report.md"; then
+              failed="$failed $suite"
+            fi
+          done
+          if [ -n "$failed" ]; then
+            echo "Suites below their bar:$failed" >&2
+            exit 1
+          fi
+      - name: Run selected listening suites
+        # EAR1-I3: the listening suites judge themselves against ci-paths.json's bars. Without the
+        # listening models on the runner, listen-pick and listen-mood skip, listen-parity runs its
+        # model-free bars and listen-breakdown-hits runs on FFmpeg alone.
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "$BASE" "$HEAD"
+          suites=$(pnpm --filter @taalcut/evals run --silent select-suites -- --listening --base "$BASE" --head "$HEAD")
+          if [ -z "$suites" ]; then
+            echo "No listening suites selected."
+            exit 0
+          fi
+          args=""
+          for suite in $suites; do
+            case "$suite" in
+              listen-pick|listen-parity|listen-breakdown-hits|listen-mood) args="$args --suite $suite" ;;
+              *) echo "Unknown listening suite: $suite" >&2; exit 1 ;;
+            esac
+          done
+          # eval exits 1 when a suite misses a bar or throws; a skip is not a failure.
+          # shellcheck disable=SC2086
+          pnpm --filter @taalcut/evals run eval -- $args --out "$RUNNER_TEMP/eval-listening"
+      - name: Upload feature eval reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: feature-eval-reports
+          path: |
+            ${{ runner.temp }}/eval-*/report.md
+            ${{ runner.temp }}/eval-*/report.json
+            ${{ runner.temp }}/eval-listening/*/report.md
+            ${{ runner.temp }}/eval-listening/*/report.json
+          if-no-files-found: ignore

@@ -1,0 +1,130 @@
+{
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "hevc",
+      "codec_long_name": "H.265 / HEVC (High Efficiency Video Coding)",
+      "profile": "Main 10",
+      "codec_type": "video",
+      "codec_tag_string": "hvc1",
+      "width": 1920,
+      "height": 1080,
+      "coded_width": 1920,
+      "coded_height": 1080,
+      "pix_fmt": "yuv420p10le",
+      "level": 123,
+      "color_range": "tv",
+      "color_space": "bt2020nc",
+      "color_transfer": "arib-std-b67",
+      "color_primaries": "bt2020",
+      "chroma_location": "left",
+      "r_frame_rate": "30/1",
+      "avg_frame_rate": "17985/600",
+      "time_base": "1/600",
+      "start_pts": 0,
+      "start_time": "0.000000",
+      "duration_ts": 3001,
+      "duration": "5.001667",
+      "bit_rate": "10423117",
+      "nb_frames": "150",
+      "disposition": { "default": 1, "attached_pic": 0 },
+      "tags": {
+        "creation_time": "2026-10-01T10:00:00.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Video",
+        "vendor_id": "[0][0][0][0]",
+        "encoder": "HEVC"
+      },
+      "side_data_list": [
+        {
+          "side_data_type": "DOVI configuration record",
+          "dv_version_major": 1,
+          "dv_version_minor": 0,
+          "dv_profile": 8,
+          "dv_level": 4,
+          "rpu_present_flag": 1,
+          "el_present_flag": 0,
+          "bl_present_flag": 1,
+          "dv_bl_signal_compatibility_id": 4,
+          "dv_md_compression": "none"
+        },
+        {
+          "side_data_type": "Display Matrix",
+          "displaymatrix": "\n00000000:            0       65536           0\n00000001:       -65536           0           0\n00000002:            0           0  1073741824\n",
+          "rotation": -90
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "codec_name": "aac",
+      "codec_long_name": "AAC (Advanced Audio Coding)",
+      "profile": "LC",
+      "codec_type": "audio",
+      "codec_tag_string": "mp4a",
+      "sample_fmt": "fltp",
+      "sample_rate": "44100",
+      "channels": 2,
+      "channel_layout": "stereo",
+      "bits_per_sample": 0,
+      "r_frame_rate": "0/0",
+      "avg_frame_rate": "0/0",
+      "time_base": "1/44100",
+      "start_pts": 0,
+      "start_time": "0.000000",
+      "duration_ts": 220500,
+      "duration": "5.000000",
+      "bit_rate": "175473",
+      "nb_frames": "217",
+      "disposition": { "default": 1, "attached_pic": 0 },
+      "tags": {
+        "creation_time": "2026-10-01T10:00:00.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Audio"
+      }
+    },
+    {
+      "index": 2,
+      "codec_type": "data",
+      "codec_tag_string": "mebx",
+      "r_frame_rate": "0/0",
+      "avg_frame_rate": "0/0",
+      "time_base": "1/600",
+      "start_pts": 0,
+      "start_time": "0.000000",
+      "duration_ts": 3001,
+      "duration": "5.001667",
+      "bit_rate": "N/A",
+      "nb_frames": "12",
+      "tags": { "language": "und", "handler_name": "Core Media Metadata" }
+    }
+  ],
+  "chapters": [],
+  "format": {
+    "filename": "IMG_0420.MOV",
+    "nb_streams": 3,
+    "nb_programs": 0,
+    "nb_stream_groups": 0,
+    "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+    "format_long_name": "QuickTime / MOV",
+    "start_time": "0.000000",
+    "duration": "5.001667",
+    "size": "6631245",
+    "bit_rate": "10607275",
+    "probe_score": 100,
+    "tags": {
+      "major_brand": "qt  ",
+      "minor_version": "0",
+      "compatible_brands": "qt  ",
+      "creation_time": "2026-10-01T10:00:00.000000Z",
+      "com.apple.quicktime.location.accuracy.horizontal": "4.734210",
+      "com.apple.quicktime.full-frame-rate-playback-intent": "1",
+      "com.apple.quicktime.location.ISO6709": "+19.0760+072.8777+010.000/",
+      "com.apple.quicktime.make": "Apple",
+      "com.apple.quicktime.model": "iPhone 17 Pro",
+      "com.apple.quicktime.software": "26.0.1",
+      "com.apple.quicktime.creationdate": "2026-10-01T15:30:00+0530",
+      "com.apple.quicktime.content.identifier": "5D6B9C4E-2F1A-4B7C-9E3D-8A1F2C3B4D5E"
+    }
+  }
+}

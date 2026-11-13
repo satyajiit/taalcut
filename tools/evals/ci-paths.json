@@ -1,0 +1,92 @@
+{
+  "suites": {
+    "reframe": ["packages/render/src/reframe/**", "native/mac-helper/**", "packages/vision/**"],
+    "variants": ["packages/timeline/**", "packages/templates/**"],
+    "voice": ["packages/audio/src/voice/**", "packages/audio/src/timeline/**"],
+    "router": [
+      "packages/agent/src/router/**",
+      "packages/agent/src/run-log.ts",
+      "packages/agent/src/events.ts",
+      "packages/models/**"
+    ],
+    "interchange": ["packages/timeline/**"],
+    "cleanup": ["packages/audio/src/cleanup/**", "packages/timeline/**"]
+  },
+  "listening": {
+    "listen-pick": [
+      "packages/audio/src/listen/**",
+      "packages/audio/src/sfx/bank-*",
+      "packages/audio/src/sfx/kits/**",
+      "packages/audio/src/tools/sfx-search-tool.ts",
+      "third_party/earshot/**"
+    ],
+    "listen-parity": ["packages/audio/src/listen/**", "third_party/earshot/**", "tools/earshot-parity/**"],
+    "listen-breakdown-hits": [
+      "packages/audio/src/listen/**",
+      "packages/templates/src/breakdown/listening-*",
+      "packages/templates/src/breakdown/run-breakdown.ts",
+      "tools/earshot-parity/**"
+    ],
+    "listen-mood": [
+      "packages/audio/src/listen/**",
+      "packages/audio/src/music/library-describe.ts",
+      "third_party/earshot/**"
+    ]
+  },
+  "features": {
+    "P3-V2": "reframe",
+    "P3-V3": "variants",
+    "P3-B6": "voice",
+    "P3-B11": "router",
+    "P3-V5": "interchange",
+    "P3-V9": "cleanup",
+    "EAR1-B2": "listen-pick",
+    "EAR1-F5": "listen-parity",
+    "EAR1-F6": "listen-parity",
+    "EAR1-A1": "listen-parity",
+    "EAR1-C1": "listen-breakdown-hits",
+    "EAR1-B3": "listen-mood"
+  },
+  "thresholds": {
+    "listen-pick": {
+      "top5FamilyRate": 0.85
+    },
+    "listen-parity": {
+      "tagZMaxDelta": 0.05,
+      "tagVerdictAgreement": 1,
+      "matchVerdictAgreement": 1,
+      "pVsAltsMaxDelta": 0.01,
+      "onsetMatchRate": 0.98,
+      "onsetExtraRate": 0.02,
+      "syncStatusAgreement": 1,
+      "syncOffsetAgreement": 1,
+      "bpmWithin1Rate": 0.9,
+      "keyAgreement": 0.85,
+      "critiqueMetricAgreement": 1,
+      "critiqueVerdictAgreement": 1,
+      "realnessMaxDelta": 0.02,
+      "realnessVerdictAgreement": 1,
+      "fp16TagZMaxDelta": 0.15,
+      "fp16TagVerdictAgreement": 0.95,
+      "fp16QueryZDelta": 0.15,
+      "fp16RealnessMaxDelta": 0.02,
+      "fp16RealnessVerdictAgreement": 1,
+      "fp16CritiqueVerdictAgreement": 1,
+      "fp16CritiqueStatusAgreement": 0.99,
+      "int8TagZMaxDelta": 0.3,
+      "int8TagVerdictAgreement": 0.9,
+      "int8QueryZDelta": 0.3,
+      "int8RealnessMaxDelta": 0.08,
+      "int8RealnessVerdictAgreement": 0.95,
+      "int8CritiqueVerdictAgreement": 1,
+      "int8CritiqueStatusAgreement": 0.99
+    },
+    "listen-breakdown-hits": {
+      "cutSyncAgreement": 0.9,
+      "filmsAtBar": 3
+    },
+    "listen-mood": {
+      "top3MoodRate": 0.7
+    }
+  }
+}

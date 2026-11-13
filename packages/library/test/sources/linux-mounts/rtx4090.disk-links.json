@@ -1,0 +1,14 @@
+{
+  "by-uuid": {
+    "1bb5f06c-76c9-4d16-9ba5-2f1e00d083a8": "/dev/nvme0n1p1",
+    "E8E3-CFAA": "/dev/nvme1n1p1",
+    "d91d0717-df55-4a72-8c95-ddb73f0eeb83": "/dev/nvme1n1p2",
+    "eadd4ca0-5cce-4dd9-a8a0-e37ef6d5da8a": "/dev/sda1"
+  },
+  "by-label": {
+    "EFI": "/dev/nvme1n1p1",
+    "data": "/dev/sda1",
+    "nvme": "/dev/nvme0n1p1",
+    "root": "/dev/nvme1n1p2"
+  }
+}

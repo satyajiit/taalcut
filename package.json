@@ -1,0 +1,62 @@
+{
+  "name": "taalcut",
+  "version": "0.1.0-beta.1",
+  "private": true,
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=24.11"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck && tsc -p scripts",
+    "test": "node scripts/test-budget.mjs test",
+    "test:coverage": "node scripts/test-budget.mjs test:coverage",
+    "dev": "pnpm --filter @taalcut/desktop dev",
+    "start": "pnpm --filter @taalcut/desktop start",
+    "package:mac": "pnpm --filter @taalcut/desktop package",
+    "package:linux": "pnpm --filter @taalcut/desktop package:linux",
+    "e2e": "pnpm --filter @taalcut/desktop e2e",
+    "e2e:packaged": "pnpm --filter @taalcut/desktop e2e:packaged",
+    "bench:index": "pnpm --filter @taalcut/evals run bench:index",
+    "lint": "pnpm lint:eslint && pnpm lint:deps && pnpm lint:spdx && pnpm lint:vendored && pnpm notice --check",
+    "lint:eslint": "eslint . --max-warnings=0",
+    "lint:deps": "depcruise apps packages tools website services hub --config .dependency-cruiser.cjs",
+    "lint:spdx": "node scripts/check-spdx.mjs",
+    "lint:vendored": "node scripts/check-vendored.mjs",
+    "lint:fixtures": "node scripts/check-lint-fixtures.mjs",
+    "fix:spdx": "node scripts/check-spdx.mjs --fix",
+    "licence:scan": "node scripts/licence-scan.mjs",
+    "notice": "node scripts/notice.mjs",
+    "i18n:check": "node scripts/i18n.mjs check",
+    "i18n:handoff": "node scripts/i18n.mjs handoff",
+    "i18n:import": "node scripts/i18n.mjs import",
+    "i18n:unfreeze": "node scripts/i18n.mjs unfreeze",
+    "test:scripts": "vitest run --config scripts/vitest.config.ts && node scripts/test-budget/node.mjs scripts/licence-scan.test.mjs scripts/notice/*.test.mjs scripts/spdx/*.test.mjs scripts/vendored/*.test.mjs tools/components/hosting/*.test.mjs tools/components/yt-dlp/*.test.mjs tools/components/deno/*.test.mjs tools/components/workspace/*.test.mjs tools/components/download-worker/*.test.mjs tools/components/pack-mlx-dependency-source.test.mjs tools/ffmpeg/*.test.mjs apps/desktop/scripts/keychain-vault.test.mjs apps/desktop/scripts/linux/sandbox-check.test.mjs && node tools/earshot-parity/check.mjs",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm i18n:check && pnpm test:scripts",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
+    "@vitest/coverage-v8": "5.0.4",
+    "dependency-cruiser": "^18.7.0",
+    "eslint": "^10.12.0",
+    "eslint-plugin-lingui": "0.16.0",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "tsx": "^4.23.15",
+    "turbo": "^2.11.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "5.0.4"
+  },
+  "description": "Local-first desktop app for turning creator footage into short-form videos",
+  "main": "eslint.config.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": [],
+  "author": ""
+}

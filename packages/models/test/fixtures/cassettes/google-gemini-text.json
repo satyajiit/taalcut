@@ -1,0 +1,58 @@
+{
+  "format": "taalcut-model-cassette",
+  "version": 1,
+  "recordedAt": "2026-10-12T16:43:54.831Z",
+  "note": "Gemini wire format from the mock server (test/support/wire.ts geminiStream), not Google: no Google key was used. Requests are pi-ai's real ones for generativelanguage.googleapis.com. Re-record with TAALCUT_RECORD=1.",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+        "match": "POST /v1beta/models/gemini-3.5-flash:streamGenerateContent sha256:43225e32bd19aec8",
+        "headers": {
+          "content-type": "application/json"
+        },
+        "body": {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "Where should a cut land in a 120 BPM track?"
+                }
+              ],
+              "role": "user"
+            }
+          ],
+          "systemInstruction": {
+            "parts": [
+              {
+                "text": "Answer briefly."
+              }
+            ],
+            "role": "user"
+          },
+          "generationConfig": {
+            "temperature": 0,
+            "maxOutputTokens": 65536,
+            "thinkingConfig": {
+              "includeThoughts": true,
+              "thinkingLevel": "LOW"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/event-stream"
+        },
+        "chunks": [
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"Cut \"}]},\"index\":0}],\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n",
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"on \"}]},\"index\":0}],\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n",
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"the \"}]},\"index\":0}],\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n",
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"downbeat.\"}]},\"index\":0,\"finishReason\":\"STOP\"}],\"usageMetadata\":{\"promptTokenCount\":1290,\"candidatesTokenCount\":9,\"totalTokenCount\":1299},\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n"
+        ]
+      }
+    }
+  ]
+}

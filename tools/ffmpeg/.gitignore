@@ -1,0 +1,5 @@
+.build/
+# Build output: binaries are rebuilt by build.sh (or fetched as a release artefact), never committed.
+dist/*
+!dist/BUILDINFO.json
+# dist/linux-x64 (build-linux.sh): only BUILDINFO.json is committed (git add -f; the root .gitignore ignores dist/).

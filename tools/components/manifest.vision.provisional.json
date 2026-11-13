@@ -1,0 +1,202 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "Vision components. Hosted at components.taalcut.app by tools/components/hosting (README.md, \"Releasing components\"; hosting/plan.mjs pins each source). sign-manifest.mjs drops this comment. Each archive is one tar.zst made with the audio lane's recipe: sorted names, ustar, uid 0, gid 0, mode 0644, mtime 0 (files utime'd to 1970-01-01T00:00:00Z; bsdtar 3.5.3 ignores SOURCE_DATE_EPOCH), packed with COPYFILE_DISABLE=1 SOURCE_DATE_EPOCH=0 tar --format ustar --uid 0 --gid 0 --numeric-owner --no-xattrs --no-mac-metadata --no-acls --no-fflags and zstd 1.5.7 -19 -T1. hosting/build.mjs packs embeddinggemma-2 and ppocr-v5-devanagari again from their pinned upstream files with this recipe (hosting/archive.mjs, layout \"stream\") and gets the same sha256; the Core ML archives come from their pack scripts. embeddinggemma-2: onnx-community/embeddinggemma-2-ONNX revision daa72c51243991dfcaf9f9137d2c573d8f7790c0, q4 text graph and q4f16 vision graph only (no audio encoder; vision loads it with audio_config null). The vision graph is q4f16 since IX-E2 (2026-10-17): the same int4 weights as vision_encoder_q4 with fp16 activations, 1.6-2.2x the frames per second on WebGPU with vectors at cosine >= 0.99997 to q4 (vision SPEC, 'Indexing speed: the embedder'); vision still loads a folder that has only vision_encoder_q4. Packed with the recipe above; a second pack gave the same sha256. Archive layout: chat_template.jinja, config.json, config_sentence_transformers.json, onnx/model_q4.onnx, onnx/model_q4.onnx_data, onnx/vision_encoder_q4f16.onnx, onnx/vision_encoder_q4f16.onnx_data, preprocessor_config.json, processor_config.json, tokenizer.json, tokenizer_config.json. Source sha256: model_q4.onnx 490742 f9eeba97acddf139b8ee2ddf04bc30dceafa88de93fadf74d7644e0d61a477a9; model_q4.onnx_data 174028800 c3975f2d1ab7a1878ae31a7d7a9b7804a827aff3800b60dfceafce21cac3df49; vision_encoder_q4f16.onnx 150693 55975fba53928162eee37e9eea2a69965c10c0411ed14c24ea149efa55a8aa68; vision_encoder_q4f16.onnx_data 97614336 842f996aff092e300c966266ae0cc60771c6ca16282fee04ca83f0f159bc6b33. ppocr-v5-devanagari: PaddlePaddle/devanagari_PP-OCRv5_mobile_rec_onnx revision 251aec19e36739540d35e2cc943f6aa7503b98e5 and PaddlePaddle/PP-OCRv5_mobile_det_onnx revision e6f4fa85f00e168c862bc462aebca69eef9b3d3d. Archive layout: charset.json, det/inference.onnx, det/inference.yml, rec/inference.onnx, rec/inference.yml. charset.json (3649 bytes, 621d0073b27b8d8ff19629ee7a961f337697f553a29f21c9817057f4359549c3) is the recogniser's character list from rec/inference.yml as a JSON array, written by vision; it has no url. Source sha256: det/inference.onnx 4826518 a431985659dc921974177a95adcfbb90fd9e51989a5e04d70d0b75f597b6e61d; det/inference.yml 903 98069072e1b6b37d727fd9d9f11725faa46d6ea0de012f2ed26caea011c37699; rec/inference.onnx 7912311 cb789212ce96c69d3e74728ae4309d179281d68cb3945d0616b67cafab41c986; rec/inference.yml 5027 9bd172dd26440c8ce94d1cde5d5baea6aefdc7cf3c5c8492e0beedef656d4e54. onnxruntime: the darwin arm64 binding from the onnxruntime-node 1.30.0 npm tarball, both Mach-O files signed with the Developer ID (Matterward Labs, team WW382UC8JD; hardened runtime, secure timestamp) and packed by tools/components/pack-onnxruntime.sh (bin/napi-v6/darwin/arm64/libonnxruntime.1.30.0.dylib, onnxruntime_binding.node, and the relative symlink libonnxruntime.1.dylib -> libonnxruntime.1.30.0.dylib). Shared with audio's Beat This!, which also runs on onnxruntime-node 1.30.0. The app loads onnxruntime-node's binding from this component folder, not from node_modules (apps/desktop src/utility/component-natives.ts). embeddinggemma-2-coreml (IX2-E5, 2026-10-18): FluidInference/embeddinggemma-2-coreml revision 3f978ddf92cac9aa07eb2dcf6eb36cf450f3dba4 (the two .mlpackage graphs and position_embeddings.f16, sha256 in tools/components/embeddinggemma-coreml/checksums.txt) with every weight matrix replaced by the embeddinggemma-2 component's dequantized q4/q4f16 weight (q4_surgery.py: 218 text and 114 vision matrices, correlation to Fluid's fp16 about 0.996), the q4 token table as embeddings.f16 and the q4 position tables as position_embeddings.f16, compiled with xcrun coremlcompiler 3520.5.1 and packed with the recipe above by tools/components/pack-embeddinggemma-coreml.sh. From IX3-N3 (2026-10-20, version 2.1.0-coreml-q4recipe-daa72c5-fluid3f978dd) the archive carries no weights: weight_recipe.py replaces both weight.bin files and the token table (now embeddings.q4, the ONNX component's own 4-bit table, token_table.py) with weights.json and weights.raw (3.4 MB: blob headers, norms and rotary tables), a recipe that rebuilds them byte for byte from embeddinggemma-2's onnx/model_q4.onnx_data and onnx/vision_encoder_q4f16.onnx_data (checked when packed, and by sha256 when the app writes them into expanded/ on first use); the model is the 2.0.0 one unchanged. Archive layout: EmbeddingGemma2Text.mlmodelc/ and EmbeddingGemma2Vision.mlmodelc/ (without weights/), position_embeddings.f16, weights.json, weights.raw. transnetv2 (IX2-C2): the ONNX export of TransNetV2 by elya5 (hf.co/elya5/transnetv2, revision e1cfcb717af91e41ffb84b5fd851505682c576ee, MIT; base model Sn4kehead/TransNetV2, a PyTorch port of the upstream weights), byte-identical at hf.co/edgetools/transnetv2 revision 4b2cef0e4f246904228785e9f0a693a2363e0a6b, installed as the one file transnetv2.onnx. Hosted unchanged (sha256 c4d54a682bace32f25136ef83ca2c9d403e8f8193775efeb995172a0d95a8e0c, 31250929 bytes). Its outputs match upstream's TF SavedModel (github.com/soCzech/TransNetV2 commit 85cef72af9a916bdfd7cc94a670c9cdfbf12d1ed, inference/transnetv2-weights) within 3e-7 (vision SPEC, 'Shot boundaries'). transnetv2-coreml (IX2-S8, 2026-10-19): upstream TransNetV2 (github.com/soCzech/TransNetV2 commit 85cef72af9a916bdfd7cc94a670c9cdfbf12d1ed, MIT; sha256 of every upstream file used in tools/components/transnetv2-coreml/checksums.txt): the TF SavedModel's weights through upstream's convert_weights.py into upstream's PyTorch port (matching TF on every output), a Core ML rewrite of that port (coreml_model.py: histograms by one-hot and a matmul, the similarity band by pad and reshape, each (2+1)D Conv3d as two Conv2d; within 1e-5 of the port), converted with coremltools 8.3.0 (torch 2.5.1, tensorflow 2.19.1: build tools only, not shipped) to an fp32 ML Program for macOS 14, compiled with xcrun coremlcompiler and packed with the recipe above by tools/components/pack-transnetv2-coreml.sh, after a parity gate against the transnetv2 ONNX on every ix-v1 window. A second pack gives the same bytes. Archive layout: LICENSE (upstream's), TransNetV2.mlmodelc/.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "onnxruntime",
+      "name": "ONNX Runtime",
+      "version": "1.30.0",
+      "kind": "runtime",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/onnxruntime/1.30.0/NOTICE-25a922babc7924e8.txt",
+          "size": 341337,
+          "sha256": "25a922babc7924e81787f9991900057e6fb8cd5565569171371576bc9479909e"
+        },
+        "attribution": "ONNX Runtime, Copyright (c) Microsoft Corporation. MIT licence. The darwin arm64 binding of onnxruntime-node 1.30.0."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/onnxruntime/1.30.0/onnxruntime-node-1.30.0-darwin-arm64.tar.zst"
+          ],
+          "sha256": "568c7c67c6b7407bdceb3a79777aeb1aa49962aeab963cf17197f2b5aa9c0086",
+          "size": 9156803,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 44632544
+          }
+        }
+      ]
+    },
+    {
+      "id": "embeddinggemma-2",
+      "name": "EmbeddingGemma 2",
+      "version": "2.0.0-onnx-q4-vq4f16-daa72c5",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/embeddinggemma-2/2.0.0-onnx-q4-vq4f16-daa72c5/NOTICE-6b020158eec2ab31.txt",
+          "size": 12213,
+          "sha256": "6b020158eec2ab3195c821a5f7f1cf047145acd295a6be88fa4f347829272812"
+        },
+        "attribution": "EmbeddingGemma 2 by Google DeepMind, Apache-2.0. ONNX conversion and quantisation (q4 text graph, q4f16 vision graph) by onnx-community (embeddinggemma-2-ONNX); Taalcut ships the text and vision graphs only."
+      },
+      "dependencies": ["onnxruntime"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/embeddinggemma-2/2.0.0-onnx-q4-vq4f16-daa72c5/embeddinggemma-2-onnx-q4-vq4f16-daa72c5.tar.zst"
+          ],
+          "sha256": "01c71d39ed42a6cb213830f848a4fdec9ef573b192d7c64dd82e9cf37267357b",
+          "size": 236900181,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 304466640
+          }
+        }
+      ]
+    },
+    {
+      "id": "embeddinggemma-2-coreml",
+      "name": "EmbeddingGemma 2 (Core ML)",
+      "version": "2.1.0-coreml-q4recipe-daa72c5-fluid3f978dd",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/embeddinggemma-2-coreml/2.1.0-coreml-q4recipe-daa72c5-fluid3f978dd/NOTICE-e0dd620da4e6f0bd.txt",
+          "size": 12747,
+          "sha256": "e0dd620da4e6f0bde2d9eb2180f34aa9d3354fea96b18f8fc2c5d1ea18a47d8b"
+        },
+        "attribution": "EmbeddingGemma 2 by Google DeepMind, Apache-2.0. Core ML graphs by FluidInference (embeddinggemma-2-coreml, Apache-2.0), compiled for Core ML by Taalcut (tools/components/pack-embeddinggemma-coreml.sh), with the weights of onnx-community's q4 text and q4f16 vision quantisation (embeddinggemma-2-ONNX), which the app writes into them on first use from the installed embeddinggemma-2 component by a recipe (weights.json, tools/components/embeddinggemma-coreml/weight_recipe.py). For the mac helper on macOS 15 and later."
+      },
+      "dependencies": ["embeddinggemma-2"],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/embeddinggemma-2-coreml/2.1.0-coreml-q4recipe-daa72c5-fluid3f978dd/embeddinggemma-2-coreml-q4recipe-daa72c5.tar.zst"
+          ],
+          "sha256": "41751dea031d9a1dfb9f38b8cf5f234bd31e426b875b103aeaca61681185e3d4",
+          "size": 1930249,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 16052203
+          }
+        }
+      ]
+    },
+    {
+      "id": "ppocr-v5-devanagari",
+      "name": "PP-OCRv5 Devanagari",
+      "version": "v5-mobile-251aec19-e6f4fa85",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/ppocr-v5-devanagari/v5-mobile-251aec19-e6f4fa85/NOTICE-8902d921c3daff7f.txt",
+          "size": 12120,
+          "sha256": "8902d921c3daff7f0c0a10f3828018341d592ea6c2774dca258e4983967ef8d1"
+        },
+        "attribution": "PP-OCRv5 mobile text detection and devanagari_PP-OCRv5_mobile_rec by PaddlePaddle (PaddleOCR), Apache-2.0. ONNX exports by PaddlePaddle."
+      },
+      "dependencies": ["onnxruntime"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/ppocr-v5-devanagari/v5-mobile-251aec19-e6f4fa85/ppocr-v5-devanagari-251aec19-e6f4fa85.tar.zst"
+          ],
+          "sha256": "1fbe21ef9bc052bf8142e227f4479ec2b017675cfb9fb83296c7eac700f9c953",
+          "size": 11789891,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 12748408
+          }
+        }
+      ]
+    },
+    {
+      "id": "transnetv2",
+      "name": "TransNetV2",
+      "version": "2.0.0-onnx-c4d54a68",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/transnetv2/2.0.0-onnx-c4d54a68/NOTICE-d53bb9c1fce01220.txt",
+          "size": 1714,
+          "sha256": "d53bb9c1fce01220db0bf53247e1e30cd7a753bfb744e91dd11a7d86f35996bd"
+        },
+        "attribution": "TransNetV2 shot transition detection by Tomáš Souček and Jakub Lokoč, MIT licence (code and weights, Copyright (c) 2020 Tomáš Souček). ONNX export by elya5 (hf.co/elya5/transnetv2, MIT) of a PyTorch port of the upstream weights."
+      },
+      "dependencies": ["onnxruntime"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": ["https://components.taalcut.app/transnetv2/2.0.0-onnx-c4d54a68/transnetv2.onnx"],
+          "sha256": "c4d54a682bace32f25136ef83ca2c9d403e8f8193775efeb995172a0d95a8e0c",
+          "size": 31250929,
+          "install": {
+            "type": "file",
+            "fileName": "transnetv2.onnx",
+            "executable": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "transnetv2-coreml",
+      "name": "TransNetV2 (Core ML)",
+      "version": "2.0.0-coreml-fp32-85cef72",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/transnetv2-coreml/2.0.0-coreml-fp32-85cef72/NOTICE-148fabf79ecae57f.txt",
+          "size": 2028,
+          "sha256": "148fabf79ecae57fcd16c2d17a431c74a25d0f436810b1427c2168313fba153a"
+        },
+        "attribution": "TransNetV2 shot transition detection by Tomáš Souček and Jakub Lokoč, MIT licence (code and weights, Copyright (c) 2020 Tomáš Souček). Upstream's weights in a Core ML rewrite of upstream's PyTorch port, converted (fp32) and compiled for Core ML by Taalcut (tools/components/pack-transnetv2-coreml.sh). For the mac helper."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/transnetv2-coreml/2.0.0-coreml-fp32-85cef72/transnetv2-coreml-fp32-85cef72.tar.zst"
+          ],
+          "sha256": "2155209e58ac45c9aa164c78f318738661600d69c969267e05fd5d776b3b8c96",
+          "size": 27969056,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 30612463
+          }
+        }
+      ]
+    }
+  ]
+}

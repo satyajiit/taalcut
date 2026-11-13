@@ -1,0 +1,50 @@
+<!doctype html>
+<html
+  lang="en"
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="shapes-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #art {
+          position: absolute;
+          left: 240px;
+          top: 660px;
+          width: 600px;
+          height: 600px;
+          overflow: visible;
+        }
+        #ring {
+          fill: none;
+          stroke: #ffffff;
+          stroke-width: 18;
+        }
+        #core {
+          fill: #8338ec;
+        }
+      </style>
+      <div id="root" data-composition-id="shapes" data-width="1080" data-height="1920" data-duration="3">
+        <svg id="art" viewBox="0 0 600 600" aria-hidden="true">
+          <circle id="ring" cx="300" cy="300" r="240" />
+          <rect id="core" x="200" y="200" width="200" height="200" rx="30" />
+        </svg>
+      </div>
+      <script>
+        gsap.registerPlugin(DrawSVGPlugin);
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo('#ring', { drawSVG: '0%' }, { drawSVG: '100%', duration: 1.2, ease: 'power1.inOut' }, 0.1);
+        tl.set('#core', { opacity: 0 }, 0);
+        tl.set('#core', { opacity: 1 }, 0.6);
+        tl.from('#core', { rotation: -90, scale: 0.3, transformOrigin: '50% 50%', duration: 0.6 }, '<');
+        tl.to('#art', { y: 120, duration: 0.8, ease: 'expo.out' }, 1.8);
+        window.__timelines['shapes'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

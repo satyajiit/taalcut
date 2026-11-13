@@ -1,0 +1,38 @@
+{
+  "id": "cut-15-pt",
+  "synthetic": true,
+  "note": "Synthetic plan. Media is generated at test time.",
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "width": 80,
+  "height": 24,
+  "cellSize": 2,
+  "clips": [
+    {
+      "clipId": 3,
+      "color": "#6a4c93",
+      "inFrame": 0,
+      "frames": 225
+    },
+    {
+      "clipId": 4,
+      "color": "#1982c4",
+      "inFrame": 0,
+      "frames": 225
+    }
+  ],
+  "beats": [
+    0,
+    225
+  ],
+  "overlays": [],
+  "captions": [
+    {
+      "text": "Olá",
+      "startFrame": 15,
+      "language": "pt-BR"
+    }
+  ]
+}

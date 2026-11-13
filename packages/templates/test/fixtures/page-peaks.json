@@ -1,0 +1,515 @@
+{
+  "about": "LRN1-CTX follow-ups 4: the Analyst's worst-case prompt peak of a later page of k slots (tokens, Qwen3.5 4B on llama-server b11571 with the sidecar's chat template, the model's own with the tools written compact, and its tokenizer), memory at each window's cap and each slot's context at the window's caps (slotContextLimitsFor), at the windows the q8_0 KV cache gives the tiers and the ones measured before; `given` is the slots the page holds once templates.resolveCuts cuts it to PAGE_MAX_BYTES (Devanagari and Latin, the fewer). Measured by _orch/lrn1/logs/ctx/budget5/paged5.py (8,192, 16,384 and 32,768 the same as follow-ups 3's paged4.py); see the SPEC's page-size table.",
+  "peaks": {
+    "8192": [
+      {
+        "k": 1,
+        "peak": 6274,
+        "given": 1
+      },
+      {
+        "k": 2,
+        "peak": 7149,
+        "given": 2
+      },
+      {
+        "k": 3,
+        "peak": 8024,
+        "given": 3
+      },
+      {
+        "k": 4,
+        "peak": 8905,
+        "given": 4
+      },
+      {
+        "k": 5,
+        "peak": 9786,
+        "given": 5
+      },
+      {
+        "k": 6,
+        "peak": 10583,
+        "given": 6
+      },
+      {
+        "k": 7,
+        "peak": 11366,
+        "given": 7
+      },
+      {
+        "k": 8,
+        "peak": 12181,
+        "given": 8
+      },
+      {
+        "k": 9,
+        "peak": 12986,
+        "given": 9
+      },
+      {
+        "k": 10,
+        "peak": 13791,
+        "given": 10
+      },
+      {
+        "k": 11,
+        "peak": 14060,
+        "given": 11
+      },
+      {
+        "k": 12,
+        "peak": 14825,
+        "given": 12
+      },
+      {
+        "k": 13,
+        "peak": 15599,
+        "given": 13
+      },
+      {
+        "k": 14,
+        "peak": 17015,
+        "given": 14
+      },
+      {
+        "k": 15,
+        "peak": 17831,
+        "given": 15
+      },
+      {
+        "k": 16,
+        "peak": 17813,
+        "given": 16
+      },
+      {
+        "k": 17,
+        "peak": 19236,
+        "given": 17
+      },
+      {
+        "k": 18,
+        "peak": 20051,
+        "given": 18
+      },
+      {
+        "k": 19,
+        "peak": 20125,
+        "given": 19
+      },
+      {
+        "k": 20,
+        "peak": 20901,
+        "given": 20
+      }
+    ],
+    "12288": [
+      {
+        "k": 1,
+        "peak": 6612,
+        "given": 1
+      },
+      {
+        "k": 2,
+        "peak": 7549,
+        "given": 2
+      },
+      {
+        "k": 3,
+        "peak": 8492,
+        "given": 3
+      },
+      {
+        "k": 4,
+        "peak": 9437,
+        "given": 4
+      },
+      {
+        "k": 5,
+        "peak": 10382,
+        "given": 5
+      },
+      {
+        "k": 6,
+        "peak": 11225,
+        "given": 6
+      },
+      {
+        "k": 7,
+        "peak": 11761,
+        "given": 7
+      },
+      {
+        "k": 8,
+        "peak": 12921,
+        "given": 8
+      },
+      {
+        "k": 9,
+        "peak": 13532,
+        "given": 9
+      },
+      {
+        "k": 10,
+        "peak": 14377,
+        "given": 10
+      },
+      {
+        "k": 11,
+        "peak": 14985,
+        "given": 11
+      },
+      {
+        "k": 12,
+        "peak": 15785,
+        "given": 12
+      },
+      {
+        "k": 13,
+        "peak": 15966,
+        "given": 13
+      },
+      {
+        "k": 14,
+        "peak": 16759,
+        "given": 14
+      },
+      {
+        "k": 15,
+        "peak": 17462,
+        "given": 15
+      },
+      {
+        "k": 16,
+        "peak": 18233,
+        "given": 16
+      },
+      {
+        "k": 17,
+        "peak": 19019,
+        "given": 17
+      },
+      {
+        "k": 18,
+        "peak": 19535,
+        "given": 16
+      },
+      {
+        "k": 19,
+        "peak": 20268,
+        "given": 16
+      },
+      {
+        "k": 20,
+        "peak": 21037,
+        "given": 17
+      }
+    ],
+    "16384": [
+      {
+        "k": 1,
+        "peak": 6961,
+        "given": 1
+      },
+      {
+        "k": 2,
+        "peak": 7916,
+        "given": 2
+      },
+      {
+        "k": 3,
+        "peak": 8877,
+        "given": 3
+      },
+      {
+        "k": 4,
+        "peak": 9840,
+        "given": 4
+      },
+      {
+        "k": 5,
+        "peak": 10803,
+        "given": 5
+      },
+      {
+        "k": 6,
+        "peak": 11622,
+        "given": 6
+      },
+      {
+        "k": 7,
+        "peak": 12484,
+        "given": 7
+      },
+      {
+        "k": 8,
+        "peak": 12964,
+        "given": 8
+      },
+      {
+        "k": 9,
+        "peak": 13791,
+        "given": 9
+      },
+      {
+        "k": 10,
+        "peak": 14738,
+        "given": 10
+      },
+      {
+        "k": 11,
+        "peak": 15382,
+        "given": 11
+      },
+      {
+        "k": 12,
+        "peak": 16188,
+        "given": 12
+      },
+      {
+        "k": 13,
+        "peak": 17012,
+        "given": 13
+      },
+      {
+        "k": 14,
+        "peak": 17524,
+        "given": 13
+      },
+      {
+        "k": 15,
+        "peak": 18333,
+        "given": 14
+      },
+      {
+        "k": 16,
+        "peak": 18676,
+        "given": 16
+      },
+      {
+        "k": 17,
+        "peak": 19945,
+        "given": 17
+      },
+      {
+        "k": 18,
+        "peak": 19902,
+        "given": 17
+      },
+      {
+        "k": 19,
+        "peak": 20656,
+        "given": 18
+      },
+      {
+        "k": 20,
+        "peak": 21408,
+        "given": 18
+      }
+    ],
+    "24576": [
+      {
+        "k": 1,
+        "peak": 7186,
+        "given": 1
+      },
+      {
+        "k": 2,
+        "peak": 8205,
+        "given": 2
+      },
+      {
+        "k": 3,
+        "peak": 9232,
+        "given": 3
+      },
+      {
+        "k": 4,
+        "peak": 10259,
+        "given": 4
+      },
+      {
+        "k": 5,
+        "peak": 11286,
+        "given": 5
+      },
+      {
+        "k": 6,
+        "peak": 12181,
+        "given": 6
+      },
+      {
+        "k": 7,
+        "peak": 12752,
+        "given": 7
+      },
+      {
+        "k": 8,
+        "peak": 13615,
+        "given": 8
+      },
+      {
+        "k": 9,
+        "peak": 14467,
+        "given": 9
+      },
+      {
+        "k": 10,
+        "peak": 14871,
+        "given": 10
+      },
+      {
+        "k": 11,
+        "peak": 15655,
+        "given": 11
+      },
+      {
+        "k": 12,
+        "peak": 16651,
+        "given": 11
+      },
+      {
+        "k": 13,
+        "peak": 16915,
+        "given": 12
+      },
+      {
+        "k": 14,
+        "peak": 17715,
+        "given": 13
+      },
+      {
+        "k": 15,
+        "peak": 18526,
+        "given": 13
+      },
+      {
+        "k": 16,
+        "peak": 19335,
+        "given": 13
+      },
+      {
+        "k": 17,
+        "peak": 20159,
+        "given": 13
+      },
+      {
+        "k": 18,
+        "peak": 20101,
+        "given": 16
+      },
+      {
+        "k": 19,
+        "peak": 20857,
+        "given": 16
+      },
+      {
+        "k": 20,
+        "peak": 21631,
+        "given": 17
+      }
+    ],
+    "32768": [
+      {
+        "k": 1,
+        "peak": 7203,
+        "given": 1
+      },
+      {
+        "k": 2,
+        "peak": 8239,
+        "given": 2
+      },
+      {
+        "k": 3,
+        "peak": 9283,
+        "given": 3
+      },
+      {
+        "k": 4,
+        "peak": 10327,
+        "given": 4
+      },
+      {
+        "k": 5,
+        "peak": 11371,
+        "given": 5
+      },
+      {
+        "k": 6,
+        "peak": 12253,
+        "given": 6
+      },
+      {
+        "k": 7,
+        "peak": 13158,
+        "given": 7
+      },
+      {
+        "k": 8,
+        "peak": 13287,
+        "given": 7
+      },
+      {
+        "k": 9,
+        "peak": 14143,
+        "given": 8
+      },
+      {
+        "k": 10,
+        "peak": 14991,
+        "given": 9
+      },
+      {
+        "k": 11,
+        "peak": 15347,
+        "given": 10
+      },
+      {
+        "k": 12,
+        "peak": 16159,
+        "given": 11
+      },
+      {
+        "k": 13,
+        "peak": 16954,
+        "given": 10
+      },
+      {
+        "k": 14,
+        "peak": 18401,
+        "given": 12
+      },
+      {
+        "k": 15,
+        "peak": 18556,
+        "given": 12
+      },
+      {
+        "k": 16,
+        "peak": 19367,
+        "given": 13
+      },
+      {
+        "k": 17,
+        "peak": 20159,
+        "given": 13
+      },
+      {
+        "k": 18,
+        "peak": 20983,
+        "given": 13
+      },
+      {
+        "k": 19,
+        "peak": 21117,
+        "given": 13
+      },
+      {
+        "k": 20,
+        "peak": 21233,
+        "given": 14
+      }
+    ]
+  }
+}

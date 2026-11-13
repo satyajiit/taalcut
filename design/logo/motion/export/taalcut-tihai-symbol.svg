@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+<title id="t">Taalcut</title>
+<style>
+.c0{fill:#A94E00}.c1{fill:#B02B57}.c2{fill:#6347B8}.c3{fill:#056965}.ink{fill:#1E1712}
+@media (prefers-color-scheme:dark){.c0{fill:#FAAB3F}.c1{fill:#F26A90}.c2{fill:#9E8CF4}.c3{fill:#3CC2B4}.ink{fill:#F0ECE7}}
+@keyframes p0{0%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0, 0, 1, 1)}63.14%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0.16, 1, 0.3, 1)}68.58%{transform:translate(7.31px,-9.52px);animation-timing-function:cubic-bezier(0.22, 1, 0.36, 1)}100%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0, 0, 1, 1)}100%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0, 0, 1, 1)}}
+.a0{animation:p0 1655ms both}
+@keyframes p1{0%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0.16, 1, 0.3, 1)}4.23%{transform:translate(3.81px,2.92px);animation-timing-function:cubic-bezier(0.22, 1, 0.36, 1)}22.96%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0.16, 1, 0.3, 1)}27.19%{transform:translate(5.08px,3.9px);animation-timing-function:cubic-bezier(0.22, 1, 0.36, 1)}45.92%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0.16, 1, 0.3, 1)}50.15%{transform:translate(6.35px,4.87px);animation-timing-function:cubic-bezier(0.22, 1, 0.36, 1)}70.69%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0, 0, 1, 1)}100%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0, 0, 1, 1)}}
+.a1{animation:p1 1655ms both}
+@keyframes o2{0%{opacity:1;animation-timing-function:cubic-bezier(0, 0, 1, 1)}5.74%{opacity:1;animation-timing-function:cubic-bezier(0.65, 0, 0.35, 1)}12.39%{opacity:0.64;animation-timing-function:cubic-bezier(0.65, 0, 0.35, 1)}19.03%{opacity:1;animation-timing-function:cubic-bezier(0, 0, 1, 1)}28.7%{opacity:1;animation-timing-function:cubic-bezier(0.65, 0, 0.35, 1)}35.35%{opacity:0.52;animation-timing-function:cubic-bezier(0.65, 0, 0.35, 1)}41.99%{opacity:1;animation-timing-function:cubic-bezier(0, 0, 1, 1)}51.66%{opacity:1;animation-timing-function:cubic-bezier(0.65, 0, 0.35, 1)}58.31%{opacity:0.4;animation-timing-function:cubic-bezier(0.65, 0, 0.35, 1)}64.95%{opacity:1;animation-timing-function:cubic-bezier(0, 0, 1, 1)}100%{opacity:1;animation-timing-function:cubic-bezier(0, 0, 1, 1)}}
+.a2{animation:o2 1655ms both}
+@keyframes p3{0%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0, 0, 1, 1)}11.48%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0.16, 1, 0.3, 1)}15.71%{transform:translate(-3.81px,-2.92px);animation-timing-function:cubic-bezier(0.22, 1, 0.36, 1)}34.44%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0.16, 1, 0.3, 1)}38.67%{transform:translate(-5.08px,-3.9px);animation-timing-function:cubic-bezier(0.22, 1, 0.36, 1)}57.4%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0.16, 1, 0.3, 1)}61.63%{transform:translate(-6.35px,-4.87px);animation-timing-function:cubic-bezier(0.22, 1, 0.36, 1)}82.18%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0, 0, 1, 1)}100%{transform:translate(0px,0px);animation-timing-function:cubic-bezier(0, 0, 1, 1)}}
+.a3{animation:p3 1655ms both}
+@media (prefers-reduced-motion:reduce){.a0,.a1,.a2,.a3,.w{animation:none}}
+</style>
+<g class="a0"><path class="c0" d="M137 16.36A112 112 0 0 1 233.5 90.41L175.14 106.05A52 52 0 0 0 137 76.78Z"/></g>
+<g class="a1"><path class="c1" d="M238.16 107.8A112 112 0 0 1 137 239.64L137 201.45A74 74 0 0 0 201.28 117.68Z"/></g>
+<g class="a2"><path class="c2" d="M119 239.64A112 112 0 0 1 22.5 165.59L41.89 160.39A92 92 0 0 0 119 219.56Z"/></g>
+<g class="a3"><path class="c3" d="M17.84 148.2A112 112 0 0 1 119 16.36L119 54.55A74 74 0 0 0 54.72 138.32Z"/></g>
+</svg>

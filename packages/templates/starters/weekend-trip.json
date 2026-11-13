@@ -1,0 +1,1386 @@
+{
+  "description": "",
+  "forkedFrom": null,
+  "format": "taalcut.template",
+  "formatId": "vlog",
+  "formatVersion": 0,
+  "handle": "taalcut",
+  "id": "01HZZZZZZZZZZZZZZZ0000000Q",
+  "language": null,
+  "licence": "CC0-1.0",
+  "name": "weekend-trip",
+  "structure": {
+    "audio": {
+      "kind": "music",
+      "loudnessLufs": null,
+      "speechCoverage": null,
+      "speechLanguage": null
+    },
+    "beatMap": {
+      "beats": [
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 0
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 15
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 30
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 60
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 75
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 90
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 105
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 120
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 135
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 150
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 165
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 180
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 195
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 210
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 225
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 240
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 255
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 270
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 285
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 300
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 315
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 330
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 345
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 360
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 375
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 390
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 405
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 420
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 435
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 450
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 465
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 480
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 495
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 510
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 525
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 540
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 555
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 570
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 585
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 600
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 615
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 630
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 645
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 660
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 675
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 690
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 705
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 720
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 735
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 750
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 765
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 780
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 795
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 810
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 825
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 840
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 855
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 870
+        },
+        {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 885
+        }
+      ],
+      "beatsPerBar": 4,
+      "bpm": 120,
+      "confidence": 1,
+      "downbeats": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56
+      ],
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "source": "format"
+    },
+    "canvas": {
+      "height": 1920,
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "width": 1080
+    },
+    "duration": {
+      "rate": {
+        "den": 1,
+        "num": 30
+      },
+      "value": 900
+    },
+    "pacing": {
+      "cutsOnBeat": 1,
+      "hookEnd": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 30
+      },
+      "longestShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 60
+      },
+      "meanShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 43
+      },
+      "medianShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 45
+      },
+      "shortestShot": {
+        "rate": {
+          "den": 1,
+          "num": 30
+        },
+        "value": 30
+      },
+      "shotCount": 21
+    },
+    "slots": [
+      {
+        "beatAnchor": {
+          "beatIndex": 0,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 30
+        },
+        "intent": {
+          "energy": 0.9,
+          "motion": null,
+          "people": null,
+          "place": null,
+          "shotType": null,
+          "subject": "the most striking moment of the trip",
+          "text": "Hook: the most striking moment of the trip, movement or a face, grabbing attention in the first second"
+        },
+        "name": null,
+        "role": "hook",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 0
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 2,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 60
+        },
+        "intent": {
+          "energy": 0.4,
+          "motion": "pan",
+          "people": null,
+          "place": null,
+          "shotType": "wide",
+          "subject": "the place",
+          "text": "Establishing shot: wide or aerial view of the place"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 30
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 6,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.5,
+          "motion": "handheld",
+          "people": 1,
+          "place": null,
+          "shotType": "medium",
+          "subject": "the trip",
+          "text": "Journey: medium shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 90
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 9,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.52,
+          "motion": "tracking",
+          "people": 1,
+          "place": null,
+          "shotType": "close",
+          "subject": "the trip",
+          "text": "Journey: close shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 135
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 12,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.54,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "detail",
+          "subject": "the trip",
+          "text": "Journey: detail shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 180
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 15,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.56,
+          "motion": "handheld",
+          "people": 1,
+          "place": null,
+          "shotType": "medium",
+          "subject": "the trip",
+          "text": "Journey: medium shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 225
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 18,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.59,
+          "motion": "tracking",
+          "people": 1,
+          "place": null,
+          "shotType": "close",
+          "subject": "the trip",
+          "text": "Journey: close shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 270
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 21,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.61,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "detail",
+          "subject": "the trip",
+          "text": "Journey: detail shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 315
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 24,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.63,
+          "motion": "handheld",
+          "people": 1,
+          "place": null,
+          "shotType": "medium",
+          "subject": "the trip",
+          "text": "Journey: medium shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 360
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 27,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.65,
+          "motion": "tracking",
+          "people": 1,
+          "place": null,
+          "shotType": "close",
+          "subject": "the trip",
+          "text": "Journey: close shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 405
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 30,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.67,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "detail",
+          "subject": "the trip",
+          "text": "Journey: detail shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 450
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 33,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.69,
+          "motion": "handheld",
+          "people": 1,
+          "place": null,
+          "shotType": "medium",
+          "subject": "the trip",
+          "text": "Journey: medium shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 495
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 36,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.71,
+          "motion": "tracking",
+          "people": 1,
+          "place": null,
+          "shotType": "close",
+          "subject": "the trip",
+          "text": "Journey: close shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 540
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 39,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.74,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "detail",
+          "subject": "the trip",
+          "text": "Journey: detail shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 585
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 42,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.76,
+          "motion": "handheld",
+          "people": 1,
+          "place": null,
+          "shotType": "medium",
+          "subject": "the trip",
+          "text": "Journey: medium shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 630
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 45,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 45
+        },
+        "intent": {
+          "energy": 0.78,
+          "motion": "tracking",
+          "people": 1,
+          "place": null,
+          "shotType": "close",
+          "subject": "the trip",
+          "text": "Journey: close shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 675
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 48,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 30
+        },
+        "intent": {
+          "energy": 0.8,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "detail",
+          "subject": "the trip",
+          "text": "Journey: detail shot of the trip, with people"
+        },
+        "name": null,
+        "role": "body",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 720
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 50,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 30
+        },
+        "intent": {
+          "energy": 1,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": null,
+          "text": "Peak: fast, high-energy moment"
+        },
+        "name": null,
+        "role": "peak",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 750
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 52,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 30
+        },
+        "intent": {
+          "energy": 1,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "medium",
+          "subject": null,
+          "text": "Peak: fast, high-energy moment"
+        },
+        "name": null,
+        "role": "peak",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 780
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 54,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 30
+        },
+        "intent": {
+          "energy": 1,
+          "motion": "handheld",
+          "people": null,
+          "place": null,
+          "shotType": "close",
+          "subject": null,
+          "text": "Peak: fast, high-energy moment"
+        },
+        "name": null,
+        "role": "peak",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 810
+        },
+        "transitionIn": null
+      },
+      {
+        "beatAnchor": {
+          "beatIndex": 56,
+          "offset": {
+            "rate": {
+              "den": 1,
+              "num": 30
+            },
+            "value": 0
+          }
+        },
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 60
+        },
+        "intent": {
+          "energy": 0.3,
+          "motion": "static",
+          "people": null,
+          "place": null,
+          "shotType": "wide",
+          "subject": null,
+          "text": "Outro: calm wide shot or a face to close"
+        },
+        "name": null,
+        "role": "outro",
+        "speedRamp": null,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 840
+        },
+        "transitionIn": null
+      }
+    ],
+    "text": [
+      {
+        "appearance": {
+          "align": "center",
+          "background": "none",
+          "case": "mixed",
+          "size": 0.05
+        },
+        "box": {
+          "height": 0.08,
+          "width": 0.54,
+          "x": 0.13,
+          "y": 0.17
+        },
+        "chars": 7,
+        "duration": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 60
+        },
+        "language": null,
+        "placeholder": "{title}",
+        "reveal": "fade",
+        "role": "title",
+        "slotIndex": 1,
+        "start": {
+          "rate": {
+            "den": 1,
+            "num": 30
+          },
+          "value": 30
+        },
+        "styleKey": "title",
+        "words": 1
+      }
+    ]
+  },
+  "style": null,
+  "tags": [],
+  "trendFreshness": null,
+  "version": 1
+}

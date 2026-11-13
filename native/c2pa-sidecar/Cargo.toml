@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+[package]
+name = "taalcut-c2pa"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.96"
+license = "AGPL-3.0-or-later"
+description = "Taalcut's Content Credentials sidecar: reads and signs C2PA manifests over JSON lines on stdio."
+publish = false
+
+[[bin]]
+name = "taalcut-c2pa"
+path = "src/main.rs"
+
+[dependencies]
+# Pinned exactly (render SPEC P3.3): 0.92.0 removes Builder::from_json and changes the API.
+# No OpenSSL (rust_native_crypto), no HTTP stack: the sidecar never touches the network.
+c2pa = { version = "=0.91.2", default-features = false, features = ["rust_native_crypto", "file_io"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

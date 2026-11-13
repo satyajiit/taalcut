@@ -1,0 +1,171 @@
+{
+  "description": "Gate 8 caption goldens: each cue of each language, cropped from a rendered frame, halved and grey. Written with TAALCUT_UPDATE_GOLDENS=1; they count as approved only once the PO signs them off.",
+  "approvedBy": null,
+  "approvedOn": null,
+  "shell": "chrome-headless-shell 152.0.7977.30",
+  "ssimMin": 0.98,
+  "languages": {
+    "en": {
+      "language": "en",
+      "font": "poppins",
+      "cues": [
+        {
+          "text": "Morning light over the",
+          "frame": 24,
+          "rect": {
+            "x": 182,
+            "y": 996,
+            "width": 534,
+            "height": 234
+          },
+          "file": "en-1.png"
+        },
+        {
+          "text": "old harbour",
+          "frame": 60,
+          "rect": {
+            "x": 214,
+            "y": 1046,
+            "width": 470,
+            "height": 134
+          },
+          "file": "en-2.png"
+        }
+      ]
+    },
+    "hi": {
+      "language": "hi",
+      "font": "poppins",
+      "cues": [
+        {
+          "text": "क्षमा त्रिशूल ज्ञान श्रम",
+          "frame": 24,
+          "rect": {
+            "x": 170,
+            "y": 996,
+            "width": 558,
+            "height": 234
+          },
+          "file": "hi-1.png"
+        },
+        {
+          "text": "कर्क ज़िंदगी कि की",
+          "frame": 72,
+          "rect": {
+            "x": 144,
+            "y": 1046,
+            "width": 610,
+            "height": 134
+          },
+          "file": "hi-2.png"
+        },
+        {
+          "text": "कु कू कृ के",
+          "frame": 120,
+          "rect": {
+            "x": 274,
+            "y": 1046,
+            "width": 350,
+            "height": 134
+          },
+          "file": "hi-3.png"
+        },
+        {
+          "text": "कै को कौ",
+          "frame": 162,
+          "rect": {
+            "x": 292,
+            "y": 1046,
+            "width": 314,
+            "height": 134
+          },
+          "file": "hi-4.png"
+        }
+      ]
+    },
+    "es": {
+      "language": "es",
+      "font": "poppins",
+      "cues": [
+        {
+          "text": "¿Dónde está el niño?",
+          "frame": 24,
+          "rect": {
+            "x": 164,
+            "y": 996,
+            "width": 570,
+            "height": 234
+          },
+          "file": "es-1.png"
+        },
+        {
+          "text": "¡Mañana sí!",
+          "frame": 60,
+          "rect": {
+            "x": 206,
+            "y": 1046,
+            "width": 486,
+            "height": 134
+          },
+          "file": "es-2.png"
+        }
+      ]
+    },
+    "pt": {
+      "language": "pt-BR",
+      "font": "poppins",
+      "cues": [
+        {
+          "text": "Não, irmã: você põe",
+          "frame": 24,
+          "rect": {
+            "x": 142,
+            "y": 996,
+            "width": 614,
+            "height": 234
+          },
+          "file": "pt-1.png"
+        },
+        {
+          "text": "açúcar no pão",
+          "frame": 66,
+          "rect": {
+            "x": 166,
+            "y": 1046,
+            "width": 566,
+            "height": 134
+          },
+          "file": "pt-2.png"
+        }
+      ]
+    },
+    "hinglish": {
+      "language": "hi",
+      "font": "poppins",
+      "cues": [
+        {
+          "text": "Yeh video bahut अच्छा",
+          "frame": 24,
+          "rect": {
+            "x": 130,
+            "y": 996,
+            "width": 638,
+            "height": 234
+          },
+          "file": "hinglish-1.png"
+        },
+        {
+          "text": "hai",
+          "frame": 57,
+          "rect": {
+            "x": 372,
+            "y": 1046,
+            "width": 154,
+            "height": 134
+          },
+          "file": "hinglish-2.png"
+        }
+      ]
+    }
+  }
+}

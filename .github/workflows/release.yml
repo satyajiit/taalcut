@@ -1,0 +1,320 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Release
+
+# Builds the macOS arm64 DMG and update zip, signs them with the Developer ID,
+# notarises and staples, checks Gatekeeper's verdict, and uploads them as
+# workflow artefacts. Manual only. It never creates a GitHub Release:
+# publish-release.yml does that from a green run of this workflow (P3-B9,
+# docs/release.md "Workflows"). For the public channels (beta, stable) the
+# feed baked in is this repository's GitHub Releases download base; the app
+# appends /channel-<channel>/ itself.
+# `publish` bakes a channel and the feed URL through; it does not upload.
+# No weekly schedule: update hosting is undecided (D14), so a cron would
+# either hardcode a host or bake a token, and it would run this signed job
+# with empty workflow_dispatch inputs. Internal builds stay manual
+# (channel=internal, publish=true) once TAALCUT_UPDATE_FEED_URL is set
+# as a repository variable. No token is put in the app.
+# Owner setup (certificate, App Store Connect API key, the five secrets) and
+# the clean-Mac check: docs/release.md. The five secrets are the `release`
+# environment's (required reviewer: the PO; deployment branches: main), so a
+# run from any other branch can neither sign nor notarise (security review SB-41).
+on:
+  workflow_dispatch:
+    inputs:
+      xcode:
+        description: Xcode version that builds FFmpeg (the committed build used 26.6; see docs/release.md)
+        required: true
+        default: '26.6'
+      channel:
+        description: Update channel to bake (internal, alpha, beta, stable). Empty keeps latest-mac.yml. Used only when publish is true.
+        required: false
+        default: ''
+        type: string
+      publish:
+        description: Bake the channel and the TAALCUT_UPDATE_FEED_URL repository variable into the build. Does not upload and does not choose a host.
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  TAALCUT_BUILD_FLAVOUR: release
+  TAALCUT_MAC_IDENTITY: 'Developer ID Application: Matterward Labs Private Limited (WW382UC8JD)'
+  TAALCUT_NOTARY_PROFILE: taalcut-ci-notary
+  # Apple's Developer ID G2 intermediate, which issued the certificate. Pinned by SHA-256.
+  APPLE_DEVELOPER_ID_G2_URL: https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer
+  APPLE_DEVELOPER_ID_G2_SHA256: f16cd3c54c7f83cea4bf1a3e6a0819c8aaa8e4a1528fd144715f350643d2df3a
+  HOMEBREW_NO_AUTO_UPDATE: '1'
+  HOMEBREW_NO_INSTALL_CLEANUP: '1'
+  HOMEBREW_NO_ANALYTICS: '1'
+
+# macos-26 is the arm64 image (as in ci.yml); do not use the floating label.
+jobs:
+  dmg:
+    name: signed, notarised DMG (macOS arm64)
+    runs-on: macos-26
+    timeout-minutes: 240
+    # The signing and notary secrets live in this environment, not in the repository.
+    environment: release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Install the Electron binary
+        # electron has no postinstall script; electron-builder packages its dist/.
+        run: pnpm --filter @taalcut/desktop exec install-electron
+
+      - name: Select Xcode
+        env:
+          XCODE: ${{ inputs.xcode }}
+        run: |
+          case "$XCODE" in
+            '' | *[!0-9.]*) echo "::error::xcode must be a version such as 26.6"; exit 1 ;;
+          esac
+          app="/Applications/Xcode_${XCODE}.app"
+          if [ ! -d "$app" ]; then
+            echo "::error::$app is not on this runner image. Installed:"
+            ls -d /Applications/Xcode*.app
+            exit 1
+          fi
+          sudo xcode-select --switch "$app/Contents/Developer"
+          xcodebuild -version
+          clang --version | head -n 1
+          echo "SDK $(xcrun --show-sdk-version)"
+
+      # The cache only saves a rebuild. Restored or built, the binaries pass the
+      # same hash gate against the committed BUILDINFO.json before anything signs them.
+      - name: Restore the FFmpeg build
+        id: ffmpeg-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            tools/ffmpeg/dist/ffmpeg
+            tools/ffmpeg/dist/ffprobe
+            tools/ffmpeg/dist/lib
+          key: ffmpeg-${{ runner.os }}-${{ runner.arch }}-xcode${{ inputs.xcode }}-${{ hashFiles('tools/ffmpeg/versions.env', 'tools/ffmpeg/build.sh', 'tools/ffmpeg/build-macos-deps.sh', 'tools/ffmpeg/normalize-macho.py', 'tools/ffmpeg/dist/BUILDINFO.json') }}
+
+      - name: Install the FFmpeg build tools
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
+        run: brew install meson ninja nasm cmake pkgconf autoconf automake libtool
+
+      - name: Build FFmpeg (tools/ffmpeg/build.sh)
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          # The build is path-independent (tools/ffmpeg/README.md), so it runs in the checkout.
+          # build.sh rewrites dist/BUILDINFO.json: keep its copy aside and put the committed one
+          # back, since that is the reference the hash gate checks against.
+          fresh="$RUNNER_TEMP/ffmpeg-BUILDINFO.fresh.json"
+          cp tools/ffmpeg/dist/BUILDINFO.json "$RUNNER_TEMP/ffmpeg-BUILDINFO.committed.json"
+          nice -n 10 tools/ffmpeg/build.sh
+          mv tools/ffmpeg/dist/BUILDINFO.json "$fresh"
+          cp "$RUNNER_TEMP/ffmpeg-BUILDINFO.committed.json" tools/ffmpeg/dist/BUILDINFO.json
+          echo "FFMPEG_FRESH_BUILDINFO=$fresh" >> "$GITHUB_ENV"
+
+      - name: FFmpeg hash gate (tools/ffmpeg/dist/BUILDINFO.json)
+        run: |
+          if [ -n "${FFMPEG_FRESH_BUILDINFO:-}" ]; then
+            node apps/desktop/scripts/check-ffmpeg-dist.mjs check tools/ffmpeg/dist --buildinfo "$FFMPEG_FRESH_BUILDINFO"
+          else
+            node apps/desktop/scripts/check-ffmpeg-dist.mjs check tools/ffmpeg/dist
+          fi
+
+      - name: FFmpeg smoke test (tools/ffmpeg/verify.sh)
+        run: tools/ffmpeg/verify.sh
+
+      - name: Save the FFmpeg build
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            tools/ffmpeg/dist/ffmpeg
+            tools/ffmpeg/dist/ffprobe
+            tools/ffmpeg/dist/lib
+          key: ${{ steps.ffmpeg-cache.outputs.cache-primary-key }}
+
+      - name: Build the workspace
+        # --force: build from source, not from the Turborepo cache Setup restores.
+        run: pnpm run build --force
+
+      - name: Import the Developer ID certificate into a temporary keychain
+        env:
+          MAC_CERT_P12_BASE64: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          MAC_CERT_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
+        run: |
+          set -euo pipefail
+          for name in MAC_CERT_P12_BASE64 MAC_CERT_PASSWORD; do
+            if [ -z "${!name:-}" ]; then
+              echo "::error::repository secret $name is not set (docs/release.md)"
+              exit 1
+            fi
+          done
+          umask 077
+          dir="$RUNNER_TEMP/taalcut-signing"
+          keychain="$dir/taalcut-signing.keychain-db"
+          mkdir -p "$dir"
+          trap 'rm -f "$dir/cert.p12" "$dir/DeveloperIDG2CA.cer"' EXIT
+          keychain_password="$(openssl rand -base64 32)"
+          echo "::add-mask::$keychain_password"
+          printf '%s' "$MAC_CERT_P12_BASE64" | base64 --decode > "$dir/cert.p12"
+          curl -fsSL --retry 3 -o "$dir/DeveloperIDG2CA.cer" "$APPLE_DEVELOPER_ID_G2_URL"
+          echo "$APPLE_DEVELOPER_ID_G2_SHA256  $dir/DeveloperIDG2CA.cer" | shasum -a 256 -c -
+          security create-keychain -p "$keychain_password" "$keychain"
+          security set-keychain-settings -lut 21600 "$keychain"
+          security unlock-keychain -p "$keychain_password" "$keychain"
+          security import "$dir/DeveloperIDG2CA.cer" -k "$keychain"
+          security import "$dir/cert.p12" -k "$keychain" -f pkcs12 -P "$MAC_CERT_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$keychain_password" "$keychain" > /dev/null
+          # The temporary keychain first in the search list, for codesign, spctl and notarytool.
+          security list-keychains -d user | xargs security list-keychains -d user -s "$keychain"
+          if ! security find-identity -v -p codesigning "$keychain" | grep -qF "\"$TAALCUT_MAC_IDENTITY\""; then
+            echo "::error::MAC_CERT_P12_BASE64 holds no valid \"$TAALCUT_MAC_IDENTITY\" identity"
+            security find-identity -v -p codesigning "$keychain" | sed -e 's/[0-9A-F]\{40\}/<sha1>/'
+            exit 1
+          fi
+          echo "TAALCUT_SIGNING_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
+
+      - name: Store the notarytool profile in the temporary keychain
+        env:
+          NOTARY_KEY_P8_BASE64: ${{ secrets.NOTARY_KEY_P8_BASE64 }}
+          NOTARY_KEY_ID: ${{ secrets.NOTARY_KEY_ID }}
+          NOTARY_ISSUER: ${{ secrets.NOTARY_ISSUER }}
+        run: |
+          set -euo pipefail
+          for name in NOTARY_KEY_P8_BASE64 NOTARY_KEY_ID NOTARY_ISSUER; do
+            if [ -z "${!name:-}" ]; then
+              echo "::error::repository secret $name is not set (docs/release.md)"
+              exit 1
+            fi
+          done
+          umask 077
+          key="$RUNNER_TEMP/taalcut-signing/AuthKey.p8"
+          trap 'rm -f "$key"' EXIT
+          printf '%s' "$NOTARY_KEY_P8_BASE64" | base64 --decode > "$key"
+          # --validate asks Apple once whether the key works, so a bad secret fails here.
+          xcrun notarytool store-credentials "$TAALCUT_NOTARY_PROFILE" \
+            --key "$key" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER" \
+            --keychain "$TAALCUT_SIGNING_KEYCHAIN" --validate
+
+      # The `taalcut` command-line tool (native/taalcut-cli): the MCP stdio shim and the update guard that rolls
+      # back an update that doesn't start (P3-V4, P3-B9). Packaged at Contents/Resources/bin/taalcut.
+      - name: Build the taalcut command-line tool (native/taalcut-cli/build.sh)
+        # Signs with TAALCUT_MAC_IDENTITY, found in the temporary keychain (first in the search list).
+        run: native/taalcut-cli/build.sh
+
+      - name: Package, sign, notarise and staple
+        env:
+          PUBLISH_UPDATES: ${{ inputs.publish }}
+          TAALCUT_UPDATE_CHANNEL: ${{ inputs.channel }}
+          # Repository variable for the team channels. Empty when unset. Never a host written in this file.
+          TEAM_UPDATE_FEED_URL: ${{ vars.TAALCUT_UPDATE_FEED_URL }}
+          # The public key channel files are signed with (SB-19; `release.mjs keygen`). A build that bakes a feed
+          # refuses to build without it (packaging/build-settings.ts).
+          TAALCUT_UPDATE_PUBLIC_KEY: ${{ vars.TAALCUT_UPDATE_PUBLIC_KEY }}
+          # The template hub's index and Worker addresses (review M3): baked at bundle time, both or neither; a
+          # packaged release ignores and refuses them at launch. Empty when unset: the hub is not configured.
+          TAALCUT_HUB_INDEX_URL: ${{ vars.TAALCUT_HUB_INDEX_URL }}
+          TAALCUT_HUB_WORKER_URL: ${{ vars.TAALCUT_HUB_WORKER_URL }}
+        run: |
+          set -euo pipefail
+          # Only TAALCUT_MAC_IDENTITY names the certificate, looked up in the temporary keychain.
+          unset CSC_LINK CSC_KEY_PASSWORD CSC_NAME
+          export CSC_KEYCHAIN="$TAALCUT_SIGNING_KEYCHAIN"
+          export TAALCUT_NOTARY_KEYCHAIN="$TAALCUT_SIGNING_KEYCHAIN"
+          # Fail rather than skip notarisation (packaging/notarize.ts).
+          export TAALCUT_NOTARIZE=1
+          # Fail rather than ship without Resources/bin/taalcut, the update guard and MCP shim (cli-resources.ts).
+          export TAALCUT_REQUIRE_CLI=1
+          # Default (publish false) is unchanged: no channel, no feed.
+          # publish true bakes the channel and its feed: GitHub Releases of this repository for beta and
+          # stable (D14), the TAALCUT_UPDATE_FEED_URL variable for the team channels.
+          if [ "${PUBLISH_UPDATES}" != "true" ]; then
+            unset TAALCUT_UPDATE_CHANNEL
+          else
+            case "${TAALCUT_UPDATE_CHANNEL}" in
+              beta | stable) export TAALCUT_UPDATE_FEED_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download" ;;
+              internal | alpha | '') export TAALCUT_UPDATE_FEED_URL="${TEAM_UPDATE_FEED_URL}" ;;
+              *) echo "::error::channel must be internal, alpha, beta or stable"; exit 1 ;;
+            esac
+          fi
+          pnpm --filter @taalcut/desktop package
+
+      - name: Gatekeeper verdict (spctl, stapler)
+        working-directory: apps/desktop
+        run: |
+          set -euo pipefail
+          for dmg in release/*.dmg; do
+            spctl -a -vv -t open --context context:primary-signature "$dmg"
+          done
+          spctl -a -vv release/mac-arm64/Taalcut.app
+          # Wants "source=Notarized Developer ID" and a stapled ticket on the app and the DMG.
+          node scripts/verify-signature.mjs --notarized
+
+      - name: Check the app inside the DMG
+        working-directory: apps/desktop
+        run: |
+          set -euo pipefail
+          mount="$RUNNER_TEMP/taalcut-dmg"
+          mkdir -p "$mount"
+          for dmg in release/*.dmg; do
+            hdiutil attach -readonly -nobrowse -mountpoint "$mount" "$dmg"
+            status=0
+            node scripts/verify-signature.mjs --notarized "$mount/Taalcut.app" || status=$?
+            hdiutil detach "$mount"
+            [ "$status" -eq 0 ] || exit "$status"
+          done
+
+      - name: Stage verified FFmpeg corresponding source
+        run: node scripts/release-source.mjs apps/desktop/release
+
+      - name: Upload the corresponding source and its provenance
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: taalcut-macos-arm64-source
+          path: |
+            apps/desktop/release/ffmpeg-*-source-*.tar.zst
+            apps/desktop/release/ffmpeg-source-distribution.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload the DMG
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: taalcut-macos-arm64-dmg
+          path: apps/desktop/release/*.dmg
+          if-no-files-found: error
+          retention-days: 14
+
+      # What updates install, and the blockmap delta updates read (publish-release.yml uploads both).
+      - name: Upload the update zip and its blockmap
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: taalcut-macos-arm64-update
+          path: |
+            apps/desktop/release/*-arm64-mac.zip
+            apps/desktop/release/*-arm64-mac.zip.blockmap
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Delete the temporary keychain and key files
+        if: always()
+        run: |
+          dir="$RUNNER_TEMP/taalcut-signing"
+          if [ -f "$dir/taalcut-signing.keychain-db" ]; then
+            security delete-keychain "$dir/taalcut-signing.keychain-db" || true
+          fi
+          rm -rf "$dir"
+          security list-keychains -d user

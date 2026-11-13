@@ -1,0 +1,60 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* The page grid (UX4, DESIGN.md "Window" and "Page"): one column that the page's content and the window bar's
+ * title and actions share. page-grid.ts sets the inputs on <html>; this derives the column from them, in window
+ * coordinates, so the bar (outside the page's scroll area) and the page (inside it) agree without measuring. */
+
+@theme {
+  /* The page's content widths: reading (chat, prose), standard (most pages), wide (grids of footage). */
+  --container-page-reading: 48rem;
+  --container-page-standard: 64rem;
+  --container-page-wide: 90rem;
+  /* The least room between the column and the window's right edge (and the sidebar, where no title stands): the
+   * pages' old side padding, so a column the title pushes right loses only what the title takes. */
+  --spacing-page-gutter: 2.5rem;
+}
+
+:root {
+  --shell-start: 0px;
+  --bar-title-start: 0px;
+  --page-measure: 100vw;
+  /* Half of what the page area has beyond the measure: where a centred column starts and ends. */
+  --page-slack: calc((100vw - var(--shell-start) - var(--page-measure)) / 2);
+  /* Centred when there is room; never left of the bar's title, nor inside the gutter. */
+  --page-column-start: max(
+    var(--bar-title-start),
+    calc(var(--shell-start) + var(--spacing-page-gutter)),
+    calc(var(--shell-start) + var(--page-slack))
+  );
+  /* The measure on from there, as far as the gutter: a column the title pushes right keeps its width while it can. */
+  --page-column-end: min(
+    calc(var(--page-column-start) + var(--page-measure)),
+    calc(100vw - var(--spacing-page-gutter))
+  );
+}
+
+/* The page's column (shell/page.tsx): placed in the page area by the same numbers the bar uses. */
+.page-column {
+  box-sizing: border-box;
+  margin-inline-start: calc(var(--page-column-start) - var(--shell-start));
+  inline-size: calc(var(--page-column-end) - var(--page-column-start));
+}
+
+/* The bar's own end (the models' download) sits in the bar's last 3rem; the page's actions end before it. */
+[data-slot='window-bar-main'] {
+  --bar-end: 0.75rem;
+  padding-inline-end: var(--bar-end);
+}
+[data-slot='window-bar-main']:has(> [data-slot='window-bar-end'] > *) {
+  --bar-end: 3rem;
+}
+
+/* While a page claims the grid, the bar's title moves out to the column's left edge (it never goes left of where
+ * it sits after Back, Forward and the mark), with the mark just before it, hanging into the gutter; and the page's
+ * actions end on the column's right edge. */
+:root[data-page-grid] [data-slot='window-bar'][data-grid] [data-slot='window-bar-heading'] {
+  padding-inline-start: max(0px, calc(var(--page-column-start) - var(--bar-title-start)));
+}
+:root[data-page-grid] [data-slot='window-bar'][data-grid] > [data-slot='window-bar-main'] {
+  padding-inline-end: max(var(--bar-end), calc(100vw - var(--page-column-end) - var(--bar-overlay, 0px)));
+}

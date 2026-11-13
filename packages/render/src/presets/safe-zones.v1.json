@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "canvas": { "width": 1080, "height": 1920 },
+  "checkedOn": null,
+  "note": "PROVISIONAL. No platform publishes an organic pixel box. Every rect here comes from scratchpad research/platform-presets.md (2026-10-13) and still has to be matched to annotated screenshots of each app on iOS 26 and an Android phone (device lab, SPEC section 15). Device presets use the intersection of the three safe rects.",
+  "platforms": {
+    "shorts": {
+      "provenance": "third-party",
+      "source": "Breakreach, Upload-Post and Outfeed transcriptions of Google's vertical video-ad safe-zone image (top 288, bottom 672, left 48, right 192). An ad overlay, not a phone screenshot.",
+      "safe": { "x": 48, "y": 288, "width": 840, "height": 960 },
+      "overlays": [
+        { "kind": "topBar", "rect": { "x": 0, "y": 0, "width": 1080, "height": 288 } },
+        { "kind": "actionRail", "rect": { "x": 888, "y": 0, "width": 192, "height": 1920 } },
+        { "kind": "bottomInfo", "rect": { "x": 0, "y": 1248, "width": 1080, "height": 672 } }
+      ]
+    },
+    "reels": {
+      "provenance": "derived",
+      "source": "Meta Ads Guide, Instagram Reels: leave about 14% top, 35% bottom and 6% each side free. Official percentages for ads; the pixels are arithmetic on 1080x1920.",
+      "safe": { "x": 65, "y": 269, "width": 950, "height": 979 },
+      "overlays": [
+        { "kind": "topBar", "rect": { "x": 0, "y": 0, "width": 1080, "height": 269 } },
+        { "kind": "actionRail", "rect": { "x": 1015, "y": 0, "width": 65, "height": 1920 } },
+        { "kind": "bottomInfo", "rect": { "x": 0, "y": 1248, "width": 1080, "height": 672 } }
+      ]
+    },
+    "tiktok": {
+      "provenance": "third-party",
+      "source": "AdKit (2026-09-10) and Breakreach (2026-09-30) readings of TikTok's In-Feed Standard LTR ad template, scaled x1.5 to 1080x1920: top 240, bottom 660, left 120, right 300 below y 840.",
+      "safe": { "x": 120, "y": 240, "width": 660, "height": 1020 },
+      "overlays": [
+        { "kind": "topBar", "rect": { "x": 0, "y": 0, "width": 1080, "height": 240 } },
+        { "kind": "actionRail", "rect": { "x": 780, "y": 840, "width": 300, "height": 1080 } },
+        { "kind": "bottomInfo", "rect": { "x": 0, "y": 1260, "width": 1080, "height": 660 } }
+      ]
+    }
+  }
+}

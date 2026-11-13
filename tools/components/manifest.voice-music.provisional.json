@@ -1,0 +1,68 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "Voice-music components (packages/audio SPEC P3.5-P3.7). Hosted at components.taalcut.app by tools/components/hosting (README.md, \"Releasing components\"; hosting/plan.mjs pins each source). sign-manifest.mjs drops this comment. silero-vad 6.2.3 is snakers4/silero-vad's own silero_vad.onnx at tag v6.2.3 (MIT): hosted unchanged (2327524 bytes, sha256 1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3); it runs on the onnxruntime component (compose-provisional.mjs adds that dependency). sfx-pack 1.0.0 is the synthesised CC0 sound pack: 32 FLAC sounds (8 whooshes, 8 risers, 8 impacts, 8 hits) made by tools/audio-packs/build-sfx-pack.mjs from FFmpeg's own generators, with catalogue.json and the CC0 dedication as LICENCE.txt. The build is reproducible (fixed seeds, bit-exact FLAC, a ustar written by the script with mtime 0, zstd 19 through Node's zlib), so the sha256 below (b5dfd368…, 1813612 bytes, extractedSize 2137415) is what any checkout's build prints, what hosting/build.mjs uploads and what the app's own extractor unpacks. The product owner approves the sounds before release. FLAC, not the Opus the SPEC planned: the shipped LGPL FFmpeg has no libopus and its native Opus encoder is experimental. kind is model because the schema has no data kind. music-pack is not here: its track list (tools/audio-packs/music-tracks.json) is empty until the product owner picks the CC0 tracks, and build-music-pack.mjs refuses an empty list; the app hides the option meanwhile (audio.music_library_empty).",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "silero-vad",
+      "name": "Silero VAD",
+      "version": "6.2.3",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/silero-vad/6.2.3/NOTICE-efb4d028641dc9bb.txt",
+          "size": 1528,
+          "sha256": "efb4d028641dc9bb96e2a4cd64b97fcdfa446bdd9653b9eb041a00a16579e12d"
+        },
+        "attribution": "Silero VAD by the Silero Team, MIT licence. silero_vad.onnx v6.2.3, unchanged."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": ["https://components.taalcut.app/silero-vad/6.2.3/silero_vad.onnx"],
+          "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+          "size": 2327524,
+          "install": {
+            "type": "file",
+            "fileName": "silero_vad.onnx",
+            "executable": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "sfx-pack",
+      "name": "Taalcut sound pack (CC0)",
+      "version": "1.0.0",
+      "kind": "model",
+      "tiers": ["minimum", "recommended", "high"],
+      "licence": {
+        "spdx": "CC0-1.0",
+        "notice": {
+          "url": "https://components.taalcut.app/sfx-pack/1.0.0/NOTICE-7a271755206d1e6c.txt",
+          "size": 8817,
+          "sha256": "7a271755206d1e6c680e1caa3c1e0ccbd4c5b84ede3f76dea7f6be4771efc089"
+        },
+        "attribution": "Sounds synthesised for Taalcut (tools/audio-packs/build-sfx-pack.mjs), dedicated to the public domain under CC0 1.0 by the Taalcut contributors."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": ["https://components.taalcut.app/sfx-pack/1.0.0/sfx-pack-1.0.0.tar.zst"],
+          "sha256": "b5dfd368e14d1199ac8d4231f8d68aa24e7bbbbee90ddd0b80e20b95002bf468",
+          "size": 1813612,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 2137415
+          }
+        }
+      ]
+    }
+  ]
+}

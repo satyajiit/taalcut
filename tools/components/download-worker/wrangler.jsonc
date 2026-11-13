@@ -1,0 +1,10 @@
+{
+  "name": "taalcut-components-download",
+  "main": "index.mjs",
+  "compatibility_date": "2026-11-11",
+  "workers_dev": true,
+  "routes": [{ "pattern": "components.taalcut.app/*", "zone_name": "taalcut.app" }],
+  "preview_urls": false,
+  "r2_buckets": [{ "binding": "COMPONENTS", "bucket_name": "taalcut-components" }],
+  "observability": { "enabled": false },
+}

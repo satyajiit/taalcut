@@ -1,0 +1,57 @@
+{
+  "format": "taalcut-model-cassette",
+  "version": 1,
+  "recordedAt": "2026-10-12T16:43:54.834Z",
+  "note": "Gemini wire format from the mock server (test/support/wire.ts geminiStream), not Google: no Google key was used. Requests are pi-ai's real ones for generativelanguage.googleapis.com. Re-record with TAALCUT_RECORD=1.",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+        "match": "POST /v1beta/models/gemini-3.5-flash:streamGenerateContent sha256:dcc54b32344b70b4",
+        "headers": {
+          "content-type": "application/json"
+        },
+        "body": {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "Describe this frame in one sentence."
+                },
+                {
+                  "inlineData": {
+                    "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==",
+                    "mimeType": "image/png"
+                  }
+                }
+              ],
+              "role": "user"
+            }
+          ],
+          "generationConfig": {
+            "temperature": 0,
+            "maxOutputTokens": 65536,
+            "thinkingConfig": {
+              "includeThoughts": true,
+              "thinkingLevel": "LOW"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/event-stream"
+        },
+        "chunks": [
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"A \"}]},\"index\":0}],\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n",
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"red \"}]},\"index\":0}],\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n",
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"square \"}]},\"index\":0}],\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n",
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"on \"}]},\"index\":0}],\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n",
+          "data: {\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"white.\"}]},\"index\":0,\"finishReason\":\"STOP\"}],\"usageMetadata\":{\"promptTokenCount\":1290,\"candidatesTokenCount\":9,\"totalTokenCount\":1299},\"modelVersion\":\"gemini-3.5-flash\",\"responseId\":\"mock-gemini-response\"}\n\n"
+        ]
+      }
+    }
+  ]
+}

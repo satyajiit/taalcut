@@ -1,0 +1,510 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-16 00:05+0700\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: pt-BR\n"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.more"
+msgstr "{count, plural, one {mais #} many {mais #} other {mais #}}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+#, fuzzy
+msgid "notify.mcp.approval.title"
+msgstr "{name} está aguardando você"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.needsAttention.body"
+msgstr "{name} não passou em uma verificação. Abra o Taalcut para ver o que corrigir."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.ready.body"
+msgstr "{name} passou nas verificações e está em Renderizações."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.title"
+msgstr ""
+
+# review: Menu items use Apple’s pt-BR Title Case (Selecionar Tudo, Fechar Janela…), not the glossary’s sentence case, to match the system menus.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.about"
+msgstr "Sobre o {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.resetZoom"
+msgstr "Tamanho Real"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.agent"
+msgstr "Agente"
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+#, fuzzy
+msgid "menu.view.back"
+msgstr "Voltar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.beats"
+msgstr "Batidas"
+
+# review: macOS pt-BR wording “Trazer Todas para a Frente”; confirm against a current macOS Window menu.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.front"
+msgstr "Trazer Todas para a Frente"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.close"
+msgstr "Fechar Janela"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.copy"
+msgstr "Copiar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.jobs"
+msgstr "Não foi possível baixar os modelos de {jobs}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.stopped.everything.computer"
+msgstr "Não foi possível baixar os modelos de que este computador precisa"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.stopped.everything"
+msgstr "Não foi possível baixar os modelos de que este Mac precisa"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.cut"
+msgstr "Recortar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.delete"
+msgstr "Apagar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit"
+msgstr "Editar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.ready.body.computer"
+msgstr "Tudo o que este computador precisa foi baixado. Daqui em diante, os modelos funcionam offline."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.body"
+msgstr "Tudo o que este Mac precisa foi baixado. Daqui em diante, os modelos funcionam offline."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.failed.body"
+msgstr "A exportação de {name} parou. Abra o Taalcut para tentar de novo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.file"
+msgstr "Arquivo"
+
+#. js-lingui-explicit-id
+#: src/main/menu/navigation.ts
+#, fuzzy
+msgid "menu.view.forward"
+msgstr "Avançar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go"
+msgstr "Ir"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help"
+msgstr "Ajuda"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.hide"
+msgstr "Ocultar {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.hideOthers"
+msgstr "Ocultar Outros"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/mcp-messages.ts
+#, fuzzy
+msgid "notify.mcp.approval.body"
+msgstr "Pediu para fazer algo que precisa da sua aprovação. Abra o Taalcut para aprovar ou recusar."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.library"
+msgstr "Biblioteca"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.make"
+msgstr "Criar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.minimize"
+msgstr "Minimizar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.no-fresh-ideas.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.failed.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.paste"
+msgstr "Colar"
+
+# review: macOS pt-BR wording “Colar e Igualar Estilo”; confirm against a current macOS Edit menu.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.pasteAndMatchStyle"
+msgstr "Colar e Igualar Estilo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.quit"
+msgstr "Encerrar {appName}"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.redo"
+msgstr "Refazer"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.reload"
+msgstr "Recarregar"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.reportIssue"
+msgstr "Relatar um problema no GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.requestFeature"
+msgstr "Sugerir um recurso no GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.ideas.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.search"
+msgstr "Busca"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.selectAll"
+msgstr "Selecionar Tudo"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.feedback"
+msgstr "Enviar feedback…"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.services"
+msgstr "Serviços"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.other"
+msgstr "Ajustes › Modelos explica o motivo, com Tentar de novo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.settings"
+msgstr "Ajustes…"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.shots"
+msgstr "Tomadas"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.app.showAll"
+msgstr "Mostrar Tudo"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.sounds"
+msgstr "Efeitos sonoros"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.speech"
+msgstr "Fala"
+
+#. js-lingui-explicit-id
+#: src/main/menu/help-navigation.ts
+#, fuzzy
+msgid "menu.help.github"
+msgstr "Dar estrela ao {appName} no GitHub"
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+#, fuzzy
+msgid "macos.localNetworkUsage"
+msgstr "O Taalcut verifica se este Mac pode ser encontrado na sua rede Wi-Fi para que seu celular possa enviar vídeos. Mesmo se você desativar isso, os celulares ainda conseguem enviar."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.manifest"
+msgstr "O Taalcut não conseguiu verificar a lista de modelos. Atualize o Taalcut e tente de novo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.ready.title"
+msgstr "O Taalcut está pronto"
+
+#. js-lingui-explicit-id
+#: src/main/transfer/local-network-note.ts
+#, fuzzy
+msgid "macos.photoLibraryUsage"
+msgstr "O Taalcut lê as fotos e os vídeos que você escolher do app Fotos da Apple ou de um iPhone ou iPad conectado. Seus originais permanecem inalterados."
+
+#. js-lingui-explicit-id
+#: src/main/voice/microphone-note.ts
+#, fuzzy
+msgid "macos.microphoneUsage"
+msgstr "O Taalcut grava sua voz somente quando você lê a frase de consentimento para criar sua própria voz. A gravação fica neste Mac até você criar essa voz."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.go.templates"
+msgstr "Templates"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.text"
+msgstr "Texto nos quadros"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.network"
+msgstr "A conexão caiu várias vezes. Verifique sua conexão com a internet e tente de novo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.refused"
+msgstr "O servidor de downloads recusou os arquivos. Tente de novo mais tarde."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.different"
+msgstr "O servidor enviou arquivos diferentes dos que o Taalcut espera. Tente de novo mais tarde."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.install"
+msgstr "Eles foram baixados, mas não puderam ser instalados. Tente de novo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/platform-words.ts
+#, fuzzy
+msgid "notify.downloads.reason.space.computer"
+msgstr "Este computador não tem espaço livre suficiente para eles. Libere espaço e tente de novo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.reason.space"
+msgstr "Este Mac não tem espaço livre suficiente para eles. Libere espaço e tente de novo."
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.titles"
+msgstr "Títulos"
+
+# review: Development-only item; shortened to “Ferramentas do Desenvolvedor” (as Chrome pt-BR names it).
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.toggleDevTools"
+msgstr "Ferramentas do Desenvolvedor"
+
+# review: The Electron label is static (does not switch between Entrar/Sair da Tela Cheia), so a neutral toggle wording is used.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.fullScreen"
+msgstr "Ativar/Desativar Tela Cheia"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.sidebar"
+msgstr "Mostrar/Ocultar Barra Lateral"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.edit.undo"
+msgstr "Desfazer"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view"
+msgstr "Visualizar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.body"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window"
+msgstr "Janela"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/downloads-messages.ts
+msgid "notify.downloads.job.writing"
+msgstr "Escrita"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.approval.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.draft.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/product-messages.ts
+msgid "notify.products.published.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.ready.title"
+msgstr "Seu vídeo está pronto"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.needsAttention.title"
+msgstr "Seu vídeo precisa da sua atenção"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/render-messages.ts
+#, fuzzy
+msgid "notify.render.failed.title"
+msgstr "Não foi possível fazer seu vídeo"
+
+# review: macOS pt-BR keeps “Zoom” in the Window menu; confirm.
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.window.zoom"
+msgstr "Zoom"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.zoomIn"
+msgstr "Ampliar"
+
+#. js-lingui-explicit-id
+#: src/main/i18n/menu-messages.ts
+#, fuzzy
+msgid "menu.view.zoomOut"
+msgstr "Reduzir"

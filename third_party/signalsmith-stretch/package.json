@@ -1,0 +1,35 @@
+{
+  "name": "@taalcut-vendor/signalsmith-stretch",
+  "version": "1.3.2",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Signalsmith Stretch 1.3.2 (MIT, with Signalsmith Linear, MIT) as its WebAssembly module factory, vendored for @taalcut/audio's time-stretch. Unchanged code; the Web Audio worklet wrapper is left out. See README.md.",
+  "upstream": {
+    "repository": "https://github.com/Signalsmith-Audio/signalsmith-stretch",
+    "npm": "signalsmith-stretch@1.3.2 (tarball sha256 345e774c8d5f680bc0156d788ff0f3f08d47bd307a8a262a7c0d5d887b230909, integrity sha512-tJqRbwPCoWLSHXwO29UQ75u72IwPsHns3RG+TKzuOAp7OduJiJMzEtz32JEFbPFQcTR7aiKCIVc+/Kzw8bMZUw==, gitHead 222093b4cc13ddb4d07c826bc3c1559326091731)",
+    "fetched": "2026-10-14",
+    "files": {
+      "upstream/SignalsmithStretch.mjs": "SignalsmithStretch.mjs from the npm tarball, unchanged (sha256 97530b11d5bc01015af4cde40d6aa55ff10c40aa1294ca4c8c5762027d517a46)",
+      "upstream/package.json": "package.json from the npm tarball, unchanged",
+      "LICENSE.txt": "LICENSE.txt of signalsmith-stretch at main, MIT, copyright (c) 2022 Geraint Luff / Signalsmith Audio Ltd. (sha256 ee2ef82481ffb445ecdd4b3a4c1f82c0cddb2da8fe39d8e8dc384fffb3e7f06f)",
+      "LICENSE-signalsmith-linear.txt": "LICENSE.txt of Signalsmith-Audio/linear at main, MIT, copyright (c) 2025 Signalsmith Audio (sha256 072b5e9eb5b22880bdf6256324654cf3ce53dba828edb911921121e1be09d9c3); Stretch's header includes signalsmith-linear/stft.h, so the WebAssembly build contains it"
+    },
+    "changes": [
+      "src/signalsmith-stretch.mjs is lines 3-16 of upstream/SignalsmithStretch.mjs (the Emscripten module factory with the WebAssembly binary inlined) followed by `export default SignalsmithStretch;`, with a two-line comment on top. The AudioWorklet wrapper that follows in the npm file is not used: Taalcut stretches offline in a utility process, which has no Web Audio.",
+      "src/signalsmith-stretch.d.mts is new: types for the module's C entry points, written for Taalcut."
+    ]
+  },
+  "files": [
+    "src",
+    "LICENSE.txt",
+    "LICENSE-signalsmith-linear.txt"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/signalsmith-stretch.d.mts",
+      "default": "./src/signalsmith-stretch.mjs"
+    }
+  },
+  "sideEffects": false
+}

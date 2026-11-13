@@ -1,0 +1,71 @@
+{
+  "formatVersion": 0,
+  "maxBytes": 131072,
+  "maxProblems": 50,
+  "maxPathLength": 200,
+  "documentRules": [
+    "notNfc",
+    "tooLarge",
+    "schema"
+  ],
+  "idPaths": [
+    "id",
+    "forkedFrom.id"
+  ],
+  "idPattern": {
+    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+    "flags": ""
+  },
+  "rules": [
+    {
+      "id": "url",
+      "pattern": "[a-z][a-z0-9+.-]*://",
+      "flags": "i"
+    },
+    {
+      "id": "www",
+      "pattern": "\\bwww\\.",
+      "flags": "i"
+    },
+    {
+      "id": "domain",
+      "pattern": "\\b[a-z0-9-]+\\.(?:com|net|org|io|app|co|me|tv|in|ly|gg|xyz|link|site|info|biz|br|es|mx|ar|de|uk)\\b",
+      "flags": "i"
+    },
+    {
+      "id": "email",
+      "pattern": "[^\\s@]+@[^\\s@]+\\.[^\\s@]+",
+      "flags": ""
+    },
+    {
+      "id": "handle",
+      "pattern": "(?:^|\\s)@[\\p{L}\\p{N}_.]{2,}",
+      "flags": "u"
+    },
+    {
+      "id": "phone",
+      "pattern": "(?:\\+?\\d[\\s().-]?){9,}",
+      "flags": ""
+    },
+    {
+      "id": "path",
+      "pattern": "(?:^|[\\s\"'(=])(?:~|\\.{1,2})?/[^\\s/]+/|\\b[A-Za-z]:\\\\|\\\\\\\\[^\\s\\\\]+\\\\",
+      "flags": ""
+    },
+    {
+      "id": "encoded",
+      "pattern": "[A-Za-z0-9+/=_-]{40,}",
+      "flags": ""
+    },
+    {
+      "id": "dataUri",
+      "pattern": "data:[a-z]+/",
+      "flags": "i"
+    },
+    {
+      "id": "control",
+      "pattern": "[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F\\u007F]",
+      "flags": ""
+    }
+  ]
+}

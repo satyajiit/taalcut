@@ -1,0 +1,28 @@
+{
+  "name": "@taalcut/tools",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Tool registry, tool contracts, permission and cost metadata, tool search.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./node": "./src/node.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.3.1",
+    "@modelcontextprotocol/server": "2.3.1",
+    "@taalcut/core": "workspace:*",
+    "twitter-text": "3.1.0",
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "@types/twitter-text": "3.1.10"
+  }
+}

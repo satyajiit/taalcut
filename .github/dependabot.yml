@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    ignore:
+      # The app runs on Electron's Node (Node 24 in Electron 44, and .nvmrc), so the types stay on that major.
+      # Move them with an Electron upgrade that changes it.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+    groups:
+      # core, producer, player and engine ship together and must move together. An upgrade is done by hand
+      # (packages/render/SPEC.md, "Pinned versions"): the engine patch is keyed to its version and has to be
+      # ported, and the frame oracle and goldens re-run. This PR is the notice that a new version is out.
+      hyperframes:
+        patterns: ['@hyperframes/*']

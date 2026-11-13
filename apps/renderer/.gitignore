@@ -1,0 +1,4 @@
+# Playwright output: screenshots, traces and the HTML report. Never committed.
+e2e-artifacts/
+# TanStack Router generator scratch space.
+.tanstack/

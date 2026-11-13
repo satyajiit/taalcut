@@ -1,0 +1,372 @@
+{
+  "about": "Queries for the image-token budget study (IX-E2). The photos are macOS's account pictures (/Library/User Pictures/*/*.heic, 512x512), which are not redistributable and are not in the repository: convert them to <id>.png with `sips -s format png` (lower case, spaces as hyphens) into the folder passed as --images. Queries are written to what each photo shows, one per language.",
+  "subjects": [
+    {
+      "id": "8ball",
+      "queries": {
+        "en": "a black eight ball from pool",
+        "es": "la bola ocho negra del billar",
+        "pt-BR": "a bola oito preta da sinuca",
+        "hi": "बिलियर्ड की काली आठ नंबर गेंद"
+      }
+    },
+    {
+      "id": "baseball",
+      "queries": {
+        "en": "a baseball with red stitches",
+        "es": "una pelota de béisbol",
+        "pt-BR": "uma bola de beisebol",
+        "hi": "बेसबॉल की गेंद"
+      }
+    },
+    {
+      "id": "basketball",
+      "queries": {
+        "en": "an orange basketball",
+        "es": "un balón de baloncesto",
+        "pt-BR": "uma bola de basquete",
+        "hi": "बास्केटबॉल की गेंद"
+      }
+    },
+    {
+      "id": "bowling",
+      "queries": {
+        "en": "a bowling ball hitting the pins",
+        "es": "una bola de boliche derribando los bolos",
+        "pt-BR": "uma bola de boliche derrubando os pinos",
+        "hi": "बॉलिंग की गेंद और पिन"
+      }
+    },
+    {
+      "id": "cactus",
+      "queries": {
+        "en": "a green cactus with spines",
+        "es": "un cactus verde con espinas",
+        "pt-BR": "um cacto verde com espinhos",
+        "hi": "काँटों वाला हरा कैक्टस"
+      }
+    },
+    {
+      "id": "chalk",
+      "queries": {
+        "en": "maths written in chalk on a blackboard",
+        "es": "fórmulas escritas con tiza en la pizarra",
+        "pt-BR": "contas escritas a giz no quadro-negro",
+        "hi": "ब्लैकबोर्ड पर चॉक से लिखा गणित"
+      }
+    },
+    {
+      "id": "dahlia",
+      "queries": {
+        "en": "a pink dahlia flower",
+        "es": "una dalia rosa",
+        "pt-BR": "uma flor de dália rosa",
+        "hi": "गुलाबी डहलिया का फूल"
+      }
+    },
+    {
+      "id": "dandelion",
+      "queries": {
+        "en": "a dandelion seed head",
+        "es": "un diente de león con semillas",
+        "pt-BR": "um dente-de-leão com sementes",
+        "hi": "बीजों वाला सिंहपर्णी का फूल"
+      }
+    },
+    {
+      "id": "drum",
+      "queries": {
+        "en": "a drum with drumsticks",
+        "es": "un tambor con baquetas",
+        "pt-BR": "um tambor com baquetas",
+        "hi": "ड्रमस्टिक के साथ ड्रम"
+      }
+    },
+    {
+      "id": "eagle",
+      "queries": {
+        "en": "a bald eagle",
+        "es": "un águila calva",
+        "pt-BR": "uma águia-careca",
+        "hi": "सफ़ेद सिर वाला गरुड़"
+      }
+    },
+    {
+      "id": "earth",
+      "queries": {
+        "en": "planet earth seen from space",
+        "es": "el planeta tierra visto desde el espacio",
+        "pt-BR": "o planeta Terra visto do espaço",
+        "hi": "अंतरिक्ष से दिखती पृथ्वी"
+      }
+    },
+    {
+      "id": "flower",
+      "queries": {
+        "en": "an orange daisy with a bee",
+        "es": "una margarita naranja con una abeja",
+        "pt-BR": "uma margarida laranja com uma abelha",
+        "hi": "मधुमक्खी के साथ नारंगी फूल"
+      }
+    },
+    {
+      "id": "football",
+      "queries": {
+        "en": "an american football on the grass",
+        "es": "un balón de fútbol americano en el césped",
+        "pt-BR": "uma bola de futebol americano na grama",
+        "hi": "घास पर अमेरिकी फ़ुटबॉल"
+      }
+    },
+    {
+      "id": "fortune-cookie",
+      "queries": {
+        "en": "a fortune cookie",
+        "es": "una galleta de la fortuna",
+        "pt-BR": "um biscoito da sorte",
+        "hi": "फ़ॉर्च्यून कुकी"
+      }
+    },
+    {
+      "id": "gingerbread-man",
+      "queries": {
+        "en": "a gingerbread man cookie",
+        "es": "una galleta de jengibre con forma de muñeco",
+        "pt-BR": "um biscoito de gengibre em forma de boneco",
+        "hi": "जिंजरब्रेड मैन बिस्कुट"
+      }
+    },
+    {
+      "id": "golf",
+      "queries": {
+        "en": "a white golf ball",
+        "es": "una pelota de golf blanca",
+        "pt-BR": "uma bola de golfe branca",
+        "hi": "सफ़ेद गोल्फ़ की गेंद"
+      }
+    },
+    {
+      "id": "guitar",
+      "queries": { "en": "a guitar", "es": "una guitarra", "pt-BR": "uma guitarra", "hi": "गिटार" }
+    },
+    {
+      "id": "hockey",
+      "queries": {
+        "en": "a hockey stick and a puck",
+        "es": "un palo de hockey y un disco",
+        "pt-BR": "um taco de hóquei e um disco",
+        "hi": "हॉकी स्टिक और पक"
+      }
+    },
+    {
+      "id": "leaf",
+      "queries": {
+        "en": "a green leaf with water drops",
+        "es": "una hoja verde con gotas de agua",
+        "pt-BR": "uma folha verde com gotas de água",
+        "hi": "पानी की बूँदों वाली हरी पत्ती"
+      }
+    },
+    {
+      "id": "lightning",
+      "queries": {
+        "en": "lightning in a purple sky",
+        "es": "un rayo en el cielo morado",
+        "pt-BR": "um raio no céu roxo",
+        "hi": "बैंगनी आसमान में बिजली"
+      }
+    },
+    {
+      "id": "lotus",
+      "queries": {
+        "en": "a pink lotus flower",
+        "es": "una flor de loto rosa",
+        "pt-BR": "uma flor de lótus rosa",
+        "hi": "गुलाबी कमल का फूल"
+      }
+    },
+    {
+      "id": "medal",
+      "queries": {
+        "en": "a gold medal for first place",
+        "es": "una medalla de oro del primer lugar",
+        "pt-BR": "uma medalha de ouro de primeiro lugar",
+        "hi": "पहले स्थान का स्वर्ण पदक"
+      }
+    },
+    {
+      "id": "nest",
+      "queries": {
+        "en": "blue eggs in a bird's nest",
+        "es": "huevos azules en un nido",
+        "pt-BR": "ovos azuis num ninho",
+        "hi": "घोंसले में नीले अंडे"
+      }
+    },
+    {
+      "id": "owl",
+      "queries": {
+        "en": "an owl with yellow eyes",
+        "es": "un búho de ojos amarillos",
+        "pt-BR": "uma coruja de olhos amarelos",
+        "hi": "पीली आँखों वाला उल्लू"
+      }
+    },
+    {
+      "id": "parrot",
+      "queries": {
+        "en": "a red macaw parrot",
+        "es": "un guacamayo rojo",
+        "pt-BR": "uma arara vermelha",
+        "hi": "लाल मकाओ तोता"
+      }
+    },
+    {
+      "id": "penguin",
+      "queries": { "en": "a penguin", "es": "un pingüino", "pt-BR": "um pinguim", "hi": "एक पेंगुइन" }
+    },
+    {
+      "id": "piano",
+      "queries": {
+        "en": "piano keys",
+        "es": "las teclas de un piano",
+        "pt-BR": "teclas de piano",
+        "hi": "पियानो की कुंजियाँ"
+      }
+    },
+    {
+      "id": "poppy",
+      "queries": {
+        "en": "an orange poppy",
+        "es": "una amapola naranja",
+        "pt-BR": "uma papoula laranja",
+        "hi": "नारंगी पोस्ता का फूल"
+      }
+    },
+    {
+      "id": "red-rose",
+      "queries": {
+        "en": "a red rose",
+        "es": "una rosa roja",
+        "pt-BR": "uma rosa vermelha",
+        "hi": "लाल गुलाब"
+      }
+    },
+    {
+      "id": "sandollar",
+      "queries": {
+        "en": "a sand dollar on the beach",
+        "es": "una galleta de mar en la arena",
+        "pt-BR": "uma bolacha-da-praia na areia",
+        "hi": "रेत पर सैंड डॉलर"
+      }
+    },
+    {
+      "id": "smack",
+      "queries": {
+        "en": "a pink lipstick kiss mark",
+        "es": "la marca de un beso con pintalabios",
+        "pt-BR": "marca de beijo de batom rosa",
+        "hi": "गुलाबी लिपस्टिक का चुंबन निशान"
+      }
+    },
+    {
+      "id": "snowflake",
+      "queries": {
+        "en": "an ice crystal snowflake",
+        "es": "un copo de nieve",
+        "pt-BR": "um floco de neve",
+        "hi": "हिमकण"
+      }
+    },
+    {
+      "id": "soccer",
+      "queries": {
+        "en": "a soccer ball",
+        "es": "un balón de fútbol",
+        "pt-BR": "uma bola de futebol",
+        "hi": "फ़ुटबॉल"
+      }
+    },
+    {
+      "id": "sunflower",
+      "queries": { "en": "a sunflower", "es": "un girasol", "pt-BR": "um girassol", "hi": "सूरजमुखी का फूल" }
+    },
+    {
+      "id": "target",
+      "queries": {
+        "en": "an archery target with an arrow in the bullseye",
+        "es": "una diana de tiro con arco con una flecha en el centro",
+        "pt-BR": "um alvo de tiro com arco com uma flecha no centro",
+        "hi": "तीरंदाज़ी का निशाना जिसके बीच में तीर लगा है"
+      }
+    },
+    {
+      "id": "tennis",
+      "queries": {
+        "en": "a yellow tennis ball",
+        "es": "una pelota de tenis amarilla",
+        "pt-BR": "uma bola de tênis amarela",
+        "hi": "पीली टेनिस बॉल"
+      }
+    },
+    {
+      "id": "turntable",
+      "queries": {
+        "en": "a vinyl record on a turntable",
+        "es": "un disco de vinilo en un tocadiscos",
+        "pt-BR": "um disco de vinil na vitrola",
+        "hi": "टर्नटेबल पर विनाइल रिकॉर्ड"
+      }
+    },
+    {
+      "id": "violin",
+      "queries": { "en": "a violin", "es": "un violín", "pt-BR": "um violino", "hi": "वायलिन" }
+    },
+    {
+      "id": "whiterose",
+      "queries": {
+        "en": "a pale peach rose",
+        "es": "una rosa color melocotón",
+        "pt-BR": "uma rosa cor de pêssego",
+        "hi": "हल्के आड़ू रंग का गुलाब"
+      }
+    },
+    {
+      "id": "yellow-daisy",
+      "queries": {
+        "en": "a yellow flower with a dark centre",
+        "es": "una flor amarilla con el centro oscuro",
+        "pt-BR": "uma flor amarela de miolo escuro",
+        "hi": "गहरे बीच वाला पीला फूल"
+      }
+    },
+    {
+      "id": "yin-yang",
+      "queries": {
+        "en": "a yin yang symbol",
+        "es": "el símbolo del yin y el yang",
+        "pt-BR": "o símbolo do yin-yang",
+        "hi": "यिन यांग का प्रतीक"
+      }
+    },
+    {
+      "id": "zebra",
+      "queries": {
+        "en": "a zebra in the grass",
+        "es": "una cebra en la hierba",
+        "pt-BR": "uma zebra no capim",
+        "hi": "घास में ज़ेबरा"
+      }
+    },
+    {
+      "id": "zen",
+      "queries": {
+        "en": "a spiral raked in sand",
+        "es": "una espiral dibujada en la arena",
+        "pt-BR": "uma espiral desenhada na areia",
+        "hi": "रेत में बना सर्पिल"
+      }
+    }
+  ]
+}

@@ -1,0 +1,435 @@
+{
+ "caseId": "multi-this-half-crossfade",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJACH0VCZYASSHCTBB3E3B",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "Sq4tPu3gvQ91dg2sOS2t3pZK197v9Fyy",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "Sq4tPu3gvQ91dg2sOS2t3pZK197v9Fyy",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11713,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11769,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604268577,
+     "responseId": "chatcmpl-1542c995236b4d159bdd13a1cb854c9b",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10698
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "Sq4tPu3gvQ91dg2sOS2t3pZK197v9Fyy",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11713,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11769,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJAPZCPA8X5P604KPBXYV8",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "QjOYzRRJcEde6OJShndHOBDgaA2rpYfe",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "1",
+        "speed": 0.5,
+        "fit": "media",
+        "audio": "keepPitch"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "QjOYzRRJcEde6OJShndHOBDgaA2rpYfe",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "1",
+        "speed": 0.5,
+        "fit": "media",
+        "audio": "keepPitch"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 128,
+      "cacheRead": 11713,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13456,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604279277,
+     "responseId": "chatcmpl-6e6e3f31c60449eea490209e8e39006a",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4569
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "QjOYzRRJcEde6OJShndHOBDgaA2rpYfe",
+     "name": "timeline_setSpeed",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "1",
+      "speed": 0.5,
+      "fit": "media",
+      "audio": "keepPitch"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 128,
+    "cachedInputTokens": 11713,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13456,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJAVEBX53NMP1GDJ7QE46K",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "uCBMt9xzcx5Wi2JiM3roTea0Fcvl7OUh",
+       "name": "timeline_setTransition",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "1",
+        "kind": "dissolve",
+        "durationSeconds": 0.5
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "uCBMt9xzcx5Wi2JiM3roTea0Fcvl7OUh",
+       "name": "timeline_setTransition",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "1",
+        "kind": "dissolve",
+        "durationSeconds": 0.5
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 171,
+      "output": 117,
+      "cacheRead": 13328,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13616,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604283852,
+     "responseId": "chatcmpl-91626dd6c9a04f64a4f44e1081af8141",
+     "rawStopReason": "tool_calls",
+     "durationMs": 2791
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "uCBMt9xzcx5Wi2JiM3roTea0Fcvl7OUh",
+     "name": "timeline_setTransition",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "1",
+      "kind": "dissolve",
+      "durationSeconds": 0.5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 171,
+    "outputTokens": 117,
+    "cachedInputTokens": 13328,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13616,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJAY5QK5AQ98DGXR1Q5PEG",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 1 is now at half speed with a dissolve crossfade into clip 2."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 1 is now at half speed with a dissolve crossfade into clip 2."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 183,
+      "output": 18,
+      "cacheRead": 13499,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13700,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604286649,
+     "responseId": "chatcmpl-67b60bcacfcd4ad8b0769c54f4c25136",
+     "rawStopReason": "stop",
+     "durationMs": 706
+    }
+   },
+   "text": "Clip 1 is now at half speed with a dissolve crossfade into clip 2.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 183,
+    "outputTokens": 18,
+    "cachedInputTokens": 13499,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13700,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJAYVVQF3ZCXKG5JJZF92K",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "4682OQwuS6Ln84J2TNi7Zi6AGbLDseCN",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "4682OQwuS6Ln84J2TNi7Zi6AGbLDseCN",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13776,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13831,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604287357,
+     "responseId": "chatcmpl-fb0cba3270b941df8f02dccead72e9bd",
+     "rawStopReason": "tool_calls",
+     "durationMs": 13278
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "4682OQwuS6Ln84J2TNi7Zi6AGbLDseCN",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13776,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13831,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

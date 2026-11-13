@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Feature request
+description: A change you want in Taalcut.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a question or a half-formed idea, use Discussions:
+        https://github.com/satyajiit/taalcut/discussions
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What you cannot do today, and who it affects.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What you want the app to do.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Other ways you considered, if any.
+    validations:
+      required: false

@@ -1,0 +1,136 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+# Taalcut secret scan. Schema: gitleaks 8.30.1.
+# https://github.com/gitleaks/gitleaks/blob/v8.30.1/README.md#configuration
+title = "Taalcut"
+
+[extend]
+# Without this, a config file replaces the built-in rules and the scan
+# would not look for secrets. useDefault keeps those rules.
+useDefault = true
+
+# Each entry is a proven false positive from the 2026-10-14 full-history scan.
+# gitleaks 8.25+ rejects an allowlist table with no commits, paths, regexes, or stopwords.
+
+[[allowlists]]
+description = "Test fixtures only. The values are made-up keys, jwt.io-style samples, or scrubber inputs, not live credentials."
+paths = [
+  # Sample JWT and a fake api key the debug-bundle test expects to refuse.
+  '''apps/desktop/test/debug-bundle-scan\.test\.ts$''',
+  # Placeholder hex token for the preview-protocol unit test.
+  '''apps/desktop/test/preview-protocol\.test\.ts$''',
+  # sk-test / sk-bad strings passed through the accounts fake.
+  '''apps/desktop/test/accounts\.test\.ts$''',
+  # projectKey is a hex fixture id in a telemetry event, not a credential.
+  '''packages/core/test/privacy-telemetry\.test\.ts$''',
+  # Comment in the file: a made-up Gemini key in Google's shape, for the scrubber.
+  '''packages/models/test/support/scenarios\.ts$''',
+  # Synthetic PEM and the documented AWS example key, built in the secret-scrubber test.
+  '''packages/library/test/secrets\.test\.ts$''',
+  # Cassette scrubber fixtures (fake JWT and api-key query strings).
+  '''packages/models/test/cassette\.test\.ts$''',
+  # List of fake secrets the local-endpoint test asserts are kept out of errors.
+  '''packages/models/test/local-endpoints\.test\.ts$''',
+  # sk-test / sk-bad keys in the renderer fake-backend test.
+  '''apps/renderer/test/fake-backend\.test\.ts$''',
+  # GOOD_KEY / BAD_KEY constants for the api-key validation test.
+  '''packages/models/test/api-keys\.test\.ts$''',
+  # Fixture key for the classifier test. source is the test, not a provider.
+  '''packages/models/test/classifier\.test\.ts$''',
+  # Prompt test builds an api_key finding with source 'test'.
+  '''packages/agent/test/prompt\.test\.ts$''',
+  # Fake OAuth access token and api key for the credential broker tests.
+  '''packages/models/test/credentials\.test\.ts$''',
+  # Executor safety table of fake aws and jwt strings.
+  '''packages/tools/test/executor-safety\.test\.ts$''',
+  # Synthetic JWTs the error-retry test rotates through.
+  '''packages/models/test/errors\.test\.ts$''',
+  # Added after the 2026-10-16 full-history scan of the Phase 3 tree:
+  # A ULID-shaped captureKey for the consent recorder fake.
+  '''packages/ui/test/media-voice-consent\.test\.tsx$''',
+  # itemKey is a base32 device-item id ('QRSTUVWXYZ234567'), not a credential.
+  '''packages/library/test/import/usb-import\.test\.ts$''',
+  '''packages/core/test/p3-basics\.test\.ts$''',
+  '''packages/core/test/p3-events\.test\.ts$''',
+  # A made-up ElevenLabs key (sequential hex) and the provider's error echoing it.
+  '''packages/models/test/support/elevenlabs-wire\.ts$''',
+  '''packages/models/test/fixtures/elevenlabs/errors\.json$''',
+  # Placeholder Pexels and TypeSafe keys ('pexels-key-0123…', 'ts-key-0123…').
+  '''packages/models/test/stock-keys\.test\.ts$''',
+  '''packages/models/test/router-pin\.test\.ts$''',
+]
+
+[[allowlists]]
+description = "The C2PA SDK's published ES256 test signing key (FOR TESTING_ONLY), byte-identical to contentauth/c2pa-rs c2pa-v0.91.2 sdk/tests/fixtures/certs/es256.pem; its sha256 is pinned in the folder's README.md."
+paths = ['''native/c2pa-sidecar/certs/es256\.pem$''']
+
+[[allowlists]]
+description = "generic-api-key matches stageKey: PHASE2_STAGES.normalising. That is a progress stage id, not a credential."
+regexTarget = "line"
+regexes = ['''stageKey: PHASE2_STAGES\.normalising''']
+
+# Verified during the 2026-11-11 publication audit. Each exemption requires
+# both the named fixture/source path and the exact benign line shape.
+# Scope these to the matching rule: global path allowlists skip whole files.
+
+[[allowlists]]
+description = "Earshot golden kit keys are 40-hex identifiers for rendered audio fixtures, not credentials."
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(?:^|/)tools/earshot-parity/fixtures/kits/(?:calm|crisp|minimal|launch)/kit\.lock\.json$''']
+regexTarget = "line"
+regexes = [
+  '''^\s*"key": "[a-f0-9]{40}",?\s*$''',
+]
+
+[[allowlists]]
+description = "A fixed hexadecimal capability used only by the in-process preview protocol test."
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(?:^|/)apps/desktop/test/preview\-workspace\.test\.ts$''']
+regexTarget = "line"
+regexes = [
+  '''^\s*const\ TOKEN\ =\ 'fedcba9876543210fedcba9876543210';\s*$''',
+]
+
+[[allowlists]]
+description = "A synthetic environment-token string sent to the local crash-ingest fake to verify redaction."
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(?:^|/)apps/desktop/test/crash\-reporter\.test\.ts$''']
+regexTarget = "line"
+regexes = [
+  '''^\s*const\ ENV_TOKEN\ =\ 'tok_planted_in_the_environment_7f3e';\s*$''',
+]
+
+[[allowlists]]
+description = "The dotenv parser fixture uses a synthetic secret containing equals signs and verifies that it survives parsing."
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(?:^|/)tools/components/hosting/helpers\.test\.mjs$''']
+regexTarget = "line"
+regexes = [
+  '''^\s*'R2_SECRET_ACCESS_KEY=s3cr3t=with=equals',\s*$''',
+  '''^\s*assert\.equal\(config\.secretAccessKey,\ 's3cr3t=with=equals'\);\s*$''',
+]
+
+[[allowlists]]
+description = "A historical keyboard shortcut declaration is a key name, not a secret."
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(?:^|/)apps/renderer/src/features/library/clip/clip-timeline\.tsx$''']
+regexTarget = "line"
+regexes = [
+  '''^\s*const PREVIOUS_KEYS = 'Shift\+ArrowLeft';\s*$''',
+]
+
+[[allowlists]]
+description = "The exact documented Ed25519 public update-verification key; the private signing key remains in the macOS Keychain."
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(?:^|/)docs/release-readiness\.md$''']
+regexTarget = "secret"
+regexes = [
+  '''^FEiRgAnqvwO2AcIb9lfQOsqfkHLjKDI5vo1hSKuJVp4=$''',
+]

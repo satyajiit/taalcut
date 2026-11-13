@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="186" height="35" viewBox="0 0 186 35" role="img" aria-label="WORKS ON: MY MAC">
+  <title>WORKS ON: MY MAC</title>
+  <rect width="102" height="35" fill="#4a3396"/>
+  <rect x="102" width="84" height="35" fill="#6347b8"/>
+  <g font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11">
+    <text x="14" y="22" fill="#fffdf9" font-weight="400" textLength="74" lengthAdjust="spacing">WORKS ON</text>
+    <text x="116" y="22" fill="#fffdf9" font-weight="700" textLength="56" lengthAdjust="spacing">MY MAC</text>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+{
+  "reelId": "sample-hi-2997",
+  "synthetic": true,
+  "note": "Synthetic sample, not a real reel. Hindi and English speech at 30000/1001.",
+  "source": {
+    "label": "synthetic-bilingual-talk",
+    "durationFrames": 900,
+    "width": 1080,
+    "height": 1920
+  },
+  "frameRate": {
+    "numerator": 30000,
+    "denominator": 1001
+  },
+  "cuts": [90, 240, 480, 720],
+  "beats": [
+    { "frame": 0, "kind": "downbeat" },
+    { "frame": 60, "kind": "beat" }
+  ],
+  "slots": [
+    { "id": "hook", "startFrame": 0, "endFrame": 90, "intent": "hook" },
+    { "id": "body", "startFrame": 90, "endFrame": 900, "intent": "explanation" }
+  ],
+  "overlays": [
+    {
+      "id": "caption",
+      "text": "Synthetic caption",
+      "startFrame": 30,
+      "endFrame": 120,
+      "position": { "x": 0.08, "y": 0.72, "width": 0.84, "height": 0.12 }
+    }
+  ],
+  "transitions": [{ "atFrame": 90, "kind": "cut" }],
+  "audio": { "type": "speech" },
+  "languages": ["hi", "en"]
+}

@@ -1,0 +1,495 @@
+{
+ "caseId": "multi-delete-mono",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJBBVTN6X99GQ4MJYAG71J",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "k5HwXVlLhWPYJg6bEvig2vtDy4tlePKD",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "k5HwXVlLhWPYJg6bEvig2vtDy4tlePKD",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10258,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10314,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604300666,
+     "responseId": "chatcmpl-f9a3aa22ce3f4f69a8866f9a922ead82",
+     "rawStopReason": "tool_calls",
+     "durationMs": 8993
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "k5HwXVlLhWPYJg6bEvig2vtDy4tlePKD",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10258,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10314,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJBMMXPWJYSAYX4M3GBG4J",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I found clip 2 is the coffee shot and clip 1 is the bike clip. I'll delete clip 2 and apply a black and white look to clip 1.\n\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "OzWTYBUeQ1PiAyLHDSRF8rn674SAaNoG",
+       "name": "timeline_deleteClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "2",
+        "revision": 3,
+        "mode": "ripple"
+       }
+      }
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "avYORVhbludimP7l1tZ5ZZEi2Vt0LMQ7",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clips": [
+         "this"
+        ],
+        "look": "mono",
+        "lookStrength": 1,
+        "reset": false
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I found clip 2 is the coffee shot and clip 1 is the bike clip. I'll delete clip 2 and apply a black and white look to clip 1.\n\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "OzWTYBUeQ1PiAyLHDSRF8rn674SAaNoG",
+       "name": "timeline_deleteClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "2",
+        "revision": 3,
+        "mode": "ripple"
+       }
+      },
+      {
+       "type": "toolCall",
+       "id": "avYORVhbludimP7l1tZ5ZZEi2Vt0LMQ7",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clips": [
+         "this"
+        ],
+        "look": "mono",
+        "lookStrength": 1,
+        "reset": false
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 279,
+      "cacheRead": 10258,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12152,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604309662,
+     "responseId": "chatcmpl-8eaed73365474d4eb0b5b667c6455271",
+     "rawStopReason": "tool_calls",
+     "durationMs": 7933
+    }
+   },
+   "text": "I found clip 2 is the coffee shot and clip 1 is the bike clip. I'll delete clip 2 and apply a black and white look to clip 1.\n\n\n",
+   "toolCalls": [
+    {
+     "id": "OzWTYBUeQ1PiAyLHDSRF8rn674SAaNoG",
+     "name": "timeline_deleteClip",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "2",
+      "revision": 3,
+      "mode": "ripple"
+     }
+    },
+    {
+     "id": "avYORVhbludimP7l1tZ5ZZEi2Vt0LMQ7",
+     "name": "timeline_setGrade",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clips": [
+       "this"
+      ],
+      "look": "mono",
+      "lookStrength": 1,
+      "reset": false
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 279,
+    "cachedInputTokens": 10258,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12152,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJBWD4KD1HYA3GB8QGH3S0",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "6oUPqRT8L2OBgcKlCbOSfU6rm69UcP0H",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clips": [
+         1
+        ],
+        "look": "mono",
+        "lookStrength": 1,
+        "reset": false
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "6oUPqRT8L2OBgcKlCbOSfU6rm69UcP0H",
+       "name": "timeline_setGrade",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clips": [
+         1
+        ],
+        "look": "mono",
+        "lookStrength": 1,
+        "reset": false
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 375,
+      "output": 128,
+      "cacheRead": 11873,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12376,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604317605,
+     "responseId": "chatcmpl-9a67d4c002c14234ad4bbf33ca8bad30",
+     "rawStopReason": "tool_calls",
+     "durationMs": 2982
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "6oUPqRT8L2OBgcKlCbOSfU6rm69UcP0H",
+     "name": "timeline_setGrade",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clips": [
+       1
+      ],
+      "look": "mono",
+      "lookStrength": 1,
+      "reset": false
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 375,
+    "outputTokens": 128,
+    "cachedInputTokens": 11873,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12376,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJBZAFJK7NJXYX8FBWFFMW",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 2 is gone and clip 1 is now black and white."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 2 is gone and clip 1 is now black and white."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 172,
+      "output": 15,
+      "cacheRead": 12248,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12435,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604320593,
+     "responseId": "chatcmpl-ab4856ba0c21473daa4dd0ecf41af725",
+     "rawStopReason": "stop",
+     "durationMs": 647
+    }
+   },
+   "text": "Clip 2 is gone and clip 1 is now black and white.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 172,
+    "outputTokens": 15,
+    "cachedInputTokens": 12248,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12435,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJBZYS7SRW9G408AE3BRQN",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "eqNxy3WOpEL1eGuWUs8YTXSsz57ywyE9",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "eqNxy3WOpEL1eGuWUs8YTXSsz57ywyE9",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 5
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 12512,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12567,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604321242,
+     "responseId": "chatcmpl-71026908a1764a969199f156c33ca40a",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11977
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "eqNxy3WOpEL1eGuWUs8YTXSsz57ywyE9",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 12512,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12567,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

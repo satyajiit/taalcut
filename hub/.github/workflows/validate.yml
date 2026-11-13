@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+# Pull requests only. contents: read. No secrets.
+# The validator, its schema and its rules come from the base branch, never from the pull request: a pull
+# request that edits scripts/ or schema/ cannot pass its own templates. It is checked out in `base/`, and the
+# pull request's files in `pr/`.
+name: validate
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the pull request
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          path: pr
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout the validator from the base branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+      - name: Install
+        working-directory: base
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: List changes
+        working-directory: pr
+        # --no-renames: a renamed template shows as a deletion and an addition, so the deletion is refused too.
+        run: git diff --name-only --no-renames --diff-filter=ACDMRTUXB "origin/${GITHUB_BASE_REF}...HEAD" > "$RUNNER_TEMP/changed.txt"
+      - name: Validate
+        run: node base/scripts/validate.mjs --root pr --changed-list "$RUNNER_TEMP/changed.txt" --base "origin/${GITHUB_BASE_REF}"

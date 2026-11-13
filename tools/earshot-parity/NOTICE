@@ -1,0 +1,25 @@
+earshot parity fixtures (tools/earshot-parity), third-party credits
+
+The fixtures under fixtures/ are build-time test data for @taalcut/audio. They are not part of the app.
+
+earshot
+  Every result under fixtures/ (cli/, intermediates/, kits/) is the output of earshot 0.4.0
+  (https://github.com/Leonxlnx/earshot, commit ff41f0788ae56896fd59879ab03858d223c06a53), and the 14 clips in
+  fixtures/clips/sfx are renders of its sound bank. Copyright (c) 2026 Leon Lin, MIT licence: see
+  third_party/earshot/LICENSE.
+
+Models whose outputs are recorded
+  - CLAP, laion/larger_clap_general at revision 16c8cc3159a3c8a31e8ff5ef1f66b0d9ab3667db, by LAION. Apache License
+    2.0. The fixtures hold embeddings and scores it computed, not its weights.
+  - AST, MIT/ast-finetuned-audioset-10-10-0.4593 at revision f826b80d28226b62986cc218e5cec390b1096902, by Yuan
+    Gong, Yu-An Chung and James Glass (MIT CSAIL). BSD 3-Clause License. The fixtures hold logits, probabilities
+    and front-end features it computed, not its weights.
+
+AudioSet class names
+  fixtures/intermediates/ast.json (`labels`) holds the 527 class names of AudioSet, as the AST model's id2label
+  lists them, and fixtures/cli/describe.json and fixtures/cli/timeline.json name some of them in earshot's results.
+  The names come from AudioSet's class_labels_indices.csv (https://research.google.com/audioset/), by Google Inc.,
+  licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0,
+  https://creativecommons.org/licenses/by/4.0/). They are used unchanged, as label names only. The AudioSet data is
+  provided as is, without warranties of any kind (CC BY 4.0, section 5). Nothing from the AudioSet ontology file
+  (ontology.json, CC BY-SA 4.0) is included: no class descriptions, no hierarchy.

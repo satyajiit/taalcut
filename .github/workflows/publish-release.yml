@@ -1,0 +1,145 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Publish release
+
+# Publishes a green release.yml run on a public channel (P3-B9, docs/release.md "Workflows"): re-checks the
+# signatures and Gatekeeper's verdict, creates v<version> (zip, blockmap, DMG, SHA256SUMS, notes), points the
+# channel's yml at it at the first rollout stage, keeps a history entry for a later pull, replaces the fixed-name
+# DMG, then rebuilds the website so the download page shows the new SHA-256. Manual only, behind the `release`
+# environment (required reviewer: the PO). The logic is scripts/rollout (tested by release-workflows.test.ts);
+# inputs reach it through the environment, never pasted into the script.
+on:
+  workflow_dispatch:
+    inputs:
+      run-id:
+        description: The green release.yml run whose artefacts are published
+        required: true
+        type: string
+      channel:
+        description: Public channel
+        required: true
+        type: choice
+        options: [beta, stable]
+      version:
+        description: The version that run built (1.3.0-beta.4 on beta, 1.3.0 on stable); release-notes/<version>/ must exist
+        required: true
+        type: string
+      stage:
+        description: First rollout stage in percent (10, 50 or 100)
+        required: true
+        default: '10'
+        type: choice
+        options: ['10', '50', '100']
+
+concurrency:
+  group: release-channels
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  publish:
+    name: publish on the channel
+    # spctl and stapler need macOS.
+    runs-on: macos-26
+    timeout-minutes: 30
+    environment: release
+    permissions:
+      contents: write
+      # Reads the release.yml run's artefacts and dispatches website.yml.
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RUN_ID: ${{ inputs.run-id }}
+      CHANNEL: ${{ inputs.channel }}
+      VERSION: ${{ inputs.version }}
+      STAGE: ${{ inputs.stage }}
+    steps:
+      - name: Resolve the successful build's source commit
+        id: source
+        run: |
+          set -euo pipefail
+          [[ "$RUN_ID" =~ ^[0-9]+$ ]] || { echo "::error::run-id must be a number"; exit 1; }
+          sha=$(gh run view "$RUN_ID" --repo "$GITHUB_REPOSITORY" --json workflowName,conclusion,headBranch,headSha \
+            --jq 'select(.workflowName == "Release" and .conclusion == "success" and .headBranch == "main") | .headSha')
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::run $RUN_ID is not a green Release run from main"; exit 1; }
+          echo "commit=$sha" >> "$GITHUB_OUTPUT"
+          echo "Release run $RUN_ID built $sha"
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Release notes and publisher code must come from the same source as the selected binaries.
+          ref: ${{ steps.source.outputs.commit }}
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+
+      - name: Check the inputs
+        run: |
+          set -euo pipefail
+          [[ "$RUN_ID" =~ ^[0-9]+$ ]] || { echo "::error::run-id must be a number"; exit 1; }
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-beta\.[0-9]+)?$ ]] || { echo "::error::bad version"; exit 1; }
+          [ -f "release-notes/$VERSION/en.md" ] || { echo "::error::release-notes/$VERSION/en.md is missing"; exit 1; }
+
+      - name: Download the run's artefacts
+        run: |
+          set -euo pipefail
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --dir "$RUNNER_TEMP/run"
+          mkdir -p "$RUNNER_TEMP/artifacts"
+          find "$RUNNER_TEMP/run" -type f \( -name '*.dmg' -o -name '*-arm64-mac.zip' -o -name '*.blockmap' \
+            -o -name 'ffmpeg-*-source-*.tar.zst' -o -name 'ffmpeg-source-distribution.json' \) \
+            -exec mv {} "$RUNNER_TEMP/artifacts/" \;
+          ls -l "$RUNNER_TEMP/artifacts"
+
+      - name: Re-check signatures and Gatekeeper
+        run: |
+          set -euo pipefail
+          dir="$RUNNER_TEMP/artifacts"
+          dmg="$dir/Taalcut-$VERSION-arm64.dmg"
+          zip="$dir/Taalcut-$VERSION-arm64-mac.zip"
+          spctl -a -vv -t open --context context:primary-signature "$dmg"
+          xcrun stapler validate "$dmg"
+          unpacked="$RUNNER_TEMP/unpacked"
+          mkdir -p "$unpacked"
+          ditto -x -k "$zip" "$unpacked"
+          codesign --verify --deep --strict "$unpacked/Taalcut.app"
+          spctl -a -vv "$unpacked/Taalcut.app"
+          version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$unpacked/Taalcut.app/Contents/Info.plist")
+          [ "$version" = "$VERSION" ] || { echo "::error::the zip holds $version, not $VERSION"; exit 1; }
+          # Source provenance must match both the selected checkout and the signed app before any tag is made.
+          cmp tools/ffmpeg/source-distribution.json "$dir/ffmpeg-source-distribution.json"
+          cmp "$dir/ffmpeg-source-distribution.json" "$unpacked/Taalcut.app/Contents/Resources/bin/source-distribution.json"
+          node --input-type=module -e '
+            import { assertSourceBuild, sourceArtifacts } from "./scripts/rollout/source-artifacts.ts";
+            sourceArtifacts(`${process.env.RUNNER_TEMP}/artifacts`, true);
+            assertSourceBuild(`${process.env.RUNNER_TEMP}/artifacts/ffmpeg-source-distribution.json`,
+              `${process.env.RUNNER_TEMP}/unpacked/Taalcut.app/Contents/Resources/bin/BUILDINFO.json`, "darwin-arm64");
+          '
+
+      - name: Publish
+        env:
+          RELEASE_COMMIT: ${{ steps.source.outputs.commit }}
+          # Signs the channel files (security review SB-19); only this step sees it.
+          TAALCUT_UPDATE_SIGNING_KEY: ${{ secrets.TAALCUT_UPDATE_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          # Calling the provenance guard explicitly also refuses old builds that predate this check.
+          node --input-type=module -e '
+            import { ensureVersionTag } from "./scripts/rollout/release-provenance.ts";
+            import { runGh } from "./scripts/rollout/release-store.ts";
+            await ensureVersionTag(process.env.GITHUB_REPOSITORY, `v${process.env.VERSION}`, process.env.RELEASE_COMMIT, runGh);
+          '
+          node scripts/release.mjs publish --repo "$GITHUB_REPOSITORY" --channel "$CHANNEL" --version "$VERSION" \
+            --commit "$RELEASE_COMMIT" \
+            --artifacts "$RUNNER_TEMP/artifacts" --notes "release-notes/$VERSION" --stage "$STAGE" \
+            --download-base "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download" \
+            --repo-url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+
+      # The fixed-name DMG changed: the download page prints its SHA-256 (website.yml reads SHA256SUMS).
+      - name: Rebuild the website
+        run: gh workflow run website.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"

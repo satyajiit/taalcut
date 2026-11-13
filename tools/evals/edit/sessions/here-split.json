@@ -1,0 +1,506 @@
+{
+ "caseId": "here-split",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJG2YMWXVWKSAZ4P1MYH6W",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "kozZcM6eBONpV7qshNtrisCo9H67WhpB",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 9
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "kozZcM6eBONpV7qshNtrisCo9H67WhpB",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 9
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11504,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11560,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604455381,
+     "responseId": "chatcmpl-588a88d7292b4e57ae5023fc7bd9cbbd",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10679
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "kozZcM6eBONpV7qshNtrisCo9H67WhpB",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 9
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11504,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11560,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJGDCEZMAB4G46Z9W9JJ28",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Splitting clip 5 at 9 seconds will fall outside its current range (8.5–10), so I'll split clip 5 at its end (10 seconds) instead.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "YZPFCVlwIhd1A2B3wOZpWRrWQPdJKkRq",
+       "name": "timeline_splitClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "5",
+        "atSeconds": 10
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Splitting clip 5 at 9 seconds will fall outside its current range (8.5–10), so I'll split clip 5 at its end (10 seconds) instead.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "YZPFCVlwIhd1A2B3wOZpWRrWQPdJKkRq",
+       "name": "timeline_splitClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "5",
+        "atSeconds": 10
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1612,
+      "output": 143,
+      "cacheRead": 11504,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13259,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604466063,
+     "responseId": "chatcmpl-9f19905b43f245d69b433ae6d3402d1e",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4923
+    }
+   },
+   "text": "Splitting clip 5 at 9 seconds will fall outside its current range (8.5–10), so I'll split clip 5 at its end (10 seconds) instead.\n\n",
+   "toolCalls": [
+    {
+     "id": "YZPFCVlwIhd1A2B3wOZpWRrWQPdJKkRq",
+     "name": "timeline_splitClip",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "5",
+      "atSeconds": 10
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1612,
+    "outputTokens": 143,
+    "cachedInputTokens": 11504,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13259,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJGJ6D3EK2TS3KMGV2YJXW",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I’ll split clip 5 at its middle (9.25s), which is inside the clip and away from the ends.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "h3Niw4x0D5YyLucYi5DExMKhTZuzYk0C",
+       "name": "timeline_splitClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "5",
+        "atSeconds": 9.25
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I’ll split clip 5 at its middle (9.25s), which is inside the clip and away from the ends.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "h3Niw4x0D5YyLucYi5DExMKhTZuzYk0C",
+       "name": "timeline_splitClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "5",
+        "atSeconds": 9.25
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 216,
+      "output": 132,
+      "cacheRead": 13116,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13464,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604470991,
+     "responseId": "chatcmpl-186b72e6d3384c789a44eee9b4484548",
+     "rawStopReason": "tool_calls",
+     "durationMs": 3128
+    }
+   },
+   "text": "I’ll split clip 5 at its middle (9.25s), which is inside the clip and away from the ends.\n\n",
+   "toolCalls": [
+    {
+     "id": "h3Niw4x0D5YyLucYi5DExMKhTZuzYk0C",
+     "name": "timeline_splitClip",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "5",
+      "atSeconds": 9.25
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 216,
+    "outputTokens": 132,
+    "cachedInputTokens": 13116,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13464,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJGN8AHPHA92JPZPDJDFNV",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Clip 5 is now split into two parts at 9.25 seconds. The first part keeps clip 5’s number, the second part becomes clip 6."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Clip 5 is now split into two parts at 9.25 seconds. The first part keeps clip 5’s number, the second part becomes clip 6."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 198,
+      "output": 35,
+      "cacheRead": 13332,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13565,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604474124,
+     "responseId": "chatcmpl-34689674e4614ae2893745fb1d44180a",
+     "rawStopReason": "stop",
+     "durationMs": 1109
+    }
+   },
+   "text": "Clip 5 is now split into two parts at 9.25 seconds. The first part keeps clip 5’s number, the second part becomes clip 6.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 198,
+    "outputTokens": 35,
+    "cachedInputTokens": 13332,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13565,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJGPB219Z3JA54W6JKDK7X",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Split clip 5 at 9.25 seconds."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Split clip 5 at 9.25 seconds."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13642,
+      "output": 12,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13654,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793604475236,
+     "responseId": "chatcmpl-2ce4eacf3ca744389b8068fa08bd05cc",
+     "rawStopReason": "stop",
+     "durationMs": 12071
+    }
+   },
+   "text": "Split clip 5 at 9.25 seconds.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 13642,
+    "outputTokens": 12,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13654,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJH24C120KVWZRD5ZSAQ9C",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "ubJkeDalWVe1khb87wYHlcQdLx51Brch",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "ubJkeDalWVe1khb87wYHlcQdLx51Brch",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13674,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13729,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604487309,
+     "responseId": "chatcmpl-4c47369cce3549999cce4131dea0e37c",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10607
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "ubJkeDalWVe1khb87wYHlcQdLx51Brch",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13674,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13729,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+{
+  "skill": "timeline.editor",
+  "note": "Scripted model turns: read the timeline, rewrite its first text item for the user's footage, hand off.",
+  "turns": [
+    {
+      "calls": [{ "tool": "timeline.get", "as": "read", "input": { "timelineId": "{{timelineId}}" } }]
+    },
+    {
+      "text": "The reference said 'POV: you finally went'. For a Goa trip: 'Goa, finally'.",
+      "calls": [
+        {
+          "tool": "timeline.editText",
+          "as": "edited",
+          "input": {
+            "projectId": "{{projectId}}",
+            "timelineId": "{{timelineId}}",
+            "itemId": "{{read.texts.0.itemId}}",
+            "text": "Goa, finally"
+          }
+        }
+      ]
+    },
+    {
+      "calls": [
+        { "tool": "handOff", "input": { "timelineId": "{{timelineId}}", "revision": "{{edited.revision}}" } }
+      ]
+    }
+  ]
+}

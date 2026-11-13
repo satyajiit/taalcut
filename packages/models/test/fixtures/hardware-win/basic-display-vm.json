@@ -1,0 +1,36 @@
+{
+  "description": "Virtual machine: 4 vCPUs, 8 GB, Microsoft Basic Display Adapter only (no GPU compute)",
+  "provenance": "Constructed, not captured: shaped like PowerShell 5.1's `ConvertTo-Json -Compress` of the probe's CIM script and nvidia-smi's `--format=csv` output as NVIDIA documents it. No Windows machine was available in round IX.",
+  "commands": {
+    "powershell": "{\"cpu\":[{\"Name\":\"Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz\",\"NumberOfCores\":2,\"NumberOfLogicalProcessors\":4}],\"os\":{\"Version\":\"10.0.20348\",\"Caption\":\"Microsoft Windows Server 2022 Datacenter\"},\"memory\":8589398016,\"gpus\":[{\"Name\":\"Microsoft Basic Display Adapter\",\"AdapterCompatibility\":\"(Standard display types)\",\"AdapterRAM\":null,\"DriverVersion\":\"10.0.20348.1\"}],\"adapterMemory\":null}",
+    "nvidiaSmi": null
+  },
+  "expected": {
+    "chip": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
+    "memoryBytes": 8589398016,
+    "cpuCores": {
+      "total": 4
+    },
+    "osVersion": "10.0.20348",
+    "osName": "Microsoft Windows Server 2022 Datacenter",
+    "gpus": [
+      {
+        "name": "Microsoft Basic Display Adapter",
+        "vendor": "other",
+        "unifiedMemory": false,
+        "apis": [],
+        "driverVersion": "10.0.20348.1"
+      }
+    ],
+    "tier": "minimum",
+    "shortfalls": ["no_gpu_for_local_models"],
+    "profile": "no-accelerator",
+    "classes": {
+      "cpu": 1,
+      "video": 1,
+      "gpu": 1,
+      "npu": 1
+    },
+    "videoEngine": "none"
+  }
+}

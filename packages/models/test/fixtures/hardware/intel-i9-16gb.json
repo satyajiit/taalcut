@@ -1,0 +1,36 @@
+{
+  "description": "MacBook Pro 16-inch (Intel, 2019), i9, 16 GB, two Metal 3 GPUs, macOS Ventura 13.6. Below the minimum: no Apple Silicon, macOS too old, and no GPU backend for local models (Metal inference runtimes need an Apple GPU)",
+  "platform": "darwin",
+  "arch": "x64",
+  "totalmem": 17179869184,
+  "freeDiskBytes": 15032385536,
+  "commands": {
+    "sysctl": "machdep.cpu.brand_string: Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz\nhw.model: MacBookPro16,1\nhw.memsize: 17179869184\nhw.ncpu: 16\n",
+    "sysctlExitCode": 1,
+    "system_profiler": "{\n  \"SPDisplaysDataType\" : [\n    {\n      \"_name\" : \"Intel UHD Graphics 630\",\n      \"spdisplays_mtlgpufamilysupport\" : \"spdisplays_metal3\",\n      \"spdisplays_vendor\" : \"sppci_vendor_intel\",\n      \"spdisplays_vram_shared\" : \"1536 MB\",\n      \"sppci_bus\" : \"spdisplays_builtin\",\n      \"sppci_device_type\" : \"spdisplays_gpu\",\n      \"sppci_model\" : \"Intel UHD Graphics 630\"\n    },\n    {\n      \"_name\" : \"AMD Radeon Pro 5500M\",\n      \"spdisplays_mtlgpufamilysupport\" : \"spdisplays_metal3\",\n      \"spdisplays_vendor\" : \"sppci_vendor_amd\",\n      \"spdisplays_vram\" : \"4 GB\",\n      \"sppci_bus\" : \"spdisplays_pcie_device\",\n      \"sppci_device_type\" : \"spdisplays_gpu\",\n      \"sppci_model\" : \"AMD Radeon Pro 5500M\"\n    }\n  ]\n}\n",
+    "sw_vers": "13.6\n"
+  },
+  "expected": {
+    "gpus": [
+      {
+        "name": "AMD Radeon Pro 5500M",
+        "vendor": "amd",
+        "vramBytes": 4294967296,
+        "unifiedMemory": false,
+        "apis": ["metal"],
+        "metalFamily": "metal3"
+      },
+      {
+        "name": "Intel UHD Graphics 630",
+        "vendor": "intel",
+        "unifiedMemory": false,
+        "apis": ["metal"],
+        "metalFamily": "metal3"
+      }
+    ],
+    "neuralEngine": false,
+    "backends": ["coreml", "webgpu", "cpu"],
+    "tier": "minimum",
+    "shortfalls": ["not_apple_silicon", "macos_too_old", "disk_low", "no_gpu_for_local_models"]
+  }
+}

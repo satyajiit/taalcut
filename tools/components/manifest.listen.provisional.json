@@ -1,0 +1,220 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "EAR1-F3: the listening models, hosted on 2026-11-07 (compose-provisional.mjs SOURCES; their plans are hosting/plan/listen.mjs, in PLAN), with the four text-bank files the audio builds carry at listen-text/<sha12>/<file>. CLAP's audio and text encoders and AST, each an int8 base (the CPU build) whose fp16 variant requires darwin and Metal (ONNX Runtime's WebGPU provider). All on demand (tiers []); every build depends on onnxruntime (compose-provisional.mjs adds it). Built by tools/components/listen/pack-listen-models.mjs: hosting/build.mjs --pending with the pack recipe, layout \"file\" (sorted names, ustar, uid 0, gid 0, mode 0644, mtime 0, the tar written to a file, then zstd 1.5.7 -19 -T1); two packs on 2026-11-06 gave the same sha256 (the audio builds again with the text banks, as -text1). Each archive is flat: the graph as model.onnx beside the upstream configs, unchanged (tools/components/listen/README.md). Builds: clap-general-audio 56723868 bytes, extractedSize 79005452, sha256 134f87a8cf05d2ab5d830be95d1e00014122d3a9f33cb0c89bb361f860fb0522; clap-general-audio-fp16 127124378 bytes, extractedSize 144282246, sha256 7721b8d35b6551dc7b5ad49dbef20b88df9c55af12a5ae84405a5044d9bac23b; clap-general-text 96579785 bytes, extractedSize 129969591, sha256 a488a91be2f46be0e29343762dd7d21957a78baf909878a39b7a5990ab1257d6; clap-general-text-fp16 232031826 bytes, extractedSize 254395416, sha256 82f5efe2d77c235f6e8bb901b633d96d016b4ea05a853df4fe015a40ae7b1756; ast-audioset 65424314 bytes, extractedSize 90834475, sha256 30d417f14028bd953891f5848935dd1af92d042a68f1179a3fc27b677816edf6; ast-audioset-fp16 159420203 bytes, extractedSize 173713987, sha256 5821d22fe11a5070b2c564369f39174ac93e0a6eb202c4b18d57370b77eb60e1. CLAP: Xenova/larger_clap_general revision d78c3994912c441f0151a5cc44d86f6b7bf4c861, the ONNX export of laion/larger_clap_general revision 16c8cc3159a3c8a31e8ff5ef1f66b0d9ab3667db (Apache-2.0). Source files: config.json 587 b8c3a259af1c9eee98570630d81881974a368364886678d9c6b04c6d15874837; preprocessor_config.json 541 9739f58296aa6f9ac18008fd0150fb2649bc554985fbde86d0a4041c882ac753; onnx/audio_model_quantized.onnx 78155433 320b831d0043d36aa8cfad0f36b64b7c597fa9ff01a5a9b505e37632923cf9ac; onnx/audio_model_fp16.onnx 143432227 7331cfbef5e9b7eec56e489c93737556f5e22c8abf8978280f0ad38c4b2b1ed1; merges.txt 456318 1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5; special_tokens_map.json 964 8c785abebea9ae3257b61681b4e6fd8365ceafde980c21970d001e834cf10835; tokenizer.json 2108774 dc239041d98de27ffc3975473a1a23e3db4c937b23c138c38bbc66588bd247e5; tokenizer_config.json 1392 2c964a338683aec3695ea37687271e75b40905233f5d2a5bbb9be8cb40c4d0a0; vocab.json 798293 ed19656ea1707df69134c4af35c8ceda2cc9860bf2c3495026153a133670ab5e; onnx/text_model_quantized.onnx 126603263 045614ce697750cf8876cb965ebfad3ef2d0ae7900dda897d7569f7be86521cd; onnx/text_model_fp16.onnx 251029088 9c06f2aa8b7da59c3a781c682cbca510206d198e2d0c9ebadb78927e38df7f94. AST: Xenova/ast-finetuned-audioset-10-10-0.4593 revision 249a1fbf0286b40e7f1ed687a8ae396997bf7dc6, the ONNX export of MIT/ast-finetuned-audioset-10-10-0.4593 revision f826b80d28226b62986cc218e5cec390b1096902 (BSD-3-Clause); config.json's 527 class names are AudioSet's (Google Inc., CC BY 4.0). Source files: config.json 26792 49d0dce922da23685787c73a874d9b1ffa97297f8cc4dc0a4e8bef219725e44d; preprocessor_config.json 297 8d04ba5a9c6fca5d39d0de2b1fd05ecf79deb589fbba279728bbebac39934231; onnx/model_quantized.onnx 90807386 807d244b58a30eaa89f0a721fb841619c696857aabe4eac93769bd0b61497f61; onnx/model_fp16.onnx 173686898 5f41fdc5b94549d76ddab192ef5a0b859f9d873d6615705e6664b89ed0624f0c. Licences: clap-general-audio and clap-general-audio-fp16 are Apache-2.0 AND MIT, CLAP's weights with the text banks of earshot's MIT vocabulary (EAR1-R5 added MIT: only the SPDX and so the notices changed; a repack on 2026-11-07 gave the same sha256); clap-general-text and clap-general-text-fp16 are Apache-2.0; ast-audioset and ast-audioset-fp16 BSD-3-Clause AND CC-BY-4.0.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "clap-general-audio",
+      "name": "CLAP general audio encoder (int8)",
+      "version": "16c8cc31-onnx-int8-d78c3994-text1",
+      "kind": "model",
+      "tiers": [],
+      "licence": {
+        "spdx": "Apache-2.0 AND MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/clap-general-audio/16c8cc31-onnx-int8-d78c3994-text1/NOTICE-27eb18ea0a1653a0.txt",
+          "size": 14473,
+          "sha256": "27eb18ea0a1653a06707ed2a30fcaedc7980e37de2f579e302c1a1b56f21a68f"
+        },
+        "attribution": "CLAP (laion/larger_clap_general, revision 16c8cc31) by LAION: Yusong Wu, Ke Chen, Tianyu Zhang, Yuchen Hui, Taylor Berg-Kirkpatrick and Shlomo Dubnov. Apache-2.0. ONNX export by Xenova (Xenova/larger_clap_general, revision d78c3994): the audio encoder, 8-bit dynamically quantised (int8); repacked unchanged; with Taalcut's CLAP text embeddings of earshot's listening vocabulary (earshot 0.4.0 data by Leon Lin, MIT)."
+      },
+      "dependencies": [],
+      "variants": ["clap-general-audio-fp16"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/clap-general-audio/16c8cc31-onnx-int8-d78c3994-text1/clap-general-audio-int8-d78c3994.tar.zst"
+          ],
+          "sha256": "134f87a8cf05d2ab5d830be95d1e00014122d3a9f33cb0c89bb361f860fb0522",
+          "size": 56723868,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 79005452
+          }
+        }
+      ]
+    },
+    {
+      "id": "clap-general-audio-fp16",
+      "name": "CLAP general audio encoder (fp16)",
+      "version": "16c8cc31-onnx-fp16-d78c3994-text1",
+      "kind": "model",
+      "tiers": [],
+      "licence": {
+        "spdx": "Apache-2.0 AND MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/clap-general-audio-fp16/16c8cc31-onnx-fp16-d78c3994-text1/NOTICE-a36a2982528b7ed1.txt",
+          "size": 14466,
+          "sha256": "a36a2982528b7ed1c2ab029babcb5ee04cbd444630c531d130a0d91378f6d488"
+        },
+        "attribution": "CLAP (laion/larger_clap_general, revision 16c8cc31) by LAION: Yusong Wu, Ke Chen, Tianyu Zhang, Yuchen Hui, Taylor Berg-Kirkpatrick and Shlomo Dubnov. Apache-2.0. ONNX export by Xenova (Xenova/larger_clap_general, revision d78c3994): the audio encoder, float16 weights (fp16); repacked unchanged; with Taalcut's CLAP text embeddings of earshot's listening vocabulary (earshot 0.4.0 data by Leon Lin, MIT)."
+      },
+      "dependencies": [],
+      "requires": {
+        "platform": "darwin",
+        "gpuApi": "metal"
+      },
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/clap-general-audio-fp16/16c8cc31-onnx-fp16-d78c3994-text1/clap-general-audio-fp16-d78c3994.tar.zst"
+          ],
+          "sha256": "7721b8d35b6551dc7b5ad49dbef20b88df9c55af12a5ae84405a5044d9bac23b",
+          "size": 127124378,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 144282246
+          }
+        }
+      ]
+    },
+    {
+      "id": "clap-general-text",
+      "name": "CLAP general text encoder (int8)",
+      "version": "16c8cc31-onnx-int8-d78c3994",
+      "kind": "model",
+      "tiers": [],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/clap-general-text/16c8cc31-onnx-int8-d78c3994/NOTICE-6c43b0a92c5138a5.txt",
+          "size": 12718,
+          "sha256": "6c43b0a92c5138a513f8b19ba18090dc9d3adf1a9431ce4ece0a901ae81f18ca"
+        },
+        "attribution": "CLAP (laion/larger_clap_general, revision 16c8cc31) by LAION: Yusong Wu, Ke Chen, Tianyu Zhang, Yuchen Hui, Taylor Berg-Kirkpatrick and Shlomo Dubnov. Apache-2.0. ONNX export by Xenova (Xenova/larger_clap_general, revision d78c3994): the text encoder, 8-bit dynamically quantised (int8); repacked unchanged."
+      },
+      "dependencies": [],
+      "variants": ["clap-general-text-fp16"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/clap-general-text/16c8cc31-onnx-int8-d78c3994/clap-general-text-int8-d78c3994.tar.zst"
+          ],
+          "sha256": "a488a91be2f46be0e29343762dd7d21957a78baf909878a39b7a5990ab1257d6",
+          "size": 96579785,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 129969591
+          }
+        }
+      ]
+    },
+    {
+      "id": "clap-general-text-fp16",
+      "name": "CLAP general text encoder (fp16)",
+      "version": "16c8cc31-onnx-fp16-d78c3994",
+      "kind": "model",
+      "tiers": [],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/clap-general-text-fp16/16c8cc31-onnx-fp16-d78c3994/NOTICE-5673dc09e86ba71f.txt",
+          "size": 12711,
+          "sha256": "5673dc09e86ba71fc50c381d94e83bb2c4c04703bcd40b2e30836d90eb780bfc"
+        },
+        "attribution": "CLAP (laion/larger_clap_general, revision 16c8cc31) by LAION: Yusong Wu, Ke Chen, Tianyu Zhang, Yuchen Hui, Taylor Berg-Kirkpatrick and Shlomo Dubnov. Apache-2.0. ONNX export by Xenova (Xenova/larger_clap_general, revision d78c3994): the text encoder, float16 weights (fp16); repacked unchanged."
+      },
+      "dependencies": [],
+      "requires": {
+        "platform": "darwin",
+        "gpuApi": "metal"
+      },
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/clap-general-text-fp16/16c8cc31-onnx-fp16-d78c3994/clap-general-text-fp16-d78c3994.tar.zst"
+          ],
+          "sha256": "82f5efe2d77c235f6e8bb901b633d96d016b4ea05a853df4fe015a40ae7b1756",
+          "size": 232031826,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 254395416
+          }
+        }
+      ]
+    },
+    {
+      "id": "ast-audioset",
+      "name": "AST AudioSet sound tagger (int8)",
+      "version": "f826b80d-onnx-int8-249a1fbf",
+      "kind": "model",
+      "tiers": [],
+      "licence": {
+        "spdx": "BSD-3-Clause AND CC-BY-4.0",
+        "notice": {
+          "url": "https://components.taalcut.app/ast-audioset/f826b80d-onnx-int8-249a1fbf/NOTICE-559a789aaa17db45.txt",
+          "size": 22340,
+          "sha256": "559a789aaa17db45ebe84ea92947076c88a7724f81ada8a244654ae98841d2b5"
+        },
+        "attribution": "Audio Spectrogram Transformer fine-tuned on AudioSet (MIT/ast-finetuned-audioset-10-10-0.4593, revision f826b80d) by Yuan Gong, Yu-An Chung and James Glass (MIT CSAIL). BSD-3-Clause. ONNX export by Xenova (Xenova/ast-finetuned-audioset-10-10-0.4593, revision 249a1fbf), 8-bit dynamically quantised (int8); repacked unchanged. Its 527 class names are from AudioSet by Google Inc., CC BY 4.0 (research.google.com/audioset)."
+      },
+      "dependencies": [],
+      "variants": ["ast-audioset-fp16"],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/ast-audioset/f826b80d-onnx-int8-249a1fbf/ast-audioset-int8-249a1fbf.tar.zst"
+          ],
+          "sha256": "30d417f14028bd953891f5848935dd1af92d042a68f1179a3fc27b677816edf6",
+          "size": 65424314,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 90834475
+          }
+        }
+      ]
+    },
+    {
+      "id": "ast-audioset-fp16",
+      "name": "AST AudioSet sound tagger (fp16)",
+      "version": "f826b80d-onnx-fp16-249a1fbf",
+      "kind": "model",
+      "tiers": [],
+      "licence": {
+        "spdx": "BSD-3-Clause AND CC-BY-4.0",
+        "notice": {
+          "url": "https://components.taalcut.app/ast-audioset-fp16/f826b80d-onnx-fp16-249a1fbf/NOTICE-9102cc268cd66295.txt",
+          "size": 22333,
+          "sha256": "9102cc268cd662956b0cd6372ff2667c941551fe7af4f5d02319127b1d2a5dba"
+        },
+        "attribution": "Audio Spectrogram Transformer fine-tuned on AudioSet (MIT/ast-finetuned-audioset-10-10-0.4593, revision f826b80d) by Yuan Gong, Yu-An Chung and James Glass (MIT CSAIL). BSD-3-Clause. ONNX export by Xenova (Xenova/ast-finetuned-audioset-10-10-0.4593, revision 249a1fbf), float16 weights (fp16); repacked unchanged. Its 527 class names are from AudioSet by Google Inc., CC BY 4.0 (research.google.com/audioset)."
+      },
+      "dependencies": [],
+      "requires": {
+        "platform": "darwin",
+        "gpuApi": "metal"
+      },
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/ast-audioset-fp16/f826b80d-onnx-fp16-249a1fbf/ast-audioset-fp16-249a1fbf.tar.zst"
+          ],
+          "sha256": "5821d22fe11a5070b2c564369f39174ac93e0a6eb202c4b18d57370b77eb60e1",
+          "size": 159420203,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 173713987
+          }
+        }
+      ]
+    }
+  ]
+}

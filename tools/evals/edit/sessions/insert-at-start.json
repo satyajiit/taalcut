@@ -1,0 +1,454 @@
+{
+ "caseId": "insert-at-start",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DH9NFWGP1AK61D50P32VVW",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I will search the library for a shot of a cyclist climbing a hill, then insert it at the start of the timeline before the first clip (the bridge).\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "1hjJdw7aaVBDa6TKkgNq8w9zgCeyrcu3",
+       "name": "findTools",
+       "arguments": {
+        "query": "library.search"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I will search the library for a shot of a cyclist climbing a hill, then insert it at the start of the timeline before the first clip (the bridge).\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "1hjJdw7aaVBDa6TKkgNq8w9zgCeyrcu3",
+       "name": "findTools",
+       "arguments": {
+        "query": "library.search"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11962,
+      "output": 58,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12020,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603196414,
+     "responseId": "chatcmpl-c0d8728cfdfd48789f5d2debbae8d8a0",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10448
+    }
+   },
+   "text": "I will search the library for a shot of a cyclist climbing a hill, then insert it at the start of the timeline before the first clip (the bridge).\n\n",
+   "toolCalls": [
+    {
+     "id": "1hjJdw7aaVBDa6TKkgNq8w9zgCeyrcu3",
+     "name": "findTools",
+     "arguments": {
+      "query": "library.search"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11962,
+    "outputTokens": 58,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12020,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DH9ZPF35RDPX97XMKEC0XC",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "1mTzITewV8nwR5i56LCLz61DQIlR9qZi",
+       "name": "library_search",
+       "arguments": {
+        "query": "cyclist climbing a hill"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "1mTzITewV8nwR5i56LCLz61DQIlR9qZi",
+       "name": "library_search",
+       "arguments": {
+        "query": "cyclist climbing a hill"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 12975,
+      "output": 29,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13004,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603206865,
+     "responseId": "chatcmpl-876d2218f0614389a5e50c125ee2f58e",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11848
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "1mTzITewV8nwR5i56LCLz61DQIlR9qZi",
+     "name": "library_search",
+     "arguments": {
+      "query": "cyclist climbing a hill"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 12975,
+    "outputTokens": 29,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13004,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHAB8WP2F8YBKVR1B38GYB",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I found the perfect shot: \"A cyclist climbs a steep hill\" (assetId: 01K8EAA6PAE4H5MXDC5JCQ96MC). Now I will insert it at the very start of the timeline, before the first clip.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "5tB0fRkjVUz4aGnENbJYTHAINonRwiSP",
+       "name": "timeline_insertClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "media": {
+         "assetId": "01K8EAA6PAE4H5MXDC5JCQ96MC",
+         "kind": "video",
+         "shotId": "01K8ES45GZS2VBVPHNKV2HNM1W"
+        },
+        "position": {
+         "atSeconds": 0,
+         "kind": "time"
+        },
+        "revision": 3
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I found the perfect shot: \"A cyclist climbs a steep hill\" (assetId: 01K8EAA6PAE4H5MXDC5JCQ96MC). Now I will insert it at the very start of the timeline, before the first clip.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "5tB0fRkjVUz4aGnENbJYTHAINonRwiSP",
+       "name": "timeline_insertClip",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "media": {
+         "assetId": "01K8EAA6PAE4H5MXDC5JCQ96MC",
+         "kind": "video",
+         "shotId": "01K8ES45GZS2VBVPHNKV2HNM1W"
+        },
+        "position": {
+         "atSeconds": 0,
+         "kind": "time"
+        },
+        "revision": 3
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 814,
+      "output": 241,
+      "cacheRead": 12975,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14030,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603218720,
+     "responseId": "chatcmpl-8fcdf02deea34290928e2c65b4e267cb",
+     "rawStopReason": "tool_calls",
+     "durationMs": 5810
+    }
+   },
+   "text": "I found the perfect shot: \"A cyclist climbs a steep hill\" (assetId: 01K8EAA6PAE4H5MXDC5JCQ96MC). Now I will insert it at the very start of the timeline, before the first clip.\n\n",
+   "toolCalls": [
+    {
+     "id": "5tB0fRkjVUz4aGnENbJYTHAINonRwiSP",
+     "name": "timeline_insertClip",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "media": {
+       "assetId": "01K8EAA6PAE4H5MXDC5JCQ96MC",
+       "kind": "video",
+       "shotId": "01K8ES45GZS2VBVPHNKV2HNM1W"
+      },
+      "position": {
+       "atSeconds": 0,
+       "kind": "time"
+      },
+      "revision": 3
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 814,
+    "outputTokens": 241,
+    "cachedInputTokens": 12975,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14030,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHAGZ1T3E48NC56Z5ZWK29",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Done. I inserted the cyclist climbing the hill shot at the start of the video, before the bridge clip."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Done. I inserted the cyclist climbing the hill shot at the start of the video, before the bridge clip."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 307,
+      "output": 22,
+      "cacheRead": 13789,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14118,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793603224550,
+     "responseId": "chatcmpl-47b9adbe078e477e95ef26fadda08e75",
+     "rawStopReason": "stop",
+     "durationMs": 977
+    }
+   },
+   "text": "Done. I inserted the cyclist climbing the hill shot at the start of the video, before the bridge clip.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 307,
+    "outputTokens": 22,
+    "cachedInputTokens": 13789,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14118,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHAHXSZN1CCM50CNHWKPEK",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "GMCvLJe4Ys9rPqleZ84IxpHj3AanNgfT",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "GMCvLJe4Ys9rPqleZ84IxpHj3AanNgfT",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 14206,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 14261,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603225534,
+     "responseId": "chatcmpl-675477ea49a84cd0878aa4c220f07ec3",
+     "rawStopReason": "tool_calls",
+     "durationMs": 13418
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "GMCvLJe4Ys9rPqleZ84IxpHj3AanNgfT",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 14206,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 14261,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

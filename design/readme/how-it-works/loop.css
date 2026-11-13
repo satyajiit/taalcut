@@ -1,0 +1,347 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+
+/* The loop's end state: every part sits where it finishes, and loop.js moves it there from where it starts. */
+@font-face {
+  font-family: Onest;
+  src: url('assets/onest.woff2');
+  font-weight: 100 900;
+}
+:root {
+  --paper: #fbf8f2;
+  --card: #fffdf9;
+  --line: #e5dccd;
+  --ink: #211a13;
+  --ink-2: #4d4338;
+  --ink-3: #6f6457;
+  --marigold: #ffb331;
+  --marigold-strong: #a94e00;
+  --rose: #e0457b;
+  --violet: #7a5bd6;
+  --teal: #056965;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  font-family: Onest, sans-serif;
+  color: var(--ink);
+}
+#root {
+  position: relative;
+  overflow: hidden;
+  width: 1280px;
+  height: 720px;
+  background: var(--paper);
+}
+#stage {
+  position: absolute;
+  inset: 0;
+}
+h1,
+p {
+  margin: 0;
+}
+
+#steps {
+  position: absolute;
+  top: 40px;
+  left: 90px;
+  display: flex;
+  gap: 10px;
+}
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 20px 0 8px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 22px;
+  font-weight: 650;
+  color: var(--ink-3);
+}
+.pill b {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--line);
+  font-size: 19px;
+  color: var(--ink-2);
+}
+#kaatu {
+  position: absolute;
+  top: 14px;
+  right: 80px;
+  width: 112px;
+  height: 112px;
+  background: url('assets/kaatu.webp') 100% 0 / 300% 300%;
+}
+.words {
+  position: absolute;
+  top: 110px;
+  left: 90px;
+}
+.words h1 {
+  font-size: 46px;
+  font-weight: 750;
+  letter-spacing: -1.9px;
+}
+.words p {
+  margin-top: 8px;
+  font-size: 25px;
+  color: var(--ink-3);
+}
+
+.phone {
+  position: absolute;
+  top: 238px;
+  overflow: hidden;
+  width: 176px;
+  height: 312px;
+  border: 5px solid var(--card);
+  border-radius: 22px;
+  background: #1c1712;
+  box-shadow:
+    0 0 0 2px var(--line),
+    0 22px 30px -18px rgb(70 45 10 / 45%);
+}
+#reel {
+  left: 90px;
+}
+#version {
+  left: 306px;
+}
+.frames,
+.frames div {
+  position: absolute;
+  inset: 0;
+  background: center / cover;
+}
+.label {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 19px;
+  font-weight: 650;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+#scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--rose);
+  box-shadow: 0 0 18px 6px rgb(224 69 123 / 55%);
+}
+
+#reads {
+  position: absolute;
+  top: 270px;
+  left: 330px;
+  display: flex;
+  gap: 24px;
+}
+.stat {
+  width: 270px;
+  height: 190px;
+  padding: 24px 28px;
+  border: 2px solid var(--line);
+  border-radius: 24px;
+  background: var(--card);
+}
+.stat b {
+  display: block;
+  font-size: 96px;
+  font-weight: 780;
+  line-height: 1;
+  letter-spacing: -4px;
+}
+.stat span {
+  display: block;
+  margin-top: 8px;
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+#stat-cuts b {
+  color: var(--marigold-strong);
+}
+#stat-beats b {
+  color: var(--rose);
+}
+#stat-slots b {
+  color: var(--violet);
+}
+
+#roll {
+  position: absolute;
+  top: 246px;
+  left: 330px;
+  width: 860px;
+  height: 312px;
+}
+#cells div {
+  position: absolute;
+  width: 112px;
+  height: 150px;
+  border-radius: 12px;
+  background: center / cover;
+  box-shadow: 0 0 0 2px var(--line);
+}
+.sticker {
+  position: absolute;
+  top: -24px;
+  right: -18px;
+  padding: 9px 18px;
+  border-radius: 12px;
+  background: var(--marigold);
+  font-size: 22px;
+  font-weight: 750;
+  transform: rotate(5deg);
+}
+.tag {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow:
+    0 0 0 2px var(--line),
+    0 8px 16px -8px rgb(70 45 10 / 50%);
+  font-size: 19px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.tag i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--violet);
+}
+#pick-tag {
+  top: 212px;
+  left: 420px;
+}
+#yours-tag {
+  top: -48px;
+  left: 236px;
+}
+#yours-tag i {
+  background: var(--teal);
+}
+
+#checks {
+  position: absolute;
+  top: 262px;
+  left: 560px;
+  width: 520px;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 68px;
+  margin-bottom: 14px;
+  padding: 0 24px;
+  border: 2px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  font-size: 26px;
+  font-weight: 620;
+}
+.check i {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--teal)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cpath d='M7 13.5l4 4 8-9' fill='none' stroke='%23fffdf9' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+#approve {
+  position: relative;
+  width: 220px;
+  height: 68px;
+  margin-top: 26px;
+  border-radius: 20px;
+  background: var(--marigold);
+  box-shadow: 0 10px 18px -10px rgb(169 78 0 / 70%);
+  font-size: 28px;
+  font-weight: 720;
+}
+#approve span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+#strip {
+  position: absolute;
+  top: 606px;
+  left: 90px;
+  width: 1100px;
+  height: 84px;
+}
+#slots div {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  height: 62px;
+  border: 2px dashed #cfc3b0;
+  border-radius: 12px;
+}
+#slots div span {
+  position: absolute;
+  inset: -2px;
+  border-radius: 12px;
+  background: center 38% / cover;
+}
+#slots div i {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  height: 8px;
+  background: var(--violet);
+}
+#ticks div {
+  position: absolute;
+  top: 70px;
+  width: 3px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--rose);
+}
+#playhead {
+  position: absolute;
+  top: -8px;
+  left: -2px;
+  width: 4px;
+  height: 80px;
+  border-radius: 2px;
+  background: var(--ink);
+}
+#flyers div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 12px;
+  background: center 38% / cover;
+  box-shadow:
+    0 0 0 3px var(--violet),
+    0 14px 22px -10px rgb(60 40 120 / 60%);
+}

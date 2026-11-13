@@ -1,0 +1,53 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"text","type":"string","label":"Words","default":"New recipe"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="pill-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #card {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 360px;
+          margin: 0 auto;
+          width: fit-content;
+          max-width: 720px;
+          padding: 18px 44px;
+          border-radius: 999px;
+          background: #e63946;
+        }
+        #words {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          font-size: 54px;
+          font-weight: 600;
+          line-height: 1.2;
+          color: #ffffff;
+          white-space: nowrap;
+        }
+      </style>
+      <div id="root" data-composition-id="pill" data-width="1080" data-height="1920" data-duration="3">
+        <div id="card">
+          <p id="words" data-var-text="text">New recipe</p>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.from('#card', { opacity: 0, duration: 0.3, ease: 'power2.out' }, 0);
+        tl.addLabel('exit', 2.6);
+        tl.to('#card', { opacity: 0, duration: 0.3, ease: 'power2.in' }, 'exit');
+        window.__timelines['pill'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

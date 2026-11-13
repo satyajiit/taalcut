@@ -1,0 +1,354 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* Impeccable · direction: Remix Vernacular (seed:bf826395379d2ba8) · system: WEB2 Remix Vernacular
+ * world: the Reels and Stories interface language. White ground and near-black ink; dark is a true near-black.
+ *   Full-bleed 9:16 video in 28 px frames is the material, segment bars the structural motif, tilted sticker chips
+ *   carry facts, and the coded Taalcut app window is the product surface.
+ * colour jobs: violet the AI · rose beats and rhythm · teal yours · marigold acts (one fill a screen: the waitlist
+ *   button). Sticker fields (pink, violet, teal, marigold, sky, lime, paper) are decoration and facts, never state.
+ * type: Onest, heavy and tight in display; JetBrains Mono for timecodes only.
+ * shell: a solid sticky nav whose tint deepens past the hero · a footer band with the mark, grouped links, the
+ *   platform row and Kaatu.
+ * motion: one orchestrated arrival a section, sticker pop and settle, stories-style segment fill, rose ticks on the
+ *   beat; reduced motion shows the finished state with 150 ms fades.
+ * contrast: every text and fill pair is held to AA in both themes by test/unit/tokens-contrast.test.ts.
+ */
+
+@import 'tailwindcss';
+@import '../../../design/tokens/tailwind.css';
+@import '../../../design/tokens/base.css';
+@import '../../../design/tokens/roles.css';
+/* The app window's scale and the brand icons' theme drawings. */
+@import './world.css';
+
+@source '../';
+
+/* next/font loads Onest and JetBrains Mono (preloaded, with a metric-matched fallback so the swap doesn't shift the
+ * page). The stacks keep the tokens' own names behind them; only the first family changes to the loaded face. */
+:root {
+  --font-sans: var(--font-onest), 'Onest Variable', system-ui, ui-sans-serif, sans-serif;
+  --font-mono: var(--font-jetbrains), 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* The world's own tokens (light values; dark below). Tailwind makes utilities of each: bg-sticker-pink,             */
+/* text-sticker-pink-ink, rounded-reel, rounded-window, pt-section-top… (shadow-window and co. are @utility below).  */
+/* ---------------------------------------------------------------------------------------------------------------- */
+@theme static {
+  /* The waitlist button's hover: a deeper marigold under the same ink. */
+  --color-marigold-hover: oklch(79% 0.17 76);
+
+  /* Sticker fields: a pastel field and the ink that reads on it. Decoration and facts, never state. */
+  --color-sticker-pink: oklch(87% 0.085 352);
+  --color-sticker-pink-ink: oklch(25% 0.08 355);
+  --color-sticker-violet: oklch(87% 0.075 298);
+  --color-sticker-violet-ink: oklch(25% 0.1 293);
+  --color-sticker-teal: oklch(89% 0.08 182);
+  --color-sticker-teal-ink: oklch(25% 0.05 186);
+  --color-sticker-marigold: oklch(91% 0.13 92);
+  --color-sticker-marigold-ink: oklch(25% 0.05 65);
+  --color-sticker-sky: oklch(88% 0.07 232);
+  --color-sticker-sky-ink: oklch(25% 0.07 245);
+  --color-sticker-lime: oklch(92% 0.15 125);
+  --color-sticker-lime-ink: oklch(26% 0.06 132);
+  --color-sticker-paper: oklch(100% 0 0);
+  --color-sticker-paper-ink: oklch(17% 0.01 286);
+  /* A die-cut sticker's white edge (Kaatu's sticker frame) and the shadow under it, in both themes. */
+  --color-sticker-cut: oklch(100% 0 0);
+  --color-sticker-shadow: oklch(17% 0.02 286 / 0.28);
+
+  /* Radii: the reel's frame, the app window (the Mac's 14), a sticker. Pill is the tokens' own. */
+  --radius-reel: 28px;
+  --radius-window: 14px;
+  --radius-sticker: 999px;
+
+  /* The app's shadow scale, neutral on white. Tailwind writes these values into shadow-xs…lg itself, so they don't
+   * follow the theme; the world's own depth (shadow-window, -sticker, -reel, -lift) does, through --elevation-*. */
+  --shadow-xs: 0 1px 1px oklch(17% 0.01 286 / 0.06);
+  --shadow-sm: 0 1px 2px oklch(17% 0.01 286 / 0.08);
+  --shadow-md: 0 1px 2px oklch(17% 0.01 286 / 0.06), 0 8px 24px -4px oklch(17% 0.01 286 / 0.1);
+  --shadow-lg: 0 2px 6px oklch(17% 0.01 286 / 0.08), 0 24px 56px -12px oklch(17% 0.01 286 / 0.2);
+
+  /* One rhythm for every section: more room above a heading than below it. */
+  --spacing-section-top: clamp(4.5rem, 7vw + 1.5rem, 9rem);
+  --spacing-section-bottom: clamp(3rem, 4vw + 1.5rem, 6rem);
+  --spacing-heading-gap: clamp(1.75rem, 2vw + 1rem, 3rem);
+  --spacing-nav: 4rem;
+  --spacing-gutter: clamp(1rem, 3vw, 2.5rem);
+  --max-width-site: 82rem;
+}
+
+/* The world over the app's tokens: light (the default, whatever the system says) and dark ([data-theme='dark']).
+ * The app's own names stay, so every utility built on them (bg-canvas, text-ink-2, bg-ai-soft…) speaks this world. */
+@layer base {
+  :root:not([data-theme='dark']) {
+    color-scheme: light;
+    --color-canvas: oklch(100% 0 0);
+    --color-raised: oklch(100% 0 0);
+    --color-overlay: oklch(100% 0 0);
+    --color-panel: oklch(97.6% 0.004 286);
+    --color-well: oklch(97.6% 0.004 286);
+    --color-sunken: oklch(96.4% 0.005 286);
+    --color-sidebar: oklch(97.2% 0.004 286);
+    --color-sidebar-hover: oklch(94.6% 0.006 286);
+    --color-sidebar-pressed: oklch(92.5% 0.008 286);
+    --color-bubble: oklch(96.4% 0.005 286);
+    --color-chip: oklch(95.4% 0.006 286);
+    --color-control: oklch(96.4% 0.005 286);
+    --color-control-hover: oklch(94% 0.007 286);
+    --color-control-pressed: oklch(91.5% 0.008 286);
+    --color-hover: oklch(95% 0.006 286);
+    --color-pressed: oklch(92.5% 0.008 286);
+    --color-inverse: oklch(17% 0.01 286);
+    --color-on-inverse: oklch(99% 0.002 286);
+    --color-tooltip: oklch(17% 0.01 286);
+    --color-on-tooltip: oklch(99% 0.002 286);
+    --color-tooltip-rule: oklch(36% 0.012 286);
+    --color-thumb: oklch(100% 0 0);
+    --color-on-thumb: oklch(47% 0.012 286);
+    --color-ink: oklch(17% 0.01 286);
+    --color-ink-2: oklch(36% 0.012 286);
+    --color-ink-3: oklch(47% 0.012 286);
+    --color-ink-disabled: oklch(72% 0.008 286);
+    --color-rule-subtle: oklch(93% 0.005 286);
+    --color-rule: oklch(89% 0.007 286);
+    --color-rule-strong: oklch(60% 0.01 286);
+    --color-focus: oklch(54% 0.14 62);
+
+    --color-violet: oklch(55% 0.235 293);
+    --color-violet-strong: oklch(49% 0.23 293);
+    --color-violet-soft: oklch(95% 0.03 300);
+    --color-violet-ink: oklch(99% 0.002 286);
+    --color-violet-strong-ink: oklch(99% 0.002 286);
+    --color-rose: oklch(64% 0.22 12);
+    --color-rose-strong: oklch(53% 0.2 14);
+    --color-rose-soft: oklch(95.5% 0.025 10);
+    --color-rose-ink: oklch(17% 0.01 286);
+    --color-rose-strong-ink: oklch(99% 0.002 286);
+    --color-teal: oklch(64% 0.125 184);
+    --color-teal-strong: oklch(48% 0.09 186);
+    --color-teal-soft: oklch(95.5% 0.03 184);
+    --color-teal-ink: oklch(17% 0.01 286);
+    --color-teal-strong-ink: oklch(99% 0.002 286);
+    --color-marigold: oklch(84% 0.165 82);
+    --color-marigold-strong: oklch(52% 0.13 62);
+    --color-marigold-soft: oklch(96% 0.05 92);
+    --color-marigold-ink: oklch(19% 0.03 70);
+    --color-marigold-strong-ink: oklch(99% 0.002 286);
+
+
+    /* Depth: offset and a soft blur, never a zero-offset halo. */
+    --elevation-window: 0 0 0 1px oklch(17% 0.01 286 / 0.07), 0 2px 4px oklch(17% 0.01 286 / 0.04),
+      0 18px 40px -12px oklch(17% 0.02 286 / 0.2), 0 44px 80px -36px oklch(17% 0.02 286 / 0.22);
+    --elevation-sticker: 0 1px 2px oklch(17% 0.02 286 / 0.1), 0 6px 16px -6px oklch(17% 0.02 286 / 0.28);
+    --elevation-reel: 0 2px 6px oklch(17% 0.02 286 / 0.08), 0 28px 60px -20px oklch(17% 0.02 286 / 0.36);
+    --elevation-lift: 0 2px 4px oklch(17% 0.02 286 / 0.08), 0 14px 28px -10px oklch(30% 0.14 293 / 0.38);
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --color-canvas: oklch(13.5% 0.004 286);
+    --color-raised: oklch(19% 0.005 286);
+    --color-overlay: oklch(22.5% 0.006 286);
+    --color-panel: oklch(21.5% 0.006 286);
+    --color-well: oklch(17% 0.005 286);
+    --color-sunken: oklch(10.5% 0.003 286);
+    --color-sidebar: oklch(16.5% 0.005 286);
+    --color-sidebar-hover: oklch(22% 0.006 286);
+    --color-sidebar-pressed: oklch(26% 0.007 286);
+    --color-bubble: oklch(22.5% 0.006 286);
+    --color-chip: oklch(26% 0.007 286);
+    --color-control: oklch(24% 0.006 286);
+    --color-control-hover: oklch(28% 0.007 286);
+    --color-control-pressed: oklch(31.5% 0.008 286);
+    --color-hover: oklch(25% 0.007 286);
+    --color-pressed: oklch(29% 0.008 286);
+    --color-inverse: oklch(96.5% 0.003 286);
+    --color-on-inverse: oklch(15% 0.004 286);
+    --color-tooltip: oklch(30% 0.006 286);
+    --color-on-tooltip: oklch(96.5% 0.003 286);
+    --color-tooltip-rule: oklch(40% 0.006 286);
+    --color-thumb: oklch(80% 0.005 286);
+    --color-on-thumb: oklch(14% 0.004 286);
+    --color-ink: oklch(96.5% 0.003 286);
+    --color-ink-2: oklch(84% 0.006 286);
+    --color-ink-3: oklch(73% 0.008 286);
+    --color-ink-disabled: oklch(45% 0.006 286);
+    --color-rule-subtle: oklch(25% 0.006 286);
+    --color-rule: oklch(31% 0.007 286);
+    --color-rule-strong: oklch(56% 0.008 286);
+    --color-focus: oklch(85% 0.16 84);
+
+    --color-violet: oklch(68% 0.19 293);
+    --color-violet-strong: oklch(79% 0.13 293);
+    --color-violet-soft: oklch(28% 0.09 293);
+    --color-violet-ink: oklch(14% 0.01 286);
+    --color-violet-strong-ink: oklch(14% 0.01 286);
+    --color-rose: oklch(70% 0.19 12);
+    --color-rose-strong: oklch(80% 0.12 10);
+    --color-rose-soft: oklch(28% 0.08 10);
+    --color-rose-ink: oklch(14% 0.01 286);
+    --color-rose-strong-ink: oklch(14% 0.01 286);
+    --color-teal: oklch(75% 0.13 184);
+    --color-teal-strong: oklch(83% 0.1 184);
+    --color-teal-soft: oklch(27% 0.05 186);
+    --color-teal-ink: oklch(14% 0.01 286);
+    --color-teal-strong-ink: oklch(14% 0.01 286);
+    --color-marigold: oklch(85% 0.165 84);
+    --color-marigold-hover: oklch(90% 0.15 90);
+    --color-marigold-strong: oklch(86% 0.15 84);
+    --color-marigold-soft: oklch(29% 0.06 75);
+    --color-marigold-ink: oklch(19% 0.03 70);
+    --color-marigold-strong-ink: oklch(19% 0.03 70);
+
+    --color-sticker-pink: oklch(82% 0.11 352);
+    --color-sticker-pink-ink: oklch(22% 0.08 355);
+    --color-sticker-violet: oklch(80% 0.11 298);
+    --color-sticker-violet-ink: oklch(22% 0.1 293);
+    --color-sticker-teal: oklch(83% 0.11 182);
+    --color-sticker-teal-ink: oklch(22% 0.05 186);
+    --color-sticker-marigold: oklch(87% 0.15 88);
+    --color-sticker-marigold-ink: oklch(22% 0.05 65);
+    --color-sticker-sky: oklch(82% 0.09 232);
+    --color-sticker-sky-ink: oklch(22% 0.07 245);
+    --color-sticker-lime: oklch(88% 0.17 125);
+    --color-sticker-lime-ink: oklch(23% 0.06 132);
+    --color-sticker-paper: oklch(22.5% 0.006 286);
+    --color-sticker-paper-ink: oklch(96.5% 0.003 286);
+    --color-sticker-shadow: oklch(0% 0 0 / 0.6);
+
+    --elevation-window: 0 0 0 1px oklch(100% 0 0 / 0.09), inset 0 1px 0 oklch(100% 0 0 / 0.06),
+      0 2px 4px oklch(0% 0 0 / 0.4), 0 28px 64px -16px oklch(0% 0 0 / 0.75);
+    --elevation-sticker: 0 1px 2px oklch(0% 0 0 / 0.5), 0 8px 18px -6px oklch(0% 0 0 / 0.65);
+    --elevation-reel: 0 0 0 1px oklch(100% 0 0 / 0.07), 0 28px 60px -20px oklch(0% 0 0 / 0.85);
+    --elevation-lift: 0 2px 4px oklch(0% 0 0 / 0.5), 0 14px 28px -10px oklch(55% 0.2 293 / 0.45);
+  }
+}
+
+/* The world's depth, theme-aware: the app window, a sticker, a reel's frame, a segment bar lifted off its reel. */
+@utility shadow-window {
+  box-shadow: var(--elevation-window);
+}
+@utility shadow-sticker {
+  box-shadow: var(--elevation-sticker);
+}
+@utility shadow-reel {
+  box-shadow: var(--elevation-reel);
+}
+@utility shadow-lift {
+  box-shadow: var(--elevation-lift);
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Type roles. Onest's range does the work: heavy and tight at display size, plain at reading size.                 */
+/* ---------------------------------------------------------------------------------------------------------------- */
+
+/* The page's one h1: about 77 px at 1440 (the home's in three lines beside its reel), 80 at most, fluid, heavy and */
+/* tight (the tracking floor is -0.04em). */
+@utility type-site-display {
+  font-size: clamp(2.625rem, 4.5vw + 0.75rem, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+/* A section's h2. */
+@utility type-site-headline {
+  font-size: clamp(2rem, 3vw + 0.75rem, 3.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+
+/* A block's h3 inside a section: a feature, a platform, a question. */
+@utility type-site-subhead {
+  font-size: clamp(1.25rem, 0.6vw + 1.05rem, 1.625rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+/* The paragraph under the h1 or an h2. */
+@utility type-site-lead {
+  font-size: clamp(1.125rem, 0.6vw + 0.98rem, 1.5rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  font-weight: var(--weight-body);
+}
+
+/* Reading text on the content pages (about, press, the legal pages). */
+@utility type-site-body {
+  font-size: clamp(1rem, 0.2vw + 0.95rem, 1.0625rem);
+  line-height: 1.6;
+  letter-spacing: -0.002em;
+  font-weight: var(--weight-body);
+}
+
+/* The bold word on a sticker. */
+@utility type-sticker {
+  font-size: clamp(0.8125rem, 0.25vw + 0.76rem, 1rem);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  font-weight: 700;
+}
+
+/* A timecode or a duration that changes in place: JetBrains Mono, tabular. Scales inside the app window. */
+@utility type-timecode {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Browser surfaces carry the world: selection and the caret are yours (teal), the scrollbar is a rule.            */
+/* ---------------------------------------------------------------------------------------------------------------- */
+@layer base {
+  /* A heading on a coloured ground (a sticker field, the inverse, the viewer, a job's fill) takes that ground's ink,
+     not the base rule's (design/tokens/base.css gives every heading text-ink). A heading's own text-* class still wins. */
+  :is([class*='bg-sticker-'], .bg-inverse, .bg-viewer, .bg-violet, .bg-rose, .bg-teal, .bg-marigold) :is(h1, h2, h3, h4) {
+    color: inherit;
+  }
+
+  :lang(hi) {
+    font-family: var(--font-devanagari), var(--font-sans);
+  }
+
+  html {
+    scroll-padding-top: calc(var(--spacing-nav) + 1.5rem);
+    scrollbar-color: var(--color-rule-strong) transparent;
+  }
+
+  ::selection {
+    background: var(--color-teal-soft);
+    color: var(--color-ink);
+  }
+
+  input,
+  textarea {
+    caret-color: var(--color-teal-strong);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 0.07em;
+  }
+
+  :focus-visible {
+    outline-offset: 3px;
+  }
+
+  /* The skip link sits off screen until it takes focus. */
+  .skip-link {
+    position: absolute;
+    inset-inline-start: var(--space-md);
+    inset-block-start: var(--space-md);
+    transform: translateY(-200%);
+    z-index: 60;
+  }
+  .skip-link:focus-visible {
+    transform: none;
+  }
+}

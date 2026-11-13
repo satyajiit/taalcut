@@ -1,0 +1,569 @@
+{
+ "version": 1,
+ "sources": [
+  {
+   "id": "tos",
+   "title": "Tears of Steel (2012)",
+   "page": "https://mango.blender.org/",
+   "download": "https://download.blender.org/demo/movies/ToS/tears_of_steel_720p.mov",
+   "licence": "CC BY 3.0",
+   "author": "Blender Foundation (mango.blender.org)"
+  },
+  {
+   "id": "fry",
+   "title": "File:Is AI better at maths than people? - Hannah Fry -science -ai -maths.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Is_AI_better_at_maths_than_people%3F_-_Hannah_Fry_-science_-ai_-maths.webm",
+   "download": "https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Is_AI_better_at_maths_than_people%3F_-_Hannah_Fry_-science_-ai_-maths.webm/Is_AI_better_at_maths_than_people%3F_-_Hannah_Fry_-science_-ai_-maths.webm.1080p.vp9.webm",
+   "licence": "CC BY 4.0",
+   "author": "The Royal Society"
+  },
+  {
+   "id": "proverbio",
+   "title": "File:Um provérbio russo dito por jovem russa na cidade do Porto Portugal.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Um_prov%C3%A9rbio_russo_dito_por_jovem_russa_na_cidade_do_Porto_Portugal.webm",
+   "download": "https://upload.wikimedia.org/wikipedia/commons/transcoded/1/12/Um_prov%C3%A9rbio_russo_dito_por_jovem_russa_na_cidade_do_Porto_Portugal.webm/Um_prov%C3%A9rbio_russo_dito_por_jovem_russa_na_cidade_do_Porto_Portugal.webm.1080p.vp9.webm",
+   "licence": "CC0",
+   "author": "Daniel Dias escritor"
+  },
+  {
+   "id": "arin",
+   "title": "File:Arin Hanson at Anime Expo 2011.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Arin_Hanson_at_Anime_Expo_2011.webm",
+   "download": "https://upload.wikimedia.org/wikipedia/commons/transcoded/0/00/Arin_Hanson_at_Anime_Expo_2011.webm/Arin_Hanson_at_Anime_Expo_2011.webm.1080p.vp9.webm",
+   "licence": "CC BY 3.0",
+   "author": "Adrian Bauer"
+  },
+  {
+   "id": "txguard",
+   "title": "File:Texas National Guard (36424713290)-video.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Texas_National_Guard_(36424713290)-video.webm",
+   "download": "https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5b/Texas_National_Guard_%2836424713290%29-video.webm/Texas_National_Guard_%2836424713290%29-video.webm.1080p.vp9.webm",
+   "licence": "Public domain",
+   "author": "The National Guard (Flickr)"
+  },
+  {
+   "id": "metro",
+   "title": "File:Moscow metro Krasnoselskaya vestibule corridor 2023-03.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Moscow_metro_Krasnoselskaya_vestibule_corridor_2023-03.webm",
+   "download": "https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e7/Moscow_metro_Krasnoselskaya_vestibule_corridor_2023-03.webm/Moscow_metro_Krasnoselskaya_vestibule_corridor_2023-03.webm.1080p.vp9.webm",
+   "licence": "CC BY 4.0",
+   "author": "Svetlov Artem"
+  },
+  {
+   "id": "damon",
+   "title": "File:Matt Damon Takes the ALSA Ice Bucket Challenge!.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Matt_Damon_Takes_the_ALSA_Ice_Bucket_Challenge!.webm",
+   "download": "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f7/Matt_Damon_Takes_the_ALSA_Ice_Bucket_Challenge%21.webm/Matt_Damon_Takes_the_ALSA_Ice_Bucket_Challenge%21.webm.480p.vp9.webm",
+   "licence": "CC BY 3.0",
+   "author": "Matt Damon, Water.org"
+  },
+  {
+   "id": "drauzio",
+   "title": "File:Dr Dráuzio ressalta a importância das vacinas para nossas crianças e jovens - Governo do Brasil.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Dr_Dr%C3%A1uzio_ressalta_a_import%C3%A2ncia_das_vacinas_para_nossas_crian%C3%A7as_e_jovens_-_Governo_do_Brasil.webm",
+   "download": "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/76/Dr_Dr%C3%A1uzio_ressalta_a_import%C3%A2ncia_das_vacinas_para_nossas_crian%C3%A7as_e_jovens_-_Governo_do_Brasil.webm/Dr_Dr%C3%A1uzio_ressalta_a_import%C3%A2ncia_das_vacinas_para_nossas_crian%C3%A7as_e_jovens_-_Governo_do_Brasil.webm.1080p.vp9.webm",
+   "licence": "CC BY 3.0",
+   "author": "Governo do Brasil"
+  },
+  {
+   "id": "zmago",
+   "title": "File:Zmago Jelinčič Plemeniti in kandidat za župana občine Štore, Emil Kačičnik.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Zmago_Jelin%C4%8Di%C4%8D_Plemeniti_in_kandidat_za_%C5%BEupana_ob%C4%8Dine_%C5%A0tore,_Emil_Ka%C4%8Di%C4%8Dnik.webm",
+   "download": "https://upload.wikimedia.org/wikipedia/commons/transcoded/d/db/Zmago_Jelin%C4%8Di%C4%8D_Plemeniti_in_kandidat_za_%C5%BEupana_ob%C4%8Dine_%C5%A0tore%2C_Emil_Ka%C4%8Di%C4%8Dnik.webm/Zmago_Jelin%C4%8Di%C4%8D_Plemeniti_in_kandidat_za_%C5%BEupana_ob%C4%8Dine_%C5%A0tore%2C_Emil_Ka%C4%8Di%C4%8Dnik.webm.1080p.vp9.webm",
+   "licence": "CC BY 3.0",
+   "author": "Teodor Goznikar"
+  }
+ ],
+ "frames": [
+  {
+   "id": "tos-26",
+   "source": "tos",
+   "at": 26
+  },
+  {
+   "id": "tos-34",
+   "source": "tos",
+   "at": 34
+  },
+  {
+   "id": "tos-52",
+   "source": "tos",
+   "at": 52
+  },
+  {
+   "id": "tos-60",
+   "source": "tos",
+   "at": 60
+  },
+  {
+   "id": "tos-92",
+   "source": "tos",
+   "at": 92
+  },
+  {
+   "id": "tos-100",
+   "source": "tos",
+   "at": 100
+  },
+  {
+   "id": "tos-120",
+   "source": "tos",
+   "at": 120
+  },
+  {
+   "id": "tos-128",
+   "source": "tos",
+   "at": 128
+  },
+  {
+   "id": "tos-144",
+   "source": "tos",
+   "at": 144
+  },
+  {
+   "id": "tos-164",
+   "source": "tos",
+   "at": 164
+  },
+  {
+   "id": "tos-168",
+   "source": "tos",
+   "at": 168
+  },
+  {
+   "id": "tos-176",
+   "source": "tos",
+   "at": 176
+  },
+  {
+   "id": "tos-188",
+   "source": "tos",
+   "at": 188
+  },
+  {
+   "id": "tos-196",
+   "source": "tos",
+   "at": 196
+  },
+  {
+   "id": "tos-204",
+   "source": "tos",
+   "at": 204
+  },
+  {
+   "id": "tos-212",
+   "source": "tos",
+   "at": 212
+  },
+  {
+   "id": "tos-220",
+   "source": "tos",
+   "at": 220
+  },
+  {
+   "id": "tos-228",
+   "source": "tos",
+   "at": 228
+  },
+  {
+   "id": "tos-240",
+   "source": "tos",
+   "at": 240
+  },
+  {
+   "id": "tos-252",
+   "source": "tos",
+   "at": 252
+  },
+  {
+   "id": "tos-264",
+   "source": "tos",
+   "at": 264
+  },
+  {
+   "id": "tos-276",
+   "source": "tos",
+   "at": 276
+  },
+  {
+   "id": "tos-288",
+   "source": "tos",
+   "at": 288
+  },
+  {
+   "id": "tos-308",
+   "source": "tos",
+   "at": 308
+  },
+  {
+   "id": "tos-312",
+   "source": "tos",
+   "at": 312
+  },
+  {
+   "id": "tos-316",
+   "source": "tos",
+   "at": 316
+  },
+  {
+   "id": "tos-340",
+   "source": "tos",
+   "at": 340
+  },
+  {
+   "id": "tos-348",
+   "source": "tos",
+   "at": 348
+  },
+  {
+   "id": "tos-356",
+   "source": "tos",
+   "at": 356
+  },
+  {
+   "id": "tos-364",
+   "source": "tos",
+   "at": 364
+  },
+  {
+   "id": "tos-372",
+   "source": "tos",
+   "at": 372
+  },
+  {
+   "id": "tos-384",
+   "source": "tos",
+   "at": 384
+  },
+  {
+   "id": "tos-400",
+   "source": "tos",
+   "at": 400
+  },
+  {
+   "id": "tos-408",
+   "source": "tos",
+   "at": 408
+  },
+  {
+   "id": "tos-412",
+   "source": "tos",
+   "at": 412
+  },
+  {
+   "id": "tos-432",
+   "source": "tos",
+   "at": 432
+  },
+  {
+   "id": "tos-436",
+   "source": "tos",
+   "at": 436
+  },
+  {
+   "id": "tos-452",
+   "source": "tos",
+   "at": 452
+  },
+  {
+   "id": "tos-496",
+   "source": "tos",
+   "at": 496
+  },
+  {
+   "id": "tos-504",
+   "source": "tos",
+   "at": 504
+  },
+  {
+   "id": "tos-516",
+   "source": "tos",
+   "at": 516
+  },
+  {
+   "id": "tos-532",
+   "source": "tos",
+   "at": 532
+  },
+  {
+   "id": "tos-548",
+   "source": "tos",
+   "at": 548
+  },
+  {
+   "id": "tos-552",
+   "source": "tos",
+   "at": 552
+  },
+  {
+   "id": "tos-564",
+   "source": "tos",
+   "at": 564
+  },
+  {
+   "id": "tos-716",
+   "source": "tos",
+   "at": 716
+  },
+  {
+   "id": "tosp33-316",
+   "source": "tos",
+   "at": 316,
+   "crop": {
+    "x": 0.33,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp62-412",
+   "source": "tos",
+   "at": 412,
+   "crop": {
+    "x": 0.62,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp0-384",
+   "source": "tos",
+   "at": 384,
+   "crop": {
+    "x": 0.0,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp12-26",
+   "source": "tos",
+   "at": 26,
+   "crop": {
+    "x": 0.12,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp30-196",
+   "source": "tos",
+   "at": 196,
+   "crop": {
+    "x": 0.3,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp20-552",
+   "source": "tos",
+   "at": 552,
+   "crop": {
+    "x": 0.2,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp0-240",
+   "source": "tos",
+   "at": 240,
+   "crop": {
+    "x": 0.0,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp45-356",
+   "source": "tos",
+   "at": 356,
+   "crop": {
+    "x": 0.45,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp50-564",
+   "source": "tos",
+   "at": 564,
+   "crop": {
+    "x": 0.5,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "tosp55-176",
+   "source": "tos",
+   "at": 176,
+   "crop": {
+    "x": 0.55,
+    "aspect": 0.5625
+   }
+  },
+  {
+   "id": "fry-5",
+   "source": "fry",
+   "at": 5
+  },
+  {
+   "id": "fry-20",
+   "source": "fry",
+   "at": 20
+  },
+  {
+   "id": "fry-45",
+   "source": "fry",
+   "at": 45
+  },
+  {
+   "id": "fry-80",
+   "source": "fry",
+   "at": 80
+  },
+  {
+   "id": "proverbio-2",
+   "source": "proverbio",
+   "at": 2
+  },
+  {
+   "id": "proverbio-9",
+   "source": "proverbio",
+   "at": 9
+  },
+  {
+   "id": "proverbio-16",
+   "source": "proverbio",
+   "at": 16
+  },
+  {
+   "id": "proverbio-20",
+   "source": "proverbio",
+   "at": 20
+  },
+  {
+   "id": "proverbio-25",
+   "source": "proverbio",
+   "at": 25
+  },
+  {
+   "id": "arin-1",
+   "source": "arin",
+   "at": 1
+  },
+  {
+   "id": "arin-3_5",
+   "source": "arin",
+   "at": 3.5
+  },
+  {
+   "id": "arin-6",
+   "source": "arin",
+   "at": 6
+  },
+  {
+   "id": "txguard-3",
+   "source": "txguard",
+   "at": 3
+  },
+  {
+   "id": "txguard-16",
+   "source": "txguard",
+   "at": 16
+  },
+  {
+   "id": "txguard-28",
+   "source": "txguard",
+   "at": 28
+  },
+  {
+   "id": "txguard-47",
+   "source": "txguard",
+   "at": 47
+  },
+  {
+   "id": "txguard-60",
+   "source": "txguard",
+   "at": 60
+  },
+  {
+   "id": "txguard-72",
+   "source": "txguard",
+   "at": 72
+  },
+  {
+   "id": "metro-6",
+   "source": "metro",
+   "at": 6
+  },
+  {
+   "id": "metro-9",
+   "source": "metro",
+   "at": 9
+  },
+  {
+   "id": "metro-14",
+   "source": "metro",
+   "at": 14
+  },
+  {
+   "id": "metro-23",
+   "source": "metro",
+   "at": 23
+  },
+  {
+   "id": "damon-5",
+   "source": "damon",
+   "at": 5
+  },
+  {
+   "id": "damon-40",
+   "source": "damon",
+   "at": 40
+  },
+  {
+   "id": "damon-55",
+   "source": "damon",
+   "at": 55
+  },
+  {
+   "id": "damon-60",
+   "source": "damon",
+   "at": 60
+  },
+  {
+   "id": "damon-75",
+   "source": "damon",
+   "at": 75
+  },
+  {
+   "id": "damon-95",
+   "source": "damon",
+   "at": 95
+  },
+  {
+   "id": "damon-105",
+   "source": "damon",
+   "at": 105
+  },
+  {
+   "id": "drauzio-4",
+   "source": "drauzio",
+   "at": 4
+  },
+  {
+   "id": "drauzio-30",
+   "source": "drauzio",
+   "at": 30
+  },
+  {
+   "id": "zmago-2",
+   "source": "zmago",
+   "at": 2
+  },
+  {
+   "id": "zmago-12",
+   "source": "zmago",
+   "at": 12
+  },
+  {
+   "id": "zmago-20",
+   "source": "zmago",
+   "at": 20
+  }
+ ]
+}

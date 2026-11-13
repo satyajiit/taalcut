@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: Bug
+description: Something in the app did the wrong thing.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not report a security vulnerability here. Open a private advisory:
+        https://github.com/satyajiit/taalcut/security/advisories/new
+
+        Do not attach your footage.
+
+  - type: checkboxes
+    id: debug-bundle
+    attributes:
+      label: Debug bundle
+      description: >
+        Attach a debug bundle to this issue. How to create one is in
+        docs/support/debug-bundle.md. An issue is public: read the bundle's
+        preview before you attach it. A bundle needs the app running; if
+        Taalcut will not open, say so under "What happened" instead.
+      options:
+        - label: I attached a debug bundle, following docs/support/debug-bundle.md.
+          required: false
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App version
+      description: The version shown in the app, or the build you are running.
+      placeholder: 0.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: macos-version
+    attributes:
+      label: macOS version
+      description: The version from About This Mac.
+      placeholder: macOS 26.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: channel
+    attributes:
+      label: Channel
+      description: The update channel, if you know it. Dev runs are unpackaged.
+      options:
+        - beta
+        - stable
+        - alpha
+        - internal
+        - dev (unpackaged)
+        - I don't know
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What you thought the app would do.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: What the app did instead. No secrets, no footage.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      description: What you did before it happened.
+    validations:
+      required: false

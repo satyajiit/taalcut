@@ -1,0 +1,51 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"text","type":"string","label":"Words","default":"Mira Shah, baker"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="lower-third-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #card {
+          position: absolute;
+          left: 72px;
+          top: 1360px;
+          width: fit-content;
+          max-width: 900px;
+          padding: 24px 36px;
+          border-radius: 12px;
+          background: #111111;
+        }
+        #words {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          font-size: 58px;
+          font-weight: 600;
+          line-height: 1.2;
+          color: #ffffff;
+          white-space: nowrap;
+        }
+      </style>
+      <div id="root" data-composition-id="lower-third" data-width="1080" data-height="1920" data-duration="3">
+        <div id="card">
+          <p id="words" data-var-text="text">Mira Shah, baker</p>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.from('#card', { opacity: 0, x: -80, duration: 0.4, ease: 'power3.out' }, 0);
+        tl.addLabel('exit', 2.6);
+        tl.to('#card', { opacity: 0, duration: 0.3, ease: 'power2.in' }, 'exit');
+        window.__timelines['lower-third'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

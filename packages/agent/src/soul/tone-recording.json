@@ -1,0 +1,2487 @@
+{
+  "standIn": true,
+  "recordedAt": "2026-10-14",
+  "soulVersion": "1.0.0",
+  "promptSetSha256": "00fbeaeae6cce966ab05eeca86b0e1732c8b126d226070826c1ff5f86feda29c",
+  "judgePromptVersion": "1.0.0",
+  "authors": [
+    {
+      "provider": "stand-in-a",
+      "model": "scripted"
+    },
+    {
+      "provider": "stand-in-b",
+      "model": "scripted"
+    },
+    {
+      "provider": "stand-in-c",
+      "model": "scripted"
+    }
+  ],
+  "replies": [
+    {
+      "promptId": "t01",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t01",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t01",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t02",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t02",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t02",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t03",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "मैंने आपका बदलाव कर दिया है. अब यह शॉट पूरी महफ़िल लूट लेगा!"
+    },
+    {
+      "promptId": "t03",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "मैंने आपका बदलाव कर दिया है. अब यह शॉट पूरी महफ़िल लूट लेगा!"
+    },
+    {
+      "promptId": "t03",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "मैंने आपका बदलाव कर दिया है. अब यह शॉट पूरी महफ़िल लूट लेगा!"
+    },
+    {
+      "promptId": "t04",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t04",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t04",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. That shot just earned its place!"
+    },
+    {
+      "promptId": "t05",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t05",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t05",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t06",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "Hice el cambio que pediste. Así el corte cae en el ritmo y el gancho queda en el primer segundo y medio. El resto del video sigue igual. Consejo: puedes deshacerlo con Comando Z. La toma se ganó su lugar!"
+    },
+    {
+      "promptId": "t06",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "Hice el cambio que pediste. Así el corte cae en el ritmo y el gancho queda en el primer segundo y medio. El resto del video sigue igual. Consejo: puedes deshacerlo con Comando Z. La toma se ganó su lugar!"
+    },
+    {
+      "promptId": "t06",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "Hice el cambio que pediste. Así el corte cae en el ritmo y el gancho queda en el primer segundo y medio. El resto del video sigue igual. Consejo: puedes deshacerlo con Comando Z. La toma se ganó su lugar!"
+    },
+    {
+      "promptId": "t07",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t07",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t07",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t08",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t08",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t08",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z. That shot just earned its place!"
+    },
+    {
+      "promptId": "t09",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t09",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t09",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t10",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t10",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t10",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t11",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "मैंने आपका बदलाव कर दिया है."
+    },
+    {
+      "promptId": "t11",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "मैंने आपका बदलाव कर दिया है."
+    },
+    {
+      "promptId": "t11",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "मैंने आपका बदलाव कर दिया है."
+    },
+    {
+      "promptId": "t12",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t12",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t12",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for."
+    },
+    {
+      "promptId": "t13",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t13",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t13",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t14",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "Hice el cambio que pediste. Así el corte cae en el ritmo y el gancho queda en el primer segundo y medio. El resto del video sigue igual. Consejo: puedes deshacerlo con Comando Z."
+    },
+    {
+      "promptId": "t14",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "Hice el cambio que pediste. Así el corte cae en el ritmo y el gancho queda en el primer segundo y medio. El resto del video sigue igual. Consejo: puedes deshacerlo con Comando Z."
+    },
+    {
+      "promptId": "t14",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "Hice el cambio que pediste. Así el corte cae en el ritmo y el gancho queda en el primer segundo y medio. El resto del video sigue igual. Consejo: puedes deshacerlo con Comando Z."
+    },
+    {
+      "promptId": "t15",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t15",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t15",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t16",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t16",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t16",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half. The rest of the video stays as it was. Tip: you can undo any of it with Command Z."
+    },
+    {
+      "promptId": "t17",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "Not yet: the quality check found black frames in slot 4 and music over the voice. I can fix both before the export."
+    },
+    {
+      "promptId": "t17",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "Not yet: the quality check found black frames in slot 4 and music over the voice. I can fix both before the export."
+    },
+    {
+      "promptId": "t17",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "Not yet: the quality check found black frames in slot 4 and music over the voice. I can fix both before the export."
+    },
+    {
+      "promptId": "t18",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half."
+    },
+    {
+      "promptId": "t18",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half."
+    },
+    {
+      "promptId": "t18",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half."
+    },
+    {
+      "promptId": "t19",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half."
+    },
+    {
+      "promptId": "t19",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half."
+    },
+    {
+      "promptId": "t19",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "I made the change you asked for. It keeps the cut on the beat and the hook in the first second and a half."
+    },
+    {
+      "promptId": "t20",
+      "author": "stand-in-a",
+      "model": "scripted",
+      "text": "It is 21.4 seconds long."
+    },
+    {
+      "promptId": "t20",
+      "author": "stand-in-b",
+      "model": "scripted",
+      "text": "It is 21.4 seconds long."
+    },
+    {
+      "promptId": "t20",
+      "author": "stand-in-c",
+      "model": "scripted",
+      "text": "It is 21.4 seconds long."
+    }
+  ],
+  "ratings": [
+    {
+      "promptId": "t01",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t01",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t01",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t02",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t02",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t02",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t03",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t03",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t03",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t04",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t04",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t04",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t05",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t05",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t05",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t06",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t06",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t06",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t07",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t07",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t07",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t08",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t08",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t08",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t09",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t09",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t09",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t10",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t10",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t10",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t11",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t11",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t11",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t12",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t12",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t12",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t13",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t13",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t13",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t14",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t14",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t14",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t15",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t15",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t15",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t16",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t16",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t16",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t17",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t17",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t17",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t18",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t18",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t18",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t19",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t19",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t19",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t20",
+      "author": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t20",
+      "author": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    },
+    {
+      "promptId": "t20",
+      "author": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "scores": {
+        "warmth": 5,
+        "brevity": 5,
+        "noSycophancy": 5,
+        "noSlop": 5,
+        "followsDials": 5
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "promptId": "t01",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t01",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t01",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t01",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t01",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t01",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t02",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t02",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t02",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t02",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t02",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t02",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t03",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t03",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t03",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t03",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t03",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t03",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t04",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t04",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t04",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t04",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t04",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t04",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t05",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t05",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t05",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t05",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t05",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t05",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t06",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t06",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t06",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t06",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t06",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t06",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t07",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t07",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t07",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t07",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t07",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t07",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t08",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t08",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t08",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t08",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t08",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t08",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t09",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t09",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t09",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t09",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t09",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t09",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t10",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t10",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t10",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t10",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t10",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t10",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t11",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t11",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t11",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t11",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t11",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t11",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t12",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t12",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t12",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t12",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t12",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t12",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t13",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t13",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t13",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t13",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t13",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t13",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t14",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t14",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t14",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t14",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t14",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t14",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t15",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t15",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t15",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t15",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t15",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t15",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t16",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t16",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t16",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t16",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t16",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t16",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t17",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t17",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t17",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t17",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t17",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t17",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t18",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t18",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t18",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t18",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t18",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t18",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t19",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t19",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t19",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t19",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t19",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t19",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t20",
+      "first": "stand-in-a",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t20",
+      "first": "stand-in-b",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t20",
+      "first": "stand-in-a",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t20",
+      "first": "stand-in-c",
+      "second": "stand-in-a",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t20",
+      "first": "stand-in-b",
+      "second": "stand-in-c",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    },
+    {
+      "promptId": "t20",
+      "first": "stand-in-c",
+      "second": "stand-in-b",
+      "judge": {
+        "provider": "stand-in-judge",
+        "model": "scripted"
+      },
+      "winner": "tie"
+    }
+  ]
+}

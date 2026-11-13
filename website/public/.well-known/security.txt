@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+# Taalcut's security contact (RFC 9116). Renew Expires before 2027-11-05; test/unit/geo-machine.test.ts fails a
+# month before it lapses.
+Contact: mailto:admin@matterwardlabs.com
+Expires: 2027-11-05T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://taalcut.app/.well-known/security.txt

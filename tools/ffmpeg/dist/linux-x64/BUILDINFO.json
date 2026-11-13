@@ -1,0 +1,209 @@
+{
+  "configure": "--prefix=/taalcut-ffmpeg --arch=x86_64 --target-os=linux --cc=gcc --cxx=g++ --nvcc=clang-14 --pkg-config=pkg-config --pkg-config-flags=--static --enable-shared --disable-static --disable-debug --disable-doc --disable-ffplay --disable-stripping --disable-autodetect --disable-gpl --disable-nonfree --disable-version3 --disable-libx264 --disable-libx265 --disable-libfdk-aac --enable-iconv --enable-zlib --enable-ffnvcodec --enable-cuda-llvm --enable-cuvid --enable-nvdec --enable-nvenc --enable-vulkan --glslc=glslang --enable-libplacebo --enable-libzimg --enable-libopenh264 --enable-libdav1d --enable-libsvtav1 --enable-vaapi --extra-ldflags='-static-libgcc -Wl,--exclude-libs,ALL' --extra-ldexeflags='-Wl,--disable-new-dtags -Wl,-rpath,'\\''\\$\\$ORIGIN/../lib'\\'''",
+  "ffmpeg_version": "9.0.2",
+  "glibc_min": "2.35",
+  "gpl": false,
+  "license": "LGPL-2.1-or-later",
+  "nonfree": false,
+  "outputs": [
+    {
+      "bytes": 481592,
+      "name": "ffmpeg",
+      "path": "bin/ffmpeg",
+      "sha256": "1a64540023df511c011ab2b26b99bdcec711cda87ddc1597090ea25f561dc3ac"
+    },
+    {
+      "bytes": 215280,
+      "name": "ffprobe",
+      "path": "bin/ffprobe",
+      "sha256": "0460b4f0ece7f6232db6d615e3243b4456eff45c1cf354b46fe88021645c1cb8"
+    },
+    {
+      "bytes": 25212088,
+      "name": "libavcodec.so.63",
+      "path": "lib/libavcodec.so.63",
+      "sha256": "a971861c077d0e4ef437fd861a6b598ffd37630468af213b90d51f6a398e41a3"
+    },
+    {
+      "bytes": 64496,
+      "name": "libavdevice.so.63",
+      "path": "lib/libavdevice.so.63",
+      "sha256": "c24083b39802267359a41dd159ed8318a7e88ad7c04e57e59fa77649f907de4f"
+    },
+    {
+      "bytes": 11794800,
+      "name": "libavfilter.so.12",
+      "path": "lib/libavfilter.so.12",
+      "sha256": "2b076e0e9f57f822396a2d3132853d53bf6868edf0a3ebf359fb866f41a3229e"
+    },
+    {
+      "bytes": 2947248,
+      "name": "libavformat.so.63",
+      "path": "lib/libavformat.so.63",
+      "sha256": "42d65e6edf1059284f842686fba1a319bac0137e7105350fed57f75c69307d67"
+    },
+    {
+      "bytes": 1170456,
+      "name": "libavutil.so.61",
+      "path": "lib/libavutil.so.61",
+      "sha256": "d6c538f8bfc091398075741343c09881716f86c553fec753ae909511601a0c61"
+    },
+    {
+      "bytes": 121296,
+      "name": "libswresample.so.7",
+      "path": "lib/libswresample.so.7",
+      "sha256": "c07c94483d1df1eb9d95046cf72307e8b4435f8ca28fb691639196fef1616af9"
+    },
+    {
+      "bytes": 1330232,
+      "name": "libswscale.so.10",
+      "path": "lib/libswscale.so.10",
+      "sha256": "6d9c67cc41a32ddab6b9466c849423682592716943ba9f793b26c9f9d435f430"
+    }
+  ],
+  "reproducibility": {
+    "build_directories": 2,
+    "clean_builds": 2,
+    "compared_at": "2026-10-27T13:04:23Z",
+    "diffoscope": false,
+    "matched": true,
+    "method": "Two builds on 2026-10-27, each with an empty build tree (.build/linux-x64) and no dist/linux-x64 files: one in this checkout's tools/ffmpeg, its tarballs from .build/src checked against versions.env; one in a copy of tools/ffmpeg at a path of different depth and length outside any checkout, with every source downloaded again and the toolchain image rebuilt from the Ubuntu snapshot without Docker's layer cache (TAALCUT_TOOLCHAIN_REBUILD=1). The two images listed the same installed packages (toolchain-packages.txt identical). sha256 and cmp -s agreed for all nine outputs and LICENSE.txt, the licence texts were identical, and the two BUILDINFO.json files were identical. check-paths.sh found no home, temp, checkout or account-name path in the outputs nor in the 68 compiled shaders and CUDA kernels. diffoscope is not installed.",
+    "path_independent": true,
+    "sha256": {
+      "ffmpeg": "1a64540023df511c011ab2b26b99bdcec711cda87ddc1597090ea25f561dc3ac",
+      "ffprobe": "0460b4f0ece7f6232db6d615e3243b4456eff45c1cf354b46fe88021645c1cb8",
+      "libavcodec.so.63": "a971861c077d0e4ef437fd861a6b598ffd37630468af213b90d51f6a398e41a3",
+      "libavdevice.so.63": "c24083b39802267359a41dd159ed8318a7e88ad7c04e57e59fa77649f907de4f",
+      "libavfilter.so.12": "2b076e0e9f57f822396a2d3132853d53bf6868edf0a3ebf359fb866f41a3229e",
+      "libavformat.so.63": "42d65e6edf1059284f842686fba1a319bac0137e7105350fed57f75c69307d67",
+      "libavutil.so.61": "d6c538f8bfc091398075741343c09881716f86c553fec753ae909511601a0c61",
+      "libswresample.so.7": "c07c94483d1df1eb9d95046cf72307e8b4435f8ca28fb691639196fef1616af9",
+      "libswscale.so.10": "6d9c67cc41a32ddab6b9466c849423682592716943ba9f793b26c9f9d435f430"
+    }
+  },
+  "source_date_epoch": 1789689600,
+  "sources": [
+    {
+      "name": "dav1d",
+      "sha256": "a1d5b63d2d38ec9bd03acf643caa51fa22edd1e89c5a109c4807717216bbec07",
+      "url": "https://github.com/videolan/dav1d/archive/refs/tags/1.5.4.tar.gz",
+      "version": "1.5.4"
+    },
+    {
+      "name": "fast_float",
+      "sha256": "7ff47ad261068517561beb0a7c1d57131f71b8be19bdbac2857c6a517a2eb53c",
+      "url": "https://github.com/fastfloat/fast_float/archive/refs/tags/v8.3.1.tar.gz",
+      "version": "8.3.1"
+    },
+    {
+      "name": "ffmpeg",
+      "sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "url": "https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz",
+      "version": "9.0.2"
+    },
+    {
+      "name": "glslang",
+      "sha256": "c167b2474af06cbab93abae8249efaf88fb79a09f30488e2a24d399e4258ce7a",
+      "url": "https://github.com/KhronosGroup/glslang/archive/168d452a4f460d24b588fed08477a81c44ee27a1.tar.gz",
+      "version": "168d452a4f460d24b588fed08477a81c44ee27a1"
+    },
+    {
+      "name": "jinja2",
+      "sha256": "0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d",
+      "url": "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz",
+      "version": "3.1.6"
+    },
+    {
+      "name": "lcms2",
+      "sha256": "bfc54f7bab59fbc921012014a8032e4cba4abd46db47d46b76416a8c0b2815c8",
+      "url": "https://downloads.sourceforge.net/project/lcms/lcms/2.19.1/lcms2-2.19.1.tar.gz",
+      "version": "2.19.1"
+    },
+    {
+      "name": "libplacebo",
+      "sha256": "d05fdf90bea2f629eaa2d115e909fd356388ac639e54f77b87a018a6d76224bd",
+      "url": "https://github.com/haasn/libplacebo/archive/refs/tags/v7.360.1.tar.gz",
+      "version": "7.360.1"
+    },
+    {
+      "name": "markupsafe",
+      "sha256": "722695808f4b6457b320fdc131280796bdceb04ab50fe1795cd540799ebe1698",
+      "url": "https://files.pythonhosted.org/packages/7e/99/7690b6d4034fffd95959cbe0c02de8deb3098cc577c67bb6a24fe5d7caa7/markupsafe-3.0.3.tar.gz",
+      "version": "3.0.3"
+    },
+    {
+      "name": "nv-codec-headers",
+      "sha256": "eab9d02d461035a4baded23d4f2e2834e5b17934820b79cea45baaf0c85383eb",
+      "url": "https://github.com/FFmpeg/nv-codec-headers/releases/download/n13.0.19.1/nv-codec-headers-13.0.19.1.tar.gz",
+      "version": "13.0.19.1"
+    },
+    {
+      "name": "openh264",
+      "sha256": "558544ad358283a7ab2930d69a9ceddf913f4a51ee9bf1bfb9e377322af81a69",
+      "url": "https://github.com/cisco/openh264/archive/refs/tags/v2.6.0.tar.gz",
+      "version": "2.6.0"
+    },
+    {
+      "name": "spirv-headers",
+      "sha256": "4d703067a7e06331ccb37bdfed3f9b7879cc61969a2689ae95c95db34a47ff07",
+      "url": "https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.357.0.tar.gz",
+      "version": "1.4.357.0"
+    },
+    {
+      "name": "svt-av1",
+      "sha256": "d9cb8d5fccbed565d038ae304cb00c5610f1f62388868102ca22132e7844921b",
+      "url": "https://github.com/AOMediaCodec/SVT-AV1/archive/refs/tags/v4.2.0.tar.gz",
+      "version": "4.2.0"
+    },
+    {
+      "name": "vulkan-headers",
+      "sha256": "e87dce08116151f6b6d7de6b6faf41498e87e6cf848ff16fa3bd5402190ad4a3",
+      "url": "https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/vulkan-sdk-1.4.357.0.tar.gz",
+      "version": "1.4.357.0"
+    },
+    {
+      "name": "vulkan-loader",
+      "sha256": "54f2537df22313768da0317dda2abdaaab7711b4081c48c869a79db343d0ae70",
+      "url": "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/vulkan-sdk-1.4.357.0.tar.gz",
+      "version": "1.4.357.0"
+    },
+    {
+      "name": "zimg",
+      "sha256": "be89390f13a5c9b2388ce0f44a5e89364a20c1c57ce46d382b1fcc3967057577",
+      "url": "https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.6.tar.gz",
+      "version": "3.0.6"
+    },
+    {
+      "name": "zlib",
+      "sha256": "d7a0654783a4da529d1bb793b7ad9c3318020af77667bcae35f95d0e42a792f3",
+      "url": "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.xz",
+      "version": "1.3.2"
+    }
+  ],
+  "target": "linux-x64",
+  "toolchain": {
+    "apt_packages": "build-essential clang-14 nasm pkg-config python3 autoconf automake libtool xz-utils ninja-build libva-dev",
+    "apt_snapshot": "20261027T000000Z",
+    "base_image": "ubuntu:22.04@sha256:e0f80c829509ef4df9e76bd8944eb7b8ec25cbb379b112a7f9448b2c77a77c9b",
+    "binutils": "2.38",
+    "clang": "14.0.0-1ubuntu1.1",
+    "gcc": "11.4.0",
+    "glibc": "2.35",
+    "installed_packages_sha256": "3a9f73efdf09c21f4779c8d47f3702f251e176fede17f0aa7c2edb12ea2b301d",
+    "nasm": "2.15.05",
+    "tools": [
+      {
+        "name": "cmake",
+        "sha256": "0dc2e9a6860f06bf10bd8fadc03e35d9eeb4df46e33763a7e480e987758f385c",
+        "url": "https://github.com/Kitware/CMake/releases/download/v3.31.12/cmake-3.31.12-linux-x86_64.tar.gz",
+        "version": "3.31.12"
+      },
+      {
+        "name": "meson",
+        "sha256": "ab0a6ca09f8ef70c564c8241fb5a23957886a0b53fb58412b5e07eaf07dba743",
+        "url": "https://github.com/mesonbuild/meson/releases/download/1.12.1/meson-1.12.1.tar.gz",
+        "version": "1.12.1"
+      }
+    ]
+  }
+}

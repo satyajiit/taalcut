@@ -1,0 +1,40 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "EAR1-D1: earshot's SFX bank rendered into takes (D22), hosted on 2026-11-07 (compose-provisional.mjs SOURCES; its plan is hosting/plan/sfx-bank.mjs, in PLAN); the notice pin is the NOTICE.txt hosting/build.mjs writes for these bytes. Built by tools/audio-packs/sfx-bank/build-sfx-bank.mjs --render --embed (README.md beside it): upstream earshot 0.4.0 at ff41f0788ae56896fd59879ab03858d223c06a53 renders every bank sound's takes (its own seed and the next) and the four presets' takes in the build machine's venv (Python at build time only), each audited and re-rolled as `kit render` does; 246 of the 252 sounds ship (624 takes), 6 are withheld because no take passes the audit; FLAC 48 kHz (16-bit, 24 where 16 would change the audit) with 50 ms of silence each side, catalogue.json, CLAP audio embeddings (int8 and fp16, @taalcut/audio's runner on the CPU), LICENSE-earshot.txt, CREDITS_FIT.md and NOTICE.txt; a ustar written by pack-archive.mjs (mtime 0) compressed with zstd 19 through Node's zlib. Build 2 (EAR1-R5, D22): build 1 (ba484336…) labelled the 15 fitted sounds CC0 1.0, but earshot renders them from the models in fit.json (MIT), so every sound is MIT; only catalogue.json and NOTICE.txt changed. Three builds on 2026-11-07 gave the same sha256 (two packs of the 2026-11-06 render, and one full render, embed and pack in a fresh work folder): 33479940 bytes, extractedSize 40917320, sha256 e6b0f259e98932b3000df433cb79b4ec865054505af89b77780e9528da5eba6c. Licence: all 246 sounds (forge_v2 177, forge04 51, fit 15, pluck 3) MIT, earshot's; the CC0 1.0 recordings the fitted sounds' models were measured from are credited in each fitted item's credit, NOTICE.txt and CREDITS_FIT.md. On demand (tiers []): sfx.addHits asks for it when given bank sounds or a kit. kind is model because the schema has no data kind.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "sfx-bank",
+      "name": "SFX bank (earshot, code-made sound effects)",
+      "version": "0.4.0-ff41f07.2",
+      "kind": "model",
+      "tiers": [],
+      "licence": {
+        "spdx": "MIT",
+        "notice": {
+          "url": "https://components.taalcut.app/sfx-bank/0.4.0-ff41f07.2/NOTICE-17a27e7bce3dae14.txt",
+          "size": 10043,
+          "sha256": "17a27e7bce3dae14e6c9f818259bf9803ba5382f76ba03172cf5202bc22539c0"
+        },
+        "attribution": "Sound effects from earshot 0.4.0 (https://github.com/Leonxlnx/earshot) by Leon Lin, MIT licence, rendered from its recipe code and fitted models by Taalcut (tools/audio-packs/sfx-bank); the 15 fitted sounds' models were measured from CC0 1.0 recordings on Freesound, whose recordists are credited in CREDITS_FIT.md and NOTICE.txt."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "any",
+          "urls": [
+            "https://components.taalcut.app/sfx-bank/0.4.0-ff41f07.2/sfx-bank-0.4.0-ff41f07.2.tar.zst"
+          ],
+          "sha256": "e6b0f259e98932b3000df433cb79b4ec865054505af89b77780e9528da5eba6c",
+          "size": 33479940,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 40917320
+          }
+        }
+      ]
+    }
+  ]
+}

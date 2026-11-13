@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+# These forms belong to the categories Q&A, Ideas, Show and tell, and Templates in the repository's settings.
+# Enabling Discussions first creates six defaults (Announcements, General, Ideas, Polls, Q&A, Show and tell),
+# which is a larger set than these four. Forms cannot set a category's format: use question-and-answer for
+# Q&A and open-ended for Ideas, Show and tell, and Templates. Polls cannot have a form.
+# The filename must match the category slug GitHub assigns. cli/cli uses q-a, ideas, and show-and-tell.
+
+title: "[Show and tell] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Show and tell
+
+        Share something you made with Taalcut. The video stays on your Mac. A link is optional. Do not attach the file.
+  - type: textarea
+    id: what-you-made
+    attributes:
+      label: What did you make?
+      description: Length, where it is going, and what you want people to notice.
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: A link, if you have one
+      description: Optional. Do not paste a key, a password, or a path under your home folder.
+    validations:
+      required: false

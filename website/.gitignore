@@ -1,0 +1,19 @@
+# Built and generated (website/SPEC.md)
+.next/
+out/
+# Written by scripts/csp.mjs after each build from firebase/firebase.template.json; the CLI's deploy cache.
+/firebase.json
+.firebase/
+# The local project alias for deploys from here (copy firebase/.firebaserc.example); never committed.
+/.firebaserc
+next-env.d.ts
+*.tsbuildinfo
+public/brand/
+test-results/
+playwright-report/
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/decision-*.json
+
+# next dev writes this; not ours
+/AGENTS.md

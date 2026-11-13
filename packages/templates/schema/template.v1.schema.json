@@ -1,0 +1,4957 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://taalcut.app/schema/template.v1.schema.json",
+  "title": "Taalcut template, schema version 1",
+  "description": "One immutable version of a template. Times are RationalTime { value, rate: { num, den } }; structure times are whole frames at canvas.rate, beats at beatMap.rate. Cross-field rules are checked by @taalcut/core templateSchema.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "parentVersion": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "createdAt": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "origin": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "reference"
+            },
+            "input": {
+              "type": "string",
+              "enum": [
+                "link",
+                "file",
+                "screenRecording"
+              ]
+            },
+            "platform": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "shorts",
+                    "reels",
+                    "tiktok",
+                    "other"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "url": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 2048,
+                  "format": "uri"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "fingerprint": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "source": {
+              "type": "object",
+              "properties": {
+                "duration": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "rate": {
+                      "type": "object",
+                      "properties": {
+                        "num": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "den": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "num",
+                        "den"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "rate"
+                  ]
+                },
+                "rate": {
+                  "type": "object",
+                  "properties": {
+                    "num": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "den": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "num",
+                    "den"
+                  ]
+                },
+                "width": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "height": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "duration",
+                "rate",
+                "width",
+                "height"
+              ]
+            },
+            "crop": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "width": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "height": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "pipelineVersion": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32
+            },
+            "configVersion": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            "analysedAt": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "kind",
+            "input",
+            "platform",
+            "url",
+            "fingerprint",
+            "source",
+            "crop",
+            "pipelineVersion",
+            "configVersion",
+            "analysedAt"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "format"
+            },
+            "formatId": {
+              "type": "string",
+              "enum": [
+                "vlog",
+                "dayInTheLife",
+                "talkingHead",
+                "podcastClip",
+                "ugcAd",
+                "beforeAfter",
+                "tutorial",
+                "highlightReel"
+              ]
+            },
+            "formatVersion": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32
+            },
+            "target": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "rate": {
+                  "type": "object",
+                  "properties": {
+                    "num": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "den": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "num",
+                    "den"
+                  ]
+                }
+              },
+              "required": [
+                "value",
+                "rate"
+              ]
+            },
+            "brief": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 500
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "formatId",
+            "formatVersion",
+            "target",
+            "brief"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "manual"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        }
+      ]
+    },
+    "canvas": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 16,
+          "maximum": 8192
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 16,
+          "maximum": 8192
+        },
+        "rate": {
+          "type": "object",
+          "properties": {
+            "num": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "den": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "num",
+            "den"
+          ]
+        }
+      },
+      "required": [
+        "width",
+        "height",
+        "rate"
+      ]
+    },
+    "duration": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "rate": {
+          "type": "object",
+          "properties": {
+            "num": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "den": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "num",
+            "den"
+          ]
+        }
+      },
+      "required": [
+        "value",
+        "rate"
+      ]
+    },
+    "slots": {
+      "minItems": 1,
+      "maxItems": 200,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "hook",
+              "body",
+              "peak",
+              "outro"
+            ]
+          },
+          "start": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "rate": {
+                "type": "object",
+                "properties": {
+                  "num": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "den": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "num",
+                  "den"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "rate"
+            ]
+          },
+          "duration": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "rate": {
+                "type": "object",
+                "properties": {
+                  "num": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "den": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "num",
+                  "den"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "rate"
+            ]
+          },
+          "intent": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "shotType": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "wide",
+                      "medium",
+                      "close",
+                      "detail",
+                      "pov",
+                      "aerial",
+                      "screen",
+                      "text"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "motion": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "static",
+                      "pan",
+                      "tilt",
+                      "push-in",
+                      "pull-out",
+                      "handheld",
+                      "tracking"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "subject": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 120
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "people": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 50
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "place": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 120
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "energy": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "reel": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "needs": {
+                "maxItems": 3,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                }
+              },
+              "face": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "shown",
+                      "hidden"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "analyst",
+                  "format",
+                  "user"
+                ]
+              }
+            },
+            "required": [
+              "text",
+              "shotType",
+              "motion",
+              "subject",
+              "people",
+              "place",
+              "energy",
+              "source"
+            ]
+          },
+          "beatAnchor": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "beatIndex": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "offset": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 9007199254740991
+                      },
+                      "rate": {
+                        "type": "object",
+                        "properties": {
+                          "num": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "den": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "num",
+                          "den"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "rate"
+                    ]
+                  }
+                },
+                "required": [
+                  "beatIndex",
+                  "offset"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "transitionIn": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "dissolve",
+                      "fade",
+                      "whip",
+                      "zoom",
+                      "slide",
+                      "flash",
+                      "glitch",
+                      "other"
+                    ]
+                  },
+                  "before": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 9007199254740991
+                      },
+                      "rate": {
+                        "type": "object",
+                        "properties": {
+                          "num": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "den": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "num",
+                          "den"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "rate"
+                    ]
+                  },
+                  "after": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 9007199254740991
+                      },
+                      "rate": {
+                        "type": "object",
+                        "properties": {
+                          "num": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "den": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "num",
+                          "den"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "rate"
+                    ]
+                  },
+                  "direction": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "left",
+                          "right",
+                          "up",
+                          "down"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "before",
+                  "after",
+                  "direction",
+                  "confidence"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "speedRamp": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "points": {
+                    "minItems": 2,
+                    "maxItems": 16,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "at": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "integer",
+                              "minimum": -9007199254740991,
+                              "maximum": 9007199254740991
+                            },
+                            "rate": {
+                              "type": "object",
+                              "properties": {
+                                "num": {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "den": {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                }
+                              },
+                              "required": [
+                                "num",
+                                "den"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "value",
+                            "rate"
+                          ]
+                        },
+                        "speed": {
+                          "type": "number",
+                          "minimum": 0.1,
+                          "maximum": 16
+                        }
+                      },
+                      "required": [
+                        "at",
+                        "speed"
+                      ]
+                    }
+                  },
+                  "curve": {
+                    "type": "string",
+                    "enum": [
+                      "linear",
+                      "ease",
+                      "hold"
+                    ]
+                  },
+                  "windowStart": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 9007199254740991
+                      },
+                      "rate": {
+                        "type": "object",
+                        "properties": {
+                          "num": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "den": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "num",
+                          "den"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "rate"
+                    ]
+                  }
+                },
+                "required": [
+                  "points",
+                  "curve"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cut": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string",
+                "enum": [
+                  "both",
+                  "scdet",
+                  "embedding",
+                  "vision",
+                  "rule",
+                  "format",
+                  "user"
+                ]
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "method",
+              "confidence"
+            ]
+          },
+          "approved": {
+            "type": "boolean"
+          },
+          "frame": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "doubts": {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "cutUnsure",
+                    "cutMaybeTransition",
+                    "fadeTail",
+                    "intentVague",
+                    "intentGeneralised",
+                    "motionUnsure",
+                    "textMaybeScene",
+                    "speechMaybeHallucinated",
+                    "tempoMaybeHalfOrDouble",
+                    "soundCreditMissing"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "reason"
+              ]
+            }
+          },
+          "motionMeasure": {
+            "type": "object",
+            "properties": {
+              "panX": {
+                "type": "number",
+                "minimum": -20,
+                "maximum": 20
+              },
+              "panY": {
+                "type": "number",
+                "minimum": -20,
+                "maximum": 20
+              },
+              "scale": {
+                "type": "number",
+                "minimum": -20,
+                "maximum": 20
+              },
+              "rotation": {
+                "type": "number",
+                "minimum": -20,
+                "maximum": 20
+              },
+              "jitter": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "subjectSteady": {
+                "type": "boolean"
+              },
+              "label": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "static",
+                      "pan",
+                      "tilt",
+                      "push-in",
+                      "pull-out",
+                      "handheld",
+                      "tracking"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "version": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "panX",
+              "panY",
+              "scale",
+              "rotation",
+              "jitter",
+              "label",
+              "confidence",
+              "version"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "role",
+          "start",
+          "duration",
+          "intent",
+          "beatAnchor",
+          "transitionIn",
+          "speedRamp",
+          "cut",
+          "approved",
+          "frame"
+        ]
+      }
+    },
+    "beatMap": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "rate": {
+              "type": "object",
+              "properties": {
+                "num": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "den": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "num",
+                "den"
+              ]
+            },
+            "beats": {
+              "maxItems": 4000,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  "rate": {
+                    "type": "object",
+                    "properties": {
+                      "num": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "den": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "num",
+                      "den"
+                    ]
+                  }
+                },
+                "required": [
+                  "value",
+                  "rate"
+                ]
+              }
+            },
+            "downbeats": {
+              "maxItems": 1000,
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "bpm": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 400
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "beatsPerBar": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 12
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "tracker",
+                "format",
+                "user"
+              ]
+            }
+          },
+          "required": [
+            "rate",
+            "beats",
+            "downbeats",
+            "bpm",
+            "beatsPerBar",
+            "confidence",
+            "source"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "text": {
+      "maxItems": 500,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "title",
+              "label",
+              "list",
+              "caption",
+              "cta",
+              "other"
+            ]
+          },
+          "start": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "rate": {
+                "type": "object",
+                "properties": {
+                  "num": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "den": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "num",
+                  "den"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "rate"
+            ]
+          },
+          "duration": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "rate": {
+                "type": "object",
+                "properties": {
+                  "num": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "den": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "num",
+                  "den"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "rate"
+            ]
+          },
+          "slotId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "box": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "y": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "width": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "height": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          "appearance": {
+            "type": "object",
+            "properties": {
+              "size": {
+                "type": "number",
+                "minimum": 0.005,
+                "maximum": 0.5
+              },
+              "align": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "center",
+                  "right"
+                ]
+              },
+              "case": {
+                "type": "string",
+                "enum": [
+                  "upper",
+                  "lower",
+                  "mixed"
+                ]
+              },
+              "background": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "box",
+                  "outline",
+                  "shadow"
+                ]
+              }
+            },
+            "required": [
+              "size",
+              "align",
+              "case",
+              "background"
+            ]
+          },
+          "styleKey": {
+            "type": "string",
+            "pattern": "^[a-z][a-zA-Z0-9]{0,31}$"
+          },
+          "doubts": {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "cutUnsure",
+                    "cutMaybeTransition",
+                    "fadeTail",
+                    "intentVague",
+                    "intentGeneralised",
+                    "motionUnsure",
+                    "textMaybeScene",
+                    "speechMaybeHallucinated",
+                    "tempoMaybeHalfOrDouble",
+                    "soundCreditMissing"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "reason"
+              ]
+            }
+          },
+          "reveal": {
+            "type": "string",
+            "enum": [
+              "none",
+              "fade",
+              "pop",
+              "slide",
+              "typewriter",
+              "wordByWord"
+            ]
+          },
+          "design": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "plain",
+                  "chatBubble",
+                  "pill",
+                  "label",
+                  "lowerThird",
+                  "sticker",
+                  "callout",
+                  "cta",
+                  "kineticTitle"
+                ]
+              },
+              "colors": {
+                "type": "object",
+                "properties": {
+                  "fill": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^#[0-9a-f]{6}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "text": {
+                    "type": "string",
+                    "pattern": "^#[0-9a-f]{6}$"
+                  },
+                  "stroke": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^#[0-9a-f]{6}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "fill",
+                  "text",
+                  "stroke"
+                ]
+              },
+              "cornerRadius": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 0.5
+              },
+              "tail": {
+                "default": "none",
+                "type": "string",
+                "enum": [
+                  "none",
+                  "left",
+                  "right"
+                ]
+              },
+              "font": {
+                "type": "object",
+                "properties": {
+                  "class": {
+                    "type": "string",
+                    "enum": [
+                      "sans",
+                      "serif",
+                      "rounded",
+                      "mono",
+                      "script",
+                      "display"
+                    ]
+                  },
+                  "weight": {
+                    "type": "integer",
+                    "minimum": 100,
+                    "maximum": 900
+                  }
+                },
+                "required": [
+                  "class",
+                  "weight"
+                ]
+              },
+              "motion": {
+                "type": "object",
+                "properties": {
+                  "enter": {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "fade",
+                      "pop",
+                      "slide",
+                      "typewriter",
+                      "wordByWord",
+                      "unknown"
+                    ]
+                  },
+                  "exit": {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "fade",
+                      "pop",
+                      "slide",
+                      "unknown"
+                    ]
+                  },
+                  "typing": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "enter",
+                  "exit",
+                  "typing"
+                ]
+              },
+              "shape": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "width": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "height": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "width",
+                  "height"
+                ]
+              },
+              "avatar": {
+                "type": "boolean"
+              },
+              "receipt": {
+                "type": "boolean"
+              },
+              "placement": {
+                "type": "object",
+                "properties": {
+                  "relativeTo": {
+                    "type": "string",
+                    "enum": [
+                      "subject",
+                      "frame"
+                    ]
+                  },
+                  "side": {
+                    "type": "string",
+                    "enum": [
+                      "left",
+                      "right",
+                      "above",
+                      "below"
+                    ]
+                  },
+                  "zone": {
+                    "type": "string",
+                    "enum": [
+                      "top",
+                      "middle",
+                      "bottom"
+                    ]
+                  },
+                  "gap": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                  }
+                },
+                "required": [
+                  "relativeTo",
+                  "zone"
+                ]
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "kind",
+              "colors",
+              "cornerRadius",
+              "font",
+              "motion",
+              "confidence"
+            ]
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "role",
+          "start",
+          "duration",
+          "slotId",
+          "box",
+          "appearance",
+          "styleKey",
+          "reveal",
+          "language",
+          "confidence"
+        ]
+      }
+    },
+    "audio": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "music",
+            "voice",
+            "original",
+            "mixed",
+            "silent"
+          ]
+        },
+        "loudnessLufs": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": -70,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sound": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "artist": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "url": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 2048,
+                      "format": "uri"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "title",
+                "artist"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "speech": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "language": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "coverage": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "segments": {
+                  "maxItems": 400,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "rate": {
+                            "type": "object",
+                            "properties": {
+                              "num": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "den": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "required": [
+                              "num",
+                              "den"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "rate"
+                        ]
+                      },
+                      "duration": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "rate": {
+                            "type": "object",
+                            "properties": {
+                              "num": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "den": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "required": [
+                              "num",
+                              "den"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "rate"
+                        ]
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1000
+                      }
+                    },
+                    "required": [
+                      "start",
+                      "duration",
+                      "text"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "language",
+                "coverage",
+                "segments"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "waveform": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "rate": {
+                  "type": "object",
+                  "properties": {
+                    "num": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "den": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "num",
+                    "den"
+                  ]
+                },
+                "peaks": {
+                  "maxItems": 12000,
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                }
+              },
+              "required": [
+                "rate",
+                "peaks"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "listening": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "version": {
+                  "type": "number",
+                  "const": 1
+                },
+                "model": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "clap": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 120
+                        },
+                        "ast": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 120
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "dtype": {
+                          "type": "string",
+                          "enum": [
+                            "fp32",
+                            "fp16",
+                            "int8"
+                          ]
+                        },
+                        "configVersion": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 64
+                        }
+                      },
+                      "required": [
+                        "clap",
+                        "ast",
+                        "dtype"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "measures": {
+                  "type": "object",
+                  "properties": {
+                    "duration": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991
+                        },
+                        "rate": {
+                          "type": "object",
+                          "properties": {
+                            "num": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "den": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "num",
+                            "den"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "rate"
+                      ]
+                    },
+                    "lufs": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": -120,
+                          "maximum": 10
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "truePeakDbtp": {
+                      "type": "number",
+                      "minimum": -240,
+                      "maximum": 40
+                    },
+                    "peakDbfs": {
+                      "type": "number",
+                      "minimum": -240,
+                      "maximum": 40
+                    },
+                    "lraLu": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 100
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "crestLu": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": -60,
+                          "maximum": 130
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "noiseFloorDbfs": {
+                      "type": "number",
+                      "minimum": -240,
+                      "maximum": 40
+                    },
+                    "nearSilent": {
+                      "type": "boolean"
+                    },
+                    "bandwidthHz": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 48000
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "brightnessHz": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 48000
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "bands": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "sub": {
+                              "type": "number",
+                              "minimum": -130,
+                              "maximum": 0
+                            },
+                            "low": {
+                              "type": "number",
+                              "minimum": -130,
+                              "maximum": 0
+                            },
+                            "lowmid": {
+                              "type": "number",
+                              "minimum": -130,
+                              "maximum": 0
+                            },
+                            "mid": {
+                              "type": "number",
+                              "minimum": -130,
+                              "maximum": 0
+                            },
+                            "presence": {
+                              "type": "number",
+                              "minimum": -130,
+                              "maximum": 0
+                            },
+                            "air": {
+                              "type": "number",
+                              "minimum": -130,
+                              "maximum": 0
+                            }
+                          },
+                          "required": [
+                            "sub",
+                            "low",
+                            "lowmid",
+                            "mid",
+                            "presence",
+                            "air"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "sideToMidDb": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": -240,
+                          "maximum": 240
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "tempo": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "bpm": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 400
+                            },
+                            "alt": {
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 400
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "clarity": {
+                              "type": "number",
+                              "minimum": -1,
+                              "maximum": 1
+                            },
+                            "confidence": {
+                              "type": "string",
+                              "enum": [
+                                "clear",
+                                "weak",
+                                "none"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "bpm",
+                            "alt",
+                            "clarity",
+                            "confidence"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "key": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "tonic": {
+                              "type": "string",
+                              "enum": [
+                                "C",
+                                "C#",
+                                "D",
+                                "Eb",
+                                "E",
+                                "F",
+                                "F#",
+                                "G",
+                                "Ab",
+                                "A",
+                                "Bb",
+                                "B"
+                              ]
+                            },
+                            "mode": {
+                              "type": "string",
+                              "enum": [
+                                "major",
+                                "minor"
+                              ]
+                            },
+                            "confidence": {
+                              "type": "number",
+                              "minimum": -1,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "tonic",
+                            "mode",
+                            "confidence"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "duration",
+                    "lufs",
+                    "truePeakDbtp",
+                    "peakDbfs",
+                    "lraLu",
+                    "crestLu",
+                    "noiseFloorDbfs",
+                    "nearSilent",
+                    "bandwidthHz",
+                    "brightnessHz",
+                    "bands",
+                    "sideToMidDb"
+                  ]
+                },
+                "events": {
+                  "maxItems": 400,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "at": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "rate": {
+                            "type": "object",
+                            "properties": {
+                              "num": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "den": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "required": [
+                              "num",
+                              "den"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "rate"
+                        ]
+                      },
+                      "shape": {
+                        "type": "string",
+                        "enum": [
+                          "hit",
+                          "swell"
+                        ]
+                      },
+                      "band": {
+                        "type": "string",
+                        "enum": [
+                          "full",
+                          "low",
+                          "high"
+                        ]
+                      },
+                      "contrastDb": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 130
+                      },
+                      "prominenceDb": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 130
+                      },
+                      "bedDb": {
+                        "type": "number",
+                        "minimum": -130,
+                        "maximum": 20
+                      },
+                      "peakDbfs": {
+                        "type": "number",
+                        "minimum": -240,
+                        "maximum": 40
+                      },
+                      "lengthMs": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 600000
+                      },
+                      "riseMs": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 60000
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "whoosh",
+                          "riser",
+                          "hit",
+                          "key",
+                          "ui",
+                          "step",
+                          "foley",
+                          "note",
+                          "drum",
+                          "voice"
+                        ]
+                      },
+                      "tags": {
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "term": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 120
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "whoosh",
+                                "riser",
+                                "hit",
+                                "key",
+                                "ui",
+                                "step",
+                                "foley",
+                                "note",
+                                "drum",
+                                "voice"
+                              ]
+                            },
+                            "z": {
+                              "type": "number",
+                              "minimum": -100,
+                              "maximum": 100
+                            }
+                          },
+                          "required": [
+                            "term",
+                            "kind",
+                            "z"
+                          ]
+                        }
+                      },
+                      "audioSet": {
+                        "maxItems": 5,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 120
+                            },
+                            "score": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "score"
+                          ]
+                        }
+                      },
+                      "exposed": {
+                        "type": "boolean"
+                      },
+                      "beatOffsetMs": {
+                        "type": "number",
+                        "minimum": -60000,
+                        "maximum": 60000
+                      }
+                    },
+                    "required": [
+                      "at",
+                      "shape",
+                      "band",
+                      "contrastDb",
+                      "prominenceDb",
+                      "bedDb",
+                      "peakDbfs",
+                      "lengthMs",
+                      "exposed"
+                    ]
+                  }
+                },
+                "sections": {
+                  "maxItems": 60,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "rate": {
+                            "type": "object",
+                            "properties": {
+                              "num": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "den": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "required": [
+                              "num",
+                              "den"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "rate"
+                        ]
+                      },
+                      "end": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "rate": {
+                            "type": "object",
+                            "properties": {
+                              "num": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "den": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "required": [
+                              "num",
+                              "den"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "rate"
+                        ]
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 300
+                      },
+                      "genre": {
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "term": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "category": {
+                              "type": "string",
+                              "enum": [
+                                "transitions",
+                                "impacts",
+                                "ui",
+                                "keyboard",
+                                "foley",
+                                "water",
+                                "nature",
+                                "chimes",
+                                "ambience",
+                                "everyday",
+                                "music_genre",
+                                "music_mood",
+                                "instruments",
+                                "voice",
+                                "quality",
+                                "production"
+                              ]
+                            },
+                            "cosine": {
+                              "type": "number",
+                              "minimum": -1,
+                              "maximum": 1
+                            },
+                            "z": {
+                              "type": "number",
+                              "minimum": -100,
+                              "maximum": 100
+                            },
+                            "verdict": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "strong",
+                                    "plausible",
+                                    "weak",
+                                    "no_match"
+                                  ]
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "hint": {
+                              "type": "boolean"
+                            },
+                            "borderline": {
+                              "type": "boolean"
+                            },
+                            "pVsAlts": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "term",
+                            "category",
+                            "cosine",
+                            "z",
+                            "verdict",
+                            "hint",
+                            "borderline"
+                          ]
+                        }
+                      },
+                      "mood": {
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "term": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "category": {
+                              "type": "string",
+                              "enum": [
+                                "transitions",
+                                "impacts",
+                                "ui",
+                                "keyboard",
+                                "foley",
+                                "water",
+                                "nature",
+                                "chimes",
+                                "ambience",
+                                "everyday",
+                                "music_genre",
+                                "music_mood",
+                                "instruments",
+                                "voice",
+                                "quality",
+                                "production"
+                              ]
+                            },
+                            "cosine": {
+                              "type": "number",
+                              "minimum": -1,
+                              "maximum": 1
+                            },
+                            "z": {
+                              "type": "number",
+                              "minimum": -100,
+                              "maximum": 100
+                            },
+                            "verdict": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "strong",
+                                    "plausible",
+                                    "weak",
+                                    "no_match"
+                                  ]
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "hint": {
+                              "type": "boolean"
+                            },
+                            "borderline": {
+                              "type": "boolean"
+                            },
+                            "pVsAlts": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "term",
+                            "category",
+                            "cosine",
+                            "z",
+                            "verdict",
+                            "hint",
+                            "borderline"
+                          ]
+                        }
+                      },
+                      "instruments": {
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "term": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "category": {
+                              "type": "string",
+                              "enum": [
+                                "transitions",
+                                "impacts",
+                                "ui",
+                                "keyboard",
+                                "foley",
+                                "water",
+                                "nature",
+                                "chimes",
+                                "ambience",
+                                "everyday",
+                                "music_genre",
+                                "music_mood",
+                                "instruments",
+                                "voice",
+                                "quality",
+                                "production"
+                              ]
+                            },
+                            "cosine": {
+                              "type": "number",
+                              "minimum": -1,
+                              "maximum": 1
+                            },
+                            "z": {
+                              "type": "number",
+                              "minimum": -100,
+                              "maximum": 100
+                            },
+                            "verdict": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "strong",
+                                    "plausible",
+                                    "weak",
+                                    "no_match"
+                                  ]
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "hint": {
+                              "type": "boolean"
+                            },
+                            "borderline": {
+                              "type": "boolean"
+                            },
+                            "pVsAlts": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "term",
+                            "category",
+                            "cosine",
+                            "z",
+                            "verdict",
+                            "hint",
+                            "borderline"
+                          ]
+                        }
+                      },
+                      "ambience": {
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "term": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "category": {
+                              "type": "string",
+                              "enum": [
+                                "transitions",
+                                "impacts",
+                                "ui",
+                                "keyboard",
+                                "foley",
+                                "water",
+                                "nature",
+                                "chimes",
+                                "ambience",
+                                "everyday",
+                                "music_genre",
+                                "music_mood",
+                                "instruments",
+                                "voice",
+                                "quality",
+                                "production"
+                              ]
+                            },
+                            "cosine": {
+                              "type": "number",
+                              "minimum": -1,
+                              "maximum": 1
+                            },
+                            "z": {
+                              "type": "number",
+                              "minimum": -100,
+                              "maximum": 100
+                            },
+                            "verdict": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "strong",
+                                    "plausible",
+                                    "weak",
+                                    "no_match"
+                                  ]
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "hint": {
+                              "type": "boolean"
+                            },
+                            "borderline": {
+                              "type": "boolean"
+                            },
+                            "pVsAlts": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "term",
+                            "category",
+                            "cosine",
+                            "z",
+                            "verdict",
+                            "hint",
+                            "borderline"
+                          ]
+                        }
+                      },
+                      "voice": {
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "term": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "category": {
+                              "type": "string",
+                              "enum": [
+                                "transitions",
+                                "impacts",
+                                "ui",
+                                "keyboard",
+                                "foley",
+                                "water",
+                                "nature",
+                                "chimes",
+                                "ambience",
+                                "everyday",
+                                "music_genre",
+                                "music_mood",
+                                "instruments",
+                                "voice",
+                                "quality",
+                                "production"
+                              ]
+                            },
+                            "cosine": {
+                              "type": "number",
+                              "minimum": -1,
+                              "maximum": 1
+                            },
+                            "z": {
+                              "type": "number",
+                              "minimum": -100,
+                              "maximum": 100
+                            },
+                            "verdict": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "strong",
+                                    "plausible",
+                                    "weak",
+                                    "no_match"
+                                  ]
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "hint": {
+                              "type": "boolean"
+                            },
+                            "borderline": {
+                              "type": "boolean"
+                            },
+                            "pVsAlts": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "term",
+                            "category",
+                            "cosine",
+                            "z",
+                            "verdict",
+                            "hint",
+                            "borderline"
+                          ]
+                        }
+                      },
+                      "presence": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "music": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "speech": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "silence": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              }
+                            },
+                            "required": [
+                              "music",
+                              "speech",
+                              "silence"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "audioSet": {
+                        "maxItems": 5,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 120
+                            },
+                            "score": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "score"
+                          ]
+                        }
+                      },
+                      "lufs": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "minimum": -120,
+                            "maximum": 10
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "silent": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "start",
+                      "end",
+                      "label",
+                      "genre",
+                      "mood",
+                      "instruments",
+                      "ambience",
+                      "voice",
+                      "presence",
+                      "lufs",
+                      "silent"
+                    ]
+                  }
+                },
+                "cutSync": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "maxItems": 2000,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "cutIndex": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "at": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "integer",
+                                "minimum": -9007199254740991,
+                                "maximum": 9007199254740991
+                              },
+                              "rate": {
+                                "type": "object",
+                                "properties": {
+                                  "num": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "den": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  }
+                                },
+                                "required": [
+                                  "num",
+                                  "den"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "value",
+                              "rate"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "ok",
+                              "near",
+                              "swell",
+                              "peak",
+                              "off",
+                              "none"
+                            ]
+                          },
+                          "offsetMs": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "eventAt": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "integer",
+                                "minimum": -9007199254740991,
+                                "maximum": 9007199254740991
+                              },
+                              "rate": {
+                                "type": "object",
+                                "properties": {
+                                  "num": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "den": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  }
+                                },
+                                "required": [
+                                  "num",
+                                  "den"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "value",
+                              "rate"
+                            ]
+                          },
+                          "prominenceDb": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 130
+                          },
+                          "accentOffsetMs": {
+                            "type": "number",
+                            "minimum": -1000,
+                            "maximum": 1000
+                          },
+                          "beatOffsetMs": {
+                            "type": "number",
+                            "minimum": -60000,
+                            "maximum": 60000
+                          }
+                        },
+                        "required": [
+                          "cutIndex",
+                          "at",
+                          "status",
+                          "offsetMs"
+                        ]
+                      }
+                    },
+                    "cutsWithoutHit": {
+                      "maxItems": 2000,
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "okShare": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "nearShare": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "chanceShare": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "medianOffsetMs": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1000
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "toleranceMs": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 1000
+                    },
+                    "frameRate": {
+                      "type": "object",
+                      "properties": {
+                        "num": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "den": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "num",
+                        "den"
+                      ]
+                    },
+                    "onBeatShare": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "onBeatChance": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "cutsWithoutHit",
+                    "okShare",
+                    "nearShare",
+                    "chanceShare",
+                    "medianOffsetMs",
+                    "toleranceMs"
+                  ]
+                },
+                "sfxAtCuts": {
+                  "maxItems": 200,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cutIndex": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "family": {
+                        "type": "string",
+                        "enum": [
+                          "whoosh",
+                          "riser",
+                          "impact",
+                          "hit"
+                        ]
+                      },
+                      "soundHint": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 120
+                      },
+                      "offsetMs": {
+                        "type": "number",
+                        "minimum": -1000,
+                        "maximum": 1000
+                      }
+                    },
+                    "required": [
+                      "cutIndex",
+                      "family",
+                      "offsetMs"
+                    ]
+                  }
+                },
+                "realness": {
+                  "type": "object",
+                  "properties": {
+                    "pReal": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "real",
+                        "uncertain",
+                        "synthetic",
+                        "silent"
+                      ]
+                    },
+                    "windows": {
+                      "maxItems": 1000,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "integer",
+                                "minimum": -9007199254740991,
+                                "maximum": 9007199254740991
+                              },
+                              "rate": {
+                                "type": "object",
+                                "properties": {
+                                  "num": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "den": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  }
+                                },
+                                "required": [
+                                  "num",
+                                  "den"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "value",
+                              "rate"
+                            ]
+                          },
+                          "end": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "integer",
+                                "minimum": -9007199254740991,
+                                "maximum": 9007199254740991
+                              },
+                              "rate": {
+                                "type": "object",
+                                "properties": {
+                                  "num": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "den": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  }
+                                },
+                                "required": [
+                                  "num",
+                                  "den"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "value",
+                              "rate"
+                            ]
+                          },
+                          "pReal": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "start",
+                          "end",
+                          "pReal"
+                        ]
+                      }
+                    },
+                    "borderline": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "pReal",
+                    "verdict"
+                  ]
+                },
+                "critiqueMetrics": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-zA-Z0-9_]{0,39}$"
+                  },
+                  "additionalProperties": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "version",
+                "model",
+                "measures",
+                "events",
+                "sections",
+                "cutSync",
+                "sfxAtCuts"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "loudnessLufs",
+        "sound",
+        "speech",
+        "waveform"
+      ]
+    },
+    "pacing": {
+      "type": "object",
+      "properties": {
+        "shotCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "meanShot": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "rate": {
+              "type": "object",
+              "properties": {
+                "num": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "den": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "num",
+                "den"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "rate"
+          ]
+        },
+        "medianShot": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "rate": {
+              "type": "object",
+              "properties": {
+                "num": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "den": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "num",
+                "den"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "rate"
+          ]
+        },
+        "shortestShot": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "rate": {
+              "type": "object",
+              "properties": {
+                "num": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "den": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "num",
+                "den"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "rate"
+          ]
+        },
+        "longestShot": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "rate": {
+              "type": "object",
+              "properties": {
+                "num": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "den": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "num",
+                "den"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "rate"
+          ]
+        },
+        "hookEnd": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "rate": {
+              "type": "object",
+              "properties": {
+                "num": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "den": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "num",
+                "den"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "rate"
+          ]
+        },
+        "cutsOnBeat": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "shotCount",
+        "meanShot",
+        "medianShot",
+        "shortestShot",
+        "longestShot",
+        "hookEnd",
+        "cutsOnBeat"
+      ]
+    },
+    "styleId": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contactSheet": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "asset": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "mediaType": {
+              "type": "string",
+              "enum": [
+                "image/jpeg",
+                "image/webp"
+              ]
+            },
+            "columns": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "rows": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "tile": {
+              "type": "object",
+              "properties": {
+                "width": {
+                  "type": "integer",
+                  "minimum": 16,
+                  "maximum": 180
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 16,
+                  "maximum": 180
+                }
+              },
+              "required": [
+                "width",
+                "height"
+              ]
+            },
+            "frames": {
+              "maxItems": 60,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "at": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 9007199254740991
+                      },
+                      "rate": {
+                        "type": "object",
+                        "properties": {
+                          "num": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "den": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "num",
+                          "den"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "rate"
+                    ]
+                  },
+                  "slotId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "at",
+                  "slotId"
+                ]
+              }
+            }
+          },
+          "required": [
+            "asset",
+            "mediaType",
+            "columns",
+            "rows",
+            "tile",
+            "frames"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "language": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "doubts": {
+      "maxItems": 10,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "enum": [
+              "cutUnsure",
+              "cutMaybeTransition",
+              "fadeTail",
+              "intentVague",
+              "intentGeneralised",
+              "motionUnsure",
+              "textMaybeScene",
+              "speechMaybeHallucinated",
+              "tempoMaybeHalfOrDouble",
+              "soundCreditMissing"
+            ]
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      }
+    },
+    "subjects": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "number",
+          "const": 1
+        },
+        "detector": {
+          "type": "string",
+          "enum": [
+            "vision",
+            "onnx"
+          ]
+        },
+        "hz": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 30
+        },
+        "samples": {
+          "maxItems": 4000,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "t": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  "rate": {
+                    "type": "object",
+                    "properties": {
+                      "num": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "den": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "num",
+                      "den"
+                    ]
+                  }
+                },
+                "required": [
+                  "value",
+                  "rate"
+                ]
+              },
+              "heads": {
+                "maxItems": 16,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "box": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "width": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "height": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y",
+                        "width",
+                        "height"
+                      ]
+                    },
+                    "confidence": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": [
+                    "box",
+                    "confidence"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "people": {
+                "maxItems": 16,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "box": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "width": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "height": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y",
+                        "width",
+                        "height"
+                      ]
+                    },
+                    "confidence": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": [
+                    "box",
+                    "confidence"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "t",
+              "heads",
+              "people"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "version",
+        "detector",
+        "hz",
+        "samples"
+      ],
+      "additionalProperties": false
+    },
+    "graphics": {
+      "type": "object",
+      "properties": {
+        "uses": {
+          "default": [],
+          "maxItems": 500,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "overlayId": {
+                "type": "string",
+                "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "compositionId": {
+                "type": "string",
+                "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "params": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-zA-Z0-9]{0,23}$"
+                },
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 500
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "boolean"
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "overlayId",
+              "compositionId"
+            ]
+          }
+        },
+        "compositions": {
+          "maxItems": 24,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+              },
+              "entry": {
+                "type": "string",
+                "maxLength": 160,
+                "pattern": "^(?:[A-Za-z0-9_][A-Za-z0-9._-]{0,63}\\/){0,7}[A-Za-z0-9_][A-Za-z0-9._-]{0,63}$"
+              },
+              "files": {
+                "minItems": 1,
+                "maxItems": 32,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "maxLength": 160,
+                      "pattern": "^(?:[A-Za-z0-9_][A-Za-z0-9._-]{0,63}\\/){0,7}[A-Za-z0-9_][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 65536
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "sha256",
+                    "bytes"
+                  ]
+                }
+              },
+              "variables": {
+                "maxItems": 16,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "text"
+                        },
+                        "name": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,23}$"
+                        },
+                        "maxLength": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 500
+                        },
+                        "sample": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 500
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "name",
+                        "maxLength",
+                        "sample"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "enum"
+                        },
+                        "name": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,23}$"
+                        },
+                        "options": {
+                          "minItems": 2,
+                          "maxItems": 8,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-zA-Z0-9-]{0,23}$"
+                          }
+                        },
+                        "default": {
+                          "type": "string",
+                          "maxLength": 24
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "name",
+                        "options",
+                        "default"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "boolean"
+                        },
+                        "name": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,23}$"
+                        },
+                        "default": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "name",
+                        "default"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "colour"
+                        },
+                        "name": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,23}$"
+                        },
+                        "default": {
+                          "type": "string",
+                          "pattern": "^#[0-9a-f]{6}$"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "name",
+                        "default"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "number"
+                        },
+                        "name": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,23}$"
+                        },
+                        "min": {
+                          "type": "number"
+                        },
+                        "max": {
+                          "type": "number"
+                        },
+                        "default": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "name",
+                        "min",
+                        "max",
+                        "default"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "durationSeconds": {
+                "type": "number",
+                "minimum": 0.5,
+                "maximum": 600
+              },
+              "provenance": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 120
+                          },
+                          "onDevice": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "onDevice"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "overlays": {
+                    "maxItems": 100,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+                    }
+                  },
+                  "brief": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "overlayId": {
+                            "type": "string",
+                            "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+                          },
+                          "graphic": {
+                            "type": "boolean"
+                          },
+                          "reason": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "maxLength": 300
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "incomingMessage",
+                              "outgoingMessage",
+                              "typingIndicator",
+                              "title",
+                              "caption",
+                              "locationTag",
+                              "lowerThird",
+                              "pill",
+                              "label",
+                              "sticker",
+                              "callout",
+                              "callToAction",
+                              "other"
+                            ]
+                          },
+                          "what": {
+                            "type": "string",
+                            "maxLength": 200
+                          },
+                          "role": {
+                            "type": "string",
+                            "enum": [
+                              "question",
+                              "answer",
+                              "setup",
+                              "payoff",
+                              "hook",
+                              "context",
+                              "reaction",
+                              "callToAction",
+                              "other"
+                            ]
+                          },
+                          "answers": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "look": {
+                            "type": "object",
+                            "properties": {
+                              "words": {
+                                "type": "string",
+                                "maxLength": 300
+                              },
+                              "platform": {
+                                "type": "string",
+                                "enum": [
+                                  "imessage",
+                                  "whatsapp",
+                                  "instagram",
+                                  "neutral"
+                                ]
+                              },
+                              "shadow": {
+                                "type": "boolean"
+                              },
+                              "avatar": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "words",
+                              "platform",
+                              "shadow",
+                              "avatar"
+                            ]
+                          },
+                          "motion": {
+                            "type": "object",
+                            "properties": {
+                              "words": {
+                                "type": "string",
+                                "maxLength": 200
+                              },
+                              "typingSeconds": {
+                                "anyOf": [
+                                  {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 10
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "words",
+                              "typingSeconds"
+                            ]
+                          },
+                          "timing": {
+                            "type": "object",
+                            "properties": {
+                              "cue": {
+                                "type": "string",
+                                "enum": [
+                                  "beat",
+                                  "speech",
+                                  "cut",
+                                  "free"
+                                ]
+                              },
+                              "words": {
+                                "type": "string",
+                                "maxLength": 200
+                              }
+                            },
+                            "required": [
+                              "cue",
+                              "words"
+                            ]
+                          },
+                          "people": {
+                            "type": "object",
+                            "properties": {
+                              "words": {
+                                "type": "string",
+                                "maxLength": 200
+                              }
+                            },
+                            "required": [
+                              "words"
+                            ]
+                          },
+                          "source": {
+                            "type": "string",
+                            "enum": [
+                              "model",
+                              "facts",
+                              "person"
+                            ]
+                          },
+                          "confidence": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "overlayId",
+                          "graphic",
+                          "reason",
+                          "kind",
+                          "what",
+                          "role",
+                          "answers",
+                          "look",
+                          "motion",
+                          "timing",
+                          "people",
+                          "source",
+                          "confidence"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "request": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "createdAt": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "model",
+                  "overlays",
+                  "brief",
+                  "createdAt"
+                ]
+              },
+              "gate": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                  },
+                  "passed": {
+                    "type": "boolean"
+                  },
+                  "checkedAt": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "hfLint": {
+                    "type": "object",
+                    "properties": {
+                      "errors": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10000
+                      },
+                      "warnings": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10000
+                      }
+                    },
+                    "required": [
+                      "errors",
+                      "warnings"
+                    ]
+                  },
+                  "checks": {
+                    "maxItems": 32,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,31}$"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pass",
+                            "repaired",
+                            "fail",
+                            "skipped"
+                          ]
+                        },
+                        "detail": {
+                          "type": "string",
+                          "maxLength": 500
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "status"
+                      ]
+                    }
+                  },
+                  "loweredTweens": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 300
+                  }
+                },
+                "required": [
+                  "version",
+                  "passed",
+                  "checkedAt",
+                  "hfLint",
+                  "checks",
+                  "loweredTweens"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "hash",
+              "name",
+              "entry",
+              "files",
+              "variables",
+              "durationSeconds",
+              "provenance",
+              "gate"
+            ]
+          }
+        },
+        "reading": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "number",
+              "const": 1
+            },
+            "prompt": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,40}\\/[0-9]{1,4}$"
+            },
+            "model": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "provider": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100
+                    },
+                    "model": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "local": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "provider",
+                    "model",
+                    "local"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "briefs": {
+              "maxItems": 500,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "overlayId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+                  },
+                  "graphic": {
+                    "type": "boolean"
+                  },
+                  "reason": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "maxLength": 300
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "incomingMessage",
+                      "outgoingMessage",
+                      "typingIndicator",
+                      "title",
+                      "caption",
+                      "locationTag",
+                      "lowerThird",
+                      "pill",
+                      "label",
+                      "sticker",
+                      "callout",
+                      "callToAction",
+                      "other"
+                    ]
+                  },
+                  "what": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "question",
+                      "answer",
+                      "setup",
+                      "payoff",
+                      "hook",
+                      "context",
+                      "reaction",
+                      "callToAction",
+                      "other"
+                    ]
+                  },
+                  "answers": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "look": {
+                    "type": "object",
+                    "properties": {
+                      "words": {
+                        "type": "string",
+                        "maxLength": 300
+                      },
+                      "platform": {
+                        "type": "string",
+                        "enum": [
+                          "imessage",
+                          "whatsapp",
+                          "instagram",
+                          "neutral"
+                        ]
+                      },
+                      "shadow": {
+                        "type": "boolean"
+                      },
+                      "avatar": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "words",
+                      "platform",
+                      "shadow",
+                      "avatar"
+                    ]
+                  },
+                  "motion": {
+                    "type": "object",
+                    "properties": {
+                      "words": {
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "typingSeconds": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 10
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "words",
+                      "typingSeconds"
+                    ]
+                  },
+                  "timing": {
+                    "type": "object",
+                    "properties": {
+                      "cue": {
+                        "type": "string",
+                        "enum": [
+                          "beat",
+                          "speech",
+                          "cut",
+                          "free"
+                        ]
+                      },
+                      "words": {
+                        "type": "string",
+                        "maxLength": 200
+                      }
+                    },
+                    "required": [
+                      "cue",
+                      "words"
+                    ]
+                  },
+                  "people": {
+                    "type": "object",
+                    "properties": {
+                      "words": {
+                        "type": "string",
+                        "maxLength": 200
+                      }
+                    },
+                    "required": [
+                      "words"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "enum": [
+                      "model",
+                      "facts",
+                      "person"
+                    ]
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "overlayId",
+                  "graphic",
+                  "reason",
+                  "kind",
+                  "what",
+                  "role",
+                  "answers",
+                  "look",
+                  "motion",
+                  "timing",
+                  "people",
+                  "source",
+                  "confidence"
+                ]
+              }
+            },
+            "system": {
+              "type": "object",
+              "properties": {
+                "tokens": {
+                  "type": "object",
+                  "properties": {
+                    "platform": {
+                      "type": "string",
+                      "enum": [
+                        "imessage",
+                        "whatsapp",
+                        "instagram",
+                        "neutral"
+                      ]
+                    },
+                    "fills": {
+                      "maxItems": 8,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^#[0-9a-f]{6}$"
+                      }
+                    },
+                    "text": {
+                      "maxItems": 8,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^#[0-9a-f]{6}$"
+                      }
+                    },
+                    "cornerRadius": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 0.5
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "font": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "class": {
+                              "type": "string",
+                              "enum": [
+                                "sans",
+                                "serif",
+                                "rounded",
+                                "mono",
+                                "script",
+                                "display"
+                              ]
+                            },
+                            "weight": {
+                              "type": "integer",
+                              "minimum": 100,
+                              "maximum": 900
+                            }
+                          },
+                          "required": [
+                            "class",
+                            "weight"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "platform",
+                    "fills",
+                    "text",
+                    "cornerRadius",
+                    "font"
+                  ]
+                },
+                "conversation": {
+                  "maxItems": 100,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "overlayId": {
+                        "type": "string",
+                        "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+                      },
+                      "side": {
+                        "type": "string",
+                        "enum": [
+                          "left",
+                          "right"
+                        ]
+                      },
+                      "speaker": {
+                        "type": "string",
+                        "enum": [
+                          "me",
+                          "them"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "overlayId",
+                      "side",
+                      "speaker"
+                    ]
+                  }
+                },
+                "stack": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "direction": {
+                          "type": "string",
+                          "enum": [
+                            "down",
+                            "up"
+                          ]
+                        },
+                        "gap": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      },
+                      "required": [
+                        "direction",
+                        "gap"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "words": {
+                  "type": "string",
+                  "maxLength": 400
+                }
+              },
+              "required": [
+                "tokens",
+                "conversation",
+                "stack",
+                "words"
+              ]
+            }
+          },
+          "required": [
+            "version",
+            "prompt",
+            "model",
+            "briefs",
+            "system"
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "version",
+    "parentVersion",
+    "createdAt",
+    "origin",
+    "canvas",
+    "duration",
+    "slots",
+    "beatMap",
+    "text",
+    "audio",
+    "pacing",
+    "styleId",
+    "contactSheet",
+    "language"
+  ]
+}

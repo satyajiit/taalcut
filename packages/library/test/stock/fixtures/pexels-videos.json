@@ -1,0 +1,93 @@
+{
+  "page": 1,
+  "per_page": 15,
+  "total_results": 2,
+  "url": "https://www.pexels.com/search/videos/ocean/",
+  "videos": [
+    {
+      "id": 101,
+      "width": 1920,
+      "height": 1080,
+      "duration": 12,
+      "url": "https://www.pexels.com/video/ocean-101/",
+      "image": "https://images.pexels.test/101.jpg",
+      "user": { "id": 7, "name": "Ada\u0007 <Lovelace>", "url": "https://www.pexels.com/@ada" },
+      "video_files": [
+        {
+          "id": 11,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 640,
+          "height": 360,
+          "fps": 30,
+          "link": "https://player.pexels.test/640.mp4"
+        },
+        {
+          "id": 12,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1280,
+          "height": 720,
+          "fps": 24,
+          "link": "https://player.pexels.test/720.mp4"
+        },
+        {
+          "id": 13,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1920,
+          "height": 1080,
+          "fps": 25,
+          "link": "https://player.pexels.test/1080-25.mp4"
+        },
+        {
+          "id": 14,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "link": "https://player.pexels.test/1080-30.mp4"
+        },
+        {
+          "id": 15,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 3840,
+          "height": 2160,
+          "fps": 30,
+          "link": "https://player.pexels.test/2160.mp4"
+        },
+        {
+          "id": 16,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 4096,
+          "height": 2160,
+          "fps": 30,
+          "link": "https://player.pexels.test/over.mp4"
+        }
+      ]
+    },
+    {
+      "id": 202,
+      "width": 1080,
+      "height": 1920,
+      "duration": 8,
+      "url": "https://www.pexels.com/video/rain-202/",
+      "image": "https://images.pexels.test/202.jpg",
+      "user": { "id": 8, "name": "Grace Hopper", "url": "https://www.pexels.com/@grace" },
+      "video_files": [
+        {
+          "id": 21,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 30,
+          "link": "https://player.pexels.test/portrait.mp4"
+        }
+      ]
+    }
+  ]
+}

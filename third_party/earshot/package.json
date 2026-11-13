@@ -1,0 +1,56 @@
+{
+  "name": "@taalcut-vendor/earshot-data",
+  "version": "0.4.0-ff41f07",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "earshot 0.4.0's data files (MIT, Leon Lin): the listening vocabulary and its calibration statistics, the launch-film reference profile, the realness model, the four kit presets and the fitted sounds' credits, vendored for @taalcut/audio's native port of earshot's listening layer (EAR1). Unchanged; see README.md.",
+  "upstream": {
+    "repository": "https://github.com/Leonxlnx/earshot",
+    "commit": "ff41f0788ae56896fd59879ab03858d223c06a53",
+    "version": "0.4.0",
+    "fetched": "2026-11-06",
+    "files": {
+      "data/vocab.json": "earshot/data/vocab.json, unchanged (sha256 6e5ccf7b7d718caa1b3f896ae776f8fabd1540d41dd504e9c6c608740b65852a)",
+      "data/vocab_stats.json": "earshot/data/vocab_stats.json, unchanged (sha256 a43adf61888fbc35162635c0c85a48b9ae5904b27c9eb8441a20f40a3e5eef6e)",
+      "data/launch_profile.json": "earshot/data/launch_profile.json, unchanged (sha256 8568435e5fe0855fbd73aa2d360bc3f95174c641f8eb939a2d88658720665643)",
+      "data/realness_model.json": "earshot/data/realness_model.json, unchanged (sha256 a35bd2f82de72ce28783323edb448e10a6b8ebb0656b13ffa35388ac698b129e)",
+      "kits/calm.json": "earshot/forge/kits/calm.json, unchanged (sha256 7bf9d859ad7794ee4b678ab9f410bbfc6aa843d502663fc746bc28e2fa9522d1)",
+      "kits/crisp.json": "earshot/forge/kits/crisp.json, unchanged (sha256 c4a3677b2e3e98f4741782285ba4c066e105c86c30e7238694d59a0f18f4a348)",
+      "kits/minimal.json": "earshot/forge/kits/minimal.json, unchanged (sha256 f8caca638a63042762c9b8e07a96f25ea64d473c8f3ee0bd4920aaceb92150a7)",
+      "kits/launch.json": "earshot/forge/kits/launch.json, unchanged (sha256 33e5c8c40af91b13589bb38df123769a6b496edb28bf819dd3d0ac6e50b9f9d5)",
+      "docs/CREDITS_FIT.md": "docs/CREDITS_FIT.md, unchanged (sha256 14c3e327982530a58ad9a889123a6236842517d94080a0a04dfaff7121651e2e)",
+      "LICENSE": "LICENSE, MIT, copyright (c) 2026 Leon Lin (sha256 d9177365c7471d18ecd623ce7b8849e26ab8d7e7fea13e1fcbda62397ecb9db8)"
+    },
+    "changes": [
+      "None to the vendored files. NOTICE is new: it names earshot's licence and the licences of the models and labels the audio package ships with this data (CLAP Apache-2.0, AST BSD-3-Clause, AudioSet class label names CC BY 4.0).",
+      "test/data.test.mjs is new: it checks every vendored file's sha256 against this list and the shapes @taalcut/audio relies on."
+    ]
+  },
+  "files": [
+    "data",
+    "kits",
+    "docs",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "exports": {
+    "./vocab.json": "./data/vocab.json",
+    "./vocab_stats.json": "./data/vocab_stats.json",
+    "./launch_profile.json": "./data/launch_profile.json",
+    "./realness_model.json": "./data/realness_model.json",
+    "./kits/calm.json": "./kits/calm.json",
+    "./kits/crisp.json": "./kits/crisp.json",
+    "./kits/minimal.json": "./kits/minimal.json",
+    "./kits/launch.json": "./kits/launch.json",
+    "./CREDITS_FIT.md": "./docs/CREDITS_FIT.md",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "vitest": "5.0.4"
+  }
+}

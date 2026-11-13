@@ -1,0 +1,357 @@
+{
+ "caseId": "transition-this-crossfade-next",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DHM5B5DA98XH3SNSADVRHW",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "mq8TF566VfKLcxkvy3JXJZinQdLIKjud",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     },
+     {
+      "type": "text",
+      "text": "\n"
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "mq8TF566VfKLcxkvy3JXJZinQdLIKjud",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      },
+      {
+       "type": "text",
+       "text": "\n"
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11850,
+      "output": 61,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11911,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603540328,
+     "responseId": "chatcmpl-7ef055b978694731ab4c0afaa405af6c",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10019
+    }
+   },
+   "text": "\n",
+   "toolCalls": [
+    {
+     "id": "mq8TF566VfKLcxkvy3JXJZinQdLIKjud",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11850,
+    "outputTokens": 61,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11911,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHMF4M6MC8MGKNAEFRBJM1",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "The selection is on clip 1 (the cyclist), so \"the next one\" is clip 2 (the coffee). I'll add a crossfade (dissolve) on the end edge of clip 1.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "HvVqyTYiYz5VcbVNNa71vLoHWHc3sKgO",
+       "name": "timeline_setTransition",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "1",
+        "edge": "end",
+        "kind": "dissolve",
+        "durationSeconds": 0.5
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "The selection is on clip 1 (the cyclist), so \"the next one\" is clip 2 (the coffee). I'll add a crossfade (dissolve) on the end edge of clip 1.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "HvVqyTYiYz5VcbVNNa71vLoHWHc3sKgO",
+       "name": "timeline_setTransition",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "1",
+        "edge": "end",
+        "kind": "dissolve",
+        "durationSeconds": 0.5
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 175,
+      "cacheRead": 11850,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13640,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603550359,
+     "responseId": "chatcmpl-feb912737e684093b87e9909e14f34fd",
+     "rawStopReason": "tool_calls",
+     "durationMs": 5499
+    }
+   },
+   "text": "The selection is on clip 1 (the cyclist), so \"the next one\" is clip 2 (the coffee). I'll add a crossfade (dissolve) on the end edge of clip 1.\n\n",
+   "toolCalls": [
+    {
+     "id": "HvVqyTYiYz5VcbVNNa71vLoHWHc3sKgO",
+     "name": "timeline_setTransition",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "1",
+      "edge": "end",
+      "kind": "dissolve",
+      "durationSeconds": 0.5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 175,
+    "cachedInputTokens": 11850,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13640,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHMMH2FTP7S73KQVK4MJ7Q",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Done—crossfade added into the next clip."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Done—crossfade added into the next clip."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 240,
+      "output": 10,
+      "cacheRead": 13465,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13715,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793603555879,
+     "responseId": "chatcmpl-e2d1fdd7c4c343238a4d9fd66ae43f12",
+     "rawStopReason": "stop",
+     "durationMs": 658
+    }
+   },
+   "text": "Done—crossfade added into the next clip.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 240,
+    "outputTokens": 10,
+    "cachedInputTokens": 13465,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13715,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHMN5WDJQWYK6097Z7BTM5",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "rRKDkaK1wTNVb7mAbUmHZf3r4O9zRSQC",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "rRKDkaK1wTNVb7mAbUmHZf3r4O9zRSQC",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 13795,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13850,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603556546,
+     "responseId": "chatcmpl-d3935a2f893d4596a2132f4830ad6c96",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11940
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "rRKDkaK1wTNVb7mAbUmHZf3r4O9zRSQC",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 13795,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13850,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"line","type":"string","label":"Line","default":"Big made-up news"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="words-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #line {
+          position: absolute;
+          left: 80px;
+          right: 80px;
+          top: 820px;
+          margin: 0;
+          text-align: center;
+          font-family: 'Anton', sans-serif;
+          font-size: 130px;
+          color: #ffe66d;
+          text-transform: uppercase;
+        }
+      </style>
+      <div id="root" data-composition-id="words" data-width="1080" data-height="1920" data-duration="3">
+        <h1 id="line" data-var-text="line">Big made-up news</h1>
+      </div>
+      <script>
+        gsap.registerPlugin(SplitText);
+        const tl = gsap.timeline({ paused: true });
+        const split = SplitText.create('#line', { type: 'words' });
+        tl.from(split.words, { scale: 0, opacity: 0, duration: 0.45, ease: 'back.out(1.4)', stagger: { amount: 0.4, from: 'center' } }, 0.2);
+        tl.to(split.words, { y: -20, duration: 0.5, ease: 'sine.inOut' }, 1.6);
+        window.__timelines['words'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

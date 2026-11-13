@@ -1,0 +1,37 @@
+diff --git a/dist/api/google-generative-ai.js b/dist/api/google-generative-ai.js
+index 1a33683..0725780 100644
+--- a/dist/api/google-generative-ai.js
++++ b/dist/api/google-generative-ai.js
+@@ -33,14 +33,11 @@ export const stream = (model, context, options) => {
+             timestamp: Date.now(),
+         };
+         try {
+-            if (options?.fetch && options.fetch !== globalThis.fetch) {
+-                throw new Error("Custom fetch is not supported by the Google Generative AI adapter");
+-            }
+             const apiKey = options?.apiKey;
+             if (!apiKey) {
+                 throw new Error(`No API key for provider: ${model.provider}`);
+             }
+-            const client = createClient(model, apiKey, options?.headers, options?.identity);
++            const client = createClient(model, apiKey, options?.headers, options?.identity, options?.fetch);
+             let params = buildParams(model, normalizedContext, options);
+             const nextParams = await options?.onPayload?.(params, model);
+             if (nextParams !== undefined) {
+@@ -267,7 +264,7 @@ export const streamSimple = (model, context, options) => {
+         },
+     });
+ };
+-function createClient(model, apiKey, optionsHeaders, identity) {
++function createClient(model, apiKey, optionsHeaders, identity, fetch) {
+     const httpOptions = {};
+     if (model.baseUrl) {
+         httpOptions.baseUrl = model.baseUrl;
+@@ -280,6 +277,7 @@ function createClient(model, apiKey, optionsHeaders, identity) {
+     return new GoogleGenAI({
+         apiKey,
+         httpOptions: Object.keys(httpOptions).length > 0 ? httpOptions : undefined,
++        ...(fetch && { fetch }),
+     });
+ }
+ function buildParams(model, context, options = {}) {

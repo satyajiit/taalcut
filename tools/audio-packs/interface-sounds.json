@@ -1,0 +1,73 @@
+{
+  "about": "Taalcut interface cues, authored locally with Tone.Offline. No downloaded samples or runtime synthesis. Rebuild with pnpm --filter @taalcut/renderer sounds:build.",
+  "authoring": {
+    "library": "tone",
+    "version": "15.1.22",
+    "libraryLicence": "MIT",
+    "recipe": "tone-interface-recipes.mjs",
+    "outputLicence": "AGPL-3.0-or-later",
+    "sampleRate": 48000,
+    "channels": 1,
+    "oscillator": "sine",
+    "filterHz": 2000
+  },
+  "loudness": { "actionLufs": -28, "milestoneLufs": -22, "truePeakDbtp": -3 },
+  "sounds": [
+    {
+      "name": "promptSent",
+      "file": "prompt-sent.m4a",
+      "lengthMs": 100,
+      "fadeMs": 12,
+      "kind": "action",
+      "notes": ["C5"]
+    },
+    {
+      "name": "editApplied",
+      "file": "edit-applied.m4a",
+      "lengthMs": 140,
+      "fadeMs": 12,
+      "kind": "action",
+      "notes": ["E5"]
+    },
+    {
+      "name": "undo",
+      "file": "undo.m4a",
+      "lengthMs": 160,
+      "fadeMs": 12,
+      "kind": "action",
+      "notes": ["E5", "C5"]
+    },
+    {
+      "name": "redo",
+      "file": "redo.m4a",
+      "lengthMs": 160,
+      "fadeMs": 12,
+      "kind": "action",
+      "notes": ["C5", "E5"]
+    },
+    {
+      "name": "importDone",
+      "file": "import-done.m4a",
+      "lengthMs": 280,
+      "fadeMs": 20,
+      "kind": "milestone",
+      "notes": ["G4", "C5"]
+    },
+    {
+      "name": "draftAssembled",
+      "file": "draft-assembled.m4a",
+      "lengthMs": 360,
+      "fadeMs": 20,
+      "kind": "milestone",
+      "notes": ["C5", "G5"]
+    },
+    {
+      "name": "complete",
+      "file": "complete.m4a",
+      "lengthMs": 480,
+      "fadeMs": 20,
+      "kind": "milestone",
+      "notes": ["C5", "E5", "G5"]
+    }
+  ]
+}

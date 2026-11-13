@@ -1,0 +1,1682 @@
+{
+  "manifest": {
+    "schemaVersion": 1,
+    "components": [
+      {
+        "id": "local-llm-runtime",
+        "name": "llama.cpp server",
+        "version": "b11571",
+        "kind": "runtime",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/local-llm-runtime/b11571/NOTICE-07c99851f2ac74a6.txt",
+            "size": 19779,
+            "sha256": "07c99851f2ac74a69845dc4b7b2fdd5118c90ec58674c470a686a84d8c625510"
+          },
+          "attribution": "llama.cpp and ggml, Copyright (c) 2023-2026 The ggml authors. MIT licence."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/local-llm-runtime/b11571/llama-b11571-bin-macos-arm64.tar.zst"
+            ],
+            "sha256": "3d54d5b3d387e2dbe2d1dbf66bdb1e7ba2cefd9db77bb80fe5388202ff2a7c59",
+            "size": 8734674,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 1,
+              "extractedSize": 32612726
+            }
+          },
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/local-llm-runtime/b11571/llama-b11571-bin-ubuntu-x64.tar.gz"
+            ],
+            "sha256": "f955f2eb69357c2b0a2ed3f796652a24763d7e068be3ab30fcc4e12c92d0f4be",
+            "size": 17725590,
+            "install": {
+              "type": "archive",
+              "format": "tar.gz",
+              "stripComponents": 1,
+              "extractedSize": 45831798
+            }
+          }
+        ],
+        "variants": [
+          "local-llm-runtime-cuda",
+          "local-llm-runtime-vulkan"
+        ]
+      },
+      {
+        "id": "local-llm-qwen3-5-4b",
+        "name": "Qwen3.5 4B (GGUF Q4_K_M)",
+        "version": "q4_k_m-a9d0a3e1",
+        "kind": "model",
+        "tiers": [
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/local-llm-qwen3-5-4b/q4_k_m-a9d0a3e1/NOTICE-5aa17b588130d45e.txt",
+            "size": 11951,
+            "sha256": "5aa17b588130d45eb32efd6fd29c2de0fd13060d86dfb5d8d73467f9788d2281"
+          },
+          "attribution": "Qwen3.5-4B by the Qwen team, Alibaba Cloud. Apache-2.0. Converted to GGUF and quantised to Q4_K_M (Ollama library build of qwen3.5:4b)."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/local-llm-qwen3-5-4b/q4_k_m-a9d0a3e1/qwen3.5-4b-q4_k_m.gguf"
+            ],
+            "sha256": "a9d0a3e1d8c91732a3812becd31f8d4a8ff57414903f226306069f0437e2ac50",
+            "size": 2648593216,
+            "install": {
+              "type": "file",
+              "fileName": "qwen3.5-4b-q4_k_m.gguf",
+              "executable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "local-llm-qwen3-5-4b-mmproj",
+        "name": "Qwen3.5 4B vision projector (GGUF BF16)",
+        "version": "bf16-e56a899b",
+        "kind": "model",
+        "tiers": [
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/local-llm-qwen3-5-4b-mmproj/bf16-e56a899b/NOTICE-8be729d9a2d93632.txt",
+            "size": 12003,
+            "sha256": "8be729d9a2d93632ca35f6353e769cef3f208f28caa5915ebe174a7293ef6688"
+          },
+          "attribution": "Qwen3.5-4B vision encoder by the Qwen team, Alibaba Cloud. Apache-2.0. Converted to a GGUF multimodal projector in BF16 (Ollama library build of qwen3.5:4b)."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/local-llm-qwen3-5-4b-mmproj/bf16-e56a899b/qwen3.5-4b-mmproj-bf16.gguf"
+            ],
+            "sha256": "e56a899b1540860385465756dd308c84417410b94dbc1c380adffd20a921ca60",
+            "size": 675569120,
+            "install": {
+              "type": "file",
+              "fileName": "qwen3.5-4b-mmproj-bf16.gguf",
+              "executable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "local-llm-qwen3-5-0-8b",
+        "name": "Qwen3.5 0.8B (GGUF Q4_K_M)",
+        "version": "q4_k_m-bd258782",
+        "kind": "model",
+        "tiers": [
+          "minimum"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/local-llm-qwen3-5-0-8b/q4_k_m-bd258782/NOTICE-1c00b31ba055226b.txt",
+            "size": 11967,
+            "sha256": "1c00b31ba055226bd2d2fde1693520703339cb7180efab10db73046d910f5a0f"
+          },
+          "attribution": "Qwen3.5-0.8B by the Qwen team, Alibaba Cloud. Apache-2.0. Converted to GGUF and quantised to Q4_K_M by Unsloth (unsloth/Qwen3.5-0.8B-GGUF)."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/local-llm-qwen3-5-0-8b/q4_k_m-bd258782/Qwen3.5-0.8B-Q4_K_M.gguf"
+            ],
+            "sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+            "size": 532517120,
+            "install": {
+              "type": "file",
+              "fileName": "qwen3.5-0.8b-q4_k_m.gguf",
+              "executable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "onnxruntime",
+        "name": "ONNX Runtime",
+        "version": "1.30.0",
+        "kind": "runtime",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/onnxruntime/1.30.0/NOTICE-25a922babc7924e8.txt",
+            "size": 341337,
+            "sha256": "25a922babc7924e81787f9991900057e6fb8cd5565569171371576bc9479909e"
+          },
+          "attribution": "ONNX Runtime, Copyright (c) Microsoft Corporation. MIT licence. The darwin arm64 and linux-x64 bindings of onnxruntime-node 1.30.0."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/onnxruntime/1.30.0/onnxruntime-node-1.30.0-darwin-arm64.tar.zst"
+            ],
+            "sha256": "568c7c67c6b7407bdceb3a79777aeb1aa49962aeab963cf17197f2b5aa9c0086",
+            "size": 9156803,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 44632544
+            }
+          },
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/onnxruntime/1.30.0/onnxruntime-node-1.30.0-linux-x64.tar.zst"
+            ],
+            "sha256": "5c8b502b342826826cbb3d30546a94d513fe604ad652cdc47ff35adf9fcd981c",
+            "size": 13679458,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 46218000
+            }
+          }
+        ],
+        "variants": [
+          "onnxruntime-cuda"
+        ]
+      },
+      {
+        "id": "embeddinggemma-2",
+        "name": "EmbeddingGemma 2",
+        "version": "2.0.0-onnx-q4-vq4f16-daa72c5",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/embeddinggemma-2/2.0.0-onnx-q4-vq4f16-daa72c5/NOTICE-6b020158eec2ab31.txt",
+            "size": 12213,
+            "sha256": "6b020158eec2ab3195c821a5f7f1cf047145acd295a6be88fa4f347829272812"
+          },
+          "attribution": "EmbeddingGemma 2 by Google DeepMind, Apache-2.0. ONNX conversion and quantisation (q4 text graph, q4f16 vision graph) by onnx-community (embeddinggemma-2-ONNX); Taalcut ships the text and vision graphs only."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/embeddinggemma-2/2.0.0-onnx-q4-vq4f16-daa72c5/embeddinggemma-2-onnx-q4-vq4f16-daa72c5.tar.zst"
+            ],
+            "sha256": "01c71d39ed42a6cb213830f848a4fdec9ef573b192d7c64dd82e9cf37267357b",
+            "size": 236900181,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 304466640
+            }
+          }
+        ]
+      },
+      {
+        "id": "embeddinggemma-2-coreml",
+        "name": "EmbeddingGemma 2 (Core ML)",
+        "version": "2.1.0-coreml-q4recipe-daa72c5-fluid3f978dd",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/embeddinggemma-2-coreml/2.1.0-coreml-q4recipe-daa72c5-fluid3f978dd/NOTICE-e0dd620da4e6f0bd.txt",
+            "size": 12747,
+            "sha256": "e0dd620da4e6f0bde2d9eb2180f34aa9d3354fea96b18f8fc2c5d1ea18a47d8b"
+          },
+          "attribution": "EmbeddingGemma 2 by Google DeepMind, Apache-2.0. Core ML graphs by FluidInference (embeddinggemma-2-coreml, Apache-2.0), compiled for Core ML by Taalcut (tools/components/pack-embeddinggemma-coreml.sh), with the weights of onnx-community's q4 text and q4f16 vision quantisation (embeddinggemma-2-ONNX), which the app writes into them on first use from the installed embeddinggemma-2 component by a recipe (weights.json, tools/components/embeddinggemma-coreml/weight_recipe.py). For the mac helper on macOS 15 and later."
+        },
+        "dependencies": [
+          "embeddinggemma-2"
+        ],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/embeddinggemma-2-coreml/2.1.0-coreml-q4recipe-daa72c5-fluid3f978dd/embeddinggemma-2-coreml-q4recipe-daa72c5.tar.zst"
+            ],
+            "sha256": "41751dea031d9a1dfb9f38b8cf5f234bd31e426b875b103aeaca61681185e3d4",
+            "size": 1930249,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 16052203
+            }
+          }
+        ],
+        "requires": {
+          "platform": "darwin",
+          "minOsVersion": "15"
+        }
+      },
+      {
+        "id": "ppocr-v5-devanagari",
+        "name": "PP-OCRv5 Devanagari",
+        "version": "v5-mobile-251aec19-e6f4fa85",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/ppocr-v5-devanagari/v5-mobile-251aec19-e6f4fa85/NOTICE-8902d921c3daff7f.txt",
+            "size": 12120,
+            "sha256": "8902d921c3daff7f0c0a10f3828018341d592ea6c2774dca258e4983967ef8d1"
+          },
+          "attribution": "PP-OCRv5 mobile text detection and devanagari_PP-OCRv5_mobile_rec by PaddlePaddle (PaddleOCR), Apache-2.0. ONNX exports by PaddlePaddle."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/ppocr-v5-devanagari/v5-mobile-251aec19-e6f4fa85/ppocr-v5-devanagari-251aec19-e6f4fa85.tar.zst"
+            ],
+            "sha256": "1fbe21ef9bc052bf8142e227f4479ec2b017675cfb9fb83296c7eac700f9c953",
+            "size": 11789891,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 12748408
+            }
+          }
+        ]
+      },
+      {
+        "id": "transnetv2",
+        "name": "TransNetV2",
+        "version": "2.0.0-onnx-c4d54a68",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/transnetv2/2.0.0-onnx-c4d54a68/NOTICE-d53bb9c1fce01220.txt",
+            "size": 1714,
+            "sha256": "d53bb9c1fce01220db0bf53247e1e30cd7a753bfb744e91dd11a7d86f35996bd"
+          },
+          "attribution": "TransNetV2 shot transition detection by Tomáš Souček and Jakub Lokoč, MIT licence (code and weights, Copyright (c) 2020 Tomáš Souček). ONNX export by elya5 (hf.co/elya5/transnetv2, MIT) of a PyTorch port of the upstream weights."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/transnetv2/2.0.0-onnx-c4d54a68/transnetv2.onnx"
+            ],
+            "sha256": "c4d54a682bace32f25136ef83ca2c9d403e8f8193775efeb995172a0d95a8e0c",
+            "size": 31250929,
+            "install": {
+              "type": "file",
+              "fileName": "transnetv2.onnx",
+              "executable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "transnetv2-coreml",
+        "name": "TransNetV2 (Core ML)",
+        "version": "2.0.0-coreml-fp32-85cef72",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/transnetv2-coreml/2.0.0-coreml-fp32-85cef72/NOTICE-148fabf79ecae57f.txt",
+            "size": 2028,
+            "sha256": "148fabf79ecae57fcd16c2d17a431c74a25d0f436810b1427c2168313fba153a"
+          },
+          "attribution": "TransNetV2 shot transition detection by Tomáš Souček and Jakub Lokoč, MIT licence (code and weights, Copyright (c) 2020 Tomáš Souček). Upstream's weights in a Core ML rewrite of upstream's PyTorch port, converted (fp32) and compiled for Core ML by Taalcut (tools/components/pack-transnetv2-coreml.sh). For the mac helper."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/transnetv2-coreml/2.0.0-coreml-fp32-85cef72/transnetv2-coreml-fp32-85cef72.tar.zst"
+            ],
+            "sha256": "2155209e58ac45c9aa164c78f318738661600d69c969267e05fd5d776b3b8c96",
+            "size": 27969056,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 30612463
+            }
+          }
+        ]
+      },
+      {
+        "id": "whisper-cpp",
+        "name": "whisper.cpp",
+        "version": "1.9.5-d1be6fde",
+        "kind": "runtime",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/whisper-cpp/1.9.5-d1be6fde/NOTICE-0f72cb059298f012.txt",
+            "size": 2480,
+            "sha256": "0f72cb059298f0125c42611ce788186dbc630438082426a13cb1eecf18c97004"
+          },
+          "attribution": "whisper.cpp by Georgi Gerganov and contributors, MIT licence. whisper-cli built with Metal (macOS) and for the CPU (Linux)."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/whisper-cpp/1.9.5-d1be6fde/whisper-cli"
+            ],
+            "sha256": "a53381fd74e56f5e8214f708016092ef03370442fc5aceb717da446e740bc743",
+            "size": 7977456,
+            "install": {
+              "type": "file",
+              "fileName": "whisper-cli",
+              "executable": true
+            }
+          },
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/whisper-cpp/1.9.5-d1be6fde/whisper-cli-linux-x64"
+            ],
+            "sha256": "e8211eed0e0069614f6068b21e30833381bbde603b7fd6d5181d3182fcb9fd60",
+            "size": 4395992,
+            "install": {
+              "type": "file",
+              "fileName": "whisper-cli",
+              "executable": true
+            }
+          }
+        ]
+      },
+      {
+        "id": "whisper-server",
+        "name": "whisper.cpp server",
+        "version": "1.9.5-d1be6fde",
+        "kind": "runtime",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/whisper-server/1.9.5-d1be6fde/NOTICE-24776cfa5d6a901d.txt",
+            "size": 5243,
+            "sha256": "24776cfa5d6a901da9cd81034f629b2aec2999280818e4920d1c8ef23a45fc53"
+          },
+          "attribution": "whisper.cpp by Georgi Gerganov and contributors, MIT licence. whisper-server built with Metal (macOS) and for the CPU (Linux)."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/whisper-server/1.9.5-d1be6fde/whisper-server"
+            ],
+            "sha256": "5e5daffe29ae173e2c83b716384f32399e0775a43498eac5b22f32d77f8a60a7",
+            "size": 8376784,
+            "install": {
+              "type": "file",
+              "fileName": "whisper-server",
+              "executable": true
+            }
+          },
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/whisper-server/1.9.5-d1be6fde/whisper-server-linux-x64"
+            ],
+            "sha256": "7da0a2156781ffc06cc147c4b195caae7e6f7e6d1e1fbfafb9755ef9d5e895df",
+            "size": 4752552,
+            "install": {
+              "type": "file",
+              "fileName": "whisper-server",
+              "executable": true
+            }
+          }
+        ],
+        "variants": [
+          "whisper-server-cuda"
+        ]
+      },
+      {
+        "id": "beat-this",
+        "name": "Beat This!",
+        "version": "1.1.0-onnx-25308706",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/beat-this/1.1.0-onnx-25308706/NOTICE-175db1fd40e3d912.txt",
+            "size": 1717,
+            "sha256": "175db1fd40e3d912b1fcbc04b0b314e67fbdc52eb4670478bd70a341fe471f4f"
+          },
+          "attribution": "Beat This! by Foscarin, Schlüter and Widmer (CPJKU / JKU Linz). MIT licence."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/beat-this/1.1.0-onnx-25308706/beat-this-1.1.0-onnx-25308706.tar.zst"
+            ],
+            "sha256": "b6edbf26dad05e03cc11ec1612604c9d94cf9fe47ab3025a3c4c5f07fcabcc92",
+            "size": 122643040,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 190912694
+            }
+          }
+        ]
+      },
+      {
+        "id": "whisper-tiny",
+        "name": "Whisper tiny",
+        "version": "tiny-5359861c",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/whisper-tiny/tiny-5359861c/NOTICE-4002ef4196a645f8.txt",
+            "size": 2862,
+            "sha256": "4002ef4196a645f8a1aafaea11103abcc00712f785ce955965c12e59756212b7"
+          },
+          "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-tiny.bin)."
+        },
+        "dependencies": [
+          "whisper-cpp"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/whisper-tiny/tiny-5359861c/ggml-tiny.bin"
+            ],
+            "sha256": "be07e048e1e599ad46341c8d2a135645097a538221678b7acdd1b1919c6e1b21",
+            "size": 77691713,
+            "install": {
+              "type": "file",
+              "fileName": "ggml-tiny.bin",
+              "executable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "whisper-small-q8-0",
+        "name": "Whisper small Q8_0",
+        "version": "small-q8_0-5359861c",
+        "kind": "model",
+        "tiers": [
+          "minimum"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/whisper-small-q8-0/small-q8_0-5359861c/NOTICE-bca9b94c5f24464a.txt",
+            "size": 2904,
+            "sha256": "bca9b94c5f24464a63e6b5e185d8f43fcab6097327c26f77a903b74f8eb89e12"
+          },
+          "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-small-q8_0.bin)."
+        },
+        "dependencies": [
+          "whisper-cpp"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/whisper-small-q8-0/small-q8_0-5359861c/ggml-small-q8_0.bin"
+            ],
+            "sha256": "49c8fb02b65e6049d5fa6c04f81f53b867b5ec9540406812c643f177317f779f",
+            "size": 264464607,
+            "install": {
+              "type": "file",
+              "fileName": "ggml-small-q8_0.bin",
+              "executable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "whisper-medium-q5-0",
+        "name": "Whisper medium Q5_0",
+        "version": "medium-q5_0-5359861c",
+        "kind": "model",
+        "tiers": [
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/whisper-medium-q5-0/medium-q5_0-5359861c/NOTICE-d7e51a7ffae9c8af.txt",
+            "size": 2911,
+            "sha256": "d7e51a7ffae9c8af8481f55923edaa56c50d1eba35609766089db5d09d41861b"
+          },
+          "attribution": "OpenAI Whisper, MIT licence. GGML conversion from whisper.cpp (ggml-medium-q5_0.bin)."
+        },
+        "dependencies": [
+          "whisper-cpp"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/whisper-medium-q5-0/medium-q5_0-5359861c/ggml-medium-q5_0.bin"
+            ],
+            "sha256": "19fea4b380c3a618ec4723c3eef2eb785ffba0d0538cf43f8f235e7b3b34220f",
+            "size": 539212467,
+            "install": {
+              "type": "file",
+              "fileName": "ggml-medium-q5_0.bin",
+              "executable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "hyperframes-headless-shell",
+        "name": "Chrome headless shell (render engine)",
+        "version": "157.0.8103.50",
+        "kind": "tool",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "BSD-3-Clause",
+          "notice": {
+            "url": "https://components.taalcut.app/hyperframes-headless-shell/157.0.8103.50/NOTICE-d48a7e059369b295.txt",
+            "size": 4433824,
+            "sha256": "d48a7e059369b29540fcc98538987a52133d3081f9005fd398ce7da8a12171dd"
+          },
+          "attribution": "Chromium (chrome-headless-shell from Chrome for Testing), BSD-3-Clause; bundled third-party notices are in LICENSE.headless_shell inside the component."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/hyperframes-headless-shell/157.0.8103.50/chrome-headless-shell-157.0.8103.50-mac-arm64.tar.zst"
+            ],
+            "sha256": "7a080da5986b3f18cd423193aae9ee41e318ce96196195205c87a7d320b59769",
+            "size": 74003116,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 213708206
+            }
+          },
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/hyperframes-headless-shell/157.0.8103.50/chrome-headless-shell-157.0.8103.50-linux64.tar.zst"
+            ],
+            "sha256": "70ec61c727bda1eef775fc84a32dee386282e9c285f5e57c1a333aa362c21d0e",
+            "size": 89494803,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 289833043
+            }
+          }
+        ]
+      },
+      {
+        "id": "c2pa-sidecar",
+        "name": "Content Credentials (C2PA) signer and reader",
+        "version": "1.0.0",
+        "kind": "tool",
+        "tiers": [],
+        "licence": {
+          "spdx": "AGPL-3.0-or-later AND (MIT OR Apache-2.0)",
+          "notice": {
+            "url": "https://components.taalcut.app/c2pa-sidecar/1.0.0/NOTICE-9946a24eef59d9fd.txt",
+            "size": 4110750,
+            "sha256": "9946a24eef59d9fdfbd0d5a2fcda71e873fb9482cd059dcab498f6ae6c0fa60e"
+          },
+          "attribution": "taalcut-c2pa (AGPL-3.0-or-later) statically links the c2pa crate 0.91.2 by Adobe and the Content Authenticity Initiative (MIT OR Apache-2.0); both licence texts, the test certificate's source and the licences of every crate linked in are in LICENSES/ inside the component."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/c2pa-sidecar/1.0.0/c2pa-sidecar-1.0.0-darwin-arm64.tar.zst"
+            ],
+            "sha256": "9663b529b3f9693a188b590b3f62d367d9ed5fb19ac1d989c3b586f352eabc19",
+            "size": 3569213,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 12810389
+            }
+          },
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/c2pa-sidecar/1.0.0/c2pa-sidecar-1.0.0-linux-x64.tar.zst"
+            ],
+            "sha256": "66c403ce30e843a57632a97519969832914c2d70f4d05c136699cced02482b08",
+            "size": 3968190,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 14696247
+            }
+          }
+        ]
+      },
+      {
+        "id": "deno",
+        "name": "Deno",
+        "version": "2.9.6",
+        "kind": "runtime",
+        "tiers": [],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/deno/2.9.6/NOTICE-4a20f919001f51ed.txt",
+            "size": 1629287,
+            "sha256": "4a20f919001f51edc455ced96afa5fbd32d9a4c01c3caf1f64dac02a466679c9"
+          },
+          "attribution": "Deno, Copyright 2018-2026 the Deno authors. MIT licence. Runs yt-dlp's YouTube challenge solver."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/deno/2.9.6/deno-2.9.6-darwin-arm64.tgz"
+            ],
+            "sha256": "60321cf03244e275589f0d099575bfc739c72ff5aa6e9d19d47d8f0757c24bad",
+            "size": 39597481,
+            "install": {
+              "type": "archive",
+              "format": "tar.gz",
+              "stripComponents": 1,
+              "extractedSize": 80915630
+            }
+          }
+        ]
+      },
+      {
+        "id": "reference-fetcher",
+        "name": "yt-dlp",
+        "version": "2026.10.21",
+        "kind": "tool",
+        "tiers": [],
+        "licence": {
+          "spdx": "GPL-3.0-or-later",
+          "notice": {
+            "url": "https://components.taalcut.app/reference-fetcher/2026.10.21/NOTICE-addd85960e8086f0.txt",
+            "size": 410419,
+            "sha256": "addd85960e8086f0d5c5c8f12980d102855b8e5fcf7c4f081b25b2007f570824"
+          },
+          "attribution": "yt-dlp 2026.10.21 (Unlicense source), built by Taalcut with PyInstaller; the build bundles GPL code (mutagen, the PyInstaller bootloader), so this file is GPL-3.0-or-later. Every bundled piece, its licence and where the sources are is in its NOTICE.txt."
+        },
+        "dependencies": [
+          "deno"
+        ],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/reference-fetcher/2026.10.21/yt-dlp-2026.10.21-darwin-arm64.tar.zst"
+            ],
+            "sha256": "06081bab78bae53d286fde4cd2248542ddc963edd5391b5298a7467fef68a790",
+            "size": 20912722,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 43617779
+            }
+          }
+        ]
+      },
+      {
+        "id": "silero-vad",
+        "name": "Silero VAD",
+        "version": "6.2.3",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/silero-vad/6.2.3/NOTICE-efb4d028641dc9bb.txt",
+            "size": 1528,
+            "sha256": "efb4d028641dc9bb96e2a4cd64b97fcdfa446bdd9653b9eb041a00a16579e12d"
+          },
+          "attribution": "Silero VAD by the Silero Team, MIT licence. silero_vad.onnx v6.2.3, unchanged."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/silero-vad/6.2.3/silero_vad.onnx"
+            ],
+            "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+            "size": 2327524,
+            "install": {
+              "type": "file",
+              "fileName": "silero_vad.onnx",
+              "executable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "sfx-pack",
+        "name": "Taalcut sound pack (CC0)",
+        "version": "1.0.0",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "CC0-1.0",
+          "notice": {
+            "url": "https://components.taalcut.app/sfx-pack/1.0.0/NOTICE-7a271755206d1e6c.txt",
+            "size": 8817,
+            "sha256": "7a271755206d1e6c680e1caa3c1e0ccbd4c5b84ede3f76dea7f6be4771efc089"
+          },
+          "attribution": "Sounds synthesised for Taalcut (tools/audio-packs/build-sfx-pack.mjs), dedicated to the public domain under CC0 1.0 by the Taalcut contributors."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/sfx-pack/1.0.0/sfx-pack-1.0.0.tar.zst"
+            ],
+            "sha256": "b5dfd368e14d1199ac8d4231f8d68aa24e7bbbbee90ddd0b80e20b95002bf468",
+            "size": 1813612,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 2137415
+            }
+          }
+        ]
+      },
+      {
+        "id": "cuda-runtime-13",
+        "name": "CUDA runtime 13",
+        "version": "13.4.3-cudnn9.27.0",
+        "kind": "runtime",
+        "tiers": [],
+        "licence": {
+          "spdx": "LicenseRef-NVIDIA-CUDA-Toolkit-EULA AND LicenseRef-NVIDIA-cuDNN",
+          "notice": {
+            "url": "https://components.taalcut.app/cuda-runtime-13/13.4.3-cudnn9.27.0/NOTICE-a03bc73d5dfaf49b.txt",
+            "size": 99775,
+            "sha256": "a03bc73d5dfaf49bb3a6f6598a1ab4c336a785b36c29c027df20a5efa5cc01c2"
+          },
+          "attribution": "© NVIDIA Corporation. CUDA 13.4.3 runtime libraries (cudart, cuBLAS, cuBLASLt, cuRAND, NVRTC) and cuDNN 9.27.0, made and owned by NVIDIA Corporation and licensed to you by NVIDIA under the CUDA Toolkit End User License Agreement and the NVIDIA cuDNN Software License Agreement. Unchanged; downloaded and installed by Taalcut at your request, after you accept NVIDIA's terms.",
+          "acceptance": {
+            "owner": "NVIDIA Corporation",
+            "termsVersion": "2026-10-27",
+            "documents": [
+              {
+                "title": "CUDA Toolkit End User License Agreement",
+                "url": "https://docs.nvidia.com/cuda/eula/index.html"
+              },
+              {
+                "title": "NVIDIA cuDNN Software License Agreement",
+                "url": "https://docs.nvidia.com/deeplearning/cudnn/latest/reference/eula.html"
+              }
+            ]
+          }
+        },
+        "dependencies": [],
+        "requires": {
+          "gpuApi": "cuda",
+          "minDriver": "580",
+          "minComputeCapability": "7.5"
+        },
+        "artifacts": [
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/cuda-runtime-13/13.4.3-cudnn9.27.0/cuda-runtime-13.4.3-cudnn9.27.0-linux-x64.tar.zst"
+            ],
+            "sha256": "837da78cbfae3a09702863b98c3317792e5e84076352af84db63261a25098f79",
+            "size": 968041808,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 1777118009
+            }
+          }
+        ]
+      },
+      {
+        "id": "onnxruntime-cuda",
+        "name": "ONNX Runtime (CUDA)",
+        "version": "1.30.0",
+        "kind": "runtime",
+        "tiers": [],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/onnxruntime-cuda/1.30.0/NOTICE-fc1d452612e1d1ed.txt",
+            "size": 340675,
+            "sha256": "fc1d452612e1d1edbec642f39ef5234d5dd4893cbc27763e190a61c3003f6d7c"
+          },
+          "attribution": "ONNX Runtime, Copyright (c) Microsoft Corporation. MIT licence. The linux-x64 binding of onnxruntime-node 1.30.0 with the CUDA execution provider of Microsoft.ML.OnnxRuntime.Gpu.Linux 1.30.0."
+        },
+        "dependencies": [
+          "cuda-runtime-13"
+        ],
+        "requires": {
+          "gpuApi": "cuda",
+          "minDriver": "580",
+          "minComputeCapability": "7.5"
+        },
+        "artifacts": [
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/onnxruntime-cuda/1.30.0/onnxruntime-node-1.30.0-cuda13-linux-x64.tar.zst"
+            ],
+            "sha256": "408673208f967bf86c274e4a75bd2e0dbf29365ab6b99ffcb3a8fcc4bdf9f96f",
+            "size": 191649663,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 318286632
+            }
+          }
+        ]
+      },
+      {
+        "id": "local-llm-runtime-cuda",
+        "name": "llama.cpp server (CUDA)",
+        "version": "b11571",
+        "kind": "runtime",
+        "tiers": [],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/local-llm-runtime-cuda/b11571/NOTICE-310dbd4646579b82.txt",
+            "size": 4695,
+            "sha256": "310dbd4646579b82dfe380c3ab39289a3b0c1b16fe0a15b37ce0b5e66dc8d9d1"
+          },
+          "attribution": "llama.cpp and ggml, Copyright (c) 2023-2026 The ggml authors. MIT licence. Upstream's ubuntu-cuda-13.4-x64 build."
+        },
+        "dependencies": [
+          "cuda-runtime-13"
+        ],
+        "requires": {
+          "gpuApi": "cuda",
+          "minDriver": "580",
+          "minComputeCapability": "7.5",
+          "minGlibc": "2.38"
+        },
+        "artifacts": [
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/local-llm-runtime-cuda/b11571/llama-b11571-bin-ubuntu-cuda-13.4-x64.tar.gz"
+            ],
+            "sha256": "42f31a6b1fba358c68b66de956216291571ec3bc3db6f5e8972a797751ee6c28",
+            "size": 152485973,
+            "install": {
+              "type": "archive",
+              "format": "tar.gz",
+              "stripComponents": 1,
+              "extractedSize": 208676094
+            }
+          }
+        ]
+      },
+      {
+        "id": "local-llm-runtime-vulkan",
+        "name": "llama.cpp server (Vulkan)",
+        "version": "b11571",
+        "kind": "runtime",
+        "tiers": [],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/local-llm-runtime-vulkan/b11571/NOTICE-f3f1a5ce09bd7b35.txt",
+            "size": 4630,
+            "sha256": "f3f1a5ce09bd7b3561d800949d393d81d9af2c4d54e8226af1ce694a31768117"
+          },
+          "attribution": "llama.cpp and ggml, Copyright (c) 2023-2026 The ggml authors. MIT licence. Upstream's ubuntu-vulkan-x64 build."
+        },
+        "dependencies": [],
+        "requires": {
+          "gpuApi": "vulkan"
+        },
+        "artifacts": [
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/local-llm-runtime-vulkan/b11571/llama-b11571-bin-ubuntu-vulkan-x64.tar.gz"
+            ],
+            "sha256": "39dc4772a26b0c8e45a80aa5e2a508886f98bdb5856758a28bf1c5d7a9c31303",
+            "size": 30287313,
+            "install": {
+              "type": "archive",
+              "format": "tar.gz",
+              "stripComponents": 1,
+              "extractedSize": 86325766
+            }
+          }
+        ]
+      },
+      {
+        "id": "whisper-server-cuda",
+        "name": "whisper.cpp server (CUDA)",
+        "version": "1.9.5-d1be6fde",
+        "kind": "runtime",
+        "tiers": [],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/whisper-server-cuda/1.9.5-d1be6fde/NOTICE-549c794b755262f2.txt",
+            "size": 4891,
+            "sha256": "549c794b755262f248b3b07410bfdd876e2ae61298f9d50ec200497b3f295865"
+          },
+          "attribution": "whisper.cpp by Georgi Gerganov and contributors, MIT licence. whisper-server built with CUDA."
+        },
+        "dependencies": [
+          "cuda-runtime-13"
+        ],
+        "requires": {
+          "gpuApi": "cuda",
+          "minDriver": "580",
+          "minComputeCapability": "7.5"
+        },
+        "artifacts": [
+          {
+            "platform": "linux-x64",
+            "urls": [
+              "https://components.taalcut.app/whisper-server-cuda/1.9.5-d1be6fde/whisper-server-1.9.5-cuda13-linux-x64.tar.zst"
+            ],
+            "sha256": "1a5c854ae164bef4197b134222a351f25a88b649283f69bfad38181e3aeba415",
+            "size": 126304640,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 161517567
+            }
+          }
+        ]
+      },
+      {
+        "id": "ppocr-v5-latin",
+        "name": "PP-OCRv5 Latin",
+        "version": "v5-mobile-89d3a50e-e6f4fa85",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/ppocr-v5-latin/v5-mobile-89d3a50e-e6f4fa85/NOTICE-1c5688c6ae32953d.txt",
+            "size": 12095,
+            "sha256": "1c5688c6ae32953d92e52581aba6e120f3f2f1c2bd660e5930ee5652684096cb"
+          },
+          "attribution": "PP-OCRv5 mobile text detection and latin_PP-OCRv5_mobile_rec by PaddlePaddle (PaddleOCR), Apache-2.0. ONNX exports by PaddlePaddle."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "requires": {
+          "platform": "linux"
+        },
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/ppocr-v5-latin/v5-mobile-89d3a50e-e6f4fa85/ppocr-v5-latin-89d3a50e-e6f4fa85.tar.zst"
+            ],
+            "sha256": "cdd4cdcfffd473eccafb64a7a6f1469f46805c4d83d853c56065cff8898a0dbb",
+            "size": 11853847,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 12881387
+            }
+          }
+        ]
+      },
+      {
+        "id": "anuvani-lid",
+        "name": "Language identifier for Odia and other Indian languages",
+        "version": "3b9caa41-npu-15s",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/anuvani-lid/3b9caa41-npu-15s/NOTICE-9aaf942b0ea2704d.txt",
+            "size": 12064,
+            "sha256": "9aaf942b0ea2704d932f5c3383ef3ebfa0d2649cb77bcb69628d3bcfd633a8b6"
+          },
+          "attribution": "Anuvani-LID by Stephen Fernandes and Narayan Kumar Choudhary, Central Institute of Indian Languages. Apache-2.0. Its accelerator-format front end and encoder (rev 3b9caa41), unchanged."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/anuvani-lid/3b9caa41-npu-15s/anuvani-lid-3b9caa41-npu-15s.tar.zst"
+            ],
+            "sha256": "6252898b7342eb7b29a0d6f8a3af699d5b1da7c138621aefb1efa5aea9ebbdac",
+            "size": 436989666,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 471333102
+            }
+          }
+        ]
+      },
+      {
+        "id": "clap-general-audio",
+        "name": "CLAP general audio encoder (int8)",
+        "version": "16c8cc31-onnx-int8-d78c3994-text1",
+        "kind": "model",
+        "tiers": [],
+        "licence": {
+          "spdx": "Apache-2.0 AND MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/clap-general-audio/16c8cc31-onnx-int8-d78c3994-text1/NOTICE-27eb18ea0a1653a0.txt",
+            "size": 14473,
+            "sha256": "27eb18ea0a1653a06707ed2a30fcaedc7980e37de2f579e302c1a1b56f21a68f"
+          },
+          "attribution": "CLAP (laion/larger_clap_general, revision 16c8cc31) by LAION: Yusong Wu, Ke Chen, Tianyu Zhang, Yuchen Hui, Taylor Berg-Kirkpatrick and Shlomo Dubnov. Apache-2.0. ONNX export by Xenova (Xenova/larger_clap_general, revision d78c3994): the audio encoder, 8-bit dynamically quantised (int8); repacked unchanged; with Taalcut's CLAP text embeddings of earshot's listening vocabulary (earshot 0.4.0 data by Leon Lin, MIT)."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "variants": [
+          "clap-general-audio-fp16"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/clap-general-audio/16c8cc31-onnx-int8-d78c3994-text1/clap-general-audio-int8-d78c3994.tar.zst"
+            ],
+            "sha256": "134f87a8cf05d2ab5d830be95d1e00014122d3a9f33cb0c89bb361f860fb0522",
+            "size": 56723868,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 79005452
+            }
+          }
+        ]
+      },
+      {
+        "id": "clap-general-audio-fp16",
+        "name": "CLAP general audio encoder (fp16)",
+        "version": "16c8cc31-onnx-fp16-d78c3994-text1",
+        "kind": "model",
+        "tiers": [],
+        "licence": {
+          "spdx": "Apache-2.0 AND MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/clap-general-audio-fp16/16c8cc31-onnx-fp16-d78c3994-text1/NOTICE-a36a2982528b7ed1.txt",
+            "size": 14466,
+            "sha256": "a36a2982528b7ed1c2ab029babcb5ee04cbd444630c531d130a0d91378f6d488"
+          },
+          "attribution": "CLAP (laion/larger_clap_general, revision 16c8cc31) by LAION: Yusong Wu, Ke Chen, Tianyu Zhang, Yuchen Hui, Taylor Berg-Kirkpatrick and Shlomo Dubnov. Apache-2.0. ONNX export by Xenova (Xenova/larger_clap_general, revision d78c3994): the audio encoder, float16 weights (fp16); repacked unchanged; with Taalcut's CLAP text embeddings of earshot's listening vocabulary (earshot 0.4.0 data by Leon Lin, MIT)."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "requires": {
+          "platform": "darwin",
+          "gpuApi": "metal"
+        },
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/clap-general-audio-fp16/16c8cc31-onnx-fp16-d78c3994-text1/clap-general-audio-fp16-d78c3994.tar.zst"
+            ],
+            "sha256": "7721b8d35b6551dc7b5ad49dbef20b88df9c55af12a5ae84405a5044d9bac23b",
+            "size": 127124378,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 144282246
+            }
+          }
+        ]
+      },
+      {
+        "id": "clap-general-text",
+        "name": "CLAP general text encoder (int8)",
+        "version": "16c8cc31-onnx-int8-d78c3994",
+        "kind": "model",
+        "tiers": [],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/clap-general-text/16c8cc31-onnx-int8-d78c3994/NOTICE-6c43b0a92c5138a5.txt",
+            "size": 12718,
+            "sha256": "6c43b0a92c5138a513f8b19ba18090dc9d3adf1a9431ce4ece0a901ae81f18ca"
+          },
+          "attribution": "CLAP (laion/larger_clap_general, revision 16c8cc31) by LAION: Yusong Wu, Ke Chen, Tianyu Zhang, Yuchen Hui, Taylor Berg-Kirkpatrick and Shlomo Dubnov. Apache-2.0. ONNX export by Xenova (Xenova/larger_clap_general, revision d78c3994): the text encoder, 8-bit dynamically quantised (int8); repacked unchanged."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "variants": [
+          "clap-general-text-fp16"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/clap-general-text/16c8cc31-onnx-int8-d78c3994/clap-general-text-int8-d78c3994.tar.zst"
+            ],
+            "sha256": "a488a91be2f46be0e29343762dd7d21957a78baf909878a39b7a5990ab1257d6",
+            "size": 96579785,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 129969591
+            }
+          }
+        ]
+      },
+      {
+        "id": "clap-general-text-fp16",
+        "name": "CLAP general text encoder (fp16)",
+        "version": "16c8cc31-onnx-fp16-d78c3994",
+        "kind": "model",
+        "tiers": [],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/clap-general-text-fp16/16c8cc31-onnx-fp16-d78c3994/NOTICE-5673dc09e86ba71f.txt",
+            "size": 12711,
+            "sha256": "5673dc09e86ba71fc50c381d94e83bb2c4c04703bcd40b2e30836d90eb780bfc"
+          },
+          "attribution": "CLAP (laion/larger_clap_general, revision 16c8cc31) by LAION: Yusong Wu, Ke Chen, Tianyu Zhang, Yuchen Hui, Taylor Berg-Kirkpatrick and Shlomo Dubnov. Apache-2.0. ONNX export by Xenova (Xenova/larger_clap_general, revision d78c3994): the text encoder, float16 weights (fp16); repacked unchanged."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "requires": {
+          "platform": "darwin",
+          "gpuApi": "metal"
+        },
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/clap-general-text-fp16/16c8cc31-onnx-fp16-d78c3994/clap-general-text-fp16-d78c3994.tar.zst"
+            ],
+            "sha256": "82f5efe2d77c235f6e8bb901b633d96d016b4ea05a853df4fe015a40ae7b1756",
+            "size": 232031826,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 254395416
+            }
+          }
+        ]
+      },
+      {
+        "id": "ast-audioset",
+        "name": "AST AudioSet sound tagger (int8)",
+        "version": "f826b80d-onnx-int8-249a1fbf",
+        "kind": "model",
+        "tiers": [],
+        "licence": {
+          "spdx": "BSD-3-Clause AND CC-BY-4.0",
+          "notice": {
+            "url": "https://components.taalcut.app/ast-audioset/f826b80d-onnx-int8-249a1fbf/NOTICE-559a789aaa17db45.txt",
+            "size": 22340,
+            "sha256": "559a789aaa17db45ebe84ea92947076c88a7724f81ada8a244654ae98841d2b5"
+          },
+          "attribution": "Audio Spectrogram Transformer fine-tuned on AudioSet (MIT/ast-finetuned-audioset-10-10-0.4593, revision f826b80d) by Yuan Gong, Yu-An Chung and James Glass (MIT CSAIL). BSD-3-Clause. ONNX export by Xenova (Xenova/ast-finetuned-audioset-10-10-0.4593, revision 249a1fbf), 8-bit dynamically quantised (int8); repacked unchanged. Its 527 class names are from AudioSet by Google Inc., CC BY 4.0 (research.google.com/audioset)."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "variants": [
+          "ast-audioset-fp16"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/ast-audioset/f826b80d-onnx-int8-249a1fbf/ast-audioset-int8-249a1fbf.tar.zst"
+            ],
+            "sha256": "30d417f14028bd953891f5848935dd1af92d042a68f1179a3fc27b677816edf6",
+            "size": 65424314,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 90834475
+            }
+          }
+        ]
+      },
+      {
+        "id": "ast-audioset-fp16",
+        "name": "AST AudioSet sound tagger (fp16)",
+        "version": "f826b80d-onnx-fp16-249a1fbf",
+        "kind": "model",
+        "tiers": [],
+        "licence": {
+          "spdx": "BSD-3-Clause AND CC-BY-4.0",
+          "notice": {
+            "url": "https://components.taalcut.app/ast-audioset-fp16/f826b80d-onnx-fp16-249a1fbf/NOTICE-9102cc268cd66295.txt",
+            "size": 22333,
+            "sha256": "9102cc268cd662956b0cd6372ff2667c941551fe7af4f5d02319127b1d2a5dba"
+          },
+          "attribution": "Audio Spectrogram Transformer fine-tuned on AudioSet (MIT/ast-finetuned-audioset-10-10-0.4593, revision f826b80d) by Yuan Gong, Yu-An Chung and James Glass (MIT CSAIL). BSD-3-Clause. ONNX export by Xenova (Xenova/ast-finetuned-audioset-10-10-0.4593, revision 249a1fbf), float16 weights (fp16); repacked unchanged. Its 527 class names are from AudioSet by Google Inc., CC BY 4.0 (research.google.com/audioset)."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "requires": {
+          "platform": "darwin",
+          "gpuApi": "metal"
+        },
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/ast-audioset-fp16/f826b80d-onnx-fp16-249a1fbf/ast-audioset-fp16-249a1fbf.tar.zst"
+            ],
+            "sha256": "5821d22fe11a5070b2c564369f39174ac93e0a6eb202c4b18d57370b77eb60e1",
+            "size": 159420203,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 173713987
+            }
+          }
+        ]
+      },
+      {
+        "id": "sfx-bank",
+        "name": "SFX bank (earshot, code-made sound effects)",
+        "version": "0.4.0-ff41f07.2",
+        "kind": "model",
+        "tiers": [],
+        "licence": {
+          "spdx": "MIT",
+          "notice": {
+            "url": "https://components.taalcut.app/sfx-bank/0.4.0-ff41f07.2/NOTICE-17a27e7bce3dae14.txt",
+            "size": 10043,
+            "sha256": "17a27e7bce3dae14e6c9f818259bf9803ba5382f76ba03172cf5202bc22539c0"
+          },
+          "attribution": "Sound effects from earshot 0.4.0 (https://github.com/Leonxlnx/earshot) by Leon Lin, MIT licence, rendered from its recipe code and fitted models by Taalcut (tools/audio-packs/sfx-bank); the 15 fitted sounds' models were measured from CC0 1.0 recordings on Freesound, whose recordists are credited in CREDITS_FIT.md and NOTICE.txt."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/sfx-bank/0.4.0-ff41f07.2/sfx-bank-0.4.0-ff41f07.2.tar.zst"
+            ],
+            "sha256": "e6b0f259e98932b3000df433cb79b4ec865054505af89b77780e9528da5eba6c",
+            "size": 33479940,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 40917320
+            }
+          }
+        ]
+      },
+      {
+        "id": "workspace-node",
+        "name": "Node.js (workspace shell)",
+        "version": "24.22.2",
+        "kind": "tool",
+        "tiers": [],
+        "licence": {
+          "spdx": "MIT AND Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND ISC AND Unicode-3.0 AND Zlib AND BlueOak-1.0.0 AND CC0-1.0",
+          "notice": {
+            "url": "https://components.taalcut.app/workspace-node/24.22.2/NOTICE-9a24f3ba5180f12c.txt",
+            "size": 158986,
+            "sha256": "9a24f3ba5180f12cc5f836bfc4a8694ed1dc12518ebe1da829c27ebcadc0ec01"
+          },
+          "attribution": "Node.js by the OpenJS Foundation and Node.js contributors (MIT), with V8, ICU, zlib, OpenSSL, libuv and the other libraries its LICENSE lists."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/workspace-node/24.22.2/node-v24.22.2-darwin-arm64.tar.zst"
+            ],
+            "sha256": "90be0827dc88fe7b13cb4de028cd75a61a4c1738e3261fdd825d0b50c27e6b03",
+            "size": 28836401,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 122722041
+            }
+          }
+        ]
+      },
+      {
+        "id": "workspace-python",
+        "name": "Python with NumPy and Pillow (workspace shell)",
+        "version": "3.14.9-1",
+        "kind": "tool",
+        "tiers": [],
+        "licence": {
+          "spdx": "PSF-2.0 AND Python-2.0 AND BSD-3-Clause AND MIT-CMU AND MIT AND Apache-2.0 AND BSD-2-Clause AND Zlib AND 0BSD AND FTL",
+          "notice": {
+            "url": "https://components.taalcut.app/workspace-python/3.14.9-1/NOTICE-22fa3416ccc89c22.txt",
+            "size": 237151,
+            "sha256": "22fa3416ccc89c2215820bd09741ab016997bb23a22526eb50b2aad5af58471f"
+          },
+          "attribution": "CPython by the Python Software Foundation (PSF-2.0), built by python-build-standalone (Astral); NumPy (BSD-3-Clause, NumPy developers); Pillow (MIT-CMU, Jeffrey A. Clark and contributors) and the libraries each bundles."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/workspace-python/3.14.9-1/python-3.14.9-1-darwin-arm64.tar.zst"
+            ],
+            "sha256": "a643aa14e3b34bcfad4e043310b18a61acf4fbf49101eac88d11e18188cbdad8",
+            "size": 32541461,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 120855236
+            }
+          }
+        ]
+      },
+      {
+        "id": "hyperframes-cli",
+        "name": "HyperFrames CLI (workspace shell)",
+        "version": "0.8.209-1",
+        "kind": "tool",
+        "tiers": [],
+        "licence": {
+          "spdx": "Apache-2.0 AND LicenseRef-HyperFrames-CLI-Dependencies AND AGPL-3.0-or-later AND LicenseRef-GSAP-Standard",
+          "notice": {
+            "url": "https://components.taalcut.app/hyperframes-cli/0.8.209-1/NOTICE-2fde4bee2e109439.txt",
+            "size": 172145,
+            "sha256": "2fde4bee2e1094397c524c342845cfb6681891f754c09b0a8c59e3e232f98d58"
+          },
+          "attribution": "The HyperFrames CLI by HeyGen, Inc. (Apache-2.0), with Puppeteer (Apache-2.0, Google), esbuild (MIT), unchanged GSAP 3.15.0 (GSAP Standard License), and the packages LICENSES/INVENTORY.txt lists. Taalcut capture and preload additions are AGPL-3.0-or-later with the included section 7 additional permission."
+        },
+        "dependencies": [
+          "workspace-node"
+        ],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/hyperframes-cli/0.8.209-1/hyperframes-cli-0.8.209-1-darwin-arm64.tar.zst"
+            ],
+            "sha256": "21fc971ff8d3149c55d63675449e0e56c66b93e9d27d6025dece2bbbf20a3c2c",
+            "size": 13687515,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 75150293
+            }
+          }
+        ]
+      },
+      {
+        "id": "subjects-onnx",
+        "name": "Subject detection (RTMO-s poses, YOLOX-Nano)",
+        "version": "2.0.0-rtmo-s-191f8f2c-nano-c789161e",
+        "kind": "model",
+        "tiers": [
+          "minimum",
+          "recommended",
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/subjects-onnx/2.0.0-rtmo-s-191f8f2c-nano-c789161e/NOTICE-7861b4358fb0bccc.txt",
+            "size": 23924,
+            "sha256": "7861b4358fb0bccc9a8a23eb83b0cc6135517f197005ead62c94152abb2e6aaa"
+          },
+          "attribution": "RTMO-s pose estimator from MMPose (open-mmlab/mmpose), Apache-2.0, exported to ONNX by Taalcut with mmdeploy (Apache-2.0). YOLOX-Nano object detector by Megvii (Megvii-BaseDetection/YOLOX), Apache-2.0, hosted unchanged."
+        },
+        "dependencies": [
+          "onnxruntime"
+        ],
+        "artifacts": [
+          {
+            "platform": "any",
+            "urls": [
+              "https://components.taalcut.app/subjects-onnx/2.0.0-rtmo-s-191f8f2c-nano-c789161e/subjects-onnx-rtmo-s-coco-yolox-nano.tar.zst"
+            ],
+            "sha256": "4759fe20866b0a445271a4431e3da7a62f7e83e5716b9c70e107441b364f26c1",
+            "size": 39772963,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 47245924
+            }
+          }
+        ]
+      },
+      {
+        "id": "local-llm-runtime-mlx",
+        "name": "Taalcut MLX server",
+        "version": "1.0.0",
+        "kind": "runtime",
+        "tiers": [
+          "high"
+        ],
+        "licence": {
+          "spdx": "AGPL-3.0-or-later AND MIT AND Apache-2.0 AND BSD-2-Clause",
+          "notice": {
+            "url": "https://components.taalcut.app/local-llm-runtime-mlx/1.0.0/NOTICE-7c7ee789a1207697.txt",
+            "size": 110756,
+            "sha256": "7c7ee789a1207697fc7e40511377af14a58865966e2e31557157ca3c60893bff"
+          },
+          "attribution": "Taalcut's MLX server on mlx-swift and mlx-swift-lm (MIT, ml-explore), swift-transformers (Apache-2.0, Hugging Face) and XGrammar (Apache-2.0, XGrammar contributors, with picojson, BSD-2-Clause)."
+        },
+        "dependencies": [],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/local-llm-runtime-mlx/1.0.0/taalcut-mlx-server-1.0.0-darwin-arm64.tar.zst"
+            ],
+            "sha256": "8731bb1e536bad559492dbe6e1e9375f54d8639158754223303c2e9fa47810c5",
+            "size": 12619693,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 72486292
+            }
+          }
+        ]
+      },
+      {
+        "id": "local-llm-qwen3-5-9b-mlx",
+        "name": "Qwen3.5 9B (MLX 4-bit)",
+        "version": "4bit-8b2b98c0",
+        "kind": "model",
+        "tiers": [
+          "high"
+        ],
+        "licence": {
+          "spdx": "Apache-2.0",
+          "notice": {
+            "url": "https://components.taalcut.app/local-llm-qwen3-5-9b-mlx/4bit-8b2b98c0/NOTICE-38a8b88e0656b47b.txt",
+            "size": 12342,
+            "sha256": "38a8b88e0656b47b6601d3661901a2aadc92b91d7d94e5659ba06b134beeaf09"
+          },
+          "attribution": "Qwen3.5-9B by the Qwen team, Alibaba Cloud. Apache-2.0. Converted to MLX and quantised to 4 bits by mlx-community (mlx-community/Qwen3.5-9B-4bit)."
+        },
+        "dependencies": [
+          "local-llm-runtime-mlx"
+        ],
+        "artifacts": [
+          {
+            "platform": "darwin-arm64",
+            "urls": [
+              "https://components.taalcut.app/local-llm-qwen3-5-9b-mlx/4bit-8b2b98c0/qwen3.5-9b-mlx-4bit.tar.zst"
+            ],
+            "sha256": "a3ef74d3cfe4c7cbd500bd79e2b00d619021b2fb6612e1276a27472e90cda8b6",
+            "size": 5247264957,
+            "install": {
+              "type": "archive",
+              "format": "tar.zst",
+              "stripComponents": 0,
+              "extractedSize": 5970348308
+            }
+          }
+        ]
+      }
+    ],
+    "sequence": 23,
+    "notAfter": "2027-05-10T17:09:13Z"
+  },
+  "signatures": [
+    {
+      "keyId": "438da86c0fbd96ef",
+      "sig": "bzE1AgcWB1XzO49wwq3lXVxfJg+tV7gbuEJjQ3WCdC05q6e+nLCPxdI6gN+M8Q5jYowQGo5c09E2bV++rOs0DA=="
+    }
+  ]
+}

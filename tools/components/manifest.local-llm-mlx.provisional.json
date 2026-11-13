@@ -1,0 +1,79 @@
+{
+  "$schema": "./manifest.schema.json",
+  "$comment": "MLX1: Taalcut's own MLX server and Qwen3.5 9B on MLX, for Apple silicon Macs of the High tier (packages/models/src/local-runtime/mlx-spec.ts; the component ids match it). Hosted at components.taalcut.app since 2026-11-11; compose-provisional.mjs includes it in production. local-llm-runtime-mlx is native/mlx-server built by its build.sh --tarball (xcodebuild, Xcode 26): taalcut-mlx-server, mlx.metallib, libswiftCompatibilitySpan.dylib, LICENSES/ and BUILDINFO.json, flat. The runtime has Matterward Labs Private Limited's Developer ID signature and an Accepted Apple notarization. Its own source and all pinned Swift dependency sources are hosted beside it. local-llm-qwen3-5-9b-mlx is mlx-community/Qwen3.5-9B-4bit at revision 8b2b98c00a6b4d291155e4890773ca8f769aee53 (Apache-2.0; Qwen/Qwen3.5-9B converted to MLX 4-bit, group size 64, with mlx-vlm 0.3.12): the ten files the server reads, unchanged, as one flat tar.zst (deterministic zstd level 3, one thread). Every artifact and notice passed a complete public SHA-256 verification.",
+  "schemaVersion": 1,
+  "components": [
+    {
+      "id": "local-llm-runtime-mlx",
+      "name": "Taalcut MLX server",
+      "version": "1.0.0",
+      "kind": "runtime",
+      "tiers": [
+        "high"
+      ],
+      "licence": {
+        "spdx": "AGPL-3.0-or-later AND MIT AND Apache-2.0 AND BSD-2-Clause",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-runtime-mlx/1.0.0/NOTICE-7c7ee789a1207697.txt",
+          "size": 110756,
+          "sha256": "7c7ee789a1207697fc7e40511377af14a58865966e2e31557157ca3c60893bff"
+        },
+        "attribution": "Taalcut's MLX server on mlx-swift and mlx-swift-lm (MIT, ml-explore), swift-transformers (Apache-2.0, Hugging Face) and XGrammar (Apache-2.0, XGrammar contributors, with picojson, BSD-2-Clause)."
+      },
+      "dependencies": [],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/local-llm-runtime-mlx/1.0.0/taalcut-mlx-server-1.0.0-darwin-arm64.tar.zst"
+          ],
+          "sha256": "8731bb1e536bad559492dbe6e1e9375f54d8639158754223303c2e9fa47810c5",
+          "size": 12619693,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 72486292
+          }
+        }
+      ]
+    },
+    {
+      "id": "local-llm-qwen3-5-9b-mlx",
+      "name": "Qwen3.5 9B (MLX 4-bit)",
+      "version": "4bit-8b2b98c0",
+      "kind": "model",
+      "tiers": [
+        "high"
+      ],
+      "licence": {
+        "spdx": "Apache-2.0",
+        "notice": {
+          "url": "https://components.taalcut.app/local-llm-qwen3-5-9b-mlx/4bit-8b2b98c0/NOTICE-38a8b88e0656b47b.txt",
+          "size": 12342,
+          "sha256": "38a8b88e0656b47b6601d3661901a2aadc92b91d7d94e5659ba06b134beeaf09"
+        },
+        "attribution": "Qwen3.5-9B by the Qwen team, Alibaba Cloud. Apache-2.0. Converted to MLX and quantised to 4 bits by mlx-community (mlx-community/Qwen3.5-9B-4bit)."
+      },
+      "dependencies": [
+        "local-llm-runtime-mlx"
+      ],
+      "artifacts": [
+        {
+          "platform": "darwin-arm64",
+          "urls": [
+            "https://components.taalcut.app/local-llm-qwen3-5-9b-mlx/4bit-8b2b98c0/qwen3.5-9b-mlx-4bit.tar.zst"
+          ],
+          "sha256": "a3ef74d3cfe4c7cbd500bd79e2b00d619021b2fb6612e1276a27472e90cda8b6",
+          "size": 5247264957,
+          "install": {
+            "type": "archive",
+            "format": "tar.zst",
+            "stripComponents": 0,
+            "extractedSize": 5970348308
+          }
+        }
+      ]
+    }
+  ]
+}

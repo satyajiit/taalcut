@@ -1,0 +1,41 @@
+Third-party licence texts for the bundled FFmpeg build (linux-x64)
+
+These are the licence texts of the code statically linked into the seven FFmpeg shared libraries
+(lib/*.so.*) that tools/ffmpeg/build-linux.sh builds from the pins in tools/ffmpeg/versions.env, in the
+pinned Ubuntu 22.04 toolchain image (linux-x64.Dockerfile). The binaries' BUILDINFO.json lists every source
+with its URL and SHA-256; tools/ffmpeg/SOURCE.md is the source offer.
+
+FFmpeg 9.0.2 itself is LGPL-2.1-or-later (--disable-gpl --disable-nonfree --disable-version3); its text
+ships as dist/linux-x64/LICENSE.txt (FFmpeg's COPYING.LGPLv2.1) and is not repeated here.
+
+Line format: name | upstream | pinned version | SPDX licence expression | files
+Files are named <Library>-<OriginalFileName> and hold the upstream bytes unchanged, except the
+nv-codec-headers notices, which are verbatim excerpts of the header comments (the tarball has no licence
+file). "+ ..." in the SPDX field marks a patent licence that sits beside the copyright licence.
+build-linux.sh copies the texts from the trees it builds and stops if a file here is from no library it
+links, or if this index doesn't name one.
+
+# A. Statically linked: the code is inside lib/*.so.*
+zlib | https://github.com/madler/zlib | 1.3.2 | Zlib | zlib-LICENSE
+nv-codec-headers | https://github.com/FFmpeg/nv-codec-headers | 13.0.19.1 (Video Codec SDK 13.0 API; loads the NVIDIA driver's libraries at run time) | MIT | nv-codec-headers-nvEncodeAPI.h-notice.txt nv-codec-headers-dynlink_loader.h-notice.txt
+Vulkan-Headers | https://github.com/KhronosGroup/Vulkan-Headers | vulkan-sdk-1.4.357.0 | Apache-2.0 OR MIT | Vulkan-Headers-LICENSE.md Vulkan-Headers-Apache-2.0.txt Vulkan-Headers-MIT.txt
+Little-CMS (lcms2) | https://github.com/mm2/Little-CMS | 2.19.1 (used by libplacebo) | MIT | lcms2-LICENSE
+zimg | https://github.com/sekrit-twc/zimg | release-3.0.6 | WTFPL | zimg-COPYING
+glslang | https://github.com/KhronosGroup/glslang | 168d452a4f460d24b588fed08477a81c44ee27a1 (used by libplacebo) | BSD-3-Clause AND BSD-2-Clause AND MIT AND Apache-2.0 (per file; the file's GPL-3.0 text covers parts that are not compiled, see SOURCE.md) | glslang-LICENSE.txt
+SPIRV-Headers | https://github.com/KhronosGroup/SPIRV-Headers | vulkan-sdk-1.4.357.0 (glslang, and swscale's SPIR-V backend) | MIT | SPIRV-Headers-LICENSE SPIRV-Headers-MIT.txt
+fast_float | https://github.com/fastfloat/fast_float | 8.3.1 (used by libplacebo) | Apache-2.0 OR BSL-1.0 OR MIT | fast_float-LICENSE-APACHE fast_float-LICENSE-BOOST fast_float-LICENSE-MIT
+libplacebo | https://github.com/haasn/libplacebo | 7.360.1 | LGPL-2.1-or-later | libplacebo-LICENSE
+OpenH264 | https://github.com/cisco/openh264 | 2.6.0 (compiled from source: Cisco's patent grant for its own binary does not cover it; SOURCE.md) | BSD-2-Clause | OpenH264-LICENSE
+dav1d | https://code.videolan.org/videolan/dav1d (GitHub mirror) | 1.5.4 | BSD-2-Clause | dav1d-COPYING
+SVT-AV1 | https://gitlab.com/AOMediaCodec/SVT-AV1 (GitHub mirror) | 4.2.0 (encoder library only) | BSD-3-Clause-Clear AND BSD-2-Clause + LicenseRef-AOM-Patent-License-1.0; bundled fastfeat BSD-3-Clause | SVT-AV1-LICENSE.md SVT-AV1-LICENSE-BSD2.md SVT-AV1-PATENTS.md SVT-AV1-fastfeat-LICENSE
+GCC runtime (libstdc++, libgcc) | https://gcc.gnu.org/ | GCC 11.4.0, Ubuntu 22.04's gcc-11 11.4.0-1ubuntu1~22.04.3 (-l:libstdc++.a, -static-libgcc) | GPL-3.0-or-later WITH GCC-exception-3.1 | GCC-runtime-COPYING3 GCC-runtime-COPYING.RUNTIME
+
+# B. Used to build, not in the binaries
+Vulkan-Loader vulkan-sdk-1.4.357.0 (linked against; the system's libvulkan.so.1 is loaded at run time),
+jinja2 3.1.6 and MarkupSafe 3.0.3 (libplacebo's code generator), CMake 3.31.12, Meson 1.12.1, and the
+image's Ubuntu packages (gcc, clang-14 for the CUDA kernels, nasm, binutils; BUILDINFO.json's toolchain).
+
+# C. From the system at run time, not shipped
+glibc (libc6 2.35 or later), the Vulkan loader (libvulkan1, Apache-2.0), libva and libva-drm 2.x (MIT,
+with libdrm, MIT) for VA-API, and the NVIDIA driver's libcuda, libnvcuvid and libnvidia-encode, which
+FFmpeg opens at run time when NVDEC, NVENC or CUDA filters are used (NVIDIA's driver licence).

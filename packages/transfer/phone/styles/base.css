@@ -1,0 +1,109 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* Hallmark · route: custom (tuned) · system: Taalcut app · file: base.css
+ * Hand-written base layer. Uses tokens only; no raw colour or font values.
+ * Load after tokens.css (plain CSS) or tailwind.css (app).
+ */
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-size: 100%;
+    font-weight: var(--weight-body);
+    font-synthesis: none; /* Onest has no italics: never fake them */
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    overflow-x: clip;
+  }
+
+  body {
+    margin: 0;
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-style: normal;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-ink);
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+    min-width: 0;
+    margin: 0;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Numbers that change in place: timecodes, durations, counts, sizes. */
+  code, kbd, samp, .tc-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums slashed-zero;
+  }
+
+  /* A moment or a length that sits still ("Changed Oct 7", "3 min") is set in the text face with tabular
+   * figures, so a line never mixes two faces (DESIGN.md "Typography", v0.4 UX1). A live timer adds .tc-mono. */
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: var(--color-selection);
+    color: var(--color-ink);
+  }
+
+  /* Focus shows instantly and is never animated. */
+  :focus-visible {
+    outline: var(--rule-fine) solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* An inactive window shows no focus ring, as on macOS (DESIGN.md, "Window").
+   * Focus stays where it was and the ring returns with the window. */
+  [data-window-active="false"] :focus-visible {
+    outline-color: transparent;
+  }
+
+  /* The video viewer surround stays neutral in both themes, and so does the ink drawn on it. */
+  .tc-viewer {
+    background: var(--color-viewer);
+    color: var(--color-viewer-ink);
+    color-scheme: dark;
+  }
+
+  /* The theme engine sets this for two frames while switching, so colours
+   * change at once instead of animating through every transition. */
+  :root[data-theme-switching] *,
+  :root[data-theme-switching] *::before,
+  :root[data-theme-switching] *::after {
+    transition: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Transitions are the 150 ms fade (DESIGN.md "Motion", P3-R2): only opacity and colours change gradually;
+     * anything that would move, grow or turn (transform, size, position) takes its new value at once. */
+    *, *::before, *::after {
+      animation-duration: 150ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 150ms !important;
+      transition-property: opacity, color, background-color, border-color, outline-color, text-decoration-color,
+        fill, stroke, box-shadow, visibility !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Loaders keep running, slower: they are the only sign that work is
+     * happening. Spinners turn, skeletons and the global loader fade. */
+    .animate-spin, .tc-bone, .tc-global-loader-bar {
+      animation-duration: 2.4s !important;
+      animation-iteration-count: infinite !important;
+    }
+  }
+}

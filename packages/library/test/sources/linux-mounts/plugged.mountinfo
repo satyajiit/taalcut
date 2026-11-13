@@ -1,0 +1,13 @@
+29 33 0:26 / /proc rw,nosuid,nodev,noexec,relatime shared:13 - proc proc rw
+30 33 0:7 / /dev rw,nosuid,relatime shared:2 - devtmpfs udev rw,size=32113960k,nr_inodes=8028490,mode=755,inode64
+32 33 0:28 / /run rw,nosuid,nodev,noexec,relatime shared:5 - tmpfs tmpfs rw,size=6447224k,mode=755,inode64
+33 2 259:4 / / rw,relatime shared:1 - ext4 /dev/nvme1n1p2 rw
+52 33 7:4 / /snap/firefox/8929 ro,nodev,relatime shared:26 - squashfs /dev/loop4 ro,errors=continue,threads=single
+75 33 259:1 / /data rw,relatime shared:88 - ext4 /dev/nvme0n1p1 rw
+77 33 259:3 / /boot/efi rw,relatime shared:90 - vfat /dev/nvme1n1p1 rw,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro
+80 75 8:1 / /data/sata rw,relatime shared:92 - ext4 /dev/sda1 rw
+741 32 0:62 / /run/user/1000 rw,nosuid,nodev,relatime shared:668 - tmpfs tmpfs rw,size=6447220k,nr_inodes=1611805,mode=700,uid=1000,gid=1000,inode64
+3959 33 0:87 / /var/lib/docker/rootfs/overlayfs/8504c5379ad14796ab357fcb524dd1632f72d16f1eba043ecef150e3043b3507 rw,relatime shared:1438 - overlay overlay rw,nouserxattr
+1201 33 8:17 / /media/satyajit/Footage\040Drive rw,nosuid,nodev,relatime shared:700 - exfat /dev/sdb1 rw,fmask=0022,dmask=0022,iocharset=utf8,errors=remount-ro
+1240 33 253:0 / /mnt/archive rw,relatime shared:705 - ext4 /dev/mapper/archive rw
+1300 33 0:120 / /mnt/nas rw,relatime shared:710 - nfs4 nas.local:/volume1/footage rw,vers=4.2,rsize=1048576,wsize=1048576,hard,proto=tcp,timeo=600,retrans=2,sec=sys

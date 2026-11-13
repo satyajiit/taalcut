@@ -1,0 +1,15 @@
+{
+  "$comment": "GET /v2/voices?page_size=100&next_page_token=page-2-token (last page).",
+  "voices": [
+    {
+      "voice_id": "myClone000000000000a",
+      "name": "My voice",
+      "category": "cloned",
+      "labels": {},
+      "verified_languages": []
+    }
+  ],
+  "has_more": false,
+  "next_page_token": null,
+  "total_count": 4
+}

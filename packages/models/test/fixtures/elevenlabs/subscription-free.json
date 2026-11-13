@@ -1,0 +1,7 @@
+{
+  "$comment": "GET /v1/user/subscription on Free.",
+  "tier": "free",
+  "character_count": 900,
+  "character_limit": 10000,
+  "status": "free"
+}

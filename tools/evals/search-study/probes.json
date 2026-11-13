@@ -1,0 +1,505 @@
+{
+  "v": 1,
+  "about": "IX2-U1 ranking study set. Labels come from what the footage is known to contain: tools/bench-footage's IX_V1 set (speech text, on-screen lines, each shot's look) and the search eval's fixtures (tools/evals/src/search/fixtures.ts). The search eval's own 8 queries are added from the fixtures at run time. See tools/evals/SPEC.md, 'IX2 search ranking study'.",
+  "probes": [
+    {
+      "id": "ix-speech-en-lighthouse",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "speech",
+      "text": "lighthouse",
+      "relevant": [{ "clip": "city-4k-hevc30-en.mov" }]
+    },
+    {
+      "id": "ix-speech-en-dumplings",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "speech",
+      "text": "dumplings",
+      "relevant": [{ "clip": "street-portrait-h264-en.mp4" }]
+    },
+    {
+      "id": "ix-speech-en-mushrooms",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "speech",
+      "text": "mushrooms",
+      "relevant": [{ "clip": "kitchen-1080-h264-en.mp4" }]
+    },
+    {
+      "id": "ix-speech-en-tripod",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "speech",
+      "text": "tripod",
+      "relevant": [{ "clip": "desk-1080-h264-en.mp4" }]
+    },
+    {
+      "id": "ix-speech-en-bridge",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "speech",
+      "text": "bridge",
+      "relevant": [{ "clip": "run-4k-hevc60-en.mov" }]
+    },
+    {
+      "id": "ix-speech-en-drums",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "speech",
+      "text": "drums",
+      "relevant": [{ "clip": "studio-1080-hevc60-en.mov" }]
+    },
+    {
+      "id": "ix-speech-hi-monsoon",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "speech",
+      "text": "मानसून",
+      "relevant": [{ "clip": "market-4k-hevc30-hi.mov" }]
+    },
+    {
+      "id": "ix-speech-hi-kites",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "speech",
+      "text": "पतंगें",
+      "relevant": [{ "clip": "rooftop-portrait-hevc30-hi.mov" }]
+    },
+    {
+      "id": "ix-speech-hi-flute",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "speech",
+      "text": "बांसुरी",
+      "relevant": [{ "clip": "studio-1080-h264-hi.mp4" }]
+    },
+    {
+      "id": "ix-speech-hi-tea-shop",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "speech",
+      "text": "चाय की दुकान",
+      "relevant": [{ "clip": "market-4k-hevc30-hi.mov" }]
+    },
+    {
+      "id": "ix-speech-es-biblioteca",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "speech",
+      "text": "biblioteca",
+      "relevant": [{ "clip": "beach-4k-hevc30-es.mov" }]
+    },
+    {
+      "id": "ix-speech-es-rampa",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "speech",
+      "text": "rampa",
+      "relevant": [{ "clip": "skate-4k-hevc60-es.mov" }]
+    },
+    {
+      "id": "ix-speech-es-albahaca",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "speech",
+      "text": "albahaca",
+      "relevant": [{ "clip": "garden-1080-hevc30-es.mov" }]
+    },
+    {
+      "id": "ix-speech-es-faro",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "speech",
+      "text": "el faro",
+      "relevant": [{ "clip": "beach-4k-hevc30-es.mov" }]
+    },
+    {
+      "id": "ix-speech-pt-cachoeira",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "speech",
+      "text": "cachoeira",
+      "relevant": [{ "clip": "park-4k-hevc30-ptbr.mov" }]
+    },
+    {
+      "id": "ix-speech-pt-abelhas",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "speech",
+      "text": "abelhas",
+      "relevant": [{ "clip": "garden-1080-h264-ptbr.mp4" }]
+    },
+    {
+      "id": "ix-speech-pt-cafe-coado",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "speech",
+      "text": "café coado",
+      "relevant": [{ "clip": "coffee-4k-h264-30-ptbr.mp4" }]
+    },
+    {
+      "id": "ix-speech-pt-trilha",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "speech",
+      "text": "trilha",
+      "relevant": [{ "clip": "park-4k-hevc30-ptbr.mov" }]
+    },
+
+    {
+      "id": "ix-screen-en-pier",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "PIER 39 FERRY",
+      "relevant": [
+        { "clip": "city-4k-hevc30-en.mov", "onScreen": "PIER 39 FERRY" },
+        { "clip": "city-4k-hevc30-en.mov", "spokenToo": "pier" }
+      ]
+    },
+    {
+      "id": "ix-screen-en-take",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "TAKE 4",
+      "relevant": [{ "clip": "studio-1080-h264-hi.mp4", "onScreen": "TAKE 4" }]
+    },
+    {
+      "id": "ix-screen-en-live",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "LIVE TONIGHT",
+      "relevant": [{ "clip": "concert-4k-hevc30-music.mov", "onScreen": "LIVE TONIGHT" }]
+    },
+    {
+      "id": "ix-screen-en-sale",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "sale 50 off",
+      "relevant": [{ "clip": "desk-1080-h264-en.mp4", "onScreen": "KEYBOARD SALE 50 OFF" }]
+    },
+    {
+      "id": "ix-screen-en-setup",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "NEW SETUP 2026",
+      "relevant": [
+        { "clip": "desk-1080-h264-en.mp4", "onScreen": "NEW SETUP 2026" },
+        { "clip": "desk-1080-h264-en.mp4", "spokenToo": "setup" }
+      ]
+    },
+    {
+      "id": "ix-screen-en-skate-park",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "SKATE PARK OPEN",
+      "relevant": [{ "clip": "skate-4k-hevc60-es.mov", "onScreen": "SKATE PARK OPEN" }]
+    },
+    {
+      "id": "ix-screen-en-garlic",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "GARLIC CREAM PASTA",
+      "relevant": [
+        { "clip": "kitchen-1080-h264-en.mp4", "onScreen": "GARLIC CREAM PASTA" },
+        { "clip": "kitchen-1080-h264-en.mp4", "spokenToo": "garlic" }
+      ]
+    },
+    {
+      "id": "ix-screen-en-night-market",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "NIGHT MARKET",
+      "relevant": [
+        { "clip": "street-portrait-h264-en.mp4", "onScreen": "NIGHT MARKET" },
+        { "clip": "street-portrait-h264-en.mp4", "spokenToo": "night market" }
+      ]
+    },
+    {
+      "id": "ix-screen-pt-jardim",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "on-screen",
+      "text": "JARDIM BOTANICO",
+      "relevant": [
+        { "clip": "garden-1080-h264-ptbr.mp4", "onScreen": "JARDIM BOTANICO" },
+        { "clip": "garden-1080-h264-ptbr.mp4", "spokenToo": "jardim" }
+      ]
+    },
+
+    {
+      "id": "ix-visual-en-bars",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "visual",
+      "text": "colour bars test pattern",
+      "relevant": [{ "look": "bars" }]
+    },
+    {
+      "id": "ix-visual-hi-bars",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "visual",
+      "text": "रंगीन पट्टियों वाला टेस्ट पैटर्न",
+      "relevant": [{ "look": "bars" }]
+    },
+    {
+      "id": "ix-visual-es-bars",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "visual",
+      "text": "barras de colores de prueba",
+      "relevant": [{ "look": "bars" }]
+    },
+    {
+      "id": "ix-visual-pt-bars",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "visual",
+      "text": "barras coloridas de teste",
+      "relevant": [{ "look": "bars" }]
+    },
+    {
+      "id": "ix-visual-en-gradient",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "visual",
+      "text": "smooth colour gradient",
+      "relevant": [{ "look": "gradient" }]
+    },
+    {
+      "id": "ix-visual-hi-gradient",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "visual",
+      "text": "रंगों का हल्का ग्रेडिएंट",
+      "relevant": [{ "look": "gradient" }]
+    },
+    {
+      "id": "ix-visual-es-gradient",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "visual",
+      "text": "degradado de colores suave",
+      "relevant": [{ "look": "gradient" }]
+    },
+    {
+      "id": "ix-visual-pt-gradient",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "visual",
+      "text": "degradê de cores suave",
+      "relevant": [{ "look": "gradient" }]
+    },
+    {
+      "id": "ix-visual-en-pixels",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "visual",
+      "text": "blocky pixel cellular automaton",
+      "relevant": [{ "look": "life" }, { "look": "cells" }]
+    },
+    {
+      "id": "ix-visual-hi-pixels",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "visual",
+      "text": "पिक्सेल वाला सेल्युलर ऑटोमेटन",
+      "relevant": [{ "look": "life" }, { "look": "cells" }]
+    },
+    {
+      "id": "ix-visual-es-pixels",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "visual",
+      "text": "autómata celular de píxeles",
+      "relevant": [{ "look": "life" }, { "look": "cells" }]
+    },
+    {
+      "id": "ix-visual-pt-pixels",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "visual",
+      "text": "autômato celular de pixels",
+      "relevant": [{ "look": "life" }, { "look": "cells" }]
+    },
+
+    {
+      "id": "ix-describe-en-waterfall",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "description",
+      "text": "hiking up to a waterfall",
+      "relevant": [{ "clip": "park-4k-hevc30-ptbr.mov" }]
+    },
+    {
+      "id": "ix-describe-en-pour-over",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "description",
+      "text": "pour-over brewing at home",
+      "relevant": [{ "clip": "coffee-4k-h264-30-ptbr.mp4" }]
+    },
+    {
+      "id": "ix-describe-en-jogging",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "description",
+      "text": "jogging at dawn along the water",
+      "relevant": [{ "clip": "run-4k-hevc60-en.mov" }]
+    },
+    {
+      "id": "ix-describe-en-stove",
+      "set": "ix-v1",
+      "language": "en",
+      "kind": "description",
+      "text": "cooking dinner on the stove",
+      "relevant": [{ "clip": "kitchen-1080-h264-en.mp4" }]
+    },
+    {
+      "id": "ix-describe-hi-rainy-market",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "description",
+      "text": "बरसात में खरीदारी",
+      "relevant": [{ "clip": "market-4k-hevc30-hi.mov" }]
+    },
+    {
+      "id": "ix-describe-hi-recording",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "description",
+      "text": "संगीत की रिकॉर्डिंग",
+      "relevant": [{ "clip": "studio-1080-h264-hi.mp4" }, { "clip": "studio-1080-hevc60-en.mov" }]
+    },
+    {
+      "id": "ix-describe-hi-city-view",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "description",
+      "text": "ऊँचाई से नगर का दृश्य",
+      "relevant": [{ "clip": "rooftop-portrait-hevc30-hi.mov" }]
+    },
+    {
+      "id": "ix-describe-hi-morning-run",
+      "set": "ix-v1",
+      "language": "hi",
+      "kind": "description",
+      "text": "सुबह नदी के किनारे दौड़",
+      "relevant": [{ "clip": "run-4k-hevc60-en.mov" }]
+    },
+    {
+      "id": "ix-describe-es-skateboard",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "description",
+      "text": "deslizándose en monopatín",
+      "relevant": [{ "clip": "skate-4k-hevc60-es.mov" }]
+    },
+    {
+      "id": "ix-describe-es-vegetables",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "description",
+      "text": "cultivar verduras con la familia",
+      "relevant": [{ "clip": "garden-1080-hevc30-es.mov" }]
+    },
+    {
+      "id": "ix-describe-es-books-sea",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "description",
+      "text": "leer libros y pasear junto al mar",
+      "relevant": [{ "clip": "beach-4k-hevc30-es.mov" }]
+    },
+    {
+      "id": "ix-describe-es-garlic-recipe",
+      "set": "ix-v1",
+      "language": "es",
+      "kind": "description",
+      "text": "receta de salsa con ajo",
+      "relevant": [{ "clip": "kitchen-1080-h264-en.mp4" }]
+    },
+    {
+      "id": "ix-describe-pt-insects",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "description",
+      "text": "insetos visitando um canteiro na primavera",
+      "relevant": [{ "clip": "garden-1080-h264-ptbr.mp4" }]
+    },
+    {
+      "id": "ix-describe-pt-hot-drink",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "description",
+      "text": "preparando uma bebida para começar o dia",
+      "relevant": [{ "clip": "coffee-4k-h264-30-ptbr.mp4" }]
+    },
+    {
+      "id": "ix-describe-pt-cold-swim",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "description",
+      "text": "um mergulho gelado depois da caminhada",
+      "relevant": [{ "clip": "park-4k-hevc30-ptbr.mov" }]
+    },
+    {
+      "id": "ix-describe-pt-recording",
+      "set": "ix-v1",
+      "language": "pt-BR",
+      "kind": "description",
+      "text": "gravando música no estúdio",
+      "relevant": [{ "clip": "studio-1080-h264-hi.mp4" }, { "clip": "studio-1080-hevc60-en.mov" }]
+    },
+
+    {
+      "id": "syn-screen-en-desk",
+      "set": "synthetic-search",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "desk",
+      "relevant": [{ "clip": "clips/desk.mkv" }]
+    },
+    {
+      "id": "syn-screen-en-noise",
+      "set": "synthetic-search",
+      "language": "en",
+      "kind": "on-screen",
+      "text": "noise",
+      "relevant": [{ "clip": "clips/noise.mkv" }]
+    },
+    {
+      "id": "syn-screen-hi-namaste",
+      "set": "synthetic-search",
+      "language": "hi",
+      "kind": "on-screen",
+      "text": "नमस्ते",
+      "relevant": [{ "clip": "clips/hi-namaste.mkv" }]
+    },
+    {
+      "id": "syn-screen-es-mercado",
+      "set": "synthetic-search",
+      "language": "es",
+      "kind": "on-screen",
+      "text": "mercado",
+      "relevant": [{ "clip": "clips/es-mercado.mkv" }]
+    },
+    {
+      "id": "syn-screen-pt-festa",
+      "set": "synthetic-search",
+      "language": "pt-BR",
+      "kind": "on-screen",
+      "text": "uma festa animada",
+      "relevant": [{ "clip": "clips/pt-festa.mkv" }]
+    }
+  ]
+}

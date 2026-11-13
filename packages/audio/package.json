@@ -1,0 +1,25 @@
+{
+  "name": "@taalcut/audio",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Beats, speech-to-text, loudness and audio type.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@huggingface/tokenizers": "0.2.0",
+    "@taalcut-vendor/earshot-data": "workspace:*",
+    "@taalcut-vendor/signalsmith-stretch": "workspace:*",
+    "@taalcut/core": "workspace:*",
+    "@taalcut/media": "workspace:*",
+    "onnxruntime-node": "1.30.0",
+    "zod": "^4.6.6"
+  }
+}

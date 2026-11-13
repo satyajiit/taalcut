@@ -1,0 +1,242 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+name: CI
+
+# Runs on pull requests and on demand. Not on every push to main: the repo is
+# private while the product is built, and macOS minutes are billed at 10x.
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# macos-26 is the arm64 image. macos-latest floated to it in July 2026; do not use the floating label.
+# A local action is loaded from the workspace, so each pnpm job checks out before Setup.
+# Setup checks out again, then installs pnpm, Node 24, and dependencies. No remote Turbo cache.
+jobs:
+  typecheck:
+    name: typecheck
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Typecheck
+        run: pnpm typecheck
+
+  lint:
+    name: lint
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Lint
+        run: pnpm lint
+      - name: Lint fixtures
+        run: pnpm lint:fixtures
+
+  unit-tests:
+    name: unit tests with coverage
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Vitest with coverage gates
+        continue-on-error: false
+        run: pnpm test:coverage
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage
+          if-no-files-found: warn
+          path: |
+            packages/core/coverage
+            packages/agent/coverage
+            packages/tools/coverage
+
+  build:
+    name: build
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Build
+        run: pnpm build
+
+  # The e2e projects that need nothing a Mac downloads or builds first: app (the placeholder renderer; its three
+  # durability tests that need FFmpeg skip here) and window (the real one). The projects that need the components,
+  # the headless shell, FFmpeg or the mac helper (gate, make, indexing, and app again) run nightly in
+  # e2e-assets.yml, which provisions them.
+  e2e:
+    name: end-to-end smoke
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: End-to-end smoke
+        run: pnpm --filter @taalcut/desktop e2e:smoke
+      - name: Upload Playwright results
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: e2e-smoke-results
+          if-no-files-found: ignore
+          path: apps/desktop/test-results
+
+  # LNX1: the whole `pnpm check` on Linux, which the .deb ships to (Ubuntu 24.04 is its oldest supported release),
+  # on the same triggers as the macOS jobs. The LGPL FFmpeg is laid out first, so the FFmpeg suites run here instead
+  # of skipping. It is built by tools/ffmpeg/build-linux.sh in its pinned container, and cached by everything that
+  # build reads (the pins and the base image's digest in versions.env, the scripts and the Dockerfile): the first run
+  # after a change builds it (the toolchain image, 7.5 minutes on the dev host, most of it apt downloads, then the
+  # compile, 97 s there on 12 CPUs and longer on this runner's 4) and saves it at once, so a later failure in the job
+  # doesn't lose it; later runs restore it. Either way the result has to be the bytes media pins
+  # (test/pinned-build.test.ts), so a cache can't put another build under the tests. Its libraries load the system's
+  # Vulkan loader and libva, which the .deb depends on and the runner image may lack, so they are installed first.
+  # Suites that need a Mac (say, VideoToolbox, sips, Core ML) or a GPU skip and say why in their names; `pnpm lint`'s
+  # `notice --check` reads NOTICE from Linux (scripts/notice/other-platforms.mjs).
+  check-linux:
+    name: check (ubuntu-24.04)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: The Linux FFmpeg's system libraries (the .deb's Depends for it)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libvulkan1 libva2 libva-drm2
+      - name: Restore the Linux FFmpeg build
+        id: ffmpeg-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            tools/ffmpeg/dist/linux-x64/bin
+            tools/ffmpeg/dist/linux-x64/lib
+            tools/ffmpeg/dist/linux-x64/LICENSE.txt
+          key: ffmpeg-linux-x64-${{ hashFiles('tools/ffmpeg/versions.env', 'tools/ffmpeg/build-linux.sh', 'tools/ffmpeg/linux-in-container.sh', 'tools/ffmpeg/linux-x64.Dockerfile', 'tools/ffmpeg/buildinfo.py', 'tools/ffmpeg/check-paths.sh', 'tools/ffmpeg/verify-linux.sh') }}
+      - name: Build the Linux FFmpeg (tools/ffmpeg/build-linux.sh)
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
+        run: tools/ffmpeg/build-linux.sh
+      # A build of other bytes would rewrite these (and fail media's pin): stop here, and cache nothing.
+      - name: The build is the committed one
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
+        run: git diff --exit-code -- tools/ffmpeg/dist/linux-x64/BUILDINFO.json tools/ffmpeg/LICENSES/linux-x64
+      - name: Save the Linux FFmpeg build
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            tools/ffmpeg/dist/linux-x64/bin
+            tools/ffmpeg/dist/linux-x64/lib
+            tools/ffmpeg/dist/linux-x64/LICENSE.txt
+          key: ${{ steps.ffmpeg-cache.outputs.cache-primary-key }}
+      # The committed BUILDINFO.json stays as checked out (a build that reproduces it rewrites it byte for byte).
+      - name: Verify the Linux FFmpeg (no GPU on this runner)
+        run: tools/ffmpeg/verify-linux.sh --no-gpu
+      - name: Check
+        run: pnpm check
+
+  licence-scan:
+    name: licence scan
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Write NOTICE
+        run: pnpm licence:scan
+      - name: Fail if NOTICE is stale
+        run: git diff --exit-code -- NOTICE
+      - name: Licence scanner unit tests
+        run: node --test scripts/licence-scan.test.mjs
+
+  eval:
+    name: eval
+    # Future path filter (not enabled yet). Run only when these change:
+    # packages/templates/**, packages/timeline/**, packages/render/**,
+    # packages/audio/**, packages/vision/**, tools/evals/**
+    # (breakdown, casting, captions, QA).
+    runs-on: macos-26
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Golden-set eval
+        run: pnpm --filter @taalcut/evals run eval -- --golden golden/sample --predictions predictions/stub --out "$RUNNER_TEMP/eval-report.md"
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: eval-report
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/eval-report.md
+            ${{ runner.temp }}/eval-report.json
+      - name: Post eval report on the pull request
+        if: github.event_name == 'pull_request' && success()
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const fs = require('node:fs');
+            const path = require('node:path');
+            const marker = '<!-- taalcut-eval-report -->';
+            const reportPath = path.join(process.env.RUNNER_TEMP, 'eval-report.md');
+            const report = fs.readFileSync(reportPath, 'utf8');
+            const limit = 60000;
+            let body = `${marker}\n## Eval report\n\n${report}`;
+            if (body.length > limit) {
+              const suffix = '\n\n_(truncated)_';
+              body = body.slice(0, limit - suffix.length) + suffix;
+            }
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number,
+              per_page: 100,
+            });
+            const existing = comments.find((comment) => {
+              const user = comment.user;
+              return Boolean(user && user.type === 'Bot' && comment.body && comment.body.includes(marker));
+            });
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body,
+              });
+              return;
+            }
+            await github.rest.issues.createComment({ owner, repo, issue_number, body });
+
+  cla-workflow:
+    name: CLA workflow presence
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: CLA workflow pins contributor-assistant
+        run: test -f .github/workflows/cla.yml && grep -q 'contributor-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08' .github/workflows/cla.yml

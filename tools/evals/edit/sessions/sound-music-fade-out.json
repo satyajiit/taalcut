@@ -1,0 +1,267 @@
+{
+ "caseId": "sound-music-fade-out",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DHYGXEZ5NGQFBM1GTTFGQC",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "I will fade the music out over the last two seconds of the timeline.\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "UnvpxlVaYLzCji6ahuEzLY7kzpfTdKtQ",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "kind": "sound",
+         "sound": "music"
+        },
+        "fadeOutSeconds": 2
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "I will fade the music out over the last two seconds of the timeline.\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "UnvpxlVaYLzCji6ahuEzLY7kzpfTdKtQ",
+       "name": "audio_setVolume",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "of": {
+         "kind": "sound",
+         "sound": "music"
+        },
+        "fadeOutSeconds": 2
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10672,
+      "output": 128,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10800,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603879855,
+     "responseId": "chatcmpl-d85c5fee2cdf4275b3968ef79adffa66",
+     "rawStopReason": "tool_calls",
+     "durationMs": 11753
+    }
+   },
+   "text": "I will fade the music out over the last two seconds of the timeline.\n\n",
+   "toolCalls": [
+    {
+     "id": "UnvpxlVaYLzCji6ahuEzLY7kzpfTdKtQ",
+     "name": "audio_setVolume",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "of": {
+       "kind": "sound",
+       "sound": "music"
+      },
+      "fadeOutSeconds": 2
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10672,
+    "outputTokens": 128,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10800,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHYWCVRKKB631MWDXEDM6S",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Done. The music fades out over the last two seconds."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Done. The music fades out over the last two seconds."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 172,
+      "output": 12,
+      "cacheRead": 10672,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10856,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793603891612,
+     "responseId": "chatcmpl-431427ffa93948958a4ee6ef079df4c9",
+     "rawStopReason": "stop",
+     "durationMs": 619
+    }
+   },
+   "text": "Done. The music fades out over the last two seconds.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 172,
+    "outputTokens": 12,
+    "cachedInputTokens": 10672,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10856,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHYX089P7RX40ZX7D3DJ9F",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "ybwDhxSPwQJXjmVu9An83fcS6bDRmEZU",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "ybwDhxSPwQJXjmVu9An83fcS6bDRmEZU",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10941,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10996,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603892234,
+     "responseId": "chatcmpl-641fb0c4bcab488bb4934d4d2f1b6105",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10509
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "ybwDhxSPwQJXjmVu9An83fcS6bDRmEZU",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10941,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10996,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

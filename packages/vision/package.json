@@ -1,0 +1,34 @@
+{
+  "name": "@taalcut/vision",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Shot detection, OCR, frame captions, embeddings, faces (opt-in).",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./src/test-support.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests",
+    "bench:embed": "tsx scripts/bench-embed.ts",
+    "study:embed": "tsx scripts/study-embed-budget.ts",
+    "study:duplicates": "tsx scripts/study-duplicates.ts",
+    "bench:decode": "tsx scripts/bench-decode.ts",
+    "bench:embed-frames": "tsx scripts/bench-embed-frames.ts",
+    "study:coreml-weights": "tsx scripts/study-coreml-weights.ts"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.1",
+    "@taalcut/core": "workspace:*",
+    "@taalcut/media": "workspace:*",
+    "@taalcut/models": "workspace:*",
+    "onnxruntime-node": "1.30.0",
+    "zod": "4.6.6"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15"
+  }
+}

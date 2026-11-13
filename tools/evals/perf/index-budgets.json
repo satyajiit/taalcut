@@ -1,0 +1,49 @@
+{
+  "v": 1,
+  "tolerance": 0.15,
+  "floorMinPerHour": 0.5,
+  "note": "IX-B4 indexing budgets: minutes per hour of footage (median of a bench label). Set from the IX baseline with the mac helper's on-screen text (OCR) read, 2026-10-17 (baseline-ixv1-rec-helper, baseline-smoke-rec-helper); the first baselines had no OCR and were replaced with `budgets <label> --reset`. Tighten with `pnpm bench:index budgets <label> --write`, which only ever lowers them; both refuse a bench without OCR. Over a budget by more than the tolerance and by more than the floor (min/h) warns (bench summary, nightly perf).",
+  "budgets": [
+    {
+      "searchableMinPerHour": 95.3,
+      "completeMinPerHour": 95.8,
+      "stageBusyMinPerHour": {
+        "library.hash": 0.86,
+        "media.normalise": 0.35,
+        "vision.shots": 20.3,
+        "media.previews": 20.24,
+        "audio.language": 1.05,
+        "media.proxy": 14.81,
+        "vision.analyse": 62.74,
+        "audio.transcript": 1.98,
+        "vision.embed": 8.42,
+        "vision.describe": 0.42
+      },
+      "footage": "ix-v1",
+      "tier": "recommended",
+      "from": "baseline-ixv1-rec-helper",
+      "setAt": "2026-10-16T23:46:47.315Z"
+    },
+    {
+      "footage": "smoke",
+      "tier": "recommended",
+      "from": "baseline-smoke-rec-helper",
+      "setAt": "2026-10-16T23:46:47.816Z",
+      "searchableMinPerHour": 55,
+      "completeMinPerHour": 55.7,
+      "stageBusyMinPerHour": {
+        "library.hash": 0.25,
+        "media.normalise": 0.28,
+        "audio.language": 1.65,
+        "media.previews": 12.31,
+        "audio.beats": 0.55,
+        "vision.shots": 11.55,
+        "media.proxy": 8.62,
+        "vision.analyse": 29.65,
+        "audio.transcript": 2.34,
+        "vision.embed": 8.81,
+        "vision.describe": 0.69
+      }
+    }
+  ]
+}

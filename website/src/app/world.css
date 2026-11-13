@@ -1,0 +1,113 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 Taalcut contributors */
+/* WEB2 Remix Vernacular · system: WEB2 Remix Vernacular · imported by globals.css, after the tokens.
+ * The mechanisms the primitives lean on: the app window's one-unit scale, the brand icons' theme drawings, and
+ * Kaatu's atlases (kaatu.css, lane L5's file: loaded here so no component imports a stylesheet). */
+
+@import '../components/kaatu/kaatu.css';
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* The app window scales as one unit (components/ui/app-window.tsx). Its frame lays out at a design width and every */
+/* length inside it is in design pixels: --aw-px is one of them, never more than 1px, so on a phone the window       */
+/* shrinks whole instead of reflowing. Registered as a length, so it is worked out once, where it is declared.      */
+/* Inside the window use the spacing, text and radius scales (p-4, type-body, rounded-lg), never rem or px values.  */
+/* ---------------------------------------------------------------------------------------------------------------- */
+@property --aw-px {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 1px;
+}
+
+@layer components {
+  /* The design width: the size's (APP_WINDOW_WIDTH), less 40 beside a compact sidebar (APP_SIDEBAR_WIDTH). */
+  [data-slot='app-window'] {
+    container-type: inline-size;
+    --aw-size: 760;
+    --aw-width: var(--aw-size);
+  }
+  [data-slot='app-window'][data-size='sm'] {
+    --aw-size: 560;
+  }
+  [data-slot='app-window'][data-size='md'] {
+    --aw-size: 760;
+  }
+  [data-slot='app-window'][data-size='lg'] {
+    --aw-size: 960;
+  }
+  [data-slot='app-window'][data-sidebar='compact'] {
+    --aw-width: calc(var(--aw-size) - 40);
+  }
+  [data-slot='app-window-sidebar'] {
+    display: flex;
+  }
+  /* fit fold: on a phone the sidebar folds away and the window lays out at its page's width. */
+  @media (width < 40rem) {
+    [data-slot='app-window'][data-fit='fold'][data-sidebar] {
+      --aw-width: calc(var(--aw-size) - 200);
+    }
+    [data-slot='app-window'][data-fit='fold'] [data-slot='app-window-sidebar'] {
+      display: none;
+    }
+  }
+  /* fit fluid: laid out at its own width from 320 design px; the sidebar only once the window is 60rem wide. */
+  [data-slot='app-window'][data-fit='fluid'] {
+    --aw-width: 320;
+  }
+  [data-slot='app-window'][data-fit='fluid'] [data-slot='app-window-sidebar'] {
+    display: none;
+  }
+  @container (width >= 60rem) {
+    [data-slot='app-window'][data-fit='fluid'] [data-slot='app-window-sidebar'] {
+      display: flex;
+    }
+  }
+  [data-slot='app-window-frame'] {
+    --aw-px: min(1px, calc(100cqw / var(--aw-width, 760)));
+    --spacing: calc(var(--aw-px) * 4);
+    --text-2xs: calc(var(--aw-px) * 11);
+    --text-2xs--line-height: calc(var(--aw-px) * 16);
+    --text-xs: calc(var(--aw-px) * 12);
+    --text-xs--line-height: calc(var(--aw-px) * 16);
+    --text-sm: calc(var(--aw-px) * 13);
+    --text-sm--line-height: calc(var(--aw-px) * 20);
+    --text-base: calc(var(--aw-px) * 14);
+    --text-base--line-height: calc(var(--aw-px) * 22);
+    --text-md: calc(var(--aw-px) * 15);
+    --text-md--line-height: calc(var(--aw-px) * 24);
+    --text-lg: calc(var(--aw-px) * 17);
+    --text-lg--line-height: calc(var(--aw-px) * 24);
+    --text-xl: calc(var(--aw-px) * 20);
+    --text-xl--line-height: calc(var(--aw-px) * 28);
+    --text-2xl: calc(var(--aw-px) * 24);
+    --text-2xl--line-height: calc(var(--aw-px) * 32);
+    --text-3xl: calc(var(--aw-px) * 29);
+    --text-3xl--line-height: calc(var(--aw-px) * 36);
+    --radius-clip: calc(var(--aw-px) * 4);
+    --radius-sm: calc(var(--aw-px) * 6);
+    --radius-md: calc(var(--aw-px) * 8);
+    --radius-lg: calc(var(--aw-px) * 10);
+    --radius-xl: calc(var(--aw-px) * 14);
+    --radius-2xl: calc(var(--aw-px) * 20);
+    --radius-reel: calc(var(--aw-px) * 18);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+
+  /* A brand icon and the AI mark are 1em square by default. :where() and this layer put the default under every
+     utility, so a caller's size-*, w-* or h-* wins without an !important (brand-icon.tsx, ai-mark.tsx). */
+  :where([data-slot='brand-icon'], [data-slot='ai-mark']) {
+    width: 1em;
+    height: 1em;
+  }
+
+  /* A brand icon with a light and a dark drawing shows the one for the theme (components/brand/brand-icon.tsx). */
+  [data-slot='brand-icon'] > [data-variant='dark'] {
+    display: none;
+  }
+  :root[data-theme='dark'] [data-slot='brand-icon'][data-theme-aware] > [data-variant='light'] {
+    display: none;
+  }
+  :root[data-theme='dark'] [data-slot='brand-icon'][data-theme-aware] > [data-variant='dark'] {
+    display: block;
+  }
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html
+  lang="en"
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="orbit-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #puck {
+          position: absolute;
+          left: 240px;
+          top: 960px;
+          width: 120px;
+          height: 60px;
+          border-radius: 30px;
+          background: #2a9d8f;
+        }
+      </style>
+      <div id="root" data-composition-id="orbit" data-width="1080" data-height="1920" data-duration="4">
+        <div id="puck"></div>
+      </div>
+      <script>
+        gsap.registerPlugin(MotionPathPlugin);
+        const tl = gsap.timeline({ paused: true });
+        tl.to('#puck', { motionPath: { path: 'M0,0 C150,-400 450,-400 600,0', autoRotate: true }, duration: 2.5, ease: 'power1.inOut' }, 0);
+        window.__timelines['orbit'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

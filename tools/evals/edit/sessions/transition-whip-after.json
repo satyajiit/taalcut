@@ -1,0 +1,346 @@
+{
+ "caseId": "transition-whip-after",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DHNSG394C1PCEBSN4M5AYD",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "xQp3D7V61Idz0p8v7keVgCesqEj6qlIU",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "xQp3D7V61Idz0p8v7keVgCesqEj6qlIU",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 0
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 10407,
+      "output": 56,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 10463,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603593734,
+     "responseId": "chatcmpl-79aea94b0eed40e2a6d369448dfeedf4",
+     "rawStopReason": "tool_calls",
+     "durationMs": 8735
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "xQp3D7V61Idz0p8v7keVgCesqEj6qlIU",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 0
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 10407,
+    "outputTokens": 56,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 10463,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHP21972TVCA5RFDDFPKP9",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "The coffee shot is clip 2. I'll add a whip pan transition after it into clip 3.\n\n\n"
+     },
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "0SOudQsPKhzBEZ2DhRIa4wkUkACHVk4h",
+       "name": "timeline_setTransition",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "2",
+        "kind": "whip",
+        "durationSeconds": 0.25
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "The coffee shot is clip 2. I'll add a whip pan transition after it into clip 3.\n\n\n"
+      },
+      {
+       "type": "toolCall",
+       "id": "0SOudQsPKhzBEZ2DhRIa4wkUkACHVk4h",
+       "name": "timeline_setTransition",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "2",
+        "kind": "whip",
+        "durationSeconds": 0.25
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1615,
+      "output": 145,
+      "cacheRead": 10407,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12167,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603602475,
+     "responseId": "chatcmpl-2a0a4ffc1cc34e73a18c09c5366ac620",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4536
+    }
+   },
+   "text": "The coffee shot is clip 2. I'll add a whip pan transition after it into clip 3.\n\n\n",
+   "toolCalls": [
+    {
+     "id": "0SOudQsPKhzBEZ2DhRIa4wkUkACHVk4h",
+     "name": "timeline_setTransition",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "2",
+      "kind": "whip",
+      "durationSeconds": 0.25
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1615,
+    "outputTokens": 145,
+    "cachedInputTokens": 10407,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12167,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHP6FGREG4QPHFRB7SH0H7",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "text",
+      "text": "Whip pan added after the coffee shot."
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Whip pan added after the coffee shot."
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 206,
+      "output": 9,
+      "cacheRead": 12022,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12237,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "stop",
+     "timestamp": 1793603607028,
+     "responseId": "chatcmpl-639d11046e3c4776a1d1501cf659cf28",
+     "rawStopReason": "stop",
+     "durationMs": 675
+    }
+   },
+   "text": "Whip pan added after the coffee shot.",
+   "toolCalls": [],
+   "stopReason": "stop",
+   "usage": {
+    "inputTokens": 206,
+    "outputTokens": 9,
+    "cachedInputTokens": 12022,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12237,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DHP74SP5T33QC1D8GMAA0Q",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "PX6fXgiU53MvDoMtawkxf5BAsGS1BHY6",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "PX6fXgiU53MvDoMtawkxf5BAsGS1BHY6",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 12319,
+      "output": 55,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 12374,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793603607709,
+     "responseId": "chatcmpl-a650497b0af94dd8809ef924b84e37ef",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10163
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "PX6fXgiU53MvDoMtawkxf5BAsGS1BHY6",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 12319,
+    "outputTokens": 55,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 12374,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

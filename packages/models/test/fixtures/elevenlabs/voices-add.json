@@ -1,0 +1,5 @@
+{
+  "$comment": "POST /v1/voices/add (multipart).",
+  "voice_id": "myClone000000000000a",
+  "requires_verification": false
+}

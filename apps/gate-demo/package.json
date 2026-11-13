@@ -1,0 +1,30 @@
+{
+  "name": "@taalcut/gate-demo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Headless twin of the gate demo: the real library, media, vision, render and agent packages composed the way the desktop app will, run end to end on scripted models and on a recorded model session.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
+    "refresh:catalogue": "tsx scripts/refresh-catalogue.ts"
+  },
+  "dependencies": {
+    "@taalcut/agent": "workspace:*",
+    "@taalcut/audio": "workspace:*",
+    "@taalcut/core": "workspace:*",
+    "@taalcut/library": "workspace:*",
+    "@taalcut/media": "workspace:*",
+    "@taalcut/models": "workspace:*",
+    "@taalcut/render": "workspace:*",
+    "@taalcut/shorts": "workspace:*",
+    "@taalcut/templates": "workspace:*",
+    "@taalcut/timeline": "workspace:*",
+    "@taalcut/tools": "workspace:*",
+    "@taalcut/vision": "workspace:*"
+  }
+}

@@ -1,0 +1,4 @@
+/* Generated from main's catalogue by i18n:extract (packaging/info-plist-strings.ts). Do not edit. */
+"NSLocalNetworkUsageDescription" = "O Taalcut verifica se este Mac pode ser encontrado na sua rede Wi-Fi para que seu celular possa enviar vídeos. Mesmo se você desativar isso, os celulares ainda conseguem enviar.";
+"NSMicrophoneUsageDescription" = "O Taalcut grava sua voz somente quando você lê a frase de consentimento para criar sua própria voz. A gravação fica neste Mac até você criar essa voz.";
+"NSPhotoLibraryUsageDescription" = "O Taalcut lê as fotos e os vídeos que você escolher do app Fotos da Apple ou de um iPhone ou iPad conectado. Seus originais permanecem inalterados.";

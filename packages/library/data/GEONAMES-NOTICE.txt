@@ -1,0 +1,12 @@
+places-v1.bin.gz contains data from GeoNames (https://www.geonames.org),
+licensed under the Creative Commons Attribution 4.0 International licence
+(CC BY 4.0, https://creativecommons.org/licenses/by/4.0/).
+
+Source: https://download.geonames.org/export/dump/ (cities1000, admin1CodesASCII,
+countryInfo), as of the date in places.lock.json.
+
+Changes: Taalcut keeps each place's id, name, coordinates, population, country,
+first-level region and time zone, leaves out sections of cities and historical,
+abandoned or destroyed places, and packs them into one binary file
+(packages/library/scripts/build-places.ts). GeoNames' data comes with no
+warranty.

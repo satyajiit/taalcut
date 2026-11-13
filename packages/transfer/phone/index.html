@@ -1,0 +1,242 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- Copyright (C) 2026 Taalcut contributors -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf6f1" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#181715" />
+    <title data-i18n="page.title">Send videos · Taalcut</title>
+    <link rel="preload" href="/assets/onest-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/assets/icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/assets/icon.png" />
+    <link rel="stylesheet" href="/assets/tokens.css" />
+    <link rel="stylesheet" href="/assets/base.css" />
+    <link rel="stylesheet" href="/assets/app.css" />
+    <link rel="stylesheet" href="/assets/controls.css" />
+    <link rel="stylesheet" href="/assets/rows.css" />
+    <script src="/assets/tus.min.js" defer></script>
+    <script type="module" src="/assets/app.js"></script>
+  </head>
+  <body>
+    <!-- Icons: Lucide's drawings (ISC), the set packages/ui uses, on its 24-unit grid. -->
+    <svg class="sprite" aria-hidden="true">
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="m16 12-4-4-4 4M12 16V8" /></symbol>
+      <symbol id="i-held" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M10 15V9M14 15V9" /></symbol>
+      <symbol id="i-offline" viewBox="0 0 24 24"><path d="M12 20h.01M8.5 16.43a5 5 0 0 1 7 0M5 12.86a10 10 0 0 1 5.17-2.69M19 12.86a10 10 0 0 0-2-1.52M2 8.82a15 15 0 0 1 4.18-2.64M22 8.82a15 15 0 0 0-11.29-3.76M2 2l20 20" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol>
+      <symbol id="i-done" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" /></symbol>
+      <symbol id="i-refused" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="m4.9 4.9 14.2 14.2" /></symbol>
+      <symbol id="i-stopped" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6M9 9l6 6" /></symbol>
+      <symbol id="i-ghost" viewBox="0 0 24 24"><path d="M10.1 2.18a10 10 0 0 1 3.8 0M13.9 21.82a10 10 0 0 1-3.8 0M17.61 3.72a10 10 0 0 1 2.69 2.7M2.18 13.9a10 10 0 0 1 0-3.8M20.28 17.61a10 10 0 0 1-2.7 2.69M21.82 10.1a10 10 0 0 1 0 3.8M3.72 6.39a10 10 0 0 1 2.7-2.69M6.39 20.28a10 10 0 0 1-2.69-2.7" /></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="4" width="4" height="16" rx="1" /><rect x="6" y="4" width="4" height="16" rx="1" /></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3l14 9-14 9z" /></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></symbol>
+      <symbol id="i-retry" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14" /></symbol>
+      <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></symbol>
+      <symbol id="i-photos" viewBox="0 0 24 24"><path d="M18 22H4a2 2 0 0 1-2-2V6" /><path d="m22 13-1.3-1.3a2.41 2.41 0 0 0-3.4 0L11 18" /><circle cx="12" cy="8" r="2" /><rect width="16" height="16" x="6" y="2" rx="2" /></symbol>
+      <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.22 3.48a.5.5 0 0 0 .78-.42V7.87a.5.5 0 0 0-.75-.43L16 10.5" /><rect x="2" y="6" width="14" height="12" rx="2" /></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" /><path d="M12 18h.01" /></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol>
+      <symbol id="i-spin" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.22-8.56" /></symbol>
+      <symbol id="i-check-again" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></symbol>
+      <symbol id="i-key" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" /><circle cx="16.5" cy="7.5" r=".5" fill="currentColor" /></symbol>
+      <symbol id="i-sign-in" viewBox="0 0 24 24"><path d="m10 17 5-5-5-5" /><path d="M15 12H3" /><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /></symbol>
+    </svg>
+
+    <div class="shell">
+      <!-- The lockup and the steps stay at the top while the step under them scrolls (UX3: a long list of
+           videos moved them out of reach). -->
+      <header class="topbar" id="topbar">
+        <div class="masthead">
+          <!-- The horizontal lockup, small drawing, four colours: this page is the transfer's brand surface. -->
+          <svg class="lockup" id="lockup" viewBox="0 0 905 256" role="img" aria-label="Taalcut">
+            <path class="arc arc-1" fill-rule="evenodd" d="M142.45 16.88A112 112 0 0 1 232.16 85.72L167.15 103.14A46 46 0 0 0 142.45 84.18Z" />
+            <path class="arc arc-2" fill-rule="evenodd" d="M239.41 112.76A112 112 0 0 1 142.45 239.12L142.45 192.5A66 66 0 0 0 194.37 124.83Z" />
+            <path class="arc arc-3" fill-rule="evenodd" d="M114.45 239.12A112 112 0 0 1 24.73 170.28L55.99 161.91A80 80 0 0 0 114.45 206.77Z" />
+            <path class="arc arc-4" fill-rule="evenodd" d="M17.49 143.24A112 112 0 0 1 114.45 16.88L114.45 63.5A66 66 0 0 0 62.52 131.17Z" />
+            <path class="wordmark" fill-rule="evenodd" d="M324.07 60.8L343.49 60.8L343.49 83.2L362.9 83.2L362.9 100.37L343.49 100.37L343.49 172.8L324.07 172.8L324.07 100.37L307.65 100.37L307.65 83.2L324.07 83.2ZM448.02 83.2L467.43 83.2L467.43 172.8L448.02 172.8L448.02 166.07A47.04 47.04 0 1 1 448.02 89.93ZM448.02 128A27.63 27.63 0 1 0 392.77 128A27.63 27.63 0 1 0 448.02 128ZM557.03 83.2L576.45 83.2L576.45 172.8L557.03 172.8L557.03 166.07A47.04 47.04 0 1 1 557.03 89.93ZM557.03 128A27.63 27.63 0 1 0 501.78 128A27.63 27.63 0 1 0 557.03 128ZM592.87 41.39L612.29 41.39L612.29 172.8L592.87 172.8ZM709.02 161.26A47.04 47.04 0 1 1 709.02 94.74L695.29 108.46A27.63 27.63 0 1 0 695.29 147.54ZM731.75 83.2L751.17 83.2L751.17 130.24A25.39 25.39 0 0 0 776.55 155.63A25.39 25.39 0 0 0 801.94 130.24L801.94 83.2L821.35 83.2L821.35 172.8L801.94 172.8L801.94 167.15A44.8 44.8 0 0 1 731.75 130.24ZM849.73 60.8L869.14 60.8L869.14 83.2L888.55 83.2L888.55 100.37L869.14 100.37L869.14 172.8L849.73 172.8L849.73 100.37L833.3 100.37L833.3 83.2L849.73 83.2Z" />
+          </svg>
+        </div>
+
+        <ol class="beats" id="beats" aria-label="Steps" data-i18n-label="steps.label">
+          <li data-step="pair"><span data-i18n="step.pair">Connect</span></li>
+          <li data-step="choose"><span data-i18n="step.choose">Choose</span></li>
+          <li data-step="sending"><span data-i18n="step.send">Send</span></li>
+          <li data-step="done"><span data-i18n="step.done">Done</span></li>
+        </ol>
+      </header>
+
+      <main id="main">
+        <section class="screen" id="screen-pair" data-screen="pair" aria-labelledby="pair-title" hidden>
+          <h1 id="pair-title" tabindex="-1" data-i18n="pair.title">Connect to your Mac</h1>
+          <p class="lede" id="pair-lede" data-i18n="pair.lede">Type the PIN shown next to the QR code on your Mac.</p>
+          <!-- Opened from the QR: the computer asks a person to allow this phone; the same two digits show on both. -->
+          <div class="approval" id="approval" hidden>
+            <p class="match" id="approval-match" hidden>
+              <span class="label" data-i18n="approval.match">Your computer shows the same number</span>
+              <span class="match-code" id="approval-code" translate="no"></span>
+            </p>
+            <p class="approval-line" id="approval-line" role="status" data-state="waiting">
+              <svg class="icon spin animate-spin" aria-hidden="true"><use href="#i-spin" /></svg>
+              <svg class="icon alert" aria-hidden="true"><use href="#i-alert" /></svg>
+              <svg class="icon tick" aria-hidden="true"><use href="#i-check" /></svg>
+              <span id="approval-text"></span>
+            </p>
+            <button class="button primary wide" id="approval-again" type="button" hidden>
+              <svg class="icon" aria-hidden="true"><use href="#i-retry" /></svg><span data-i18n="approval.again">Ask again</span>
+            </button>
+            <button class="button secondary" id="approval-pin" type="button">
+              <svg class="icon" aria-hidden="true"><use href="#i-key" /></svg><span data-i18n="approval.usePin">Use the PIN instead</span>
+            </button>
+          </div>
+          <form id="pair-form" novalidate>
+            <div class="field" id="code-field" hidden>
+              <label class="label" for="code" data-i18n="code.label">Setup code</label>
+              <input id="code" name="code" type="text" maxlength="12" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" aria-describedby="code-hint" />
+              <p class="hint" id="code-hint" data-i18n="code.hint">Eight letters and numbers, shown on your Mac.</p>
+            </div>
+            <div class="field">
+              <p class="label" id="pin-label" data-i18n="pin.label">PIN</p>
+              <div class="otp" id="pin" role="group" aria-labelledby="pin-label" aria-describedby="pin-hint">
+                <span class="slot"><input class="digit" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" aria-label="Digit 1 of 6" /></span>
+                <span class="slot"><input class="digit" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" aria-label="Digit 2 of 6" /></span>
+                <span class="slot"><input class="digit" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" aria-label="Digit 3 of 6" /></span>
+                <span class="slot"><input class="digit" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" aria-label="Digit 4 of 6" /></span>
+                <span class="slot"><input class="digit" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" aria-label="Digit 5 of 6" /></span>
+                <span class="slot"><input class="digit" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" aria-label="Digit 6 of 6" /></span>
+              </div>
+              <p class="hint" id="pin-hint" data-i18n="pin.hint">Six digits, shown on your Mac.</p>
+              <p class="error" id="pair-error" role="alert" hidden>
+                <svg class="icon" aria-hidden="true"><use href="#i-alert" /></svg><span id="pair-error-text"></span>
+              </p>
+            </div>
+            <button class="button primary wide" id="pair-submit" type="submit">
+              <svg class="icon rest" aria-hidden="true"><use href="#i-sign-in" /></svg>
+              <svg class="icon spin animate-spin" aria-hidden="true"><use href="#i-spin" /></svg>
+              <svg class="icon tick" aria-hidden="true"><use href="#i-check" /></svg>
+              <span id="pair-submit-label" data-i18n="pair.submit">Connect</span>
+            </button>
+          </form>
+          <p class="aside" id="pair-help" data-i18n="pair.help">Can’t see a PIN? On your Mac, open Taalcut, go to Library and choose From your phone.</p>
+        </section>
+
+        <section class="screen" id="screen-choose" data-screen="choose" aria-labelledby="choose-title" hidden>
+          <h1 id="choose-title" tabindex="-1" data-i18n="choose.title">Choose videos</h1>
+          <p class="lede" id="choose-lede"></p>
+          <div class="pickers">
+            <label class="pick primary" data-kind="files">
+              <svg class="icon" aria-hidden="true"><use href="#i-folder" /></svg>
+              <span class="pick-text"><span class="pick-title" data-i18n="pick.files">Choose from Files</span><span class="pick-note" data-i18n="pick.filesNote">Original quality</span></span>
+              <input id="pick-files" type="file" multiple accept=".mov,.mp4,.m4v,.heic,.heif,.jpg,.jpeg,.png,.dng" />
+            </label>
+            <label class="pick" data-kind="photos">
+              <svg class="icon" aria-hidden="true"><use href="#i-photos" /></svg>
+              <span class="pick-text"><span class="pick-title" data-i18n="pick.photos">Choose from Photos</span><span class="pick-note" data-i18n="pick.photosNote">Quicker, may be a smaller copy</span></span>
+              <input id="pick-photos" type="file" multiple accept="video/*,image/*" />
+            </label>
+            <label class="pick primary" data-kind="any">
+              <svg class="icon" aria-hidden="true"><use href="#i-video" /></svg>
+              <span class="pick-text"><span class="pick-title" data-i18n="pick.any">Choose videos</span><span class="pick-note" data-i18n="pick.anyNote">Videos and photos, as many as you like</span></span>
+              <input id="pick-any" type="file" multiple accept="video/*,image/*" />
+            </label>
+          </div>
+          <details class="guide" id="guide" hidden>
+            <summary><span data-i18n="guide.title">Videos not in Files yet?</span></summary>
+            <ol>
+              <li data-i18n="guide.step1">Open Photos and select the videos.</li>
+              <li data-i18n="guide.step2">Tap Share, then Save to Files.</li>
+              <li data-i18n="guide.step3">Pick On My iPhone, then come back here.</li>
+            </ol>
+          </details>
+          <p class="strip" id="choose-strip" hidden>
+            <span id="choose-strip-text"></span>
+            <a class="link" id="choose-strip-link" href="#/sending"><span id="choose-strip-label"></span><svg class="icon" aria-hidden="true"><use href="#i-next" /></svg></a>
+          </p>
+          <p class="note"><svg class="icon" aria-hidden="true"><use href="#i-phone" /></svg><span data-i18n="page.keepOpen">Keep this page open and your phone unlocked until every video says Added.</span></p>
+        </section>
+
+        <section class="screen" id="screen-sending" data-screen="sending" aria-labelledby="sending-title" hidden>
+          <h1 id="sending-title" tabindex="-1" data-i18n="send.title">Sending to your Mac</h1>
+          <p class="lede summary" id="summary" aria-live="polite"></p>
+          <div class="overall" id="overall" aria-hidden="true"></div>
+          <p class="note"><svg class="icon" aria-hidden="true"><use href="#i-phone" /></svg><span data-i18n="page.keepOpen">Keep this page open and your phone unlocked until every video says Added.</span></p>
+          <ul class="rows" id="send-list"></ul>
+          <a class="button secondary" id="send-more" href="#/choose">
+            <svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg><span data-i18n="send.more">Add more videos</span>
+          </a>
+        </section>
+
+        <section class="screen" id="screen-done" data-screen="done" aria-labelledby="done-title" hidden>
+          <!-- Kaatu, delighted (UX4): a still frame of the app's mascot (packages/ui/src/brand/kaatu-reactions.webp,
+               "delighted", 160 px for a 72 px place), inline so the page ships it with no file of its own. Only
+               when every video arrived (screens.mjs paintDone); decorative, so screen readers skip it. -->
+          <img class="kaatu" id="done-kaatu" alt="" aria-hidden="true" width="72" height="72" decoding="async" src="data:image/webp;base64,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" />
+          <h1 class="display" id="done-title" tabindex="-1"></h1>
+          <p class="lede" id="done-lede"></p>
+          <section class="group" id="done-arrived-group" aria-labelledby="done-arrived-title">
+            <h2 id="done-arrived-title" data-i18n="done.arrived">On your Mac</h2>
+            <ul class="rows" id="done-arrived"></ul>
+          </section>
+          <section class="group" id="done-missing-group" aria-labelledby="done-missing-title">
+            <h2 id="done-missing-title" data-i18n="done.notSent">Not sent</h2>
+            <ul class="rows" id="done-missing"></ul>
+          </section>
+          <a class="button primary wide" id="done-more" href="#/choose">
+            <svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg><span data-i18n="done.more">Send more videos</span>
+          </a>
+        </section>
+
+        <section class="screen condition" id="screen-lost" data-condition="lost" aria-labelledby="lost-title" hidden>
+          <h1 id="lost-title" tabindex="-1" data-i18n="lost.title">Lost the connection</h1>
+          <p class="lede" data-i18n="lost.body">Your phone can’t reach your Mac. Check both are on the same Wi-Fi.</p>
+          <button class="button primary wide" id="lost-retry" type="button">
+            <svg class="icon rest" aria-hidden="true"><use href="#i-retry" /></svg>
+            <svg class="icon spin animate-spin" aria-hidden="true"><use href="#i-spin" /></svg>
+            <span id="lost-retry-label" data-i18n="lost.retry">Try again</span>
+          </button>
+        </section>
+
+        <section class="screen condition" id="screen-waiting" data-condition="waiting" aria-labelledby="waiting-title" hidden>
+          <h1 id="waiting-title" tabindex="-1" data-i18n="waiting.title">Waiting for your Mac</h1>
+          <p class="lede" data-i18n="waiting.body">On your Mac, open Taalcut, go to Library and choose From your phone.</p>
+          <p class="checking"><svg class="icon spin animate-spin" aria-hidden="true"><use href="#i-spin" /></svg><span data-i18n="waiting.checking">Checking every few seconds.</span></p>
+          <button class="button secondary" id="waiting-check" type="button">
+            <svg class="icon" aria-hidden="true"><use href="#i-check-again" /></svg><span data-i18n="waiting.check">Check now</span>
+          </button>
+        </section>
+      </main>
+
+      <footer class="foot">
+        <p data-i18n="foot.note">Your videos go straight to your Mac over this Wi-Fi, never through the internet.</p>
+      </footer>
+    </div>
+
+    <template id="row-template">
+      <li class="row">
+        <svg class="icon status-icon" aria-hidden="true"><use href="#i-clock" /></svg>
+        <div class="row-body">
+          <p class="row-name" translate="no"></p>
+          <p class="row-status"><span class="row-state"></span><span class="row-size"></span></p>
+          <div class="bar"><progress max="1" value="0"></progress></div>
+          <p class="row-meter"></p>
+          <p class="row-reason"></p>
+          <button class="button ghost row-retry" type="button" hidden>
+            <svg class="icon" aria-hidden="true"><use href="#i-retry" /></svg><span class="retry-label"></span>
+          </button>
+        </div>
+        <div class="row-actions"></div>
+      </li>
+    </template>
+    <template id="action-template">
+      <button class="icon-button" type="button"><svg class="icon" aria-hidden="true"><use href="#i-x" /></svg><span class="visually-hidden"></span></button>
+    </template>
+  </body>
+</html>

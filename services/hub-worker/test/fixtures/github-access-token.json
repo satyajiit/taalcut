@@ -1,0 +1,6 @@
+{
+  "token": "ghs_recorded_fixture_not_a_real_token",
+  "expires_at": "2026-10-14T11:00:00Z",
+  "permissions": { "contents": "write", "issues": "write", "metadata": "read", "pull_requests": "write" },
+  "repository_selection": "selected"
+}

@@ -1,0 +1,280 @@
+{
+ "caseId": "here-slow",
+ "model": "on-device/qwen3.5-9b (MLX, 32768 tokens)",
+ "verdict": {
+  "pass": true,
+  "why": "ok"
+ },
+ "turns": [
+  {
+   "callId": "01M6DJHX91AF8GSYQMVE6JQSS3",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "NFV5H2VO0oMiwEwOvDp93ifPJNWeBpjL",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 4.5
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "NFV5H2VO0oMiwEwOvDp93ifPJNWeBpjL",
+       "name": "timeline_get",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "atSeconds": 4.5
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 11517,
+      "output": 58,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 11575,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604515106,
+     "responseId": "chatcmpl-d02e2cdf77c048319254fa9b15d31aa3",
+     "rawStopReason": "tool_calls",
+     "durationMs": 10300
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "NFV5H2VO0oMiwEwOvDp93ifPJNWeBpjL",
+     "name": "timeline_get",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "atSeconds": 4.5
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 11517,
+    "outputTokens": 58,
+    "cachedInputTokens": 0,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 11575,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJJ7B0SKMCR9F4KNYGBRD8",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "324vAEI4eKWnpSsxfz1sQmr7s0KhRCam",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "3",
+        "revision": 3,
+        "speed": 0.5,
+        "fit": "media",
+        "audio": "keepPitch"
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "324vAEI4eKWnpSsxfz1sQmr7s0KhRCam",
+       "name": "timeline_setSpeed",
+       "arguments": {
+        "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "clip": "3",
+        "revision": 3,
+        "speed": 0.5,
+        "fit": "media",
+        "audio": "keepPitch"
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 1620,
+      "output": 139,
+      "cacheRead": 11517,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13276,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604525409,
+     "responseId": "chatcmpl-c32eef80592049fe8847cb48ca14c98c",
+     "rawStopReason": "tool_calls",
+     "durationMs": 4779
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "324vAEI4eKWnpSsxfz1sQmr7s0KhRCam",
+     "name": "timeline_setSpeed",
+     "arguments": {
+      "projectId": "01K8EP1H9PD02MT83YBDD0NMYE",
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "clip": "3",
+      "revision": 3,
+      "speed": 0.5,
+      "fit": "media",
+      "audio": "keepPitch"
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 1620,
+    "outputTokens": 139,
+    "cachedInputTokens": 11517,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13276,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  },
+  {
+   "callId": "01M6DJJC0F2PY9RK94EWVNQ9SD",
+   "module": "agent",
+   "provider": "on-device",
+   "model": "qwen3.5-9b",
+   "reasoning": "off",
+   "message": {
+    "role": "assistant",
+    "parts": [
+     {
+      "type": "tool_call",
+      "call": {
+       "id": "wY3hFgt82JG4w7gOfPAEHwIwPxwVeQ1X",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     }
+    ],
+    "provider": "on-device",
+    "model": "qwen3.5-9b",
+    "native": {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "toolCall",
+       "id": "wY3hFgt82JG4w7gOfPAEHwIwPxwVeQ1X",
+       "name": "handOff",
+       "arguments": {
+        "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+        "revision": 4
+       }
+      }
+     ],
+     "api": "openai-completions",
+     "provider": "on-device",
+     "model": "qwen3.5-9b",
+     "usage": {
+      "input": 183,
+      "output": 55,
+      "cacheRead": 13137,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 13375,
+      "cost": {
+       "input": 0,
+       "output": 0,
+       "cacheRead": 0,
+       "cacheWrite": 0,
+       "total": 0
+      }
+     },
+     "stopReason": "toolUse",
+     "timestamp": 1793604530193,
+     "responseId": "chatcmpl-ee7a3c81e4a94d08808be2ecf8e1af0a",
+     "rawStopReason": "tool_calls",
+     "durationMs": 1581
+    }
+   },
+   "text": "",
+   "toolCalls": [
+    {
+     "id": "wY3hFgt82JG4w7gOfPAEHwIwPxwVeQ1X",
+     "name": "handOff",
+     "arguments": {
+      "timelineId": "01K8ETT93RNBMVFNZZMQ8RGFAH",
+      "revision": 4
+     }
+    }
+   ],
+   "stopReason": "tool_use",
+   "usage": {
+    "inputTokens": 183,
+    "outputTokens": 55,
+    "cachedInputTokens": 13137,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 13375,
+    "costUsd": 0
+   },
+   "latencyMs": 0,
+   "local": true
+  }
+ ]
+}

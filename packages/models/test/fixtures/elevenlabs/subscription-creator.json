@@ -1,0 +1,8 @@
+{
+  "$comment": "GET /v1/user/subscription (fields trimmed).",
+  "tier": "creator",
+  "character_count": 12034,
+  "character_limit": 121000,
+  "status": "active",
+  "currency": "usd"
+}

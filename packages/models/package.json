@@ -1,0 +1,26 @@
+{
+  "name": "@taalcut/models",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "pi-ai setup, provider and auth registry, per-module model profiles, hardware tiers. The only package allowed to import pi-ai or a provider SDK.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./node": "./src/node.ts",
+    "./test-support": "./src/test-support.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests",
+    "test:coverage": "vitest run --fsModuleCachePath node_modules/.vitest-cache --coverage --passWithNoTests",
+    "test:offline": "sandbox-exec -p '(version 1)(allow default)(deny network*)' vitest run test/replay.test.ts test/deprecation.test.ts test/hardware.test.ts",
+    "test:loopback-only": "sandbox-exec -p '(version 1)(allow default)(deny network-outbound)(allow network-outbound (remote ip \"localhost:*\"))(allow network-outbound (remote unix-socket))' vitest run",
+    "test:record": "TAALCUT_RECORD=1 vitest run test/ollama.live.test.ts"
+  },
+  "dependencies": {
+    "@earendil-works/pi-ai": "1.4.0",
+    "@taalcut/core": "workspace:*",
+    "zod": "^4.6.6"
+  }
+}

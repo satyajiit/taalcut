@@ -1,0 +1,49 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"message","type":"string","label":"Message","default":"See you at five"},{"id":"tint","type":"color","label":"Tint","default":"#25d366"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="bubble-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #bubble {
+          position: absolute;
+          right: 80px;
+          top: 700px;
+          max-width: 640px;
+          padding: 28px 36px;
+          border-radius: 36px;
+          background: var(--tint);
+          transform-origin: 100% 100%;
+        }
+        #message {
+          margin: 0;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 56px;
+          font-weight: 600;
+          line-height: 1.2;
+          color: #0b1f12;
+        }
+      </style>
+      <div id="root" data-composition-id="bubble" data-width="1080" data-height="1920" data-duration="3">
+        <div id="bubble">
+          <p id="message" data-var-text="message">See you at five</p>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo('#bubble', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }, 0.2);
+        tl.to('#bubble', { y: -30, duration: 0.6, ease: 'sine.inOut' }, 1.2);
+        tl.to('#bubble', { opacity: 0, duration: 0.3 }, 2.6);
+        window.__timelines['bubble'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

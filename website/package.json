@@ -1,0 +1,55 @@
+{
+  "name": "@taalcut/website",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "taalcut.app: the static marketing site (Next.js, exported), with the waitlist on Firestore. Imports no Taalcut package.",
+  "imports": {
+    "#components/*": "./src/components/*",
+    "#content/*": "./src/content/*.ts",
+    "#lib/*": "./src/lib/*.ts",
+    "#stores/*": "./src/stores/*.ts"
+  },
+  "scripts": {
+    "brand": "node scripts/brand-assets.mjs",
+    "dev": "node scripts/brand-assets.mjs && next dev --turbopack",
+    "build": "node scripts/brand-assets.mjs && NEXT_TELEMETRY_DISABLED=1 next build && node scripts/csp.mjs",
+    "serve": "serve out -l 4173",
+    "typecheck": "node scripts/brand-assets.mjs && tsc --noEmit",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
+    "test:rules": "npx --yes firebase-tools@15.26.0 emulators:exec --only firestore --project demo-taalcut --config firebase/firebase.template.json \"vitest run firebase/test\"",
+    "test:coverage": "pnpm run test",
+    "e2e": "NEXT_TELEMETRY_DISABLED=1 next build && playwright install --only-shell chromium && playwright test",
+    "media": "node scripts/media.mjs",
+    "kaatu": "node scripts/kaatu-atlas.mjs",
+    "e2e:waitlist": "NEXT_PUBLIC_FIREBASE_EMULATOR=127.0.0.1:8183 NEXT_TELEMETRY_DISABLED=1 next build && playwright install --only-shell chromium && npx --yes firebase-tools@15.26.0 emulators:exec --only firestore --project demo-taalcut --config firebase/firebase.template.json \"NEXT_PUBLIC_FIREBASE_EMULATOR=127.0.0.1:8183 playwright test test/e2e/waitlist.spec.ts test/e2e/waitlist-forms.spec.ts test/e2e/contact.spec.ts test/e2e/platforms.spec.ts\""
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/onest": "5.3.1",
+    "firebase": "13.2.0",
+    "lucide-react": "1.55.0",
+    "motion": "14.1.0",
+    "next": "16.4.5",
+    "next-themes": "0.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zustand": "5.0.16"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@firebase/rules-unit-testing": "6.0.0",
+    "@fontsource-variable/noto-sans-devanagari": "5.3.0",
+    "@fontsource/onest": "5.3.1",
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "serve": "14.2.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "vitest": "5.0.4"
+  }
+}

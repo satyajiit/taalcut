@@ -1,0 +1,118 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Taalcut contributors
+
+# Triage labels. crazy-max/ghaction-github-labeler reads this path by default.
+# Sync workflow: .github/workflows/labels.yml, on a change to this file or by hand.
+# skip-delete is true in that workflow, so labels that are not listed here stay.
+
+- name: "type: bug"
+  color: "#d73a4a"
+  description: "Something in this build did the wrong thing."
+
+- name: "type: feature"
+  color: "#a371f7"
+  description: "A change to what Taalcut can do."
+
+- name: "type: docs"
+  color: "#0075ca"
+  description: "Documentation or support text."
+
+- name: "type: question"
+  color: "#d876e3"
+  description: "A question about using this build."
+
+- name: "area: core"
+  color: "#1d76db"
+  description: "Code in packages/core."
+
+- name: "area: desktop"
+  color: "#1d76db"
+  description: "Code in apps/desktop."
+
+- name: "area: renderer"
+  color: "#1d76db"
+  description: "Code in apps/renderer."
+
+- name: "area: ui"
+  color: "#1d76db"
+  description: "Code in packages/ui."
+
+- name: "area: agent"
+  color: "#1d76db"
+  description: "Code in packages/agent."
+
+- name: "area: audio"
+  color: "#1d76db"
+  description: "Code in packages/audio."
+
+- name: "area: jobs"
+  color: "#1d76db"
+  description: "Code in packages/jobs."
+
+- name: "area: library"
+  color: "#1d76db"
+  description: "Code in packages/library."
+
+- name: "area: media"
+  color: "#1d76db"
+  description: "Code in packages/media."
+
+- name: "area: models"
+  color: "#1d76db"
+  description: "Code in packages/models."
+
+- name: "area: render"
+  color: "#1d76db"
+  description: "Code in packages/render."
+
+- name: "area: templates"
+  color: "#1d76db"
+  description: "Code in packages/templates."
+
+- name: "area: timeline"
+  color: "#1d76db"
+  description: "Code in packages/timeline."
+
+- name: "area: tools"
+  color: "#1d76db"
+  description: "Code in packages/tools."
+
+- name: "area: transfer"
+  color: "#1d76db"
+  description: "Code in packages/transfer."
+
+- name: "area: vision"
+  color: "#1d76db"
+  description: "Code in packages/vision."
+
+- name: "area: repo"
+  color: "#1d76db"
+  description: "Repository config, CI, and community files."
+
+- name: "area: docs"
+  color: "#1d76db"
+  description: "Pages under docs/."
+
+- name: "priority: p0"
+  color: "#b60205"
+  description: "Blocks the beta, with no workaround."
+
+- name: "priority: p1"
+  color: "#fbca04"
+  description: "Hurts the beta. A workaround exists."
+
+- name: "priority: p2"
+  color: "#c5def5"
+  description: "Worth doing. Does not block the beta."
+
+- name: "needs-repro"
+  color: "#e4e669"
+  description: "Needs steps that show the problem again."
+
+- name: "good first issue"
+  color: "#7057ff"
+  description: "Small and bounded enough for a first change."
+
+- name: "blocks-export"
+  color: "#f9d0c4"
+  description: "Stops an export from finishing or being saved."

@@ -1,0 +1,50 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"label","type":"string","label":"Label","default":"Chapter two"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="wipe-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #panel {
+          position: absolute;
+          left: 0;
+          top: 860px;
+          width: 1080px;
+          height: 200px;
+          background: #e63946;
+          clip-path: inset(0% 100% 0% 0%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        #label {
+          margin: 0;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 90px;
+          font-weight: 800;
+          color: #ffffff;
+        }
+      </style>
+      <div id="root" data-composition-id="wipe" data-width="1080" data-height="1920" data-duration="3">
+        <div id="panel">
+          <h2 id="label" data-var-text="label">Chapter two</h2>
+        </div>
+      </div>
+      <script>
+                const tl = gsap.timeline({ paused: true });
+        tl.to('#panel', { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'power2.out' }, 0.2);
+        tl.from('#label', { x: 60, opacity: 0, duration: 0.8 }, 0.5);
+        tl.to('#panel', { backgroundColor: '#457b9d', duration: 0.6 }, 1.6);
+        window.__timelines['wipe'] = tl;
+      </script>
+    </template>
+  </body>
+</html>
