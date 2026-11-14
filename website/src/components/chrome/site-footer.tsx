@@ -16,6 +16,7 @@ import {
   Cpu,
   FileText,
   FlaskConical,
+  Gem,
   Info,
   LayoutGrid,
   Mail,
@@ -24,11 +25,11 @@ import {
   ShieldCheck,
   type LucideIcon,
 } from 'lucide-react';
-import Link from 'next/link';
 import { Logo } from '#components/brand/logo';
 import { MatterwardMark } from '#components/brand/matterward-mark';
 import { AnalyticsSwitch } from '#components/chrome/analytics';
 import { Kaatu } from '#components/kaatu/kaatu';
+import { RefLink } from '#components/premium/ref-link';
 import { IconText } from '#components/ui/icon-text';
 import { ProductHuntBadge } from '#components/ui/product-hunt-badge';
 import { SegmentBar } from '#components/ui/segment-bar';
@@ -42,6 +43,7 @@ const LINK_ICONS: Readonly<Record<FooterHref, LucideIcon>> = {
   '/features/': LayoutGrid,
   '/ai/': Cpu,
   '/download/': ArrowDownToLine,
+  '/premium/': Gem,
   '/faq/': MessageCircleQuestion,
   '/about/': Info,
   '/press/': Newspaper,
@@ -113,11 +115,12 @@ export function SiteFooter() {
                 <ul className="mt-3 flex flex-col gap-1">
                   {group.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className={LINK}>
+                      {/* RefLink: the link to /premium/ carries the visit's tag; every other address is as written. */}
+                      <RefLink href={link.href} className={LINK}>
                         <IconText icon={LINK_ICONS[link.href]} tone="muted">
                           {link.label}
                         </IconText>
-                      </Link>
+                      </RefLink>
                     </li>
                   ))}
                 </ul>

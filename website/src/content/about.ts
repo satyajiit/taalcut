@@ -92,7 +92,7 @@ export const ABOUT = {
       {
         id: 'yours',
         belief: 'Your AI, your files.',
-        why: 'Taalcut doesn’t run AI for you or keep your files. Use the ChatGPT plan you have, your own keys or the models on your computer.',
+        why: 'The app doesn’t run AI for you or keep your files. Use the ChatGPT plan you have, your own keys or the models on your computer.',
       },
     ] satisfies readonly Belief[],
   },

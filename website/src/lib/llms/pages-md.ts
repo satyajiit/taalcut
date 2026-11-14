@@ -9,6 +9,7 @@ import { FEATURE_GROUPS, FEATURE_STEPS, FEATURES, feature } from '#content/featu
 import { BETA_TERMS, type GistRow, PRIVACY, PRIVACY_GIST, TERMS, type LegalDoc } from '#content/legal';
 import { HOME_STORY, LLMS, MIRROR_LINES } from '#content/llms';
 import { PLATFORM_GETS, PLATFORMS } from '#content/platforms';
+import { PREMIUM, PREMIUM_POINTERS } from '#content/premium';
 import { GET, INSTALL, RELEASE } from '#content/release';
 import { API_KEYS, CHATGPT, LOCAL_ONLY, ON_DEVICE, OWN_SERVER, PROFILE_ON_UBUNTU, PROFILES, PROFILES_DEMO, PROVIDER_GRID, PROVIDERS } from '#content/providers';
 import type { PageEntry } from '#content/schema';
@@ -17,6 +18,7 @@ import { logoColours } from '#lib/og/palette';
 import { absolute } from '#lib/seo';
 import { bullets, doc, facts, heading, inline, link } from './markdown';
 import { mirrorPath } from './mirror';
+import { premiumMarkdown } from './premium-md';
 
 /**
  * Each listed page as Markdown, from the same content modules the pages render. A mirror opens with the page's title,
@@ -51,6 +53,7 @@ function home(): string {
     heading(2, COST_SECTION.heading),
     COST_SECTION.lead,
     bullets(costLines()),
+    `${PREMIUM_POINTERS.home.line} ${link(PREMIUM_POINTERS.home.link, mirrorPath(PREMIUM.path))}.`,
     heading(2, 'Platforms'),
     bullets(PLATFORMS.map((p) => `${p.name}: ${PLATFORM_GETS[p.id]}`)),
     heading(2, 'Private by default'),
@@ -135,6 +138,7 @@ function download(): string {
     bullets(INSTALL.steps.map((s) => `${s.title}: ${s.body}`)),
     heading(2, INSTALL.factsHeading),
     facts(INSTALL.facts),
+    inline(PREMIUM_POINTERS.download),
   );
 }
 
@@ -231,6 +235,7 @@ const BODIES: Readonly<Record<string, () => string>> = {
   ...Object.fromEntries(FEATURES.map((f) => [`/features/${f.slug}/`, () => featurePage(f.slug)])),
   '/ai/': ai,
   '/download/': download,
+  '/premium/': premiumMarkdown,
   '/faq/': faq,
   '/about/': about,
   '/press/': press,

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
+import { PREMIUM_POINTERS } from './premium';
 import { RELEASE } from './release';
 import type { Fact } from './schema';
 import { SITE } from './site';
@@ -48,7 +49,7 @@ export const PRESS = {
     ['What it is', 'An AI video editor for short videos that runs on your computer'],
     ['Made by', `[${SITE.company.legal}](${SITE.company.url})`],
     ['Platforms', 'Macs with Apple silicon on macOS 14 or later. Ubuntu and Windows have no download yet; Windows comes after 1.0.'],
-    ['Price', 'Free. Taalcut doesn’t run AI for you or keep your files.'],
+    ['Price', `Free. The app doesn’t run AI for you or keep your files. ${PREMIUM_POINTERS.machine}`],
     ['Licence', `${SITE.licence.name}. The code is at [github.com/satyajiit/taalcut](${SITE.repository}).`],
     ['Status', `${RELEASE.name} is out, as a free [download](/download/).`],
     ['Instagram', SITE.instagram.handle],

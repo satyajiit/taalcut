@@ -103,9 +103,9 @@ module.exports = {
       name: 'sandboxed-code-has-no-node',
       severity: 'error',
       comment:
-        'The renderer, the UI kit and the hub Worker have no Node built-ins. The Worker uses WebCrypto and fetch.',
+        'The renderer, the UI kit and the Workers have no Node built-ins. A Worker uses WebCrypto and fetch.',
       from: {
-        path: '^(apps/renderer|packages/ui|services/hub-worker/src)/',
+        path: '^(apps/renderer|packages/ui|services/(hub|billing)-worker/src)/',
         pathNot: '\\.(test|spec)\\.tsx?$|/(test|e2e)/|\\.config\\.ts$',
       },
       to: { dependencyTypes: ['core'] },

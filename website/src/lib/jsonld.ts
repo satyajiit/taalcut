@@ -3,6 +3,7 @@
 import { FAQ } from '#content/faq';
 import { FEATURE_GROUPS, FEATURES } from '#content/features';
 import { PLATFORMS } from '#content/platforms';
+import { FAQ_PREMIUM, PREMIUM, PREMIUM_PAGE } from '#content/premium';
 import { RELEASE } from '#content/release';
 import type { FaqEntry } from '#content/schema';
 import { SITE } from '#content/site';
@@ -52,7 +53,7 @@ export function websiteJsonLd(): JsonLdObject {
 
 /**
  * The app, for the home page and /download/. The release is content/release.ts's: its version, the file a Mac
- * downloads and the page with its notes. No `offers`: nothing is sold, so the price is said only as
+ * downloads and the page with its notes. No `offers`: the app is not sold, so its price is said only as
  * `isAccessibleForFree`. The operating systems are the platforms the release has a download for (the Mac alone). The
  * publisher is the company that makes it. `featureList` names every feature page, in the index's order.
  */
@@ -75,6 +76,42 @@ export function softwareApplicationJsonLd(): JsonLdObject {
     license: SITE.licence.url,
     publisher: companyJsonLd(),
     url: SITE.origin,
+  };
+}
+
+/**
+ * Taalcut Premium, for /premium/: the one thing the site sells, as a service with an offer at the list price a month
+ * (content/premium.ts). The app's own block above still offers nothing: the app is free, and Premium is the service
+ * around it. A launch price is never written here: it exists only in the billing service's quote.
+ */
+export function premiumJsonLd(): JsonLdObject {
+  const price = (PREMIUM.listAmount / 100).toFixed(2);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: PREMIUM.name,
+    description: FAQ_PREMIUM.answer,
+    serviceType: 'Setup, cloud models and support for the Taalcut app',
+    provider: companyJsonLd(),
+    url: absolute(PREMIUM.path),
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: PREMIUM_PAGE.included.heading,
+      itemListElement: PREMIUM_PAGE.included.rows.map(([name]) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name } })),
+    },
+    offers: {
+      '@type': 'Offer',
+      url: absolute(PREMIUM.path),
+      price,
+      priceCurrency: PREMIUM.currency,
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price,
+        priceCurrency: PREMIUM.currency,
+        billingDuration: 'P1M',
+        unitText: 'month',
+      },
+    },
   };
 }
 

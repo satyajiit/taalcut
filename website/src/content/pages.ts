@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
+import { LIST_PRICE, PER_MONTH } from './premium';
 import type { PageEntry } from './schema';
 
 /**
@@ -97,6 +98,20 @@ export const PAGES: readonly PageEntry[] = [
     title: 'Download',
     description: 'Download Taalcut, free, for Macs with Apple silicon: what it needs, how to install it, and where Ubuntu and Windows stand.',
     section: 'Product',
+  },
+  {
+    path: '/premium/',
+    title: 'Taalcut Premium',
+    description: `The paid plan around the free app: we set Taalcut up on your Mac, pay for the top cloud models, and answer on WhatsApp. ${LIST_PRICE} ${PER_MONTH}.`,
+    section: 'Product',
+  },
+  {
+    // Where the payment page sends a buyer back: it checks one payment, so it is off the sitemap and llms.txt.
+    path: '/premium/thanks/',
+    title: 'Your Premium order',
+    description: 'This page checks a Taalcut Premium payment with our billing service, right after you pay.',
+    section: 'Product',
+    unlisted: true,
   },
   {
     // The waitlist is closed. The address stays for the links that point at it, off the sitemap and llms.txt.

@@ -10,7 +10,8 @@ test('the nav sticks, solid, and deepens once the page scrolls past its top', as
   await page.goto('/features/');
   await expect(header(page)).not.toHaveAttribute('data-tinted', /.*/);
   const nav = page.getByRole('navigation', { name: 'Main' });
-  for (const name of ['Features', 'Your AI']) await expect(nav.getByRole('link', { name, exact: true })).toBeVisible();
+  for (const name of ['Features', 'Your AI', 'Premium']) await expect(nav.getByRole('link', { name, exact: true })).toBeVisible();
+  await expect(nav.getByRole('link', { name: 'Premium', exact: true })).toHaveAttribute('href', '/premium/');
   await expect(nav.getByRole('link', { name: 'Features', exact: true })).toHaveAttribute('aria-current', 'page');
   // The two ways on: Download, outlined, to its page, and GitHub by its icon, named.
   const download = nav.getByRole('link', { name: 'Download', exact: true });
@@ -36,7 +37,7 @@ test('on a phone the menu opens a sheet, focuses its first link, and Escape hand
   const sheet = page.locator('#site-menu');
   await expect(sheet).toBeVisible();
   await expect(sheet.getByRole('link').first()).toBeFocused();
-  await expect(sheet.getByRole('link')).toHaveText(['Features', 'Your AI', 'GitHub', 'Download']);
+  await expect(sheet.getByRole('link')).toHaveText(['Features', 'Your AI', 'Premium', 'GitHub', 'Download']);
   await expect(sheet.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/download/');
   await expect(page.getByRole('button', { name: 'Close menu' })).toHaveAttribute('aria-expanded', 'true');
   await page.keyboard.press('Escape');
@@ -56,7 +57,7 @@ test('the footer names the platforms, Instagram and GitHub, its links, and the l
   await expect(footer.getByRole('link', { name: /Instagram/ })).toHaveAttribute('href', /instagram\.com/);
   await expect(footer.getByRole('link', { name: /GitHub/ })).toHaveAttribute('href', 'https://github.com/satyajiit/taalcut');
   const links = footer.getByRole('navigation', { name: 'Footer' });
-  for (const name of ['Features', 'Your AI', 'Download', 'FAQ', 'About', 'Press', 'Contact', 'Privacy', 'Terms', 'Beta channel terms']) {
+  for (const name of ['Features', 'Your AI', 'Download', 'Premium', 'FAQ', 'About', 'Press', 'Contact', 'Privacy', 'Terms', 'Beta channel terms']) {
     await expect(links.getByRole('link', { name, exact: true })).toBeVisible();
   }
   await expect(links.getByRole('link', { name: /waitlist/i })).toHaveCount(0);

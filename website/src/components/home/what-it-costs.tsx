@@ -7,8 +7,8 @@
  *   A month (default) · A year (the facts beside the board follow the switch, word for word with its stickers) · the
  *   link onward: the kit's (default, hover, focus). The section arrives as the home's split sections do.
  * Two placements of one comparison. On the home, right after Your AI (what it costs follows from the AI you choose):
- * the h2 on its own, the lead (Taalcut is free; what you pay is your AI's bill), the savings in words and the way to
- * /ai/, with the board beside them and Kaatu by the zero. On /ai/, where the visitor chooses cloud or local: the same
+ * the h2 on its own, the lead (Taalcut is free; what you pay is your AI's bill), the savings in words, the way to
+ * /ai/ and one line to Taalcut Premium (the paid plan around the free app), with the board beside them and Kaatu by the zero. On /ai/, where the visitor chooses cloud or local: the same
  * board without Kaatu (the download band's Kaatu is a screen below), the facts beside it as bold-led sentences (AI1:
  * no icon-tile list on /ai/). */
 
@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { IconText, type IconTone } from '#components/ui/icon-text';
 import { Arrive, Section } from '#components/ui/section';
 import { COST_SECTION, type CostPeriod } from '#content/cost';
+import { PREMIUM, PREMIUM_POINTERS } from '#content/premium';
 import { cn } from '#lib/cn';
 import { CostBoard } from './cost-board';
 import { HomeSection } from './home-section';
@@ -78,6 +79,10 @@ export function WhatItCosts() {
         <>
           <CostFacts period={period} />
           <MoreLink href="/ai/">{C.link}</MoreLink>
+          <p data-slot="premium-pointer" className="m-0 flex flex-wrap items-center gap-x-2 border-t border-rule pt-5 type-body text-pretty text-ink-2">
+            {PREMIUM_POINTERS.home.line}
+            <MoreLink href={PREMIUM.path}>{PREMIUM_POINTERS.home.link}</MoreLink>
+          </p>
         </>
       }
     >

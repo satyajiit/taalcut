@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
+import { PREMIUM_POINTERS } from './premium';
 import { RELEASE } from './release';
 import { SITE } from './site';
 
@@ -11,7 +12,7 @@ import { SITE } from './site';
  */
 export const LLMS = {
   facts:
-    `Taalcut is free. ${RELEASE.name} runs on Macs with Apple silicon (${RELEASE.system}); there is no Ubuntu or Windows download yet, and Windows comes after 1.0. It works with the AI you already have: Continue with ChatGPT on the plan you pay for, your own API keys, or models that run on your computer. With its Local only switch on, nothing of yours leaves your computer; update checks still send the app’s version and a random ID. Taalcut doesn’t run AI for you or keep your files. Its code is under the ${SITE.licence.name} licence at ${SITE.repository}. The download is at ${SITE.origin}/download/, and the newest release at ${RELEASE.latest}.`,
+    `Taalcut is free. ${RELEASE.name} runs on Macs with Apple silicon (${RELEASE.system}); there is no Ubuntu or Windows download yet, and Windows comes after 1.0. It works with the AI you already have: Continue with ChatGPT on the plan you pay for, your own API keys, or models that run on your computer. With its Local only switch on, nothing of yours leaves your computer; update checks still send the app’s version and a random ID. The app doesn’t run AI for you or keep your files. Its code is under the ${SITE.licence.name} licence at ${SITE.repository}. The download is at ${SITE.origin}/download/, and the newest release at ${RELEASE.latest}. ${PREMIUM_POINTERS.machine}`,
   fullIntro: 'Every page of taalcut.app as Markdown, in one file, in the order llms.txt lists them.',
   optional: 'Every page above in one file',
   /** The line that closes a mirror: the download, as a link (pages-md turns the two words into one). */

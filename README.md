@@ -99,7 +99,8 @@ More of what’s inside:
 
 - **Private by default.** Indexing, search, text in video and music beats run on your Mac, and your footage stays there. No upload, no storage cap.
 - **No AI subscription needed.** Taalcut downloads the models and runtimes it needs and runs them itself. There is nothing else for you to install.
-- **Or use the AI you already pay for.** Continue with ChatGPT, add an API key (OpenAI, Anthropic, Google, OpenRouter), or point it at Ollama or LM Studio. Provider charges are yours and separate. Taalcut has no paid plan and sells no credits.
+- **Or use the AI you already pay for.** Continue with ChatGPT, add an API key (OpenAI, Anthropic, Google, OpenRouter), or point it at Ollama or LM Studio. Provider charges are yours and separate, and the app sells no credits.
+- **Or have us set it up and run the models.** [Taalcut Premium](https://taalcut.app/premium/) is a paid plan around the free app: we install it with you, the top cloud models are paid by us, and support is on WhatsApp.
 - **It asks first.** Before a cloud model first sees one of your files, Taalcut asks. Settings › Privacy lists what leaves your Mac.
 - **Local only.** One switch in Settings › Privacy: no cloud models, uploads, reel links, feedback or usage counts. Update checks still send the app’s version and a random ID.
 
@@ -154,7 +155,7 @@ This is the first release, and it has rough edges. Keep your original media, and
 - **8 GB Macs need help with pictures.** On a Mac with 8 GB of memory, understanding images needs a cloud account.
 - **Apple silicon Macs only.** There is no Windows or Linux installer.
 - **English only.** Hindi, Spanish and Brazilian Portuguese are draft translations, and help reviewing them is welcome.
-- **Free means free.** There is no paid plan and nothing to buy in the app.
+- **Free means free.** The app is free and there is nothing to buy inside it. [Premium](https://taalcut.app/premium/) is a separate paid service, ordered on the website.
 
 ## Build from source
 

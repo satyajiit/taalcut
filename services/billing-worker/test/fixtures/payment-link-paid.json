@@ -1,0 +1,43 @@
+{
+  "accept_partial": false,
+  "amount": 33900,
+  "amount_paid": 33900,
+  "callback_method": "get",
+  "callback_url": "https://taalcut.app/premium/thanks/",
+  "cancelled_at": 0,
+  "created_at": 1794441600,
+  "currency": "USD",
+  "customer": { "email": "asha@example.com", "name": "Asha Rao" },
+  "description": "Taalcut Premium: one month",
+  "expire_by": 1795132800,
+  "expired_at": 0,
+  "first_min_partial_amount": 0,
+  "id": "plink_RecordedFix01",
+  "notes": {
+    "taalcut_offer": "product-hunt",
+    "taalcut_order": "01KA0000000000000000000001",
+    "taalcut_plan": "premium"
+  },
+  "notify": { "email": false, "sms": false },
+  "order_id": "order_RecordedFix01",
+  "payments": [
+    {
+      "amount": 33900,
+      "created_at": 1794528000,
+      "method": "card",
+      "payment_id": "pay_RecordedFix01",
+      "plink_id": "plink_RecordedFix01",
+      "status": "captured",
+      "updated_at": 1794528000
+    }
+  ],
+  "reference_id": "01KA0000000000000000000001",
+  "reminder_enable": false,
+  "reminders": { "status": "failed" },
+  "short_url": "https://rzp.io/i/RecordedFix01",
+  "status": "paid",
+  "updated_at": 1794528000,
+  "upi_link": false,
+  "user_id": "",
+  "whatsapp_link": false
+}

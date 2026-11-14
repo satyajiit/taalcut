@@ -15,6 +15,7 @@ import { ArrowRight, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
 import { type ReactNode, type RefObject, useCallback, useEffect, useState } from 'react';
 import { AiMark } from '#components/brand/ai-mark';
+import { useRefHref } from '#components/premium/ref-link';
 import { useReducedMotionPref } from '#components/brand/use-reduced-motion';
 import { SURE, type Sure } from '#content/home';
 import { type ArrivalState, useArrival } from '#lib/arrival';
@@ -147,13 +148,15 @@ export function SureMeter({ sure, className }: { readonly sure: Sure; readonly c
   );
 }
 
-type MoreHref = '/ai/' | '/download/' | '/faq/' | '/faq/#footage-leaves' | '/features/' | `/features/${string}/`;
+type MoreHref = '/ai/' | '/download/' | '/faq/' | '/faq/#footage-leaves' | '/features/' | `/features/${string}/` | '/premium/';
 
 /** The section's way onward: words and an arrow that steps right on hover. */
 export function MoreLink({ href, children, className }: { readonly href: MoreHref; readonly children: ReactNode; readonly className?: string }) {
+  // The link to /premium/ carries the tag the visit arrived with; every other address is as written.
+  const to = useRefHref(href);
   return (
     <Link
-      href={href as never}
+      href={to as never}
       className={cn(
         'group inline-flex min-h-6 items-center gap-1.5 py-1 type-label font-semibold text-ink underline decoration-rule-strong underline-offset-4',
         'transition-[text-decoration-color] duration-(--dur-micro) hover:decoration-ink',

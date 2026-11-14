@@ -7,6 +7,7 @@ import { AnalyticsBoot } from '#components/chrome/analytics';
 import { SiteFooter } from '#components/chrome/site-footer';
 import { SiteHeader } from '#components/chrome/site-header';
 import { ThemeProvider } from '#components/chrome/theme-provider';
+import { EntryRef } from '#components/premium/entry-ref';
 import { JsonLd } from '#components/ui/json-ld';
 import { SITE } from '#content/site';
 import { organizationJsonLd, websiteJsonLd } from '#lib/jsonld';
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </main>
           <SiteFooter />
           <AnalyticsBoot />
+          <EntryRef />
         </ThemeProvider>
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
       </body>

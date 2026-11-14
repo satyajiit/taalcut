@@ -34,6 +34,39 @@ export const STACK_NAMES: readonly { readonly pattern: RegExp; readonly why: str
 ];
 
 /**
+ * Taalcut Premium's ledger (the owner, 2026-11-14). Premium is a plan a creator buys, sold as what it is: never a stage
+ * of something, never a promise of a result, and never dressed up with people who don't exist. What may be said: the
+ * list price a month (content/premium.ts › PREMIUM.listAmount; a launch price only as the billing service quotes it),
+ * what is in the plan (PREMIUM_PAGE.included), that a plan is active within 7 days of payment and the paid month starts
+ * that day, the refund when it isn't, one payment link a month with no stored card, support hours in India time, fair
+ * use, that it needs an Apple silicon Mac, and that Premium sends a make's material to cloud models. premium.test.ts
+ * runs these over every Premium string, the terms, the privacy notice and the mirrors; claims.test.ts over the site.
+ */
+export const PREMIUM_RULES: readonly { readonly pattern: RegExp; readonly why: string }[] = [
+  {
+    pattern: /\btrials?\b|\bpilots?\b|\bearly[- ]birds?\b|\bexperiment(s|al)?\b/i,
+    why: 'Premium is a plan: never a trial, a pilot, an early-bird deal or an experiment',
+  },
+  { pattern: /\bguarantee[sd]?\b/i, why: 'Advice is advice and a make can fail: say what we do, never what is guaranteed' },
+  {
+    pattern: /\b(grow|boost|double|triple|multiply|increase)s? your (reach|views|followers|audience|income|channel|sales)\b|\bgo(es|ing)? viral\b/i,
+    why: 'No promise of reach, views or income',
+  },
+  { pattern: /\bunlimited\b|\bno limits?\b/i, why: 'The models we pay for are under fair use: never "unlimited"' },
+  {
+    pattern:
+      /\b(always|never fails? to) (finish(es)?|complete[sd]?|succeed(s)?|works?|deliver(s)?)\b|\b(finish(es)?|complete[sd]?|succeed(s)?|works?) every time\b|\bnever fails?\b/i,
+    why: 'Nobody measured that the top models always finish a make: say they are the top models, not what they always do',
+  },
+  {
+    pattern:
+      /\b(already|now) (use[sd]?|using|on|with) premium\b|\bpremium (members|customers|creators|buyers) (love|say|report|tell|are|have|get|got|made|make)\b|\b(joined by|join) (\d[\d,]*|dozens|hundreds|thousands)\b|\bour (members|customers)\b/i,
+    why: 'Nothing says or implies that anyone already uses Premium: write to "you", in the present',
+  },
+  { pattern: /\b(razorpay|stripe|paypal)\b/i, why: 'Say "our payment provider"' },
+];
+
+/**
  * The truth ledger's "don't say" column as patterns (WEB1 plan). test/unit/claims.test.ts runs every string in
  * src/content and every text node in src/app and src/components against them. A match fails the build: change the
  * words, or change the ledger with the owner first.
@@ -112,6 +145,8 @@ export const BANNED_CLAIMS: readonly { readonly pattern: RegExp; readonly why: s
   ...HEDGES,
   // WEB2: no stack names in visitor text.
   ...STACK_NAMES,
+  // Premium: a plan, sold as what it is.
+  ...PREMIUM_RULES,
 ];
 
 export interface ClaimViolation {

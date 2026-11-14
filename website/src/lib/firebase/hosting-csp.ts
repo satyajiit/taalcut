@@ -51,6 +51,14 @@ export interface CspOptions {
   readonly firebase: boolean;
   /** Analytics' hosts (a live build with a measurement id). Optional: absent means none. */
   readonly analytics?: boolean;
+  /**
+   * The billing service's origin (lib/billing/origin.ts › billingOrigin), which /premium/ asks for a quote and sends
+   * an order to. On every page, not only /premium/: a visitor who moves there inside the site keeps the policy of the
+   * page they arrived on. Null or absent adds nothing (a test build that reaches billing on the site's own origin).
+   * The payment page itself needs no entry: the browser goes there by a top-level navigation, which no directive of
+   * this policy governs (`form-action` is for forms, and the order form posts nowhere).
+   */
+  readonly billing?: string | null;
 }
 
 export interface InlineScript {
@@ -119,7 +127,13 @@ export function buildCsp(hashes: readonly string[], options: CspOptions): string
   const directives: [string, ...string[]][] = [
     ['default-src', "'self'"],
     ['script-src', "'self'", ...hashes, ...hosts.script, ...counted.script],
-    ['connect-src', "'self'", ...hosts.connect, ...counted.connect],
+    [
+      'connect-src',
+      "'self'",
+      ...hosts.connect,
+      ...counted.connect,
+      ...(options.billing ? [options.billing] : []),
+    ],
     ['frame-src', ...hosts.frame, ...FILM_HOSTS.frame],
     ['img-src', "'self'", 'data:', ...counted.img],
     ['font-src', "'self'"],

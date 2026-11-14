@@ -8,6 +8,8 @@
 
 import Link from 'next/link';
 import { Fragment, type ReactNode } from 'react';
+import { RefLink } from '#components/premium/ref-link';
+import { TAGGED_PATH } from '#lib/billing/ref';
 import { cn } from '#lib/cn';
 
 /** A `[label](href)` link, or a `code` span. */
@@ -20,6 +22,14 @@ export const INLINE_LINK_CLASS =
 /** One link: a site path through next/link, a mail link or an anchor on the page as is, anything else in a new tab. */
 export function InlineLink({ href, children, className }: { readonly href: string; readonly children: ReactNode; readonly className?: string }) {
   const cls = cn(INLINE_LINK_CLASS, className);
+  if (href.startsWith(TAGGED_PATH)) {
+    return (
+      // A link to /premium/ carries the tag the visit arrived with (components/premium/ref-link).
+      <RefLink href={href} className={cls}>
+        {children}
+      </RefLink>
+    );
+  }
   if (href.startsWith('/')) {
     return (
       // Paths in content are checked against PAGES by the geo tests.

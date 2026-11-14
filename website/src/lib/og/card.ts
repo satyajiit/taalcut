@@ -41,6 +41,8 @@ const STICKERS: Readonly<Record<string, readonly [text: string, field: StickerFi
   '/features/plugins/': ['You choose what it may do', 'sky'],
   '/ai/': ['Your ChatGPT plan', 'paper'],
   '/download/': ['Free for Mac', 'sky'],
+  '/premium/': ['Set up for you', 'lime'],
+  '/premium/thanks/': ['Your order', 'paper'],
   '/waitlist/': ['Download for Mac', 'marigold'],
   '/faq/': ['Straight answers', 'lime'],
   '/about/': [SITE.pronunciation, 'marigold'],

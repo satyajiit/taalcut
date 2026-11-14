@@ -2,6 +2,7 @@
 // Copyright (C) 2026 Taalcut contributors
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { BILLING_DEFAULT, billingBase, billingOrigin, billingOverridden } from '#lib/billing/origin';
 import {
   buildCsp,
   FILM_HOSTS,
@@ -97,6 +98,36 @@ describe('the policy', () => {
     }
     expect(policy).not.toMatch(/unsafe-eval|strict-dynamic|\*/);
     expect(directive(policy, 'script-src')).not.toContain('unsafe-inline');
+  });
+
+  it('lets a page reach the billing service, and only when the build names its origin', () => {
+    const origin = billingOrigin(BILLING_DEFAULT);
+    expect(origin).toBe('https://billing.taalcut.app');
+    const policy = buildCsp([], { firebase: true, billing: origin });
+    expect(directive(policy, 'connect-src')).toBe(`connect-src 'self' ${FIREBASE_HOSTS.connect.join(' ')} https://billing.taalcut.app`);
+    // Nothing else moves: the payment page is reached by a navigation, which the policy doesn't govern.
+    expect(policy.replace(' https://billing.taalcut.app', '')).toBe(csp([]));
+    expect(directive(policy, 'form-action')).toBe("form-action 'self'");
+    // A test build reaches billing on the site's own origin: 'self' covers it, and no host is added.
+    expect(billingOrigin(billingBase('/__billing'))).toBeNull();
+    expect(buildCsp([], { firebase: true, billing: null })).toBe(csp([]));
+    expect(billingOrigin(billingBase('http://127.0.0.1:8787/'))).toBe('http://127.0.0.1:8787');
+    expect(billingBase(undefined)).toBe(BILLING_DEFAULT);
+    expect(billingBase('  ')).toBe(BILLING_DEFAULT);
+    expect(billingOverridden(undefined)).toBe(false);
+    expect(billingOverridden('/__billing')).toBe(true);
+  });
+
+  it('writes the billing origin into every page’s policy, since a visitor reaches /premium/ from any page', () => {
+    const template = JSON.parse(readFileSync(new URL('../../firebase/firebase.template.json', import.meta.url), 'utf8')) as HostingTemplate;
+    const pages = [
+      { path: '/', hashes: ["'sha256-home'"] },
+      { path: '/premium/', hashes: ["'sha256-premium'"] },
+    ];
+    const rules = withCsp(template, pages, { firebase: true, billing: 'https://billing.taalcut.app' }).hosting.headers;
+    const policies = rules.flatMap((r) => r.headers.filter((h) => h.key === 'Content-Security-Policy').map((h) => h.value));
+    expect(policies).toHaveLength(3);
+    for (const policy of policies) expect(directive(policy, 'connect-src')).toContain('https://billing.taalcut.app');
   });
 
   it('allows no Firebase or reCAPTCHA host in a build without config', () => {

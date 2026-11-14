@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
-import type { Fact } from './schema';
+import { PRIVACY_PREMIUM, PRIVACY_PREMIUM_GIST, PRIVACY_PREMIUM_PROCESSORS, PRIVACY_PREMIUM_WHERE, TERMS_PREMIUM } from './legal-premium';
+import type { GistRow, LegalBlock, LegalDoc, LegalSection } from './legal-types';
 import { LICENCE_LINE, SITE, TRADEMARK_POLICY } from './site';
 
 /**
@@ -11,29 +12,12 @@ import { LICENCE_LINE, SITE, TRADEMARK_POLICY } from './site';
  * release (November 2026; content/waitlist.ts). The facts are website/firebase/DATA.md's, checked in
  * a browser on 2026-11-06: the cookies `_ga` and `_ga_<id>`, and the installations and heartbeat IndexedDB records.
  * Visitor text names no product (claims.ts › STACK_NAMES). Text may carry links as `[label](href)`.
+ * Taalcut Premium's sections (its terms, its refunds, what an order holds) are legal-premium.ts's, spliced in below.
  */
 
-export type LegalBlock =
-  | { readonly kind: 'p'; readonly text: string }
-  | { readonly kind: 'list'; readonly items: readonly string[] }
-  | { readonly kind: 'facts'; readonly facts: readonly Fact[] };
+export type { GistRow, LegalBlock, LegalDoc, LegalSection };
 
-export interface LegalSection {
-  /** The section's anchor (`/privacy/#waitlist`). */
-  readonly id: string;
-  readonly heading: string;
-  readonly blocks: readonly LegalBlock[];
-}
-
-export interface LegalDoc {
-  /** The visible line at the top: when it last changed. */
-  readonly status: string;
-  /** The answer-first sentence the page opens with. */
-  readonly definition: string;
-  readonly sections: readonly LegalSection[];
-}
-
-/** When the notices last changed, shown on each page and in the .md mirrors: the waitlist closed with the first release. */
+/** When the notices last changed, shown on each page and in the .md mirrors: the first release closed the waitlist, and Taalcut Premium came the same day. */
 export const LEGAL_UPDATED = { iso: '2026-11-14', words: '14 November 2026' } as const;
 /** The privacy notice's own date (it has changed apart from the terms before: 2026-11-07, for the launch film). */
 export const PRIVACY_UPDATED = LEGAL_UPDATED;
@@ -44,14 +28,7 @@ const mail = `[${SITE.email}](mailto:${SITE.email})`;
 const company = `[${SITE.company.legal}](${SITE.company.url})`;
 const p = (text: string): LegalBlock => ({ kind: 'p', text });
 
-/** One row of the privacy notice's gist: its facts, said short, each from a section below (the icon is the section's). */
-export interface GistRow {
-  /** The section the row sums up, so the row links to it. */
-  readonly section: string;
-  readonly text: string;
-}
-
-/** The gist at the top of /privacy/: the notice in seven short lines, nothing it doesn't say in full below. */
+/** The gist at the top of /privacy/: the notice in eight short lines, nothing it doesn't say in full below. */
 export const PRIVACY_GIST: { readonly heading: string; readonly rows: readonly GistRow[] } = {
   heading: 'The gist',
   rows: [
@@ -61,6 +38,7 @@ export const PRIVACY_GIST: { readonly heading: string; readonly rows: readonly G
     { section: 'film', text: 'The launch film on the home page plays from YouTube, and only once you press play.' },
     { section: 'waitlist', text: 'The waitlist is closed. An address already on it is kept for one email, and deleted 30 days after that.' },
     { section: 'contact-form', text: 'A message from the contact form is kept for 12 months.' },
+    PRIVACY_PREMIUM_GIST,
     { section: 'rights', text: `Write to ${SITE.email} to see, correct or delete what we hold.` },
   ],
 };
@@ -68,7 +46,7 @@ export const PRIVACY_GIST: { readonly heading: string; readonly rows: readonly G
 export const PRIVACY: LegalDoc = {
   status: `Last updated ${PRIVACY_UPDATED.words}.`,
   definition:
-    'This notice says what taalcut.app collects, what its closed waitlist still holds, why, how long it is kept and how to have it deleted. By default, the website counts visits, and you can turn that off at the foot of any page.',
+    'This notice says what taalcut.app collects, what its closed waitlist still holds, what a Taalcut Premium order holds, why, how long it is kept and how to have it deleted. By default, the website counts visits, and you can turn that off at the foot of any page.',
   sections: [
     {
       id: 'who',
@@ -95,13 +73,14 @@ export const PRIVACY: LegalDoc = {
         p('It sets two cookies on this site, `_ga` and one whose name starts with `_ga_`. They hold a random number that tells a returning visit from a new one, and last up to two years. It also keeps two small records in your browser’s storage (IndexedDB): another random number for this browser, and the days the provider’s tools were used on this site.'),
         p('We see the counts as totals and trends. Advertising features are off, nothing is shared for advertising, and the counts are never joined to your waitlist entry or your message. The service keeps them for up to 14 months. Our basis is our legitimate interest in knowing how the site is used, so we can improve it.'),
         p('To stop it, choose “Turn off analytics” at the foot of any page. The site remembers your choice, deletes the two cookies at once and sends no more counts; clearing this site’s data in your browser removes the rest. If your browser sends a Global Privacy Control or Do Not Track signal, analytics stays off unless you turn it on there.'),
-        p('The site also keeps three small settings of its own in your browser’s storage. They never leave your device:'),
+        p('The site also keeps four small records of its own in your browser’s storage. They never leave your device:'),
         {
           kind: 'list',
           items: [
             '`taalcut.theme`, in local storage: the light or dark theme, written when you choose one;',
             '`taalcut.countedIn`, in session storage: that the logo has played its count-in, written the first time it plays, so it doesn’t play again until you close the tab;',
-            '`taalcut.analytics`, in local storage: “off” or “on”, written when you use the analytics switch at the foot of a page.',
+            '`taalcut.analytics`, in local storage: “off” or “on”, written when you use the analytics switch at the foot of a page;',
+            '`taalcut.premiumOrder`, in session storage: the outcome of a Taalcut Premium payment (the order’s reference, that it is paid, the plan, the amount and its two dates), written when the page you return to after paying confirms it, so a reload still shows it until you close the tab.',
           ],
         },
       ],
@@ -162,6 +141,7 @@ export const PRIVACY: LegalDoc = {
         },
       ],
     },
+    PRIVACY_PREMIUM,
     {
       id: 'processors',
       heading: 'Who handles it for us',
@@ -171,6 +151,7 @@ export const PRIVACY: LegalDoc = {
         p('When you send the contact form, a bot check run by our cloud provider reads signals from your device and browser to tell that a person is sending it. It may keep its own data in your browser and on the provider’s own sites.'),
         p('Our cloud provider’s own privacy policy and terms apply to all three, and the bot check’s badge links to them.'),
         p('The Download and GitHub links go to GitHub, which hosts Taalcut’s code and the file you download. GitHub’s own privacy statement covers what it receives when you follow them.'),
+        p(PRIVACY_PREMIUM_PROCESSORS),
       ],
     },
     {
@@ -178,6 +159,7 @@ export const PRIVACY: LegalDoc = {
       heading: 'Where it is stored',
       blocks: [
         p('The contact messages and the waitlist’s remaining entries are on our cloud provider’s servers in Mumbai, India. The visit counts are on the analytics service’s servers, which may be outside India, including in the United States.'),
+        p(PRIVACY_PREMIUM_WHERE),
       ],
     },
     {
@@ -206,7 +188,7 @@ export const PRIVACY: LegalDoc = {
       id: 'the-app',
       heading: 'The Taalcut app',
       blocks: [
-        p('The app is separate from this website, and local-first. The download itself comes from GitHub, so this site learns nothing from it beyond the visit counts above. It indexes your footage on your computer, and your footage stays there unless you connect a cloud model. [How the app handles your footage](/faq/#footage-leaves).'),
+        p('The app is separate from this website, and local-first. The download itself comes from GitHub, so this site learns nothing from it beyond the visit counts above. It indexes your footage on your computer, and your footage stays there unless you connect a cloud model. On Taalcut Premium, the material a make needs goes to cloud models, as [the Premium section](/privacy/#premium) says. [How the app handles your footage](/faq/#footage-leaves).'),
       ],
     },
     {
@@ -220,7 +202,7 @@ export const PRIVACY: LegalDoc = {
 export const TERMS: LegalDoc = {
   status: `Last updated ${LEGAL_UPDATED.words}.`,
   definition:
-    'These terms cover using taalcut.app. The Taalcut app you download from it comes under its own licence.',
+    'These terms cover using taalcut.app and buying Taalcut Premium, the paid plan around the app. The Taalcut app you download comes under its own licence.',
   sections: [
     {
       id: 'who',
@@ -249,6 +231,7 @@ export const TERMS: LegalDoc = {
         p('The app has two update channels, Stable and Beta. Before you switch to Beta, it shows you three lines about what that means. The [Beta channel terms](/beta-terms/) have them.'),
       ],
     },
+    ...TERMS_PREMIUM,
     {
       id: 'no-warranty',
       heading: 'No warranty',

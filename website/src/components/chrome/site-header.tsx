@@ -10,18 +10,20 @@
  *   alone, named for assistive technology (default · hover surface · focus · active) · menu closed · menu open
  *   (phones: a sheet under the bar with every link, GitHub and Download; focus moves to its first link; Escape
  *   closes it and returns focus to the button; any link closes it)
- * Solid, never glass; it sticks. The mark (the drawn lockup, with its motion), Features and Your AI with their icons,
+ * Solid, never glass; it sticks. The mark (the drawn lockup, with its motion), Features, Your AI and Premium with their icons,
  * the theme switch, GitHub, and Download outlined, to /download/: the page's own Download for Mac button holds the
  * one marigold fill. */
 
-import { ArrowRight, Cpu, LayoutGrid, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Cpu, Gem, LayoutGrid, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { BrandIcon } from '#components/brand/brand-icon';
 import { HeaderMark } from '#components/brand/header-mark';
+import { useEntryRef } from '#components/premium/ref-link';
 import { GET } from '#content/release';
 import { NAV, NAV_GET, SITE } from '#content/site';
+import { withRef } from '#lib/billing/ref';
 import { cn } from '#lib/cn';
 import { ICON_STROKE, ICONS } from '#lib/icons';
 import { useUiStore } from '#stores/ui';
@@ -32,6 +34,7 @@ import { useNavTint } from './use-nav-tint';
 export const NAV_ICONS: Readonly<Record<(typeof NAV)[number]['href'], LucideIcon>> = {
   '/features/': LayoutGrid,
   '/ai/': Cpu,
+  '/premium/': Gem,
 };
 
 function isCurrent(pathname: string, href: string): boolean {
@@ -53,6 +56,8 @@ export function SiteHeader() {
   const open = useUiStore((s) => s.menuOpen);
   const setOpen = useUiStore((s) => s.setMenuOpen);
   const tinted = useNavTint(pathname);
+  // The tag a visit arrived with rides on the link to /premium/, so a new tab keeps it (lib/billing/ref).
+  const tag = useEntryRef();
   const menu = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   useEffect(() => setOpen(false), [pathname, setOpen]);
@@ -89,7 +94,7 @@ export function SiteHeader() {
             return (
               <li key={item.href}>
                 <Link
-                  href={item.href}
+                  href={withRef(item.href, tag) as never}
                   aria-current={isCurrent(pathname, item.href) ? 'page' : undefined}
                   className={cn(
                     'group inline-flex h-10 items-center gap-2 rounded-pill px-3.5 type-label font-semibold text-ink-2',
@@ -136,7 +141,7 @@ export function SiteHeader() {
             return (
               <li key={item.href}>
                 <Link
-                  href={item.href}
+                  href={withRef(item.href, tag) as never}
                   aria-current={isCurrent(pathname, item.href) ? 'page' : undefined}
                   className="flex h-12 items-center gap-3 rounded-xl px-3 type-label font-semibold text-ink hover:bg-hover active:bg-pressed aria-[current=page]:bg-hover"
                 >

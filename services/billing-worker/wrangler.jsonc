@@ -1,0 +1,116 @@
+{
+  // SPDX-License-Identifier: AGPL-3.0-or-later
+  // Copyright (C) 2026 Taalcut contributors
+  "name": "taalcut-billing",
+  "main": "src/index.ts",
+  // The newest date the pinned workerd (1.20261006.1, via wrangler 4.150.0 and @cloudflare/vitest-plugin 1.4.1)
+  // runs, so the Workers test project boots the exact configuration that deploys. Raise it with those pins.
+  "compatibility_date": "2026-10-13",
+  "workers_dev": false,
+  "routes": [{ "pattern": "billing.taalcut.app", "custom_domain": true }],
+  "observability": { "enabled": true },
+  // The sweep (src/orders/reconcile.ts): every five minutes.
+  "triggers": { "crons": ["*/5 * * * *"] },
+  "vars": {
+    "SITE_ORIGIN": "https://taalcut.app",
+    "ALLOWED_ORIGINS": "https://taalcut.app",
+    // The key pair must be of this mode, or nothing is sold.
+    "MODE": "live",
+    // "off" stops new orders; payments already started are still confirmed. The key pair is set, so this is
+    // the switch. On since 2026-11-14, when the website's Premium pages went live.
+    "SELLING": "on",
+    "OWNER_EMAIL": "admin@matterwardlabs.com",
+    "MAIL_FROM": "premium@taalcut.app",
+    // What is sold and for how much, in minor units (US cents). A price or an offer changes here only.
+    // The website shows what the Worker quotes; scripts/premium-prices.test.ts keeps its static text in step.
+    "CATALOG": {
+      "plans": {
+        "premium": { "label": "Taalcut Premium", "prices": { "USD": 40000 } },
+      },
+      "offers": [
+        // Visitors who arrive from Product Hunt (it appends ?ref=producthunt), for the launch week.
+        {
+          "id": "product-hunt",
+          "plan": "premium",
+          "currency": "USD",
+          "amount": 33900,
+          "code": "producthunt",
+          "startsAt": "2026-11-19T08:01:00Z",
+          "endsAt": "2026-11-26T08:01:00Z",
+        },
+        // Everyone, on launch day (12:01 AM Pacific to the same time the next day).
+        {
+          "id": "launch-day",
+          "plan": "premium",
+          "currency": "USD",
+          "amount": 33900,
+          "startsAt": "2026-11-19T08:01:00Z",
+          "endsAt": "2026-11-20T08:01:00Z",
+        },
+      ],
+    },
+  },
+  "d1_databases": [
+    {
+      "binding": "ORDERS",
+      "database_name": "taalcut-billing",
+      "database_id": "4b695e3b-2d0e-41a3-a5f9-3b7783ddd0c7",
+      "migrations_dir": "migrations",
+    },
+  ],
+  // A paid order emails us and the buyer. The binding may only send as the plan's own address.
+  "send_email": [{ "name": "EMAIL", "allowed_sender_addresses": ["premium@taalcut.app"] }],
+  "ratelimits": [
+    { "name": "CHECKOUT_BURST", "namespace_id": "5101", "simple": { "limit": 5, "period": 60 } },
+    { "name": "READ_BURST", "namespace_id": "5102", "simple": { "limit": 60, "period": 60 } },
+  ],
+  // Secrets, set with `wrangler secret put` and never written here: RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET,
+  // RAZORPAY_WEBHOOK_SECRET (optional), NOTIFY_WEBHOOK_URL (optional). They are not listed under
+  // `secrets.required` on purpose: a Worker without them deploys and answers "not selling".
+  "env": {
+    // The provider's test mode, for an end-to-end run with no money. Bindings are not inherited by an environment.
+    "staging": {
+      "name": "taalcut-billing-staging",
+      "workers_dev": true,
+      "routes": [],
+      "triggers": { "crons": ["*/5 * * * *"] },
+      "vars": {
+        "SITE_ORIGIN": "http://localhost:3000",
+        "ALLOWED_ORIGINS": "http://localhost:3000",
+        "MODE": "test",
+        "SELLING": "on",
+        "OWNER_EMAIL": "admin@matterwardlabs.com",
+        "MAIL_FROM": "premium@taalcut.app",
+        "CATALOG": {
+          "plans": {
+            "premium": { "label": "Taalcut Premium", "prices": { "USD": 40000 } },
+          },
+          "offers": [
+            {
+              "id": "product-hunt",
+              "plan": "premium",
+              "currency": "USD",
+              "amount": 33900,
+              "code": "producthunt",
+              "startsAt": "2026-11-01T00:00:00Z",
+              "endsAt": "2026-11-26T08:01:00Z",
+            },
+          ],
+        },
+      },
+      "d1_databases": [
+        {
+          "binding": "ORDERS",
+          "database_name": "taalcut-billing-staging",
+          "database_id": "ad5024db-c8c4-41d0-84b3-bb38b2a4d990",
+          "migrations_dir": "migrations",
+        },
+      ],
+      "send_email": [{ "name": "EMAIL", "allowed_sender_addresses": ["premium@taalcut.app"] }],
+      "ratelimits": [
+        { "name": "CHECKOUT_BURST", "namespace_id": "5103", "simple": { "limit": 5, "period": 60 } },
+        { "name": "READ_BURST", "namespace_id": "5104", "simple": { "limit": 60, "period": 60 } },
+      ],
+    },
+  },
+}

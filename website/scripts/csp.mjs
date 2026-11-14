@@ -12,6 +12,7 @@
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { billingOrigin, billingOverridden } from '../src/lib/billing/origin.ts';
 import { FIREBASE_SETUP, MEASUREMENT_ID } from '../src/lib/firebase/config.ts';
 import { isDeployed, pageHashes, pagePath, withCsp } from '../src/lib/firebase/hosting-csp.ts';
 
@@ -50,9 +51,13 @@ if (FIREBASE_SETUP.mode === 'closed') {
   console.warn('csp: warning: an emulator build (NEXT_PUBLIC_FIREBASE_EMULATOR). Never deploy it.');
 }
 
+// /premium/ talks to the billing service: its origin joins connect-src. A build pointed anywhere else is a test build.
+const billing = billingOrigin();
+if (billingOverridden()) console.warn(`csp: warning: NEXT_PUBLIC_BILLING_URL is set (${billing ?? 'a path on this site'}). Never deploy this build.`);
+
 const template = JSON.parse(readFileSync(templatePath, 'utf8'));
 const fromTemplate = (path) => relative(site, join(site, 'firebase', path));
-const csp = withCsp(template, pages, { firebase: FIREBASE_SETUP.mode === 'live', analytics: MEASUREMENT_ID !== null });
+const csp = withCsp(template, pages, { firebase: FIREBASE_SETUP.mode === 'live', analytics: MEASUREMENT_ID !== null, billing });
 const config = {
   ...csp,
   hosting: { ...csp.hosting, public: fromTemplate(csp.hosting.public) },
@@ -66,5 +71,5 @@ writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
 
 const hashes = new Set(pages.flatMap((p) => p.hashes));
 console.log(
-  `csp: ${pages.length} HTML files, ${hashes.size} inline script hashes, analytics ${MEASUREMENT_ID ? 'on' : 'off'} → ${relative(site, configPath)}`,
+  `csp: ${pages.length} HTML files, ${hashes.size} inline script hashes, analytics ${MEASUREMENT_ID ? 'on' : 'off'}, billing ${billing ?? 'same origin'} → ${relative(site, configPath)}`,
 );

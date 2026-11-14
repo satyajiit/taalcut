@@ -1,0 +1,21 @@
+{
+  "name": "@taalcut/billing-worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "description": "Cloudflare Worker that prices Taalcut Premium, makes a payment link for an order and confirms the payment with the payment provider. Never published.",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "1.4.1",
+    "typescript": "6.0.3",
+    "vitest": "5.0.4",
+    "wrangler": "4.150.0"
+  }
+}

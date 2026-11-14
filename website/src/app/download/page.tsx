@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 import { PageArrival } from '#components/contact/page-arrival';
+import { InlineText } from '#components/content/inline-text';
 import { GetButtons } from '#components/download/get-buttons';
 import { InstallSteps } from '#components/download/install-steps';
 import { Kaatu } from '#components/kaatu/kaatu';
@@ -9,12 +10,14 @@ import { PlatformList } from '#components/platforms/platform-list';
 import { JsonLd } from '#components/ui/json-ld';
 import { page } from '#content/pages';
 import { PLATFORMS_PAGE } from '#content/platforms';
+import { PREMIUM_POINTERS } from '#content/premium';
 import { breadcrumbJsonLd, softwareApplicationJsonLd } from '#lib/jsonld';
 import { pageMetadata } from '#lib/seo';
 
 /* page: /download/ · Download · mode: Persuade · system: WEB2 Remix Vernacular · lane L4
  * The release's download and what stands around it. The head: the title, the lead, Download for Mac (the page's one
- * marigold fill) and GitHub, the version and what it needs, and its one known limit in words. Then the Mac as
+ * marigold fill) and GitHub, the version and what it needs, its one known limit in words, and one line to Taalcut
+ * Premium (the paid plan around the free app; its words are content/premium.ts's). Then the Mac as
  * Taalcut running on it, with its requirements as stickers on the window and in full beside it, and the way to the
  * release's notes and checksums. Then the three steps to install it and the facts beside a download (signed and
  * notarized, what to expect, the language, the release's page, the source, where to report). Last, the two platforms
@@ -47,6 +50,9 @@ export default function Page() {
               <Kaatu pose="laptop" size={112} interactive sticker toward="left" className="-my-2" />
             </div>
             <PlatformJump />
+            <p data-slot="premium-pointer" className="m-0 max-w-[40em] type-body text-pretty text-ink-2">
+              <InlineText text={PREMIUM_POINTERS.download} />
+            </p>
           </PageArrival>
           <PlatformList ids={['macos']} />
         </div>

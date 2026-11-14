@@ -137,7 +137,7 @@ export function changeWords(id: Exclude<CostId, 'editor'>): string {
 export const COST_SECTION = {
   id: 'cost',
   heading: 'What a month of videos costs',
-  lead: 'Taalcut is free, and there is no Taalcut cloud to pay for. What you pay is your AI’s bill: your ChatGPT plan or API keys, or nearly nothing when the AI runs on your computer.',
+  lead: 'Taalcut is free, and using it needs no Taalcut cloud. What you pay is your AI’s bill: your ChatGPT plan or API keys, or nearly nothing when the AI runs on your computer.',
   /** The board's heading line: what the figures are for. */
   basis: (period: CostPeriod) => `${capital(per(period))} at ${VIDEOS_A_DAY} videos a day`,
   currency: 'In US dollars',

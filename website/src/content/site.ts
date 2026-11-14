@@ -68,12 +68,13 @@ export const FOOTER_SOURCE = 'source and releases';
 export const FOOTER_LINE = 'Taalcut cuts your clips to the rhythm of a reel you love.';
 
 /**
- * The nav's two links; the chrome gives each its Lucide icon. The theme switch, GitHub and the outlined Download link
- * (NAV_GET, to /download/) follow.
+ * The nav's three links; the chrome gives each its Lucide icon. The theme switch, GitHub and the outlined Download link
+ * (NAV_GET, to /download/) follow. Premium is the paid plan around the free app (content/premium.ts).
  */
 export const NAV = [
   { href: '/features/', label: 'Features' },
   { href: '/ai/', label: 'Your AI' },
+  { href: '/premium/', label: 'Premium' },
 ] as const;
 
 /** The nav's outlined link: the page with the download, what it needs and how to install it. */
@@ -87,6 +88,7 @@ export const FOOTER_GROUPS = [
       { href: '/features/', label: 'Features' },
       { href: '/ai/', label: 'Your AI' },
       { href: '/download/', label: 'Download' },
+      { href: '/premium/', label: 'Premium' },
       { href: '/faq/', label: 'FAQ' },
     ],
   },
