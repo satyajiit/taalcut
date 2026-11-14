@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 import { costInWords } from './cost';
-import { FAQ_PREMIUM, FAQ_STILL_FREE, LIST_PRICE, PER_MONTH, PREMIUM } from './premium';
+import { BOTH_PRICES, FAQ_PREMIUM, FAQ_STILL_FREE, PREMIUM } from './premium';
 import { KNOWN_LIMIT, RELEASE } from './release';
 import type { FaqEntry } from './schema';
 import { LICENCE_LINE, SITE, TRADEMARK_POLICY } from './site';
@@ -149,7 +149,7 @@ export const FAQ: readonly FaqEntry[] = [
     group: 'Platforms and price',
     question: 'What does it cost?',
     // The comparison is computed in cost.ts from the owner's three prices, never typed here.
-    answer: `Taalcut is free. The app doesn’t run AI for you or keep your files, so using it costs you nothing from Taalcut. If you use a cloud model, you use your own plan or API key with that provider. ${costInWords()} ${PREMIUM.name} is a paid plan around the app, at ${LIST_PRICE} ${PER_MONTH}, where we set it up and pay for the top models.`,
+    answer: `Taalcut is free. The app doesn’t run AI for you or keep your files, so using it costs you nothing from Taalcut. If you use a cloud model, you use your own plan or API key with that provider. ${costInWords()} ${PREMIUM.name} is a paid plan around the app, where we set it up and pay for the top models, at ${BOTH_PRICES}.`,
   },
   { ...FAQ_STILL_FREE, group: 'Platforms and price' },
   { ...FAQ_PREMIUM, group: 'Platforms and price' },

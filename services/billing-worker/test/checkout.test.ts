@@ -84,6 +84,7 @@ describe('checkout', () => {
         listAmount: 40000,
         offer: null,
         selling: true,
+        currencies: ['USD', 'INR'],
       },
     });
     expect(billing.provider.created).toEqual([]);
@@ -102,6 +103,61 @@ describe('checkout', () => {
     expect(billing.db.snapshot()['orders']).toEqual([
       expect.objectContaining({ amount: 33900, list_amount: 40000, offer_id: 'product-hunt' }),
     ]);
+  });
+
+  it('charges rupees when the page showed rupees, and dollars when it names no currency', async () => {
+    const billing = createTestBilling();
+    billing.visitor.country = 'IN';
+    const response = await billing.post('/v1/checkout', { ...BUYER, currency: 'INR', expect: 3760000 });
+    expect(response.status).toBe(201);
+    expect(await response.json()).toMatchObject({ currency: 'INR', amount: 3760000 });
+    expect(billing.provider.created.at(-1)).toMatchObject({ currency: 'INR', amount: 3760000 });
+
+    // A page that knows one currency showed dollars: the order is in dollars, wherever it comes from.
+    const plain = await billing.post('/v1/checkout', { ...BUYER, expect: 40000 });
+    expect(await plain.json()).toMatchObject({ currency: 'USD', amount: 40000 });
+    expect(billing.db.snapshot()['orders']).toEqual([
+      expect.objectContaining({ currency: 'INR', amount: 3760000, list_amount: 3760000, country: 'IN' }),
+      expect.objectContaining({ currency: 'USD', amount: 40000, list_amount: 40000, country: 'IN' }),
+    ]);
+  });
+
+  it('gives the launch price in rupees, and tells the page the new price in the same currency', async () => {
+    const billing = createTestBilling({ now: LAUNCH_WEEK });
+    const order = await placeOrder(billing, { currency: 'INR', ref: 'producthunt', expect: 3186600 });
+    expect(order.amount).toBe(3186600);
+    expect(billing.db.snapshot()['orders']).toEqual([
+      expect.objectContaining({
+        currency: 'INR',
+        amount: 3186600,
+        list_amount: 3760000,
+        offer_id: 'product-hunt',
+      }),
+    ]);
+
+    // The dollar price is not the rupee price: the page is shown what the order would cost, in rupees.
+    for (const expected of [33900, 40000, 3186600]) {
+      const stale = await billing.post('/v1/checkout', { ...BUYER, currency: 'INR', expect: expected });
+      expect(stale.status).toBe(409);
+      expect(await stale.json()).toMatchObject({
+        code: 'billing.price_changed',
+        quote: { currency: 'INR', amount: 3760000, listAmount: 3760000, offer: null },
+      });
+    }
+    expect(billing.provider.created).toHaveLength(1);
+  });
+
+  it('refuses a currency the plan is not sold in before a limit is spent', async () => {
+    const billing = createTestBilling({ checkoutLimit: 1 });
+    expect(await problemsOf(await billing.post('/v1/checkout', { ...BUYER, currency: 'EUR' }))).toEqual([
+      'currency:unknown',
+    ]);
+    for (const currency of ['auto', 'inr', 5, null])
+      expect(await problemsOf(await billing.post('/v1/checkout', { ...BUYER, currency }))).toEqual([
+        'currency:format',
+      ]);
+    expect(billing.db.snapshot()['orders']).toEqual([]);
+    expect((await billing.post('/v1/checkout', { ...BUYER, currency: 'INR' })).status).toBe(201);
   });
 
   it('tells the page when an offer ended between showing the price and the order', async () => {
@@ -192,6 +248,15 @@ describe('checkout', () => {
       expect(response.status).toBe(415);
     }
     expect(billing.provider.created).toEqual([]);
+  });
+
+  it('asks the buyer to check a phone number the payment provider will not take', async () => {
+    const billing = createTestBilling();
+    billing.provider.refuseContact = true;
+    const response = await billing.post('/v1/checkout', BUYER);
+    expect(response.status).toBe(400);
+    expect(await problemsOf(response)).toEqual(['whatsapp:format']);
+    expect(billing.db.snapshot()['orders']).toEqual([expect.objectContaining({ status: 'failed' })]);
   });
 
   it('takes no order while it is not selling', async () => {

@@ -14,7 +14,7 @@ test.use({ timezoneId: 'Asia/Kolkata', locale: 'en-GB', reducedMotion: 'reduce' 
 
 const amount = (scope: ReturnType<typeof priceCard>) => scope.locator('[data-slot="price-amount"]');
 
-test('the server HTML carries the list price, every section and a structured-data offer of 400 US dollars a month', async ({
+test('the server HTML carries the list price, every section and two structured-data offers: 400 US dollars a month, and 37,600 rupees in India', async ({
   request,
 }) => {
   const html = await (await request.get('/premium/')).text();
@@ -39,7 +39,10 @@ test('the server HTML carries the list price, every section and a structured-dat
   const service = blocks.find((block) => block['@type'] === 'Service');
   expect(service).toMatchObject({
     name: 'Taalcut Premium',
-    offers: { '@type': 'Offer', price: '400.00', priceCurrency: 'USD' },
+    offers: [
+      { '@type': 'Offer', price: '400.00', priceCurrency: 'USD' },
+      { '@type': 'Offer', price: '37600.00', priceCurrency: 'INR', eligibleRegion: { name: 'India' } },
+    ],
   });
 });
 
@@ -272,12 +275,12 @@ for (const [name, reply] of [
     await expect(orderSection(page).locator('button[type="submit"]')).toHaveCount(0);
     await expect(amount(priceCard(page))).toHaveText('$400');
     await expect(amount(orderSection(page))).toHaveText('$400');
-    // The card line stays: it is how a buyer in India pays either way.
-    await expect(orderSection(page).locator('[data-slot="order-india"]')).toBeVisible();
+    // No quote, so no currency to change.
+    await expect(orderSection(page).locator('[data-slot="price-currency"]')).toHaveCount(0);
   });
 }
 
-test('the page says what it must before an order: what it needs, where material goes, and how a card from India pays', async ({
+test('the page says what it must before an order: what it needs, where material goes, and what it is paid in', async ({
   page,
 }) => {
   await mockQuote(page);
@@ -291,13 +294,12 @@ test('the page says what it must before an order: what it needs, where material 
     'Work beyond your plan is scoped with you and quoted before it starts.',
     'Within one business day we write to you',
     'Your plan is active within 7 days of payment, and your paid month starts that day.',
+    'In US dollars, or in Indian rupees in India, month to month, by one payment link a month.',
   ]) {
     await expect(main, words).toContainText(words);
   }
-  const india = orderSection(page).locator('[data-slot="order-india"]');
-  await expect(india).toHaveText(
-    'A card issued in India usually can’t pay in US dollars. Write to admin@matterwardlabs.com and we arrange a way to pay.',
-  );
+  // Buyers in India pay in rupees on the page itself: nothing sends a card from India to the address.
+  await expect(main).not.toContainText(/card issued in India/i);
   // Never a stage of something, and no stack name.
   await expect(main).not.toContainText(
     /\b(trial|pilot|beta|early bird|waitlist|experiment|razorpay|stripe)\b/i,
@@ -358,7 +360,7 @@ test('other pages lead to Premium: the home’s cost section, /download/ and the
   await page.goto('/download/');
   const line = page.locator('[data-slot="premium-pointer"]');
   await expect(line).toHaveText(
-    'Want it installed and set up for you, on the top models? Taalcut Premium is $400 a month.',
+    'Want it installed and set up for you, on the top models? Taalcut Premium is $400 a month, or ₹37,600 a month in India.',
   );
   await expect(line.getByRole('link', { name: 'Taalcut Premium' })).toHaveAttribute('href', '/premium/');
   await page.goto('/faq/');

@@ -10,6 +10,8 @@ import { type Problem } from '../http/respond';
 export interface CheckoutInput {
   plan: string;
   ref: string | undefined;
+  /** The currency of the price the page showed. Whether the plan is sold in it is the pricing's to say. */
+  currency: string | undefined;
   name: string;
   email: string;
   /** Required: the payment provider makes no payment page without a phone number. `+` and 8 to 15 digits. */
@@ -21,7 +23,17 @@ export interface CheckoutInput {
 
 export type CheckoutRead = { ok: true; input: CheckoutInput } | { ok: false; problems: Problem[] };
 
-const FIELDS = new Set(['plan', 'ref', 'name', 'email', 'whatsapp', 'channel', 'agreed', 'expect']);
+const FIELDS = new Set([
+  'plan',
+  'ref',
+  'currency',
+  'name',
+  'email',
+  'whatsapp',
+  'channel',
+  'agreed',
+  'expect',
+]);
 const EMAIL = /^[^\s@<>"',;:\\]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/i;
 const CHANNEL = /^(https?:\/\/[^\s<>"']{4,}|@[A-Za-z0-9._]{1,60})$/;
 
@@ -91,12 +103,17 @@ export function readCheckout(value: unknown): CheckoutRead {
   const ref = body['ref'];
   if (ref !== undefined && typeof ref !== 'string') problems.push({ path: 'ref', rule: 'format' });
 
+  const currency = body['currency'];
+  if (currency !== undefined && (typeof currency !== 'string' || !/^[A-Z]{3}$/.test(currency)))
+    problems.push({ path: 'currency', rule: 'format' });
+
   if (problems.length > 0 || !plan || !name || !email || whatsapp === null) return { ok: false, problems };
   return {
     ok: true,
     input: {
       plan,
       ref: typeof ref === 'string' ? ref : undefined,
+      currency: typeof currency === 'string' ? currency : undefined,
       name,
       email,
       whatsapp,

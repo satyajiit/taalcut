@@ -21,12 +21,16 @@
     "SELLING": "on",
     "OWNER_EMAIL": "admin@matterwardlabs.com",
     "MAIL_FROM": "premium@taalcut.app",
-    // What is sold and for how much, in minor units (US cents). A price or an offer changes here only.
-    // The website shows what the Worker quotes; scripts/premium-prices.test.ts keeps its static text in step.
+    // What is sold and for how much, in minor units (US cents, Indian paise). A price or an offer changes here
+    // only. The website shows what the Worker quotes; scripts/premium/prices.test.ts keeps its static text in step.
     "CATALOG": {
       "plans": {
-        "premium": { "label": "Taalcut Premium", "prices": { "USD": 40000 } },
+        // Rupees are the dollar price at 1 USD = 94 INR, with nothing added (the owner, 2026-11-14).
+        "premium": { "label": "Taalcut Premium", "prices": { "USD": 40000, "INR": 3760000 } },
       },
+      // The currency a visitor is quoted when the page asks for their own (`currency=auto`), by the country the
+      // request comes from. Everyone else, and a page that names no currency, gets US dollars.
+      "currencyByCountry": { "IN": "INR" },
       "offers": [
         // Visitors who arrive from Product Hunt (it appends ?ref=producthunt), for the launch week.
         {
@@ -44,6 +48,24 @@
           "plan": "premium",
           "currency": "USD",
           "amount": 33900,
+          "startsAt": "2026-11-19T08:01:00Z",
+          "endsAt": "2026-11-20T08:01:00Z",
+        },
+        // The same two in rupees: US$339 at 1 USD = 94 INR.
+        {
+          "id": "product-hunt",
+          "plan": "premium",
+          "currency": "INR",
+          "amount": 3186600,
+          "code": "producthunt",
+          "startsAt": "2026-11-19T08:01:00Z",
+          "endsAt": "2026-11-26T08:01:00Z",
+        },
+        {
+          "id": "launch-day",
+          "plan": "premium",
+          "currency": "INR",
+          "amount": 3186600,
           "startsAt": "2026-11-19T08:01:00Z",
           "endsAt": "2026-11-20T08:01:00Z",
         },
@@ -83,14 +105,24 @@
         "MAIL_FROM": "premium@taalcut.app",
         "CATALOG": {
           "plans": {
-            "premium": { "label": "Taalcut Premium", "prices": { "USD": 40000 } },
+            "premium": { "label": "Taalcut Premium", "prices": { "USD": 40000, "INR": 3760000 } },
           },
+          "currencyByCountry": { "IN": "INR" },
           "offers": [
             {
               "id": "product-hunt",
               "plan": "premium",
               "currency": "USD",
               "amount": 33900,
+              "code": "producthunt",
+              "startsAt": "2026-11-01T00:00:00Z",
+              "endsAt": "2026-11-26T08:01:00Z",
+            },
+            {
+              "id": "product-hunt",
+              "plan": "premium",
+              "currency": "INR",
+              "amount": 3186600,
               "code": "producthunt",
               "startsAt": "2026-11-01T00:00:00Z",
               "endsAt": "2026-11-26T08:01:00Z",

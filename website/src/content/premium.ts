@@ -10,9 +10,11 @@ import { SITE } from './site';
  * here; /premium/, /premium/thanks/, the FAQ, the terms, the .md mirror, llms.txt and the JSON-LD read them.
  *
  * The price the page charges is never typed in a browser: the billing service quotes it (lib/billing) and the page
- * shows the quote. LIST below is the list price as the static HTML and the machine-read files say it; the launch
- * prices exist only in the quote. Premium is a plan you buy: the ledger (claims.ts) bans the words that would make it
- * a stage of one, any promise of a result, and any hint that someone already uses it.
+ * shows the quote, in the quote's own currency: Indian rupees for a visitor in India, US dollars elsewhere (the owner,
+ * 2026-11-14), and the visitor may choose the other. The list prices below are what the static HTML and the
+ * machine-read files say; the launch prices exist only in the quote. Premium is a plan you buy: the ledger
+ * (claims.ts) bans the words that would make it a stage of one, any promise of a result, and any hint that someone
+ * already uses it.
  */
 export const PREMIUM = {
   name: `${SITE.name} Premium`,
@@ -24,13 +26,23 @@ export const PREMIUM = {
   currency: 'USD',
   /** The list price a month, in US cents. */
   listAmount: 40000,
+  /** In India the plan is sold in rupees: the list price a month there, in paise. */
+  india: { currency: 'INR', listAmount: 3760000 },
   /** A plan is active within this many days of its payment. */
   activationDays: 7,
 } as const;
 
 /** The list price in words: "$400". */
 export const LIST_PRICE = usd(PREMIUM.listAmount / 100);
+/** The list price in India in words: "₹37,600". */
+export const INDIA_PRICE = new Intl.NumberFormat('en-IN', {
+  style: 'currency',
+  currency: PREMIUM.india.currency,
+  maximumFractionDigits: 0,
+}).format(PREMIUM.india.listAmount / 100);
 export const PER_MONTH = 'a month';
+/** The price as every static sentence says it: "$400 a month, or ₹37,600 a month in India". */
+export const BOTH_PRICES = `${LIST_PRICE} ${PER_MONTH}, or ${INDIA_PRICE} ${PER_MONTH} in India`;
 
 /**
  * The address the billing service's one email to a buyer comes from, under the name Taalcut. It only sends: replies to
@@ -51,8 +63,8 @@ export const PREMIUM_MATERIAL =
 
 /**
  * A launch price, as the page says one when the billing service quotes it. It is the first month's price: `first`
- * stands where "a month" does, and `later` says what the months after it cost. The names are by the service's offer
- * id; an id the site doesn't know reads as a launch price.
+ * stands where "a month" does, and `later` says what the months after it cost: the quote's own list price, in the
+ * quote's currency. The names are by the service's offer id; an id the site doesn't know reads as a launch price.
  */
 export const OFFER = {
   names: { 'product-hunt': 'Product Hunt launch price', 'launch-day': 'Launch day price' } as Readonly<
@@ -60,7 +72,8 @@ export const OFFER = {
   >,
   name: 'Launch price',
   first: 'for your first month',
-  later: `Later months are ${LIST_PRICE} ${PER_MONTH}.`,
+  /** "Later months are ₹37,600 a month." */
+  later: (listPrice: string) => `Later months are ${listPrice} ${PER_MONTH}.`,
   /** "Product Hunt launch price, until 26 November at 13:31 IST." */
   until: (name: string, when: string) => `${name}, until ${when}.`,
   /** For assistive technology, before the struck-through price. */
@@ -70,6 +83,28 @@ export const OFFER = {
 /** An offer's name on the page, by its id. */
 export function offerName(id: string): string {
   return OFFER.names[id] ?? OFFER.name;
+}
+
+/**
+ * The currency line under the order's price (components/premium/currency-switch.tsx), shown when the quote lists more
+ * than one currency: what the prices are in, and the way to pay in the other. A currency the site has no name for is
+ * said by its code.
+ */
+export const CURRENCY = {
+  names: { USD: 'US dollars', INR: 'Indian rupees' } as Readonly<Record<string, string>>,
+  /** "Prices in Indian rupees." */
+  shown: (name: string) => `Prices in ${name}.`,
+  /** "Pay in US dollars instead" */
+  pay: (name: string) => `Pay in ${name} instead`,
+  /** While the price in the other currency is being asked for. */
+  asking: 'Getting that price…',
+  /** The billing service didn't give it: the price shown stays. */
+  failed: 'We couldn’t get that price. Try again.',
+} as const;
+
+/** A currency's name on the page, by its code. */
+export function currencyName(code: string): string {
+  return CURRENCY.names[code] ?? code;
 }
 
 export const PREMIUM_PAGE = {
@@ -149,7 +184,7 @@ export const PREMIUM_PAGE = {
       ['Support hours', 'WhatsApp support runs from Monday 00:00 to Friday 24:00, India time.'],
       [
         'Paying',
-        `In US dollars, month to month, by one payment link a month. Each payment has a receipt, and an invoice if you ask. The [Premium terms](/terms/#premium) and the [refund and cancellation terms](/terms/#premium-refunds) say the rest.`,
+        `In US dollars, or in Indian rupees in India, month to month, by one payment link a month. Each payment has a receipt, and an invoice if you ask. The [Premium terms](/terms/#premium) and the [refund and cancellation terms](/terms/#premium-refunds) say the rest.`,
       ],
     ] satisfies readonly Fact[],
   },
@@ -166,7 +201,7 @@ export const FAQ_STILL_FREE = {
 export const FAQ_PREMIUM = {
   id: 'premium',
   question: 'What is Premium?',
-  answer: `${PREMIUM.name} is a paid plan around the free app, at ${LIST_PRICE} ${PER_MONTH}. We install Taalcut on your Mac and set it up with you in one live session, pay for the top cloud models so every make runs on them, answer on WhatsApp around the clock from Monday to Friday, and advise on Instagram, YouTube and other creator platforms. A plan is active within ${PREMIUM.activationDays} days of payment. It is at ${SITE.origin}${PREMIUM.path}.`,
+  answer: `${PREMIUM.name} is a paid plan around the free app, at ${BOTH_PRICES}. We install Taalcut on your Mac and set it up with you in one live session, pay for the top cloud models so every make runs on them, answer on WhatsApp around the clock from Monday to Friday, and advise on Instagram, YouTube and other creator platforms. A plan is active within ${PREMIUM.activationDays} days of payment. It is at ${SITE.origin}${PREMIUM.path}.`,
 } as const;
 
 /** /premium/'s own questions, after "Is Taalcut still free?". Plain sentences: the page and its mirror print them. */
@@ -229,7 +264,6 @@ export const ORDER = {
   tryAgain: 'Try again',
   /** Shown in place of the form when orders are off or the billing service can't be reached. */
   closed: `We can’t take orders on this page right now. Write to ${mail} and we send you a payment link.`,
-  india: `A card issued in India usually can’t pay in US dollars. Write to ${mail} and we arrange a way to pay.`,
   noScript: `The order form needs JavaScript. You can also write to ${mail} and we send you a payment link.`,
   problems: {
     nameEmpty: 'Add your name, or what to call you.',
@@ -314,7 +348,7 @@ export const THANKS = {
 
 /** The .md mirror's own two lines (lib/llms/premium-md.ts): the price without a browser, and how to order. */
 export const PREMIUM_MIRROR = {
-  price: `${LIST_PRICE} ${PER_MONTH}, in US dollars. When a launch price applies, the page shows it with the moment it ends, and it is the price of the first month.`,
+  price: `${BOTH_PRICES}. The page shows the price in Indian rupees to visitors in India and in US dollars elsewhere, and lets a visitor choose the other. When a launch price applies, the page shows it with the moment it ends, and it is the price of the first month.`,
   order: `Order on the [Premium page](${PREMIUM.path}#order), or write to ${mail} and we send you a payment link.`,
 } as const;
 
@@ -323,7 +357,7 @@ export const PREMIUM_POINTERS = {
   /** The home page's cost section, after the comparison. */
   home: { line: 'Would you rather we set it up and pay for the models?', link: PREMIUM.name },
   /** /download/, under the buttons. */
-  download: `Want it installed and set up for you, on the top models? [${PREMIUM.name}](${PREMIUM.path}) is ${LIST_PRICE} ${PER_MONTH}.`,
+  download: `Want it installed and set up for you, on the top models? [${PREMIUM.name}](${PREMIUM.path}) is ${BOTH_PRICES}.`,
   /** The mirrors and llms.txt: the plan in one sentence. */
-  machine: `${PREMIUM.name} is a paid plan around the free app, at ${LIST_PRICE} ${PER_MONTH}: ${SITE.origin}${PREMIUM.path}.`,
+  machine: `${PREMIUM.name} is a paid plan around the free app, at ${BOTH_PRICES}: ${SITE.origin}${PREMIUM.path}.`,
 } as const;

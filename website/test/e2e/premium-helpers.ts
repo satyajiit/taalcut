@@ -15,12 +15,16 @@ export const LIST = {
   listAmount: 40000,
   offer: null,
   selling: true,
+  currencies: ['USD', 'INR'],
 };
 export const LAUNCH = {
   ...LIST,
   amount: 33900,
   offer: { id: 'product-hunt', endsAt: '2026-11-26T08:01:00.000Z' },
 };
+/** The same two in Indian rupees, in paise: what the service answers a visitor in India. */
+export const LIST_INR = { ...LIST, currency: 'INR', amount: 3760000, listAmount: 3760000 };
+export const LAUNCH_INR = { ...LIST_INR, amount: 3186600, offer: LAUNCH.offer };
 export const ORDER_ID = '01KA7Q3ZV5R8N2M4X6C9D1E3F5';
 /** A payment page on a host that doesn't exist: a route answers it, so the browser really navigates there. */
 export const PAY_URL = 'https://pay.example/l/abc123';
@@ -63,7 +67,7 @@ export interface Answer {
   readonly body: unknown;
 }
 /** An answer, or `null` for a request that never gets one (the service out of reach). */
-type Reply = Answer | null | ((request: Request, nth: number) => Answer | null);
+export type Reply = Answer | null | ((request: Request, nth: number) => Answer | null);
 
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'content-type' };
 
@@ -87,6 +91,22 @@ async function answer(page: Page, glob: string, reply: Reply): Promise<Request[]
 }
 
 export const mockQuote = (page: Page, reply: Reply = { body: LIST }) => answer(page, '**/v1/quote?*', reply);
+
+/** The currency a quote was asked in: `auto`, a code, or null when the question didn't name one. */
+export const askedIn = (request: Request) => new URL(request.url()).searchParams.get('currency');
+
+/**
+ * Quotes as the service gives them: in the currency asked for, and for `auto` in the currency of a visitor whose
+ * country pays in `home`. `launch` answers with the launch price.
+ */
+export const quotesFor =
+  (home: 'USD' | 'INR', launch = false): Reply =>
+  (request) => {
+    const asked = askedIn(request);
+    const currency = asked === 'USD' || asked === 'INR' ? asked : home;
+    if (currency === 'INR') return { body: launch ? LAUNCH_INR : LIST_INR };
+    return { body: launch ? LAUNCH : LIST };
+  };
 export const mockCheckout = (page: Page, reply: Reply = { status: 201, body: CHECKOUT }) =>
   answer(page, '**/v1/checkout', reply);
 export const mockConfirm = (page: Page, reply: Reply = { body: PAID }) =>

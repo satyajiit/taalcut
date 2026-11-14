@@ -84,8 +84,26 @@ export function softwareApplicationJsonLd(): JsonLdObject {
  * (content/premium.ts). The app's own block above still offers nothing: the app is free, and Premium is the service
  * around it. A launch price is never written here: it exists only in the billing service's quote.
  */
+/** A month of the plan as an Offer: the list price in one currency, and where that currency is the one shown. */
+function monthlyOffer(amountMinor: number, currency: string, region?: string): JsonLdObject {
+  const price = (amountMinor / 100).toFixed(2);
+  return {
+    '@type': 'Offer',
+    url: absolute(PREMIUM.path),
+    price,
+    priceCurrency: currency,
+    ...(region ? { eligibleRegion: { '@type': 'Country', name: region } } : {}),
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price,
+      priceCurrency: currency,
+      billingDuration: 'P1M',
+      unitText: 'month',
+    },
+  };
+}
+
 export function premiumJsonLd(): JsonLdObject {
-  const price = (PREMIUM.listAmount / 100).toFixed(2);
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -99,19 +117,11 @@ export function premiumJsonLd(): JsonLdObject {
       name: PREMIUM_PAGE.included.heading,
       itemListElement: PREMIUM_PAGE.included.rows.map(([name]) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name } })),
     },
-    offers: {
-      '@type': 'Offer',
-      url: absolute(PREMIUM.path),
-      price,
-      priceCurrency: PREMIUM.currency,
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price,
-        priceCurrency: PREMIUM.currency,
-        billingDuration: 'P1M',
-        unitText: 'month',
-      },
-    },
+    // The list price in US dollars, and in Indian rupees for India: the two the plan is sold in.
+    offers: [
+      monthlyOffer(PREMIUM.listAmount, PREMIUM.currency),
+      monthlyOffer(PREMIUM.india.listAmount, PREMIUM.india.currency, 'India'),
+    ],
   };
 }
 

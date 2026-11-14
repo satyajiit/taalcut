@@ -23,7 +23,8 @@ export const LAUNCH_DAY = Date.parse('2026-11-19T10:00:00Z');
 export const LAUNCH_WEEK = Date.parse('2026-11-22T10:00:00Z');
 
 export const CATALOG = {
-  plans: { premium: { label: 'Taalcut Premium', prices: { USD: 40000 } } },
+  plans: { premium: { label: 'Taalcut Premium', prices: { USD: 40000, INR: 3760000 } } },
+  currencyByCountry: { IN: 'INR' },
   offers: [
     {
       id: 'product-hunt',
@@ -39,6 +40,23 @@ export const CATALOG = {
       plan: 'premium',
       currency: 'USD',
       amount: 33900,
+      startsAt: '2026-11-19T08:01:00Z',
+      endsAt: '2026-11-20T08:01:00Z',
+    },
+    {
+      id: 'product-hunt',
+      plan: 'premium',
+      currency: 'INR',
+      amount: 3186600,
+      code: 'producthunt',
+      startsAt: '2026-11-19T08:01:00Z',
+      endsAt: '2026-11-26T08:01:00Z',
+    },
+    {
+      id: 'launch-day',
+      plan: 'premium',
+      currency: 'INR',
+      amount: 3186600,
       startsAt: '2026-11-19T08:01:00Z',
       endsAt: '2026-11-20T08:01:00Z',
     },
@@ -62,6 +80,8 @@ export interface TestBilling {
   /** Bodies posted to the chat webhook. */
   chats: string[];
   clock: { now: number };
+  /** Where Cloudflare says a request comes from. Null: it does not say. */
+  visitor: { country: string | null };
   /** Switches the mailbox and the chat webhook off and on during a test. */
   mail: { fails: boolean; chatFails: boolean };
   request(path: string, init?: RequestInit): Promise<Response>;
@@ -150,8 +170,13 @@ export function createTestBilling(options: TestOptions = {}): TestBilling {
   const worker = createBillingWorker({ provider: () => provider, fetch: fetchFake, now });
   const ctx = { waitUntil: (work: Promise<unknown>) => void pending.push(work) };
 
-  const request = (path: string, init?: RequestInit): Promise<Response> =>
-    worker.fetch(new Request(`${API}${path}`, init), env, ctx);
+  const visitor: { country: string | null } = { country: null };
+  const request = (path: string, init?: RequestInit): Promise<Response> => {
+    const made = new Request(`${API}${path}`, init);
+    // Cloudflare writes what it knows about the visitor on the request itself.
+    if (visitor.country !== null) Object.defineProperty(made, 'cf', { value: { country: visitor.country } });
+    return worker.fetch(made, env, ctx);
+  };
   return {
     env,
     db,
@@ -159,6 +184,7 @@ export function createTestBilling(options: TestOptions = {}): TestBilling {
     emails,
     chats,
     clock,
+    visitor,
     mail,
     request,
     post: (path, body, headers) =>

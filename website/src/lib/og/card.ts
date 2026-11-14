@@ -7,6 +7,7 @@ import { createElement as h, type CSSProperties, type ReactElement } from 'react
 import { page } from '#content/pages';
 import { SITE } from '#content/site';
 import { tokenHex, worldHex } from './palette';
+import { cardWords } from './words';
 
 /**
  * The social card every route's opengraph-image draws at build (1200×630, PNG), in the Remix Vernacular world: the
@@ -206,7 +207,7 @@ export function ogImage(path: string): ImageResponse {
           'div',
           { style: flex({ flexDirection: 'column', gap: 22 }) },
           h('div', { style: { fontSize: title.length > 34 ? 60 : 78, fontWeight: 800, lineHeight: 1.0, letterSpacing: title.length > 34 ? -2.2 : -3, maxWidth: 600, textWrap: 'balance' } }, title),
-          h('div', { style: { fontSize: 26, fontWeight: 500, lineHeight: 1.38, color: c['ink-2'], maxWidth: 560 } }, entry.description),
+          h('div', { style: { fontSize: 26, fontWeight: 500, lineHeight: 1.38, color: c['ink-2'], maxWidth: 560 } }, cardWords(entry.description)),
         ),
         h('div', { style: { fontSize: 22, fontWeight: 700, color: c['ink-3'] } }, new URL(SITE.origin).host),
       ),

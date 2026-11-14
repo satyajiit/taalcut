@@ -58,6 +58,7 @@ test('an order sends what the form holds with the amount the page showed, then t
     whatsapp: '+14155550100',
     channel: 'https://instagram.com/asha',
     agreed: true,
+    currency: 'USD',
     expect: 33900,
   });
 });
@@ -77,6 +78,7 @@ test('at the list price, with only what is required, the order carries no tag an
     email: 'asha@example.com',
     whatsapp: '+14155550100',
     agreed: true,
+    currency: 'USD',
     expect: 40000,
   });
 });

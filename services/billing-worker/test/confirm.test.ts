@@ -56,6 +56,18 @@ describe('the return from the payment page', () => {
     expect(billing.chats[0]).toContain(order.orderId);
   });
 
+  it('confirms a rupee order in rupees, and writes rupees in both messages', async () => {
+    const billing = createTestBilling();
+    const order = await placeOrder(billing, { currency: 'INR' });
+    const paymentId = billing.provider.pay(order.linkId);
+    const response = await billing.post('/v1/orders/confirm', await returnBody(order, paymentId));
+    expect(await response.json()).toMatchObject({ status: 'paid', currency: 'INR', amount: 3760000 });
+    await billing.settled();
+    const [toUs, toBuyer] = billing.emails;
+    expect(toUs?.text).toContain('Paid: ₹37,600.00');
+    expect(toBuyer?.text).toContain('We have your payment of ₹37,600.00 for Taalcut Premium.');
+  });
+
   it('tells nobody twice when the buyer comes back twice', async () => {
     const billing = createTestBilling();
     const order = await placeOrder(billing);

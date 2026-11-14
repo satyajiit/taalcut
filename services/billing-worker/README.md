@@ -8,7 +8,8 @@ provider. It serves `https://billing.taalcut.app`; the website's `/premium/` pag
 
 - **Charge an amount a browser sent.** The price comes from the catalogue in `wrangler.jsonc` and the clock
   (`src/pricing/quote.ts`). The form may say which amount the page showed (`expect`); when that is no longer the
-  price, the order is refused with the new quote so the buyer sees it first.
+  price, the order is refused with the new quote so the buyer sees it first. A plan can have a price in more than
+  one currency (US dollars and Indian rupees today). A browser may say which of them it wants, never how much.
 - **Believe that an order is paid because someone said so.** The buyer's return, the provider's webhook delivery
   and the scheduled sweep are each only a reason to look. `src/orders/settle.ts` reads the link from the provider
   and makes the order paid only when that record names this order, carries its amount and currency, and is paid in
@@ -31,6 +32,7 @@ provider. It serves `https://billing.taalcut.app`; the website's `/premium/` pag
 | --------------------------- | --------------------------------------------------------------------------------------- |
 | `GET /v1/health`            | `{ ok, selling }`                                                                       |
 | `GET /v1/quote?plan=&ref=`  | The price now, the list price, the offer that applies and whether orders are taken      |
+| …`&currency=`               | `auto`: the visitor's own currency, by the country the request comes from. Or a code    |
 | `POST /v1/checkout`         | The order form. Answers with the payment page's address                                 |
 | `POST /v1/orders/confirm`   | The buyer's signed return. Answers with the order's outcome and dates, no personal data |
 | `POST /v1/razorpay/webhook` | The provider's signed deliveries                                                        |

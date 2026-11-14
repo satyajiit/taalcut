@@ -125,10 +125,18 @@ export function orderProblems(answers: OrderAnswers): OrderProblem[] {
   return problems;
 }
 
-/** The request for an order, or null while the answers have a problem. `expect` is the amount the page shows. */
+/**
+ * The request for an order, or null while the answers have a problem. `expect` is the amount the page shows and
+ * `currency` the currency it shows it in: both are the quote's own.
+ */
 export function checkoutRequest(
   answers: OrderAnswers,
-  order: { readonly plan: string; readonly ref: string | null; readonly expect: number },
+  order: {
+    readonly plan: string;
+    readonly ref: string | null;
+    readonly currency: string;
+    readonly expect: number;
+  },
 ): CheckoutRequest | null {
   const whatsapp = normalizeWhatsapp(answers.whatsapp);
   if (orderProblems(answers).length > 0 || !whatsapp) return null;
@@ -141,6 +149,7 @@ export function checkoutRequest(
     whatsapp,
     ...(typeof channel === 'string' && channel !== 'too-long' && channel.length > 0 ? { channel } : {}),
     agreed: true,
+    currency: order.currency,
     expect: order.expect,
   };
 }

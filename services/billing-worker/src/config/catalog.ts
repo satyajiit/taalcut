@@ -42,7 +42,12 @@ const offerSchema = z
 const catalogSchema = z
   .object({
     plans: z.record(z.string().regex(/^[a-z0-9-]{1,40}$/), planSchema),
-    offers: z.array(offerSchema).max(20).default([]),
+    offers: z.array(offerSchema).max(40).default([]),
+    /**
+     * The currency a visitor is quoted when the page asks for their own: by the two-letter country a request comes
+     * from. A country not listed, or a currency the plan has no price in, gets the plan's default.
+     */
+    currencyByCountry: z.record(z.string().regex(/^[A-Z]{2}$/), currency).default({}),
   })
   .strict();
 
@@ -64,6 +69,7 @@ export interface Plan {
 export interface Catalog {
   plans: Readonly<Record<string, Plan>>;
   offers: readonly Offer[];
+  currencyByCountry: Readonly<Record<string, string>>;
 }
 
 /** The catalogue, or null when it is malformed or an offer contradicts its plan. A string is read as JSON. */
@@ -82,7 +88,7 @@ export function readCatalog(raw: unknown): Catalog | null {
     if (list === undefined || offer.amount >= list || startsAt >= endsAt) return null;
     offers.push({ ...offer, startsAt, endsAt });
   }
-  return { plans: parsed.data.plans, offers };
+  return { plans: parsed.data.plans, offers, currencyByCountry: parsed.data.currencyByCountry };
 }
 
 function parsedJson(text: string): unknown {

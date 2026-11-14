@@ -5,10 +5,11 @@
 /* component: Premium price line · the plan's price, as the billing service quotes it
  * mode: Persuade · system: WEB2 Remix Vernacular
  * states: list (the server HTML, and whenever no quote is in or orders are closed: the list price a month) · quoted
- *   (the service's price a month) · launch price (the quoted price for the first month, the list price struck through
- *   beside it and named for assistive technology, then the offer's name, when it ends in the visitor's own time zone,
- *   and what later months cost). `live` makes it a polite live region: the order form's copy says the amount about to
- *   be charged, and says it again if the price moves.
+ *   (the service's price a month, in the quote's currency: "₹37,600" for a quote in rupees) · launch price (the quoted
+ *   price for the first month, the list price struck through beside it and named for assistive technology, then the
+ *   offer's name, when it ends in the visitor's own time zone, and what later months cost: the quote's list price).
+ *   `live` makes it a polite live region: the order form's copy says the amount about to be charged, and says it
+ *   again if the price or its currency moves.
  * Not a control. Money and the moment are written by `Intl` (lib/billing/money). */
 
 import { LIST_PRICE, OFFER, PER_MONTH, offerName } from '#content/premium';
@@ -46,9 +47,10 @@ export function PriceLine({
         ) : null}
         <span className="type-site-lead text-ink-2">{offer ? OFFER.first : PER_MONTH}</span>
       </p>
-      {offer ? (
+      {quote && offer ? (
         <p data-slot="price-offer" className="m-0 max-w-[30em] type-body text-pretty text-ink-2">
-          {OFFER.until(offerName(offer.id), momentWords(offer.endsAt))} {OFFER.later}
+          {OFFER.until(offerName(offer.id), momentWords(offer.endsAt))}{' '}
+          {OFFER.later(money(quote.listAmount, quote.currency))}
         </p>
       ) : null}
     </div>

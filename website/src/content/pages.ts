@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
-import { LIST_PRICE, PER_MONTH } from './premium';
+import { BOTH_PRICES } from './premium';
 import type { PageEntry } from './schema';
 
 /**
@@ -102,7 +102,7 @@ export const PAGES: readonly PageEntry[] = [
   {
     path: '/premium/',
     title: 'Taalcut Premium',
-    description: `The paid plan around the free app: we set Taalcut up on your Mac, pay for the top cloud models, and answer on WhatsApp. ${LIST_PRICE} ${PER_MONTH}.`,
+    description: `The paid plan around the free app: we set Taalcut up on your Mac, pay for the top models, and answer on WhatsApp. ${BOTH_PRICES}.`,
     section: 'Product',
   },
   {

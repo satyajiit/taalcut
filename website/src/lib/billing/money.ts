@@ -15,11 +15,14 @@ function minorUnits(currency: string): number {
   return 10 ** digits;
 }
 
-/** An amount in minor units as money: 33900 US cents is "$339", 33950 is "$339.50". */
+/**
+ * An amount in minor units as money: 33900 US cents is "$339", 33950 is "$339.50", 3760000 paise is "₹37,600".
+ * Rupees are grouped the Indian way (₹1,00,000); every other currency as English writes it.
+ */
 export function money(amountMinor: number, currency: string): string {
   const units = minorUnits(currency);
   const whole = amountMinor % units === 0;
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en-US', {
     style: 'currency',
     currency,
     ...(whole ? { minimumFractionDigits: 0, maximumFractionDigits: 0 } : {}),

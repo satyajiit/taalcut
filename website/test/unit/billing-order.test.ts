@@ -162,7 +162,7 @@ describe('the order form’s answers', () => {
     expect(
       checkoutRequest(
         { ...GOOD, name: '  Asha   Rao ', email: ' Asha@Example.COM ' },
-        { plan: 'premium', ref: null, expect: 40000 },
+        { plan: 'premium', ref: null, currency: 'USD', expect: 40000 },
       ),
     ).toEqual({
       plan: 'premium',
@@ -170,12 +170,13 @@ describe('the order form’s answers', () => {
       email: 'asha@example.com',
       whatsapp: '+14155550100',
       agreed: true,
+      currency: 'USD',
       expect: 40000,
     });
     expect(
       checkoutRequest(
         { ...GOOD, whatsapp: '+1 (415) 555-0100', channel: 'instagram.com/asha' },
-        { plan: 'premium', ref: 'producthunt', expect: 33900 },
+        { plan: 'premium', ref: 'producthunt', currency: 'INR', expect: 3186600 },
       ),
     ).toEqual({
       plan: 'premium',
@@ -185,20 +186,30 @@ describe('the order form’s answers', () => {
       whatsapp: '+14155550100',
       channel: 'https://instagram.com/asha',
       agreed: true,
-      expect: 33900,
+      currency: 'INR',
+      expect: 3186600,
     });
     expect(cleanName(' a  b ')).toBe('a b');
   });
 
   it('builds nothing while a problem stands: an order is never sent without the agreement or the number', () => {
     expect(
-      checkoutRequest({ ...GOOD, whatsapp: '' }, { plan: 'premium', ref: null, expect: 40000 }),
+      checkoutRequest(
+        { ...GOOD, whatsapp: '' },
+        { plan: 'premium', ref: null, currency: 'USD', expect: 40000 },
+      ),
     ).toBeNull();
     expect(
-      checkoutRequest({ ...GOOD, agreed: false }, { plan: 'premium', ref: null, expect: 40000 }),
+      checkoutRequest(
+        { ...GOOD, agreed: false },
+        { plan: 'premium', ref: null, currency: 'USD', expect: 40000 },
+      ),
     ).toBeNull();
     expect(
-      checkoutRequest({ ...GOOD, email: 'asha' }, { plan: 'premium', ref: null, expect: 40000 }),
+      checkoutRequest(
+        { ...GOOD, email: 'asha' },
+        { plan: 'premium', ref: null, currency: 'USD', expect: 40000 },
+      ),
     ).toBeNull();
   });
 

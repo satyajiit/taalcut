@@ -43,11 +43,12 @@ export interface NewLink {
 }
 
 /**
- * `refused`: the provider answered and said no (our request or our key is wrong). `unreachable`: it did not
- * answer, or answered with a fault of its own. `not_found`: it has no such link.
+ * `refused`: the provider answered and said no (our request or our key is wrong). `contact`: it said no to the
+ * buyer's phone number, which the buyer can put right. `unreachable`: it did not answer, or answered with a fault
+ * of its own. `not_found`: it has no such link.
  */
 export type ProviderResult<T> =
-  { ok: true; value: T } | { ok: false; reason: 'refused' | 'unreachable' | 'not_found' };
+  { ok: true; value: T } | { ok: false; reason: 'refused' | 'contact' | 'unreachable' | 'not_found' };
 
 export interface PaymentProvider {
   createLink(input: NewLink): Promise<ProviderResult<ProviderLink>>;

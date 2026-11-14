@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 import type { GistRow, LegalSection } from './legal-types';
-import { LIST_PRICE, PER_MONTH, PREMIUM, PREMIUM_MATERIAL, PREMIUM_NEEDS, PREMIUM_SENDER } from './premium';
+import { BOTH_PRICES, PREMIUM, PREMIUM_MATERIAL, PREMIUM_NEEDS, PREMIUM_SENDER } from './premium';
 import { SITE } from './site';
 
 /**
@@ -36,7 +36,7 @@ export const TERMS_PREMIUM: readonly LegalSection[] = [
           ],
           [
             'Price',
-            `${LIST_PRICE} ${PER_MONTH}, in US dollars. If the order page shows a launch price, it is the price of your first month, and later months are ${LIST_PRICE}. You pay the amount the order page showed you.`,
+            `${BOTH_PRICES}. The order page shows the price in Indian rupees to visitors in India and in US dollars elsewhere, and lets you choose the other. You pay the price shown; nothing is added on the payment page. If the order page shows a launch price, it is the price of your first month, and later months are the list price in the currency you paid in.`,
           ],
           [
             'Paying',
@@ -105,6 +105,10 @@ export const PRIVACY_PREMIUM: LegalSection = {
         [
           'Our payment provider',
           'To make your payment page, our billing service gives our payment provider your name, your email address and your phone number. You type your card details on its page, and we never see them. It tells us whether the payment went through, with its reference numbers.',
+        ],
+        [
+          'The currency you see',
+          'Our billing service picks the currency the Premium page shows you from the country your request comes from. You can choose the other on that page.',
         ],
         [
           'Limiting abuse',

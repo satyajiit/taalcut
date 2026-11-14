@@ -10,7 +10,7 @@
 import { type BillingDeps } from '../deps';
 import { newUlid } from '../ids/ulid';
 import { logInfo } from '../log';
-import { priceOf, normaliseRef, type Quote } from '../pricing/quote';
+import { currenciesOf, priceOf, normaliseRef, type Quote } from '../pricing/quote';
 import { attachLink, insertOrder, markFailed } from '../store/d1-orders';
 import { type CheckoutInput } from './checkout-input';
 
@@ -19,11 +19,18 @@ export const LINK_LIFETIME_MS = 24 * 60 * 60 * 1000;
 
 export type Priced =
   | { ok: true; quote: Quote }
-  | { ok: false; reason: 'unknown_plan' }
+  | { ok: false; reason: 'unknown_plan' | 'unknown_currency' }
   | { ok: false; reason: 'price_changed'; quote: Quote };
 
 export function priceOrder(deps: Pick<BillingDeps, 'config' | 'now'>, input: CheckoutInput): Priced {
-  const quote = priceOf(deps.config.catalog, input.plan, normaliseRef(input.ref), deps.now());
+  const { catalog } = deps.config;
+  const currencies = currenciesOf(catalog, input.plan);
+  if (!currencies) return { ok: false, reason: 'unknown_plan' };
+  // The page names the currency of the price it showed. Without one, the plan's default: what a page that knows
+  // one currency showed.
+  if (input.currency !== undefined && !currencies.includes(input.currency))
+    return { ok: false, reason: 'unknown_currency' };
+  const quote = priceOf(catalog, input.plan, normaliseRef(input.ref), deps.now(), input.currency);
   if (!quote) return { ok: false, reason: 'unknown_plan' };
   // The buyer agreed to the amount on the page. If it is no longer the price, they are shown the new one first.
   if (input.expect !== undefined && input.expect !== quote.amount)
@@ -33,7 +40,7 @@ export function priceOrder(deps: Pick<BillingDeps, 'config' | 'now'>, input: Che
 
 export type Created =
   | { ok: true; orderId: string; payUrl: string }
-  | { ok: false; reason: 'not_selling' | 'provider_unavailable' };
+  | { ok: false; reason: 'not_selling' | 'provider_unavailable' | 'contact_refused' };
 
 type CreateDeps = Pick<BillingDeps, 'db' | 'config' | 'provider' | 'now'>;
 
@@ -78,7 +85,7 @@ export async function createOrder(
   });
   if (!made.ok) {
     await markFailed(deps.db, id);
-    return { ok: false, reason: 'provider_unavailable' };
+    return { ok: false, reason: made.reason === 'contact' ? 'contact_refused' : 'provider_unavailable' };
   }
   await attachLink(deps.db, id, made.value.id);
   logInfo('billing.order_created', { order: id, mode: config.mode });

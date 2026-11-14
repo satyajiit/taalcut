@@ -49,6 +49,18 @@ describe('worker pool', () => {
       currency: 'USD',
     });
 
+    // The country as workerd carries it, on the request's `cf`: a visitor in India who asks for their own currency.
+    const visit: RequestInit & { cf: { country: string } } = {
+      headers: { origin: 'https://taalcut.app' },
+      cf: { country: 'IN' },
+    };
+    const fromIndia = new Request('https://billing.taalcut.app/v1/quote?plan=premium&currency=auto', visit);
+    const rupees = await worker.fetch(fromIndia, env, ctx);
+    expect(z.object({ listAmount: z.number(), currency: z.string() }).parse(await rupees.json())).toEqual({
+      listAmount: 3760000,
+      currency: 'INR',
+    });
+
     const json = { 'content-type': 'application/json' };
     const oversized = await worker.fetch(
       new Request('https://billing.taalcut.app/v1/checkout', {

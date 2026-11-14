@@ -8,6 +8,8 @@ import {
   type Confirmation,
   type ConfirmRequest,
   type Quote,
+  AUTO_CURRENCY,
+  isCurrencyCode,
   parseCheckout,
   parseConfirmation,
   parseFailure,
@@ -33,7 +35,12 @@ export interface BillingClientOptions {
 }
 
 export interface BillingClient {
-  quote(plan: string, ref: string | null): Promise<BillingResult<Quote>>;
+  /**
+   * The plan's price. `currency` is `auto` (the service picks from the visitor's country: the page's first question)
+   * or a code the plan is sold in (after the visitor chose one). The question always names one: a quote asked
+   * without it is in dollars for everyone.
+   */
+  quote(plan: string, ref: string | null, currency?: string): Promise<BillingResult<Quote>>;
   checkout(order: CheckoutRequest): Promise<BillingResult<Checkout>>;
   confirm(values: ConfirmRequest): Promise<BillingResult<Confirmation>>;
 }
@@ -83,13 +90,16 @@ export function createBillingClient(options: BillingClientOptions = {}): Billing
   }
 
   return {
-    quote(plan, ref) {
+    quote(plan, ref, currency = AUTO_CURRENCY) {
+      const asked = isCurrencyCode(currency) ? currency : AUTO_CURRENCY;
       const query = new URLSearchParams({ plan });
       if (ref) query.set('ref', ref);
+      query.set('currency', asked);
       return call(`/v1/quote?${query.toString()}`, undefined, (value) => {
         const quote = parseQuote(value);
-        // A quote for another plan is not this page's price.
-        return quote && quote.plan === plan ? quote : null;
+        // A quote for another plan, or in another currency than the one asked for, is not this page's price.
+        if (!quote || quote.plan !== plan) return null;
+        return asked === AUTO_CURRENCY || quote.currency === asked ? quote : null;
       });
     },
     checkout(order) {

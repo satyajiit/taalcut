@@ -5,11 +5,14 @@ import { expect, test, type Page } from '@playwright/test';
 import { openInTheme } from './helpers';
 import {
   LAUNCH,
+  LAUNCH_INR,
   RETURN_QUERY,
+  askedIn,
   mockCheckout,
   mockConfirm,
   mockQuote,
   orderForm,
+  quotesFor,
   thanks,
   unpaid,
 } from './premium-helpers';
@@ -69,6 +72,24 @@ for (const theme of ['light', 'dark'] as const) {
     expect(await violations(page)).toEqual([]);
   });
 
+  test(`/premium/ in rupees, with the currency switch and its failure line, passes axe in ${theme}`, async ({
+    page,
+  }) => {
+    // Rupees for the page's own question; the other currency can't be had, so the switch says so.
+    await mockQuote(page, (request) =>
+      askedIn(request) === 'USD'
+        ? { status: 502, body: { code: 'billing.provider_unavailable' } }
+        : { body: LAUNCH_INR },
+    );
+    await openInTheme(page, '/premium/?ref=producthunt', theme);
+    const line = page.locator('[data-slot="price-currency"]');
+    await expect(line).toContainText('Prices in Indian rupees.');
+    expect(await violations(page)).toEqual([]);
+    await line.getByRole('button', { name: 'Pay in US dollars instead' }).click();
+    await expect(line).toHaveAttribute('data-state', 'failed');
+    expect(await violations(page)).toEqual([]);
+  });
+
   for (const [kind, reply] of [
     ['paid', undefined],
     ['expired', { body: unpaid('expired') }],
@@ -100,6 +121,19 @@ for (const width of [320, 375, 414, 768]) {
     await expect(thanks(page)).toHaveAttribute('data-state', 'paid');
     expect(await sideways(page)).toBeLessThanOrEqual(0);
   });
+
+  test(`/premium/ fits ${width} px in rupees, with the launch price and the currency switch`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await mockQuote(page, quotesFor('INR', true));
+    await page.goto('/premium/?ref=producthunt');
+    await expect(page.locator('[data-slot="premium-order"] [data-slot="price-amount"]')).toHaveText(
+      '₹31,866',
+    );
+    await expect(page.locator('[data-slot="price-currency"]')).toBeVisible();
+    expect(await sideways(page)).toBeLessThanOrEqual(0);
+  });
 }
 
 test('the form’s targets are at least 24 px, and the page holds one marigold fill: the form’s button', async ({
@@ -112,6 +146,7 @@ test('the form’s targets are at least 24 px, and the page holds one marigold f
     form.getByRole('checkbox'),
     form.locator('button[type="submit"]'),
     page.getByRole('link', { name: 'Order Premium' }),
+    page.locator('[data-slot="price-currency"]').getByRole('button'),
   ]) {
     const box = await target.boundingBox();
     expect(Math.min(box?.width ?? 0, box?.height ?? 0)).toBeGreaterThanOrEqual(24);

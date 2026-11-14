@@ -37,14 +37,15 @@ const EMPTY: OrderAnswers = { name: '', email: '', whatsapp: '', channel: '', ag
 
 /**
  * The order form's send. Answers are checked first (a problem stays on its field and sends nothing). The order then
- * carries the amount the page shows; the billing service answers with the payment page, and the browser goes there.
+ * carries the amount the page shows and the currency it shows it in; the billing service answers with the payment
+ * page, and the browser goes there. While an order is on its way the currency can't be changed.
  * A price that moved comes back as the new price for the visitor to read: the form never sends twice by itself.
  */
 export function useOrder(
   fields: Readonly<Record<OrderField, RefObject<HTMLInputElement | null>>>,
   leave: (payUrl: string) => void,
 ) {
-  const { client, settled, reprice, close } = usePremiumQuote();
+  const { client, settled, reprice, close, setOrdering } = usePremiumQuote();
   const [answers, setAnswers] = useState<OrderAnswers>(EMPTY);
   const [status, setStatus] = useState<OrderStatus>('idle');
   const [problems, setProblems] = useState<readonly OrderProblem[]>([]);
@@ -66,6 +67,13 @@ export function useOrder(
     [fields],
   );
 
+  /** Back to rest: nothing is on its way, and the currency may be changed again. */
+  const rest = useCallback(() => {
+    busy.current = false;
+    setStatus('idle');
+    setOrdering(false);
+  }, [setOrdering]);
+
   const send = useCallback(async () => {
     if (busy.current) return;
     const found = orderProblems(answers);
@@ -75,23 +83,23 @@ export function useOrder(
       return;
     }
     busy.current = true;
+    setOrdering(true);
     setNotice(null);
     setStatus('pricing');
     // The price the page shows, once the service has answered; a closed service has swapped the form out by now.
     const quoted = await settled();
     if (quoted.status !== 'ready') {
-      busy.current = false;
-      setStatus('idle');
+      rest();
       return;
     }
     const request = checkoutRequest(answers, {
       plan: PREMIUM.plan,
       ref: quoted.tag,
+      currency: quoted.quote.currency,
       expect: quoted.quote.amount,
     });
     if (!request) {
-      busy.current = false;
-      setStatus('idle');
+      rest();
       return;
     }
     setStatus('submitting');
@@ -102,8 +110,7 @@ export function useOrder(
       leave(result.value.payUrl);
       return;
     }
-    busy.current = false;
-    setStatus('idle');
+    rest();
     const { failure } = result;
     // Orders are off, or the service refuses this page: trying again can't help, so the address takes over.
     if (failure.kind === 'not-selling' || failure.kind === 'forbidden') {
@@ -114,13 +121,7 @@ export function useOrder(
     const refused = failure.kind === 'invalid' ? refusedFields(failure.problems ?? []) : [];
     if (refused.length > 0) show(refused);
     else setNotice({ failure, retry: RETRIES.has(failure.kind) });
-  }, [answers, client, close, leave, reprice, settled, show]);
-
-  /** Back to rest: the browser returned to this page after leaving for the payment page. */
-  const rest = useCallback(() => {
-    busy.current = false;
-    setStatus('idle');
-  }, []);
+  }, [answers, client, close, leave, reprice, rest, settled, show]);
 
   return { answers, update, send, status, problems, notice, rest } as const;
 }

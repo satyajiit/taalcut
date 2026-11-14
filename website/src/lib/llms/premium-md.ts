@@ -5,7 +5,8 @@ import { bullets, doc, facts, heading, inline } from './markdown';
 
 /**
  * /premium/ as Markdown, from content/premium.ts: the page's own words in the page's order. The price is the list
- * price: a launch price exists only in the billing service's quote, so the mirror says where it shows, never a number.
+ * price, in US dollars and in Indian rupees: a launch price exists only in the billing service's quote, so the mirror
+ * says where it shows, never a number.
  */
 export function premiumMarkdown(): string {
   const P = PREMIUM_PAGE;
@@ -24,6 +25,5 @@ export function premiumMarkdown(): string {
     ...PREMIUM_QUESTIONS.flatMap((entry) => [heading(3, entry.question), entry.answer]),
     heading(2, ORDER.heading),
     inline(PREMIUM_MIRROR.order),
-    inline(ORDER.india),
   );
 }

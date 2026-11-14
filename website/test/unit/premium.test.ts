@@ -11,10 +11,15 @@ import {
 } from '#content/legal-premium';
 import { page } from '#content/pages';
 import {
+  BOTH_PRICES,
+  CURRENCY,
+  currencyName,
   FAQ_PREMIUM,
   FAQ_STILL_FREE,
+  INDIA_PRICE,
   LIST_PRICE,
   OFFER,
+  offerName,
   ORDER,
   PER_MONTH,
   PREMIUM,
@@ -26,7 +31,6 @@ import {
   PREMIUM_QUESTIONS,
   PREMIUM_SENDER,
   THANKS,
-  offerName,
 } from '#content/premium';
 import { SITE } from '#content/site';
 import type { FailureKind } from '#lib/billing/api';
@@ -56,8 +60,11 @@ function strings(value: unknown): string[] {
 const PREMIUM_COPY = strings([
   PREMIUM,
   LIST_PRICE,
+  INDIA_PRICE,
+  BOTH_PRICES,
   PER_MONTH,
   OFFER,
+  CURRENCY,
   PREMIUM_NEEDS,
   PREMIUM_MATERIAL,
   PREMIUM_PAGE,
@@ -90,9 +97,14 @@ describe('Taalcut Premium: the plan’s constants', () => {
       plan: 'premium',
       currency: 'USD',
       listAmount: 40000,
+      // In India the plan is sold in rupees, at 94 to the dollar: 37,600 a month, in paise.
+      india: { currency: 'INR', listAmount: 3760000 },
       activationDays: 7,
     });
+    expect(PREMIUM.india.listAmount).toBe(PREMIUM.listAmount * 94);
     expect(LIST_PRICE).toBe('$400');
+    expect(INDIA_PRICE).toBe('₹37,600');
+    expect(BOTH_PRICES).toBe('$400 a month, or ₹37,600 a month in India');
     expect(BILLING_DEFAULT).toBe('https://billing.taalcut.app');
   });
 
@@ -102,7 +114,9 @@ describe('Taalcut Premium: the plan’s constants', () => {
     expect(offerName('something-new')).toBe('Launch price');
     // A launch price is the first month's: said wherever one is shown.
     expect(OFFER.first).toBe('for your first month');
-    expect(OFFER.later).toBe('Later months are $400 a month.');
+    // Later months cost the quote's own list price, in the quote's currency: the page passes it in.
+    expect(OFFER.later('$400')).toBe('Later months are $400 a month.');
+    expect(OFFER.later('₹37,600')).toBe('Later months are ₹37,600 a month.');
   });
 
   it('lists what the owner put in the plan, and the four steps from payment to active', () => {
@@ -154,6 +168,14 @@ describe('Taalcut Premium: the words', () => {
   it('never call Premium a stage of something', () => {
     const stage = /\b(trials?|pilots?|betas?|early[- ]birds?|waitlists?|experiment(s|al)?)\b/i;
     expect(PREMIUM_COPY.filter((text) => stage.test(text))).toEqual([]);
+  });
+
+  it('say nothing about tax on the price: the price shown is the price paid', () => {
+    const taxed = PREMIUM_COPY.filter((text) => /\bGST\b|\btax/i.test(text));
+    // The one sentence with the word is the privacy notice's, on how long a paid order's record is kept.
+    expect(taxed).toEqual([
+      'An order that is never paid is deleted within 30 days. A paid order is kept for as long as tax and accounting law requires.',
+    ]);
   });
 
   it('carry one address, and no date typed by hand', () => {
@@ -246,13 +268,25 @@ describe('Taalcut Premium: the words', () => {
     expect(
       strings([ORDER.refusals, THANKS]).filter((text) => /\b(a moment|a minute|shortly|soon)\b/.test(text)),
     ).toEqual([THANKS.checking.body, THANKS.pending.body]);
-    // Orders off, or the billing service out of reach: one sentence and the address. And the line for a card from India.
+    // Orders off, or the billing service out of reach: one sentence and the address.
     expect(ORDER.closed).toBe(
       `We can’t take orders on this page right now. Write to [${SITE.email}](mailto:${SITE.email}) and we send you a payment link.`,
     );
-    expect(ORDER.india).toMatch(
-      /^A card issued in India usually can’t pay in US dollars\. Write to \[admin@matterwardlabs\.com\]/,
-    );
+    // Buyers in India pay in rupees now: nothing tells a card from India to write in.
+    expect(ORDER).not.toHaveProperty('india');
+    expect(PREMIUM_COPY.filter((text) => /card issued in India/i.test(text))).toEqual([]);
+  });
+
+  it('name the currency the prices are in, and the way to pay in the other', () => {
+    expect(currencyName('USD')).toBe('US dollars');
+    expect(currencyName('INR')).toBe('Indian rupees');
+    expect(currencyName('EUR')).toBe('EUR');
+    expect(CURRENCY.shown(currencyName('INR'))).toBe('Prices in Indian rupees.');
+    expect(CURRENCY.pay(currencyName('USD'))).toBe('Pay in US dollars instead');
+    expect(CURRENCY.shown(currencyName('USD'))).toBe('Prices in US dollars.');
+    expect(CURRENCY.pay(currencyName('INR'))).toBe('Pay in Indian rupees instead');
+    expect(CURRENCY.asking).toBe('Getting that price…');
+    expect(CURRENCY.failed).toBe('We couldn’t get that price. Try again.');
   });
 
   it('ask for the WhatsApp number and say why: the payment page needs a phone number', () => {

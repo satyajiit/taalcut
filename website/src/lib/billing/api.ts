@@ -4,7 +4,7 @@
 /**
  * The billing service's API, version 1, as the site reads it. Every answer's shape is checked here before a page uses
  * it: a body that isn't what the contract says is `unexpected`, never a crash and never a half-read price. Amounts are
- * minor units (US cents). Pure, so every branch has a test.
+ * the minor units of the answer's own currency (US cents, Indian paise). Pure, so every branch has a test.
  */
 
 export interface Offer {
@@ -16,6 +16,7 @@ export interface Offer {
 
 export interface Quote {
   readonly plan: string;
+  /** The currency this quote is in: the one the service picked for the visitor's country, or the one asked for. */
   readonly currency: string;
   /** What an order costs now. */
   readonly amount: number;
@@ -23,7 +24,15 @@ export interface Quote {
   readonly offer: Offer | null;
   /** Whether the service takes orders at all. */
   readonly selling: boolean;
+  /** Every currency the plan is sold in, this quote's own among them. An answer that lists none has only its own. */
+  readonly currencies: readonly string[];
 }
+
+/** What a quote may be asked in: the currency for the visitor's country, or a code the plan is sold in. */
+export const AUTO_CURRENCY = 'auto';
+/** A currency's code as the service writes one: three capitals. */
+export const isCurrencyCode = (value: unknown): value is string =>
+  typeof value === 'string' && /^[A-Z]{3}$/.test(value);
 
 export interface Checkout {
   readonly orderId: string;
@@ -46,7 +55,7 @@ export interface Confirmation {
   readonly activateBy: string | null;
 }
 
-/** What the page sends to start an order. `expect` is the amount it showed. */
+/** What the page sends to start an order. `expect` is the amount it showed, in `currency`, the quote's own. */
 export interface CheckoutRequest {
   readonly plan: string;
   readonly ref?: string;
@@ -56,6 +65,8 @@ export interface CheckoutRequest {
   readonly whatsapp: string;
   readonly channel?: string;
   readonly agreed: true;
+  /** The code of the quote the page showed, never `auto`: without it the service prices the order in dollars. */
+  readonly currency: string;
   readonly expect: number;
 }
 
@@ -111,7 +122,7 @@ const text = (value: unknown, max = 200): value is string =>
   typeof value === 'string' && value.length > 0 && value.length <= max;
 const amount = (value: unknown): value is number =>
   typeof value === 'number' && Number.isSafeInteger(value) && value > 0;
-const currency = (value: unknown): value is string => typeof value === 'string' && /^[A-Z]{3}$/.test(value);
+const currency = isCurrencyCode;
 const instant = (value: unknown): value is string => text(value, 40) && !Number.isNaN(Date.parse(value));
 
 function parseOffer(value: unknown): Offer | null | undefined {
@@ -121,12 +132,30 @@ function parseOffer(value: unknown): Offer | null | undefined {
   return { id: f.id, endsAt: f.endsAt };
 }
 
+/** How many currencies a plan may list before the answer stops looking like one. */
+const CURRENCIES_MAX = 12;
+
+/**
+ * The currencies a quote lists: codes, each once, the quote's own among them. A missing field is the quote's own
+ * currency alone (an older answer); anything else that isn't such a list makes the answer no quote.
+ */
+function parseCurrencies(value: unknown, own: string): readonly string[] | null {
+  if (value === undefined) return [own];
+  if (!Array.isArray(value) || value.length === 0 || value.length > CURRENCIES_MAX) return null;
+  const codes = value.filter(currency);
+  if (codes.length !== value.length || new Set(codes).size !== codes.length || !codes.includes(own))
+    return null;
+  return codes;
+}
+
 export function parseQuote(value: unknown): Quote | null {
   const f = fields(value);
   if (!f) return null;
   const offer = parseOffer(f.offer);
   if (offer === undefined) return null;
   if (!text(f.plan, 40) || !currency(f.currency) || !amount(f.amount) || !amount(f.listAmount)) return null;
+  const currencies = parseCurrencies(f.currencies, f.currency);
+  if (currencies === null) return null;
   // A price above the list price, a lower one that names no offer, or a boolean that isn't one, is not a quote.
   if (
     f.amount > f.listAmount ||
@@ -141,6 +170,7 @@ export function parseQuote(value: unknown): Quote | null {
     listAmount: f.listAmount,
     offer,
     selling: f.selling,
+    currencies,
   };
 }
 

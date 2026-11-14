@@ -149,6 +149,19 @@ describe('the REST client', () => {
         description: '[withheld] is not a valid email for [withheld]',
       }),
     );
+    // A phone number it will not take is told apart, so the buyer can be asked to check it.
+    const contact = {
+      error: {
+        code: 'BAD_REQUEST_ERROR',
+        description: 'Recurring digits in customer contact are disallowed',
+      },
+    };
+    expect(await provider(() => Response.json(contact, { status: 400 })).client.createLink(NEW_LINK)).toEqual(
+      {
+        ok: false,
+        reason: 'contact',
+      },
+    );
     for (const status of [429, 500, 503])
       expect(await provider(() => new Response('busy', { status })).client.getLink('plink_A1b2C3d4')).toEqual(
         {

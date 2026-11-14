@@ -82,11 +82,12 @@ export function createRestProvider(options: RestProviderOptions): PaymentProvide
     }
     if (response.status === 404) return { ok: false, reason: 'not_found' };
     if (!response.ok) {
-      await logRefusal(method, path, response, hidden);
-      return {
-        ok: false,
-        reason: response.status >= 500 || response.status === 429 ? 'unreachable' : 'refused',
-      };
+      const sentence = await logRefusal(method, path, response, hidden);
+      if (response.status >= 500 || response.status === 429) return { ok: false, reason: 'unreachable' };
+      // The provider refuses some phone numbers our own check lets through (one of repeated digits, for one), and
+      // its sentence is the only place it says so. Checked live on 2026-11-14.
+      const contact = response.status === 400 && /customer contact/i.test(sentence ?? '');
+      return { ok: false, reason: contact ? 'contact' : 'refused' };
     }
     const parsed = linkSchema.safeParse(await response.json().catch(() => undefined));
     if (!parsed.success) {
@@ -153,12 +154,13 @@ function withheld(sentence: string | null | undefined, hidden: readonly string[]
   return text.slice(0, 200);
 }
 
+/** Logs a refusal without the buyer's words, and returns the provider's own sentence for the caller to read. */
 async function logRefusal(
   method: string,
   path: string,
   response: Response,
   hidden: readonly string[],
-): Promise<void> {
+): Promise<string | undefined> {
   const refusal = refusalSchema.safeParse(await response.json().catch(() => undefined));
   const error = refusal.success ? refusal.data.error : undefined;
   console.error(
@@ -173,4 +175,5 @@ async function logRefusal(
       description: withheld(error?.description, hidden),
     }),
   );
+  return error?.description ?? undefined;
 }

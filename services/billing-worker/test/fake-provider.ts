@@ -23,6 +23,8 @@ export class FakeProvider implements PaymentProvider {
   reads = 0;
   away = false;
   refuse = false;
+  /** It will not take the buyer's phone number. */
+  refuseContact = false;
   private readonly links = new Map<string, StoredLink>();
   private count = 0;
   private gate: Promise<void> | undefined;
@@ -32,6 +34,7 @@ export class FakeProvider implements PaymentProvider {
   async createLink(input: NewLink): Promise<ProviderResult<ProviderLink>> {
     if (this.away) return { ok: false, reason: 'unreachable' };
     if (this.refuse) return { ok: false, reason: 'refused' };
+    if (this.refuseContact) return { ok: false, reason: 'contact' };
     this.count += 1;
     const id = `plink_Test${String(this.count).padStart(6, '0')}`;
     const link: StoredLink = {

@@ -21,6 +21,7 @@ import { FOOTER_GROUPS, LICENCE_LINE, NAV, SITE } from '#content/site';
 import { OUTCOME_KEY } from '#lib/billing/outcome';
 import { TAGGED_PATH } from '#lib/billing/ref';
 import { premiumJsonLd, softwareApplicationJsonLd } from '#lib/jsonld';
+import { cardWords } from '#lib/og/words';
 import { llmsFullTxt, llmsTxt } from '#lib/llms/llms-txt';
 import { listedPages } from '#lib/llms/mirror';
 import { pageMarkdown } from '#lib/llms/pages-md';
@@ -47,7 +48,7 @@ describe('Taalcut Premium beside the free app', () => {
     expect(FAQ_STILL_FREE.answer).toMatch(
       /Premium is a paid service around the app, and it takes nothing out of the free app\./,
     );
-    expect(FAQ_PREMIUM.answer).toContain('$400 a month');
+    expect(FAQ_PREMIUM.answer).toContain('at $400 a month, or ₹37,600 a month in India. We install');
     const ids = FAQ.map((entry) => entry.id);
     expect(ids).toContain('still-free');
     expect(ids).toContain('premium');
@@ -61,7 +62,9 @@ describe('Taalcut Premium beside the free app', () => {
     });
     const cost = FAQ.find((entry) => entry.id === 'cost')!.answer;
     expect(cost).toMatch(/^Taalcut is free\./);
-    expect(cost).toMatch(/Taalcut Premium is a paid plan around the app, at \$400 a month/);
+    expect(cost).toContain(
+      'Taalcut Premium is a paid plan around the app, where we set it up and pay for the top models, at $400 a month, or ₹37,600 a month in India.',
+    );
     // No sentence says nothing at all is ever paid to Taalcut.
     const everything = [...strings(FAQ), ...strings(LLMS), llmsTxt(), llmsFullTxt()].join('\n');
     expect(everything).not.toMatch(
@@ -73,6 +76,12 @@ describe('Taalcut Premium beside the free app', () => {
     expect(page('/premium/')).toMatchObject({ title: 'Taalcut Premium', section: 'Product' });
     expect(page('/premium/').unlisted).toBeFalsy();
     expect(page('/premium/').description.length).toBeLessThanOrEqual(160);
+    expect(page('/premium/').description).toMatch(/\$400 a month, or ₹37,600 a month in India\.$/);
+    // The social card's face has no rupee sign, so the card writes rupees with their code.
+    expect(cardWords(page('/premium/').description)).toMatch(
+      /\$400 a month, or INR 37,600 a month in India\.$/,
+    );
+    expect(cardWords('Taalcut Premium')).toBe('Taalcut Premium');
     expect(page('/premium/thanks/')).toMatchObject({ unlisted: true });
     const urls = sitemap().map((entry) => entry.url);
     expect(urls).toContain(absolute('/premium/'));
@@ -88,38 +97,47 @@ describe('Taalcut Premium beside the free app', () => {
 
   it('has a mirror with the page’s own words, and a line in llms.txt', () => {
     const mirror = pageMarkdown(page('/premium/'));
-    expect(mirror).toContain('$400 a month, in US dollars.');
+    expect(mirror).toContain(
+      '$400 a month, or ₹37,600 a month in India. The page shows the price in Indian rupees to visitors in India and in US dollars elsewhere, and lets a visitor choose the other.',
+    );
+    expect(mirror).toContain('In US dollars, or in Indian rupees in India, month to month');
+    expect(mirror).not.toMatch(/card issued in India/);
     for (const [, value] of PREMIUM_PAGE.included.rows) expect(mirror, value).toContain(value);
     for (const step of PREMIUM_PAGE.activation.steps) expect(mirror, step.title).toContain(step.body);
     for (const entry of PREMIUM_QUESTIONS) expect(mirror, entry.id).toContain(entry.answer);
     expect(mirror).toContain(`[${SITE.email}](mailto:${SITE.email})`);
     expect(mirror).toContain(`(${absolute('/terms/#premium-refunds')})`);
     expect(llmsTxt()).toContain(PREMIUM_POINTERS.machine);
+    expect(PREMIUM_POINTERS.machine).toContain(
+      'at $400 a month, or ₹37,600 a month in India: https://taalcut.app/premium/.',
+    );
     expect(llmsFullTxt()).toContain('# Taalcut Premium');
     expect(pageMarkdown(page('/download/'))).toContain(
-      `[Taalcut Premium](${absolute('/premium/')}) is $400 a month.`,
+      `[Taalcut Premium](${absolute('/premium/')}) is $400 a month, or ₹37,600 a month in India.`,
     );
     expect(pageMarkdown(page('/'))).toContain('Would you rather we set it up and pay for the models?');
   });
 
-  it('is an Offer of 400 US dollars a month in the structured data, beside an app that is still free', () => {
+  it('is two Offers in the structured data, 400 US dollars a month and 37,600 rupees a month in India, beside an app that is still free', () => {
     const service = premiumJsonLd();
+    const monthly = (price: string, priceCurrency: string) => ({
+      '@type': 'Offer',
+      url: absolute('/premium/'),
+      price,
+      priceCurrency,
+      priceSpecification: { '@type': 'UnitPriceSpecification', price, priceCurrency, billingDuration: 'P1M' },
+    });
     expect(service).toMatchObject({
       '@type': 'Service',
       name: 'Taalcut Premium',
       url: absolute('/premium/'),
-      offers: {
-        '@type': 'Offer',
-        price: '400.00',
-        priceCurrency: 'USD',
-        priceSpecification: {
-          '@type': 'UnitPriceSpecification',
-          price: '400.00',
-          priceCurrency: 'USD',
-          billingDuration: 'P1M',
-        },
-      },
+      offers: [
+        monthly('400.00', 'USD'),
+        { ...monthly('37600.00', 'INR'), eligibleRegion: { '@type': 'Country', name: 'India' } },
+      ],
     });
+    expect((service as { offers: unknown[] }).offers).toHaveLength(2);
+    expect((service as { offers: object[] }).offers[0]).not.toHaveProperty('eligibleRegion');
     expect(JSON.stringify(service)).toContain(SITE.company.legal);
     const app = softwareApplicationJsonLd();
     expect(app).not.toHaveProperty('offers');
@@ -152,8 +170,12 @@ describe('Taalcut Premium in the terms and the privacy notice', () => {
   it('says who sells it, what it costs and how it is paid for', () => {
     const terms = said('premium');
     expect(terms).toContain(SITE.company.legal);
-    expect(terms).toContain('$400 a month, in US dollars.');
-    expect(terms).toMatch(/launch price, it is the price of your first month, and later months are \$400/);
+    expect(terms).toContain(
+      '$400 a month, or ₹37,600 a month in India. The order page shows the price in Indian rupees to visitors in India and in US dollars elsewhere, and lets you choose the other. You pay the price shown; nothing is added on the payment page.',
+    );
+    expect(terms).toContain(
+      'If the order page shows a launch price, it is the price of your first month, and later months are the list price in the currency you paid in.',
+    );
     expect(terms).toMatch(/Each month we send you one payment link/);
     expect(terms).toMatch(/We keep no card, and nothing is charged automatically/);
     expect(terms).toMatch(/Your plan is active within 7 days of your payment/);
@@ -196,6 +218,10 @@ describe('Taalcut Premium in the terms and the privacy notice', () => {
     expect(privacy).toMatch(/A paid order is kept for as long as tax and accounting law requires/);
     expect(privacy).toMatch(
       /Premium sends the material a make needs to cloud models, which model providers run for us/,
+    );
+    // The currency a visitor sees is picked from the country the request comes from: said where the country is listed.
+    expect(privacy).toContain(
+      'Our billing service picks the currency the Premium page shows you from the country your request comes from. You can choose the other on that page.',
     );
     // What limits abuse, said as it is: a count against a scrambled network address, deleted within two days.
     expect(privacy).toContain(

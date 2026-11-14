@@ -20,6 +20,7 @@ const LIST = {
   listAmount: 40000,
   offer: null,
   selling: true,
+  currencies: ['USD', 'INR'],
 };
 const LAUNCH = { ...LIST, amount: 33900, offer: { id: 'product-hunt', endsAt: '2026-11-26T08:01:00.000Z' } };
 const ORDER_ID = '01KA7Q3ZV5R8N2M4X6C9D1E3F5';
@@ -51,6 +52,7 @@ const ORDER = {
   email: 'asha@example.com',
   whatsapp: '+14155550100',
   agreed: true as const,
+  currency: 'USD',
   expect: 33900,
 };
 
@@ -227,14 +229,14 @@ const failureOf = async <T>(
 };
 
 describe('the billing client', () => {
-  it('asks for a quote with the plan and the visit’s tag, and sends no credentials', async () => {
+  it('asks for a quote with the plan, the visit’s tag and a currency, and sends no credentials', async () => {
     const { fetch, calls } = fakeFetch(() => json(LAUNCH));
     const client = createBillingClient({ base: 'https://billing.taalcut.app', fetch });
     expect(await client.quote('premium', 'producthunt')).toEqual({ ok: true, value: LAUNCH });
     expect(await client.quote('premium', null)).toEqual({ ok: true, value: LAUNCH });
     expect(calls.map((c) => c.url)).toEqual([
-      'https://billing.taalcut.app/v1/quote?plan=premium&ref=producthunt',
-      'https://billing.taalcut.app/v1/quote?plan=premium',
+      'https://billing.taalcut.app/v1/quote?plan=premium&ref=producthunt&currency=auto',
+      'https://billing.taalcut.app/v1/quote?plan=premium&currency=auto',
     ]);
     for (const call of calls) {
       expect(call.init.method).toBe('GET');

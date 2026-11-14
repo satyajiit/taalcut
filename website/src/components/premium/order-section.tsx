@@ -5,13 +5,15 @@
  * mode: Persuade · system: WEB2 Remix Vernacular (the download band's reel-cornered panel, Kaatu standing on its top
  *   edge; here it holds the page's one marigold fill, the form's Continue to payment)
  * states: the price line's (list · quoted · launch price, said again to assistive technology when it moves) · the
+ *   currency switch's (currency-switch.tsx), under the price when the quote lists more than one currency · the
  *   form's own (order-form.tsx), or its closed sentence · without JavaScript: the form hides, and one line says it
- *   needs JavaScript, with the address. A server component: the price line and the form are its client parts.
- * Under the form, for a card issued in India: US dollars usually won't go through, and the address arranges a way. */
+ *   needs JavaScript, with the address. A server component: the price line, the switch and the form are its client
+ *   parts. */
 
 import { InlineText } from '#components/content/inline-text';
 import { Kaatu } from '#components/kaatu/kaatu';
 import { ORDER } from '#content/premium';
+import { CurrencySwitch } from './currency-switch';
 import { OrderForm } from './order-form';
 import { PriceLine } from './price-line';
 
@@ -39,7 +41,10 @@ export function OrderSection() {
             <h2 id={HEADING} className="m-0 type-site-headline text-balance text-ink">
               {ORDER.heading}
             </h2>
-            <PriceLine live />
+            <div className="flex flex-col gap-3">
+              <PriceLine live />
+              <CurrencySwitch />
+            </div>
             <p className="m-0 max-w-[30em] type-site-body text-pretty text-ink-2">{ORDER.lead}</p>
           </div>
           <div className="flex min-w-0 flex-col gap-6">
@@ -51,12 +56,6 @@ export function OrderSection() {
               </p>
             </noscript>
             <OrderForm labelledBy={HEADING} />
-            <p
-              data-slot="order-india"
-              className="m-0 max-w-[40em] border-t border-rule pt-5 type-body text-pretty text-ink-2"
-            >
-              <InlineText text={ORDER.india} />
-            </p>
           </div>
         </div>
       </div>
