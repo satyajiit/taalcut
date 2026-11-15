@@ -9,7 +9,9 @@
  * @taalcut/templates'; these are the renderer fake's, for the pages and the
  * breakdown card to run against. Dropping a slot gives its time to the slot
  * before it (the first slot's goes to the next), merged slots take the first
- * slot's intent unless another is named, and text moves with its slot.
+ * slot's intent unless another is named, and text moves with its slot. KEEP1:
+ * a merged slot takes `footage` (whose clip it plays) from the slot whose
+ * intent it takes.
  */
 import type { Id, TaalcutError, Template } from '@taalcut/core';
 
@@ -111,8 +113,10 @@ export function mergeSlots(
   const group = indices.map((index) => template.slots[index]!);
   const first = group[0]!;
   const source = group.find((slot) => slot.id === intentFrom) ?? first;
+  const { footage: _firstFootage, ...kept } = first;
   const merged: Slot = {
-    ...first,
+    ...kept,
+    ...(source.footage ? { footage: source.footage } : {}),
     duration: { value: group.reduce((sum, slot) => sum + slot.duration.value, 0), rate: first.duration.rate },
     intent: source.intent,
     name: first.name ?? source.name,

@@ -79,8 +79,10 @@ async function save(dir: string, file: GraphicsFile): Promise<void> {
 export function promptOverlays(draft: BreakdownDraft): (PromptOverlay & { readonly sheet: string })[] {
   const reel = reelOfDraft(draft);
   const sheets = new Map((draft.graphicSheets ?? []).map((sheet) => [sheet.overlayId, sheet] as const));
+  // LYR1: a piece of a sequence that nobody could read has no words to ask about (reading.ts leaves it out too).
+  const unread = new Set((draft.textSequences ?? []).flatMap((sequence) => sequence.unread));
   return draft.text
-    .filter((overlay) => sheets.has(overlay.id))
+    .filter((overlay) => sheets.has(overlay.id) && !unread.has(overlay.id))
     .map((overlay) => {
       const sheet = sheets.get(overlay.id)!;
       return { overlay, facts: graphicFacts(reel, overlay, sheet.lead), sheet: sheet.path };

@@ -15,8 +15,10 @@ import {
   artifactRefSchema,
   defineTool,
   FrameRates,
+  keepsReelFootage,
   NO_TOOL_RETRY,
   ok,
+  SLOT_EDGES,
   TEMPLATE_COMMANDS,
   VIDEO_SIZES,
   type AnyTool,
@@ -28,6 +30,7 @@ import {
   ulidSchema,
 } from '@taalcut/core';
 import { z } from 'zod';
+import { sequenceWords, templateTextSequences } from '../breakdown/text-sequence';
 import { planFormat } from '../formats/plan-format';
 import { sha256Hex } from '../store/change-key';
 import type { TemplateToolDeps } from './deps';
@@ -175,6 +178,11 @@ const slotLineSchema = z.object({
   needs: z.array(z.string()).optional(),
   face: z.enum(['shown', 'hidden']).nullable().optional(),
   reel: z.string().optional(),
+  /** KEEP1: a video made from the template keeps the reel's own footage here; the user's clips fill the others. */
+  keepsReel: z.literal(true).optional(),
+  /** MATCH1: the transition the reel comes into the slot by, and a moment of the footage that lands on an edge. */
+  transitionIn: z.string().optional(),
+  lands: z.object({ edge: z.enum(SLOT_EDGES), moment: z.string() }).optional(),
   approved: z.boolean(),
 });
 
@@ -186,6 +194,8 @@ const overlayLineSchema = z.object({
   duration: plainTimeSchema,
   kind: z.string().optional(),
   designed: z.boolean(),
+  /** LYR1: the sequence it is one text of, by its number in `sequences` (from 1). */
+  sequence: z.int().min(1).optional(),
 });
 
 const speechLineSchema = z.object({
@@ -199,7 +209,11 @@ const WATERMARK_HANDLE_RE = /^@[A-Za-z0-9._-]+(?:\s+[A-Za-z0-9._-]+)?\.?$/;
 export function getTool(deps: TemplateToolDeps) {
   return defineTool({
     name: 'templates.get',
-    version: '1.0.0',
+    // 1.1.0 (LYR1): `sequences` names text that replaces itself in place, each overlay says which it is in, and
+    // `speechDoubted` says when the breakdown doubts the speech.
+    // 1.2.0 (KEEP1): a slot that keeps the reel's own footage says keepsReel.
+    // 1.3.0 (MATCH1): a slot says the transition it comes in by (transitionIn) and its moment to land (lands).
+    version: '1.3.0',
     description:
       'Reads a template (default its head version): its summary and one line per slot (role, timing, intent, ' +
       'approved). The whole document is stored as an artifact. Use baseVersion = version for slot edits.',
@@ -210,7 +224,17 @@ export function getTool(deps: TemplateToolDeps) {
       version: z.int().min(1),
       slots: z.array(slotLineSchema),
       overlays: z.array(overlayLineSchema).optional(),
+      sequences: z
+        .array(z.string())
+        .optional()
+        .describe(
+          'Texts the reference shows in turn at one place, one at a time; a made video keeps each as its own',
+        ),
       speech: z.array(speechLineSchema).optional(),
+      speechDoubted: z
+        .boolean()
+        .optional()
+        .describe('true when the breakdown doubts the speech it heard: its words are not to be relied on'),
       document: artifactRefSchema.optional(),
     }),
     costClass: 'local',
@@ -221,7 +245,8 @@ export function getTool(deps: TemplateToolDeps) {
     permission: { filesystem: { read: ['library'] } },
     summarize: (output) =>
       `${output.summary.name}, version ${output.version}: ${output.slots.length} slots, ` +
-      `${output.slots.filter((slot) => slot.approved).length} approved.`,
+      `${output.slots.filter((slot) => slot.approved).length} approved.` +
+      (output.sequences?.length ? ` Its text has ${output.sequences.join('; ')}.` : ''),
     run: async (input, ctx) => {
       const got = await deps.service.get({
         templateId: input.templateId as TemplateId,
@@ -242,6 +267,11 @@ export function getTool(deps: TemplateToolDeps) {
         (overlay) => !WATERMARK_HANDLE_RE.test(overlay.text.trim()),
       );
       const speechSegments = template.audio.speech?.segments ?? [];
+      // LYR1: the texts the reference shows in turn at one place (text-sequence.ts), named plainly.
+      const sequences = templateTextSequences(template);
+      const sequenceOf = new Map(
+        sequences.flatMap((sequence, at) => sequence.ids.map((id) => [id, at + 1] as const)),
+      );
       return ok({
         summary: summaryOf(summary),
         version: template.version,
@@ -260,6 +290,9 @@ export function getTool(deps: TemplateToolDeps) {
           ...(slot.intent.needs && slot.intent.needs.length > 0 ? { needs: [...slot.intent.needs] } : {}),
           ...(slot.intent.face !== undefined ? { face: slot.intent.face } : {}),
           ...(slot.intent.reel ? { reel: slot.intent.reel } : {}),
+          ...(keepsReelFootage(slot) ? { keepsReel: true as const } : {}),
+          ...(slot.transitionIn ? { transitionIn: slot.transitionIn.kind } : {}),
+          ...(slot.lands ? { lands: slot.lands } : {}),
           approved: slot.approved,
         })),
         ...(nonWatermarkOverlays.length > 0
@@ -272,8 +305,12 @@ export function getTool(deps: TemplateToolDeps) {
                 duration: time(overlay.duration),
                 ...(overlay.design?.kind ? { kind: overlay.design.kind } : {}),
                 designed: overlay.design !== undefined,
+                ...(sequenceOf.has(overlay.id) ? { sequence: sequenceOf.get(overlay.id)! } : {}),
               })),
             }
+          : {}),
+        ...(sequences.length > 0
+          ? { sequences: sequences.map((sequence) => sequenceWords(sequence, template.canvas.rate)) }
           : {}),
         ...(speechSegments.length > 0
           ? {
@@ -283,6 +320,9 @@ export function getTool(deps: TemplateToolDeps) {
                 text: seg.text,
               })),
             }
+          : {}),
+        ...(template.doubts?.some((doubt) => doubt.reason === 'speechMaybeHallucinated')
+          ? { speechDoubted: true }
           : {}),
         ...(document.ok ? { document: document.value } : {}),
       });

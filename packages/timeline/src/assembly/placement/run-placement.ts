@@ -2,47 +2,33 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * The placement solver on a made timeline, with its people (FRM1-OVL): the tracks of every clip range are made or
- * joined (`SubjectSource.ensure`), read (`over`), and the overlays placed (place-timeline.ts). An item with no room
- * then tries, in order, its clip at another in-point within retime's reach (fallbacks.ts) and the slot's
- * next clip with room (casting/recast-for-room.ts); one that still has none stays `noRoom`, which render QA's
- * `graphicCoversFace` fails with a plain reason. Without a subject source, or when tracking fails, the overlays
- * keep the reel's relation with nobody known on screen, and the warning says why.
+ * A made timeline's text and its people.
+ *
+ * TXT1 (the owner's rule): no code decides where a video's text sits. `runPlacement`, which the make and every edit
+ * call, lays the text out as the reel had it (place-timeline.ts `reelTextLayout`: a run together at one place and one
+ * size, a placed text untouched) and asks for the clips' subject tracks, for the tools that tell whoever places the
+ * text what is under it. It moves no text off a head and changes no clip. FRM1-OVL's own pass (the solver's place
+ * applied, and for a text with no room its clip retimed or its slot recast) was removed with TXT1: the solver's
+ * place reaches the AI as a candidate only (`candidatePlaces`).
+ *
+ * `spansFor` reads the people of clip ranges for whoever needs them now (the text facts, the make's frame checks),
+ * waiting a bounded time for a track still being made.
  */
-import {
-  RationalTime,
-  type CastCandidate,
-  type MediaRef,
-  type SubjectClipRange,
-  type SubjectSource,
-  type SubjectSpan,
-  type Template,
-  type Timeline,
-} from '@taalcut/core';
-import { CASTING_CONFIG } from '../../casting/config';
-import { RETIME_REACH_SECONDS, widened } from '../subjects';
-import { alternateKey, recastCandidates, recastForRoom } from '../../casting/recast-for-room';
-import { clipUnder, needsFallback, retimeForRoom, sideLost } from './fallbacks';
-import { placeOverlays, type PlaceResult } from './place-timeline';
+import type { SubjectClipRange, SubjectSource, SubjectSpan, Template, Timeline } from '@taalcut/core';
+import { reelTextLayout } from './place-timeline';
 import { clipSourceRange, placedClips } from './subjects';
 
 export interface PlacementDeps {
   readonly subjects?: SubjectSource;
-  /** Media for a slot's alternates (assembly: the variant's; an edit: the catalog's); absent, nothing is recast. */
-  readonly media?: (candidates: readonly CastCandidate[]) => Promise<ReadonlyMap<string, MediaRef>>;
-  /** casting's `confidence.tau`, for a recast's confidence. */
-  readonly tau?: number;
   readonly signal?: AbortSignal;
   /**
-   * How long placement waits for missing tracks (SubjectSource.ensure), ms; a track still being made then finishes
-   * in the jobs queue and the clip is placed with what is stored. Default PLACEMENT_ENSURE_MS.
+   * How long a read waits for missing tracks (SubjectSource.ensure), ms; a track still being made then finishes in
+   * the jobs queue and what is stored is read. Default PLACEMENT_ENSURE_MS.
    */
   readonly ensureBudgetMs?: number;
 }
 
-const SIDE_WORDS = { left: 'left of', right: 'right of', above: 'above', below: 'below' } as const;
-
-/** Assembly's wait for tracks (as FRM1-SUB's assembly budget); an edit waits less (EDIT_ENSURE_MS). */
+/** The make's frame checks wait this long for tracks (FRM1-SUB's assembly budget); the text facts wait less. */
 export const PLACEMENT_ENSURE_MS = 90_000;
 export const EDIT_ENSURE_MS = 8_000;
 
@@ -57,10 +43,6 @@ async function within<T>(promise: Promise<T>, ms: number): Promise<T | 'late'> {
   } finally {
     if (timer) clearTimeout(timer);
   }
-}
-
-export interface PlacementRun extends PlaceResult {
-  readonly warnings: readonly string[];
 }
 
 export async function spansFor(
@@ -86,103 +68,26 @@ export async function spansFor(
   return out;
 }
 
-/** Places the overlays of `timeline` (only `only`, when given) with the people in its clips. */
-export async function runPlacement(
+/**
+ * TXT1: the text of `timeline` laid out as the reel had it (only `only`, when given), and the clips' subject tracks
+ * asked for without waiting for them. It moves nothing a person or the AI placed.
+ */
+export function runPlacement(
   timeline: Timeline,
   template: Template,
-  deps: PlacementDeps,
+  deps: Pick<PlacementDeps, 'subjects'>,
   only?: ReadonlySet<string>,
-): Promise<PlacementRun> {
-  const warnings: string[] = [];
-  const base = { template, ...(only ? { only } : {}) };
+): Timeline {
   const source = deps.subjects;
-  if (!source) return { ...placeOverlays({ ...base, timeline, subjects: new Map() }), warnings };
-  const rate = timeline.canvas.rate;
-  const clips = placedClips(timeline).filter((placed) => placed.clip.media.kind === 'video');
-  const subjects = await spansFor(
-    source,
-    clips.map((placed) => ({
-      key: placed.clip.id,
-      range: { assetId: placed.clip.media.assetId, ...clipSourceRange(placed.clip, rate) },
-    })),
-    warnings,
-    deps,
-  );
-  let result = placeOverlays({ ...base, timeline, subjects });
-  const stuck = () => result.report.filter(needsFallback);
-  const done = () => {
-    for (const entry of result.report.filter(sideLost))
-      warnings.push(
-        `placement: ${entry.id} sits ${SIDE_WORDS[entry.side!]} the head, not ${SIDE_WORDS[entry.relation.side!]} it as in the reel`,
-      );
-    return { ...result, warnings };
-  };
-  if (stuck().length === 0) return done();
-
-  // Retime: each stuck item's clip over as far as retime moves it (FRM1-SUB tracks that window at assembly).
-  const under = [...new Set(stuck().flatMap((entry) => clipUnder(result.timeline, entry.span) ?? []))];
-  const wider = await spansFor(
-    source,
-    under.flatMap((placed) =>
+  if (source) {
+    const rate = timeline.canvas.rate;
+    const ranges = placedClips(timeline).flatMap((placed) =>
       placed.clip.media.kind === 'video'
-        ? [
-            {
-              key: placed.clip.id,
-              range: widened(
-                { assetId: placed.clip.media.assetId, ...clipSourceRange(placed.clip, rate) },
-                RETIME_REACH_SECONDS,
-                placed.clip.media.available,
-              ),
-            },
-          ]
+        ? [{ assetId: placed.clip.media.assetId, ...clipSourceRange(placed.clip, rate) }]
         : [],
-    ),
-    warnings,
-    deps,
-  );
-  const before = new Map(clips.map((placed) => [placed.clip.id, placed.clip.sourceStart]));
-  result = retimeForRoom({ ...base, timeline: result.timeline, subjects, result, wider });
-  // A retimed clip's people are the wider span's from now on.
-  for (const placed of placedClips(result.timeline)) {
-    const was = before.get(placed.clip.id);
-    if (was && !RationalTime.equals(was, placed.clip.sourceStart))
-      subjects.set(placed.clip.id, wider.get(placed.clip.id));
+    );
+    // Not awaited: a track still being made finishes in the jobs queue, for the tools and the export to read.
+    if (ranges.length > 0) void source.ensure(ranges).catch(() => undefined);
   }
-  if (stuck().length === 0 || !deps.media) return done();
-
-  // Recast: the stuck slots' alternates, in casting's order, with their people.
-  const slots = recastCandidates({ result });
-  const candidates = slots.flatMap((slot) => slot.alternates);
-  const media = await deps.media(candidates);
-  const placedByClip = new Map(
-    placedClips(result.timeline).map((placed) => [placed.clip.slotId as string, placed]),
-  );
-  const alternates = await spansFor(
-    source,
-    slots.flatMap((slot) => {
-      const placed = placedByClip.get(slot.slotId);
-      if (!placed) return [];
-      return slot.alternates.flatMap((alternate) => {
-        const ref = media.get(alternate.shotId ?? `asset:${alternate.assetId}`);
-        if (ref?.kind !== 'video') return [];
-        const range = clipSourceRange(
-          { ...placed.clip, media: ref, sourceStart: alternate.sourceStart },
-          rate,
-        );
-        return [{ key: alternateKey(alternate), range: { assetId: alternate.assetId, ...range } }];
-      });
-    }),
-    warnings,
-    deps,
-  );
-  result = recastForRoom({
-    ...base,
-    timeline: result.timeline,
-    subjects,
-    result,
-    alternates,
-    media,
-    tau: deps.tau ?? CASTING_CONFIG.confidence.tau,
-  });
-  return done();
+  return reelTextLayout({ timeline, template, ...(only ? { only } : {}) });
 }

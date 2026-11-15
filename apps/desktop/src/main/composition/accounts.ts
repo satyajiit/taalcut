@@ -18,6 +18,7 @@ import {
   type CloudCallSink,
   type SettingsStore,
   type SignInEvent,
+  type TaalcutError,
 } from '@taalcut/core';
 import {
   createAccountsService,
@@ -41,6 +42,37 @@ export function modelsAcknowledgements(store: AcknowledgementStore): ModelsAckno
       const latest = await store.latest(feature);
       if (!latest.ok) return latest;
       return ok(latest.value?.termsVersion === termsVersion ? latest.value.acknowledgedAt : undefined);
+    },
+  };
+}
+
+/**
+ * A failed sign-in as main's log keeps it: the code and the developer detail. The window shows a sentence a person
+ * can act on; this is how anyone finds out which step failed. The detail has the broker's secrets scrubbed already,
+ * but a provider's refusal can quote a token the broker never held, so anything token-like is withheld here too.
+ */
+export function signInFailureLine(provider: string, error: Pick<TaalcutError, 'code' | 'detail'>): string {
+  const detail = (error.detail ?? '')
+    .replace(/eyJ[\w-]{8,}(?:\.[\w-]+){0,2}/g, '[withheld]')
+    .replace(/[\w-]{32,}/g, '[withheld]')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 600);
+  return `[signin] ${provider}: ${error.code}${detail ? `: ${detail}` : ''}`;
+}
+
+/**
+ * The broker, with the reason of every sign-in that fails written to main's log: the one a window asked for and
+ * the image connection that follows Continue with ChatGPT alike. A person who closes the sign-in is not a failure.
+ */
+function withSignInLog(broker: AuthBroker): AuthBroker {
+  return {
+    ...broker,
+    async signIn(provider, request) {
+      const outcome = await broker.signIn(provider, request);
+      if (!outcome.ok && outcome.error.code !== 'core.cancelled')
+        console.warn(signInFailureLine(provider, outcome.error));
+      return outcome;
     },
   };
 }
@@ -73,7 +105,9 @@ export interface MainAccounts {
 
 export function createMainAccounts(deps: MainAccountsDeps): MainAccounts {
   const base = createAccountsService({
-    broker: deps.broker,
+    broker: withSignInLog(deps.broker),
+    // One Continue with ChatGPT asks for the plan's chat and then its images (the owner, 2026-11-14).
+    imagesWithChatGPT: true,
     runtime: deps.runtime,
     acknowledgements: modelsAcknowledgements(deps.acknowledgements),
     callLog: deps.callLog,

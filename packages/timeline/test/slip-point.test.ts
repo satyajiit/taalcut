@@ -11,6 +11,7 @@ import { CASTING_CONFIG as config } from '../src/casting/config';
 import { slipPoint } from '../src/casting/slip-point';
 import { slotSpecs } from '../src/casting/slots';
 import { makeProfile, unitVector } from './fixtures/library';
+import { withMoments } from './fixtures/moments';
 import { buildTemplate } from './fixtures/template';
 
 const fps30 = FrameRates.fps30;
@@ -47,5 +48,32 @@ describe('a slip’s part of the shot', () => {
     expect(at(270, ['start'])).toEqual({ ok: false, why: 'noRoom' });
     expect(at(150, ['face'])).toEqual({ ok: false, why: 'unknownFaces' });
     expect(at(150, ['face'], true)).toEqual({ ok: false, why: 'noGain' });
+  });
+
+  it('never slips onto a stretch where the camera is being handled (MOM2)', () => {
+    // The same shot, its last four seconds stated as the camera being lowered.
+    const lowered = withMoments(profile, [
+      { to: 180, note: 'A boat crosses the bay.', fit: null },
+      { to: 300, note: 'The camera drops to the deck.', fit: null, handling: true },
+    ]);
+    const slip = (current: number, avoid: readonly ('start' | 'end')[]) =>
+      slipPoint({
+        profile: lowered,
+        slot,
+        canvasRate: fps30,
+        config,
+        current,
+        avoid,
+        person: null,
+        tracked: false,
+      });
+    // A step later from 3 s would start at 6 s, inside the lowering: there is no room that way.
+    expect(startOf(at(90, ['start']))).toBe(120);
+    expect(slip(90, ['start'])).toEqual({ ok: true, point: expect.anything(), measured: false });
+    const stepped = slip(90, ['start']);
+    expect(stepped.ok && stepped.point.sourceStart.value + 30).toBeLessThanOrEqual(180);
+    expect(slip(150, ['start'])).toEqual({ ok: false, why: 'noRoom' });
+    // Earlier is as it was.
+    expect(startOf(slip(150, ['end']))).toBe(120);
   });
 });

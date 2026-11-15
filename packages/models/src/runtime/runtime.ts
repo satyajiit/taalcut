@@ -22,6 +22,7 @@ import {
   type MutableModels,
   type Provider,
 } from '@earendil-works/pi-ai';
+import { registerBunOAuthFlows } from '@earendil-works/pi-ai/bun-oauth';
 import { builtinProviders } from '@earendil-works/pi-ai/providers/all';
 import { CHATGPT_IMAGE_PROVIDER, err, ok, type Result } from '@taalcut/core';
 import { secretCredentialStore, type SecretStore } from '../credentials/secret-store';
@@ -112,6 +113,12 @@ const SEALED_AUTH_CONTEXT: AuthContext = {
 };
 
 export function createModelRuntime(options: ModelRuntimeOptions = {}): ModelRuntime {
+  // pi-ai loads each provider's sign-in flow through a variable import that a bundler cannot follow
+  // (auth/oauth/load.js). In a bundled build that import looks for the flow's file beside the bundle: the desktop's
+  // main answered "Cannot find module …/out/main/openai-codex.js" and the ChatGPT images sign-in never started
+  // (2026-11-14 and 15). Registering the flows, pi-ai's own answer for bundled builds, makes them part of whatever
+  // bundle holds this module. They import nothing but Node's own modules.
+  registerBunOAuthFlows();
   const credentials = options.secrets
     ? secretCredentialStore(options.secrets)
     : new InMemoryCredentialStore();

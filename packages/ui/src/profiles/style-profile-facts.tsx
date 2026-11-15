@@ -163,10 +163,18 @@ function FormFacts({
 
 /** What a set's templates have in common, measured: pacing, the opening, cuts, text, sound and shape. */
 export function StyleProfileFacts({ profile }: { profile: StyleProfile }) {
+  // Four across where the list itself has 38rem (the card on the chat page in a window of 1024 px, where it went
+  // to four before), two across in anything narrower (the editor's chat): by its own width, not the window's,
+  // which says nothing about the column it sits in.
   return (
-    <dl data-slot="style-profile-facts" className="m-0 grid grid-cols-2 gap-x-6 gap-y-4 lg:grid-cols-4">
-      <PacingFacts pacing={profile.pacing} hook={profile.hook} />
-      <FormFacts mix={profile.mix} overlays={profile.overlays} audio={profile.audio} form={profile.form} />
-    </dl>
+    <div className="@container">
+      <dl
+        data-slot="style-profile-facts"
+        className="m-0 grid grid-cols-2 gap-x-6 gap-y-4 @min-[38rem]:grid-cols-4"
+      >
+        <PacingFacts pacing={profile.pacing} hook={profile.hook} />
+        <FormFacts mix={profile.mix} overlays={profile.overlays} audio={profile.audio} form={profile.form} />
+      </dl>
+    </div>
   );
 }

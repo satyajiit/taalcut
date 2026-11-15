@@ -7,11 +7,13 @@
  * per id. `library.frameAt` (any clip at any
  * second, as a picture) and `library.subjects` (where people are in it) join the library package's `library` module
  * (a module's tools share its id as their prefix), as render's captureFrame joins `timeline`. The gate demo composes
- * both the same way, in the same places.
+ * both the same way, in the same places. MATCH1: `library.frameStrip` (a stretch of a clip as frames with their
+ * times on them) joins the library's after them.
  */
 import { defineToolModule, type AnyTool, type ToolModule } from '@taalcut/core';
 import { videoCompareTool } from './compare-tool';
 import type { EyesDeps } from './deps';
+import { frameStripTool } from './frame-strip';
 import { frameAtTool, subjectsTool } from './library-tools';
 
 export function eyesToolModules(deps: EyesDeps): {
@@ -20,7 +22,7 @@ export function eyesToolModules(deps: EyesDeps): {
 } {
   return {
     video: defineToolModule({ id: 'video', tools: [videoCompareTool(deps)] }),
-    library: [frameAtTool(deps), subjectsTool(deps)],
+    library: [frameAtTool(deps), subjectsTool(deps), frameStripTool(deps)],
   };
 }
 

@@ -21,7 +21,7 @@ import {
   type BeatMap,
 } from '@taalcut/core';
 import type { BreakdownAnalysers, ReferenceProbe } from '../breakdown/ports';
-import { ffmpegFramePixels } from './ffmpeg-pixels';
+import { ffmpegFramePixels, ffmpegGrayFrames } from './ffmpeg-pixels';
 import { runProcess } from './run-process';
 
 export interface FfmpegBinaryPaths {
@@ -220,6 +220,7 @@ export function createFfmpegAnalysers(
       extractFrames: (path, frames, { maxDimension, outDir, signal }) =>
         extract(path, frames, maxDimension, outDir, signal),
       framePixels: ffmpegFramePixels(bins),
+      grayFrames: ffmpegGrayFrames(bins),
       async contactSheet(images, layout, { outPath, signal }) {
         const work = `${outPath}.tiles`;
         await mkdir(work, { recursive: true });

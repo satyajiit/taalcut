@@ -7,7 +7,8 @@
  * - an own track (path b): its tracked beats placed under the timeline, when it has a beat map;
  * - the reel's own music (path d): the template version's beat map, because the reel's audio starts at frame 0 where
  *   that map's zero is. Only an earlier choice (an own track) can have moved the grid; the cuts then go back to the
- *   reel's beats, so the music and the cuts share one clock again;
+ *   reel's beats, so the music and the cuts share one clock again. LONG1: a video lengthened by bars of that music
+ *   hears the map with those bars played again (music/carry.ts), and that is the map the cuts go back to;
  * - platform sound and generated music: the cuts stay where they are.
  */
 import { isDeepStrictEqual } from 'node:util';
@@ -22,6 +23,7 @@ import {
 } from '@taalcut/core';
 import { TemplateNotFound } from '../errors';
 import type { EditConfig } from '../model/config';
+import { carriedBeatMap, repeatsOf } from '../music/carry';
 import type { TemplateReader } from '../service/templates';
 import { beatsUnderTimeline, resyncToBeatMap } from './resync';
 
@@ -57,7 +59,7 @@ async function gridFor(
   const template = await deps.templates.read(timeline.template);
   // A template that is gone has no reel either: the choice stands, and the export says what is missing.
   if (!template.ok) return TemplateNotFound.is(template.error) ? ok(null) : template;
-  const reel = template.value.beatMap;
+  const reel = template.value.beatMap && carriedBeatMap(template.value.beatMap, repeatsOf(timeline));
   return ok(reel && !isDeepStrictEqual(reel, timeline.beatMap) ? reel : null);
 }
 

@@ -15,7 +15,8 @@ const isPermission = (value: unknown): value is (typeof MICROPHONE_PERMISSIONS)[
  * ('granted', 'denied', 'not-determined', 'restricted'); `answer` what the person says when asked ('granted' or
  * 'denied'); `arranged` puts the media cards' voiceovers, graphics and image slots on the Golden hour timelines;
  * `heard` is what the consent check hears instead of the line (a mismatch); `designs` (HFW1-UI) puts graphics the AI
- * designed on Golden hour's first video in place of the kit's, and seeds its workspace.
+ * designed on Golden hour's first video in place of the kit's, and seeds its workspace; with `designOptions` (DSG2)
+ * one of them is a title that came as three designs to choose between.
  */
 export const mediaOptions: AreaOptionsReader = (stored) => {
   const media = stored['media'];
@@ -29,7 +30,9 @@ export const mediaOptions: AreaOptionsReader = (stored) => {
         ...(media['arranged'] === true ? { arranged: true } : {}),
         ...(typeof media['heard'] === 'string' ? { heard: media['heard'].slice(0, 300) } : {}),
       },
-      ...(media['designs'] === true ? { designs: { arranged: true } } : {}),
+      ...(media['designs'] === true
+        ? { designs: { arranged: true, ...(media['designOptions'] === true ? { options: true } : {}) } }
+        : {}),
     },
   };
 };

@@ -87,9 +87,9 @@ describe('powerRouter', () => {
       { context: {} },
     );
     const client = connectRpc(powerContract, port2, { peer: 'jobs' }).client;
-    expect(await client.update({ onBattery: true, thermalState: 'serious' })).toEqual({ applied: true });
-    const bad = await client.update({ onBattery: false, thermalState: 'hot' as 'fair' }).catch(fromRpcError);
+    expect(await client.update({ thermalState: 'serious' })).toEqual({ applied: true });
+    const bad = await client.update({ thermalState: 'hot' as 'fair' }).catch(fromRpcError);
     expect(bad).toMatchObject({ code: 'core.validation' });
-    expect(seen).toEqual([{ onBattery: true, thermalState: 'serious' }]);
+    expect(seen).toEqual([{ thermalState: 'serious' }]);
   });
 });

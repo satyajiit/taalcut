@@ -14,9 +14,10 @@ export function coverExportTool() {
   return defineTool({
     name: 'render.exportCover',
     command: 'render.exportCover',
-    version: '1.0.0',
+    // 1.1.0 (CVR2): a cover is saved by workspace.placeCover (a designed composition) before it is exported.
+    version: '1.1.0',
     description:
-      'Exports the video’s saved cover as a full-resolution JPEG in Taalcut’s exports folder. Uses original media, editable video effects and the same design renderer as the publishing studio preview. First use timeline.setCover to choose a frame, image or solid background and compose editable typography, shapes and drawn paths with cover.design.',
+      'Exports the video’s saved cover as a full-resolution JPEG in Taalcut’s exports folder: the same picture the cover panel shows, drawn from original media. Save the cover first with workspace.placeCover (a designed composition over real frames); then look at the JPEG before saying it is done.',
     summary: 'Exports the saved cover at full resolution.',
     tags: ['cover', 'thumbnail', 'export'],
     input: coverExportPayloadSchema,

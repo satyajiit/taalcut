@@ -6,6 +6,7 @@ import {
   GRANTED_PERMISSIONS,
   isNavigationAllowed,
   isPermissionGranted,
+  PREVIEW_FRAME_ORIGIN,
   windowOpenDecision,
 } from '../src/main/security/policy';
 import { secureWebPreferences } from '../src/main/security/web-preferences';
@@ -77,18 +78,29 @@ describe('CSP', () => {
 describe('permissions', () => {
   const trusted = ['app://taalcut'];
 
-  it('grants nothing yet', () => {
-    expect(GRANTED_PERMISSIONS.size).toBe(0);
+  it('grants writing to the clipboard and nothing else', () => {
+    expect([...GRANTED_PERMISSIONS]).toEqual(['clipboard-sanitized-write']);
     for (const permission of [
       'media',
       'geolocation',
       'notifications',
       'clipboard-read',
+      'deprecated-sync-clipboard-read',
       'openExternal',
       'hid',
     ]) {
       expect(isPermissionGranted(permission, 'app://taalcut/', trusted)).toBe(false);
     }
+  });
+
+  // FIX-COPYMSG: the app's own Copy buttons (a message you sent, the credits, a link, a PIN).
+  it('lets the app’s own pages write to the clipboard, and no other page', () => {
+    expect(isPermissionGranted('clipboard-sanitized-write', 'app://taalcut/', trusted)).toBe(true);
+    expect(isPermissionGranted('clipboard-sanitized-write', 'app://taalcut', trusted)).toBe(true);
+    expect(isPermissionGranted('clipboard-sanitized-write', 'https://example.com/', trusted)).toBe(false);
+    expect(
+      isPermissionGranted('clipboard-sanitized-write', `${PREVIEW_FRAME_ORIGIN}/x/index.html`, trusted),
+    ).toBe(false);
   });
 
   it('would grant an allow-listed permission only to the app origin', () => {

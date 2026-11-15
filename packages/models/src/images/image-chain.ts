@@ -74,16 +74,21 @@ export function imageCandidates(deps: ImageChainDeps): Result<ImageCandidate[]> 
   return candidates.length > 0 ? ok(candidates) : err(NoModelForModule({ module: 'images' }));
 }
 
-/** The candidates that can run now; core.local_only or models.image_no_provider when none can. */
+/**
+ * The candidates that can run now; when none can: core.local_only, models.chatgpt_images_not_connected (CVR2: a
+ * route of the chain is one approval away on a plan the person is signed in to), or models.image_no_provider.
+ */
 async function runnable(deps: ImageChainDeps, signal?: AbortSignal): AsyncResult<ImageCandidate[]> {
   const all = imageCandidates(deps);
   if (!all.ok) return all;
   const usable: ImageCandidate[] = [];
   let credentialError: TaalcutError | undefined;
+  let connect: TaalcutError | undefined;
   let localOnly = false;
   for (const candidate of all.value) {
     const availability = await candidate.provider.available(candidate.model, signal);
     if (availability.error) credentialError ??= availability.error;
+    if (availability.connect) connect ??= availability.connect;
     if (availability.ok)
       usable.push({ ...candidate, access: availability.access ?? candidate.provider.access });
     else if (availability.reason === 'local_only') localOnly = true;
@@ -93,7 +98,7 @@ async function runnable(deps: ImageChainDeps, signal?: AbortSignal): AsyncResult
   if (subscription.length > 0) return ok(subscription);
   if (credentialError) return err(credentialError);
   if (usable.length > 0) return ok(usable);
-  return err(localOnly ? LocalOnly({ what: 'model' }) : ImageNoProvider());
+  return err(localOnly ? LocalOnly({ what: 'model' }) : (connect ?? ImageNoProvider()));
 }
 
 export interface ImageGeneration {

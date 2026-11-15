@@ -32,6 +32,7 @@ export * from './formats/registry';
 export * from './breakdown/config';
 export type * from './breakdown/ports';
 export * from './breakdown/cut-merge';
+export * from './breakdown/gradual';
 export * from './breakdown/text-track';
 export * from './breakdown/text-overlay';
 // FIX-SIGN: composited or scene, a record per reading (DSG1's reader takes it as input).
@@ -45,7 +46,22 @@ export {
   type WeighOptions,
 } from './breakdown/text-scene';
 export { SCENE_SIGNALS, type SceneSignal } from './breakdown/text-signals';
-export { draftTextRegionSchema, type DraftTextRegion } from './breakdown/text-judge';
+export {
+  draftTextRegionSchema,
+  draftTextSequenceSchema,
+  type DraftTextRegion,
+  type DraftTextSequence,
+} from './breakdown/text-judge';
+// LYR1: text that replaces itself in place (a word or a line at a time), found by one rule in the breakdown's
+// readings and among a stored template's overlays; the timeline's tools keep its cadence with it.
+export {
+  sequenceRuleFor,
+  sequenceWords,
+  templateTextSequences,
+  textSequences,
+  type SequenceRule,
+  type TextSequence,
+} from './breakdown/text-sequence';
 export {
   measureTextPixels,
   type ContextCrop,

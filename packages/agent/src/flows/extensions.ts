@@ -111,10 +111,14 @@ export interface SettlerCall {
   readonly output: unknown;
 }
 
-/** The handoff a step gets from what is stored, read from its completed calls; undefined: nothing to hand off. */
+/**
+ * The handoff a step gets from what is stored, read from its completed calls; undefined: nothing to hand off.
+ * `input` is the step's own input (DSG2: the Designer's jobs, so each job gets a result from what was placed).
+ */
 export type StepSettler = (
   calls: readonly SettlerCall[],
   signal: AbortSignal,
+  input?: unknown,
 ) => AsyncResult<unknown | undefined>;
 
 export interface FlowExtensionDeps {

@@ -1,13 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 
-/** timeline.editText, timeline.moveText and timeline.lockClip: changes that move no cut. */
+/**
+ * timeline.editText, timeline.moveText and timeline.lockClip: changes that move no cut.
+ *
+ * TXT1: a box these set records who set it (`placedBy`: the person, or the AI's tool). A placed text is never
+ * moved by anything automatic afterwards.
+ *
+ * The box follows the words (styles/text-box.ts). A box the AI's tool gives says where a text sits, never where its
+ * words wrap: the text is anchored there and its box becomes its words' own, on one line for each written line (the
+ * owner's "After 9 to 5", given a box 70 % of the frame wide, broke in two). A box the person sets is theirs as
+ * given, and one they made wider or narrower states the width its words wrap at. New words refit a text whose box
+ * follows them.
+ */
 import {
   err,
   ok,
   RationalTime,
+  type CommandSource,
   type NormalisedBox,
   type Result,
+  type TextItem,
   type TextTrackItem,
   type Timeline,
   type TimelineItemId,
@@ -15,6 +28,7 @@ import {
 } from '@taalcut/core';
 import { InvalidMove, ItemNotFound } from '../errors';
 import { findPosition, videoItems, withVideoItems } from '../model/sequence';
+import { anchorOf, wordsBox } from '../styles/text-box';
 import { unchanged, type EditOptions, type EditResult } from './types';
 
 export interface TextEditEntry {
@@ -44,6 +58,28 @@ export interface MoveTextInput {
 
 type TextTrack = Extract<Track, { kind: 'text' }>;
 const isTextTrack = (track: Track): track is TextTrack => track.kind === 'text';
+
+/** A text in the box someone set: the starting layout's record goes, and who set it is kept (TXT1 `placedBy`). */
+export function placedIn(item: TextItem, box: NormalisedBox, source: CommandSource): TextItem {
+  const { placement: _laidOut, ...rest } = item;
+  return { ...rest, box: { ...box }, placedBy: source === 'agent' ? 'editor' : 'person' };
+}
+
+/** The box's width, to the digit a stored box keeps. */
+const sameWidth = (a: NormalisedBox, b: NormalisedBox) => Math.abs(a.width - b.width) < 1e-4;
+
+/**
+ * A text put where `box` says. The AI's tool: anchored there (the box's left edge, centre or right edge as the
+ * text is aligned, at its middle), its box its words' own on one line for each written line. The person: the box
+ * as given; one of another width states where the words wrap.
+ */
+function movedTo(item: TextItem, box: NormalisedBox, source: CommandSource, canvas: Timeline['canvas']) {
+  if (source === 'agent') {
+    const fitted = wordsBox(item, anchorOf(box, item.appearance.align), canvas);
+    return placedIn({ ...item, breaks: 'written' }, fitted, source);
+  }
+  return placedIn(sameWidth(box, item.box) ? item : { ...item, breaks: 'width' }, box, source);
+}
 
 function videoDurationFrames(timeline: Timeline): number {
   let frames = 0;
@@ -133,11 +169,15 @@ export function editText(timeline: Timeline, input: EditTextInput, options: Edit
       let updated: TextTrackItem = item;
       if (edit.text !== undefined) {
         updated = { ...updated, text: edit.text, origin };
+        // The box follows the new words, round the anchor it had.
+        if (updated.type === 'text' && updated.breaks === 'written' && edit.box === undefined)
+          updated = {
+            ...updated,
+            box: wordsBox(updated, anchorOf(updated.box, updated.appearance.align), timeline.canvas),
+          };
       }
-      if (edit.box !== undefined) {
-        const { placement: _solved, ...rest } = updated;
-        updated = { ...rest, box: { ...edit.box } };
-      }
+      if (edit.box !== undefined && updated.type === 'text')
+        updated = movedTo(updated, edit.box, options.source, timeline.canvas);
       if (edit.start !== undefined || edit.duration !== undefined) {
         const rawStart =
           edit.start !== undefined
@@ -172,11 +212,7 @@ export function editText(timeline: Timeline, input: EditTextInput, options: Edit
   return ok({ timeline: { ...timeline, tracks: tracks.value }, changed: ['tracks'] });
 }
 
-export function moveText(
-  timeline: Timeline,
-  input: MoveTextInput,
-  _options: EditOptions,
-): Result<EditResult> {
+export function moveText(timeline: Timeline, input: MoveTextInput, options: EditOptions): Result<EditResult> {
   const moves: TextMoveEntry[] = [
     ...(input.itemId !== undefined && input.box !== undefined
       ? [{ itemId: input.itemId, box: input.box }]
@@ -200,9 +236,7 @@ export function moveText(
         // Text items only: a motion graphic (Timeline v2) moves by its placement (graphics.edit).
         if (!box || item.type !== 'text') return item;
         seen.add(item.id);
-        // FRM1-OVL: the person placed it now, so the solver's record goes and no later solve moves it.
-        const { placement: _solved, ...rest } = item;
-        return { ...rest, box: { ...box } };
+        return movedTo(item, box, options.source, timeline.canvas);
       }),
     };
   });

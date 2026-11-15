@@ -26,6 +26,7 @@ export {
   type SyntheticReelSpec,
   type SyntheticShot,
 } from './testing/synthetic-reel';
+export { MOVING_REEL, movingReelArgs, type MovingReelJoin } from './testing/moving-reel';
 export { runProcess, type ProcessResult } from './testing/run-process';
 export {
   createMemoryTemplateMediaStore,

@@ -8,14 +8,22 @@
  * may stay as it is with a stated reason (no clip in the library shows its need, the person asked for it); a failing
  * check the person may export over (`overridable`) may too; one the person may not, never. The refusal lists every failing slot with what differs and the tools its
  * fix names, so the next round starts from it. Render's `video.done` tool and the Maker's check both call this.
- * Pure.
+ *
+ * TXT1: a video's text is designed and placed by whoever makes it, so a video is not done while a role its text
+ * uses has no look in the Style it renders with (`textStyle`: it would be drawn in the default face), or while a
+ * text made from the reference has no stated place (core `unplacedTexts`; "as the reference has it" is a statement
+ * too). The refusal names what is missing and the tools that state it. No reason waives either: there is no
+ * built-in look or place to fall back on. It never judges a look, a place or a size. Pure.
  */
 import {
   SLOT_MATCH_CHECK_IDS,
+  undesignedTextRoles,
+  unplacedTexts,
   type QaCheckId,
   type QaCheckResult,
   type QaReport,
   type SkillVerdict,
+  type Style,
   type Timeline,
 } from '@taalcut/core';
 import { positions, videoItems } from '../model/sequence';
@@ -41,6 +49,12 @@ export interface VideoDoneInput {
   readonly slots: readonly { readonly id: string }[] | null;
   readonly draft: VideoDoneDraft | null;
   readonly reasons: readonly VideoDoneReason[];
+  /**
+   * TXT1: the Style the video renders with (render's resolution: the video's, else its template's), or null when
+   * it has none. Absent only where no Style can be read at all (no style store): the text's look and place are then
+   * not held.
+   */
+  readonly textStyle?: Pick<Style, 'textStyles'> | null;
 }
 
 export interface VideoDoneOutcome {
@@ -57,6 +71,37 @@ const SLOT_CHECKS = new Set<QaCheckId>(SLOT_MATCH_CHECK_IDS);
 const LISTED = 12;
 
 const retry = (reason: string): SkillVerdict => ({ verdict: 'retry', reason });
+
+/** TXT1: what a video with text in the default face is told; null when every role its text uses has a look. */
+export function defaultLookRefusal(
+  timeline: Pick<Timeline, 'tracks'>,
+  style: Pick<Style, 'textStyles'> | null,
+): string | null {
+  const roles = undesignedTextRoles(timeline, style);
+  if (roles.length === 0) return null;
+  const named = roles
+    .map((use) => `"${use.role}" (${use.itemIds.length} ${use.itemIds.length === 1 ? 'text' : 'texts'})`)
+    .join(', ');
+  return (
+    `The video's on-screen text has no designed look and would be drawn in the default face: ${named}. Read ` +
+    'timeline.textLook (the roles, the reference’s measured look, the faces), then give every role a look with ' +
+    'timeline.designText, starting from the reference’s unless the person asked for another. Then render.draft ' +
+    'again and call video.done.'
+  );
+}
+
+/** TXT1: what a video whose text nobody has placed is told; null when every text has a stated place. */
+export function unplacedTextRefusal(timeline: Pick<Timeline, 'tracks'>): string | null {
+  const texts = unplacedTexts(timeline).length;
+  if (texts === 0) return null;
+  return (
+    `${texts} of the video's on-screen texts ${texts === 1 ? 'has' : 'have'} no stated place or size yet: ` +
+    `${texts === 1 ? 'it sits' : 'they sit'} where the reference had ${texts === 1 ? 'it' : 'them'}. Read ` +
+    'timeline.textLook (each group, what is under it here), look at the text in your draft frames, then state ' +
+    'every group’s place and size with timeline.placeText (asReel: true keeps the reference’s). Then ' +
+    'render.draft again and call video.done.'
+  );
+}
 
 /** A fix's params as words: key=value, in order. */
 const paramsText = (params: Readonly<Record<string, string | number>>) =>
@@ -129,6 +174,12 @@ export function checkVideoDone(input: VideoDoneInput): VideoDoneOutcome {
     compared,
   });
   const { timeline, draft } = input;
+  if (input.textStyle !== undefined) {
+    const unstated = [defaultLookRefusal(timeline, input.textStyle), unplacedTextRefusal(timeline)].filter(
+      (refusal) => refusal !== null,
+    );
+    if (unstated.length > 0) return outcome(retry(unstated.join(' ')));
+  }
   if (!draft)
     return outcome(
       retry(

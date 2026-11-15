@@ -75,6 +75,7 @@ const SKIPPED_WITHOUT_FEATURE: ReadonlySet<QaCheckId> = new Set<QaCheckId>([
   'slotMotion',
   'slotTiming',
   'slotGraphics',
+  'slotPart',
 ]);
 
 /** Every check the gate runs today, passing unless the plan says otherwise. */

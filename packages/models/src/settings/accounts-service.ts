@@ -8,6 +8,7 @@
  * setApiKey once and is never returned: the state says only `configured`.
  */
 import {
+  CancelledError,
   CHATGPT_PROVIDER,
   CHATGPT_IMAGE_PROVIDER,
   err,
@@ -18,6 +19,7 @@ import {
   type AccountsState,
   type AsyncResult,
   type CloudCallSink,
+  type ImagesAttempt,
   type LocalServerCheck,
   type LocalServerKind,
   type Result,
@@ -28,7 +30,7 @@ import type { FetchFn } from '../client/http-meter';
 import { createKeyTester, type ApiKeyTester } from '../credentials/api-keys';
 import type { AccountStatus, AuthBroker } from '../credentials/auth-broker';
 import { ELEVENLABS_PROVIDER } from '../elevenlabs/config';
-import { ModelNotConfigured, SignInUnsupported } from '../errors';
+import { ModelNotConfigured, SignInFailed, SignInUnsupported } from '../errors';
 import { BUILTIN_PROFILES } from '../registry/builtin-profiles';
 import { runtimeInternals, type ModelRuntime } from '../runtime/runtime';
 import { signInOption, type AcknowledgementStore } from '../signin/options';
@@ -55,6 +57,13 @@ export interface AccountsServiceDeps {
    * client). The broker must keep their keys (`keyOnlyProviders`). The others are listed, not settable.
    */
   readonly stockKeys?: readonly { readonly provider: StockProviderId; readonly test: ApiKeyTester }[];
+  /**
+   * Continue with ChatGPT also asks for the plan's images. OpenAI grants those separately
+   * (CHATGPT_IMAGE_PROVIDER), so a second page opens in the browser once the chat sign-in is in. Off unless
+   * asked for: a tool or a test signs in to one thing at a time. CVR2: how that second half goes is in the state
+   * (`chatgpt.imagesAttempt`), so a page that was closed or a sign-in that failed is said, never dropped.
+   */
+  readonly imagesWithChatGPT?: boolean;
 }
 
 export interface AccountsService {
@@ -118,6 +127,8 @@ export function createAccountsService(deps: AccountsServiceDeps): AccountsServic
     ...(deps.fetch ? { fetch: deps.fetch } : {}),
     now,
   });
+  /** CVR2: the last try at the plan's images; `state()` leaves it out once they are connected. */
+  let imagesAttempt: ImagesAttempt | undefined;
 
   async function acknowledgedAt(feature: string, termsVersion: string): Promise<number | undefined> {
     const at = await deps.acknowledgements?.acknowledgedAt?.(feature, termsVersion);
@@ -152,10 +163,13 @@ export function createAccountsService(deps: AccountsServiceDeps): AccountsServic
         ...usagePage(provider),
       });
     }
+    const imagesSignedIn = method(CHATGPT_IMAGE_PROVIDER) === 'subscription';
     return ok({
       chatgpt: {
         signedIn: method(CHATGPT) === 'subscription',
-        imagesSignedIn: method(CHATGPT_IMAGE_PROVIDER) === 'subscription',
+        imagesSignedIn,
+        // Connected images have nothing left to say about the try that connected them.
+        ...(imagesAttempt && !imagesSignedIn ? { imagesAttempt } : {}),
         manageUsageUrl: signInOption(CHATGPT)?.manageUsageUrl ?? 'https://chatgpt.com/settings/usage',
       },
       subscriptions,
@@ -176,6 +190,39 @@ export function createAccountsService(deps: AccountsServiceDeps): AccountsServic
     return current.value;
   });
   const unsubscribe = broker.onChange(() => watch.notify());
+
+  /**
+   * CVR2: one try at the plan's images, kept in the state while its page is open and after it ends without
+   * connecting. A try that a newer one replaced, or that a sign-out cancelled, says nothing: it did not fail.
+   */
+  const signInImages = async (): Promise<Result<AccountStatus>> => {
+    const attempt: ImagesAttempt = { state: 'waiting', at: now() };
+    imagesAttempt = attempt;
+    watch.notify();
+    const outcome = await broker
+      .signIn(CHATGPT_IMAGE_PROVIDER)
+      .catch(() => err(SignInFailed({ provider: CHATGPT_IMAGE_PROVIDER })));
+    if (imagesAttempt === attempt) {
+      // A guard that narrows the error away would leave nothing to read the code from.
+      const code = outcome.ok ? undefined : outcome.error.code;
+      imagesAttempt =
+        code === undefined || code === CancelledError.code
+          ? undefined
+          : { state: 'failed', at: now(), errorCode: code };
+      watch.notify();
+    }
+    return outcome;
+  };
+
+  /**
+   * The second half of Continue with ChatGPT: the plan's images, on a second page in the browser. Nothing waits
+   * for it: the chat sign-in is already answered, a person who closes that page keeps it, and the broker's own
+   * change tells windows when images connect. When they don't, the state says how it ended (`imagesAttempt`),
+   * Settings offers them again, and so does the next image that needs them (models.chatgpt_images_not_connected).
+   */
+  const connectImages = (): void => {
+    void signInImages();
+  };
 
   /** Applies a change, then answers with the new state. */
   const after = async (change: AsyncResult<unknown>): AsyncResult<AccountsState> => {
@@ -205,10 +252,28 @@ export function createAccountsService(deps: AccountsServiceDeps): AccountsServic
         if (!recorded.ok) return recorded;
       }
       // The broker refuses a warned sign-in whose card wasn't acknowledged (P1-F6).
-      return after(broker.signIn(target));
+      const signedIn = await after(
+        target === CHATGPT_IMAGE_PROVIDER ? signInImages() : broker.signIn(target),
+      );
+      if (
+        signedIn.ok &&
+        target === CHATGPT &&
+        deps.imagesWithChatGPT &&
+        !signedIn.value.chatgpt.imagesSignedIn
+      ) {
+        connectImages();
+        // The answer already says the images' page is open (`imagesAttempt.state: 'waiting'`).
+        return state();
+      }
+      return signedIn;
     },
     async signOut({ provider }) {
       const target = signInTarget(provider);
+      // Signing out of the plan also stops asking for its images, and forgets how the last try went.
+      if (target === CHATGPT || target === CHATGPT_IMAGE_PROVIDER) {
+        imagesAttempt = undefined;
+        if (target === CHATGPT) broker.cancelSignIn(CHATGPT_IMAGE_PROVIDER);
+      }
       const method = await methodOf(target);
       if (!method.ok) return method;
       // An API key is removed with removeApiKey, never by signing out of a plan.
@@ -247,7 +312,10 @@ export function createAccountsService(deps: AccountsServiceDeps): AccountsServic
       return check;
     },
     load: () => servers.load(),
-    dispose: unsubscribe,
+    dispose() {
+      if (deps.imagesWithChatGPT) broker.cancelSignIn(CHATGPT_IMAGE_PROVIDER);
+      unsubscribe();
+    },
   };
 }
 

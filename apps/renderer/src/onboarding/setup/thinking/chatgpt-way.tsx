@@ -7,10 +7,18 @@
  *   panel back with one line. Tokens stay in main; the page only learns "signed in".
  * states: default (Continue with ChatGPT, primary) · hover/focus/active (Button) · disabled (offline: the line says
  *   why) · loading (waiting for the browser: a status line, Cancel, Open it again) · error (ErrorLine with its fix)
- *   · success (the row says "Using ChatGPT plan", announced; the panel keeps Manage usage)
+ *   · success (the row says "Using ChatGPT plan", announced; the panel keeps Manage usage) · the plan's images
+ *   (CVR2: a second page in the browser; a line while it is open, and when it ended without connecting a line
+ *   that says so with Connect ChatGPT images, which is also in Settings › Accounts)
  */
 import { Trans, useLingui } from '@lingui/react/macro';
-import { callRpc, CHATGPT_PROVIDER, type AccountsState, type TaalcutError } from '@taalcut/core';
+import {
+  callRpc,
+  CHATGPT_IMAGE_PROVIDER,
+  CHATGPT_PROVIDER,
+  type AccountsState,
+  type TaalcutError,
+} from '@taalcut/core';
 import { Button, ErrorLine } from '@taalcut/ui';
 import { useEffect, useRef, useState } from 'react';
 import { useBackend } from '../../../backend/backend';
@@ -67,7 +75,12 @@ export function ChatGptWay({
 
   // Signed in: the row says "Using ChatGPT plan"; the panel keeps OpenAI's own link.
   if (state.chatgpt.signedIn)
-    return <BrowserLink href={state.chatgpt.manageUsageUrl}>{i18n._(MANAGE_USAGE)}</BrowserLink>;
+    return (
+      <div className="flex flex-col items-start gap-3">
+        <BrowserLink href={state.chatgpt.manageUsageUrl}>{i18n._(MANAGE_USAGE)}</BrowserLink>
+        <ImagesAttempt state={state} />
+      </div>
+    );
 
   return (
     <div className="flex flex-col items-start gap-3">
@@ -106,6 +119,45 @@ export function ChatGptWay({
         </p>
       ) : null}
       {error ? <ErrorLine error={error} /> : null}
+    </div>
+  );
+}
+
+/**
+ * CVR2: the second half of Continue with ChatGPT, the plan's images, which OpenAI approves on a page of its own.
+ * Nothing while they are connected or were never asked for; a line while that page is open; and when it ended
+ * without connecting, a line that says so and the button that asks again (the state's own failure is the row's
+ * in Settings › Accounts, where the reason is said).
+ */
+function ImagesAttempt({ state }: { state: AccountsState }) {
+  const backend = useBackend();
+  const attempt = state.chatgpt.imagesAttempt;
+  if (!attempt || state.chatgpt.imagesSignedIn) return null;
+  if (attempt.state === 'waiting')
+    return (
+      <p role="status" className="m-0 max-w-[56ch] text-sm text-ink-2">
+        <Trans>
+          One more page opened in your browser: approve images there so Taalcut can make pictures with your
+          plan.
+        </Trans>
+      </p>
+    );
+  return (
+    <div className="flex flex-col items-start gap-2">
+      <p role="status" className="m-0 max-w-[56ch] text-sm text-ink-2">
+        <Trans>
+          Images didn’t connect, so Taalcut can’t make pictures with your plan yet. Connect them now, or later
+          in Settings › Accounts.
+        </Trans>
+      </p>
+      <Button
+        variant="secondary"
+        size="sm"
+        data-action="chatgpt-images-sign-in"
+        onClick={() => void callRpc(backend.accounts.signIn({ provider: CHATGPT_IMAGE_PROVIDER }))}
+      >
+        <Trans>Connect ChatGPT images</Trans>
+      </Button>
     </div>
   );
 }

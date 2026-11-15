@@ -12,7 +12,16 @@
  * their looks). A slot whose rewrite says too little, or a slot the breakdown doesn't have, is refused alone, with
  * the call to make; the page's other slots are stored.
  */
-import { defineTool, err, NO_TOOL_RETRY, ok, ValidationError, type TaalcutError } from '@taalcut/core';
+import {
+  defineTool,
+  err,
+  NO_TOOL_RETRY,
+  ok,
+  SLOT_MOMENT_CHARS,
+  ValidationError,
+  type SlotEdge,
+  type TaalcutError,
+} from '@taalcut/core';
 import { resolveCuts, type SlotIntentInput } from '../breakdown/build-template';
 import { readLooks } from '../breakdown/looks';
 import {
@@ -28,6 +37,14 @@ import { generaliseIntent, MIN_REWRITTEN_WORDS, type IntentRewrite } from '../br
 const TEXT_SHOTS: ReadonlySet<string> = new Set(['text', 'screen']);
 import { SlotNotFound } from '../errors';
 import type { DraftCache, TemplateToolDeps } from './deps';
+import {
+  ALL_REEL_NOTE,
+  reelKeepable,
+  reelSlotsOf,
+  statedReel,
+  unkeptNote,
+  type FootageEntry,
+} from './reel-footage';
 import { setIntentsInputSchema, setIntentsOutputSchema } from './schemas';
 
 const MINUTE = 60_000;
@@ -39,7 +56,13 @@ export const REWRITTEN_NOTE =
   "Taalcut rewrote these intents to fit anyone's footage (no place names, landmarks, brands or sign text) and " +
   "stored them; the reel's own words stay in reel. Write the next slots this way.";
 
-type Entry = SlotIntentInput & { readonly intent: SlotIntentInput['intent'] & { readonly reel?: string } };
+type Entry = SlotIntentInput & {
+  readonly intent: SlotIntentInput['intent'] & { readonly reel?: string };
+  /** KEEP1: whose footage the slot plays, as the call states it. */
+  readonly footage?: FootageEntry | undefined;
+  /** MATCH1: the moment that must land on the slot's start or end, as the call states it (any length). */
+  readonly lands?: { readonly edge: SlotEdge; readonly moment: string } | undefined;
+};
 
 interface Prepared {
   readonly entry: Entry;
@@ -104,7 +127,10 @@ export function setIntentsTool(deps: TemplateToolDeps, drafts: DraftCache) {
     // 1.2.0 (AGT1): such an intent is rewritten and stored (`rewritten`, `note`); a slot that can't be is refused
     // alone, as is a slot the breakdown doesn't have; lengths past the page's budget are taken up to the store's.
     // 1.3.0 (FIX-HOOK): an intent says what its footage needs (`needs`) and whether the reel shows the face (`face`).
-    version: '1.3.0',
+    // 1.4.0 (KEEP1): a slot may be stated as the reel's own footage (`footage`); the answer lists them (`reelSlots`).
+    // 1.5.0 (MATCH1): a slot may state a moment of its footage that must land on its start or end (`lands`); the
+    // answer lists them (`landSlots`).
+    version: '1.5.0',
     summary: "Stores the intents of a page of a breakdown's slots, for templates.finalise.",
     description:
       "Stores the intents of a page's slots, replacing what a slot had, and returns how many of all the slots " +
@@ -124,6 +150,8 @@ export function setIntentsTool(deps: TemplateToolDeps, drafts: DraftCache) {
       if (!loaded.ok) return loaded;
       const { draft, dir } = loaded.value;
       const looks = await readLooks(dir);
+      // KEEP1: a slot keeps the reel's footage only when finalise will have the reel to keep (reel-footage.ts).
+      const keepable = await reelKeepable(deps.media, draft, dir);
       let missing: number[] = [];
       let total = 0;
       let prepared: Prepared[] = [];
@@ -142,7 +170,14 @@ export function setIntentsTool(deps: TemplateToolDeps, drafts: DraftCache) {
         });
         const written = prepared.flatMap(({ entry, refusal }) => {
           const slot = slots[entry.slotIndex];
-          return slot && !refusal ? [{ slot, entry }] : [];
+          const keepsReel = keepable ? statedReel(entry.footage) : undefined;
+          // MATCH1: the stated moment at the store's length; a page that leaves it out states none.
+          const { lands: stated, ...rest } = entry;
+          const lands = stated
+            ? { edge: stated.edge, moment: cutAtWord(stated.moment, SLOT_MOMENT_CHARS) }
+            : null;
+          const stored = { ...rest, ...(keepsReel ? { keepsReel } : {}), ...(lands ? { lands } : {}) };
+          return slot && !refusal ? [{ slot, entry: stored }] : [];
         });
         return ok(withIntents(current, written));
       });
@@ -169,16 +204,27 @@ export function setIntentsTool(deps: TemplateToolDeps, drafts: DraftCache) {
         intentsOf(stored.value, slots),
         input.intents.map((entry) => entry.slotIndex),
       );
+      const reelSlots = reelSlotsOf(intentsOf(stored.value, slots));
+      const landSlots = intentsOf(stored.value, slots).flatMap((item) =>
+        item.lands ? [item.slotIndex] : [],
+      );
+      const unkept = keepable
+        ? []
+        : prepared.flatMap(({ entry }) => (statedReel(entry.footage) ? [entry.slotIndex] : []));
       const notes = [
         ...(extra ? [`${extra} Those were left out; the others are stored.`] : []),
         ...(same ? [same] : []),
         ...(rewritten.length > 0 ? [REWRITTEN_NOTE] : []),
+        ...(unkept.length > 0 ? [unkeptNote(unkept)] : []),
+        ...(written === slots.length && reelSlots.length === slots.length ? [ALL_REEL_NOTE] : []),
       ];
       return ok({
         written,
         total: slots.length,
         ...(rewritten.length > 0 ? { rewritten } : {}),
         ...(notes.length > 0 ? { note: notes.join(' ') } : {}),
+        ...(reelSlots.length > 0 ? { reelSlots } : {}),
+        ...(landSlots.length > 0 ? { landSlots } : {}),
       });
     },
   });

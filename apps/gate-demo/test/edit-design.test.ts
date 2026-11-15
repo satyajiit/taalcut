@@ -13,7 +13,9 @@ import {
   EDIT_DESIGN_ASK,
   EDIT_DESIGN_ENTRY,
   EDIT_DESIGN_NAME,
-  EDIT_DESIGN_PROPOSED,
+  EDIT_DESIGN_ADDED,
+  EDIT_DESIGN_FEWER,
+  EDIT_DESIGN_IDEA,
   EDIT_DESIGN_SESSION,
   editDesignTurn,
   isEditChatAsk,
@@ -35,7 +37,14 @@ const designer = (calls: Call[]): RequestView => ({
   skill: 'render.designer',
   input: { projectId: 'P', timelineId: 'T', jobs: [{ jobId: 'job-1', request: EDIT_DESIGN_ASK, at: 4 }] },
   calls,
-  tools: ['workspace_write', 'workspace_lint', 'workspace_place', 'graphics_list', 'handOff'],
+  tools: [
+    'workspace_write',
+    'workspace_lint',
+    'workspace_renderOver',
+    'workspace_placeOptions',
+    'graphics_list',
+    'handOff',
+  ],
 });
 const done = (name: string, result: object): Call => ({ name, input: {}, result: JSON.stringify(result) });
 const listed = done('graphics_list', { revision: 4, items: [] });
@@ -54,7 +63,7 @@ describe('the docked designed graphic’s stand-in (HFW1-UI)', () => {
     });
   });
 
-  it('the Designer writes, checks, places at the job’s second and hands the job off as placed', () => {
+  it('the Designer writes, checks, draws, places at the job’s second and hands the job off as placed', () => {
     const write = editDesignTurn(designer([])).toolCall!;
     expect(write.name).toBe('workspace_write');
     expect(write.args).toMatchObject({ projectId: 'P', path: EDIT_DESIGN_ENTRY });
@@ -67,32 +76,52 @@ describe('the docked designed graphic’s stand-in (HFW1-UI)', () => {
     const failed = done('workspace_lint', { passed: false, findings: [{ code: 'x' }] });
     expect(editDesignTurn(designer([wrote, failed])).text).toMatch(/didn’t pass its checks/);
     const linted = done('workspace_lint', { passed: true, findings: [] });
-    expect(editDesignTurn(designer([wrote, linted])).toolCall?.name).toBe('graphics_list');
-    expect(editDesignTurn(designer([wrote, linted, listed])).toolCall).toEqual({
-      name: 'workspace_place',
+    // DSG2: drawn over the video where it plays, then placed as the first design of its set (in the video at once).
+    expect(editDesignTurn(designer([wrote, linted])).toolCall).toEqual({
+      name: 'workspace_renderOver',
+      args: {
+        projectId: 'P',
+        entry: EDIT_DESIGN_ENTRY,
+        seconds: [1],
+        over: 'footage',
+        timelineId: 'T',
+        at: 4,
+      },
+    });
+    const undrawn = done('workspace_renderOver', { passed: false, findings: [{ code: 'x' }] });
+    expect(editDesignTurn(designer([wrote, linted, undrawn])).text).toMatch(/didn’t draw/);
+    const drawn = done('workspace_renderOver', { passed: true, findings: [], frames: [] });
+    expect(editDesignTurn(designer([wrote, linted, drawn])).toolCall).toEqual({
+      name: 'workspace_placeOptions',
       args: {
         projectId: 'P',
         timelineId: 'T',
-        revision: 4,
-        entry: EDIT_DESIGN_ENTRY,
-        name: EDIT_DESIGN_NAME,
+        options: [{ entry: EDIT_DESIGN_ENTRY, name: EDIT_DESIGN_NAME, idea: EDIT_DESIGN_IDEA }],
         request: EDIT_DESIGN_ASK,
         at: 4,
       },
     });
-    const placed = done('workspace_place', { revision: 5, itemIds: ['I'], compositionId: 'C' });
-    expect(editDesignTurn(designer([wrote, linted, listed, placed])).toolCall).toEqual({
+    const placed = done('workspace_placeOptions', { revision: 5, itemIds: ['I'], compositionId: 'C' });
+    expect(editDesignTurn(designer([wrote, linted, drawn, placed])).toolCall).toEqual({
       name: 'handOff',
       args: {
         timelineId: 'T',
         revision: 5,
-        results: [{ jobId: 'job-1', outcome: 'placed', itemIds: ['I'], compositionId: 'C' }],
+        results: [
+          {
+            jobId: 'job-1',
+            outcome: 'placed',
+            itemIds: ['I'],
+            compositionId: 'C',
+            fewerBecause: EDIT_DESIGN_FEWER,
+          },
+        ],
       },
     });
   });
 
   it('the run’s last turn says what was done', () => {
-    expect(editDesignTurn({ ...editor([]), skill: null }).text).toBe(EDIT_DESIGN_PROPOSED);
+    expect(editDesignTurn({ ...editor([]), skill: null }).text).toBe(EDIT_DESIGN_ADDED);
   });
 
   it('its ask is its own session’s', () => {

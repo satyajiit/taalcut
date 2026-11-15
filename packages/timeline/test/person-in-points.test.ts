@@ -333,7 +333,7 @@ describe('assembly’s in-points with the person', () => {
     expect(fake.asked).toContainEqual(asked);
   });
 
-  it('runs between the picks’ tracks and the fallbacks’, and placement’s ranges follow the moved clip', async () => {
+  it('runs after the picks’ tracks, in what is left of the budget, and moves the walking clip', async () => {
     const { template, engine, walker, cast } = await made();
     const fake = fakeSubjects(new Map([[walker.assetId, standsThenWalks(3)]]));
     const refine = async (next: typeof cast, budget: number) =>
@@ -348,7 +348,7 @@ describe('assembly’s in-points with the person', () => {
       ).cast;
     const tracks = await ensureForAssembly(fake.source, template, cast, 5_000, Date.now, refine);
     expect(tracks.cast.variants[0]!.slots[1]!.pick!.sourceStart.value).toBeGreaterThanOrEqual(90);
-    expect(tracks.picks.done && tracks.fallbacks.done).toBe(true);
+    expect(tracks.picks.done).toBe(true);
   });
 
   it('leaves a locked pick, an untracked shot and a shot nobody is in as cast', async () => {

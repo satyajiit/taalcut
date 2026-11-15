@@ -10,6 +10,8 @@
  *   pnpm --filter @taalcut/gate-demo refresh:catalogue                          # dry run: reports, writes nothing
  *   pnpm --filter @taalcut/gate-demo refresh:catalogue -- --write --update=<name>
  * It exits 2, writing nothing, when the sessions changed beyond their offers: re-record them then (`rerecord`).
+ * `--rerecord=<session>[,<session>]` sets those sessions aside (a flow that changed, to be recorded again in the
+ * app right after): the others refresh, so the journey that records them can replay the make flow first.
  *
  * With the network off here and in the runs it starts, and no model:
  * 1. the catalogue is the gate demo's composition's (test/compose.ts), which test/catalogue.test.ts and the desktop's
@@ -62,7 +64,12 @@ import {
 import { alignJourney } from './refresh-journey';
 import { refreshMeta } from './refresh-meta';
 
-const SESSIONS = [GATE_DEMO_SESSION, MAKE_FLOW_SESSION, EDIT_CHAT_SESSION, EDIT_DESIGN_SESSION];
+const ASIDE = (process.argv.find((arg) => arg.startsWith('--rerecord='))?.slice('--rerecord='.length) ?? '')
+  .split(',')
+  .filter(Boolean);
+const SESSIONS = [GATE_DEMO_SESSION, MAKE_FLOW_SESSION, EDIT_CHAT_SESSION, EDIT_DESIGN_SESSION].filter(
+  (session) => !ASIDE.includes(session.name),
+);
 /** The sessions the gate demo's headless journey replays; the app records the others. */
 const JOURNEYS: readonly RecordedSession[] = [GATE_DEMO_SESSION];
 const GATE = resolve(import.meta.dirname, '..');
@@ -303,7 +310,8 @@ const next = {
     'and recorded skill meta schemas came from actual public-agent requests serialized by the provider SDK. Canonical ' +
     'request hashes were recomputed by the cassette recorder with stored responses as its only upstream. Every ' +
     'response byte, interaction count and original recorder timestamp is unchanged; no live provider was contacted.',
-  sessions: stats,
+  // A session set aside (--rerecord) keeps its last record until it is recorded again.
+  sessions: { ...refresh.sessions, ...stats },
 };
 writeFileSync(refreshPath, `${JSON.stringify(next, null, 2)}\n`);
 say('Written.');

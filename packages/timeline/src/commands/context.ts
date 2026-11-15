@@ -73,8 +73,11 @@ export interface TimelineCommandDeps {
   readonly templateStore?: Pick<TemplateStore, 'setHead'>;
   /** P3-V5: the registered writers, the originals and Taalcut's exports folder. Absent: not implemented. */
   readonly interchange?: InterchangeDeps;
-  /** P3-V10, P3-V16: the Style a timeline takes. Absent: setStyle and batch.applyStyle are not implemented. */
-  readonly styles?: Pick<StyleStore, 'get'>;
+  /**
+   * P3-V10, P3-V16: the Style a timeline takes. Absent: setStyle and batch.applyStyle are not implemented. TXT1:
+   * with `create`, `timeline.designText` saves the video's own Style; without it that command is not implemented.
+   */
+  readonly styles?: Pick<StyleStore, 'get'> & Partial<Pick<StyleStore, 'create'>>;
   /** P3-V12: the template half of the energy curve and its versioning. Absent: not implemented. */
   readonly energy?: EnergyDeps;
   /**

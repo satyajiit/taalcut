@@ -16,6 +16,9 @@ export const KEYS = {
   /** EDT1-OPS: split the clip at the playhead, delete the selected clip (what follows closes up). */
   split: 's',
   remove: 'Backspace',
+  /** EDT2: on a focused clip or scene, its other shots open above it; ↓, Escape or Tab comes back. */
+  otherShots: 'ArrowUp',
+  otherShotsBack: 'ArrowDown',
 } as const;
 
 /** Shortcuts with ⌘ on a Mac and Ctrl elsewhere, as accelerators (@taalcut/ui shortcut.ts). */

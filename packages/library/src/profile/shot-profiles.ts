@@ -15,7 +15,8 @@
  * curves, past an hour, are null); place clusters group capture locations,
  * else the description's place (profile-signals.ts). The best frame is vision's sharpest sampled frame (the
  * `best_frame` column, else the analysis's), kept inside the shot (FIX-TRIM). Faces come from the description's people:
- * vision has no face pass (faces are opt-in, PRD).
+ * vision has no face pass (faces are opt-in, PRD). MOM1: a video shot's moments are the description's, each with its
+ * note's vector (profile-moments.ts), read with the frame vectors.
  */
 import {
   CAMERA_MOTIONS,
@@ -28,6 +29,7 @@ import {
   type AssetId,
   type CameraMotion,
   type Orientation,
+  type ShotAnalysis,
   type ShotId,
   type ShotProfile,
   type ShotProfileFilter,
@@ -45,6 +47,7 @@ import { assetDuration } from '../repositories/stored-time';
 import { assets, shots } from '../schema/library';
 import { meanVector } from '../search/similar';
 import { USER_IMPORTED_ASSET_SQL } from './filters';
+import { momentVectorIds, profileMoments } from './profile-moments';
 import { createPlaceClusters, namedPlace } from './profile-signals';
 
 export interface ShotProfileSourceDeps {
@@ -90,18 +93,26 @@ export function createShotProfileSource(deps: ShotProfileSourceDeps): ShotProfil
   const index = (): VectorIndex | null =>
     typeof deps.vectors === 'function' ? deps.vectors() : (deps.vectors ?? null);
 
-  /** Each shot's unit mean frame vector; shots without vectors are absent. */
-  function directions(shotIds: readonly string[]): Map<string, Float32Array> {
+  /**
+   * Each shot's unit mean frame vector (shots without vectors are absent), and whatever of `extra` the index holds
+   * (MOM1: the shots' moment vectors, read in the same pass).
+   */
+  function directions(shotIds: readonly string[], extra: readonly string[] = []) {
     const vectors = index();
     const out = new Map<string, Float32Array>();
-    if (!vectors || shotIds.length === 0) return out;
-    const read = vectors.get(shotIds.flatMap(frameIds));
-    if (!read.ok) return out;
+    const others = new Map<string, Float32Array>();
+    if (!vectors || shotIds.length === 0) return { means: out, others };
+    const read = vectors.get([...shotIds.flatMap(frameIds), ...extra]);
+    if (!read.ok) return { means: out, others };
     for (const id of shotIds) {
       const mean = meanVector(frameIds(id).flatMap((frame) => read.value.get(frame) ?? []));
       if (mean) out.set(id, mean);
     }
-    return out;
+    for (const id of extra) {
+      const vector = read.value.get(id);
+      if (vector) others.set(id, vector);
+    }
+    return { means: out, others };
   }
 
   /** Each asset's source (a present location first) and its earliest file time. */
@@ -140,10 +151,11 @@ export function createShotProfileSource(deps: ShotProfileSourceDeps): ShotProfil
     asset: AssetRow,
     located: Located | undefined,
     place: string | null,
-    vector?: Float32Array,
+    analysis: ShotAnalysis | null,
+    vectors: ReturnType<typeof directions>,
   ): ShotProfile {
     const photo = asset.kind !== 'video';
-    const analysis = shotAnalysis(shot);
+    const vector = vectors.means.get(shot.id);
     const signals = analysis?.signals;
     const range = shotRange(shot);
     const zero = RationalTime.zero(range.start.rate);
@@ -176,6 +188,7 @@ export function createShotProfileSource(deps: ShotProfileSourceDeps): ShotProfil
       sharpnessCurve: photo ? null : curve(signals?.sharpnessCurve),
       motionPeakFrames: photo ? [] : [...(signals?.motionPeakFrames ?? [])],
       bestFrame: photo ? null : bestFrameOf(shot.bestFrame ?? analysis?.bestFrame ?? null, range),
+      moments: photo ? null : profileMoments(shot.id, analysis, range, vectors.others),
     };
   }
 
@@ -187,7 +200,11 @@ export function createShotProfileSource(deps: ShotProfileSourceDeps): ShotProfil
       for (const asset of db.orm.select().from(assets).where(inArray(assets.id, part)).all())
         byId.set(asset.id, asset);
     const located = locate(assetIds as AssetId[]);
-    const vectors = directions(rows.map((row) => row.id));
+    const analyses = new Map(rows.map((row) => [row.id, shotAnalysis(row)]));
+    const vectors = directions(
+      rows.map((row) => row.id),
+      rows.flatMap((row) => momentVectorIds(row.id, analyses.get(row.id) ?? null)),
+    );
     const clusters = places();
     const seen = new Set<string>();
     const out: ShotProfile[] = [];
@@ -196,7 +213,8 @@ export function createShotProfileSource(deps: ShotProfileSourceDeps): ShotProfil
       if (!asset || asset.kind === 'audio' || asset.trashedAt !== null || asset.companionOf !== null)
         continue;
       const place = clusters.get(asset.id) ?? namedPlace(row.place);
-      const profile = toProfile(row, asset, located.get(asset.id), place, vectors.get(row.id));
+      const analysis = analyses.get(row.id) ?? null;
+      const profile = toProfile(row, asset, located.get(asset.id), place, analysis, vectors);
       const key = profile.shotId ?? `asset:${profile.assetId}`;
       if (seen.has(key)) continue;
       seen.add(key);
@@ -286,6 +304,7 @@ export function createShotProfileSource(deps: ShotProfileSourceDeps): ShotProfil
         sharpnessCurve: null,
         motionPeakFrames: [],
         bestFrame: null,
+        moments: null,
       });
     }
     return out;
@@ -351,7 +370,7 @@ export function createShotProfileSource(deps: ShotProfileSourceDeps): ShotProfil
         )
         .all(clampLimit(limit));
       const ids = rows.map((row) => String(row.id));
-      const vectors = directions(ids);
+      const vectors = directions(ids).means;
       return ok(ids.flatMap((id) => vectors.get(id) ?? []));
     },
   };

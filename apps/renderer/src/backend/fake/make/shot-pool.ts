@@ -16,9 +16,10 @@ import {
   type ShotId,
   type TimeRange,
 } from '@taalcut/core';
-import { fakeAsset, fakeSources, DEFAULT_ASSET_COUNT } from '../library/assets';
+import { fakeAsset, fakeSources, DEFAULT_ASSET_COUNT, KIND } from '../library/assets';
 import { fakeAssetDetail } from '../library/detail';
-import { prng } from '../library/seed';
+import { sampleClips, sampleDetail } from '../library/sample-clips';
+import { prng, ulidNumber } from '../library/seed';
 
 export interface PoolShot {
   readonly candidate: CastCandidate;
@@ -101,4 +102,57 @@ export function centredStart(shot: PoolShot, frames: number, rate: FrameRate): R
   const needed = RationalTime.rescale(RationalTime.of(frames, rate), mediaRate, 'ceil').value;
   const spare = Math.max(0, shot.shot.duration.value - needed);
   return RationalTime.of(shot.shot.start.value + Math.floor(spare / 2), mediaRate);
+}
+
+const UNSCORED: CastCandidate['parts'] = {
+  intent: 0,
+  motion: 0,
+  quality: 0,
+  subject: 0,
+  energy: 0,
+  hook: null,
+  rerank: null,
+  penalty: 0,
+};
+
+/**
+ * TRIM1: every shot of a file the fake library has (a generated clip or a sample clip), in order, as pool shots,
+ * so a clip can go to another shot of its own file. Empty for a file the library doesn't have.
+ */
+export function fileShots(assetId: string, count = DEFAULT_ASSET_COUNT): PoolShot[] {
+  const n = ulidNumber(assetId, KIND.asset);
+  if (n === null) return [];
+  const sources = fakeSources();
+  const asset =
+    sampleClips(sources).find((sample) => sample.summary.id === assetId) ??
+    (n < count ? fakeAsset(n, count, sources) : undefined);
+  const duration = asset?.summary.duration;
+  if (!asset || !duration) return [];
+  const source = sources.find((each) => each.id === asset.summary.sourceIds[0]) ?? sources[0]!;
+  const detail = sampleDetail(asset, source) ?? fakeAssetDetail(asset, source);
+  return detail.shots.flatMap((shot) =>
+    shot.thumbnail
+      ? [
+          {
+            candidate: {
+              assetId: asset.summary.id as AssetId,
+              shotId: shot.id as ShotId,
+              sourceStart: shot.range.start,
+              syncPoint: null,
+              score: 0,
+              parts: UNSCORED,
+            },
+            available: { start: RationalTime.zero(duration.rate), duration },
+            shot: shot.range,
+            name: asset.summary.name,
+            thumbnail: shot.thumbnail as DerivedFileRef,
+          },
+        ]
+      : [],
+  );
+}
+
+/** One shot of a file the fake library has; undefined for a file or a shot it doesn't have. */
+export function fileShot(assetId: string, shotId: string | null, count?: number): PoolShot | undefined {
+  return fileShots(assetId, count).find((shot) => shot.candidate.shotId === shotId);
 }

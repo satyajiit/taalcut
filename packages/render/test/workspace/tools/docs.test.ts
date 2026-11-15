@@ -82,7 +82,22 @@ describe('the HyperFrames skills bundle', () => {
       ]),
     );
     const hallmark = await run({ topic: 'taalcut/hallmark-thumbnails' });
-    expect(hallmark.ok && hallmark.value.text).toContain('Hallmark Video Covers');
+    // CVR2: the cover craft guide is one page, about a composition over a chosen frame, and names no kit design.
+    expect(hallmark.ok && hallmark.value.pages).toBe(1);
+    const craft = hallmark.ok ? (hallmark.value.text ?? '') : '';
+    for (const part of [
+      '## The frame',
+      '## One idea',
+      '## Lettering as design',
+      '## Safe areas',
+      '## Not this',
+    ])
+      expect(craft).toContain(part);
+    expect(craft).toContain('<img data-picture="name" alt="">');
+    expect(craft).toContain('Never a filled box behind the words, never a slab across a face');
+    expect(craft).toContain('9:16, 1080×1920 (Reels, Shorts, TikTok): x 76–886, y 480–1440');
+    for (const gone of ['cover.design', 'layers', 'archetype', 'hookText', 'timeline.setCover'])
+      expect(craft).not.toContain(gone);
     expect(index.value.note).toContain('workspace.lint');
     expect(index.value.note).toContain('workspace.exec');
     expect(index.value.note).toContain('workspace.importMedia');
@@ -160,7 +175,47 @@ it('keeps conditional editing recipes exact, discoverable and small enough to re
   );
   expect(guides.find((g) => g.topic === 'taalcut/make-film')!.text).toContain('exact frame range');
   expect(guides.find((g) => g.topic === 'taalcut/make-voice')!.text).toContain('models.not_configured');
-  expect(guides.find((g) => g.topic === 'taalcut/edit-cover')!.text).toContain(
-    'never silently replace requested generated imagery',
-  );
+  // A cover is made from the video's own footage unless the person asks for generated art; a failed image call
+  // falls back to footage, said plainly, never to a picture drawn out of design layers.
+  const cover = guides.find((g) => g.topic === 'taalcut/edit-cover')!.text;
+  expect(cover).toContain("None named: footage (the video's own frames, or their library shots)");
+  expect(cover).toContain('Never draw a stand-in');
+  expect(cover).toContain('never present a footage cover as the generated art that was asked for');
+  expect(cover).not.toContain('Existing footage does not force a footage-based cover');
+  // CVR2: the whole route is on the first page (the page a small model reads before it acts), and it is the
+  // composition route: pictures by reference, saved with workspace.placeCover, never a frame pulled out by hand.
+  const route = unwrap(await run({ topic: 'taalcut/edit-cover' })).text!;
+  for (const step of [
+    'workspace.new with cover',
+    '<img data-picture="hero" alt=""> with no src',
+    'workspace.placeCover with entry, aspect, medium, pictures [{name: "hero", frame}]',
+    'render.exportCover with the returned revision',
+    'Never pull a frame out with ffmpeg or workspace.exec',
+  ])
+    expect(route).toContain(step);
+  expect(cover).not.toContain('cover.design');
+  expect(cover).not.toContain('layers');
+});
+
+it('gives the Designer its method for a job’s three options in one page, in the app’s own words (DSG2)', async () => {
+  const guide = await run({ topic: 'taalcut/design-options' });
+  if (!guide.ok) throw new Error(guide.error.code);
+  expect(guide.value.pages ?? 1).toBe(1);
+  expect(guide.value.text?.length).toBeLessThanOrEqual(DOCS_PAGE_CHARS);
+  for (const part of [
+    'A point of view first',
+    'Three positions, not three coats',
+    'machine-made',
+    'Before you place each one',
+    'Finish the first and place it before you start the second',
+    'Never rewrite a placed design to fix another',
+    'still fails after two fixes is dropped',
+  ])
+    expect(guide.value.text).toContain(part);
+  // Asked for by its bare name (a small model drops the prefix), it is the same page.
+  const bare = await run({ topic: 'design-options' });
+  expect(bare.ok && bare.value.topic).toBe('taalcut/design-options');
+  // A method, not a catalogue: it names no outside skill, and the idea line it asks for goes to the placing tool.
+  expect(guide.value.text).not.toMatch(/hallmark/i);
+  expect(guide.value.text).toContain('workspace.placeOptions');
 });

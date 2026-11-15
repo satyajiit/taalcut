@@ -14,6 +14,7 @@ import {
   CancelledError,
   defineJobKind,
   err,
+  isTaalcutError,
   NO_RETRY,
   ok,
   registerJob,
@@ -29,6 +30,7 @@ import {
 } from '@taalcut/core';
 import type { RenderFolders } from '../engine/deps';
 import { RUNNING_RENDER_STATUSES } from '../store/snapshot';
+import { settleEndedExport } from './lost-renders';
 import {
   CONFORM_CACHE_MAX_BYTES,
   DELETED_RENDER_KEEP_MS,
@@ -100,6 +102,16 @@ export interface RenderJobDeps {
   readonly cancelPollMs?: number;
 }
 
+/**
+ * True when the queue stopped this job because it was cancelled by its id. A pause, a quit, a lost lease or a
+ * timeout also abort the signal, and after each of those the job runs again (the queue's AbortReason is the
+ * abort reason's `detail`).
+ */
+function cancelledByQueue(signal: AbortSignal): boolean {
+  const reason: unknown = signal.reason;
+  return isTaalcutError(reason) && reason.code === 'core.cancelled' && reason.detail === 'cancelled';
+}
+
 export function createRenderJobs(deps: RenderJobDeps): readonly JobRegistration[] {
   const pollMs = deps.cancelPollMs ?? 1_000;
 
@@ -112,6 +124,14 @@ export function createRenderJobs(deps: RenderJobDeps): readonly JobRegistration[
 
   const exportHandler = registerJob(renderExportJob, async (input, context) => {
     if (context.signal.aborted || (await stopped(input.renderId))) return err(CancelledError());
+    // The work an export waits on (subject tracks, grade LUTs, the sound checks) runs as this job's child, which the
+    // queue starts beside it; without the link that work waits for the slot this export holds, for ever where the
+    // class has one place. The row gets its job id from whoever queued the export, after the job exists, so the
+    // export could start first and read a row without it (the owner, 2026-11-15: stuck at "checking").
+    if (deps.store) {
+      const linked = await deps.store.update(input.renderId, { jobId: context.jobId });
+      if (!linked.ok) return linked;
+    }
     const controller = new AbortController();
     const abort = () => controller.abort();
     context.signal.addEventListener('abort', abort, { once: true });
@@ -130,7 +150,15 @@ export function createRenderJobs(deps: RenderJobDeps): readonly JobRegistration[
         signal: controller.signal,
         onProgress: (progress) => context.progress(progress),
       });
-      if (!result.ok && controller.signal.aborted) return err(CancelledError());
+      if (!result.ok && controller.signal.aborted) {
+        // The queue cancelled this job by its id: nothing runs the render again, and the render process has just
+        // put its row back to `queued` for a job that would take it over. Settled here, after its last write.
+        if (deps.store && cancelledByQueue(context.signal))
+          await settleEndedExport({ store: deps.store, clock: deps.clock }, input.renderId, {
+            state: 'cancelled',
+          });
+        return err(CancelledError());
+      }
       return result;
     } finally {
       if (timer) clearInterval(timer);

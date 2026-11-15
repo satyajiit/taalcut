@@ -35,7 +35,8 @@ export const DOCS_TOPICS: readonly { readonly topic: string; readonly text: stri
 /** What stands in here for what the docs assume (their CLI, Studio, a project's root and registry). */
 export const DOCS_NOTE =
   'HyperFrames docs, pinned (Apache-2.0), plus built-in Taalcut topics (taalcut/sandbox-workspace, taalcut/three-3d, ' +
-  'taalcut/choreography, taalcut/impeccable-craft, taalcut/hallmark-thumbnails, taalcut/tone-audio). In Taalcut you ' +
+  'taalcut/choreography, taalcut/impeccable-craft, taalcut/design-options, taalcut/hallmark-thumbnails, ' +
+  'taalcut/tone-audio). In Taalcut you ' +
   'manage workspace files directly with ' +
   'workspace.list, workspace.read, workspace.new, workspace.write, workspace.patch, workspace.delete, ' +
   'workspace.move and workspace.search; where HyperFrames says `npx hyperframes check`, use workspace.lint; ' +
@@ -117,7 +118,10 @@ export function workspaceDocsTool() {
           })),
         });
       const targetTopic = resolveTaalcutDocTopic(input.topic);
-      const found = DOCS_TOPICS.find((entry) => entry.topic === targetTopic);
+      // A Taalcut topic asked for by its bare name ("design-options") is that topic.
+      const found =
+        DOCS_TOPICS.find((entry) => entry.topic === targetTopic) ??
+        DOCS_TOPICS.find((entry) => entry.topic === `taalcut/${targetTopic}`);
       if (!found)
         return err(
           ValidationError(

@@ -45,11 +45,27 @@ export type WorkspaceListing = z.output<typeof workspaceListingSchema>;
 export const workspaceReadInputSchema = z.object({ projectId, sha256: sha256Schema });
 export type WorkspaceReadInput = z.output<typeof workspaceReadInputSchema>;
 
+/** The largest picture `read` gives back as bytes (an option's still, an image under `assets/`). */
+export const WORKSPACE_IMAGE_BYTES = WORKSPACE_LIMITS.fileBytes;
+
+export const WORKSPACE_IMAGE_TYPES = ['image/jpeg', 'image/png'] as const;
+
 export const workspaceFileTextSchema = z.object({
   sha256: sha256Schema,
   bytes: z.int().min(0).max(WORKSPACE_LIMITS.fileBytes),
   /** The file as UTF-8 text; null when its bytes aren't text (an image under `assets/`). Untrusted. */
   text: z.string().max(WORKSPACE_LIMITS.fileBytes).nullable(),
+  /**
+   * DSG2: the file as a picture, when its bytes are a JPEG or a PNG of at most WORKSPACE_IMAGE_BYTES (a still of a
+   * design over the footage, for the options a person chooses between). Shown as an image only, never run.
+   */
+  image: z
+    .object({
+      mimeType: z.enum(WORKSPACE_IMAGE_TYPES),
+      /** Base64 of at most WORKSPACE_IMAGE_BYTES. */
+      dataBase64: z.string().max(Math.ceil(WORKSPACE_LIMITS.fileBytes / 3) * 4),
+    })
+    .optional(),
 });
 export type WorkspaceFileText = z.output<typeof workspaceFileTextSchema>;
 
@@ -75,6 +91,21 @@ export function workspaceRouter(service: WorkspaceFilesService) {
 }
 
 const isNotFound = (code: string) => code === NotFoundError.code;
+
+/** A JPEG's or a PNG's media type by its first bytes; null for anything else. */
+export function workspaceImageType(data: Uint8Array): (typeof WORKSPACE_IMAGE_TYPES)[number] | null {
+  if (data[0] === 0xff && data[1] === 0xd8 && data[2] === 0xff) return 'image/jpeg';
+  const png = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+  return png.every((byte, index) => data[index] === byte) ? 'image/png' : null;
+}
+
+/** The bytes as base64, without Node's Buffer (core runs in the renderer's tests too). */
+function base64Of(data: Uint8Array): string {
+  let binary = '';
+  for (let at = 0; at < data.length; at += 0x8000)
+    binary += String.fromCharCode(...data.subarray(at, at + 0x8000));
+  return btoa(binary);
+}
 
 /** UTF-8 text, or null for bytes that aren't (invalid UTF-8, or a NUL, as in an image). */
 export function workspaceText(data: Uint8Array): string | null {
@@ -136,7 +167,17 @@ export function workspaceFilesOver(store: WorkspaceStore): WorkspaceFilesService
         return err(
           ValidationError({ field: 'sha256' }, { detail: 'The file is larger than a workspace file can be' }),
         );
-      return ok({ sha256: input.sha256, bytes: data.value.byteLength, text: workspaceText(data.value) });
+      const text = workspaceText(data.value);
+      const mimeType =
+        text === null && data.value.byteLength <= WORKSPACE_IMAGE_BYTES
+          ? workspaceImageType(data.value)
+          : null;
+      return ok({
+        sha256: input.sha256,
+        bytes: data.value.byteLength,
+        text,
+        ...(mimeType ? { image: { mimeType, dataBase64: base64Of(data.value) } } : {}),
+      });
     },
   };
 }

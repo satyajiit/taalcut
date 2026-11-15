@@ -144,7 +144,7 @@ function LiveTile({
         <p className="m-0 flex min-w-0 items-center gap-2">
           <span className="truncate text-sm font-semibold text-ink">{variant.label}</span>
           {variant.title ? (
-            <UserContent translate="no" className="truncate text-xs text-ink-2">
+            <UserContent translate="no" title={variant.title} className="truncate text-xs text-ink-2">
               {variant.title}
             </UserContent>
           ) : null}

@@ -6,7 +6,7 @@
  * request and reads an answer, and how it bills. The shared request, answer checks and CloudCall row are
  * image-request.ts; the ImageProvider over a spec is image-provider.ts.
  */
-import type { C2paPresence } from '@taalcut/core';
+import type { C2paPresence, TaalcutError } from '@taalcut/core';
 import type { ResolvedCredential } from '../credentials/credential-provider';
 import type { ImageAccess, ImageMediaType, ImageRequest } from './image-types';
 
@@ -42,6 +42,12 @@ export interface ImageRouteSpec {
   readonly requiredCredentialHeaders?: readonly string[];
   /** Additional credential provider ids to check (e.g. `'openai-codex'` for OpenAI). */
   readonly credentialAliases?: readonly string[];
+  /**
+   * CVR2: a route whose grant is a second approval on a plan's sign-in. When the route has no credential of its
+   * own and `credential` (the plan's chat sign-in) holds an OAuth token, the route is one approval away:
+   * `notConnected` is what the chain says when nothing else can make the still.
+   */
+  readonly planSignIn?: { readonly credential: string; readonly notConnected: () => TaalcutError };
   readonly models: readonly ImageModelRef[];
   /** 'all': the request's count in one call (`n`); 'one': one call per image. */
   readonly perRequest: 'all' | 'one';

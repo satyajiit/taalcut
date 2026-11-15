@@ -12,6 +12,7 @@ import { idSchema } from '../basics/ids';
 import { moneySchema } from '../basics/money';
 import { exportPresetIdSchema } from '../render/presets';
 import { renderBatchProgressSchema } from '../render/render-types';
+import { GRAPHIC_OPTION_COUNT, GRAPHIC_OPTION_IDEA_MAX } from '../timeline/graphic-options';
 import { voiceLineSchema } from '../timeline/voiceover';
 import { rationalTimeSchema } from '../time/rational-time';
 import { base, runId } from './card-parts';
@@ -89,6 +90,23 @@ export const motionGraphicCardSchema = z.object({
   unmatched: z.array(z.string().max(80)).max(6),
   /** A poster frame: a still from the composition's newest render. */
   frameArtifactId: z.string().min(1).optional(),
+  /**
+   * DSG2: the designs it was placed with, the first in use (the graphic's `options` on the live timeline say which
+   * is in use now and hold their stills). Each has its composition, its name and its idea in the designing model's
+   * words (content, plain text) and a still from its newest render. Absent: a graphic with nothing to choose.
+   */
+  options: z
+    .array(
+      z.object({
+        compositionId: idSchema<'GraphicComposition'>(),
+        name: z.string().trim().min(1).max(60),
+        idea: z.string().trim().min(1).max(GRAPHIC_OPTION_IDEA_MAX),
+        frameArtifactId: z.string().min(1).optional(),
+      }),
+    )
+    .min(2)
+    .max(GRAPHIC_OPTION_COUNT)
+    .optional(),
 });
 
 export const RENDER_BATCH_ITEM_STATUSES = [

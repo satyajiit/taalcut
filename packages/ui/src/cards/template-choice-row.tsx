@@ -75,7 +75,11 @@ export function TemplateChoiceRow({ choice, disabled, busy, onPick, extra }: Tem
       >
         <span className="flex min-w-0 flex-1 flex-col">
           {choice.kind === 'template' ? (
-            <UserContent translate="no" className="truncate text-base font-medium text-ink">
+            <UserContent
+              translate="no"
+              title={choice.name}
+              className="truncate text-base font-medium text-ink"
+            >
               {choice.name}
             </UserContent>
           ) : (

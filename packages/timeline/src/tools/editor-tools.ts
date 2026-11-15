@@ -22,6 +22,7 @@ import type { z } from 'zod';
 import { InvalidMove } from '../errors';
 import { videoItems } from '../model/sequence';
 import type { TimelineService } from '../service/service';
+import type { TemplateReader } from '../service/templates';
 import { mendClipFields, mendSlipFields } from './clip-mend';
 import { guardPointing } from './pointing-guard';
 import {
@@ -52,6 +53,8 @@ export interface EditorToolDeps {
   readonly service?: Pick<TimelineService, 'read'>;
   readonly shotDescriptions?: ShotDescriptions;
   readonly numbering?: ClipNumbering;
+  /** LYR1: the timeline's template, for texts it shows in turn at one place (sequence-guard.ts). */
+  readonly templates?: Pick<TemplateReader, 'read'>;
 }
 
 type RemoveInput = ResolvedInput<'timeline.removeTransition'>;

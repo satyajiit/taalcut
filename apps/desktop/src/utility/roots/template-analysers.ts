@@ -35,12 +35,14 @@ import {
 } from '@taalcut/media';
 import type { BreakdownMedia, BreakdownVision, OcrLine } from '@taalcut/templates';
 import { detectReelCrop } from './crop-detect';
+import { grayFramesOf } from './gray-frames';
 import {
   EmbeddingFailed,
   frameVectors,
   motionCurve,
   ocrFrames,
   ocrImage,
+  ocrRegion,
   probeSource,
   sceneFallback,
   sceneScoresOf,
@@ -194,6 +196,7 @@ export function breakdownMedia(ctx: AnalyserContext): BreakdownMedia {
         writeFrames(path, planned, frames, { maxDimension, outDir, signal }),
       ),
 
+    grayFrames: (path, options) => withPlan(path, options.signal, (p) => grayFramesOf(path, p, options)),
     // BRK1-GFX: raw RGB frames for reading an overlay's design (templates breakdown/overlay-design.ts).
     framePixels: (path, frames, { maxDimension, signal }) =>
       withPlan(path, signal, async ({ plan, media }) => {
@@ -368,6 +371,17 @@ export function breakdownVision(deps: VisionAnalyserDeps): BreakdownVision {
       if (!media.ok) return media;
       const page = await ocrImage(path, { media: media.value, ocr: deps.ocr }, { languages, signal });
       return page.ok ? ok(page.value.observations.map(lineOf)) : page;
+    },
+
+    // LYR1: one region read on its own, every frame asked (vision's region.ts).
+    async ocrRegion(path, { rate: _rate, ...options }) {
+      const media = await deps.media();
+      if (!media.ok) return media;
+      const pages = await ocrRegion(path, { media: media.value, ocr: deps.ocr }, options);
+      if (!pages.ok) return pages;
+      return ok(
+        pages.value.map(({ observations, ...page }) => ({ ...page, lines: observations.map(lineOf) })),
+      );
     },
 
     async motionCurve(path, { ranges, signal }) {

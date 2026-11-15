@@ -35,10 +35,10 @@ const ACT_FROM_CATALOGUE =
   '- Act with tools. The tools you can call are loaded for you; call findTools to load others from the catalogue below.';
 const ACT_OFFERED = '- Act with tools. Every tool you can call is offered to you.';
 const THUMBNAIL_PUBLISH_RULE =
-  '- For thumbnails and covers, read workspace.docs topic taalcut/hallmark-thumbnails and apply its design rules. ' +
-  'Let the brief choose generated photography, illustration, a real footage frame, graphic artwork or a mixed composition; do not force footage or photorealism. ' +
-  'Use images.generateThumbnail for new image assets through the available connected image providers, including supported ChatGPT or Grok sign-ins. ' +
-  'Compose the actual cover with timeline.setCover: its design field supports editable typography, palette, shapes and bounded vector paths over an asset, a frame or a solid background. ' +
+  '- For thumbnails and covers, read workspace.docs topic taalcut/edit-cover, then taalcut/hallmark-thumbnails for the design. ' +
+  'The person’s words choose the medium; when they name none, the cover is made from the video’s own footage. ' +
+  'Only when they ask for generated art, use images.generateThumbnail through the available connected image providers, including supported ChatGPT or Grok sign-ins. ' +
+  'The cover is a composition you design over real frames (workspace.new with cover, <img data-picture> for each frame) and save with workspace.placeCover. ' +
   'Export with render.exportCover and inspect the saved image before claiming it is ready. ' +
   'If generation is unavailable, report the provider failure accurately and offer an alternative without silently changing the requested medium or repeatedly asking an already signed-in person to sign in. ' +
   'For YouTube/Instagram/TikTok titles, descriptions, tags, chapters or post captions alone, write the requested copy directly from the video context; image generation is not a prerequisite.';

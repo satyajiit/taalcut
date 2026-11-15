@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 
-/** The pure edits: swap, trim (roll, slip, ripple), move, editText, lockClip and applyCast. */
+/** The pure edits: swap, trim (roll, slip, ripple), move, editText and lockClip (applyCast: edits-apply-cast). */
 import { FrameRates, newId, RationalTime, TimeRange, type MediaRef, type Timeline } from '@taalcut/core';
 import { describe, expect, it } from 'vitest';
 import { moveClip } from '../src/edits/move';
-import { applyCast, swapClip, type Replacement } from '../src/edits/swap';
+import { swapClip, type Replacement } from '../src/edits/swap';
 import { editText, lockClip, moveText } from '../src/edits/text';
 import { trimClip } from '../src/edits/trim';
 import { candidateKey } from '../src/model/cast';
@@ -118,7 +118,9 @@ describe('trimClip', () => {
     const { timeline, ids } = buildTimeline({ clips: [{ frames: 30 }, { frames: 45 }, { frames: 30 }] });
     const longer = trimClip(timeline, { clipId: ids[0]!, edge: 'end', by: f(60) }, user);
     expect(!longer.ok && longer.error.code).toBe('timeline.invalid_move');
-    expect(!longer.ok && longer.error.detail).toMatch(/the clip next to it, which lasts 1.5 s: move the edge by less/);
+    expect(!longer.ok && longer.error.detail).toMatch(
+      /the clip next to it, which lasts 1.5 s: move the edge by less/,
+    );
     const shorter = trimClip(timeline, { clipId: ids[0]!, edge: 'end', by: f(-30) }, user);
     expect(!shorter.ok && shorter.error.detail).toMatch(/The clip lasts 1 s: shorten it by less than that/);
   });
@@ -271,7 +273,11 @@ describe('editText and lockClip', () => {
   it('batches text edits, retiming, box moves and removals in one step', () => {
     const { timeline } = buildTimeline({
       clips: [{ frames: 60 }],
-      texts: [{ start: 0, frames: 10 }, { start: 15, frames: 10 }, { start: 30, frames: 5 }],
+      texts: [
+        { start: 0, frames: 10 },
+        { start: 15, frames: 10 },
+        { start: 30, frames: 5 },
+      ],
     });
     const track = timeline.tracks[1];
     if (track?.kind !== 'text') throw new Error('a text track');
@@ -286,8 +292,16 @@ describe('editText and lockClip', () => {
     ];
     const batchEdited = editText(movedAll.value.timeline, { edits }, agent);
     if (!batchEdited.ok) throw new Error(batchEdited.error.code);
-    const remaining = valid(batchEdited.value.timeline).tracks.flatMap((t) => (t.kind === 'text' ? t.items : []));
-    expect(remaining).toEqual([expect.objectContaining({ id: first, text: 'Full reel title', start: f(0), duration: f(60), box })]);
+    const remaining = valid(batchEdited.value.timeline).tracks.flatMap((t) =>
+      t.kind === 'text' ? t.items : [],
+    );
+    const kept = { id: first, text: 'Full reel title', start: f(0), duration: f(60), breaks: 'written' };
+    expect(remaining).toEqual([expect.objectContaining({ ...kept, placedBy: 'editor' })]);
+    // TXT1: the AI's box says where a text sits. Its own box follows its words, round the given box's centre.
+    const [placed] = remaining;
+    if (placed?.type !== 'text') throw new Error('a text');
+    expect(placed.box.x + placed.box.width / 2).toBeCloseTo(box.x + box.width / 2, 9);
+    expect(placed.box.y + placed.box.height / 2).toBeCloseTo(box.y + box.height / 2, 9);
   });
 
   it('explicit lock and unlock commands have UI and AI parity', () => {
@@ -302,92 +316,5 @@ describe('editText and lockClip', () => {
       ok: true,
       value: { timeline, changed: [] },
     });
-  });
-});
-
-describe('applyCast', () => {
-  it('swaps every listed slot, skips locked and user-picked ones, and fills gaps', () => {
-    const { timeline, ids, slots } = buildTimeline({
-      clips: [{ frames: 30 }, { frames: 30, locked: true }, { frames: 30, gap: true }, { frames: 30 }],
-    });
-    const userPicked = {
-      ...timeline,
-      cast: timeline.cast && {
-        ...timeline.cast,
-        slots: timeline.cast.slots.map((slot, index) =>
-          index === 3 ? { ...slot, note: 'userPick' as const } : slot,
-        ),
-      },
-    };
-    const medias = [video(300), video(300), video(300), video(300)];
-    const pick = (index: number) => ({
-      slotId: slots[index]!,
-      pick: {
-        ...candidate(clipById(timeline, ids[0]!)),
-        assetId: medias[index]!.assetId,
-        shotId: medias[index]!.kind === 'video' ? medias[index]!.shotId : null,
-        sourceStart: f(20),
-        syncPoint: f(20),
-        score: 0.9,
-      },
-    });
-    const media = new Map(
-      medias.map((ref) => [
-        candidateKey({ assetId: ref.assetId, shotId: ref.kind === 'video' ? ref.shotId : null }),
-        ref,
-      ]),
-    );
-    const applied = applyCast(userPicked, [pick(0), pick(1), pick(2), pick(3)], {
-      ...user,
-      media,
-      tau: 0.05,
-    });
-    if (!applied.ok) throw new Error(applied.error.code);
-    const result = valid(applied.value.timeline);
-    expect(clipById(result, ids[0]!).media).toEqual(medias[0]);
-    expect(clipById(result, ids[1]!).media).toEqual(clipById(timeline, ids[1]!).media);
-    expect(clipById(result, ids[2]!).media).toEqual(medias[2]);
-    expect(clipById(result, ids[3]!).media).toEqual(clipById(timeline, ids[3]!).media);
-    const filled = result.cast?.slots[2];
-    expect(filled?.clipId).toBe(ids[2]);
-    expect(filled?.confidence).toBe(1);
-    const missing = applyCast(timeline, [pick(0)], { ...user, media: new Map(), tau: 0.05 });
-    expect(!missing.ok && missing.error.code).toBe('timeline.media_missing');
-  });
-
-  it('caps a pick’s confidence at its fit, as casting does, so a poor fit stays a weak pick', () => {
-    const { timeline, ids, slots } = buildTimeline({ clips: [{ frames: 30 }, { frames: 30, gap: true }] });
-    const media = video(300);
-    const base = {
-      ...candidate(clipById(timeline, ids[0]!)),
-      assetId: media.assetId,
-      shotId: media.kind === 'video' ? media.shotId : null,
-    };
-    const poor = {
-      ...base,
-      sourceStart: f(20),
-      syncPoint: f(20),
-      score: 0.9,
-      parts: { ...base.parts, intent: 0.2 },
-    };
-    const medias = new Map([[candidateKey(poor), media]]);
-    const fitCap = (pick: { readonly parts: { readonly intent: number } }) =>
-      pick.parts.intent < 0.5 ? 0.1 : 1;
-    const applied = applyCast(timeline, [{ slotId: slots[1]!, pick: poor }], {
-      ...user,
-      media: medias,
-      tau: 0.05,
-      fitCap,
-    });
-    if (!applied.ok) throw new Error(applied.error.code);
-    expect(applied.value.timeline.cast?.slots[1]?.confidence).toBe(0.1);
-    // Without a cap (the call before FIX-CAST's rule reached it), the same lone pick reads as certain.
-    const uncapped = applyCast(timeline, [{ slotId: slots[1]!, pick: poor }], {
-      ...user,
-      media: medias,
-      tau: 0.05,
-    });
-    if (!uncapped.ok) throw new Error(uncapped.error.code);
-    expect(uncapped.value.timeline.cast?.slots[1]?.confidence).toBe(1);
   });
 });

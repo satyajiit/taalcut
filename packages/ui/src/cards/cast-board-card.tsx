@@ -9,6 +9,8 @@
  *   deleted.", no actions) · error/success: the grid's rows
  * motion: the video tabs swap content at once (no slide); the grid's frame trade (shared layout) is the one
  *   motion on the card
+ * KEEP1: when some slots keep the reel's own clips, one line over the grid says how many, and that the person's
+ *   clips fill the rest
  * UX round 1: a failed answer to "How many videos?" brings the question back with its cause and Try again (it used to
  *   settle as "Making 3 videos…"); a dropped watch keeps the board as last seen with Try again, never "deleted"
  * pre-emit critique: P5 H5 E4 S5 R5 V5 */
@@ -29,14 +31,22 @@ import { AnswerFailureLine, useAnswer } from './use-answer';
 function Bones() {
   const { t } = useLingui();
   return (
-    <div aria-busy="true" data-slot="loading" className="flex flex-col gap-1 rounded-xl bg-panel p-2">
+    // The grid's shape at the board's own width (as CastGrid lays its rows): the other shots beside the words from
+    // 36rem, under them in a narrower board, so nothing jumps when the clips arrive.
+    <div
+      aria-busy="true"
+      data-slot="loading"
+      className="@container flex flex-col gap-1 rounded-xl bg-panel p-2"
+    >
       <span className="sr-only">{t`Loading your clips`}</span>
       {[0, 1, 2, 3].map((row) => (
-        <span key={row} aria-hidden className="flex items-center gap-3 px-1 py-1.5">
+        <span key={row} aria-hidden className="flex flex-wrap items-center gap-x-3 gap-y-2 px-1 py-1.5">
           <span className="tc-bone block h-4 w-4 rounded-sm bg-hover" />
           <span className="tc-bone block h-[71px] w-10 rounded-md bg-hover" />
-          <span className="tc-bone block h-4 flex-1 rounded-sm bg-hover" />
-          <span className="tc-bone block h-[71px] w-32 rounded-md bg-hover" />
+          <span className="tc-bone block h-4 min-w-0 flex-1 rounded-sm bg-hover" />
+          <span className="flex basis-full ps-7 @xl:basis-auto @xl:ps-0">
+            <span className="tc-bone block h-[71px] w-32 rounded-md bg-hover" />
+          </span>
         </span>
       ))}
     </div>
@@ -62,11 +72,21 @@ function Board({
   if (!timeline) return watched.read.status === 'loading' ? <Bones /> : line;
   const rawName = timeline.name.trim();
   const customName = rawName && !/^video\s+\d+$/i.test(rawName) ? rawName : null;
+  const reelOwn = timeline.cast?.slots.filter((slot) => slot.note === 'reelKept').length ?? 0;
   return (
     <div className="flex flex-col gap-2">
       {customName ? (
         <p data-slot="video-title" className="m-0 type-meta text-ink-2">
           <UserContent translate="no">{customName}</UserContent>
+        </p>
+      ) : null}
+      {reelOwn > 0 ? (
+        <p data-slot="reel-own-line" className="m-0 text-sm text-ink-2">
+          <Plural
+            value={reelOwn}
+            one="# shot is the reel’s own clip. Your clips fill the rest."
+            other="# shots are the reel’s own clips. Your clips fill the rest."
+          />
         </p>
       ) : null}
       <CastGrid

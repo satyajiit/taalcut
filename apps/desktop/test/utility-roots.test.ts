@@ -217,14 +217,14 @@ describe('jobs root', () => {
 
     const before = engine.limits();
     const client = connectRpc(UTILITY_CONTRACTS.jobs, serve(root), { peer: 'jobs' }).client;
-    await client.power.update({ onBattery: true, thermalState: 'critical' });
+    await client.power.update({ thermalState: 'critical' });
     expect(engine.limits()).not.toEqual(before);
     // No manifest where the test config points, so the download manager knows no components.
     expect(await root.container.resolve(ComponentManagerToken).list()).toEqual([]);
     expect(await client.components.list()).toEqual([]);
     expect(await client.components.get({ id: 'local-llm-runtime' })).toBeNull();
     // The agent's runner: a registered kind by name, its progress, then its output.
-    await client.power.update({ onBattery: false, thermalState: 'nominal' });
+    await client.power.update({ thermalState: 'nominal' });
     const run = async (kind: string, input: unknown) => {
       const items = [];
       for await (const item of await client.runner.run({ kind, input })) items.push(item);

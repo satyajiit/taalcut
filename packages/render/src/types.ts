@@ -6,7 +6,7 @@
  * DOM probe (capture sessions), and the QA plan the compiler hands to QA.
  * Each side is tested against these shapes alone.
  */
-import type { Box, CAPTION_FONTS, MusicPath, Rect } from '@taalcut/core';
+import type { CAPTION_FONTS, MusicPath, Rect } from '@taalcut/core';
 import type { FrameSpan } from './plan/types';
 
 export type CaptionFontId = (typeof CAPTION_FONTS)[number];
@@ -175,9 +175,6 @@ export interface QaPlan {
     readonly id: string;
     readonly span: FrameSpan;
     readonly probeFrame: number;
-    /** FIX-QA: the timeline item's own box and alignment, for captionSafeZone's ready move; absent when refitted. */
-    readonly box?: Box;
-    readonly align?: 'left' | 'center' | 'right';
   }[];
   /** HFW1: the graphics drawn with a composition (absent: none), for the graphics checks (qa/modules/graphics.ts). */
   readonly graphics?: readonly QaGraphic[];

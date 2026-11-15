@@ -112,7 +112,7 @@ describe('FIX-HOOK: what a slot needs its footage to show', () => {
     expect(picks(before)).toEqual([night.shotId, bench.shotId]);
     const after = await castOf(template, profiles);
     expect(picks(after)).toEqual([bench.shotId, night.shotId]);
-    expect(after.configVersion).toBe('casting.v5');
+    expect(after.configVersion).toBe('casting.v6');
     // A day shot under a night line: it wins despite the conflict, which it still pays.
     expect(after.variants[0]!.slots[0]!.pick!.parts.intent).toBeLessThan(
       before.variants[0]!.slots[0]!.pick!.parts.intent,

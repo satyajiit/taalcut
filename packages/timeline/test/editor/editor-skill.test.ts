@@ -99,7 +99,7 @@ describe('timeline.editor 2.0', () => {
 
   it('has every edit, asked in the chat and in the make flow (AGT2)', () => {
     const editor = editorOf(['music', 'sfx', 'voice']);
-    expect(editor.version).toBe('2.8.0');
+    expect(editor.version).toBe('2.12.0');
     expect(editor.tools.families).toEqual(['captions', 'comments', 'music', 'sfx', 'voice']);
     for (const name of [...REQUEST_TOOL_NAMES, 'graphics.design', 'timeline.get', 'timeline.trimClip'])
       expect(editor.tools.names).toContain(name);
@@ -157,11 +157,8 @@ describe('timeline.editor 2.0', () => {
           ...(request ? { request, context: docked } : {}),
         }),
       });
-      const check = (run: ReturnType<typeof step>, postCaption?: string) =>
-        skill.verify!(
-          { timelineId: timeline.id, revision: timeline.revision, ...(postCaption ? { postCaption } : {}) },
-          run as never,
-        );
+      const check = (run: ReturnType<typeof step>) =>
+        skill.verify!({ timelineId: timeline.id, revision: timeline.revision }, run as never);
       return { timeline, numbering, step, check };
     }
 
@@ -236,18 +233,19 @@ describe('timeline.editor 2.0', () => {
       expect(await world.check(run)).toEqual(ok({ verdict: 'pass' }));
     });
 
-    it('does not demand a subtitle edit when delivering social post copy', async () => {
-      const world = checkWorld();
+    it('passes a run that saved a post caption: the save moved the revision (CAP1)', async () => {
+      // timeline.setPostCaption writes the caption on the timeline, so no reading of the request's words
+      // decides whether the run did its work.
+      const world = checkWorld(true);
       const run = world.step('actually i mean to have ig captions for the post. not subtitles');
       world.numbering.read(run.runId, world.timeline);
-      expect(await world.check(run, 'That airport feeling. Next stop: somewhere new.')).toEqual(
-        ok({ verdict: 'pass' }),
-      );
+      expect(await world.check(run)).toEqual(ok({ verdict: 'pass' }));
     });
 
-    it('still verifies a requested video edit even if the handoff includes post copy', async () => {
+    it('sends back a post-copy request that saved nothing, like any other that changed nothing (CAP1)', async () => {
       const world = checkWorld();
       for (const request of [
+        'actually i mean to have ig captions for the post. not subtitles',
         'Trim clip 1 and write an Instagram caption',
         'Remove the first shot and write an Instagram caption',
         'Move clip 1 to the end and write a post caption',
@@ -255,7 +253,7 @@ describe('timeline.editor 2.0', () => {
       ]) {
         const run = world.step(request);
         world.numbering.read(run.runId, world.timeline);
-        const verdict = await world.check(run, 'That airport feeling.');
+        const verdict = await world.check(run);
         expect(verdict.ok && verdict.value.verdict).toBe('retry');
       }
     });

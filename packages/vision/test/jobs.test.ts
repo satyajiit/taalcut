@@ -79,12 +79,20 @@ describe('framesForShot', () => {
     expect(framesForShot(range(0, 2), 5, 'high')).toEqual([1]);
   });
 
-  it('samples chronological frames across longer shots for describeFramesForShot, keeping start, best, and end', () => {
+  it('samples a shot for the describer at a regular stride by tier: one frame per part, its best frame alone when short', () => {
+    // Under 2 s: the best frame, whatever the tier.
     expect(describeFramesForShot(range(0, 30), 5, rate)).toEqual([5]);
-    const medium = describeFramesForShot(range(0, 120), 0, rate);
-    expect(medium).toEqual([0, 60, 105]);
-    const long = describeFramesForShot(range(0, 600), 120, rate);
-    expect(long).toEqual([60, 120, 383, 539]);
+    expect(describeFramesForShot(range(0, 59), 5, rate, 'high')).toEqual([5]);
+    // 4 s at one frame a second: four frames, each in the middle of its second.
+    expect(describeFramesForShot(range(0, 120), 0, rate)).toEqual([15, 45, 75, 105]);
+    // A long shot stops at the tier's cap, still evenly spread; the best frame plays no part.
+    expect(describeFramesForShot(range(0, 600), 120, rate)).toEqual([50, 150, 250, 350, 450, 550]);
+    expect(describeFramesForShot(range(0, 600), 120, rate, 'minimum')).toEqual([75, 225, 375, 525]);
+    expect(describeFramesForShot(range(0, 600), 120, rate, 'high')).toHaveLength(8);
+    // A shot of 2 s or more always has two frames, so there is a before and an after.
+    expect(describeFramesForShot(range(0, 60), 0, rate, 'minimum')).toEqual([15, 45]);
+    // Frames are the asset's: a shot that starts 100 frames in is sampled from there.
+    expect(describeFramesForShot(range(100, 120), 0, rate)).toEqual([115, 145, 175, 205]);
   });
 });
 

@@ -8,7 +8,13 @@
  * normalized hashtags), and TikTok (caption, SEO search bar keywords, hashtags)
  * metadata packs from agent research and timeline context.
  */
-import { socialMetadataPackSchema, type SocialChapter, type SocialMetadataPack } from '@taalcut/core';
+import {
+  POST_CAPTION_RULES,
+  postCaptionHashtags,
+  socialMetadataPackSchema,
+  type SocialChapter,
+  type SocialMetadataPack,
+} from '@taalcut/core';
 
 export type { SocialMetadataPartial, SocialMetadataInput } from './social-metadata-types';
 import type { SocialMetadataPartial, SocialMetadataInput } from './social-metadata-types';
@@ -308,7 +314,17 @@ export function buildSocialMetadataPack(input: SocialMetadataInput): SocialMetad
       `${igHookLine}\n\n${scenePrompt}\n\nSave this cut for your next edit reference and share with a collaborator.`,
     2200,
   );
-  const igHashtags = normalizeHashtags(partial.instagram?.hashtags ?? [], keywordPool, 5, 15);
+  // CAP1: Instagram's hashtag count is the post caption's rule (core's table), over the whole caption: one typed in
+  // the caption counts, and nothing is padded up to a quota. With none stated, the least the rule asks for comes
+  // from this video's own words.
+  const igRule = POST_CAPTION_RULES.instagram.hashtags;
+  const igTyped = postCaptionHashtags(igCaption).length;
+  const igHashtags = normalizeHashtags(
+    partial.instagram?.hashtags ?? [],
+    keywordPool,
+    Math.max(0, igRule.min - igTyped),
+    Math.max(0, igRule.max - igTyped),
+  );
 
   const seoKeywords = (() => {
     const supplied = (partial.tiktok?.seoKeywords ?? [])

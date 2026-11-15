@@ -71,6 +71,8 @@ export interface LockedPick {
 }
 
 function noteOf(pool: SlotPool, pick: Candidate | null): SlotCast['note'] {
+  // KEEP1: no pick by design, not for want of a shot: assembly fills it from the template's reel.
+  if (pool.slot.reel) return 'reelKept';
   if (pool.locked) return 'userPick';
   if (!pick) return 'noCandidates';
   if (pool.relaxed && pick.profile.orientation !== pool.slot.orientation) return 'orientationRelaxed';

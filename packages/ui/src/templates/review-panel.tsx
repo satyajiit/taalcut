@@ -28,6 +28,7 @@ import { DescriptionField } from './description-field';
 import { DOUBT_WORDS, type CheckItem } from './review-checks';
 import { REVIEW_ICONS } from './review-icons';
 import { reveal } from './reveal';
+import { SlotFootage } from './slot-footage';
 import { SlotTexts } from './slot-texts';
 import { cutLabel, slotBeats, toSeconds } from './slot-words';
 import type { ReviewEdits } from './use-review-edits';
@@ -322,6 +323,12 @@ export function ReviewPanel(props: ReviewPanelProps) {
             onSetMotion={editable ? (motion) => void pickMotion(motion) : undefined}
             settingMotion={edits.pending === 'setMotion'}
             busy={edits.pending !== null && edits.pending !== 'setMotion'}
+          />
+          <SlotFootage
+            template={template}
+            index={index}
+            hasReel={!!reelUrl}
+            edits={editable ? edits : null}
           />
         </section>
         {index > 0 ? (

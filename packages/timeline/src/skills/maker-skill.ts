@@ -45,6 +45,8 @@ export const MAKER_SEAM_TOOLS = [
   'library.frameAt',
   'library.subjects',
   'video.done',
+  // LONG1: a stretch of a clip as frames with their times (MATCH1's, the Librarian's until now), to name an instant.
+  'library.frameStrip',
 ] as const;
 
 /** The draft, its QA, the frames and the template: what the Editor never had. */
@@ -136,7 +138,15 @@ export function makerSkill(
     // 1.1.0 (AGT2): its description names the tools of its loop, which a small window's offer loads first
     // (agent skill-step.ts), and a shorter prompt (the 4B's first turn, agent tool-offer.ts).
     // 1.2.0: the workspace shell (workspace.open, exec, files, importMedia) where registered, and when it helps.
-    version: '1.3.0',
+    // 1.4.0 (CVR2): workspace.placeCover, with the composition tools.
+    // 1.5.0 (KEEP1): the reel's own footage is in place when the Maker starts (slot.keepsReel); it leaves it alone.
+    // 1.6.0 (TXT1): timeline.textLook, timeline.designText and timeline.placeText; timeline.get tells it when the
+    // text has no look or no stated place yet, and video.done holds the video until both are stated. Its prompt is
+    // unchanged.
+    // 1.7.0 (LONG1): timeline.musicBars and timeline.lengthenSlot (a clip longer by whole bars of the reel's music),
+    // with the guide named among the conditional jobs (taalcut/edit-longer); and library.frameStrip (MATCH1's),
+    // where registered, to name an instant of a shot.
+    version: '1.7.0',
     labelKey: 'skills.timeline.maker',
     description:
       'Makes the video from the assembled timeline in rounds: reads it with timeline.get and templates.get, edits it, ' +

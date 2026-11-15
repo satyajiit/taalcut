@@ -5,7 +5,8 @@ import type { CoverSettings, Timeline } from '@taalcut/core';
 import { useEffect, useState } from 'react';
 
 type Aspect = CoverSettings['aspect'];
-type Draft = { value: CoverSettings; base: CoverSettings | undefined; conflict: boolean };
+/** `touched`: the person changed it here. An untouched draft is nobody's design yet, so a saved cover replaces it. */
+type Draft = { value: CoverSettings; base: CoverSettings | undefined; conflict: boolean; touched?: boolean };
 const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 
 /** Each aspect keeps its draft when the person switches formats or another window saves a cover. */
@@ -28,7 +29,7 @@ export function useCoverDrafts(
       for (const [key, entry] of Object.entries(old) as [Aspect, Draft][]) {
         const current = timeline.covers?.find((cover) => cover.aspect === key);
         if (same(current, entry.base)) continue;
-        const clean = same(entry.value, entry.base) || same(entry.value, current);
+        const clean = !entry.touched || same(entry.value, entry.base) || same(entry.value, current);
         if (clean) {
           next[key] = { value: current ?? make(key), base: current, conflict: false };
           changed = true;
@@ -48,7 +49,7 @@ export function useCoverDrafts(
     patch(changes: Partial<CoverSettings>) {
       setDrafts((old) => ({
         ...old,
-        [aspect]: { ...old[aspect]!, value: { ...old[aspect]!.value, ...changes } },
+        [aspect]: { ...old[aspect]!, value: { ...old[aspect]!.value, ...changes }, touched: true },
       }));
     },
     select(next: Aspect) {

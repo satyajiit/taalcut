@@ -169,11 +169,15 @@ describe('motion-graphics prompts become design jobs and edits (HFW1 retire)', (
   it('covers the design job and every command an Editor prompt calls', () => {
     // EDT1-GFX: graphics.useProposal is the person's "Use it". HFW1: graphics.placeComposition and
     // graphics.setComposition are the Designer's, through workspace.place and workspace.replace (render
-    // test/workspace/tools), never the Editor's prompt.
+    // test/workspace/tools), never the Editor's prompt. DSG2: graphics.placeOptions is the Designer's too, through
+    // workspace.placeOptions, and graphics.chooseOption is the person's click on a design (render
+    // test/workspace/tools/options-tools.test.ts).
     const unprompted: readonly string[] = [
       GRAPHICS_COMMANDS.useProposal,
       GRAPHICS_COMMANDS.placeComposition,
       GRAPHICS_COMMANDS.setComposition,
+      GRAPHICS_COMMANDS.placeOptions,
+      GRAPHICS_COMMANDS.chooseOption,
     ];
     const prompted = Object.values(GRAPHICS_COMMANDS).filter((name) => !unprompted.includes(name));
     expect(new Set(FIXTURES.map((f) => f.tool))).toEqual(new Set([GRAPHICS_DESIGN_TOOL, ...prompted]));

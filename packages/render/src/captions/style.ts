@@ -87,6 +87,10 @@ const CATEGORY_FALLBACKS: Readonly<Record<FontCategory, readonly FontCategory[]>
   humanist: ['humanist', 'sans'],
   rounded: ['rounded', 'humanist', 'sans'],
   condensed: ['condensed', 'geometric', 'sans'],
+  // TXT1: the serif, script and mono faces are Latin only; another script takes the nearest face that has it.
+  serif: ['serif', 'humanist', 'sans'],
+  script: ['script', 'rounded', 'humanist', 'sans'],
+  mono: ['mono', 'sans'],
 };
 
 /** The curated font of a category that covers the script, in CAPTION_FONTS order. */

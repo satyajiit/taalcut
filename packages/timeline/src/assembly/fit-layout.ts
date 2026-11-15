@@ -76,6 +76,14 @@ export function fitBox(
   return { x, y, width, height };
 }
 
+/**
+ * TXT1: a normalised box of the template's frame on the made frame, where the reel had it: same centre share, same
+ * pixels, kept only inside the frame itself. The place a made video's text starts at (placement/place-timeline.ts `reelTextLayout`).
+ */
+export function reelBoxOn(box: Box, from: Size, to: Size): Box {
+  return fitBox(box, from, to, { x: 0, y: 0, width: 1, height: 1 });
+}
+
 /** A text item's cap height (a share of the canvas height), kept in pixels. */
 export function fitTextSize(size: number, from: Size, to: Size): number {
   return clamp((size * from.height * fitScale(from, to)) / to.height, 0.005, 0.5);

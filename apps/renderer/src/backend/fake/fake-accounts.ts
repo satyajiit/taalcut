@@ -68,6 +68,8 @@ export interface FakeAccounts {
   setApiKey(provider: string, key: string): AccountsState | TaalcutError;
   testApiKey(provider: string): Check | TaalcutError;
   removeApiKey(provider: string): AccountsState;
+  /** CVR2: the next ChatGPT images sign-in ends without connecting, with this error code (a closed page times out). */
+  failNextImagesSignIn(errorCode: string): void;
   /** Providers with a key or sign-in, as main's credentials.configured() answers (the ChatGPT plan serves OpenAI). */
   configured(): ReadonlySet<string>;
   setLocalServer(kind: LocalServerKind, baseUrl: string | null): AccountsState | TaalcutError;
@@ -94,10 +96,14 @@ export function createFakeAccounts(deps: { now: () => number; signInDelayMs?: nu
     'lm-studio': {},
   };
 
+  /** CVR2: as main keeps it: the last try at the plan's images, until they connect. */
+  let imagesAttempt: AccountsState['chatgpt']['imagesAttempt'];
+  let imagesFailure: string | undefined;
   const state = (): AccountsState => ({
     chatgpt: {
       signedIn: signedIn.has(CHATGPT_PROVIDER),
       imagesSignedIn: signedIn.has(CHATGPT_IMAGE_PROVIDER),
+      ...(imagesAttempt && !signedIn.has(CHATGPT_IMAGE_PROVIDER) ? { imagesAttempt } : {}),
       manageUsageUrl: 'https://chatgpt.com/codex/settings/usage',
     },
     subscriptions: WARNED_LOGINS.map((provider) => ({
@@ -143,14 +149,30 @@ export function createFakeAccounts(deps: { now: () => number; signInDelayMs?: nu
         if (acknowledgedAt === undefined) return error('models.acknowledgement_required', { provider });
         instagramAcknowledgedAt = acknowledgedAt;
       }
+      if (provider === CHATGPT_IMAGE_PROVIDER) {
+        imagesAttempt = { state: 'waiting', at: deps.now() };
+        watch.notify();
+      }
       // The real flow waits for the browser to come back to the local callback.
       await new Promise((resolve) => setTimeout(resolve, deps.signInDelayMs ?? 250));
+      if (provider === CHATGPT_IMAGE_PROVIDER && imagesFailure) {
+        const code = imagesFailure;
+        imagesFailure = undefined;
+        imagesAttempt = { state: 'failed', at: deps.now(), errorCode: code };
+        watch.notify();
+        return error(code, { provider });
+      }
+      if (provider === CHATGPT_IMAGE_PROVIDER) imagesAttempt = undefined;
       signedIn.add(provider);
       return changed();
     },
     signOut(provider) {
       signedIn.delete(provider);
+      if (provider === CHATGPT_PROVIDER || provider === CHATGPT_IMAGE_PROVIDER) imagesAttempt = undefined;
       return changed();
+    },
+    failNextImagesSignIn(errorCode) {
+      imagesFailure = errorCode;
     },
     setApiKey(provider, key) {
       if (!isKeyProvider(provider)) return error('core.not_found', { entity: 'provider', id: provider });

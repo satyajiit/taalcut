@@ -48,9 +48,11 @@ import {
   designerInputSchema,
   designerOutputSchema,
   runDesignerLoop,
+  settledDesigns,
   workspaceToolModule,
   type DesignerInput,
   type DesignerOutput,
+  type DesignerStepCall,
 } from '@taalcut/render';
 import type { DesignCase } from './cases';
 import { diskWorkspace } from './workspace';
@@ -92,6 +94,11 @@ export interface DesignWorld {
   readonly task: string;
   readonly replies: { commentId: string; reply: string; status: string }[];
   readonly handoffs: DesignerOutput[];
+  /**
+   * DSG2: a step that ended without an accepted handoff, settled from what it placed as the agent settles it
+   * (render's designer-settle.ts, then the Designer's own check); undefined when it placed nothing.
+   */
+  readonly settle: (calls: readonly DesignerStepCall[]) => DesignerOutput | undefined;
   /** A redesign's graphic, placed before the case. */
   readonly before?: { readonly itemIds: readonly string[]; readonly compositionId: string; readonly entry: string };
   readonly store: ReturnType<typeof diskWorkspace>['store'];
@@ -224,7 +231,13 @@ export async function designWorld(
       return ok({ accepted: true });
     },
   });
-  const tools = [...workspaceTools, ...list, reply as AnyTool, handOff as AnyTool];
+  // As the app's Designer: workspace.placeOptions in workspace.place's stead (render's DESIGNER_TOOLS).
+  const tools = [
+    ...workspaceTools.filter((tool) => tool.name !== 'workspace.place'),
+    ...list,
+    reply as AnyTool,
+    handOff as AnyTool,
+  ];
   const projectId = initial.projectId as ProjectId;
   const world = { tools, artifacts, dispatch };
   let before: DesignWorld['before'];
@@ -233,12 +246,13 @@ export async function designWorld(
     const folder = /data-composition-id="([^"]+)"/.exec(text)?.[1] ?? 'graphic';
     const path = `${folder}/index.html`;
     await setupCall(world, 'workspace.write', { projectId, path, text });
-    const placed = await setupCall(world, 'workspace.place', {
+    // In the video, as a design the Designer placed earlier is (DSG2: no proposal waits on the person). A design
+    // is drawn before it is placed.
+    await setupCall(world, 'workspace.render', { projectId, entry: path, seconds: [1] });
+    const placed = await setupCall(world, 'workspace.placeOptions', {
       projectId,
       timelineId: initial.id,
-      revision: initial.revision,
-      entry: path,
-      name: entry.before.name,
+      options: [{ entry: path, name: entry.before.name, idea: `The ${entry.before.name} as it was first designed` }],
       request: entry.before.name,
       at: entry.before.at,
       params: entry.before.params,
@@ -282,6 +296,11 @@ export async function designWorld(
     task,
     replies,
     handoffs,
+    settle: (calls) => {
+      const timeline = stored.get(initial.id)!;
+      const settled = settledDesigns(input, calls, timeline);
+      return settled && checkDesigns(settled, input, timeline).verdict === 'pass' ? settled : undefined;
+    },
     ...(before ? { before } : {}),
     store: workspace.store,
   };

@@ -33,6 +33,12 @@ export interface MixSegment {
   readonly gainDb: number;
   readonly fadeInSamples: number;
   readonly fadeOutSamples: number;
+  /**
+   * LONG1: the fade's curve. Absent: equal power, for two unlike sounds crossing. 'linear': for two parts of one
+   * recording crossing in step (the reel's music where it plays bars again), whose sum then keeps its level.
+   */
+  readonly fadeInCurve?: 'linear';
+  readonly fadeOutCurve?: 'linear';
   /** Source seconds per render second. 1 is real time; a ramp's mean, whose curve is in `pieces`. */
   readonly tempo: number;
   /** A speed ramp's sound: constant-tempo pieces played back to back from `inSample` (speed-curve.ts). */

@@ -13,10 +13,20 @@
  * opening. An aligned window wins when it is about as settled as the shot
  * allows (within `alignSlack` of the most settled window); otherwise the best
  * window plays with no sync point. Equal windows: the one nearest the middle.
+ *
+ * MOM1: a window also loses for showing what the slot states less well than the shot's best window does, by the
+ * notes of the shot's moments (moment-fit.ts). It counts in the score and in how settled a window is, so a peak on
+ * the beat never wins a stretch that shows something else. A shot without moments is chosen as before.
+ *
+ * MOM2: no window rests on a stretch the describer states as the camera being handled while the shot has another
+ * stretch long enough (handling.ts): only the windows that keep off them may be chosen, whatever else is asked of
+ * the window (a person's terms, a slip's limits). A shot that can't keep off them is chosen from as before.
  */
 import { RationalTime, type FrameRate, type ShotProfile } from '@taalcut/core';
 import { sourceFrames } from '../model/speed';
 import type { CastingConfig } from './config';
+import { clearStarts } from './handling';
+import { contentPenalty } from './moment-fit';
 import { recordingHandles, recordingPenalty } from './recording';
 import { settleOf, settlePenalty, type Settle } from './settle';
 import type { SlotSpec } from './slots';
@@ -149,11 +159,19 @@ export function selectInPoint(
   const best = bestFrameOf(profile, length);
   const recording = config.inPoint.recording;
   const handles = recordingHandles(profile, window, recording);
+  // MOM1: what the window shows against what the slot states.
+  const content = contentPenalty(profile, slot, window, config.inPoint.content);
   const penalty = (start: number) =>
     settlePenalty(settle, length, start, window, settling) +
     recordingPenalty(handles, start, window, recording) +
+    (content ? content(start) : 0) +
     (terms.penalty ? terms.penalty(start) : 0);
-  const allowed = terms.allowed ?? (() => true);
+  // MOM2: off the stretches where the camera is being handled, while a window of this length can be.
+  const clear = clearStarts(profile, window, config.inPoint.handling);
+  const within = terms.allowed;
+  const allowed = clear
+    ? (start: number) => clear(start) && (within ? within(start) : true)
+    : (within ?? (() => true));
   const objective = (start: number) =>
     mean(sharp, start, start + window) +
     (hook && opening ? config.hook.openingWeight * mean(opening, start, start + hookFrames) : 0) +
@@ -213,6 +231,7 @@ export function selectInPoint(
   }
   const start = pick(everyStart());
   // Nothing allowed (a span that holds no whole window): no in-point, which the caller reads as "keep yours".
-  if (start === null) return terms.allowed ? null : { sourceStart: at(0), syncPoint: null, aligned: false };
+  if (start === null)
+    return terms.allowed || clear ? null : { sourceStart: at(0), syncPoint: null, aligned: false };
   return { sourceStart: at(start), syncPoint: null, aligned: false };
 }

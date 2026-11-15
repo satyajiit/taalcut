@@ -110,10 +110,13 @@ export function ImportProgressView(props: ImportProgressViewProps) {
       {extrasOnly ? null : (
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <ImportMark state={state} waiting={waiting} ended={ended} anyIn={status.counts.done > 0} />
-          <p className="m-0 min-w-0 flex-1 text-sm font-medium text-ink">
+          {/* The title asks for 10rem beside its mark: in a narrow column (the editor's chat) Pause and Run in
+              background go under it instead of squeezing it to a word a line; and the two never run past the
+              column (longer words in other languages): they go on two lines. */}
+          <p className="m-0 min-w-0 flex-[1_1_10rem] text-sm font-medium text-ink">
             <ImportTitle status={status} source={source} lines={lines} waiting={waiting} ended={ended} />
           </p>
-          <div className="flex shrink-0 items-center gap-1">
+          <div className="flex max-w-full shrink-0 flex-wrap items-center gap-1">
             <ImportActions
               state={running || state === 'paused' || (state === 'failed' && !ended) ? state : null}
               pending={pending}

@@ -35,13 +35,24 @@ const LANGUAGES = {
 } as const;
 const LINE_HEIGHT = 90;
 
-function box(safe: Rect, width: number, anchorY: number, lines = 2, overrides: Partial<ProbedTextBox> = {}): ProbedTextBox {
+function box(
+  safe: Rect,
+  width: number,
+  anchorY: number,
+  lines = 2,
+  overrides: Partial<ProbedTextBox> = {},
+): ProbedTextBox {
   const height = lines * LINE_HEIGHT;
   return {
     kind: 'caption',
     id: 'cue-1',
     frame: 15,
-    box: { x: Math.round(safe.x + (safe.width - width) / 2), y: Math.round(anchorY * 1920 - height / 2), width, height },
+    box: {
+      x: Math.round(safe.x + (safe.width - width) / 2),
+      y: Math.round(anchorY * 1920 - height / 2),
+      width,
+      height,
+    },
     lines,
     overflow: false,
     fontsReady: true,
@@ -50,7 +61,12 @@ function box(safe: Rect, width: number, anchorY: number, lines = 2, overrides: P
   };
 }
 
-function input(text: string, preset: ExportPresetId, boxes: readonly ProbedTextBox[], style = {}): CaptionCheckInput {
+function input(
+  text: string,
+  preset: ExportPresetId,
+  boxes: readonly ProbedTextBox[],
+  style = {},
+): CaptionCheckInput {
   return {
     plan: qaPlan({ cues: [{ id: 'cue-1', span: { start: 0, end: 30 }, probeFrames: [15] }] }),
     captions: captions([{ id: 'cue-1', start: 0, frames: 30, text }], style),
@@ -61,7 +77,10 @@ function input(text: string, preset: ExportPresetId, boxes: readonly ProbedTextB
 }
 
 const inside = (rect: Rect, safe: Rect) =>
-  rect.x >= safe.x - 2 && rect.y >= safe.y - 2 && rect.x + rect.width <= safe.x + safe.width + 2 && rect.y + rect.height <= safe.y + safe.height + 2;
+  rect.x >= safe.x - 2 &&
+  rect.y >= safe.y - 2 &&
+  rect.x + rect.width <= safe.x + safe.width + 2 &&
+  rect.y + rect.height <= safe.y + safe.height + 2;
 
 describe('captionSafeZone', () => {
   describe.each(Object.entries(LANGUAGES))('%s', (_language, { text, width }) => {
@@ -102,13 +121,17 @@ describe('captionSafeZone', () => {
     expect(captionSafeZoneCheck(input('Watch', 'device', [edge(3)])).status).toBe('fail');
   });
 
-  it('asks the agent to move a text overlay, and skips when nothing is on screen', () => {
+  it('TXT1: notes a text overlay outside the rect (a warning with no fix), and skips when nothing is on screen', () => {
     const safe = presetFor('tiktok').safe;
     const overlay = box(safe, 300, 0.1, 1, { kind: 'text', id: 'title' });
     const plan = qaPlan({ texts: [{ id: 'title', span: { start: 0, end: 30 }, probeFrame: 15 }] });
     const result = captionSafeZoneCheck({ plan, captions: null, boxes: [overlay], safe, target });
-    expect(result.fixes).toEqual([{ kind: 'agent', instructionKey: 'qa.fixes.moveText', params: { textId: 'title' } }]);
-    expect(captionSafeZoneCheck({ plan: qaPlan(), captions: null, boxes: [], safe, target }).status).toBe('skipped');
+    expect(result.status).toBe('warn');
+    expect(result.findings.map((finding) => finding.target)).toEqual([{ kind: 'text', id: 'title' }]);
+    expect(result.fixes).toEqual([]);
+    expect(captionSafeZoneCheck({ plan: qaPlan(), captions: null, boxes: [], safe, target }).status).toBe(
+      'skipped',
+    );
   });
 });
 
@@ -118,8 +141,13 @@ describe('planCaptionFix', () => {
   const style = { anchorY: 0.95, sizePx: 72, maxWords: 6, maxLines: 2 };
 
   it('shrinks a block too wide for the safe width, never under 44 px', () => {
-    expect(planCaptionFix({ boxes: [box(safe, 900, 0.55)], style, safe, canvasHeight: 1920 })).toEqual({ sizePx: 52 });
-    expect(planCaptionFix({ boxes: [box(safe, 2000, 0.55)], style, safe, canvasHeight: 1920 })).toEqual({ sizePx: 44, maxWords: 3 });
+    expect(planCaptionFix({ boxes: [box(safe, 900, 0.55)], style, safe, canvasHeight: 1920 })).toEqual({
+      sizePx: 52,
+    });
+    expect(planCaptionFix({ boxes: [box(safe, 2000, 0.55)], style, safe, canvasHeight: 1920 })).toEqual({
+      sizePx: 44,
+      maxWords: 3,
+    });
   });
 
   it('shrinks and centres a block taller than the safe rect', () => {
@@ -134,26 +162,43 @@ describe('captionOverflow', () => {
   it('fails a 30-character Hindi compound at 140 px with one line allowed', () => {
     const safe = presetFor('device').safe;
     const result = captionOverflowCheck(
-      input('अंतरराष्ट्रीयकरणप्रक्रियाविशेषज्ञता', 'device', [box(safe, 640, 0.55, 2, { overflow: true })], { sizePx: 140, maxLines: 1 }),
+      input('अंतरराष्ट्रीयकरणप्रक्रियाविशेषज्ञता', 'device', [box(safe, 640, 0.55, 2, { overflow: true })], {
+        sizePx: 140,
+        maxLines: 1,
+      }),
     );
     expect(result.status).toBe('fail');
     expect(result.fixes).toEqual([
-      { kind: 'command', labelKey: 'qa.fixes.shrinkCaptions', command: CAPTION_COMMANDS.setStyle, payload: { ...target, style: { sizePx: 70 } } },
-      { kind: 'command', labelKey: 'qa.fixes.rebuildCaptions', command: CAPTION_COMMANDS.rebuild, payload: { ...target } },
+      {
+        kind: 'command',
+        labelKey: 'qa.fixes.shrinkCaptions',
+        command: CAPTION_COMMANDS.setStyle,
+        payload: { ...target, style: { sizePx: 70 } },
+      },
+      {
+        kind: 'command',
+        labelKey: 'qa.fixes.rebuildCaptions',
+        command: CAPTION_COMMANDS.rebuild,
+        payload: { ...target },
+      },
     ]);
   });
 
   it('fails twelve Spanish words at 120 px on three lines when two are allowed', () => {
     const safe = presetFor('device').safe;
     const words = 'Esta es la mejor manera de editar tus videos cortos para redes';
-    const result = captionOverflowCheck(input(words, 'device', [box(safe, 640, 0.55, 3)], { sizePx: 120, maxWords: 12, maxLines: 2 }));
+    const result = captionOverflowCheck(
+      input(words, 'device', [box(safe, 640, 0.55, 3)], { sizePx: 120, maxWords: 12, maxLines: 2 }),
+    );
     expect(result.status).toBe('fail');
     expect(result.measured).toEqual({ value: 3, unit: 'count' });
     expect(result.fixes[0]).toMatchObject({ payload: { style: { sizePx: 80 } } });
   });
 
   it('fails a box that leaves the 1080×1920 frame', () => {
-    const out = box(presetFor('device').safe, 400, 0.55, 2, { box: { x: 900, y: 900, width: 400, height: 180 } });
+    const out = box(presetFor('device').safe, 400, 0.55, 2, {
+      box: { x: 900, y: 900, width: 400, height: 180 },
+    });
     expect(captionOverflowCheck(input('Watch', 'device', [out])).status).toBe('fail');
   });
 
@@ -170,7 +215,9 @@ describe('captionOverflow', () => {
   const safe = presetFor('device').safe;
 
   it('fails a popped word that runs into its neighbour, by how deep', () => {
-    const result = captionOverflowCheck(input('one two three four', 'device', [box(safe, 500, 0.55, 2, { words: popped(26) })]));
+    const result = captionOverflowCheck(
+      input('one two three four', 'device', [box(safe, 500, 0.55, 2, { words: popped(26) })]),
+    );
     expect(result.status).toBe('fail');
     expect(result.findings).toEqual([expect.objectContaining({ measured: { value: 6, unit: 'px' } })]);
     expect(wordCollision(popped(26))).toBeCloseTo(6, 9);
@@ -178,13 +225,19 @@ describe('captionOverflow', () => {
 
   it('passes a popped word clear of every other, words at rest that touch, and a 1 px graze', () => {
     for (const words of [popped(14), popped(21), popped(40, 1).map((word) => ({ ...word, scale: 1 }))])
-      expect(captionOverflowCheck(input('one two three four', 'device', [box(safe, 500, 0.55, 2, { words })])).status).toBe('pass');
+      expect(
+        captionOverflowCheck(input('one two three four', 'device', [box(safe, 500, 0.55, 2, { words })]))
+          .status,
+      ).toBe('pass');
   });
 });
 
 describe('captionGlyphs (real cmap coverage)', () => {
   const check = (text: string, font: CaptionFontId = 'notoSans') =>
-    captionGlyphsCheck({ captions: captions([{ id: 'cue-1', start: 0, frames: 30, text }], { font }), target }, captionGlyphIssues);
+    captionGlyphsCheck(
+      { captions: captions([{ id: 'cue-1', start: 0, frames: 30, text }], { font }), target },
+      captionGlyphIssues,
+    );
 
   it('passes Hindi conjuncts in Mukta and emoji through Noto Color Emoji', () => {
     expect(check('क्षत्रिय श्रृंगार द्वार', 'mukta').status).toBe('pass');
@@ -198,46 +251,74 @@ describe('captionGlyphs (real cmap coverage)', () => {
     const result = check(text);
     expect(result.status).toBe('fail');
     expect(result.overridable).toBe(false);
-    expect(result.fixes).toEqual([{ kind: 'agent', instructionKey: 'qa.fixes.editCaptionText', params: { cueId: 'cue-1' } }]);
+    expect(result.fixes).toEqual([
+      { kind: 'agent', instructionKey: 'qa.fixes.editCaptionText', params: { cueId: 'cue-1' } },
+    ]);
   });
 
   it('offers a covering curated font when one exists', () => {
     const antonOnly = (cues: readonly { id: string; text: string }[], font: string) =>
       font === 'anton' ? cues.map((cue) => ({ cueId: cue.id, codepoints: [0x0915] })) : [];
-    const result = captionGlyphsCheck({ captions: captions([{ id: 'cue-1', start: 0, frames: 30, text: 'क' }], { font: 'anton' }), target }, antonOnly);
+    const result = captionGlyphsCheck(
+      { captions: captions([{ id: 'cue-1', start: 0, frames: 30, text: 'क' }], { font: 'anton' }), target },
+      antonOnly,
+    );
     expect(result.fixes).toEqual([
-      { kind: 'command', labelKey: 'qa.fixes.coveringFont', command: CAPTION_COMMANDS.setStyle, payload: { ...target, style: { font: 'notoSans' } } },
+      {
+        kind: 'command',
+        labelKey: 'qa.fixes.coveringFont',
+        command: CAPTION_COMMANDS.setStyle,
+        payload: { ...target, style: { font: 'notoSans' } },
+      },
     ]);
   });
 
   it('fails a cue whose font the browser had not loaded at capture', () => {
-    const caption = input('Watch this', 'device', [box(presetFor('device').safe, 400, 0.55, 2, { fontsReady: false })]);
+    const caption = input('Watch this', 'device', [
+      box(presetFor('device').safe, 400, 0.55, 2, { fontsReady: false }),
+    ]);
     expect(captionGlyphsCheck(caption, glyphStub).status).toBe('fail');
   });
 });
 
 describe('captionReadability', () => {
-  const plan = (frames: number) => qaPlan({ cues: [{ id: 'cue-1', span: { start: 0, end: frames }, probeFrames: [frames >> 1] }] });
+  const plan = (frames: number) =>
+    qaPlan({ cues: [{ id: 'cue-1', span: { start: 0, end: frames }, probeFrames: [frames >> 1] }] });
   const track = (style = {}) => captions([{ id: 'cue-1', start: 0, frames: 24, text: 'Watch this' }], style);
 
   it('fails a 0.4 s cue and passes 0.8 s', () => {
     const short = captionReadabilityCheck({ plan: plan(12), captions: track(), target }, new Map());
     expect(short.status).toBe('fail');
-    expect(short.fixes).toEqual([{ kind: 'command', labelKey: 'qa.fixes.rebuildCaptions', command: CAPTION_COMMANDS.rebuild, payload: { ...target } }]);
-    expect(captionReadabilityCheck({ plan: plan(24), captions: track(), target }, new Map()).status).toBe('pass');
+    expect(short.fixes).toEqual([
+      {
+        kind: 'command',
+        labelKey: 'qa.fixes.rebuildCaptions',
+        command: CAPTION_COMMANDS.rebuild,
+        payload: { ...target },
+      },
+    ]);
+    expect(captionReadabilityCheck({ plan: plan(24), captions: track(), target }, new Map()).status).toBe(
+      'pass',
+    );
   });
 
   it('warns on white text without a stroke over white, and passes with a 4 px stroke', () => {
     const white = new Map([['cue-1', '#fafafa']]);
     const bare = captionReadabilityCheck({ plan: plan(24), captions: track(), target }, white);
     expect(bare.status).toBe('warn');
-    expect(bare.fixes[0]).toMatchObject({ labelKey: 'qa.fixes.captionStroke', payload: { style: { stroke: { color: '#000000', widthPx: 4 } } } });
+    expect(bare.fixes[0]).toMatchObject({
+      labelKey: 'qa.fixes.captionStroke',
+      payload: { style: { stroke: { color: '#000000', widthPx: 4 } } },
+    });
     const stroked = track({ stroke: { color: '#000000', widthPx: 4 } });
     expect(captionReadabilityCheck({ plan: plan(24), captions: stroked, target }, white).status).toBe('pass');
   });
 
   it('fails text under 44 px', () => {
-    const result = captionReadabilityCheck({ plan: plan(24), captions: track({ sizePx: 40 }), target }, new Map());
+    const result = captionReadabilityCheck(
+      { plan: plan(24), captions: track({ sizePx: 40 }), target },
+      new Map(),
+    );
     expect(result.status).toBe('fail');
     expect(result.fixes[0]).toMatchObject({ payload: { style: { sizePx: 44 } } });
   });

@@ -95,7 +95,9 @@ export function ErrorLine({
         </span>
       </p>
       {fix || retry || onReport ? (
-        <span className="flex shrink-0 flex-wrap items-center gap-1.5">
+        // Never wider than the line: in a narrow column, or a language with longer words, the fix and Report this
+        // go on two lines instead of out of the column.
+        <span className="flex max-w-full shrink-0 flex-wrap items-center gap-1.5">
           {fix ? (
             <Button size="sm" variant="secondary" loading={running} onClick={() => void run(fix)}>
               {fixLabel(i18n, fix)}

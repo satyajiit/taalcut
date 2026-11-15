@@ -5,7 +5,8 @@
  * The graphics commands and tools on compositions alone (HFW1 retire): graphics.list shows each graphic's design, its
  * variables and values with look-alike fences defused; "Use it" makes a proposal part of the video and undo makes it
  * one again; remove takes a graphic off and undo puts it back; graphics.edit's tool refuses moving or resizing a
- * graphic, which is graphics.design's. The module is list, edit, remove and design.
+ * graphic, which is graphics.design's. The module is list, edit, remove and design. DSG2: graphics.list numbers a
+ * graphic's designs and graphics.chooseOption switches to one by its number.
  */
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -98,6 +99,7 @@ describe('the graphics commands and tools on compositions', () => {
       GRAPHICS_COMMANDS.remove,
       'graphics.design',
       GRAPHICS_COMMANDS.useProposal,
+      GRAPHICS_COMMANDS.chooseOption,
     ]);
     expect(module.tools.slice(0, 3).map((tool) => tool.version)).toEqual(['2.0.0', '2.0.0', '2.0.0']);
   });
@@ -117,6 +119,69 @@ describe('the graphics commands and tools on compositions', () => {
     expect(item?.composition.name).toBe('Chat ‹/untrusted> bubble');
     expect(item?.composition.variables.map((variable) => variable.name)).toEqual(['message', 'fill']);
     expect(item?.proposal).toEqual({ design: 'designed' });
+  });
+
+  it('lists a graphic’s three designs by number, and switches to the one the person names (DSG2)', async () => {
+    const { world, run, target, latest } = await placedBubble();
+    const names = ['title-a', 'title-b', 'title-c'];
+    for (const name of names)
+      unwrap(
+        await world.call('workspace.write', {
+          projectId: world.projectId,
+          path: `${name}/index.html`,
+          text: await readFile(
+            join(import.meta.dirname, '..', 'workspace', 'tools', 'fixtures', `${name}.html`),
+            'utf8',
+          ),
+        }),
+      );
+    const placed = unwrap(
+      await world.call('workspace.placeOptions', {
+        ...target,
+        revision: (await latest()).revision,
+        options: names.map((name, at) => ({
+          entry: `${name}/index.html`,
+          name: `Title ${at + 1}`,
+          idea: `Idea ${at + 1}`,
+        })),
+        request: 'a title',
+        at: 2,
+        params: { title: 'Leave' },
+      }),
+    ) as { itemIds: Id<'TimelineItem'>[] };
+    type Listed = {
+      items: { itemId: string; options?: { option: number; name: string; idea: string; inUse: boolean }[] }[];
+    };
+    const optionsOf = async () =>
+      (unwrap(await run('graphics.list', { timelineId: target.timelineId })) as Listed).items.find(
+        (item) => item.itemId === placed.itemIds[0],
+      )?.options;
+    expect(await optionsOf()).toEqual([
+      { option: 1, name: 'Title 1', idea: 'Idea 1', inUse: true },
+      { option: 2, name: 'Title 2', idea: 'Idea 2', inUse: false },
+      { option: 3, name: 'Title 3', idea: 'Idea 3', inUse: false },
+    ]);
+    const revision = async () => (await latest()).revision;
+    const chosen = await run(GRAPHICS_COMMANDS.chooseOption, {
+      ...target,
+      revision: await revision(),
+      itemId: placed.itemIds[0],
+      option: 2,
+    });
+    expect(chosen.ok, JSON.stringify(chosen)).toBe(true);
+    expect((await optionsOf())?.map((option) => option.inUse)).toEqual([false, true, false]);
+    expect(
+      graphicsOf(await latest()).find((graphic) => graphic.id === placed.itemIds[0])?.composition.params,
+    ).toEqual({ title: 'Leave' });
+    // A graphic without designs to choose between has no such option.
+    const bubble = graphicsOf(await latest()).find((graphic) => !graphic.options)!;
+    const none = await run(GRAPHICS_COMMANDS.chooseOption, {
+      ...target,
+      revision: await revision(),
+      itemId: bubble.id,
+      option: 2,
+    });
+    expect(none.ok).toBe(false);
   });
 
   it('Use it makes a proposal part of the video, once; undo makes it a proposal again', async () => {

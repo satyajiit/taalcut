@@ -21,6 +21,7 @@ const KEEP = new Set([
   'graphics_list',
   'workspace_lint',
   'workspace_place',
+  'workspace_placeOptions',
   'timeline_findAlternates',
 ]);
 const key = (call: ToolCall) =>
@@ -89,7 +90,7 @@ function receipt(call: ToolCall, skill: string | null): string | undefined {
         ? ['templateId', 'version', 'slotCount', 'breakdownId', 'unconfirmedCuts']
         : call.name === 'timeline_assemble'
           ? ['timelineIds', 'revisions', 'lowConfidence']
-          : call.name === 'workspace_place'
+          : call.name === 'workspace_place' || call.name === 'workspace_placeOptions'
             ? ['revision', 'itemIds', 'compositionId']
             : call.name === 'workspace_lint'
               ? ['passed', 'findings']

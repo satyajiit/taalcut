@@ -79,8 +79,8 @@ export interface JobSummary {
 
 export type ThermalState = 'nominal' | 'fair' | 'serious' | 'critical';
 
+/** What the throttle reads. Battery or charger is not part of it: it never decides anything. */
 export interface PowerSnapshot {
-  readonly onBattery: boolean;
   readonly thermalState: ThermalState;
 }
 

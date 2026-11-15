@@ -10,6 +10,7 @@ import '../basics/zod-config';
 import { z } from 'zod';
 import { RationalTime, rationalTimeSchema } from '../time/rational-time';
 import type { FrameRate } from '../time/frame-rate';
+import { musicRepeatsSchema } from './music-repeats';
 
 export const duckingSettingsSchema = z.object({
   enabled: z.boolean(),
@@ -64,6 +65,11 @@ export function defaultMusicBed(rate: FrameRate): MusicBed {
 export const timelineMixSchema = z.object({
   ducking: duckingSettingsSchema,
   music: musicBedSchema.optional(),
+  /**
+   * LONG1: where the reel's own music plays bars again, so the video runs longer than its reel (music-repeats.ts).
+   * Absent on every timeline from before LONG1 and on one never lengthened: the music plays once through.
+   */
+  musicRepeats: musicRepeatsSchema.optional(),
 });
 export type TimelineMix = z.output<typeof timelineMixSchema>;
 

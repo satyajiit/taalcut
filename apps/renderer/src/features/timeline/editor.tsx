@@ -22,6 +22,7 @@ import type { EditorTask } from './dock/editor-task';
 import { EditorPanels } from './editor-panels';
 import { editorWorkspaceReducer, type InspectorTool } from './editor-workspace-state';
 import { buildModel, mediaOf, type ClipView } from './model';
+import { OtherShots } from './other-shots/other-shots';
 import { usePlayhead } from './playhead';
 import { ViewerHost } from './preview/viewer-host';
 import { SceneStrip } from './scene-strip';
@@ -76,7 +77,7 @@ export function Editor({
   const history = useProjectUndo(projectId);
   const aiMarks = useAiEditMarks(timeline, activity.data);
   const mutations = useEdits(projectId, timeline.id, model);
-  const edits = { ...mutations, pending: mutations.pending || activity.paused };
+  const edits = { ...mutations, pending: mutations.pending || activity.paused, aiPaused: activity.paused };
   const [coverOpened, setCoverOpened] = useState(false);
   const [cleanupOpened, setCleanupOpened] = useState(task === 'cleanup');
   useEffect(() => {
@@ -187,6 +188,7 @@ export function Editor({
       onAddToChat={addToChat}
       onCloseTask={onCloseTask}
       onVideo={onVideo}
+      onScenes={detailed ? undefined : () => setInspect(null)}
       onCover={() => {
         setCoverOpened(true);
         setInspect('cover');
@@ -343,12 +345,13 @@ export function Editor({
               {detailed && !task ? t`Simple scenes` : t`Detailed timeline`}
             </Button>
           </div>
-          <div>
+          <OtherShots model={model} edits={edits} lookup={lookup} paused={activity.paused}>
             <div hidden={!!task || !!inspect || detailed}>
               <SceneStrip
                 aiMarks={aiMarks}
                 model={model}
                 pictureFor={pictureFor}
+                lookup={lookup}
                 selectedIds={selectedIds}
                 onPick={(id, shift, toggle) => {
                   multi.pick(id, shift, toggle);
@@ -378,7 +381,7 @@ export function Editor({
                 scale={scale}
               />
             </div>
-          </div>
+          </OtherShots>
         </div>
       </div>
     </EditorContextProvider>

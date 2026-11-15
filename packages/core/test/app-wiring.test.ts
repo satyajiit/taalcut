@@ -57,6 +57,7 @@ const AGENT_ELSEWHERE = [
   'onboarding',
   'speech',
   'interfaceSounds',
+  'postCaption',
   'telemetry',
   'telemetryIngest',
   'debugBundle',

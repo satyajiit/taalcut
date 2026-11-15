@@ -5,7 +5,8 @@
  * Keeps `library.search` and `library.findSimilar` responses under 7,800 UTF-8 bytes (`< 8,192`
  * `DEFAULT_INLINE_OUTPUT_LIMIT`) so a 30-hit search never spills to an artifact or costs an extra
  * `readArtifact` turn, while preserving every hit's `shotId`, `assetId`, `fileName`, `start`,
- * `duration`, `score`, `matchedBy`, and concise `description` inline.
+ * `duration`, `score`, `matchedBy`, and concise `description` inline. MOM1: each hit's `moments` (what the shot shows
+ * over time) are the first thing a long list drops.
  */
 import { MATCH_KINDS, ulidSchema } from '@taalcut/core';
 import { z } from 'zod';
@@ -31,6 +32,11 @@ export const hitSchema = z.object({
   description: fromMedia(z.string().nullable()).optional(),
   /** What people in the shot are doing ("dancing", "playing music"), fixed words first. */
   actions: z.array(fromMedia(z.string())).optional(),
+  /**
+   * MOM1: what the shot shows over time, "0-2.8s: …; 2.8-4.8s: …", seconds in its file (the clock a clip's
+   * sourceStart uses): the part to place. Left out of a long list of hits; library.getAsset has them whole.
+   */
+  moments: fromMedia(z.string()).optional(),
   /** Where its clip was filmed, in words ("Lisbon, Portugal"; "probably …" from its time zone). Null: unknown. */
   place: z.string().nullable().optional(),
   /** The trip its clip belongs to; a null name is named by place and month. */
@@ -97,6 +103,10 @@ function dropEmptyExtras(hit: Hit): Hit {
 }
 
 export function compactHitsOutput(output: HitsOutput): HitsOutput {
+  if (utf8Bytes(output) <= MAX_INLINE_SEARCH_BYTES) return output;
+
+  // Stage 0 (MOM1): the moments go first, so a long list of hits is cut exactly as it was before them.
+  output = { ...output, hits: output.hits.map(({ moments: _moments, ...rest }) => rest) };
   if (utf8Bytes(output) <= MAX_INLINE_SEARCH_BYTES) return output;
 
   // Stage 1: shorten snippets (`passage`), then omit them.

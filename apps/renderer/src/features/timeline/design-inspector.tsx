@@ -27,6 +27,7 @@ import {
 import { MessageSquareText, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { selectionStore } from '../../chat/selection-store';
+import { DesignOptionsSection } from './design-options-section';
 import { sendInChat } from './dock/chat-requests';
 import { useEditorContext } from './editor-context';
 import type { GraphicView } from './graphics-lane-model';
@@ -90,6 +91,8 @@ export function DesignInspector({ view, onSelect }: DesignInspectorProps) {
           onChange={changeLook}
         />
       ) : null}
+      {/* DSG2: the designs it came with; one click swaps another in. */}
+      <DesignOptionsSection item={item} command={command} />
       {design && item.composition ? (
         <div ref={words}>
           <DesignVariablesForm

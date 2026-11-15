@@ -157,6 +157,15 @@ export const LIBRARY_ERROR_WORDS: Readonly<Record<string, MessageDescriptor>> = 
     id: 'errors.templates.doubt_not_found',
     message: 'That was already checked.',
   }),
+  // KEEP1: whose footage a slot plays (template.slot.setFootage).
+  'errors.templates.no_person_slot': msg({
+    id: 'errors.templates.no_person_slot',
+    message: 'Your clips need at least one slot, so this one stays yours.',
+  }),
+  'errors.templates.no_reel': msg({
+    id: 'errors.templates.no_reel',
+    message: 'This template wasn’t made from a reel, so there is no reel clip to keep.',
+  }),
   'errors.templates.proposals_unreadable': msg({
     id: 'errors.templates.proposals_unreadable',
     message: 'Taalcut couldn’t read the model’s suggestions. Try again.',
@@ -196,6 +205,12 @@ export const LIBRARY_ERROR_WORDS: Readonly<Record<string, MessageDescriptor>> = 
   'errors.timeline.not_a_gap': msg({
     id: 'errors.timeline.not_a_gap',
     message: 'That spot already has a clip, so there’s no gap to fill.',
+  }),
+  // KEEP1: a slot keeps the reel's own clip, and the template's reel video is not on this Mac (fix.getReelMedia).
+  'errors.timeline.reel_missing': msg({
+    id: 'errors.timeline.reel_missing',
+    message:
+      'This video keeps clips from the reel, and the reel’s video isn’t on this Mac. Get it, then try again.',
   }),
 
   // @taalcut/render: exports, graphics, looks and translated captions.

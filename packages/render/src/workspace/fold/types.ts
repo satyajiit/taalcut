@@ -15,6 +15,11 @@ export interface CompositionPlacement {
   readonly sourceStart?: number;
   /** The assets it loads, by their path in the composition (`assets/<sha256>`): where they sit in the bundle. */
   readonly assets?: Readonly<Record<string, AssetLink>>;
+  /**
+   * CVR2: a cover's pictures by the name its `<img data-picture>` carries: where each resolved picture sits in the
+   * bundle. An image that names a picture not given here keeps no source and draws nothing.
+   */
+  readonly pictures?: Readonly<Record<string, AssetLink>>;
 }
 
 /** An asset linked into the bundle: its bundle path, its file, and its key (its sha256). */

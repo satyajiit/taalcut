@@ -151,6 +151,54 @@ describe('render.draft', () => {
     });
   });
 
+  it('TXT1: reports what QA measured of the text as notes: the draft passes, nothing fails and no fix is named', async () => {
+    const title = { kind: 'text' as const, id: 'title' };
+    const head = {
+      frames: { start: 16, end: 25 },
+      target: title,
+      measured: { value: 2, unit: 'frames' as const },
+    };
+    const rail = {
+      frames: { start: 40, end: 41 },
+      target: title,
+      measured: { value: 60, unit: 'px' as const },
+    };
+    const { timeline, tool, ctx } = setup([
+      checkResult('graphicCoversFace', 'warn', { findings: [head] }, 0),
+      checkResult('captionSafeZone', 'warn', { findings: [rail] }, 0),
+      // A warning that is not about a text is never a note.
+      checkResult('loudness', 'warn', { findings: [{ target: { kind: 'file', id: 'mix' } }] }, 0),
+    ]);
+    const draft = tool('render.draft');
+    expect(draft.version).toBe('1.2.0');
+    const output = unwrap(await draft.run(input(timeline), ctx())) as {
+      passed: boolean;
+      failing: unknown[];
+      textNotes: unknown[];
+    };
+    expect(output).toMatchObject({ passed: true, failing: [] });
+    expect(output.textNotes).toEqual([
+      { check: 'graphicCoversFace', itemId: 'title', frames: head.frames, measured: head.measured },
+      { check: 'captionSafeZone', itemId: 'title', frames: rail.frames, measured: rail.measured },
+    ]);
+    expect(draft.summarize!(output as never)).toContain('2 notes on the text');
+  });
+
+  it('a graphic over a head still fails the draft, and is a failure, not a note', async () => {
+    const bubble = { frames: { start: 8, end: 9 }, target: { kind: 'text' as const, id: 'bubble' } };
+    const { timeline, tool, ctx } = setup([
+      checkResult('graphicCoversFace', 'fail', { findings: [bubble] }, 0),
+    ]);
+    const output = unwrap(await tool('render.draft').run(input(timeline), ctx())) as {
+      passed: boolean;
+      failing: { id: string }[];
+      textNotes: unknown[];
+    };
+    expect(output.passed).toBe(false);
+    expect(output.failing.map((check) => check.id)).toEqual(['graphicCoversFace']);
+    expect(output.textNotes).toEqual([]);
+  });
+
   it('says a failing draft did not pass, with its failing checks and fixes', async () => {
     const fix = {
       kind: 'agent' as const,

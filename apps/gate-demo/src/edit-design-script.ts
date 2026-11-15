@@ -8,8 +8,10 @@
  * - The Editor reads the video's graphics (graphics.list), records the job for the Designer (graphics.design, the
  *   person's words and the second it comes on) and hands off. Nothing on the timeline changes in its step.
  * - The Designer (render.designer, the step the agent adds after the Editor's) writes the headline's composition
- *   into the project's workspace (workspace.write), checks it (workspace.lint), reads the timeline's revision
- *   (graphics.list) and proposes it at that second (workspace.place), then hands off the job as placed.
+ *   into the project's workspace (workspace.write), checks it (workspace.lint), draws it over the video where it
+ *   plays (workspace.renderOver) and places it at that second
+ *   (workspace.placeOptions, DSG2: it is in the video at once, the first design of its set), then hands off the job
+ *   as placed. The stand-in has one made-up design, so it says why there are fewer than three (fewerBecause).
  * - The run's last turn says what was done.
  *
  * The design is a made-up test fixture (edit-design-headline.ts), written here as a model would write one.
@@ -38,8 +40,12 @@ export const EDIT_DESIGN_ASKS: readonly string[] = [EDIT_DESIGN_ASK];
 export const EDIT_DESIGN_AT = 4;
 /** The composition's name, as the Designer names it. */
 export const EDIT_DESIGN_NAME = 'Newspaper headline';
-export const EDIT_DESIGN_PROPOSED =
-  'I proposed a newspaper-style headline at 0:04. It plays in the viewer: choose Use it on its card to keep it.';
+/** The idea the Designer states for it, in a line. */
+export const EDIT_DESIGN_IDEA = 'A front page: a kicker over a bold headline on paper';
+/** Why the job has one design: the stand-in has no more. */
+export const EDIT_DESIGN_FEWER = 'One made-up design in this test.';
+export const EDIT_DESIGN_ADDED =
+  'I added a newspaper-style headline at 0:04. It is in your video now: change it or ask for another from its card.';
 
 export const isEditDesignAsk = (ask: string): boolean =>
   EDIT_DESIGN_ASKS.some((known) => ask.includes(known));
@@ -53,7 +59,7 @@ export function editDesignTurn(view: RequestView): DemoTurn {
 function nextTurn(view: RequestView): DemoTurn {
   if (view.skill === 'timeline.editor') return editorTurn(view);
   if (view.skill === 'render.designer') return designerTurn(view);
-  return { text: EDIT_DESIGN_PROPOSED };
+  return { text: EDIT_DESIGN_ADDED };
 }
 
 /** The Editor: the graphics for the revision, the job for the Designer, the handoff. */
@@ -90,13 +96,13 @@ function designerTurn(view: RequestView): DemoTurn {
   const prefix = '[stand-in designer] ';
   const state = { ...notes(view, prefix).at(-1) };
   const finish = (turn: DemoTurn) => withNote(turn, prefix + JSON.stringify(state));
-  const visible = callsTo(view, 'workspace_place').at(-1);
+  const visible = callsTo(view, 'workspace_placeOptions').at(-1);
   if (visible && /^(?:Stored as (?:artifact|result)|\[Taalcut\] Read result) /.test(visible.result))
     state.placedSource = visible.result.split('\n')[0];
   const placed =
     visible ??
     (typeof state.placedSource === 'string'
-      ? { name: 'workspace_place', input: {}, result: state.placedSource }
+      ? { name: 'workspace_placeOptions', input: {}, result: state.placedSource }
       : undefined);
   if (placed) {
     const receipt = readCall(view, placed, {
@@ -115,6 +121,7 @@ function designerTurn(view: RequestView): DemoTurn {
             outcome: 'placed',
             itemIds: receipt.json.itemIds,
             compositionId: receipt.json.compositionId,
+            fewerBecause: EDIT_DESIGN_FEWER,
           },
         ],
       }),
@@ -142,28 +149,35 @@ function designerTurn(view: RequestView): DemoTurn {
     if (linted.json.passed !== true) return { text: 'The proposed composition didn’t pass its checks.' };
     state.lintPassed = true;
   }
-  if (typeof state.revision !== 'number') {
-    const listed = need(view, 'graphics_list', { revision: '/revision' });
-    if ('missing' in listed) return finish(call(view, 'graphics_list', { timelineId }));
-    if (listed.turn) return finish(listed.turn);
-    if (typeof listed.json.revision !== 'number')
-      return { text: 'I could not observe the timeline revision for placement.' };
-    state.revision = listed.json.revision;
+  const at = typeof job.at === 'number' ? job.at : EDIT_DESIGN_AT;
+  // A design is drawn where it plays before it is placed.
+  if (state.drawn !== true) {
+    const drawn = need(view, 'workspace_renderOver', { passed: '/passed' });
+    if ('missing' in drawn)
+      return finish(
+        call(
+          view,
+          'workspace_renderOver',
+          { projectId, entry: EDIT_DESIGN_ENTRY, seconds: [1], over: 'footage', timelineId, at },
+          'Looking at it over the video at 0:04.',
+        ),
+      );
+    if (drawn.turn) return finish(drawn.turn);
+    if (drawn.json.passed !== true) return { text: 'The headline didn’t draw as it should.' };
+    state.drawn = true;
   }
   return finish(
     call(
       view,
-      'workspace_place',
+      'workspace_placeOptions',
       {
         projectId,
         timelineId,
-        revision: state.revision,
-        entry: EDIT_DESIGN_ENTRY,
-        name: EDIT_DESIGN_NAME,
+        options: [{ entry: EDIT_DESIGN_ENTRY, name: EDIT_DESIGN_NAME, idea: EDIT_DESIGN_IDEA }],
         request: EDIT_DESIGN_ASK,
-        at: typeof job.at === 'number' ? job.at : EDIT_DESIGN_AT,
+        at,
       },
-      'Proposing it at 0:04.',
+      'Putting it in the video at 0:04.',
     ),
   );
 }

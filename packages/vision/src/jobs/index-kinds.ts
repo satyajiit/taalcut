@@ -16,6 +16,7 @@ import {
   embeddingSpaceSchema,
   frameRateSchema,
   ORIENTATIONS,
+  SHOT_MOMENT_LIMITS,
   shotAnalysisSchema,
   shotDescriptionSchema,
   timeRangeSchema,
@@ -230,13 +231,19 @@ export const visionEmbedTextsJob = defineJobKind({
 const describeInput = z.object({
   ...framed,
   rate: frameRateSchema,
-  /** Each shot's best frame (and optional chronological frames across the shot), as grid indices of the asset, and what is said and shown around it (LRN1-CTX). */
+  /**
+   * Each shot's best frame (and optional chronological frames across the shot), as grid indices of the asset, and
+   * what is said and shown around it (LRN1-CTX). MOM1: `span` is the shot's first grid frame and its length in
+   * frames, so the frames' times are known and the answer's moments are kept inside the shot; absent on jobs queued
+   * before, which are described without moments.
+   */
   shots: z
     .array(
       z.object({
         shotId: z.string().min(1),
         frame: z.int().nonnegative(),
-        frames: z.array(z.int().nonnegative()).min(1).max(8).optional(),
+        frames: z.array(z.int().nonnegative()).min(1).max(SHOT_MOMENT_LIMITS.count).optional(),
+        span: z.object({ start: z.int().nonnegative(), length: z.int().positive() }).optional(),
         context: shotContextSchema.optional(),
       }),
     )

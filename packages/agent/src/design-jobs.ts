@@ -6,7 +6,10 @@
  * look is a job the Editor records with `graphics.design`; when the Editor's step hands off, the jobs its completed
  * calls recorded become one Designer step (render's `render.designer`) right after it, on the jobs' timeline. A
  * comment handed over that way is the Designer's to answer: the Editor's check leaves it out, the Designer's counts
- * it. Pure functions of the folded state, so a resumed run and a replay decide the same.
+ * it. Pure functions of the folded state, so a resumed run and a replay decide the same. DSG2: the Designer makes
+ * up to three designs a job in the one step (it reads the brief once, then writes, draws and places them one at a
+ * time), so a step takes four jobs, not eight, to stay inside its turns. A step that runs out of turns is settled
+ * from what it placed (render's designer-settle.ts, through `settlers`).
  */
 import type { PlanStep } from './events';
 import { FLOW_SKILLS, nextFlowStepId } from './flows';
@@ -52,11 +55,15 @@ export function designJobsIn(state: RunState, step: StepState): DesignJobFacts[]
   return jobs;
 }
 
-/** The most jobs one Designer step takes (render's DESIGNER_JOBS_MAX). */
-const JOBS_PER_STEP = 8;
+/**
+ * The jobs one Designer step takes. DSG2: each job is three designs, and writing, checking, drawing and placing
+ * them is four turns when the three share a turn, so four jobs leave a step's 30 turns room for repairs (render's
+ * DESIGNER_JOBS_MAX, eight, is the most a step's input may hold).
+ */
+const DESIGN_JOBS_PER_STEP = 4;
 
 /**
- * After the Editor's handoff: its design jobs as Designer steps right after it (eight jobs a step, on the first
+ * After the Editor's handoff: its design jobs as Designer steps right after it (four jobs a step, on the first
  * job's timeline), when the Designer is registered. Nothing otherwise.
  */
 export function afterDesignJobs(
@@ -76,10 +83,12 @@ export function afterDesignJobs(
   const templateId = typeof entered.templateId === 'string' ? { templateId: entered.templateId } : {};
   const taken = new Set<string>();
   const steps: PlanStep[] = [];
-  for (let at = 0; at < jobs.length; at += JOBS_PER_STEP) {
+  for (let at = 0; at < jobs.length; at += DESIGN_JOBS_PER_STEP) {
     const id = nextFlowStepId(state, taken);
     taken.add(id);
-    const batch = jobs.slice(at, at + JOBS_PER_STEP).map(({ projectId: _p, timelineId: _t, ...job }) => job);
+    const batch = jobs
+      .slice(at, at + DESIGN_JOBS_PER_STEP)
+      .map(({ projectId: _p, timelineId: _t, ...job }) => job);
     steps.push({
       id,
       text: '',

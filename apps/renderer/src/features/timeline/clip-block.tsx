@@ -13,8 +13,10 @@ import { useLingui } from '@lingui/react/macro';
 import { cn, SHOT_TYPE_LABELS } from '@taalcut/ui';
 import { Lock } from 'lucide-react';
 import type { KeyboardEvent, PointerEvent, Ref } from 'react';
+import { KEYS } from './keys';
 import type { ClipView } from './model';
 import type { AiEditMark } from './ai-edit-marks';
+import { shotOptions } from './other-shots/shot-options';
 
 export interface ClipBlockProps {
   view: ClipView;
@@ -67,6 +69,8 @@ export function ClipBlock({
       role="option"
       aria-selected={selected}
       aria-label={name}
+      // EDT2: ↑ opens the cast's other shots for this clip, when it kept any (other-shots/).
+      aria-keyshortcuts={shotOptions(view) ? KEYS.otherShots : undefined}
       tabIndex={tabStop ? 0 : -1}
       data-slot="timeline-clip"
       data-clip-id={view.item.id}

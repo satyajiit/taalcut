@@ -12,8 +12,10 @@ import {
   NO_TOOL_RETRY,
   NotFoundError,
   ok,
+  THUMBNAIL_ASPECTS,
   ulidSchema,
   ValidationError,
+  VIDEO_SIZES,
   WORKSPACE_COMMANDS,
   workspacePathSchema,
   type AsyncResult,
@@ -260,6 +262,8 @@ export function workspaceFileTools(deps: WorkspaceToolDeps) {
 
   const create = workspaceTool({
     name: 'workspace.new',
+    // 1.1.0 (CVR2): `cover`, a cover's aspect as the canvas.
+    version: '1.1.0',
     description:
       'Starts a composition: writes <name>/index.html, a blank HyperFrames sub-composition that passes the gate ' +
       '(the template, a root the size of the canvas with its id and length, no variables, one paused timeline ' +
@@ -269,6 +273,7 @@ export function workspaceFileTools(deps: WorkspaceToolDeps) {
     input: z.object({
       projectId,
       timelineId: timelineId.optional().describe('Its canvas (default 1080×1920)'),
+      cover: z.enum(THUMBNAIL_ASPECTS).optional().describe('For a cover: its aspect gives the canvas'),
       name: z
         .string()
         .regex(COMPOSITION_NAME)
@@ -294,8 +299,9 @@ export function workspaceFileTools(deps: WorkspaceToolDeps) {
             { detail: `${path} is there already: read it, or pick another name` },
           ),
         );
-      let size = { width: 1080, height: 1920 };
-      if (input.timelineId) {
+      let size: { width: number; height: number } = { width: 1080, height: 1920 };
+      if (input.cover) size = VIDEO_SIZES[input.cover];
+      else if (input.timelineId) {
         const timeline = await deps.timelines.get(input.timelineId);
         if (!timeline.ok) return timeline;
         size = { width: timeline.value.canvas.width, height: timeline.value.canvas.height };

@@ -73,7 +73,7 @@ export function slotGraphicsCheck(fact: SlotMatchFact, boxAt: GraphicBoxAt | nul
         params: {
           overlayId: graphic.overlayId,
           missing: 1,
-          tools: 'graphics.design, graphics.list, workspace.place',
+          tools: 'graphics.design, graphics.list, workspace.placeOptions',
         },
       });
       continue;

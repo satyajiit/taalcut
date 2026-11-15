@@ -18,13 +18,15 @@ import { graphicSystem } from './system';
 /** The reading of the template's overlays that had a sheet; null when none had. */
 export function graphicReading(
   template: Template,
-  draft: Pick<BreakdownDraft, 'graphicSheets' | 'textRegions'>,
+  draft: Pick<BreakdownDraft, 'graphicSheets' | 'textRegions' | 'textSequences'>,
   file: GraphicsFile | null,
 ): GraphicReading | null {
   const sheets = new Map((draft.graphicSheets ?? []).map((sheet) => [sheet.overlayId, sheet] as const));
   const reel = { ...reelOfTemplate(template), textRegions: draft.textRegions };
+  // LYR1: a piece of a sequence that nobody could read has no words to brief, and keeps its doubt for the review.
+  const unread = new Set((draft.textSequences ?? []).flatMap((sequence) => sequence.unread));
   const inputs = template.text
-    .filter((overlay) => sheets.has(overlay.id))
+    .filter((overlay) => sheets.has(overlay.id) && !unread.has(overlay.id))
     .map((overlay) => ({
       overlay,
       facts: graphicFacts(reel, overlay, sheets.get(overlay.id)!.lead),

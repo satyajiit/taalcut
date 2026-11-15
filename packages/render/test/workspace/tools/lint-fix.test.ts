@@ -37,10 +37,10 @@ ${script}
 </html>
 `;
 
-async function lintOf(script: string) {
+async function lintOf(script: string, change: (text: string) => string = (text) => text) {
   const world = workspaceWorld(spokenTimeline([[10, 60, 'made-up words']]));
   const { projectId } = world;
-  const wrote = await world.call('workspace.write', { projectId, path: 'card/index.html', text: page(script) });
+  const wrote = await world.call('workspace.write', { projectId, path: 'card/index.html', text: change(page(script)) });
   if (!wrote.ok) throw new Error(wrote.error.code);
   const lint = await world.call('workspace.lint', { projectId, entry: 'card/index.html' });
   if (!lint.ok) throw new Error(lint.error.code);
@@ -70,6 +70,18 @@ describe('workspace.lint’s fix for the first error', () => {
     expect(lint.fix).toMatchObject({ now: "const bubble = document.querySelector('.bubble');" });
     expect(lint.fix?.write).toBeUndefined();
     expect(lint.fix?.why).toContain('it has .card');
+  });
+
+  it('says the element to write when the root is empty, keeping the tween', async () => {
+    const empty = (text: string) => text.replace('        <div class="card">made-up words</div>\n', '');
+    const lint = await lintOf(TWEEN, empty);
+    expect(lint.passed).toBe(false);
+    expect(lint.fix).toMatchObject({ now: TWEEN.trim() });
+    expect(lint.fix?.write).toBeUndefined();
+    expect(lint.fix?.why).toContain('The root element is empty');
+    expect(lint.fix?.why).toContain('<div class="card">');
+    const byId = await lintOf("        tl.from('#tag', { opacity: 0, duration: 0.4 }, 'enter');", empty);
+    expect(byId.fix?.why).toContain('<div id="tag">');
   });
 
   it('asks for a class of its own for a selector the motion can’t follow, and takes descendants and children', async () => {

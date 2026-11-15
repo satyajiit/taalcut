@@ -100,7 +100,7 @@ describe('createCastingLearner', () => {
     const [item] = items;
     if (!item) throw new Error('nothing learned');
     expect(item).toMatchObject({ scope: { kind: 'user' }, source: 'learned' });
-    expect(item.data).toMatchObject({ kind: 'casting-weights', configVersion: 'casting.v5', pairs: 20 });
+    expect(item.data).toMatchObject({ kind: 'casting-weights', configVersion: 'casting.v6', pairs: 20 });
     expect(item.data?.kind === 'casting-weights' && item.data.weights.motion).toBeGreaterThan(
       CASTING_CONFIG.weights.motion,
     );

@@ -7,12 +7,16 @@
  * store, and the editor context the docked composer would send.
  */
 import {
+  buildPostCaption,
   defineSkill,
   defineSkillModule,
   defineTool,
   defineToolModule,
   NO_TOOL_RETRY,
   NotFoundError,
+  POST_CAPTION_PLATFORMS,
+  postCaptionPartsSchema,
+  ValidationError,
   err,
   ok,
   unwrap,
@@ -97,6 +101,34 @@ function tools(world: EditorWorld): ToolModule {
           return ok({ revision: world.timelines.get(value.timelineId)!.revision });
         },
       }),
+      // CAP1: timeline.setPostCaption as timeline's tool answers it: the text built by core's rule, kept on the
+      // timeline at a new revision, or refused with what is outside the rule.
+      defineTool({
+        name: 'timeline.setPostCaption',
+        version: '1.0.0',
+        description: 'Saves the caption to post under the video, built from its parts.',
+        input: postCaptionPartsSchema.extend({
+          projectId: ulid,
+          timelineId: ulid,
+          platform: z.enum(POST_CAPTION_PLATFORMS),
+        }),
+        output: z.object({ timelineId: ulid, revision: z.int(), platform: z.string(), text: z.string() }),
+        sideEffect: 'write',
+        ...local,
+        command: 'timeline.setPostCaption',
+        idempotencyKey: (value) => JSON.stringify(value),
+        run: async ({ projectId, timelineId, platform, ...parts }, ctx) => {
+          const built = buildPostCaption(platform, parts, { credit: true });
+          if (built.issues.length > 0)
+            return err(ValidationError({ field: 'caption' }, { detail: 'Not saved: outside the rule.' }));
+          const done = await ctx.dispatch({ projectId, timelineId, platform, text: built.text });
+          if (!done.ok) return done;
+          const timeline = world.timelines.get(timelineId)!;
+          const postCaptions = [{ platform, text: built.text, writtenBy: 'ai' as const }];
+          world.timelines.set(timelineId, { ...timeline, postCaptions, revision: timeline.revision + 1 });
+          return ok({ timelineId, revision: timeline.revision + 1, platform, text: built.text });
+        },
+      }),
     ],
   });
 }
@@ -108,7 +140,7 @@ function editorSkill(world: EditorWorld) {
     labelKey: 'skills.timeline.editor',
     description: 'Edits a timeline.',
     prompt: 'Make the change with the timeline tools, then hand off the timeline at its revision.',
-    tools: { names: ['timeline.get', 'timeline.trimClip'] },
+    tools: { names: ['timeline.get', 'timeline.trimClip', 'timeline.setPostCaption'] },
     input: z.object({
       projectId: ulid,
       timelineId: ulid,
@@ -123,7 +155,7 @@ function editorSkill(world: EditorWorld) {
       notExportedReason: z.string().trim().min(1).optional(),
       notSavedCoverReason: z.string().trim().min(1).optional(),
       notStagedReason: z.string().trim().min(1).optional(),
-      postCaption: z.string().optional(),
+      notSavedPostCaptionReason: z.string().trim().min(1).optional(),
     }),
     refs: (out) => [{ entity: 'timeline', id: out.timelineId, version: out.revision }],
     verify: async () => ok({ verdict: 'pass' }),

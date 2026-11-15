@@ -4,7 +4,8 @@
  * system: DESIGN.md v0.3 · a step panel: the cut in small (the app's preview over proxies beside the mini timeline:
  *   neutral clips with their frames, AI picks with a violet edge, your swaps teal, rose beats, the marigold
  *   playhead), its length and shape, Open editor; a clip opens its line (other shots, a beat shorter or longer, Add
- *   to chat)
+ *   to chat). Where the card has less than 28rem (the editor's chat) the mini timeline and the clip's line go
+ *   under the preview at full width
  * states: loading (the cut's bones) · default (live: an edit or ⌘Z shows without a new card) · clip open (the clip's
  *   line under the cut) · changed since (teal "You changed this" from the step) · disabled (gone: "This was
  *   deleted.", no actions) · error/success: the clip line's
@@ -64,7 +65,7 @@ export function TimelineCard({ card }: { card: CardOf<'timeline'> }) {
       data-slot="smart-card"
       data-card-type="timeline"
       aria-label={title}
-      className="flex max-w-[42rem] flex-col gap-3"
+      className="@container flex max-w-[42rem] flex-col gap-3"
     >
       <StepHeader
         title={title}
@@ -85,7 +86,10 @@ export function TimelineCard({ card }: { card: CardOf<'timeline'> }) {
         }
       />
       {gone ? null : (
-        <div className="flex items-start gap-4">
+        // By the card's own width: from 28rem the cut and a clip's line sit beside the preview; narrower (the
+        // editor's chat) they go under it at full width, so the clips keep a width you can hit and the clip's
+        // line has room for its shots and buttons.
+        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-4 gap-y-3">
           <div className={live && live.canvas.width > live.canvas.height ? 'w-44 shrink-0' : 'w-24 shrink-0'}>
             {live && data.renderPreview ? (
               data.renderPreview({
@@ -99,14 +103,14 @@ export function TimelineCard({ card }: { card: CardOf<'timeline'> }) {
               <ShotThumb url={first ? frames(clipShot(first))?.url : null} size="lg" />
             )}
           </div>
-          <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <div className="contents @md:flex @md:min-w-0 @md:flex-col @md:gap-2">
             <p className="m-0 text-sm text-ink-2 tabular-nums">
               {shape
                 ? t`${length} · ${shape} · ${plural(count, { one: '# clip', other: '# clips' })}`
                 : t`${length} · ${plural(count, { one: '# clip', other: '# clips' })}`}
             </p>
             {live ? (
-              <>
+              <div className="col-span-full flex min-w-0 flex-col gap-2">
                 <MiniTimeline
                   timeline={live}
                   playheadFrame={playhead}
@@ -125,12 +129,12 @@ export function TimelineCard({ card }: { card: CardOf<'timeline'> }) {
                 ) : (
                   <p className="m-0 text-xs text-ink-3">{t`Choose a clip to swap it, trim it or ask about it.`}</p>
                 )}
-              </>
+              </div>
             ) : loading ? (
               <div
                 aria-busy="true"
                 data-slot="loading"
-                className="flex flex-col gap-1.5 rounded-xl bg-panel p-2"
+                className="col-span-full flex flex-col gap-1.5 rounded-xl bg-panel p-2"
               >
                 <span className="sr-only">{t`Loading your cut`}</span>
                 <span aria-hidden className="tc-bone block h-12 rounded-clip bg-hover" />

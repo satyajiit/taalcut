@@ -11,6 +11,11 @@ msgstr ", {name}"
 msgid ", from {from} to {to}"
 msgstr ", de {from} a {to}"
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "… more"
+msgstr "… más"
+
 #: src/features/settings/models/retirement-notices.tsx
 #, fuzzy
 msgid "“{job}” now uses <0>{replacement}</0> instead."
@@ -53,6 +58,12 @@ msgstr "(se abre en tu navegador)"
 msgid "(reference)"
 msgstr "(referencia)"
 
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{0, plural, =0 {No hashtags yet. {name} captions here carry at least {min}.} one {Only # hashtag. {name} captions here carry at least {min}.} other {Only # hashtags. {name} captions here carry at least {min}.}}"
+msgstr "{0, plural, =0 {Aún no hay hashtags. Aquí, los textos para {name} llevan al menos {min}.} one {Solo # hashtag. Aquí, los textos para {name} llevan al menos {min}.} many {Solo # hashtags. Aquí, los textos para {name} llevan al menos {min}.} other {Solo # hashtags. Aquí, los textos para {name} llevan al menos {min}.}}"
+
 #: src/features/settings/privacy/privacy-platform-words.ts
 #, fuzzy
 msgid "{0, plural, =0 {None ran on this computer} one {# on this computer, free} other {# on this computer, free}}"
@@ -86,6 +97,12 @@ msgstr "{0, plural, one {# beat} many {# beats} other {# beats}}"
 #, fuzzy
 msgid "{0, plural, one {# call today} other {# calls today}}"
 msgstr "{0, plural, one {# llamada hoy} many {# llamadas hoy} other {# llamadas hoy}}"
+
+#. placeholder {0}: issue.length - issue.max
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{0, plural, one {# character over {name}’s {max}.} other {# characters over {name}’s {max}.}}"
+msgstr "{0, plural, one {# carácter más que los {max} de {name}.} many {# caracteres más que los {max} de {name}.} other {# caracteres más que los {max} de {name}.}}"
 
 #. placeholder {0}: totals.imported
 #: src/onboarding/setup/sources/device-run.tsx
@@ -190,6 +207,12 @@ msgstr "{0, plural, one {# corregido por Taalcut} many {# corregidos por Taalcut
 msgid "{0, plural, one {# folder added} other {# folders added}}"
 msgstr "{0, plural, one {# carpeta agregada} many {# carpetas agregadas} other {# carpetas agregadas}}"
 
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{0, plural, one {# hashtag, and {name} takes {max} at most.} other {# hashtags, and {name} takes {max} at most.}}"
+msgstr "{0, plural, one {# hashtag, y {name} admite {max} como máximo.} many {# hashtags, y {name} admite {max} como máximo.} other {# hashtags, y {name} admite {max} como máximo.}}"
+
 #. placeholder {0}: voiceover.lines.length
 #: src/features/renders/sections/voice.tsx
 #, fuzzy
@@ -247,6 +270,18 @@ msgstr "{0, plural, one {# reel} many {# reels} other {# reels}}"
 #: ../../packages/ui/src/chat/tool-group-outcomes.tsx
 msgid "{0, plural, one {# result saved} other {# results saved}}"
 msgstr ""
+
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{0, plural, one {# search phrase in the brackets, and {max} is the most.} other {# search phrases in the brackets, and {max} is the most.}}"
+msgstr "{0, plural, one {# frase de búsqueda entre paréntesis, y el máximo es {max}.} many {# frases de búsqueda entre paréntesis, y el máximo es {max}.} other {# frases de búsqueda entre paréntesis, y el máximo es {max}.}}"
+
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{0, plural, one {# search phrase in the brackets. At least {min} help people find the post.} other {# search phrases in the brackets. At least {min} help people find the post.}}"
+msgstr "{0, plural, one {# frase de búsqueda entre paréntesis. Al menos {min} ayudan a que la gente encuentre la publicación.} many {# frases de búsqueda entre paréntesis. Al menos {min} ayudan a que la gente encuentre la publicación.} other {# frases de búsqueda entre paréntesis. Al menos {min} ayudan a que la gente encuentre la publicación.}}"
 
 #. placeholder {0}: open.length
 #: ../../packages/ui/src/gaps/gap-fix-question.tsx
@@ -480,6 +515,12 @@ msgstr "{0, plural, one {Taalcut propone # cambio} many {Taalcut propone # cambi
 msgid "{0, plural, one {Tags saved on # template} other {Tags saved on # templates}}"
 msgstr "{0, plural, one {Etiquetas guardadas en # plantilla} many {Etiquetas guardadas en # plantillas} other {Etiquetas guardadas en # plantillas}}"
 
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{0, plural, one {The line “{credit}” is in the text # time.} other {The line “{credit}” is in the text # times.}}"
+msgstr "{0, plural, one {La línea “{credit}” aparece # vez en el texto.} many {La línea “{credit}” aparece # veces en el texto.} other {La línea “{credit}” aparece # veces en el texto.}}"
+
 #. placeholder {0}: projects.length
 #: src/features/projects/batch/apply-look-dialog.tsx
 #, fuzzy
@@ -498,6 +539,7 @@ msgstr ""
 msgid "{aiFormatted} by Taalcut"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-steps.tsx
 #: src/features/timeline/clip-trim-controls.tsx
 msgid "{amount, plural, one {# frame} other {# frames}}"
 msgstr ""
@@ -558,6 +600,7 @@ msgstr "{bits} bits"
 
 #: ../../packages/ui/src/cards/breakdown-card.tsx
 #: src/features/timeline/inspector.tsx
+#: src/features/timeline/more/video-group.tsx
 #, fuzzy
 msgid "{bpm} beats a minute"
 msgstr "{bpm} beats por minuto"
@@ -608,6 +651,7 @@ msgid "{clips, plural, one {# clip from your phone} other {# clips from your pho
 msgstr "{clips, plural, one {# clip de tu teléfono} many {# clips de tu teléfono} other {# clips de tu teléfono}}"
 
 #: src/features/timeline/inspector.tsx
+#: src/features/timeline/more/video-group.tsx
 #, fuzzy
 msgid "{clips, plural, one {# clip} other {# clips}}"
 msgstr "{clips, plural, one {# clip} many {# clips} other {# clips}}"
@@ -711,6 +755,11 @@ msgstr "{count, plural, one {Se encontró # clip} many {Se encontraron # clips} 
 #, fuzzy
 msgid "{count, plural, one {# clip} other {# clips}} found. Taalcut keeps sorting while you go on."
 msgstr "{count, plural, one {Se encontró # clip} many {Se encontraron # clips} other {Se encontraron # clips}}. Taalcut sigue ordenándolos mientras avanzas."
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "{count, plural, one {# cover saved} other {# covers saved}}"
+msgstr "{count, plural, one {# portada guardada} many {# portadas guardadas} other {# portadas guardadas}}"
 
 #: ../../packages/ui/src/cards/cost-breakdown.tsx
 #: src/features/settings/usage/usage-words.ts
@@ -1308,6 +1357,11 @@ msgstr "Se alcanzó el límite del plan de {from}"
 msgid "{from}’s plan limit is reached, so this step used {to}."
 msgstr "Se alcanzó el límite del plan de {from}, así que este paso usó {to}."
 
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "{fromText} to {toText} of {total}"
+msgstr "De {fromText} a {toText} de {total}"
+
 #: src/features/traces/traces-page.tsx
 #, fuzzy
 msgid "{gaps, plural, one {# thing is missing from this trace:} other {# things are missing from this trace:}}"
@@ -1483,6 +1537,11 @@ msgstr "{length} · {shape} · {count, plural, one {# clip} many {# clips} other
 msgid "{length} · {shots, plural, one {# shot} other {# shots}}"
 msgstr "{length} · {shots, plural, one {# toma} many {# tomas} other {# tomas}}"
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "{length} of {limit}"
+msgstr "{length} de {limit}"
+
 #: src/features/timeline/clip-edit-controls.tsx
 #: src/features/timeline/sound-item-controls.tsx
 #, fuzzy
@@ -1551,6 +1610,11 @@ msgstr "{method}, {sure} de certeza"
 #, fuzzy
 msgid "{min} to {max}"
 msgstr "{min} a {max}"
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{min} to {max} hashtags · search phrases in brackets at the end · up to {length} characters"
+msgstr "De {min} a {max} hashtags · frases de búsqueda entre paréntesis al final · hasta {length} caracteres"
 
 #: src/features/settings/sources/source-status.tsx
 #, fuzzy
@@ -1735,6 +1799,16 @@ msgstr "Se quitó {name}."
 msgid "{name} stopped sending"
 msgstr "{name} dejó de enviar"
 
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{name}, edited by you"
+msgstr "{name}, editado por ti"
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "{name}, written by Taalcut"
+msgstr "{name}, escrito por Taalcut"
+
 #: ../../packages/ui/src/cards/edit-change-words.ts
 #, fuzzy
 msgid "{name}: {before} → {after}"
@@ -1851,6 +1925,11 @@ msgid "{provider} · about {money}"
 msgstr "{provider} · aprox. {money}"
 
 #. js-lingui-explicit-id
+#: src/features/settings/model-messages.ts
+msgid "errors.models.sign_in_refused"
+msgstr "{provider} aprobó el inicio de sesión, pero luego no le dio acceso a Taalcut. Esto pasa cuando el plan de esa cuenta ha terminado. Revisa tu plan y vuelve a iniciar sesión."
+
+#. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/domain-error-messages.ts
 msgid "errors.models.image_access_denied"
 msgstr ""
@@ -1927,6 +2006,11 @@ msgstr "{reason, select, size {Ese archivo de imagen es demasiado grande. Elige 
 #, fuzzy
 msgid "{received} received"
 msgstr "{received} recibidos"
+
+#: ../../packages/ui/src/cards/cast-board-card.tsx
+#, fuzzy
+msgid "{reelOwn, plural, one {# shot is the reel’s own clip. Your clips fill the rest.} other {# shots are the reel’s own clips. Your clips fill the rest.}}"
+msgstr "{reelOwn, plural, one {# toma es un clip del propio reel. Tus clips llenan el resto.} many {# tomas son clips del propio reel. Tus clips llenan el resto.} other {# tomas son clips del propio reel. Tus clips llenan el resto.}}"
 
 #: src/features/feedback/bundle-preview.tsx
 #, fuzzy
@@ -2142,6 +2226,16 @@ msgstr "{state, select, paused {Los modelos locales se pausan mientras se export
 msgid "{stayed, plural, one {# video was changed since; its look stays} other {# videos were changed since; their look stays}}"
 msgstr "{stayed, plural, one {# video cambió desde entonces; conserva su look} many {# videos cambiaron desde entonces; conservan su look} other {# videos cambiaron desde entonces; conservan su look}}"
 
+#: src/features/timeline/clip-part/part-steps.tsx
+#, fuzzy
+msgid "{step} earlier"
+msgstr "{step} antes"
+
+#: src/features/timeline/clip-part/part-steps.tsx
+#, fuzzy
+msgid "{step} later"
+msgstr "{step} después"
+
 #: src/features/templates/hub/hub-facts.tsx
 #: src/features/templates/template-row.tsx
 #, fuzzy
@@ -2170,11 +2264,12 @@ msgid "errors.templates.in_use"
 msgstr "{timelines, plural, one {# video usa} many {# videos usan} other {# videos usan}} esta plantilla, así que no se puede eliminar. Primero elimina o cambia {timelines, plural, one {ese video} many {esos videos} other {esos videos}}."
 
 #: ../../packages/ui/src/cards/edit-change-words.ts
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "{times}×"
 msgstr "{times}×"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "{times}× speed"
 msgstr "Velocidad {times}×"
@@ -2805,6 +2900,17 @@ msgstr "Un programa auxiliar que usa Taalcut no pudo hacer eso con este archivo.
 msgid "errors.media.sidecar_failed"
 msgstr "Un programa auxiliar que usa Taalcut se detuvo inesperadamente. Vuelve a intentarlo."
 
+#. Under "Speed" on a tile: a held moment has no speed
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "A hold has none"
+msgstr "Un momento congelado no tiene"
+
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "A hold lasts from one frame to {most} seconds."
+msgstr "Un momento congelado dura de un fotograma a {most} segundos."
+
 #: src/features/settings/privacy/what-leaves.tsx
 #, fuzzy
 msgid "A job"
@@ -2836,6 +2942,36 @@ msgstr "Una frase es demasiado larga para su lugar en el video. Acórtala o dale
 #, fuzzy
 msgid "A list arriving"
 msgstr "Una lista que llega"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "A little brighter"
+msgstr "Un poco más claro"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "A little cooler"
+msgstr "Un poco más frío"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "A little darker"
+msgstr "Un poco más oscuro"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "A little less colour"
+msgstr "Un poco menos de color"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "A little more colour"
+msgstr "Un poco más de color"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "A little warmer"
+msgstr "Un poco más cálido"
 
 #: ../../packages/ui/src/cards/pending-card.tsx
 #, fuzzy
@@ -2942,6 +3078,17 @@ msgstr "Un teléfono sigue emparejado durante un día después de su último env
 msgid "A phone that scans the code waits for your Allow, so a photo of the code alone can’t connect."
 msgstr "Un teléfono que escanea el código espera a que elijas Permitir, así que una foto del código por sí sola no basta para conectarse."
 
+#. Under "Speed" on a tile: a photo has no speed
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "A photo has none"
+msgstr "Una foto no tiene"
+
+#: src/features/timeline/clip-part/clip-part.tsx
+#, fuzzy
+msgid "A photo shows whole, so there is no part to pick. You can still make the scene longer or shorter."
+msgstr "Una foto se muestra entera, así que no hay parte que elegir. Aun así puedes alargar o acortar la escena."
+
 #: src/features/products/product-collection-empty.tsx
 msgid "A place for the sources, formats and stories behind your product."
 msgstr ""
@@ -2951,7 +3098,7 @@ msgid "A place through your eyes"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.transition.cut"
 msgstr "Un corte simple"
@@ -3269,6 +3416,11 @@ msgstr "Una versión de los archivos"
 msgid "A video"
 msgstr "Un video"
 
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#, fuzzy
+msgid "A video made from this template keeps it. Your clips go in the other slots."
+msgstr "Un video hecho con esta plantilla lo conserva. Tus clips van en los demás espacios."
+
 #: src/features/timeline/sound-item-controls.tsx
 #: src/features/timeline/sound-lane.tsx
 #, fuzzy
@@ -3382,6 +3534,11 @@ msgstr "Quedan aprox. <0>{left}</0>"
 #, fuzzy
 msgid "About slot {number}: "
 msgstr "Sobre el espacio {number}: "
+
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "About the shot this scene plays"
+msgstr "Sobre la toma que reproduce esta escena"
 
 #: src/features/library/clip/inspector/clip-facts.tsx
 #, fuzzy
@@ -3535,6 +3692,11 @@ msgstr ""
 msgid "Add"
 msgstr "Agregar"
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Add “{credit}”"
+msgstr "Agregar “{credit}”"
+
 #: src/features/recipes/recipes.ts
 #, fuzzy
 msgid "Add a callout here"
@@ -3617,6 +3779,11 @@ msgstr "Agrega una carpeta o empieza una importación desde tu teléfono para se
 #, fuzzy
 msgid "opening.library.empty"
 msgstr "Primero agrega una carpeta o tu teléfono."
+
+#. js-lingui-explicit-id
+#: src/features/palette/command-labels.ts
+msgid "commands.graphics.placeOptions"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages-listen.ts
@@ -3939,16 +4106,16 @@ msgid "Add the website, project folders and media that explain your idea. Taalcu
 msgstr "Añade el sitio web, las carpetas del proyecto y el contenido que expliquen tu idea. Taalcut solo lee las fuentes que eliges."
 
 #: ../../packages/ui/src/make/clip-detail.tsx
-#: src/features/timeline/clip-inspector.tsx
 #: src/features/timeline/inspector.tsx
 #: src/features/timeline/item-inspector.tsx
+#: src/features/timeline/scene-actions.tsx
 #, fuzzy
 msgid "Add to chat"
 msgstr "Agregar al chat"
 
-#: src/features/timeline/clip-inspector.tsx
 #: src/features/timeline/inspector.tsx
 #: src/features/timeline/item-inspector.tsx
+#: src/features/timeline/scene-actions.tsx
 #, fuzzy
 msgid "Add to chat ({addKeys})"
 msgstr "Agregar al chat ({addKeys})"
@@ -4176,6 +4343,7 @@ msgstr "Etiqueta de IA"
 #: ../../packages/ui/src/make/cast-grid.tsx
 #: ../../packages/ui/src/make/mini-timeline.tsx
 #: ../../packages/ui/src/make/shot-thumb.tsx
+#: src/features/timeline/other-shots/option-frame.tsx
 #: src/routes/_shell/dev/kit.tsx
 #, fuzzy
 msgid "AI pick"
@@ -4339,6 +4507,12 @@ msgstr "Ya importado"
 #, fuzzy
 msgid "Already in your library"
 msgstr "Ya está en tu biblioteca"
+
+#. Under "Freeze" on a tile: a photo has no moment to freeze
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "Already still"
+msgstr "Ya es una imagen fija"
 
 #: src/features/settings/external-agents/agent-words.ts
 #, fuzzy
@@ -4999,7 +5173,8 @@ msgstr ""
 msgid "As of <0>{age}</0>"
 msgstr "Actualizado <0>{age}</0>"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/colour-sheet.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "As shot"
 msgstr "Como se grabó"
@@ -5073,6 +5248,11 @@ msgstr ""
 msgid "Asked for another design."
 msgstr "Se pidió otro diseño."
 
+#: ../../packages/ui/src/cards/design-options-card.tsx
+#: src/features/timeline/design-options-section.tsx
+msgid "Asked for three new designs."
+msgstr ""
+
 #: src/features/traces/trace-labels.tsx
 #, fuzzy
 msgid "Asked for tools"
@@ -5106,6 +5286,11 @@ msgstr "en {clock}"
 #, fuzzy
 msgid "At the bottom"
 msgstr "Abajo"
+
+#: src/features/timeline/clip-trim-controls.tsx
+#, fuzzy
+msgid "At the end of the last scene, the video gets shorter or longer."
+msgstr "Al final de la última escena, el video se acorta o se alarga."
 
 #: ../../packages/ui/src/profiles/style-profile-words.ts
 #: src/features/timeline/workspace/file-list.tsx
@@ -5212,6 +5397,7 @@ msgstr ""
 
 #: src/features/palette/navigation-items.tsx
 #: src/features/renders/export-form.tsx
+#: src/features/timeline/more/more-sheet.tsx
 #: src/onboarding/step-screen.tsx
 #: src/shell/nav/history-buttons.tsx
 msgid "Back"
@@ -5258,6 +5444,7 @@ msgstr ""
 
 #: src/features/timeline/dock/editor-task.tsx
 #: src/features/timeline/editor.tsx
+#: src/features/timeline/more/scene-group.tsx
 msgid "Back to scenes"
 msgstr ""
 
@@ -5277,7 +5464,7 @@ msgstr "Volver al chat"
 msgid "Back to the choices"
 msgstr "Volver a las opciones"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/colour-sheet.tsx
 #, fuzzy
 msgid "Back to the colour as shot"
 msgstr "Volver al color como se grabó"
@@ -5426,6 +5613,11 @@ msgstr "Antes de cambiar, la beta en tres líneas:"
 msgid "Beginning"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Begins {fromText} into the clip"
+msgstr "Empieza a los {fromText} del clip"
+
 #: ../../packages/ui/src/window/window-bar.preview.tsx
 #, fuzzy
 msgid "Beside the icon rail"
@@ -5499,7 +5691,7 @@ msgid "Bigger margin"
 msgstr "Más margen"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.mono"
 msgstr "Blanco y negro"
@@ -5664,7 +5856,12 @@ msgstr "Brief creativo"
 msgid "Brief & sources"
 msgstr "Brief y fuentes"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Brighter"
+msgstr "Más claro"
+
+#: src/features/timeline/more/colour-sheet.tsx
 #, fuzzy
 msgid "Brightness"
 msgstr "Brillo"
@@ -6061,6 +6258,8 @@ msgstr "No se puede abrir"
 #: src/features/templates/library/trend-date-field.tsx
 #: src/features/timeline/comments/comment-composer.tsx
 #: src/features/timeline/comments/comment-row.tsx
+#: src/features/timeline/more/freeze-dialog.tsx
+#: src/features/timeline/more/size-dialog.tsx
 #: src/features/updates/channel-parts.tsx
 #: src/onboarding/setup/thinking/chatgpt-way.tsx
 #, fuzzy
@@ -6189,6 +6388,11 @@ msgstr "Tamaño de subtítulos"
 #, fuzzy
 msgid "Caption styles"
 msgstr "Estilos de subtítulos"
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Caption text"
+msgstr "Texto de la publicación"
 
 #: ../../packages/ui/src/cards/export-options.tsx
 #: src/features/brand/brand-kit-views.tsx
@@ -6481,7 +6685,7 @@ msgstr "Cambiar presupuestos"
 msgid "Change clip speed"
 msgstr "Cambiar la velocidad del clip"
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/freeze-dialog.tsx
 msgid "Change hold length"
 msgstr ""
 
@@ -6530,6 +6734,12 @@ msgid "commands.captions.setStyle"
 msgstr "Cambiar el estilo de los subtítulos"
 
 #. js-lingui-explicit-id
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "commands.settings.setPostCaptionCredit"
+msgstr "Cambiar la línea de crédito del texto de la publicación"
+
+#. js-lingui-explicit-id
 #: src/features/make/make-messages-edit.ts
 #, fuzzy
 msgid "commands.timeline.setGrade"
@@ -6568,6 +6778,12 @@ msgid "Change the model"
 msgstr "Cambiar el modelo"
 
 #. js-lingui-explicit-id
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "commands.timeline.setPostCaption"
+msgstr "Cambiar el texto de la publicación"
+
+#. js-lingui-explicit-id
 #: src/features/palette/command-labels.ts
 #, fuzzy
 msgid "commands.settings.setTheme"
@@ -6599,6 +6815,7 @@ msgstr "Cambiar voz"
 msgid "Change what <0>{agentName}</0> can do"
 msgstr "Cambiar lo que puede hacer <0>{agentName}</0>"
 
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/media/graphic-proposal.tsx
 #, fuzzy
 msgid "Change…"
@@ -6697,6 +6914,9 @@ msgid "ChatGPT"
 msgstr "ChatGPT"
 
 #. ChatGPT is a brand name.
+#. ChatGPT is a brand name.
+#: ../../packages/ui/src/cards/labels.ts
+#: src/features/settings/accounts/accounts-settings.tsx
 #: src/features/settings/accounts/chatgpt-images-row.tsx
 #: src/features/settings/providers.ts
 msgid "ChatGPT images"
@@ -7188,7 +7408,6 @@ msgid "Choose at least one fix."
 msgstr "Elige al menos una solución."
 
 #: ../../packages/ui/src/cards/cover-editor.tsx
-#: src/features/timeline/more-actions.tsx
 msgid "Choose cover"
 msgstr ""
 
@@ -7366,7 +7585,7 @@ msgid "Chosen"
 msgstr "Elegido"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.cinematic"
 msgstr "Cinematográfico"
@@ -7809,18 +8028,24 @@ msgid "Color"
 msgstr ""
 
 #: src/features/brand/bumper-field.tsx
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/colour-sheet.tsx
+#: src/features/timeline/more/scene-group.tsx
 #, fuzzy
 msgid "Colour"
 msgstr "Color"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.none"
 msgstr "Como se grabó"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/colour-sheet.tsx
+#, fuzzy
+msgid "Colour look"
+msgstr "Look de color"
+
+#: src/features/timeline/more/colour-sheet.tsx
 #, fuzzy
 msgid "Colour strength"
 msgstr "Intensidad del color"
@@ -8034,7 +8259,14 @@ msgstr "Conecta y activa este plugin para descubrir sus herramientas."
 msgid "Connect and copy setup"
 msgstr "Conectar y copiar configuración"
 
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/error-messages.ts
+#, fuzzy
+msgid "fix.connectChatGptImages"
+msgstr "Conectar imágenes de ChatGPT"
+
 #: src/features/settings/accounts/chatgpt-images-row.tsx
+#: src/onboarding/setup/thinking/chatgpt-way.tsx
 msgid "Connect ChatGPT images"
 msgstr ""
 
@@ -8358,10 +8590,15 @@ msgid "Cooking"
 msgstr "Cocinando"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.cool"
 msgstr "Frío"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Cooler"
+msgstr "Más frío"
 
 #: src/features/create/create-words.ts
 #, fuzzy
@@ -8369,9 +8606,11 @@ msgid "Coordinating your video"
 msgstr "Coordinando tu vídeo"
 
 #: ../../packages/ui/src/cards/publish-social-meta.tsx
+#: ../../packages/ui/src/chat/copy-message.tsx
 #: ../../packages/ui/src/make/add-sound-steps.tsx
 #: src/features/library/phone/connect/copy-button.tsx
 #: src/features/renders/sections/credits.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 #, fuzzy
 msgid "Copied"
 msgstr "Copiado"
@@ -8418,8 +8657,10 @@ msgstr "copiar"
 
 #: ../../packages/ui/src/cards/product-social-meta.tsx
 #: ../../packages/ui/src/cards/publish-social-meta.tsx
+#: ../../packages/ui/src/chat/copy-message.tsx
 #: src/features/gpu-setup/gpu-guide.tsx
 #: src/features/renders/sections/credits.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 #, fuzzy
 msgid "Copy"
 msgstr "Copiar"
@@ -8649,7 +8890,9 @@ msgstr "No se pudo cambiar el look de la plantilla"
 msgid "Couldn’t change the trend date"
 msgstr "No se pudo cambiar la fecha de tendencia"
 
+#: ../../packages/ui/src/chat/copy-message.tsx
 #: src/features/library/phone/connect/copy-button.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 #, fuzzy
 msgid "Couldn’t copy"
 msgstr "No se pudo copiar"
@@ -8837,6 +9080,11 @@ msgstr "No se pudo ponerle nombre a la versión"
 #, fuzzy
 msgid "Couldn’t open that page"
 msgstr "No se pudo abrir esa página"
+
+#: src/features/renders/open-exports-folder.ts
+#, fuzzy
+msgid "Couldn’t open the exports folder"
+msgstr "No se pudo abrir la carpeta de exportaciones"
 
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/domain-error-messages.ts
@@ -9109,6 +9357,11 @@ msgstr "Conteos y tiempos, como cuánto tardó una importación o si se aprobó 
 msgid "Courtesy, not required"
 msgstr "Por cortesía, no obligatorio"
 
+#: src/features/timeline/more/video-group.tsx
+#, fuzzy
+msgid "Cover"
+msgstr "Portada"
+
 #: ../../packages/ui/src/cards/short-cover.tsx
 msgid "Cover exported from this short"
 msgstr ""
@@ -9289,7 +9542,7 @@ msgstr "Crear la voz en off"
 msgid "Create, publish, schedule, update and delete posts."
 msgstr "Crea, publica, programa, actualiza y elimina publicaciones."
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/size-dialog.tsx
 msgid "Creates an independent video copy. Your original stays as it is."
 msgstr ""
 
@@ -9378,7 +9631,7 @@ msgid "Critiquing this sound uploads its audio to the cloud: a mono copy, never 
 msgstr "Para criticar este sonido se sube su audio a la nube: una copia mono, nunca la imagen. El proveedor puede conservarlo según sus propios términos, y su respuesta es una opinión de IA, no una medición. La revisión de sonido propia de Taalcut se queda en este equipo."
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.transition.dissolve"
 msgstr "Fundido encadenado"
@@ -9547,6 +9800,11 @@ msgstr "Oscuro"
 #, fuzzy
 msgid "dark mode"
 msgstr "modo oscuro"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Darker"
+msgstr "Más oscuro"
 
 # review: LIB2 import flow translation; native review pending.
 #: src/features/library/imports/choose-items.tsx
@@ -9903,6 +10161,15 @@ msgstr ""
 msgid "Design"
 msgstr "Diseño"
 
+#: ../../packages/ui/src/cards/cover-composition-fields.tsx
+#, fuzzy
+msgid "Design {n}"
+msgstr "Diseño {n}"
+
+#: ../../packages/ui/src/cards/design-option-picker.tsx
+msgid "Design {number} of {count}:"
+msgstr ""
+
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Design a motion graphic"
 msgstr ""
@@ -9916,12 +10183,38 @@ msgstr ""
 msgid "Design controls"
 msgstr "Controles de diseño"
 
+#: src/features/timeline/text-design-action.tsx
+#, fuzzy
+msgid "Design text with AI"
+msgstr "Diseñar el texto con IA"
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+#, fuzzy
+msgid "Design the cover"
+msgstr "Diseñar la portada"
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/cards/flow-labels.ts
 #: src/features/renders/render-messages.ts
 #, fuzzy
 msgid "skills.render.designer"
 msgstr "Diseñar los gráficos"
+
+#. js-lingui-explicit-id
+#: src/features/make/make-messages.ts
+#, fuzzy
+msgid "commands.timeline.designText"
+msgstr "Diseñar el texto"
+
+#: src/features/timeline/text-design-action.tsx
+#, fuzzy
+msgid "Design the text of this video: give every text a designed look based on the reference's look, and put each text where it should sit."
+msgstr "Diseña el texto de este video: dale a cada texto un look diseñado a partir del look de la referencia y pon cada texto donde debe ir."
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+#, fuzzy
+msgid "Design the text on the video"
+msgstr "Diseñar el texto del video"
 
 #: src/features/timeline/workspace/files-panel.tsx
 #, fuzzy
@@ -9937,6 +10230,12 @@ msgstr "Gráfico diseñado · v{version}"
 #, fuzzy
 msgid "Designing the scenes"
 msgstr "Diseñando las escenas"
+
+#: ../../packages/ui/src/cards/cover-composition-fields.tsx
+#: ../../packages/ui/src/cards/design-option-picker.tsx
+#: src/features/timeline/design-options-section.tsx
+msgid "Designs to choose from"
+msgstr ""
 
 # review: LIB2 import flow translation; native review pending.
 #: src/features/library/imports/import-review.tsx
@@ -10036,7 +10335,7 @@ msgid "Didn’t work"
 msgstr "No funcionó"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.transition.fade"
 msgstr "Fundido a negro"
@@ -10378,6 +10677,46 @@ msgstr ""
 msgid "Drag a section up for more energy, or use Faster and Slower."
 msgstr "Arrastra una sección hacia arriba para darle más energía, o usa Más rápido y Más lento."
 
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Drag an end to make the scene longer or shorter: scene {p} or scene {q} makes room, and nothing else moves."
+msgstr "Arrastra un extremo para alargar o acortar la escena: la escena {p} o la escena {q} hace sitio, y nada más se mueve."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Drag an end to make the scene longer or shorter: what is next to it makes room, and nothing else moves."
+msgstr "Arrastra un extremo para alargar o acortar la escena: lo que está a su lado hace sitio, y nada más se mueve."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Drag its beginning and scene {p} makes room. Drag its end and the video gets longer or shorter."
+msgstr "Arrastra su inicio y la escena {p} hace sitio. Arrastra su final y el video se alarga o se acorta."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Drag its beginning and what comes before it makes room. Drag its end and the video gets longer or shorter."
+msgstr "Arrastra su inicio y lo que va antes hace sitio. Arrastra su final y el video se alarga o se acorta."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Drag its end to make the scene longer or shorter: scene {q} makes room, and nothing else moves."
+msgstr "Arrastra su final para alargar o acortar la escena: la escena {q} hace sitio, y nada más se mueve."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Drag its end to make the scene longer or shorter: what comes after it makes room, and nothing else moves."
+msgstr "Arrastra su final para alargar o acortar la escena: lo que va después hace sitio, y nada más se mueve."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Drag its end to make the video longer or shorter."
+msgstr "Arrastra su final para alargar o acortar el video."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Drag the part, or click where the scene should start. The scene keeps its place and length."
+msgstr "Arrastra la parte, o haz clic donde debe empezar la escena. La escena conserva su lugar y su duración."
+
 #: src/features/library/clip/clip-stages.tsx
 #, fuzzy
 msgid "Drawing the sound"
@@ -10504,6 +10843,11 @@ msgstr "Cada búsqueda también envía un ID aleatorio creado para este equipo, 
 msgid "Each check also sends a random ID made for this Mac, so a new version can reach some Macs first. It isn’t linked to you or your files, and Taalcut doesn’t log it."
 msgstr "Cada búsqueda también envía un ID aleatorio creado para este Mac, para que una versión nueva pueda llegar primero a algunos Mac. No está vinculado a ti ni a tus archivos, y Taalcut no lo registra."
 
+#: ../../packages/ui/src/make/render-words.ts
+#, fuzzy
+msgid "Each clip plays the part of its shot the moment needs"
+msgstr "Cada clip reproduce la parte de su toma que el momento necesita"
+
 #: src/features/timeline/sound-lane.tsx
 #, fuzzy
 msgid "Each clip’s own sound"
@@ -10557,6 +10901,12 @@ msgstr "Cada espacio con el clip que eligió el agente."
 #, fuzzy
 msgid "Each time Taalcut changed the design files, a new version. Choose one to see its files."
 msgstr "Cada vez que Taalcut cambió los archivos del diseño, una versión nueva. Elige una para ver sus archivos."
+
+#: src/features/timeline/clip-part/part-steps.tsx
+#, fuzzy
+msgctxt "towards the start of a clip"
+msgid "Earlier"
+msgstr "Antes"
 
 #: src/features/library/phone/transfers/phone-history.tsx
 #, fuzzy
@@ -10643,6 +10993,7 @@ msgid "Edit history"
 msgstr ""
 
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #, fuzzy
 msgid "Edit in video"
 msgstr "Editar en el vídeo"
@@ -10702,6 +11053,11 @@ msgstr "Editar este clip"
 #, fuzzy
 msgid "Edit what slot {number} shows"
 msgstr "Editar lo que muestra el espacio {number}"
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Edited by you"
+msgstr "Editado por ti"
 
 #: src/features/timeline/editor.tsx
 msgid "Editing was interrupted. Resume or stop the run in chat."
@@ -10804,6 +11160,11 @@ msgstr "Valores finales (JSON)"
 #, fuzzy
 msgid "Ending"
 msgstr "Final"
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Ends {toText} into the clip"
+msgstr "Termina a los {toText} del clip"
 
 #: src/features/timeline/energy/pacing-words.ts
 #, fuzzy
@@ -11508,7 +11869,7 @@ msgid "Fade out"
 msgstr "Desvanecer"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.faded"
 msgstr "Deslavado"
@@ -12058,6 +12419,11 @@ msgstr "Encuentra los clips que encajan con lo que pide cada momento. Siempre se
 msgid "models.module.music.description"
 msgstr "Encuentra o crea música y efectos de sonido."
 
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Fine-tuned"
+msgstr "Con ajustes finos"
+
 #: src/features/products/product-publishing.tsx
 msgid "Finish a product video to prepare its posts."
 msgstr ""
@@ -12267,7 +12633,7 @@ msgid "flash"
 msgstr "destello"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.transition.flash"
 msgstr "Destello blanco"
@@ -12444,6 +12810,12 @@ msgstr "Material de esta fuente"
 msgid "Footage to import"
 msgstr "Material para importar"
 
+#. Under "Held moment" on a tile: how long the held moment lasts
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "For {seconds, plural, one {# second} other {# seconds}}"
+msgstr "Durante {seconds, plural, one {# segundo} many {# segundos} other {# segundos}}"
+
 #: src/features/renders/sections/other-editors.tsx
 #, fuzzy
 msgid "For another editor"
@@ -12610,7 +12982,12 @@ msgstr "gratis, más lento"
 msgid "Freesound"
 msgstr "Freesound"
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "Freeze"
+msgstr "Congelar"
+
+#: src/features/timeline/more/freeze-dialog.tsx
 msgid "Freeze this moment"
 msgstr ""
 
@@ -12767,6 +13144,11 @@ msgstr "Huecos"
 msgid "General"
 msgstr "General"
 
+#: src/features/timeline/cover-generate.tsx
+#, fuzzy
+msgid "Generate a {aspect} cover for this video."
+msgstr "Genera una portada {aspect} para este video."
+
 #. js-lingui-explicit-id
 #: src/features/settings/plugins/plugin-tool-messages.ts
 msgid "Generate a video through Postiz. May consume credits."
@@ -12816,6 +13198,12 @@ msgstr ""
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Generate voice-over audio"
 msgstr ""
+
+#: src/features/timeline/cover-generate.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#, fuzzy
+msgid "Generate with AI"
+msgstr "Generar con IA"
 
 #: ../../packages/ui/src/cards/image-takes-card.tsx
 #, fuzzy
@@ -13320,6 +13708,16 @@ msgstr "Grok"
 msgid "H.264, plays everywhere"
 msgstr "H.264, se reproduce en todas partes"
 
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "Half a second longer"
+msgstr "Medio segundo más largo"
+
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "Half a second shorter"
+msgstr "Medio segundo más corto"
+
 #: ../../packages/ui/src/templates/edit-words.ts
 #: ../../packages/ui/src/templates/fix-menu.tsx
 #: ../../packages/ui/src/templates/proposal-words.ts
@@ -13328,7 +13726,7 @@ msgstr "H.264, se reproduce en todas partes"
 msgid "Half as many beats"
 msgstr "La mitad de beats"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "Half speed"
 msgstr "Mitad de velocidad"
@@ -13401,6 +13799,16 @@ msgstr "Escuchar tu sonido"
 #, fuzzy
 msgid "Held by hand, a little shaky"
 msgstr "En la mano, un poco movida"
+
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "Held from {clock}"
+msgstr "Congelado desde {clock}"
+
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "Held moment"
+msgstr "Momento congelado"
 
 #: src/features/library/phone/flow/phone-tabs.tsx
 #: src/features/palette/navigation-items.tsx
@@ -13561,9 +13969,14 @@ msgstr "Llegó al límite de longitud"
 msgid "Hits on the cuts"
 msgstr "Golpes en los cortes"
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/freeze-dialog.tsx
 msgid "Hold length (seconds)"
 msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Hold one moment"
+msgstr "Dejar fijo un momento"
 
 #: ../../packages/ui/src/make/render-words.ts
 #, fuzzy
@@ -13621,6 +14034,11 @@ msgstr "Cuánto cuenta cada parte cuando Taalcut elige una toma para un espacio.
 #, fuzzy
 msgid "How often the cuts come, section by section, on the beat. Raise a section for more energy."
 msgstr "Cada cuánto llegan los cortes, sección por sección, al beat. Sube una sección para darle más energía."
+
+#: src/features/timeline/more/speed-sheet.tsx
+#, fuzzy
+msgid "How scene {from} goes into scene {to}."
+msgstr "Cómo pasa la escena {from} a la escena {to}."
 
 #: src/features/settings/models/models-settings.tsx
 #, fuzzy
@@ -13788,6 +14206,11 @@ msgstr "Imagen lista"
 #: src/features/settings/accounts/chatgpt-images-row.tsx
 msgid "Images connected"
 msgstr ""
+
+#: src/onboarding/setup/thinking/chatgpt-way.tsx
+#, fuzzy
+msgid "Images didn’t connect, so Taalcut can’t make pictures with your plan yet. Connect them now, or later in Settings › Accounts."
+msgstr "Las imágenes no se conectaron, así que Taalcut aún no puede crear imágenes con tu plan. Conéctalas ahora, o más tarde en Ajustes › Cuentas."
 
 #: ../../packages/ui/src/cards/image-takes-card.tsx
 #, fuzzy
@@ -14030,6 +14453,11 @@ msgstr "En revisión"
 msgid "In the bundle"
 msgstr "En el paquete"
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "In the feed"
+msgstr "En el feed"
+
 #: src/features/templates/hub/share-to-hub.tsx
 #, fuzzy
 msgid "In the hub"
@@ -14052,6 +14480,7 @@ msgstr "En este clip"
 
 #: src/features/settings/accounts/accounts-settings.tsx
 #: src/features/settings/accounts/local-servers.tsx
+#: src/features/timeline/other-shots/other-shots-list.tsx
 #, fuzzy
 msgid "In use"
 msgstr "En uso"
@@ -14069,6 +14498,7 @@ msgstr "En tu biblioteca"
 msgid "In your templates"
 msgstr "En tus plantillas"
 
+#: ../../packages/ui/src/cards/design-option-picker.tsx
 #: ../../packages/ui/src/media/take-grid.tsx
 #, fuzzy
 msgid "In your video"
@@ -14193,6 +14623,7 @@ msgid "Inspect your style"
 msgstr ""
 
 #: src/features/timeline/inspector.tsx
+#: src/features/timeline/more/more-gallery.tsx
 #, fuzzy
 msgid "Inspector"
 msgstr "Inspector"
@@ -14277,6 +14708,11 @@ msgstr ""
 msgid "Instagram Edits not connected"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Instagram feed posts"
+msgstr "Publicaciones del feed de Instagram"
+
 #: src/features/brand/creator-fields.tsx
 msgid "Instagram handle"
 msgstr ""
@@ -14357,10 +14793,10 @@ msgstr "Instalando…"
 msgid "Interface sounds"
 msgstr "Sonidos de la interfaz"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
-msgid "Into the next clip"
-msgstr "Hacia el siguiente clip"
+msgid "Into the next scene"
+msgstr "Hacia la siguiente escena"
 
 #: src/features/brand/brand-preview.tsx
 #: src/features/brand/bumper-field.tsx
@@ -14498,6 +14934,11 @@ msgstr "Se instala cuando reinicias Taalcut, o ahora con Reiniciar ahora."
 #, fuzzy
 msgid "It installs when you restart Taalcut."
 msgstr "Se instala cuando reinicias Taalcut."
+
+#: src/features/timeline/more/size-dialog.tsx
+#, fuzzy
+msgid "It is its own video now. This one stays as it is."
+msgstr "Ahora es un video aparte. Este se queda como está."
 
 #: ../../packages/ui/src/gaps/gap-words.ts
 msgid "It isn’t available yet."
@@ -14955,6 +15396,11 @@ msgstr "Mantén la página abierta en el teléfono"
 msgid "Keep the phone’s page open until they arrive."
 msgstr ""
 
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#, fuzzy
+msgid "Keep the reel’s clip"
+msgstr "Conservar el clip del reel"
+
 # review: LIB2 import flow translation; native review pending.
 #: src/features/library/imports/session-progress.tsx
 #, fuzzy
@@ -15233,6 +15679,12 @@ msgstr "Último año"
 msgid "Later"
 msgstr "Más tarde"
 
+#: src/features/timeline/clip-part/part-steps.tsx
+#, fuzzy
+msgctxt "towards the end of a clip"
+msgid "Later"
+msgstr "Después"
+
 #: src/features/make/versions-history-section.tsx
 msgid "Latest step: {undoStepName}"
 msgstr ""
@@ -15406,6 +15858,11 @@ msgstr "Duración (segundos)"
 msgid "Length in seconds"
 msgstr "Duración en segundos"
 
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Less colour"
+msgstr "Menos color"
+
 #. js-lingui-explicit-id
 #: src/features/settings/model-messages.ts
 #, fuzzy
@@ -15422,6 +15879,11 @@ msgstr "Permitir que los agentes de este equipo usen Taalcut"
 #, fuzzy
 msgid "Let agents on this Mac use Taalcut"
 msgstr "Permitir que los agentes de este Mac usen Taalcut"
+
+#: src/features/timeline/clip-part/part-says.tsx
+#, fuzzy
+msgid "Let go to play this part. Escape puts it back."
+msgstr "Suelta para reproducir esta parte. Escape la devuelve a su sitio."
 
 #: src/features/products/product-fields.tsx
 msgid "Let me choose an idea first"
@@ -16091,7 +16553,7 @@ msgstr "El modo Solo local está activado, así que Taalcut dejó esto en tu Mac
 msgid "Location tag"
 msgstr "Etiqueta de lugar"
 
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/scene-actions.tsx
 #, fuzzy
 msgid "Lock"
 msgstr "Bloquear"
@@ -16133,9 +16595,16 @@ msgid "Locked while exporting"
 msgstr "Bloqueado mientras se exporta"
 
 #: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/clip-part/part-says.tsx
+#: src/features/timeline/other-shots/other-shots-list.tsx
 #, fuzzy
 msgid "Locked: Taalcut and your edits leave it as it is. Unlock it to change it."
 msgstr "Bloqueado: ni Taalcut ni tus ediciones lo cambian. Desbloquéalo para cambiarlo."
+
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "Locked. Unlock it to change it."
+msgstr "Bloqueada. Desbloquéala para cambiarla."
 
 #: src/features/palette/navigation-items.tsx
 #, fuzzy
@@ -16253,6 +16722,11 @@ msgstr "Mirar un fotograma"
 msgid "Look only"
 msgstr "Solo ver"
 
+#: ../../packages/ui/src/cards/labels.ts
+#, fuzzy
+msgid "Look through a clip"
+msgstr "Recorrer un clip"
+
 #: src/features/settings/sources/source-row.tsx
 #, fuzzy
 msgid "Look through it again"
@@ -16344,6 +16818,11 @@ msgstr ""
 #, fuzzy
 msgid "Looks"
 msgstr "Looks"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Looks and light"
+msgstr "Looks y luz"
 
 #: src/features/library/search-results.tsx
 #, fuzzy
@@ -16517,6 +16996,17 @@ msgstr "Crea un reel de 15 segundos con mis clips más recientes, cortado al bea
 msgid "Make a before-and-after video from my clips."
 msgstr "Haz un video de antes y después con mis clips."
 
+#. js-lingui-explicit-id
+#: src/features/make/make-messages.ts
+#, fuzzy
+msgid "commands.timeline.lengthenSlot"
+msgstr "Alargar un clip"
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+#, fuzzy
+msgid "Make a clip run longer"
+msgstr "Hacer que un clip dure más"
+
 #: src/features/templates/template-words.ts
 #, fuzzy
 msgid "Make a day-in-the-life video from my clips."
@@ -16669,7 +17159,8 @@ msgstr "Crear otro"
 msgid "Make another {activeAspect} thumbnail take for \"{hookText}\"."
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/size-dialog.tsx
+#: src/features/timeline/more/video-group.tsx
 msgid "Make another size"
 msgstr ""
 
@@ -16768,6 +17259,11 @@ msgstr "Crea música para este video que coincida con sus beats."
 #, fuzzy
 msgid "Make my first video"
 msgstr "Hacer mi primer video"
+
+#: src/features/timeline/more/size-dialog.tsx
+#, fuzzy
+msgid "Make the {aspect} copy"
+msgstr "Crear la copia {aspect}"
 
 #: src/features/recipes/recipes.ts
 #, fuzzy
@@ -17142,6 +17638,11 @@ msgstr "Medir y mejorar"
 msgid "Measure audio loudness"
 msgstr ""
 
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+#, fuzzy
+msgid "Measure the bars of the music"
+msgstr "Medir los compases de la música"
+
 #: src/features/brand/brand-kits-page.tsx
 #, fuzzy
 msgid "Measured from a reference or a template: a colour grade and the closest font."
@@ -17449,6 +17950,11 @@ msgstr ""
 msgid "More actions"
 msgstr "Más acciones"
 
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "More colour"
+msgstr "Más color"
+
 #: src/features/make/project-row.tsx
 #: src/features/renders/render-row.tsx
 #: src/features/settings/sources/source-row.tsx
@@ -17593,6 +18099,7 @@ msgid "Motion graphic"
 msgstr "Gráfico animado"
 
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #, fuzzy
 msgid "Motion graphic: <0>{name}</0>"
 msgstr "Gráfico animado: <0>{name}</0>"
@@ -17703,6 +18210,11 @@ msgstr "Mover el gráfico"
 #, fuzzy
 msgid "qa.fixes.moveGraphic"
 msgstr "Mover el gráfico"
+
+#: src/features/timeline/clip-part/part-steps.tsx
+#, fuzzy
+msgid "Move the part"
+msgstr "Mover la parte"
 
 #. js-lingui-explicit-id
 #: src/features/make/make-messages-edit.ts
@@ -18315,6 +18827,11 @@ msgstr "Todavía no hay kits de marca"
 msgid "No budget"
 msgstr "Sin presupuesto"
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "No caption yet"
+msgstr "Aún no hay texto de la publicación"
+
 #: ../../packages/ui/src/cards/style-batch-card.tsx
 #: src/features/renders/export-summary.tsx
 #, fuzzy
@@ -18486,6 +19003,11 @@ msgstr "Sin música en el archivo. Añade el sonido del reel en la app al public
 msgid "No network needed, and nothing travels over Wi-Fi. Use it on public networks too."
 msgstr "No hace falta red y nada viaja por Wi-Fi. Úsalo también en redes públicas."
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#, fuzzy
+msgid "No new caption was saved. The chat says why."
+msgstr "No se guardó ningún texto nuevo para la publicación. El chat explica por qué."
+
 #: ../../packages/ui/src/gaps/gap-facts.tsx
 #, fuzzy
 msgid "No new clips came in yet. Add some, then choose Add more clips again, or pick another fix."
@@ -18500,6 +19022,11 @@ msgstr ""
 #, fuzzy
 msgid "audio.critique.fix.cutNoOnset"
 msgstr "Sin sonido nuevo en el corte de {t} s"
+
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "No next scene"
+msgstr "No hay escena siguiente"
 
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-media.ts
@@ -18641,6 +19168,11 @@ msgstr "Todavía no hay reels guardados en esta colección."
 #, fuzzy
 msgid "No saved reels match."
 msgstr "Ningún reel guardado coincide."
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "No search phrases in brackets at the very end, like (first phrase, second phrase)."
+msgstr "No hay frases de búsqueda entre paréntesis al final del todo, como (primera frase, segunda frase)."
 
 #. js-lingui-explicit-id
 #: src/features/library/indexing-messages.ts
@@ -18842,6 +19374,11 @@ msgctxt "thinking level"
 msgid "None"
 msgstr "Ninguno"
 
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "None chosen yet"
+msgstr "Ninguna elegida aún"
+
 #: ../../packages/ui/src/library/import-status-words.tsx
 msgid "None of the clips from {source} could be brought in"
 msgstr "No se pudo importar ningún clip de {source}"
@@ -18881,10 +19418,10 @@ msgstr "Ninguno, o no importa"
 msgid "None: videos keep their own caption look"
 msgstr "Ninguno: los videos mantienen su propio look de subtítulos"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
-msgid "Normal"
-msgstr "Normal"
+msgid "Normal speed"
+msgstr "Velocidad normal"
 
 #: ../../packages/ui/src/templates/review-panel.tsx
 #, fuzzy
@@ -18943,6 +19480,8 @@ msgstr "Sin comprobar"
 msgid "audio.critique.tip.realnessUnconfirmed"
 msgstr "No se confirma como sonido grabado, pero no se encontró nada sintético"
 
+#: src/features/settings/accounts/accounts-settings.tsx
+#: src/features/settings/accounts/chatgpt-images-row.tsx
 #: src/features/settings/plugins/plugin-status.tsx
 msgid "Not connected"
 msgstr "Sin conectar"
@@ -19103,6 +19642,11 @@ msgstr "No registrado"
 msgid "Not remembered"
 msgstr "No se recordó"
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#, fuzzy
+msgid "Not saved yet. It is saved when you copy it or close this."
+msgstr "Aún no está guardado. Se guarda cuando lo copias o cierras esto."
+
 #: src/features/analysis/analysis-queue.tsx
 #, fuzzy
 msgid "Not searchable yet"
@@ -19156,6 +19700,11 @@ msgstr "Sin uso reciente"
 #, fuzzy
 msgid "Not watched"
 msgstr "Sin vigilar"
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "Not written yet"
+msgstr "Aún sin escribir"
 
 #: src/features/library/clip/inspector/clip-facts.tsx
 #, fuzzy
@@ -19470,6 +20019,7 @@ msgstr "ahora"
 
 #: src/features/library/clip/progress/analysis-words.ts
 #: src/features/settings/usage/usage-now.tsx
+#: src/features/timeline/more/size-dialog.tsx
 #: src/features/timeline/workspace/revision-list.tsx
 #, fuzzy
 msgid "Now"
@@ -19796,10 +20346,20 @@ msgstr "Un video menos"
 msgid "One glyph per thing and per action, at 14, 16 or 20 px. Pick from here, never by taste."
 msgstr "Un glifo por cosa y por acción, a 14, 16 o 20 px. Elígelo de aquí, nunca por gusto."
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "One line after the caption. Taalcut adds it itself, and remembers your choice."
+msgstr "Una línea después del texto de la publicación. Taalcut la agrega por su cuenta y recuerda tu elección."
+
 #: ../../packages/ui/src/make/selection-chip.tsx
 #, fuzzy
 msgid "One message can point at {most} things at most."
 msgstr "Un mensaje puede señalar {most} elementos como máximo."
+
+#: src/onboarding/setup/thinking/chatgpt-way.tsx
+#, fuzzy
+msgid "One more page opened in your browser: approve images there so Taalcut can make pictures with your plan."
+msgstr "Se abrió una página más en tu navegador: aprueba las imágenes allí para que Taalcut pueda crear imágenes con tu plan."
 
 #: ../../packages/ui/src/make/variants-question.tsx
 #, fuzzy
@@ -20087,6 +20647,12 @@ msgstr "Abrir editor"
 msgid "Open Exports"
 msgstr "Abrir Exportaciones"
 
+#: src/features/renders/renders-page.tsx
+#: src/features/timeline/editor-toolbar.tsx
+#, fuzzy
+msgid "Open exports folder"
+msgstr "Abrir la carpeta de exportaciones"
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-messages.ts
 #, fuzzy
@@ -20242,7 +20808,7 @@ msgstr "Abrir plantilla"
 msgid "Open the address under the code in the phone’s browser, then type the setup code and the PIN."
 msgstr "Abre la dirección que aparece bajo el código en el navegador del teléfono y escribe el código de configuración y el PIN."
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/size-dialog.tsx
 msgid "Open the new video"
 msgstr ""
 
@@ -20489,9 +21055,14 @@ msgstr "Otras tomas"
 
 #: ../../packages/ui/src/make/clip-detail.tsx
 #: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/other-shots/other-shots.tsx
 #, fuzzy
 msgid "Other shots for clip {n}"
 msgstr "Otras tomas para el clip {n}"
+
+#: src/features/timeline/other-shots/other-shots.tsx
+msgid "Other shots for scene {n}"
+msgstr ""
 
 #: ../../packages/ui/src/make/cast-grid.tsx
 #, fuzzy
@@ -20775,6 +21346,7 @@ msgstr "Pega la clave"
 #: src/features/library/import-line.tsx
 #: src/features/library/imports/session-progress.tsx
 #: src/features/templates/hub/hub-detail.tsx
+#: src/features/timeline/clip-part/clip-part.tsx
 #: src/features/timeline/preview/card-preview.tsx
 #: src/features/timeline/transport.tsx
 #: src/onboarding/setup/sources/device-run.tsx
@@ -21012,6 +21584,11 @@ msgstr "Elige un clip para cambiarlo por otro que encaje en su lugar."
 msgid "Pick a reason to send it."
 msgstr "Elige un motivo para enviarlo."
 
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "Pick a scene to change its speed, transition and colour."
+msgstr "Elige una escena para cambiar su velocidad, transición y color."
+
 #. js-lingui-explicit-id
 #: src/onboarding/setup/first-video/first-video-setup.tsx
 #, fuzzy
@@ -21057,6 +21634,15 @@ msgstr "Elige uno. Se aplica desde la próxima solicitud; no se reinicia nada."
 #, fuzzy
 msgid "Pick the camera move"
 msgstr "Elegir el movimiento de cámara"
+
+#: ../../packages/ui/src/cards/design-options-card.tsx
+msgid "Pick the design you like. The marked one is in your video now."
+msgstr ""
+
+#: src/features/timeline/clip-part/clip-part.tsx
+#, fuzzy
+msgid "Pick the part scene {n} plays"
+msgstr "Elige la parte que reproduce la escena {n}"
 
 #: src/features/projects/batch/apply-look-dialog.tsx
 #, fuzzy
@@ -21193,8 +21779,19 @@ msgid "Place music on the video"
 msgstr ""
 
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
+#, fuzzy
+msgid "Place text on the video"
+msgstr "Colocar el texto del video"
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Place the chosen clips"
 msgstr ""
+
+#. js-lingui-explicit-id
+#: src/features/make/make-messages.ts
+#, fuzzy
+msgid "commands.timeline.placeText"
+msgstr "Colocar el texto"
 
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Place voice-over on the timeline"
@@ -21306,6 +21903,11 @@ msgstr "Reproducir la llegada"
 msgid "Play the hooks"
 msgstr "Reproducir los ganchos"
 
+#: ../../packages/ui/src/make/render-words.ts
+#, fuzzy
+msgid "Play the part of the shot that fits the moment"
+msgstr "Reproducir la parte de la toma que encaja con el momento"
+
 #: ../../packages/ui/src/variants/hook-transport.tsx
 #, fuzzy
 msgid "Play the previews"
@@ -21315,6 +21917,11 @@ msgstr "Reproducir las vistas previas"
 #, fuzzy
 msgid "Play the scene"
 msgstr "Reproducir la escena"
+
+#: src/features/timeline/clip-part/clip-part.tsx
+#, fuzzy
+msgid "Play this part"
+msgstr "Reproducir esta parte"
 
 # review: LIB2 import flow translation; native review pending.
 #: src/features/library/imports/import-help.tsx
@@ -21345,6 +21952,11 @@ msgstr "Tocando música"
 msgctxt "what people in a clip are doing"
 msgid "Playing sport"
 msgstr "Haciendo deporte"
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Plays {fromText} to {toText} of a {total} clip"
+msgstr "Reproduce de {fromText} a {toText} de un clip de {total}"
 
 #: ../../packages/ui/src/cards/edit-change-words.ts
 #, fuzzy
@@ -21489,6 +22101,17 @@ msgstr "Posando"
 #, fuzzy
 msgid "Position (%)"
 msgstr "Posición (%)"
+
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#: src/features/timeline/post-caption/post-caption-tile.tsx
+#, fuzzy
+msgid "Post caption"
+msgstr "Texto de la publicación"
+
+#: src/features/timeline/editor-toolbar.tsx
+#, fuzzy
+msgid "Post caption…"
+msgstr "Texto de la publicación…"
 
 #: src/features/products/product-activity-words.ts
 msgid "Post published"
@@ -22493,6 +23116,11 @@ msgid "Read the line below in your own voice, then keep reading for about a minu
 msgstr "Lee la frase de abajo con tu propia voz y luego sigue leyendo durante un minuto, más o menos. Taalcut comprueba en este Mac que eres tú quien dice la frase y guarda la grabación aquí. Nada sale de este Mac hasta que elijas Crear mi voz."
 
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
+#, fuzzy
+msgid "Read the look of the text"
+msgstr "Leer el look del texto"
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Read the motion graphic guide"
 msgstr ""
 
@@ -22952,6 +23580,11 @@ msgstr ""
 msgid "Reel ideas"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Reels, Shorts and TikTok"
+msgstr "Reels, Shorts y TikTok"
+
 #: src/features/products/product-sources.tsx
 msgid "Reference"
 msgstr ""
@@ -23170,6 +23803,11 @@ msgstr ""
 msgid "Remove date"
 msgstr "Quitar fecha"
 
+#: ../../packages/ui/src/cards/cover-composition-fields.tsx
+#, fuzzy
+msgid "Remove design"
+msgstr "Quitar diseño"
+
 # review: Fillers given as Spanish “eh, mmm” instead of English “um, uh”.
 #: ../../packages/ui/src/cleanup/cleanup-switches.tsx
 #, fuzzy
@@ -23210,6 +23848,11 @@ msgstr "Eliminar capa"
 #, fuzzy
 msgid "Remove logo"
 msgstr "Quitar logo"
+
+#: src/features/timeline/clip-trim-controls.tsx
+#, fuzzy
+msgid "Remove makes the scene shorter and what is next to that end longer by the same amount; Restore does the opposite. Nothing else moves."
+msgstr "Quitar acorta la escena y alarga lo que está junto a ese extremo en la misma cantidad; Restaurar hace lo contrario. Nada más se mueve."
 
 #: src/features/timeline/authored/authored-motion.tsx
 #, fuzzy
@@ -23551,6 +24194,11 @@ msgstr "Devolver una tarea al modelo de su perfil…"
 #, fuzzy
 msgid "commands.models.clearModuleOverride"
 msgstr "Restablecer el modelo de una tarea"
+
+#: src/features/timeline/more/colour-sheet.tsx
+#, fuzzy
+msgid "Reset adjustments"
+msgstr "Restablecer ajustes"
 
 #: ../../packages/ui/src/memory/casting-weights-item.tsx
 #, fuzzy
@@ -24007,6 +24655,7 @@ msgstr "Se dice"
 #: src/features/settings/usage/cap-form.tsx
 #: src/features/templates/library/trend-date-field.tsx
 #: src/features/timeline/comments/comment-row.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 #, fuzzy
 msgid "Save"
 msgstr "Guardar"
@@ -24174,6 +24823,11 @@ msgstr "Guardar la plantilla"
 #, fuzzy
 msgid "Save timing"
 msgstr "Guardar tiempos"
+
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#, fuzzy
+msgid "Save to take the caption off this video, or close to keep it."
+msgstr "Guarda para quitar el texto de la publicación de este video, o cierra para conservarlo."
 
 #: ../../packages/ui/src/platform/kit-platform-words.ts
 #, fuzzy
@@ -24343,6 +24997,11 @@ msgstr "Reels guardados"
 msgid "Saved this version"
 msgstr "Se guardó esta versión"
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#, fuzzy
+msgid "Saved with this video."
+msgstr "Guardado con este video."
+
 #: src/features/settings/accounts/api-keys.tsx
 #, fuzzy
 msgid "Saved, not tested"
@@ -24368,6 +25027,7 @@ msgid "Saving take…"
 msgstr ""
 
 #: src/features/brand/brand-kit-editor.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 #, fuzzy
 msgid "Saving…"
 msgstr "Guardando…"
@@ -24432,9 +25092,46 @@ msgstr "Escanea con la cámara de tu teléfono"
 msgid "Scanning and indexing"
 msgstr "Explorando e indexando"
 
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Scene {m} gets {amount} longer. Nothing else moves."
+msgstr "La escena {m} se alarga {amount}. Nada más se mueve."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Scene {m} gets {amount} shorter. Nothing else moves."
+msgstr "La escena {m} se acorta {amount}. Nada más se mueve."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Scene {m} has too little of its clip left to fill more room."
+msgstr "A la escena {m} le queda muy poco de su clip para llenar más espacio."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Scene {m} is too short to give up more."
+msgstr "La escena {m} es demasiado corta para ceder más."
+
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "Scene {n} holds one frame still. Set how long it stays."
+msgstr "La escena {n} mantiene fijo un fotograma. Define cuánto tiempo se queda."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Scene {n} now plays {fromText} to {toText}."
+msgstr "La escena {n} ahora reproduce de {fromText} a {toText}."
+
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/why-dialog.tsx
 #: src/features/timeline/scene-strip.tsx
 msgid "Scene {number}"
 msgstr ""
+
+#: src/features/timeline/more/why-dialog.tsx
+#, fuzzy
+msgid "Scene {number} · {kind}"
+msgstr "Escena {number} · {kind}"
 
 #: src/features/create/create-review.tsx
 #: src/features/create/create-scene.tsx
@@ -24732,9 +25429,10 @@ msgstr "Selecciona un clip para cambiar su toma o recortarlo al beat. Arrastra s
 msgid "Select a scene first"
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
-msgid "Select a video scene first"
-msgstr ""
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "Select a scene on the timeline to change its speed, transition and colour."
+msgstr "Selecciona una escena en la línea de tiempo para cambiar su velocidad, transición y color."
 
 #: ../../packages/ui/src/cards/publish-social-meta.tsx
 msgid "Select all"
@@ -24956,6 +25654,13 @@ msgstr "Enviando"
 #, fuzzy
 msgid "errors.audio.cloud_critique_consent_required"
 msgstr "Para enviar el sonido a un modelo en la nube primero necesitas dar tu permiso. Lee el aviso, permítelo y vuelve a intentarlo."
+
+#: src/features/timeline/cover-generate.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#: src/features/timeline/text-design-action.tsx
+#, fuzzy
+msgid "Sending to the chat…"
+msgstr "Enviando al chat…"
 
 #: src/features/settings/privacy/privacy-platform-words.ts
 #, fuzzy
@@ -25851,6 +26556,7 @@ msgid "Six shots from one day"
 msgstr ""
 
 #: src/features/brand/logo-field.tsx
+#: src/features/timeline/more/size-dialog.tsx
 #, fuzzy
 msgid "Size"
 msgstr "Tamaño"
@@ -25936,7 +26642,7 @@ msgid "Slide across"
 msgstr "Deslizar de lado"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.transition.slide"
 msgstr "Deslizamiento"
@@ -25979,8 +26685,18 @@ msgstr "El slot {n} vuelve a estar por revisar"
 
 #: ../../packages/ui/src/templates/edit-words.ts
 #, fuzzy
+msgid "Slot {n} keeps the reel’s clip"
+msgstr "El espacio {n} conserva el clip del reel"
+
+#: ../../packages/ui/src/templates/edit-words.ts
+#, fuzzy
 msgid "Slot {n} renamed"
 msgstr "Slot {n} renombrado"
+
+#: ../../packages/ui/src/templates/edit-words.ts
+#, fuzzy
+msgid "Slot {n} uses your clip"
+msgstr "El espacio {n} usa tu clip"
 
 #: ../../packages/ui/src/templates/edit-words.ts
 #, fuzzy
@@ -26164,6 +26880,11 @@ msgstr "Cámara lenta, {factor}× más lento"
 msgid "Slower"
 msgstr "Más lento"
 
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Slower or faster"
+msgstr "Más lento o más rápido"
+
 #: src/features/timeline/workspace/check-words.ts
 #, fuzzy
 msgid "Small enough to play smoothly"
@@ -26207,7 +26928,7 @@ msgid "Social publishing metadata"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.muted"
 msgstr "Colores suaves"
@@ -26450,10 +27171,6 @@ msgstr ""
 msgid "source code"
 msgstr "código fuente"
 
-#: src/features/timeline/clip-inspector.tsx
-msgid "Source details"
-msgstr ""
-
 # review: LIB2 import flow translation; native review pending.
 #: src/features/library/imports/library-sources.tsx
 #, fuzzy
@@ -26551,7 +27268,8 @@ msgstr "Habla, comprobando el idioma"
 msgid "Speech, language unclear"
 msgstr "Habla, idioma poco claro"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/speed-sheet.tsx
 #, fuzzy
 msgid "Speed"
 msgstr "Velocidad"
@@ -26670,6 +27388,11 @@ msgstr "Cuadrado (1:1)"
 #: ../../packages/ui/src/make/render-words.ts
 msgid "render.presets.square"
 msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Square posts and grids"
+msgstr "Publicaciones cuadradas y cuadrículas"
 
 #: src/features/updates/channel-parts.tsx
 #, fuzzy
@@ -26910,6 +27633,7 @@ msgid "Starting…"
 msgstr "Iniciando…"
 
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/media/graphic-timing.tsx
 #, fuzzy
 msgid "Starts at {startWords} · lasts {lengthWords}"
@@ -26924,6 +27648,11 @@ msgstr ""
 #, fuzzy
 msgid "Status"
 msgstr "Estado"
+
+#: src/features/timeline/more/size-dialog.tsx
+#, fuzzy
+msgid "Stay here"
+msgstr "Quedarme aquí"
 
 #: src/features/effects/effects.ts
 #, fuzzy
@@ -27343,6 +28072,7 @@ msgid "qa.fixes.swapFromAlternates"
 msgstr "Cambiar por otra toma"
 
 #: ../../packages/ui/src/make/alternates.tsx
+#: src/features/timeline/other-shots/other-shots-list.tsx
 #, fuzzy
 msgid "Swap in this shot"
 msgstr "Cambiar por esta toma"
@@ -27374,11 +28104,24 @@ msgstr "Cambiar o recortar la parte estática"
 msgid "Swap the weakest shot"
 msgstr "Cambiar la toma más débil"
 
+#: src/features/timeline/other-shots/other-shots-list.tsx
+msgid "Swapped in {name}."
+msgstr ""
+
+#: src/features/timeline/other-shots/other-shots-list.tsx
+msgid "Swapped."
+msgstr ""
+
 #: src/features/library/shot-action-labels.ts
 #, fuzzy
 msgctxt "what people in a clip are doing"
 msgid "Swimming"
 msgstr "Nadando"
+
+#. js-lingui-explicit-id
+#: src/features/palette/command-labels.ts
+msgid "commands.graphics.chooseOption"
+msgstr ""
 
 #: src/features/settings/models/retirement-notices.tsx
 #, fuzzy
@@ -27415,6 +28158,10 @@ msgstr "Se cambió a <0>{switched}</0>"
 #, fuzzy
 msgid "Switched to a cheaper model"
 msgstr "Se cambió a un modelo más barato"
+
+#: ../../packages/ui/src/cards/design-options-card.tsx
+msgid "Switched to this design."
+msgstr ""
 
 #: src/features/templates/saved/watch-bar.tsx
 #, fuzzy
@@ -27815,6 +28562,11 @@ msgstr "Taalcut no pudo leer las sugerencias del modelo. Inténtalo de nuevo."
 msgid "errors.desktop.update_manifest_unreadable"
 msgstr "Taalcut no pudo leer los datos de la actualización, así que no se descargó nada. Busca de nuevo para volver a intentarlo."
 
+#: src/features/timeline/clip-part/part-says.tsx
+#, fuzzy
+msgid "Taalcut couldn’t read this clip, so its frames don’t show. The steps and the exact trim still work."
+msgstr "Taalcut no pudo leer este clip, así que sus fotogramas no se muestran. Los pasos y el recorte exacto siguen funcionando."
+
 #: ../../packages/ui/src/library/import-outcome.ts
 msgid "Taalcut couldn’t read this file. It may be damaged or only partly copied."
 msgstr "Taalcut no pudo leer este archivo. Puede estar dañado o copiado solo en parte."
@@ -27897,10 +28649,20 @@ msgstr "Taalcut no pudo actualizar tu biblioteca para esta versión. Reinicia Ta
 msgid "errors.library.import_verification_failed"
 msgstr "Taalcut no pudo verificar una copia guardada. Mantén el origen conectado y vuelve a intentar los elementos pendientes."
 
+#: src/features/timeline/cover-generate.tsx
+#, fuzzy
+msgid "Taalcut designs a {aspect} cover in the chat and saves it here."
+msgstr "Taalcut diseña una portada {aspect} en el chat y la guarda aquí."
+
 #: src/features/timeline/workspace/revision-list.tsx
 #, fuzzy
 msgid "Taalcut designs from the current version next. Graphics on the video keep their designs."
 msgstr "Taalcut diseña a partir de la versión actual. Los gráficos del video conservan sus diseños."
+
+#: src/features/timeline/text-design-action.tsx
+#, fuzzy
+msgid "Taalcut designs the look of all the text in this video and puts each text in place. Texts you moved stay where you put them."
+msgstr "Taalcut diseña el look de todo el texto de este video y pone cada texto en su lugar. Los textos que moviste se quedan donde los pusiste."
 
 #: src/features/library/clip/inspector/clip-summary.tsx
 #, fuzzy
@@ -28079,6 +28841,11 @@ msgstr "Taalcut está haciendo una copia de este clip para reproducirlo. Mientra
 msgid "Taalcut is now in {changedTo}."
 msgstr "Taalcut ahora está en {changedTo}."
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Taalcut is reading the video and writing its caption…"
+msgstr "Taalcut está revisando el video y escribiendo el texto de su publicación…"
+
 #: src/features/library/clip/progress/analysis-words.ts
 #, fuzzy
 msgid "Taalcut is still looking at this clip"
@@ -28099,11 +28866,28 @@ msgstr "Taalcut no está terminado. Habrá cosas que fallen, y algunas funciones
 msgid "Taalcut is up to date"
 msgstr "Taalcut está actualizado"
 
+#: src/features/timeline/cover-generate.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#: src/features/timeline/text-design-action.tsx
+#, fuzzy
+msgid "Taalcut is working in the chat. You can ask when it is done."
+msgstr "Taalcut está trabajando en el chat. Puedes pedirlo cuando termine."
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/cards/flow-labels.ts
 #, fuzzy
 msgid "opening.busy"
 msgstr "Taalcut está trabajando en algo. Espera o detenlo."
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Taalcut is writing"
+msgstr "Taalcut está escribiendo"
+
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#, fuzzy
+msgid "Taalcut is writing your caption. The chat shows its work."
+msgstr "Taalcut está escribiendo el texto de tu publicación. El chat muestra su trabajo."
 
 #. js-lingui-explicit-id
 #: src/features/settings/settings-platform-words.ts
@@ -28262,7 +29046,8 @@ msgid "Taalcut pick"
 msgstr ""
 
 #: src/features/timeline/clip-block.tsx
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/why-dialog.tsx
 #, fuzzy
 msgid "Taalcut picked this"
 msgstr "Lo eligió Taalcut"
@@ -28276,6 +29061,11 @@ msgstr "Taalcut elige los modelos adecuados para este Mac. Puedes cambiarlos en 
 #, fuzzy
 msgid "Taalcut proposes a video from your newest clips."
 msgstr "Taalcut te propone un video con tus clips más nuevos."
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#, fuzzy
+msgid "Taalcut read this shot as the reel’s own clip:"
+msgstr "Taalcut interpretó esta toma como un clip del propio reel:"
 
 #: src/features/settings/sources/sources-settings.tsx
 #, fuzzy
@@ -28434,6 +29224,11 @@ msgstr "Taalcut usa primero el chip gráfico, y la CPU solo cuando hace falta."
 msgid "Taalcut won’t ask again before sending files for this."
 msgstr "Taalcut no volverá a preguntar antes de enviar archivos para esto."
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#, fuzzy
+msgid "Taalcut writes it in the chat and saves it here."
+msgstr "Taalcut lo escribe en el chat y lo guarda aquí."
+
 #: src/features/timeline/comments/comment-row.tsx
 #, fuzzy
 msgid "Taalcut:"
@@ -28442,6 +29237,7 @@ msgstr "Taalcut:"
 #: ../../packages/ui/src/templates/camera-move.tsx
 #: ../../packages/ui/src/templates/description-field.tsx
 #: ../../packages/ui/src/templates/graphic-brief.tsx
+#: ../../packages/ui/src/templates/slot-footage.tsx
 #, fuzzy
 msgid "Taalcut’s reading"
 msgstr "Lectura de Taalcut"
@@ -29124,6 +29920,11 @@ msgstr "Ese perfil de modelo no es válido. Revísalo y vuelve a guardarlo."
 msgid "errors.models.music_plan_invalid"
 msgstr "Esa música pide más de lo que permite el servicio de música, así que no se envió nada. Prueba con una pista más corta o más sencilla."
 
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "That part doesn’t fit inside one shot of the clip. Pick a part inside it, or make the scene shorter first."
+msgstr "Esa parte no cabe dentro de una sola toma del clip. Elige una parte dentro de ella, o acorta primero la escena."
+
 #. js-lingui-explicit-id
 #: src/features/settings/model-messages.ts
 #, fuzzy
@@ -29399,6 +30200,11 @@ msgstr "Son más de 50 videos. Elige menos proyectos: se exportan hasta 50 a la 
 msgid "That’s too long for the graphic."
 msgstr "Es demasiado largo para el gráfico."
 
+#: src/features/timeline/more/size-dialog.tsx
+#, fuzzy
+msgid "The {madeAspect} copy is ready"
+msgstr "La copia {madeAspect} está lista"
+
 #. js-lingui-explicit-id
 #: src/features/settings/settings-platform-words.ts
 #, fuzzy
@@ -29579,6 +30385,11 @@ msgstr ""
 #, fuzzy
 msgid "The clip chosen before"
 msgstr "El clip elegido antes"
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "The clip ends before the scene would. Pick an earlier part, or make the scene shorter first."
+msgstr "El clip termina antes que la escena. Elige una parte anterior, o acorta primero la escena."
 
 #: ../../packages/ui/src/gaps/weak-pick.tsx
 #, fuzzy
@@ -29859,11 +30670,26 @@ msgstr "El firewall"
 msgid "The first {span} of each, again and again"
 msgstr "Los primeros {span} de cada uno, una y otra vez"
 
+#: src/features/timeline/clip-part/clip-part.tsx
+#, fuzzy
+msgid "The first frame the scene plays"
+msgstr "El primer fotograma que reproduce la escena"
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-library.ts
 #, fuzzy
 msgid "errors.templates.first_slot_cut"
 msgstr "El primer espacio abre el reel, así que su inicio no se puede mover."
+
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "The frame at {clock}"
+msgstr "El fotograma en {clock}"
+
+#: src/features/timeline/clip-part/clip-part.tsx
+#, fuzzy
+msgid "The frame under the pointer"
+msgstr "El fotograma bajo el puntero"
 
 #: src/features/library/clip/scrubber/clip-filmstrip.tsx
 #, fuzzy
@@ -29921,11 +30747,17 @@ msgid "compute.fallback.accelerator_failed"
 msgstr "Se probó la GPU y falló, así que por ahora esto se ejecuta en la CPU."
 
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/media/media-errors.ts
 #: src/features/timeline/graphic-inspector.tsx
 #, fuzzy
 msgid "The graphic isn’t on the timeline now."
 msgstr "El gráfico ya no está en la línea de tiempo."
+
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "The held moment becomes its own scene, and what follows moves to make room."
+msgstr "El momento congelado pasa a ser una escena propia, y lo que sigue se mueve para hacerle sitio."
 
 #. js-lingui-explicit-id
 #: src/features/make/make-messages.ts
@@ -30016,6 +30848,11 @@ msgstr "Los videos y Live Photos de los últimos 30 días, solo lo nuevo, o elig
 msgid "The last 30 days of videos and Live Photos, only what’s new."
 msgstr "Los videos y Live Photos de los últimos 30 días, solo lo nuevo."
 
+#: src/features/timeline/clip-part/clip-part.tsx
+#, fuzzy
+msgid "The last frame the scene would play"
+msgstr "El último fotograma que reproduciría la escena"
+
 #: src/onboarding/setup/sources/cable-source.tsx
 #, fuzzy
 msgid "The last import from {name} stopped part-way."
@@ -30047,6 +30884,11 @@ msgstr "La licencia pide"
 #, fuzzy
 msgid "The licences didn’t load."
 msgstr "Las licencias no se cargaron."
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "The line “{credit}” is switched on, and it is not in this text."
+msgstr "La línea “{credit}” está activada, y no está en este texto."
 
 #: ../../packages/ui/src/media/consent-outcomes.tsx
 #, fuzzy
@@ -30419,6 +31261,16 @@ msgstr "No se puede acceder al original de “{name}”: puede que su disco est�
 msgid "The other clips already fit."
 msgstr "Los demás clips ya encajan."
 
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "The part scene {n} plays"
+msgstr "La parte que reproduce la escena {n}"
+
+#: src/features/timeline/clip-part/part-says.tsx
+#, fuzzy
+msgid "The part still moves: go by its times."
+msgstr "La parte aún se mueve: guíate por sus tiempos."
+
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages-listen.ts
 #, fuzzy
@@ -30449,6 +31301,16 @@ msgstr "Dirección del teléfono: {address}"
 #, fuzzy
 msgid "The photo"
 msgstr "La foto"
+
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "The picture stops on this frame and holds it, then the video plays on."
+msgstr "La imagen se detiene en este fotograma y lo mantiene; luego el video sigue."
+
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "The playhead is outside scene {n}. Close this and move it to the moment you want."
+msgstr "El cursor de reproducción está fuera de la escena {n}. Cierra esto y llévalo al momento que quieras."
 
 #. js-lingui-explicit-id
 #: src/features/settings/plugins/plugin-errors.ts
@@ -30570,6 +31432,12 @@ msgstr "La música del reel"
 msgid "errors.render.media_missing.reference_audio"
 msgstr "La música del reel ya no se guarda con su plantilla. Obtenla de nuevo para exportar con ella."
 
+#: ../../packages/ui/src/make/cast-grid.tsx
+#: ../../packages/ui/src/templates/slot-strip.tsx
+#, fuzzy
+msgid "The reel’s own clip"
+msgstr "Clip del propio reel"
+
 #: ../../packages/ui/src/templates/review-timeline.tsx
 #, fuzzy
 msgid "The reel’s time"
@@ -30596,6 +31464,28 @@ msgstr "El video del reel se guarda en este ordenador. No tiene sonido propio."
 #, fuzzy
 msgid "The reel’s video is kept on this Mac. It has no sound of its own."
 msgstr "El video del reel se guarda en este Mac. No tiene sonido propio."
+
+#: src/features/templates/templates-platform-words.ts
+#, fuzzy
+msgid "The reel’s video isn’t on this computer, so this slot can’t keep the reel’s clip."
+msgstr "El video del reel no está en este equipo, así que este espacio no puede conservar el clip del reel."
+
+#: src/features/templates/templates-platform-words.ts
+#, fuzzy
+msgid "The reel’s video isn’t on this computer. Get it before you make a video, or use your clip here."
+msgstr "El video del reel no está en este equipo. Obtenlo antes de crear un video, o usa tu clip aquí."
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#: src/features/templates/templates-platform-words.ts
+#, fuzzy
+msgid "The reel’s video isn’t on this Mac, so this slot can’t keep the reel’s clip."
+msgstr "El video del reel no está en este Mac, así que este espacio no puede conservar el clip del reel."
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#: src/features/templates/templates-platform-words.ts
+#, fuzzy
+msgid "The reel’s video isn’t on this Mac. Get it before you make a video, or use your clip here."
+msgstr "El video del reel no está en este Mac. Obtenlo antes de crear un video, o usa tu clip aquí."
 
 # review: “Saved” (Templates › Saved on Instagram) as “Guardados”, matching this row’s button “Abrir guardados”; the view itself is titled “Guardado en Instagram”.
 #: src/features/settings/accounts/accounts-settings.tsx
@@ -30684,6 +31574,21 @@ msgstr "El mismo Wi-Fi"
 msgid "The saved cover changed. Your design is still here."
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "The scene is too short to lose more."
+msgstr "La escena es demasiado corta para perder más."
+
+#: src/features/timeline/more/speed-sheet.tsx
+#, fuzzy
+msgid "The scene keeps what it shows: faster makes it shorter, slower makes it longer."
+msgstr "La escena conserva lo que muestra: más rápido la acorta, más lento la alarga."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "The scene would last {length}."
+msgstr "La escena duraría {length}."
+
 #: ../../packages/ui/src/library/import-status-words.tsx
 #, fuzzy
 msgid "the search model"
@@ -30735,6 +31640,11 @@ msgstr "La configuración incluye una clave que solo conoce este Mac. Taalcut la
 #, fuzzy
 msgid "The shape of what will be here, one line, the one action, and Kaatu for company."
 msgstr "La forma de lo que habrá aquí, una línea, la única acción y Kaatu de compañía."
+
+#: src/features/timeline/more/why-dialog.tsx
+#, fuzzy
+msgid "The shot"
+msgstr "La toma"
 
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-media.ts
@@ -30892,7 +31802,7 @@ msgstr "El encuadre vertical sigue a quien habla mientras se mueve"
 msgid "The template"
 msgstr "La plantilla"
 
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/more/why-dialog.tsx
 #, fuzzy
 msgid "The template asks for"
 msgstr "La plantilla pide"
@@ -30945,6 +31855,11 @@ msgstr "Las versiones probadas."
 #, fuzzy
 msgid "indexing.skip.textRead"
 msgstr "El texto en pantalla ya se había leído"
+
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#, fuzzy
+msgid "The text you paste under the post. Taalcut writes it from what this video shows, and you can change any of it."
+msgstr "El texto que pegas debajo de la publicación. Taalcut lo escribe a partir de lo que muestra este video, y puedes cambiar lo que quieras."
 
 #: ../../packages/ui/src/templates/review-nav.tsx
 #, fuzzy
@@ -31097,6 +32012,26 @@ msgstr "El vídeo no superó la revisión visual. Reanuda la creación para revi
 msgid "errors.render.engine_unavailable"
 msgstr "El motor de video todavía no está instalado. Taalcut lo descargará y volverá a intentarlo."
 
+#: src/features/timeline/clip-trim-controls.tsx
+#, fuzzy
+msgid "The video follows a beat, so an end lands on the nearest beat, and a small amount may change nothing."
+msgstr "El video sigue un beat, así que un extremo cae en el beat más cercano, y una cantidad pequeña puede no cambiar nada."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "The video follows a beat, so the end lands on the nearest beat."
+msgstr "El video sigue un beat, así que el extremo cae en el beat más cercano."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "The video gets {amount} longer."
+msgstr "El video se alarga {amount}."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "The video gets {amount} shorter."
+msgstr "El video se acorta {amount}."
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-agent.ts
 #, fuzzy
@@ -31106,6 +32041,16 @@ msgstr "El video cambiaba cada vez que Taalcut iba a exportarlo, así que Taalcu
 #: src/features/products/product-video.tsx
 msgid "The video preview didn’t load."
 msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "The video starts with this scene, so only its end can be dragged."
+msgstr "El video empieza con esta escena, así que solo se puede arrastrar su final."
+
+#: src/features/timeline/clip-trim-controls.tsx
+#, fuzzy
+msgid "The video starts with this scene: at its beginning, Remove plays a later part of the clip and Restore an earlier one, and the scene keeps its length."
+msgstr "El video empieza con esta escena: en su inicio, Quitar reproduce una parte posterior del clip y Restaurar una anterior, y la escena conserva su duración."
 
 #: ../../packages/ui/src/variants/variant-tile.tsx
 #, fuzzy
@@ -31301,17 +32246,32 @@ msgstr "Todavía no hay plantillas. Guarda primero una desde un video."
 msgid "audio.critique.tip.voiceDuck"
 msgstr "Hay voz en casi todo el video: baja la música bajo la voz"
 
+#: src/features/timeline/more/why-dialog.tsx
+#, fuzzy
+msgid "There is no record of who picked this shot."
+msgstr "No hay registro de quién eligió esta toma."
+
 # review: LIB2 import flow translation; native review pending.
 #: src/features/library/imports/import-words.ts
 #, fuzzy
 msgid "There is not enough destination space. Free space before importing."
 msgstr "No hay suficiente espacio en el destino. Libera espacio antes de importar."
 
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "There isn’t enough footage for that: this clip, or the one next to it, runs out. Move the end by less."
+msgstr "No hay material suficiente para eso: este clip, o el de al lado, se acaba. Mueve el extremo menos."
+
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages.ts
 #, fuzzy
 msgid "errors.render.disk_full"
 msgstr "No hay suficiente espacio libre para exportar. Libera espacio y vuelve a intentarlo."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "There isn’t enough of the clip left to go further."
+msgstr "No queda suficiente clip para ir más lejos."
 
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-products.ts
@@ -31427,6 +32387,11 @@ msgstr "Estos efectos de sonido no encajan en ningún corte de este video, así 
 #, fuzzy
 msgid "These videos aren’t here any more."
 msgstr "Estos videos ya no están aquí."
+
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "These wait while Taalcut edits this video."
+msgstr "Estas opciones esperan mientras Taalcut edita este video."
 
 #: src/features/library/library-empty.tsx
 msgid "They appear here as Taalcut finds them. You can keep working meanwhile."
@@ -31619,6 +32584,11 @@ msgstr "Este chat llegó a su presupuesto, así que Taalcut hizo una pausa. Sube
 msgid "indexing.skip.noPlan"
 msgstr "Este clip no se pudo preparar, así que no tiene vistas previas"
 
+#: src/features/timeline/clip-part/clip-part.tsx
+#, fuzzy
+msgid "This clip has no copy to play yet"
+msgstr "Este clip aún no tiene una copia para reproducir"
+
 #: src/features/library/clip/scrubber/clip-filmstrip.tsx
 #, fuzzy
 msgid "This clip has no frames to lay out."
@@ -31671,6 +32641,11 @@ msgstr "Los fotogramas de este clip van ahora."
 #, fuzzy
 msgid "This clip’s frames didn’t load."
 msgstr "Los fotogramas de este clip no se cargaron."
+
+#: src/features/timeline/clip-part/part-says.tsx
+#, fuzzy
+msgid "This clip’s original isn’t connected right now. You can still pick the part; connect it before you export."
+msgstr "El original de este clip no está conectado ahora. Aun así puedes elegir la parte; conéctalo antes de exportar."
 
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-media.ts
@@ -32207,6 +33182,16 @@ msgstr "Esta ejecución terminó antes de que respondieras."
 msgid "This run ended."
 msgstr "Esta ejecución terminó."
 
+#: src/features/timeline/more/scene-group.tsx
+#, fuzzy
+msgid "This scene"
+msgstr "Esta escena"
+
+#: src/features/timeline/clip-part/clip-part.tsx
+#, fuzzy
+msgid "This scene holds one moment still, so there is no part to pick. You can still make it longer or shorter."
+msgstr "Esta escena mantiene un momento quieto, así que no hay parte que elegir. Aun así puedes alargarla o acortarla."
+
 #: src/features/timeline/clip-trim-controls.tsx
 msgid "This scene is too short to remove that much"
 msgstr ""
@@ -32224,6 +33209,11 @@ msgstr ""
 #, fuzzy
 msgid "this service"
 msgstr "este servicio"
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#, fuzzy
+msgid "This shot is the reel’s own clip"
+msgstr "Esta toma es un clip del propio reel"
 
 #: src/features/timeline/gaps/gap-fix-panel.tsx
 #, fuzzy
@@ -32353,6 +33343,12 @@ msgstr "Esta plantilla se eliminó."
 msgid "errors.templates.unsupported_schema"
 msgstr "Esta plantilla se hizo con una versión más nueva de Taalcut. Actualiza Taalcut para abrirla."
 
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/error-words-library.ts
+#, fuzzy
+msgid "errors.templates.no_reel"
+msgstr "Esta plantilla no se hizo a partir de un reel, así que no hay ningún clip del reel que conservar."
+
 #: src/features/timeline/use-text-draft.tsx
 msgid "This text changed while you were editing. Your draft is kept."
 msgstr ""
@@ -32401,6 +33397,7 @@ msgid "errors.timeline.interchange_format_unknown"
 msgstr "Esta versión de Taalcut no puede crear ese tipo de archivo."
 
 #: src/features/timeline/inspector.tsx
+#: src/features/timeline/more/video-group.tsx
 #, fuzzy
 msgid "This video"
 msgstr "Este video"
@@ -32451,6 +33448,11 @@ msgstr "Este video no tiene música propia."
 msgid "This video has no voiceover now."
 msgstr "Este video ya no tiene voz en off."
 
+#: src/features/timeline/more/video-group.tsx
+#, fuzzy
+msgid "This video is {size}"
+msgstr "Este video es {size}"
+
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages.ts
 #, fuzzy
@@ -32463,6 +33465,18 @@ msgstr "Este video es demasiado largo o demasiado corto para esa plataforma. Rec
 msgid "errors.timeline.not_found"
 msgstr "Este video ya no está aquí."
 
+#. js-lingui-explicit-id
+#: src/features/make/make-platform-words.ts
+#, fuzzy
+msgid "errors.timeline.reel_missing.computer"
+msgstr "Este video conserva clips del reel, y el video del reel no está en este equipo. Obtenlo y vuelve a intentarlo."
+
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/error-words-library.ts
+#, fuzzy
+msgid "errors.timeline.reel_missing"
+msgstr "Este video conserva clips del reel, y el video del reel no está en este Mac. Obtenlo y vuelve a intentarlo."
+
 #. placeholder {0}: summary.shots
 #: ../../packages/ui/src/gaps/gap-facts.tsx
 #, fuzzy
@@ -32471,6 +33485,7 @@ msgstr "Este video necesita {0, plural, one {# clip} many {# clips} other {# cli
 
 #: ../../packages/ui/src/cards/cast-board-card.tsx
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/cards/image-takes-card.tsx
 #: ../../packages/ui/src/cards/timeline-card.tsx
 #: ../../packages/ui/src/cards/voiceover-card.tsx
@@ -32491,6 +33506,11 @@ msgstr "Este video se hizo con una versión más nueva de Taalcut. Actualiza Taa
 msgid "This video wasn’t cut to a template, so it has no sections to pace."
 msgstr "Este video no se cortó con una plantilla, así que no tiene secciones a las que ajustar el ritmo."
 
+#: src/features/timeline/more/more-gallery.tsx
+#, fuzzy
+msgid "This waits while Taalcut edits this video."
+msgstr "Esto espera mientras Taalcut edita este video."
+
 #: ../../packages/ui/src/cards/live-read-line.tsx
 #: ../../packages/ui/src/make/selection-chip.tsx
 #: src/chat/sent-chips.tsx
@@ -32507,6 +33527,10 @@ msgstr "Esto superaría el presupuesto de este proyecto"
 #, fuzzy
 msgid "Thought for"
 msgstr "Pensó durante"
+
+#: src/features/timeline/design-options-section.tsx
+msgid "Three new designs"
+msgstr ""
 
 #: src/features/library/clip/inspector/clip-capture.tsx
 #, fuzzy
@@ -32755,6 +33779,10 @@ msgstr "Demasiados golpes: deja los más grandes y suaviza el resto"
 msgid "audio.critique.fix.bandSubHigh"
 msgstr "Demasiado retumbe: aplica un pasa-altos a 30–40 Hz en los efectos"
 
+#: src/features/timeline/other-shots/other-shots-list.tsx
+msgid "Too short"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages.ts
 #, fuzzy
@@ -32889,6 +33917,12 @@ msgstr "transcripciones"
 msgid "Transfers"
 msgstr "Transferencias"
 
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/speed-sheet.tsx
+#, fuzzy
+msgid "Transition"
+msgstr "Transición"
+
 #: ../../packages/ui/src/make/selection-chip.tsx
 #, fuzzy
 msgid "Transition · {at}"
@@ -32977,12 +34011,13 @@ msgstr "Recortar un clip"
 msgid "commands.timeline.trimClip"
 msgstr "Recortar un clip"
 
+#: src/features/timeline/clip-part/exact-trim.tsx
+#, fuzzy
+msgid "Trim by an exact amount"
+msgstr "Recortar una cantidad exacta"
+
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Trim the audio"
-msgstr ""
-
-#: src/features/timeline/clip-trim-controls.tsx
-msgid "Trim the beginning or end. The following scenes move with the edit."
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -33048,6 +34083,7 @@ msgstr "Prueba un silencio breve antes del corte más grande, en {at} s"
 msgid "Try a wider time or another shape."
 msgstr "Prueba un rango de tiempo más amplio u otro formato."
 
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/cards/error-line.tsx
 #: ../../packages/ui/src/cards/opening-starters-failed.tsx
 #: ../../packages/ui/src/cards/qa-report-card.tsx
@@ -33092,6 +34128,7 @@ msgstr "Prueba un rango de tiempo más amplio u otro formato."
 #: src/features/templates/start/formats.tsx
 #: src/features/templates/template/template-frame.tsx
 #: src/features/timeline/cleanup/cleanup-panel.tsx
+#: src/features/timeline/clip-part/part-says.tsx
 #: src/features/timeline/gaps/gap-fix-panel.tsx
 #: src/features/timeline/preview/live-preview.tsx
 #: src/features/timeline/timeline-page.tsx
@@ -33121,6 +34158,7 @@ msgstr "Volver a intentar"
 
 #: ../../packages/ui/src/media/graphic-proposal.tsx
 #: src/features/timeline/design-inspector.tsx
+#: src/features/timeline/design-options-section.tsx
 #, fuzzy
 msgid "Try again: design this graphic another way."
 msgstr "Inténtalo de nuevo: diseña este gráfico de otra forma."
@@ -33396,7 +34434,7 @@ msgstr "Desconocido"
 msgid "Unlisted"
 msgstr ""
 
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/scene-actions.tsx
 #, fuzzy
 msgid "Unlock"
 msgstr "Desbloquear"
@@ -33430,10 +34468,11 @@ msgstr "Desbloquea el teléfono y usa un cable que transmita datos. En el iPhone
 msgid "Unlock the selected scenes before removing words"
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/more-gallery.tsx
 msgid "Unlock this scene first"
 msgstr ""
 
+#: src/features/timeline/clip-part/clip-part.tsx
 #: src/features/timeline/clip-trim-controls.tsx
 msgid "Unlock this scene to trim it"
 msgstr ""
@@ -33472,6 +34511,10 @@ msgstr "Hasta entonces, Taalcut sigue funcionando con WebGPU o la CPU, más desp
 #, fuzzy
 msgid "Until you choose, these are Taalcut’s language and English."
 msgstr "Hasta que elijas, son el idioma de Taalcut y el inglés."
+
+#: src/features/timeline/scene-strip.tsx
+msgid "Up arrow shows other shots."
+msgstr ""
 
 #: ../../packages/ui/src/make/preset-picker.tsx
 #, fuzzy
@@ -33855,6 +34898,11 @@ msgstr "Usar la memoria con modelos en la nube"
 #, fuzzy
 msgid "Use my brand kit"
 msgstr "Usar mi kit de marca"
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#, fuzzy
+msgid "Use my clip"
+msgstr "Usar mi clip"
 
 #: ../../packages/ui/src/cards/cover-editor.tsx
 msgid "Use my cover"
@@ -34240,7 +35288,7 @@ msgstr "Video {number}"
 msgid "Video {variantAt} of {variantOf}"
 msgstr "Video {variantAt} de {variantOf}"
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/more-gallery.tsx
 msgid "Video actions"
 msgstr ""
 
@@ -34423,7 +35471,7 @@ msgid "View published post"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.vintage"
 msgstr "Vintage"
@@ -34447,7 +35495,7 @@ msgid "Visual preview"
 msgstr "Vista previa visual"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.vivid"
 msgstr "Vívido"
@@ -34554,6 +35602,7 @@ msgstr "Volumen"
 msgid "Wait and carry on"
 msgstr "Esperar y seguir"
 
+#: src/features/timeline/clip-part/clip-part.tsx
 #: src/features/timeline/clip-trim-controls.tsx
 msgid "Wait for the current edit to finish"
 msgstr ""
@@ -34746,6 +35795,11 @@ msgstr "Espera su modelo"
 msgid "Waits for the original"
 msgstr "Espera el original"
 
+#: src/features/timeline/more/video-group.tsx
+#, fuzzy
+msgid "Waits while Taalcut edits"
+msgstr "Espera mientras Taalcut edita"
+
 #: src/features/library/shot-action-labels.ts
 #, fuzzy
 msgctxt "what people in a clip are doing"
@@ -34757,12 +35811,17 @@ msgid "Walkthrough"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.look.warm"
 msgstr "Cálido"
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Warmer"
+msgstr "Más cálido"
+
+#: src/features/timeline/more/colour-sheet.tsx
 #, fuzzy
 msgid "Warmth"
 msgstr "Calidez"
@@ -34985,6 +36044,11 @@ msgstr "Lo que pide cada espacio, en tus palabras"
 msgid "What else Taalcut sends, and whether Local only allows it."
 msgstr "Qué más envía Taalcut y si el modo Solo local lo permite."
 
+#: src/features/timeline/more/freeze-dialog.tsx
+#, fuzzy
+msgid "What follows moves to make room."
+msgstr "Lo que sigue se mueve para hacerle sitio."
+
 #: src/features/renders/export-steps.ts
 #, fuzzy
 msgid "What goes with the post: who to credit, and how the AI parts are labelled."
@@ -34994,6 +36058,31 @@ msgstr "Lo que va con la publicación: a quién dar crédito y cómo se etiqueta
 #, fuzzy
 msgid "What happened, or what would you change?"
 msgstr "¿Qué pasó o qué cambiarías?"
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "What is next to it can’t fill more room."
+msgstr "Lo que está a su lado no puede llenar más espacio."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "What is next to it gets {amount} longer. Nothing else moves."
+msgstr "Lo que está a su lado se alarga {amount}. Nada más se mueve."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "What is next to it gets {amount} shorter. Nothing else moves."
+msgstr "Lo que está a su lado se acorta {amount}. Nada más se mueve."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "What is next to it is too short to give up more."
+msgstr "Lo que está a su lado es demasiado corto para ceder más."
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "What is next to the scene is too short to make that much room. Move the end by less."
+msgstr "Lo que está junto a la escena es demasiado corto para hacer tanto sitio. Mueve el extremo menos."
 
 #: src/features/kit-gallery/motion-gallery.tsx
 #, fuzzy
@@ -35079,6 +36168,16 @@ msgstr "Lo que suena bajo tus clips y cómo convive con la voz."
 #: src/features/products/product-fields.tsx
 msgid "What should Taalcut know?"
 msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "What should the caption say? (optional)"
+msgstr "¿Qué debe decir el texto de la publicación? (opcional)"
+
+#: src/features/timeline/cover-generate.tsx
+#, fuzzy
+msgid "What should the cover show or say? (optional)"
+msgstr "¿Qué debe mostrar o decir la portada? (opcional)"
 
 #: src/features/create/create-fields.tsx
 #, fuzzy
@@ -35348,6 +36447,11 @@ msgstr "¿Dónde están tus videos?"
 msgid "Where is your footage?"
 msgstr "¿Dónde están tus videos?"
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Where it will be posted"
+msgstr "Dónde se publicará"
+
 #: ../../packages/ui/src/cards/export-options.tsx
 #: ../../packages/ui/src/make/preset-picker.tsx
 #: src/features/renders/export-steps.ts
@@ -35355,6 +36459,16 @@ msgstr "¿Dónde están tus videos?"
 #, fuzzy
 msgid "Where it’s going"
 msgstr "A dónde va"
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Where scene {n} begins"
+msgstr "Dónde empieza la escena {n}"
+
+#: src/features/timeline/clip-part/part-words.ts
+#, fuzzy
+msgid "Where scene {n} ends"
+msgstr "Dónde termina la escena {n}"
 
 #: src/routes/settings/sources.tsx
 #, fuzzy
@@ -35425,7 +36539,7 @@ msgid "whip"
 msgstr "barrido"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.transition.whip"
 msgstr "Barrido"
@@ -35449,6 +36563,16 @@ msgstr "Quién asume el riesgo"
 #, fuzzy
 msgid "Who is it for?"
 msgstr "¿A quién va dirigido?"
+
+#: src/features/timeline/more/why-dialog.tsx
+#, fuzzy
+msgid "Who picked it"
+msgstr "Quién la eligió"
+
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "Who picked it, and what was asked for"
+msgstr "Quién la eligió y qué se pedía"
 
 #: src/features/brand/creator-fields.tsx
 msgid "Who you make videos for"
@@ -35475,9 +36599,20 @@ msgstr "Silbido"
 msgid "Whooshes and hits"
 msgstr "Silbidos y golpes"
 
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#, fuzzy
+msgid "Whose clip plays in slot {number}"
+msgstr "De quién es el clip del espacio {number}"
+
 #: src/features/products/product-content.tsx
 msgid "Why this idea fits"
 msgstr ""
+
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/why-dialog.tsx
+#, fuzzy
+msgid "Why this shot"
+msgstr "Por qué esta toma"
 
 #: src/features/kit-gallery/controls-gallery.tsx
 #: src/features/library/phone/flow/phone-tabs.tsx
@@ -35732,6 +36867,11 @@ msgstr "Funciona igual en este Mac"
 msgid "Would you post this?"
 msgstr "¿Publicarías esto?"
 
+#: src/features/timeline/post-caption/post-caption-words.ts
+#, fuzzy
+msgid "Write a caption for this video’s {name} post."
+msgstr "Escribe el texto de la publicación de este video para {name}."
+
 #: src/features/feedback/feedback-dialog.tsx
 #, fuzzy
 msgid "Write a few words first: what you did, and what happened."
@@ -35783,6 +36923,11 @@ msgstr "Escribe primero qué cambiarías."
 msgid "Write your own"
 msgstr "Escribe tu idea"
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Write your own, or let Taalcut write one from what this video shows."
+msgstr "Escribe el tuyo, o deja que Taalcut escriba uno a partir de lo que muestra este video."
+
 #. js-lingui-explicit-id
 #: src/features/downloads/job-labels.ts
 msgid "downloads.job.writing"
@@ -35824,6 +36969,11 @@ msgstr "Escribiendo qué hay en cada toma"
 #, fuzzy
 msgid "Written by <0>{model}</0> (<1>{provider}</1>), which you allowed to see pictures."
 msgstr "Escrito por <0>{model}</0> (<1>{provider}</1>), al que le permitiste ver imágenes."
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Written by Taalcut"
+msgstr "Escrito por Taalcut"
 
 #: ../../packages/ui/src/platform/kit-platform-words.ts
 #, fuzzy
@@ -35896,7 +37046,9 @@ msgstr "Ayer"
 #: ../../packages/ui/src/templates/camera-move.tsx
 #: ../../packages/ui/src/templates/description-field.tsx
 #: ../../packages/ui/src/templates/graphic-brief.tsx
-#: src/features/timeline/clip-inspector.tsx
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#: src/features/timeline/more/why-dialog.tsx
+#: src/features/timeline/other-shots/option-frame.tsx
 #, fuzzy
 msgid "You"
 msgstr "Tú"
@@ -35968,6 +37120,11 @@ msgstr "Ya está en la búsqueda"
 msgid "You can search this clip now"
 msgstr "Ya puedes buscar este clip"
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "You can still save and copy it as it is."
+msgstr "Aun así puedes guardarlo y copiarlo tal como está."
+
 #: src/features/library/phone/connect/cable-tab.tsx
 #: src/features/library/phone/connect/cable-workspace.tsx
 #, fuzzy
@@ -35995,11 +37152,13 @@ msgstr "Puedes volver a intentarlo {when}."
 
 #: ../../packages/ui/src/cards/breakdown-card.tsx
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/cards/step-header.tsx
 #: ../../packages/ui/src/variants/variant-tile.tsx
 #: src/features/settings/models/module-row.tsx
 #: src/features/timeline/clip-block.tsx
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/why-dialog.tsx
 #: src/routes/_shell/dev/kit.tsx
 #, fuzzy
 msgid "You changed this"
@@ -36140,10 +37299,21 @@ msgstr "Tu brief es la fuente de este vídeo. Añade enlaces o carpetas para apo
 msgid "Your brief, story and finished video stay together here."
 msgstr ""
 
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/domain-error-messages.ts
+#, fuzzy
+msgid "errors.models.chatgpt_images_not_connected"
+msgstr "Tu plan de ChatGPT está conectado para el chat. Las imágenes necesitan una aprobación más: elige Conectar imágenes de ChatGPT en Ajustes › Cuentas."
+
 #: src/chat/chat-start.tsx
 #, fuzzy
 msgid "Your chats stay in the sidebar under Recent chats: pick one to carry on where you left it."
 msgstr "Tus chats se quedan en la barra lateral, en Chats recientes: elige uno para seguir donde lo dejaste."
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#, fuzzy
+msgid "Your clip goes here"
+msgstr "Aquí va tu clip"
 
 #: src/features/library/library-empty.tsx
 msgid "Your clips are on their way"
@@ -36158,6 +37328,17 @@ msgstr "Aquí tus clips pueden moverse de cualquier forma"
 #, fuzzy
 msgid "Your clips coming in"
 msgstr "Tus clips llegando"
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#, fuzzy
+msgid "Your clips need at least one slot, so this one stays yours."
+msgstr "Tus clips necesitan al menos un espacio, así que este sigue siendo tuyo."
+
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/error-words-library.ts
+#, fuzzy
+msgid "errors.templates.no_person_slot"
+msgstr "Tus clips necesitan al menos un espacio, así que este sigue siendo tuyo."
 
 #: src/features/library/phone/connect/wifi-workspace-incoming.tsx
 msgid "Your clips will appear here as they arrive. Each one goes straight to your library."
@@ -36203,6 +37384,11 @@ msgstr "No se cargaron tus creaciones."
 #, fuzzy
 msgid "Your cut"
 msgstr "Tu corte"
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+#, fuzzy
+msgid "Your edit, not saved yet"
+msgstr "Tu edición, aún sin guardar"
 
 #: src/features/make/make-empty.tsx
 #, fuzzy
@@ -36715,6 +37901,11 @@ msgstr "Tus palabras y los fotogramas del reel van al modelo que describe fotogr
 msgid "Your work"
 msgstr "Tu trabajo"
 
+#: src/features/timeline/more/more-words.ts
+#, fuzzy
+msgid "YouTube and wide screens"
+msgstr "YouTube y pantallas anchas"
+
 #: src/features/brand/creator-fields.tsx
 msgid "YouTube channel link"
 msgstr ""
@@ -36805,7 +37996,7 @@ msgid "Zoom out"
 msgstr "Alejar"
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 #, fuzzy
 msgid "editor.ops.transition.zoom"
 msgstr "Zoom a través"

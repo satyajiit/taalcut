@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 
-// EDT1-OPS: the editor's own edits. A selected clip's inspector sets its speed, the transition into the next clip,
-// its own sound and its colour, each one command from the editor and one ⌘Z; S splits the clip at the playhead and
-// ⌫ deletes the selected one, what follows closing up; the sound lane shows each clip's own sound (a press selects
-// the clip) and the music, and the captions lane the captions. In light, dark and the pseudo-locale, with axe.
+// EDT1-OPS: the editor's own edits. A selected clip's More tiles set its speed, the transition into the next clip
+// and its colour (MORE1: each a sheet of cards in the tiles' place), and its Sound tab its own sound, each one
+// command from the editor and one ⌘Z; S splits the clip at the playhead and ⌫ deletes the selected one, what
+// follows closing up; the sound lane shows each clip's own sound (a press selects the clip) and the music, and the
+// captions lane the captions. In light, dark and the pseudo-locale, with axe.
 import { mkdirSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { expectAccessible } from './axe.ts';
@@ -19,6 +20,12 @@ const EDITOR = { name: 'project-timeline', path: `/projects/${PROJECT}/timeline`
 // By its slot, not its name: the pseudo-locale renames the list.
 const clips = (page: Page) => page.locator('[data-slot=video-track]').getByRole('option');
 const controls = (page: Page) => page.locator('[data-slot=clip-edit-controls]');
+// MORE1: a More tile by what it is, a sheet's group of cards by its slot, and one card by its value.
+const tile = (page: Page, name: string) => page.locator(`[data-slot=more-tile][data-tile=${name}]`);
+const cards = (page: Page, slot: string) => page.locator(`[data-slot=${slot}]`);
+const card = (page: Page, slot: string, value: string) =>
+  cards(page, slot).locator(`[role=radio][data-value="${value}"]`);
+const back = (page: Page) => page.locator('[data-slot=more-sheet-back]');
 const ran = async (page: Page, name: string) =>
   (await backend.dispatched(page)).filter((d) => d.name === name).map((d) => d.source);
 const undo = (page: Page) => page.keyboard.press('ControlOrMeta+z');
@@ -50,15 +57,21 @@ test.describe('the editor’s edits (EDT1-OPS)', () => {
     await page.locator('[data-slot=timeline-detail-toggle]').click();
     await clips(page).nth(0).click();
     await page.locator('[data-tool=more]').click();
-    await expect(controls(page)).toBeVisible();
+    await expect(tile(page, 'speed')).toContainText('Normal speed');
 
-    await controls(page).locator('[data-slot=clip-speed]').selectOption('0.5');
+    await tile(page, 'speed').click();
+    await card(page, 'clip-speed', '0.5').click();
     await expect.poll(() => ran(page, 'timeline.setSpeed')).toEqual(['ui']);
-    await expect(controls(page).locator('[data-slot=clip-speed]')).toHaveValue('0.5');
+    await expect(cards(page, 'clip-speed')).toHaveAttribute('data-value', '0.5');
+    // Back to the tiles: the tile that opened the sheet has focus again, and says the new value.
+    await back(page).click();
+    await expect(tile(page, 'speed')).toBeFocused();
+    await expect(tile(page, 'speed')).toContainText('Half speed');
 
-    await controls(page).locator('[data-slot=clip-transition]').selectOption('dissolve');
+    await tile(page, 'transition').click();
+    await card(page, 'clip-transition', 'dissolve').click();
     await expect.poll(() => ran(page, 'timeline.setTransition')).toEqual(['ui']);
-    await expect(controls(page).locator('[data-slot=clip-transition]')).toHaveValue('dissolve');
+    await expect(cards(page, 'clip-transition')).toHaveAttribute('data-value', 'dissolve');
     await expect(page.locator('[aria-label="Crossfade between clips 1 and 2"]')).toBeAttached();
 
     await page.locator('[data-tool=sound]').click();
@@ -71,19 +84,22 @@ test.describe('the editor’s edits (EDT1-OPS)', () => {
     await expect.poll(() => ran(page, 'audio.setVolume')).toEqual(['ui', 'ui']);
 
     await page.locator('[data-tool=more]').click();
-    await controls(page).locator('[data-slot=clip-look]').selectOption('mono');
+    await tile(page, 'colour').click();
+    await card(page, 'clip-look', 'mono').click();
     await expect.poll(() => ran(page, 'timeline.setGrade')).toEqual(['ui']);
-    await expect(controls(page).getByRole('button', { name: 'Back to the colour as shot' })).toBeVisible();
-    await controls(page).scrollIntoViewIfNeeded();
+    const sheet = page.locator('[data-slot=more-sheet][data-sheet=colour]');
+    await expect(sheet.getByRole('button', { name: 'Back to the colour as shot' })).toBeVisible();
     await shoot(page, 'inspector-light');
 
-    // Back out of the fields, then ⌘Z takes the colour off, then the sound, the transition and the speed.
+    // Back out of the cards, then ⌘Z takes the colour off, then the sound, the transition and the speed.
     await page.locator('[data-tool=more]').focus();
     await undo(page);
-    await expect(controls(page).locator('[data-slot=clip-look]')).toHaveValue('none');
+    await expect(cards(page, 'clip-look')).toHaveAttribute('data-value', 'none');
     for (let n = 0; n < 4; n++) await undo(page);
-    await expect(controls(page).locator('[data-slot=clip-speed]')).toHaveValue('1');
-    await expect(controls(page).locator('[data-slot=clip-transition]')).toHaveValue('cut');
+    await back(page).click();
+    await expect(tile(page, 'speed')).toContainText('Normal speed');
+    await expect(tile(page, 'transition')).toContainText('A plain cut');
+    await expect(tile(page, 'colour')).toContainText('As shot');
     expect(problems).toEqual([]);
   });
 
@@ -185,7 +201,7 @@ test.describe('the editor’s edits (EDT1-OPS)', () => {
       await page.locator('[data-slot=timeline-detail-toggle]').click();
       await clips(page).nth(1).click();
       await page.locator('[data-tool=more]').click();
-      await expect(controls(page)).toBeVisible();
+      await expect(tile(page, 'speed')).toBeVisible();
       await expectAccessible(page, testInfo, `editor ops (${theme})`);
       await shoot(page, `editor-${theme}`);
     });
@@ -196,7 +212,7 @@ test.describe('the editor’s edits (EDT1-OPS)', () => {
     await page.locator('[data-slot=timeline-detail-toggle]').click();
     await clips(page).nth(1).click();
     await page.locator('[data-tool=more]').click();
-    await expect(controls(page)).toBeVisible();
+    await expect(tile(page, 'speed')).toBeVisible();
     await expectPseudoClean(page, 'editor ops');
     await shoot(page, 'editor-pseudo');
   });

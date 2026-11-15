@@ -98,6 +98,19 @@ export interface BreakdownMedia {
       readonly rgb: Uint8Array;
     }[]
   >;
+  /**
+   * MATCH1: every frame (at `rate`) as a small gray picture, one byte a pixel, row-major, scaled to fit `longSide`,
+   * in order: index i is frame i. For finding dissolves and fades from pixels (gradual.ts). Optional: without it
+   * only the two cut methods look for cuts.
+   */
+  grayFrames?(
+    path: string,
+    options: StepOptions & { readonly rate: FrameRate; readonly longSide: number },
+  ): AsyncResult<{
+    readonly width: number;
+    readonly height: number;
+    readonly frames: readonly Uint8Array[];
+  }>;
   /** Mean luma (0–1) per frame in the ranges [start, end), for fades through black or white. */
   lumaCurve?(
     path: string,
@@ -135,6 +148,12 @@ export interface OcrPage {
   readonly lines: readonly OcrLine[];
 }
 
+/** LYR1: a page of one region read on its own (`BreakdownVision.ocrRegion`). */
+export interface OcrRegionPage extends OcrPage {
+  /** How much the watched picture differs from the frame asked before it, 0–1 (mean absolute grey difference). */
+  readonly change: number;
+}
+
 /** vision (P2-L6, P2-L7, P2-L9). */
 export interface BreakdownVision {
   /** scdet's score (0–100) for every frame at `rate`; index i is frame i. */
@@ -162,6 +181,24 @@ export interface BreakdownVision {
     path: string,
     options: StepOptions & { readonly languages: readonly string[] },
   ): AsyncResult<readonly OcrLine[]>;
+  /**
+   * LYR1: OCR of one region of the picture on each frame asked (at `rate`), the region enlarged `scale` times and
+   * every frame read by the engine (no page reused from an alike frame): words that replace each other in place too
+   * fast, or over too busy a picture, for the whole-frame pass (text-zone.ts). Boxes are shares of the whole
+   * picture. Each page says how much the picture inside `watch` changed since the frame asked before it. Optional:
+   * without it a sequence keeps what the whole-frame pass read.
+   */
+  ocrRegion?(
+    path: string,
+    options: StepOptions & {
+      readonly rate: FrameRate;
+      readonly frames: readonly number[];
+      readonly region: Box;
+      readonly watch: Box;
+      readonly scale: number;
+      readonly languages: readonly string[];
+    },
+  ): AsyncResult<readonly OcrRegionPage[]>;
   /**
    * FRM1-SUB: whole heads and bodies on frames `hz` times a second over the file (at `rate`), boxes as fractions of
    * its picture, origin top left (reel-subjects.ts). Optional: without it the template records no subjects.

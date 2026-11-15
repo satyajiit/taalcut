@@ -10,7 +10,8 @@
  * can't read, the overlay stays plain text (no design), as before BRK1. Pixels alone decide: a vision model is
  * worth asking only where they can't tell (a sticker's tilt, a typeface's class), which the review shows as a
  * lower confidence. HFW1: an entrance is judged over the frames round the shape's appearance, read again when the
- * first read lacked them, and one they can't tell is `unknown`, apart from a cut.
+ * first read lacked them, and one they can't tell is `unknown`, apart from a cut. TXT1: the settled frames also
+ * give how the letters are set (`design.type`, the letters' colour, their outline and their weight from their stem).
  */
 import { ok, RationalTime, type AsyncResult, type TextOverlay } from '@taalcut/core';
 import {
@@ -104,6 +105,9 @@ const edgesOf = (byFrame: ReadonlyMap<number, RegionImage>) =>
 const sceneDoubt = (overlay: TextOverlay) =>
   overlay.doubts?.some((doubt) => doubt.reason === 'textMaybeScene');
 
+/** TXT1: how many letters and digits a text has, for the type reading; what they spell is never looked at. */
+const lettersOf = (text: string) => (text.match(/[\p{L}\p{N}]/gu) ?? []).length;
+
 /**
  * The overlays with their designs read; the ones it couldn't read are unchanged. `leads`: for each designed overlay,
  * the frames its shape showed before its words (DSG1-READ: how long a typing indicator ran).
@@ -152,6 +156,7 @@ export async function readOverlayDesigns(
         end,
         settled,
         edges: { frames: edgesOf(byFrame) },
+        letters: lettersOf(overlay.text),
       });
     let read = readNow();
     // HFW1: the frames round where it came on that the first read lacked, then judged again.

@@ -54,28 +54,31 @@ export function ConsentMismatch({
       <p className="m-0 text-base text-ink">
         {t`That didn’t match the consent line. Say the whole line, with your name, before the passage.`}
       </p>
-      <dl className="m-0 grid gap-3 sm:grid-cols-2">
-        <div className="flex flex-col gap-1">
-          <dt className="text-xs font-semibold text-ink-2">{t`Taalcut heard`}</dt>
-          <dd className="m-0 rounded-lg bg-panel px-3 py-2 text-sm text-ink">
-            {consent.heard ? (
-              <UserContent translate="no">{consent.heard}</UserContent>
-            ) : (
-              t`Nothing it could make out.`
-            )}
-          </dd>
-        </div>
-        <div className="flex flex-col gap-1">
-          <dt className="text-xs font-semibold text-ink-2">{t`The line to say`}</dt>
-          <dd
-            className="m-0 rounded-lg bg-panel px-3 py-2 text-sm text-ink"
-            lang={consentLineLanguage(language)}
-            translate="no"
-          >
-            {expected}
-          </dd>
-        </div>
-      </dl>
+      {/* Side by side where the card itself has 24rem; one under the other in a narrow column (the editor's chat). */}
+      <div className="@container">
+        <dl className="m-0 grid gap-3 @sm:grid-cols-2">
+          <div className="flex flex-col gap-1">
+            <dt className="text-xs font-semibold text-ink-2">{t`Taalcut heard`}</dt>
+            <dd className="m-0 rounded-lg bg-panel px-3 py-2 text-sm text-ink">
+              {consent.heard ? (
+                <UserContent translate="no">{consent.heard}</UserContent>
+              ) : (
+                t`Nothing it could make out.`
+              )}
+            </dd>
+          </div>
+          <div className="flex flex-col gap-1">
+            <dt className="text-xs font-semibold text-ink-2">{t`The line to say`}</dt>
+            <dd
+              className="m-0 rounded-lg bg-panel px-3 py-2 text-sm text-ink"
+              lang={consentLineLanguage(language)}
+              translate="no"
+            >
+              {expected}
+            </dd>
+          </div>
+        </dl>
+      </div>
       {consent.canRecord ? (
         <div>
           <Button variant="primary" size="sm" onClick={consent.recordAgain}>

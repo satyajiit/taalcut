@@ -46,6 +46,8 @@ export interface SlotPool {
   /** Filled only by allowing other orientations. */
   readonly relaxed: boolean;
   readonly reranked: boolean;
+  /** MOM1: the part of a candidate shot the model stated for this slot, by candidate key (stated-parts.ts). */
+  readonly parts?: ReadonlyMap<string, { readonly from: number; readonly to?: number }>;
 }
 
 export interface PoolScope {
@@ -164,11 +166,21 @@ export async function gatherPool(
     return ok({ slot, candidates: [candidate], locked: true, relaxed: false, reranked: false });
   }
   let relaxed = false;
-  const strict = await nearestFor(slot, vector, filterFor(slot, scope, exclude, context.config, false), context);
+  const strict = await nearestFor(
+    slot,
+    vector,
+    filterFor(slot, scope, exclude, context.config, false),
+    context,
+  );
   if (!strict.ok) return strict;
   let hits = strict.value;
   if (forceRelaxed || hits.length === 0) {
-    const any = await nearestFor(slot, vector, filterFor(slot, scope, exclude, context.config, true), context);
+    const any = await nearestFor(
+      slot,
+      vector,
+      filterFor(slot, scope, exclude, context.config, true),
+      context,
+    );
     if (!any.ok) return any;
     if (hits.length === 0) {
       hits = any.value;

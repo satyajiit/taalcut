@@ -12,10 +12,12 @@ import type {
   ChatEffort,
   ChatStart,
   ConversationId,
+  CoverRequest,
   EditorContext,
   EventOf,
   EventType,
   MessageId,
+  PostCaptionRequest,
   QuestionAnswer,
   RunId,
   RunStatus,
@@ -55,6 +57,10 @@ export interface UserMessageEvent {
     readonly comments?: TimelineCommentId[];
     /** EDT1: the editor as the user saw it, for a message from its docked chat. */
     readonly editorContext?: EditorContext;
+    /** CAP1: the post caption it asked for in the editor's caption panel. */
+    readonly postCaption?: PostCaptionRequest;
+    /** CVR1: the cover it asked for in the editor's cover panel. */
+    readonly cover?: CoverRequest;
   };
 }
 
@@ -111,6 +117,10 @@ export interface ChatService {
       readonly comments?: readonly TimelineCommentId[];
       /** EDT1: the editor as the user saw it, from its docked composer. */
       readonly editorContext?: EditorContext;
+      /** CAP1: the post caption asked for in the editor's caption panel, for its platform. */
+      readonly postCaption?: PostCaptionRequest;
+      /** CVR1: the cover asked for in the editor's cover panel, at its aspect. */
+      readonly cover?: CoverRequest;
     },
     options: { readonly signal: AbortSignal },
   ): AsyncResult<RunStream>;

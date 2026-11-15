@@ -113,7 +113,13 @@ async function phase3Start(
   const editor = deps.phase3?.editor;
   const brief =
     context && editor
-      ? (editor.replay ?? (await editor.brief({ message: request.message, context })))
+      ? (editor.replay ??
+        (await editor.brief({
+          message: request.message,
+          context,
+          cover: request.cover,
+          postCaption: request.postCaption,
+        })))
       : undefined;
   return {
     ...(dials ? { soul: { version: deps.soul.version, dials } } : {}),

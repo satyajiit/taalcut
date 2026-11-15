@@ -9,6 +9,10 @@ msgstr ""
 msgid ", from {from} to {to}"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "… more"
+msgstr ""
+
 #: src/features/settings/models/retirement-notices.tsx
 msgid "“{job}” now uses <0>{replacement}</0> instead."
 msgstr ""
@@ -44,6 +48,11 @@ msgstr ""
 msgid "(reference)"
 msgstr ""
 
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{0, plural, =0 {No hashtags yet. {name} captions here carry at least {min}.} one {Only # hashtag. {name} captions here carry at least {min}.} other {Only # hashtags. {name} captions here carry at least {min}.}}"
+msgstr ""
+
 #: src/features/settings/privacy/privacy-platform-words.ts
 msgid "{0, plural, =0 {None ran on this computer} one {# on this computer, free} other {# on this computer, free}}"
 msgstr ""
@@ -71,6 +80,11 @@ msgstr ""
 #. placeholder {0}: session.callsToday
 #: src/features/settings/external-agents/session-name.tsx
 msgid "{0, plural, one {# call today} other {# calls today}}"
+msgstr ""
+
+#. placeholder {0}: issue.length - issue.max
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{0, plural, one {# character over {name}’s {max}.} other {# characters over {name}’s {max}.}}"
 msgstr ""
 
 #. placeholder {0}: totals.imported
@@ -162,6 +176,11 @@ msgstr ""
 msgid "{0, plural, one {# folder added} other {# folders added}}"
 msgstr ""
 
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{0, plural, one {# hashtag, and {name} takes {max} at most.} other {# hashtags, and {name} takes {max} at most.}}"
+msgstr ""
+
 #. placeholder {0}: voiceover.lines.length
 #: src/features/renders/sections/voice.tsx
 msgid "{0, plural, one {# line} other {# lines}}"
@@ -210,6 +229,16 @@ msgstr ""
 #. placeholder {0}: artifacts.size
 #: ../../packages/ui/src/chat/tool-group-outcomes.tsx
 msgid "{0, plural, one {# result saved} other {# results saved}}"
+msgstr ""
+
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{0, plural, one {# search phrase in the brackets, and {max} is the most.} other {# search phrases in the brackets, and {max} is the most.}}"
+msgstr ""
+
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{0, plural, one {# search phrase in the brackets. At least {min} help people find the post.} other {# search phrases in the brackets. At least {min} help people find the post.}}"
 msgstr ""
 
 #. placeholder {0}: open.length
@@ -411,6 +440,11 @@ msgstr ""
 msgid "{0, plural, one {Tags saved on # template} other {Tags saved on # templates}}"
 msgstr ""
 
+#. placeholder {0}: issue.count
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{0, plural, one {The line “{credit}” is in the text # time.} other {The line “{credit}” is in the text # times.}}"
+msgstr ""
+
 #. placeholder {0}: projects.length
 #: src/features/projects/batch/apply-look-dialog.tsx
 msgid "{0, plural, one {To every video of the project you picked. It’s one step: Undo puts every video back.} other {To every video of the # projects you picked. It’s one step: Undo puts every video back.}}"
@@ -428,6 +462,7 @@ msgstr ""
 msgid "{aiFormatted} by Taalcut"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-steps.tsx
 #: src/features/timeline/clip-trim-controls.tsx
 msgid "{amount, plural, one {# frame} other {# frames}}"
 msgstr ""
@@ -478,6 +513,7 @@ msgstr ""
 
 #: ../../packages/ui/src/cards/breakdown-card.tsx
 #: src/features/timeline/inspector.tsx
+#: src/features/timeline/more/video-group.tsx
 msgid "{bpm} beats a minute"
 msgstr ""
 
@@ -518,6 +554,7 @@ msgid "{clips, plural, one {# clip from your phone} other {# clips from your pho
 msgstr ""
 
 #: src/features/timeline/inspector.tsx
+#: src/features/timeline/more/video-group.tsx
 msgid "{clips, plural, one {# clip} other {# clips}}"
 msgstr ""
 
@@ -603,6 +640,10 @@ msgstr ""
 
 #: src/onboarding/setup/sources/sources-moment.tsx
 msgid "{count, plural, one {# clip} other {# clips}} found. Taalcut keeps sorting while you go on."
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "{count, plural, one {# cover saved} other {# covers saved}}"
 msgstr ""
 
 #: ../../packages/ui/src/cards/cost-breakdown.tsx
@@ -1104,6 +1145,10 @@ msgstr ""
 msgid "{from}’s plan limit is reached, so this step used {to}."
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+msgid "{fromText} to {toText} of {total}"
+msgstr ""
+
 #: src/features/traces/traces-page.tsx
 msgid "{gaps, plural, one {# thing is missing from this trace:} other {# things are missing from this trace:}}"
 msgstr ""
@@ -1249,6 +1294,10 @@ msgstr ""
 msgid "{length} · {shots, plural, one {# shot} other {# shots}}"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "{length} of {limit}"
+msgstr ""
+
 #: src/features/timeline/clip-edit-controls.tsx
 #: src/features/timeline/sound-item-controls.tsx
 msgid "{length} s"
@@ -1305,6 +1354,10 @@ msgstr ""
 
 #: src/features/templates/start/formats.tsx
 msgid "{min} to {max}"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{min} to {max} hashtags · search phrases in brackets at the end · up to {length} characters"
 msgstr ""
 
 #: src/features/settings/sources/source-status.tsx
@@ -1455,6 +1508,14 @@ msgstr ""
 msgid "{name} stopped sending"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{name}, edited by you"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "{name}, written by Taalcut"
+msgstr ""
+
 #: ../../packages/ui/src/cards/edit-change-words.ts
 msgid "{name}: {before} → {after}"
 msgstr ""
@@ -1549,6 +1610,11 @@ msgid "{provider} · about {money}"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: src/features/settings/model-messages.ts
+msgid "errors.models.sign_in_refused"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/domain-error-messages.ts
 msgid "errors.models.image_access_denied"
 msgstr ""
@@ -1612,6 +1678,10 @@ msgstr ""
 
 #: src/features/settings/usage/request-table.tsx
 msgid "{received} received"
+msgstr ""
+
+#: ../../packages/ui/src/cards/cast-board-card.tsx
+msgid "{reelOwn, plural, one {# shot is the reel’s own clip. Your clips fill the rest.} other {# shots are the reel’s own clips. Your clips fill the rest.}}"
 msgstr ""
 
 #: src/features/feedback/bundle-preview.tsx
@@ -1790,6 +1860,14 @@ msgstr ""
 msgid "{stayed, plural, one {# video was changed since; its look stays} other {# videos were changed since; their look stays}}"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-steps.tsx
+msgid "{step} earlier"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-steps.tsx
+msgid "{step} later"
+msgstr ""
+
 #: src/features/templates/hub/hub-facts.tsx
 #: src/features/templates/template-row.tsx
 msgid "{tempo} BPM"
@@ -1813,10 +1891,11 @@ msgid "errors.templates.in_use"
 msgstr ""
 
 #: ../../packages/ui/src/cards/edit-change-words.ts
+#: src/features/timeline/more/more-words.ts
 msgid "{times}×"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "{times}× speed"
 msgstr ""
 
@@ -2346,6 +2425,15 @@ msgstr ""
 msgid "errors.media.sidecar_failed"
 msgstr ""
 
+#. Under "Speed" on a tile: a held moment has no speed
+#: src/features/timeline/more/scene-group.tsx
+msgid "A hold has none"
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "A hold lasts from one frame to {most} seconds."
+msgstr ""
+
 #: src/features/settings/privacy/what-leaves.tsx
 msgid "A job"
 msgstr ""
@@ -2370,6 +2458,30 @@ msgstr ""
 
 #: src/features/kit-gallery/motion-gallery.tsx
 msgid "A list arriving"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "A little brighter"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "A little cooler"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "A little darker"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "A little less colour"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "A little more colour"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "A little warmer"
 msgstr ""
 
 #: ../../packages/ui/src/cards/pending-card.tsx
@@ -2456,6 +2568,15 @@ msgstr ""
 msgid "A phone that scans the code waits for your Allow, so a photo of the code alone can’t connect."
 msgstr ""
 
+#. Under "Speed" on a tile: a photo has no speed
+#: src/features/timeline/more/scene-group.tsx
+msgid "A photo has none"
+msgstr ""
+
+#: src/features/timeline/clip-part/clip-part.tsx
+msgid "A photo shows whole, so there is no part to pick. You can still make the scene longer or shorter."
+msgstr ""
+
 #: src/features/products/product-collection-empty.tsx
 msgid "A place for the sources, formats and stories behind your product."
 msgstr ""
@@ -2465,7 +2586,7 @@ msgid "A place through your eyes"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.transition.cut"
 msgstr ""
 
@@ -2727,6 +2848,10 @@ msgstr ""
 msgid "A video"
 msgstr ""
 
+#: ../../packages/ui/src/templates/slot-footage.tsx
+msgid "A video made from this template keeps it. Your clips go in the other slots."
+msgstr ""
+
 #: src/features/timeline/sound-item-controls.tsx
 #: src/features/timeline/sound-lane.tsx
 msgid "A voice line"
@@ -2820,6 +2945,10 @@ msgstr ""
 
 #: ../../packages/ui/src/make/cast-grid.tsx
 msgid "About slot {number}: "
+msgstr ""
+
+#: src/features/timeline/more/scene-group.tsx
+msgid "About the shot this scene plays"
 msgstr ""
 
 #: src/features/library/clip/inspector/clip-facts.tsx
@@ -2954,6 +3083,10 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Add “{credit}”"
+msgstr ""
+
 #: src/features/recipes/recipes.ts
 msgid "Add a callout here"
 msgstr ""
@@ -3020,6 +3153,11 @@ msgstr ""
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/cards/flow-labels.ts
 msgid "opening.library.empty"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/features/palette/command-labels.ts
+msgid "commands.graphics.placeOptions"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -3286,15 +3424,15 @@ msgid "Add the website, project folders and media that explain your idea. Taalcu
 msgstr ""
 
 #: ../../packages/ui/src/make/clip-detail.tsx
-#: src/features/timeline/clip-inspector.tsx
 #: src/features/timeline/inspector.tsx
 #: src/features/timeline/item-inspector.tsx
+#: src/features/timeline/scene-actions.tsx
 msgid "Add to chat"
 msgstr ""
 
-#: src/features/timeline/clip-inspector.tsx
 #: src/features/timeline/inspector.tsx
 #: src/features/timeline/item-inspector.tsx
+#: src/features/timeline/scene-actions.tsx
 msgid "Add to chat ({addKeys})"
 msgstr ""
 
@@ -3489,6 +3627,7 @@ msgstr ""
 #: ../../packages/ui/src/make/cast-grid.tsx
 #: ../../packages/ui/src/make/mini-timeline.tsx
 #: ../../packages/ui/src/make/shot-thumb.tsx
+#: src/features/timeline/other-shots/option-frame.tsx
 #: src/routes/_shell/dev/kit.tsx
 msgid "AI pick"
 msgstr ""
@@ -3623,6 +3762,11 @@ msgstr ""
 #: src/features/library/imports/import-words.ts
 #: src/features/library/phone/transfers/transfer-files.tsx
 msgid "Already in your library"
+msgstr ""
+
+#. Under "Freeze" on a tile: a photo has no moment to freeze
+#: src/features/timeline/more/scene-group.tsx
+msgid "Already still"
 msgstr ""
 
 #: src/features/settings/external-agents/agent-words.ts
@@ -4177,7 +4321,8 @@ msgstr ""
 msgid "As of <0>{age}</0>"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/colour-sheet.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "As shot"
 msgstr ""
 
@@ -4238,6 +4383,11 @@ msgstr ""
 msgid "Asked for another design."
 msgstr ""
 
+#: ../../packages/ui/src/cards/design-options-card.tsx
+#: src/features/timeline/design-options-section.tsx
+msgid "Asked for three new designs."
+msgstr ""
+
 #: src/features/traces/trace-labels.tsx
 msgid "Asked for tools"
 msgstr ""
@@ -4265,6 +4415,10 @@ msgstr ""
 
 #: ../../packages/ui/src/profiles/style-profile-words.ts
 msgid "At the bottom"
+msgstr ""
+
+#: src/features/timeline/clip-trim-controls.tsx
+msgid "At the end of the last scene, the video gets shorter or longer."
 msgstr ""
 
 #: ../../packages/ui/src/profiles/style-profile-words.ts
@@ -4358,6 +4512,7 @@ msgstr ""
 
 #: src/features/palette/navigation-items.tsx
 #: src/features/renders/export-form.tsx
+#: src/features/timeline/more/more-sheet.tsx
 #: src/onboarding/step-screen.tsx
 #: src/shell/nav/history-buttons.tsx
 msgid "Back"
@@ -4397,6 +4552,7 @@ msgstr ""
 
 #: src/features/timeline/dock/editor-task.tsx
 #: src/features/timeline/editor.tsx
+#: src/features/timeline/more/scene-group.tsx
 msgid "Back to scenes"
 msgstr ""
 
@@ -4413,7 +4569,7 @@ msgstr ""
 msgid "Back to the choices"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/colour-sheet.tsx
 msgid "Back to the colour as shot"
 msgstr ""
 
@@ -4540,6 +4696,10 @@ msgstr ""
 msgid "Beginning"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Begins {fromText} into the clip"
+msgstr ""
+
 #: ../../packages/ui/src/window/window-bar.preview.tsx
 msgid "Beside the icon rail"
 msgstr ""
@@ -4599,7 +4759,7 @@ msgid "Bigger margin"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.mono"
 msgstr ""
 
@@ -4739,7 +4899,11 @@ msgstr ""
 msgid "Brief & sources"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
+msgid "Brighter"
+msgstr ""
+
+#: src/features/timeline/more/colour-sheet.tsx
 msgid "Brightness"
 msgstr ""
 
@@ -5072,6 +5236,8 @@ msgstr ""
 #: src/features/templates/library/trend-date-field.tsx
 #: src/features/timeline/comments/comment-composer.tsx
 #: src/features/timeline/comments/comment-row.tsx
+#: src/features/timeline/more/freeze-dialog.tsx
+#: src/features/timeline/more/size-dialog.tsx
 #: src/features/updates/channel-parts.tsx
 #: src/onboarding/setup/thinking/chatgpt-way.tsx
 msgid "Cancel"
@@ -5180,6 +5346,10 @@ msgstr ""
 
 #: src/features/projects/batch/apply-look-dialog.tsx
 msgid "Caption styles"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Caption text"
 msgstr ""
 
 #: ../../packages/ui/src/cards/export-options.tsx
@@ -5419,7 +5589,7 @@ msgstr ""
 msgid "Change clip speed"
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/freeze-dialog.tsx
 msgid "Change hold length"
 msgstr ""
 
@@ -5459,6 +5629,11 @@ msgid "commands.captions.setStyle"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "commands.settings.setPostCaptionCredit"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/features/make/make-messages-edit.ts
 msgid "commands.timeline.setGrade"
 msgstr ""
@@ -5490,6 +5665,11 @@ msgid "Change the model"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "commands.timeline.setPostCaption"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/features/palette/command-labels.ts
 msgid "commands.settings.setTheme"
 msgstr ""
@@ -5515,6 +5695,7 @@ msgstr ""
 msgid "Change what <0>{agentName}</0> can do"
 msgstr ""
 
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/media/graphic-proposal.tsx
 msgid "Change…"
 msgstr ""
@@ -5602,6 +5783,9 @@ msgid "ChatGPT"
 msgstr ""
 
 #. ChatGPT is a brand name.
+#. ChatGPT is a brand name.
+#: ../../packages/ui/src/cards/labels.ts
+#: src/features/settings/accounts/accounts-settings.tsx
 #: src/features/settings/accounts/chatgpt-images-row.tsx
 #: src/features/settings/providers.ts
 msgid "ChatGPT images"
@@ -6012,7 +6196,6 @@ msgid "Choose at least one fix."
 msgstr ""
 
 #: ../../packages/ui/src/cards/cover-editor.tsx
-#: src/features/timeline/more-actions.tsx
 msgid "Choose cover"
 msgstr ""
 
@@ -6149,7 +6332,7 @@ msgid "Chosen"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.cinematic"
 msgstr ""
 
@@ -6525,16 +6708,21 @@ msgid "Color"
 msgstr ""
 
 #: src/features/brand/bumper-field.tsx
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/colour-sheet.tsx
+#: src/features/timeline/more/scene-group.tsx
 msgid "Colour"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.none"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/colour-sheet.tsx
+msgid "Colour look"
+msgstr ""
+
+#: src/features/timeline/more/colour-sheet.tsx
 msgid "Colour strength"
 msgstr ""
 
@@ -6711,7 +6899,13 @@ msgstr ""
 msgid "Connect and copy setup"
 msgstr ""
 
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/error-messages.ts
+msgid "fix.connectChatGptImages"
+msgstr ""
+
 #: src/features/settings/accounts/chatgpt-images-row.tsx
+#: src/onboarding/setup/thinking/chatgpt-way.tsx
 msgid "Connect ChatGPT images"
 msgstr ""
 
@@ -6985,8 +7179,12 @@ msgid "Cooking"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.cool"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "Cooler"
 msgstr ""
 
 #: src/features/create/create-words.ts
@@ -6994,9 +7192,11 @@ msgid "Coordinating your video"
 msgstr ""
 
 #: ../../packages/ui/src/cards/publish-social-meta.tsx
+#: ../../packages/ui/src/chat/copy-message.tsx
 #: ../../packages/ui/src/make/add-sound-steps.tsx
 #: src/features/library/phone/connect/copy-button.tsx
 #: src/features/renders/sections/credits.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 msgid "Copied"
 msgstr ""
 
@@ -7034,8 +7234,10 @@ msgstr ""
 
 #: ../../packages/ui/src/cards/product-social-meta.tsx
 #: ../../packages/ui/src/cards/publish-social-meta.tsx
+#: ../../packages/ui/src/chat/copy-message.tsx
 #: src/features/gpu-setup/gpu-guide.tsx
 #: src/features/renders/sections/credits.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 msgid "Copy"
 msgstr ""
 
@@ -7233,7 +7435,9 @@ msgstr ""
 msgid "Couldn’t change the trend date"
 msgstr ""
 
+#: ../../packages/ui/src/chat/copy-message.tsx
 #: src/features/library/phone/connect/copy-button.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 msgid "Couldn’t copy"
 msgstr ""
 
@@ -7388,6 +7592,10 @@ msgstr ""
 
 #: src/chat/open-external.ts
 msgid "Couldn’t open that page"
+msgstr ""
+
+#: src/features/renders/open-exports-folder.ts
+msgid "Couldn’t open the exports folder"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -7612,6 +7820,10 @@ msgstr ""
 msgid "Courtesy, not required"
 msgstr ""
 
+#: src/features/timeline/more/video-group.tsx
+msgid "Cover"
+msgstr ""
+
 #: ../../packages/ui/src/cards/short-cover.tsx
 msgid "Cover exported from this short"
 msgstr ""
@@ -7778,7 +7990,7 @@ msgstr ""
 msgid "Create, publish, schedule, update and delete posts."
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/size-dialog.tsx
 msgid "Creates an independent video copy. Your original stays as it is."
 msgstr ""
 
@@ -7855,7 +8067,7 @@ msgid "Critiquing this sound uploads its audio to the cloud: a mono copy, never 
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.transition.dissolve"
 msgstr ""
 
@@ -7995,6 +8207,10 @@ msgstr ""
 
 #: src/features/palette/use-palette-items.tsx
 msgid "dark mode"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "Darker"
 msgstr ""
 
 #: src/features/library/imports/choose-items.tsx
@@ -8295,6 +8511,14 @@ msgstr ""
 msgid "Design"
 msgstr ""
 
+#: ../../packages/ui/src/cards/cover-composition-fields.tsx
+msgid "Design {n}"
+msgstr ""
+
+#: ../../packages/ui/src/cards/design-option-picker.tsx
+msgid "Design {number} of {count}:"
+msgstr ""
+
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Design a motion graphic"
 msgstr ""
@@ -8307,10 +8531,31 @@ msgstr ""
 msgid "Design controls"
 msgstr ""
 
+#: src/features/timeline/text-design-action.tsx
+msgid "Design text with AI"
+msgstr ""
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+msgid "Design the cover"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/cards/flow-labels.ts
 #: src/features/renders/render-messages.ts
 msgid "skills.render.designer"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/features/make/make-messages.ts
+msgid "commands.timeline.designText"
+msgstr ""
+
+#: src/features/timeline/text-design-action.tsx
+msgid "Design the text of this video: give every text a designed look based on the reference's look, and put each text where it should sit."
+msgstr ""
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+msgid "Design the text on the video"
 msgstr ""
 
 #: src/features/timeline/workspace/files-panel.tsx
@@ -8323,6 +8568,12 @@ msgstr ""
 
 #: src/features/create/create-words.ts
 msgid "Designing the scenes"
+msgstr ""
+
+#: ../../packages/ui/src/cards/cover-composition-fields.tsx
+#: ../../packages/ui/src/cards/design-option-picker.tsx
+#: src/features/timeline/design-options-section.tsx
+msgid "Designs to choose from"
 msgstr ""
 
 #: src/features/library/imports/import-review.tsx
@@ -8409,7 +8660,7 @@ msgid "Didn’t work"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.transition.fade"
 msgstr ""
 
@@ -8703,6 +8954,38 @@ msgstr ""
 msgid "Drag a section up for more energy, or use Faster and Slower."
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Drag an end to make the scene longer or shorter: scene {p} or scene {q} makes room, and nothing else moves."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Drag an end to make the scene longer or shorter: what is next to it makes room, and nothing else moves."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Drag its beginning and scene {p} makes room. Drag its end and the video gets longer or shorter."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Drag its beginning and what comes before it makes room. Drag its end and the video gets longer or shorter."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Drag its end to make the scene longer or shorter: scene {q} makes room, and nothing else moves."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Drag its end to make the scene longer or shorter: what comes after it makes room, and nothing else moves."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Drag its end to make the video longer or shorter."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Drag the part, or click where the scene should start. The scene keeps its place and length."
+msgstr ""
+
 #: src/features/library/clip/clip-stages.tsx
 msgid "Drawing the sound"
 msgstr ""
@@ -8807,6 +9090,10 @@ msgstr ""
 msgid "Each check also sends a random ID made for this Mac, so a new version can reach some Macs first. It isn’t linked to you or your files, and Taalcut doesn’t log it."
 msgstr ""
 
+#: ../../packages/ui/src/make/render-words.ts
+msgid "Each clip plays the part of its shot the moment needs"
+msgstr ""
+
 #: src/features/timeline/sound-lane.tsx
 msgid "Each clip’s own sound"
 msgstr ""
@@ -8849,6 +9136,11 @@ msgstr ""
 
 #: src/features/timeline/workspace/files-panel.tsx
 msgid "Each time Taalcut changed the design files, a new version. Choose one to see its files."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-steps.tsx
+msgctxt "towards the start of a clip"
+msgid "Earlier"
 msgstr ""
 
 #: src/features/library/phone/transfers/phone-history.tsx
@@ -8925,6 +9217,7 @@ msgid "Edit history"
 msgstr ""
 
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 msgid "Edit in video"
 msgstr ""
 
@@ -8972,6 +9265,10 @@ msgstr ""
 
 #: ../../packages/ui/src/templates/description-field.tsx
 msgid "Edit what slot {number} shows"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Edited by you"
 msgstr ""
 
 #: src/features/timeline/editor.tsx
@@ -9059,6 +9356,10 @@ msgstr ""
 
 #: ../../packages/ui/src/templates/slot-words.ts
 msgid "Ending"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Ends {toText} into the clip"
 msgstr ""
 
 #: src/features/timeline/energy/pacing-words.ts
@@ -9661,7 +9962,7 @@ msgid "Fade out"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.faded"
 msgstr ""
 
@@ -10123,6 +10424,10 @@ msgstr ""
 msgid "models.module.music.description"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+msgid "Fine-tuned"
+msgstr ""
+
 #: src/features/products/product-publishing.tsx
 msgid "Finish a product video to prepare its posts."
 msgstr ""
@@ -10298,7 +10603,7 @@ msgid "flash"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.transition.flash"
 msgstr ""
 
@@ -10436,6 +10741,11 @@ msgstr ""
 
 #: src/features/library/imports/choose-items.tsx
 msgid "Footage to import"
+msgstr ""
+
+#. Under "Held moment" on a tile: how long the held moment lasts
+#: src/features/timeline/more/more-words.ts
+msgid "For {seconds, plural, one {# second} other {# seconds}}"
 msgstr ""
 
 #: src/features/renders/sections/other-editors.tsx
@@ -10576,7 +10886,11 @@ msgstr ""
 msgid "Freesound"
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/scene-group.tsx
+msgid "Freeze"
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
 msgid "Freeze this moment"
 msgstr ""
 
@@ -10705,6 +11019,10 @@ msgstr ""
 msgid "General"
 msgstr ""
 
+#: src/features/timeline/cover-generate.tsx
+msgid "Generate a {aspect} cover for this video."
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/settings/plugins/plugin-tool-messages.ts
 msgid "Generate a video through Postiz. May consume credits."
@@ -10748,6 +11066,11 @@ msgstr ""
 
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Generate voice-over audio"
+msgstr ""
+
+#: src/features/timeline/cover-generate.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+msgid "Generate with AI"
 msgstr ""
 
 #: ../../packages/ui/src/cards/image-takes-card.tsx
@@ -11166,6 +11489,14 @@ msgstr ""
 msgid "H.264, plays everywhere"
 msgstr ""
 
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "Half a second longer"
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "Half a second shorter"
+msgstr ""
+
 #: ../../packages/ui/src/templates/edit-words.ts
 #: ../../packages/ui/src/templates/fix-menu.tsx
 #: ../../packages/ui/src/templates/proposal-words.ts
@@ -11173,7 +11504,7 @@ msgstr ""
 msgid "Half as many beats"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "Half speed"
 msgstr ""
 
@@ -11231,6 +11562,14 @@ msgstr ""
 
 #: ../../packages/ui/src/templates/slot-words.ts
 msgid "Held by hand, a little shaky"
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "Held from {clock}"
+msgstr ""
+
+#: src/features/timeline/more/scene-group.tsx
+msgid "Held moment"
 msgstr ""
 
 #: src/features/library/phone/flow/phone-tabs.tsx
@@ -11366,8 +11705,12 @@ msgstr ""
 msgid "Hits on the cuts"
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/freeze-dialog.tsx
 msgid "Hold length (seconds)"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "Hold one moment"
 msgstr ""
 
 #: ../../packages/ui/src/make/render-words.ts
@@ -11415,6 +11758,10 @@ msgstr ""
 
 #: src/features/templates/pacing/template-pacing.tsx
 msgid "How often the cuts come, section by section, on the beat. Raise a section for more energy."
+msgstr ""
+
+#: src/features/timeline/more/speed-sheet.tsx
+msgid "How scene {from} goes into scene {to}."
 msgstr ""
 
 #: src/features/settings/models/models-settings.tsx
@@ -11555,6 +11902,10 @@ msgstr ""
 
 #: src/features/settings/accounts/chatgpt-images-row.tsx
 msgid "Images connected"
+msgstr ""
+
+#: src/onboarding/setup/thinking/chatgpt-way.tsx
+msgid "Images didn’t connect, so Taalcut can’t make pictures with your plan yet. Connect them now, or later in Settings › Accounts."
 msgstr ""
 
 #: ../../packages/ui/src/cards/image-takes-card.tsx
@@ -11758,6 +12109,10 @@ msgstr ""
 msgid "In the bundle"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "In the feed"
+msgstr ""
+
 #: src/features/templates/hub/share-to-hub.tsx
 msgid "In the hub"
 msgstr ""
@@ -11776,6 +12131,7 @@ msgstr ""
 
 #: src/features/settings/accounts/accounts-settings.tsx
 #: src/features/settings/accounts/local-servers.tsx
+#: src/features/timeline/other-shots/other-shots-list.tsx
 msgid "In use"
 msgstr ""
 
@@ -11790,6 +12146,7 @@ msgstr ""
 msgid "In your templates"
 msgstr ""
 
+#: ../../packages/ui/src/cards/design-option-picker.tsx
 #: ../../packages/ui/src/media/take-grid.tsx
 msgid "In your video"
 msgstr ""
@@ -11894,6 +12251,7 @@ msgid "Inspect your style"
 msgstr ""
 
 #: src/features/timeline/inspector.tsx
+#: src/features/timeline/more/more-gallery.tsx
 msgid "Inspector"
 msgstr ""
 
@@ -11968,6 +12326,10 @@ msgstr ""
 msgid "Instagram Edits not connected"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+msgid "Instagram feed posts"
+msgstr ""
+
 #: src/features/brand/creator-fields.tsx
 msgid "Instagram handle"
 msgstr ""
@@ -12037,8 +12399,8 @@ msgstr ""
 msgid "Interface sounds"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
-msgid "Into the next clip"
+#: src/features/timeline/more/more-words.ts
+msgid "Into the next scene"
 msgstr ""
 
 #: src/features/brand/brand-preview.tsx
@@ -12153,6 +12515,10 @@ msgstr ""
 
 #: src/features/updates/update-dialog.tsx
 msgid "It installs when you restart Taalcut."
+msgstr ""
+
+#: src/features/timeline/more/size-dialog.tsx
+msgid "It is its own video now. This one stays as it is."
 msgstr ""
 
 #: ../../packages/ui/src/gaps/gap-words.ts
@@ -12528,6 +12894,10 @@ msgstr ""
 msgid "Keep the phone’s page open until they arrive."
 msgstr ""
 
+#: ../../packages/ui/src/templates/slot-footage.tsx
+msgid "Keep the reel’s clip"
+msgstr ""
+
 #: src/features/library/imports/session-progress.tsx
 msgid "Keep the source connected while Taalcut reads and checks your footage."
 msgstr ""
@@ -12757,6 +13127,11 @@ msgstr ""
 msgid "Later"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-steps.tsx
+msgctxt "towards the end of a clip"
+msgid "Later"
+msgstr ""
+
 #: src/features/make/versions-history-section.tsx
 msgid "Latest step: {undoStepName}"
 msgstr ""
@@ -12903,6 +13278,10 @@ msgstr ""
 msgid "Length in seconds"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+msgid "Less colour"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/settings/model-messages.ts
 msgid "models.hardware.disk_low"
@@ -12915,6 +13294,10 @@ msgstr ""
 #: src/features/settings/external-agents/external-agents-settings.tsx
 #: src/features/settings/settings-platform-words.ts
 msgid "Let agents on this Mac use Taalcut"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-says.tsx
+msgid "Let go to play this part. Escape puts it back."
 msgstr ""
 
 #: src/features/products/product-fields.tsx
@@ -13484,7 +13867,7 @@ msgstr ""
 msgid "Location tag"
 msgstr ""
 
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/scene-actions.tsx
 msgid "Lock"
 msgstr ""
 
@@ -13519,7 +13902,13 @@ msgid "Locked while exporting"
 msgstr ""
 
 #: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/clip-part/part-says.tsx
+#: src/features/timeline/other-shots/other-shots-list.tsx
 msgid "Locked: Taalcut and your edits leave it as it is. Unlock it to change it."
+msgstr ""
+
+#: src/features/timeline/more/scene-group.tsx
+msgid "Locked. Unlock it to change it."
 msgstr ""
 
 #: src/features/palette/navigation-items.tsx
@@ -13617,6 +14006,10 @@ msgstr ""
 msgid "Look only"
 msgstr ""
 
+#: ../../packages/ui/src/cards/labels.ts
+msgid "Look through a clip"
+msgstr ""
+
 #: src/features/settings/sources/source-row.tsx
 msgid "Look through it again"
 msgstr ""
@@ -13690,6 +14083,10 @@ msgstr ""
 #: src/features/brand/brand-kits-page.tsx
 #: src/features/projects/batch/apply-look-dialog.tsx
 msgid "Looks"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "Looks and light"
 msgstr ""
 
 #: src/features/library/search-results.tsx
@@ -13834,6 +14231,15 @@ msgstr ""
 msgid "Make a before-and-after video from my clips."
 msgstr ""
 
+#. js-lingui-explicit-id
+#: src/features/make/make-messages.ts
+msgid "commands.timeline.lengthenSlot"
+msgstr ""
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+msgid "Make a clip run longer"
+msgstr ""
+
 #: src/features/templates/template-words.ts
 msgid "Make a day-in-the-life video from my clips."
 msgstr ""
@@ -13960,7 +14366,8 @@ msgstr ""
 msgid "Make another {activeAspect} thumbnail take for \"{hookText}\"."
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/size-dialog.tsx
+#: src/features/timeline/more/video-group.tsx
 msgid "Make another size"
 msgstr ""
 
@@ -14042,6 +14449,10 @@ msgstr ""
 
 #: src/onboarding/finish-gate.tsx
 msgid "Make my first video"
+msgstr ""
+
+#: src/features/timeline/more/size-dialog.tsx
+msgid "Make the {aspect} copy"
 msgstr ""
 
 #: src/features/recipes/recipes.ts
@@ -14358,6 +14769,10 @@ msgstr ""
 msgid "Measure audio loudness"
 msgstr ""
 
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+msgid "Measure the bars of the music"
+msgstr ""
+
 #: src/features/brand/brand-kits-page.tsx
 msgid "Measured from a reference or a template: a colour grade and the closest font."
 msgstr ""
@@ -14620,6 +15035,10 @@ msgstr ""
 msgid "More actions"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+msgid "More colour"
+msgstr ""
+
 #: src/features/make/project-row.tsx
 #: src/features/renders/render-row.tsx
 #: src/features/settings/sources/source-row.tsx
@@ -14739,6 +15158,7 @@ msgid "Motion graphic"
 msgstr ""
 
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 msgid "Motion graphic: <0>{name}</0>"
 msgstr ""
 
@@ -14831,6 +15251,10 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages-phase3.ts
 msgid "qa.fixes.moveGraphic"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-steps.tsx
+msgid "Move the part"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -15341,6 +15765,10 @@ msgstr ""
 msgid "No budget"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "No caption yet"
+msgstr ""
+
 #: ../../packages/ui/src/cards/style-batch-card.tsx
 #: src/features/renders/export-summary.tsx
 msgid "No captions"
@@ -15481,6 +15909,10 @@ msgstr ""
 msgid "No network needed, and nothing travels over Wi-Fi. Use it on public networks too."
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+msgid "No new caption was saved. The chat says why."
+msgstr ""
+
 #: ../../packages/ui/src/gaps/gap-facts.tsx
 msgid "No new clips came in yet. Add some, then choose Add more clips again, or pick another fix."
 msgstr ""
@@ -15492,6 +15924,10 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages-listen.ts
 msgid "audio.critique.fix.cutNoOnset"
+msgstr ""
+
+#: src/features/timeline/more/scene-group.tsx
+msgid "No next scene"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -15607,6 +16043,10 @@ msgstr ""
 
 #: src/features/templates/saved/saved-collection.tsx
 msgid "No saved reels match."
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "No search phrases in brackets at the very end, like (first phrase, second phrase)."
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -15775,6 +16215,10 @@ msgctxt "thinking level"
 msgid "None"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+msgid "None chosen yet"
+msgstr ""
+
 #: ../../packages/ui/src/library/import-status-words.tsx
 msgid "None of the clips from {source} could be brought in"
 msgstr ""
@@ -15807,8 +16251,8 @@ msgstr ""
 msgid "None: videos keep their own caption look"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
-msgid "Normal"
+#: src/features/timeline/more/more-words.ts
+msgid "Normal speed"
 msgstr ""
 
 #: ../../packages/ui/src/templates/review-panel.tsx
@@ -15857,6 +16301,8 @@ msgstr ""
 msgid "audio.critique.tip.realnessUnconfirmed"
 msgstr ""
 
+#: src/features/settings/accounts/accounts-settings.tsx
+#: src/features/settings/accounts/chatgpt-images-row.tsx
 #: src/features/settings/plugins/plugin-status.tsx
 msgid "Not connected"
 msgstr ""
@@ -15990,6 +16436,10 @@ msgstr ""
 msgid "Not remembered"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+msgid "Not saved yet. It is saved when you copy it or close this."
+msgstr ""
+
 #: src/features/analysis/analysis-queue.tsx
 msgid "Not searchable yet"
 msgstr ""
@@ -16031,6 +16481,10 @@ msgstr ""
 
 #: src/features/settings/sources/source-status.tsx
 msgid "Not watched"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "Not written yet"
 msgstr ""
 
 #: src/features/library/clip/inspector/clip-facts.tsx
@@ -16288,6 +16742,7 @@ msgstr ""
 
 #: src/features/library/clip/progress/analysis-words.ts
 #: src/features/settings/usage/usage-now.tsx
+#: src/features/timeline/more/size-dialog.tsx
 #: src/features/timeline/workspace/revision-list.tsx
 msgid "Now"
 msgstr ""
@@ -16556,8 +17011,16 @@ msgstr ""
 msgid "One glyph per thing and per action, at 14, 16 or 20 px. Pick from here, never by taste."
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "One line after the caption. Taalcut adds it itself, and remembers your choice."
+msgstr ""
+
 #: ../../packages/ui/src/make/selection-chip.tsx
 msgid "One message can point at {most} things at most."
+msgstr ""
+
+#: src/onboarding/setup/thinking/chatgpt-way.tsx
+msgid "One more page opened in your browser: approve images there so Taalcut can make pictures with your plan."
 msgstr ""
 
 #: ../../packages/ui/src/make/variants-question.tsx
@@ -16794,6 +17257,11 @@ msgstr ""
 msgid "Open Exports"
 msgstr ""
 
+#: src/features/renders/renders-page.tsx
+#: src/features/timeline/editor-toolbar.tsx
+msgid "Open exports folder"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-messages.ts
 msgid "fix.openExternalAgents"
@@ -16920,7 +17388,7 @@ msgstr ""
 msgid "Open the address under the code in the phone’s browser, then type the setup code and the PIN."
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/size-dialog.tsx
 msgid "Open the new video"
 msgstr ""
 
@@ -17126,7 +17594,12 @@ msgstr ""
 
 #: ../../packages/ui/src/make/clip-detail.tsx
 #: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/other-shots/other-shots.tsx
 msgid "Other shots for clip {n}"
+msgstr ""
+
+#: src/features/timeline/other-shots/other-shots.tsx
+msgid "Other shots for scene {n}"
 msgstr ""
 
 #: ../../packages/ui/src/make/cast-grid.tsx
@@ -17368,6 +17841,7 @@ msgstr ""
 #: src/features/library/import-line.tsx
 #: src/features/library/imports/session-progress.tsx
 #: src/features/templates/hub/hub-detail.tsx
+#: src/features/timeline/clip-part/clip-part.tsx
 #: src/features/timeline/preview/card-preview.tsx
 #: src/features/timeline/transport.tsx
 #: src/onboarding/setup/sources/device-run.tsx
@@ -17562,6 +18036,10 @@ msgstr ""
 msgid "Pick a reason to send it."
 msgstr ""
 
+#: src/features/timeline/more/scene-group.tsx
+msgid "Pick a scene to change its speed, transition and colour."
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/onboarding/setup/first-video/first-video-setup.tsx
 msgid "onboarding.finish.starter.title"
@@ -17597,6 +18075,14 @@ msgstr ""
 
 #: ../../packages/ui/src/templates/camera-move.tsx
 msgid "Pick the camera move"
+msgstr ""
+
+#: ../../packages/ui/src/cards/design-options-card.tsx
+msgid "Pick the design you like. The marked one is in your video now."
+msgstr ""
+
+#: src/features/timeline/clip-part/clip-part.tsx
+msgid "Pick the part scene {n} plays"
 msgstr ""
 
 #: src/features/projects/batch/apply-look-dialog.tsx
@@ -17715,7 +18201,16 @@ msgid "Place music on the video"
 msgstr ""
 
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
+msgid "Place text on the video"
+msgstr ""
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Place the chosen clips"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/features/make/make-messages.ts
+msgid "commands.timeline.placeText"
 msgstr ""
 
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
@@ -17814,12 +18309,20 @@ msgstr ""
 msgid "Play the hooks"
 msgstr ""
 
+#: ../../packages/ui/src/make/render-words.ts
+msgid "Play the part of the shot that fits the moment"
+msgstr ""
+
 #: ../../packages/ui/src/variants/hook-transport.tsx
 msgid "Play the previews"
 msgstr ""
 
 #: ../../packages/ui/src/theme/theme-scene.preview.tsx
 msgid "Play the scene"
+msgstr ""
+
+#: src/features/timeline/clip-part/clip-part.tsx
+msgid "Play this part"
 msgstr ""
 
 #: src/features/library/imports/import-help.tsx
@@ -17844,6 +18347,10 @@ msgstr ""
 #: src/features/library/shot-action-labels.ts
 msgctxt "what people in a clip are doing"
 msgid "Playing sport"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Plays {fromText} to {toText} of a {total} clip"
 msgstr ""
 
 #: ../../packages/ui/src/cards/edit-change-words.ts
@@ -17964,6 +18471,15 @@ msgstr ""
 
 #: src/features/timeline/authored/authored-motion.tsx
 msgid "Position (%)"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#: src/features/timeline/post-caption/post-caption-tile.tsx
+msgid "Post caption"
+msgstr ""
+
+#: src/features/timeline/editor-toolbar.tsx
+msgid "Post caption…"
 msgstr ""
 
 #: src/features/products/product-activity-words.ts
@@ -18846,6 +19362,10 @@ msgid "Read the line below in your own voice, then keep reading for about a minu
 msgstr ""
 
 #: ../../packages/ui/src/cards/tool-labels-extra.ts
+msgid "Read the look of the text"
+msgstr ""
+
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
 msgid "Read the motion graphic guide"
 msgstr ""
 
@@ -19225,6 +19745,10 @@ msgstr ""
 msgid "Reel ideas"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+msgid "Reels, Shorts and TikTok"
+msgstr ""
+
 #: src/features/products/product-sources.tsx
 msgid "Reference"
 msgstr ""
@@ -19406,6 +19930,10 @@ msgstr ""
 msgid "Remove date"
 msgstr ""
 
+#: ../../packages/ui/src/cards/cover-composition-fields.tsx
+msgid "Remove design"
+msgstr ""
+
 #: ../../packages/ui/src/cleanup/cleanup-switches.tsx
 msgid "Remove fillers (um, uh)"
 msgstr ""
@@ -19437,6 +19965,10 @@ msgstr ""
 
 #: src/features/brand/logo-field.tsx
 msgid "Remove logo"
+msgstr ""
+
+#: src/features/timeline/clip-trim-controls.tsx
+msgid "Remove makes the scene shorter and what is next to that end longer by the same amount; Restore does the opposite. Nothing else moves."
 msgstr ""
 
 #: src/features/timeline/authored/authored-motion.tsx
@@ -19721,6 +20253,10 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/features/palette/command-labels.ts
 msgid "commands.models.clearModuleOverride"
+msgstr ""
+
+#: src/features/timeline/more/colour-sheet.tsx
+msgid "Reset adjustments"
 msgstr ""
 
 #: ../../packages/ui/src/memory/casting-weights-item.tsx
@@ -20107,6 +20643,7 @@ msgstr ""
 #: src/features/settings/usage/cap-form.tsx
 #: src/features/templates/library/trend-date-field.tsx
 #: src/features/timeline/comments/comment-row.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 msgid "Save"
 msgstr ""
 
@@ -20248,6 +20785,10 @@ msgstr ""
 msgid "Save timing"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+msgid "Save to take the caption off this video, or close to keep it."
+msgstr ""
+
 #: ../../packages/ui/src/platform/kit-platform-words.ts
 msgid "Save to this computer"
 msgstr ""
@@ -20387,6 +20928,10 @@ msgstr ""
 msgid "Saved this version"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+msgid "Saved with this video."
+msgstr ""
+
 #: src/features/settings/accounts/api-keys.tsx
 msgid "Saved, not tested"
 msgstr ""
@@ -20408,6 +20953,7 @@ msgid "Saving take…"
 msgstr ""
 
 #: src/features/brand/brand-kit-editor.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
 msgid "Saving…"
 msgstr ""
 
@@ -20457,8 +21003,38 @@ msgstr ""
 msgid "Scanning and indexing"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Scene {m} gets {amount} longer. Nothing else moves."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Scene {m} gets {amount} shorter. Nothing else moves."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Scene {m} has too little of its clip left to fill more room."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Scene {m} is too short to give up more."
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "Scene {n} holds one frame still. Set how long it stays."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Scene {n} now plays {fromText} to {toText}."
+msgstr ""
+
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/why-dialog.tsx
 #: src/features/timeline/scene-strip.tsx
 msgid "Scene {number}"
+msgstr ""
+
+#: src/features/timeline/more/why-dialog.tsx
+msgid "Scene {number} · {kind}"
 msgstr ""
 
 #: src/features/create/create-review.tsx
@@ -20716,8 +21292,8 @@ msgstr ""
 msgid "Select a scene first"
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
-msgid "Select a video scene first"
+#: src/features/timeline/more/scene-group.tsx
+msgid "Select a scene on the timeline to change its speed, transition and colour."
 msgstr ""
 
 #: ../../packages/ui/src/cards/publish-social-meta.tsx
@@ -20903,6 +21479,12 @@ msgstr ""
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-media.ts
 msgid "errors.audio.cloud_critique_consent_required"
+msgstr ""
+
+#: src/features/timeline/cover-generate.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#: src/features/timeline/text-design-action.tsx
+msgid "Sending to the chat…"
 msgstr ""
 
 #: src/features/settings/privacy/privacy-platform-words.ts
@@ -21645,6 +22227,7 @@ msgid "Six shots from one day"
 msgstr ""
 
 #: src/features/brand/logo-field.tsx
+#: src/features/timeline/more/size-dialog.tsx
 msgid "Size"
 msgstr ""
 
@@ -21717,7 +22300,7 @@ msgid "Slide across"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.transition.slide"
 msgstr ""
 
@@ -21752,7 +22335,15 @@ msgid "Slot {n} is to check again"
 msgstr ""
 
 #: ../../packages/ui/src/templates/edit-words.ts
+msgid "Slot {n} keeps the reel’s clip"
+msgstr ""
+
+#: ../../packages/ui/src/templates/edit-words.ts
 msgid "Slot {n} renamed"
+msgstr ""
+
+#: ../../packages/ui/src/templates/edit-words.ts
+msgid "Slot {n} uses your clip"
 msgstr ""
 
 #: ../../packages/ui/src/templates/edit-words.ts
@@ -21903,6 +22494,10 @@ msgstr ""
 msgid "Slower"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+msgid "Slower or faster"
+msgstr ""
+
 #: src/features/timeline/workspace/check-words.ts
 msgid "Small enough to play smoothly"
 msgstr ""
@@ -21940,7 +22535,7 @@ msgid "Social publishing metadata"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.muted"
 msgstr ""
 
@@ -22140,10 +22735,6 @@ msgstr ""
 msgid "source code"
 msgstr ""
 
-#: src/features/timeline/clip-inspector.tsx
-msgid "Source details"
-msgstr ""
-
 #: src/features/library/imports/library-sources.tsx
 msgid "Source health"
 msgstr ""
@@ -22225,7 +22816,8 @@ msgstr ""
 msgid "Speech, language unclear"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/speed-sheet.tsx
 msgid "Speed"
 msgstr ""
 
@@ -22322,6 +22914,10 @@ msgstr ""
 #: ../../packages/ui/src/cards/export-labels.ts
 #: ../../packages/ui/src/make/render-words.ts
 msgid "render.presets.square"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "Square posts and grids"
 msgstr ""
 
 #: src/features/updates/channel-parts.tsx
@@ -22530,6 +23126,7 @@ msgid "Starting…"
 msgstr ""
 
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/media/graphic-timing.tsx
 msgid "Starts at {startWords} · lasts {lengthWords}"
 msgstr ""
@@ -22541,6 +23138,10 @@ msgstr ""
 
 #: src/features/traces/span-details.tsx
 msgid "Status"
+msgstr ""
+
+#: src/features/timeline/more/size-dialog.tsx
+msgid "Stay here"
 msgstr ""
 
 #: src/features/effects/effects.ts
@@ -22892,6 +23493,7 @@ msgid "qa.fixes.swapFromAlternates"
 msgstr ""
 
 #: ../../packages/ui/src/make/alternates.tsx
+#: src/features/timeline/other-shots/other-shots-list.tsx
 msgid "Swap in this shot"
 msgstr ""
 
@@ -22917,9 +23519,22 @@ msgstr ""
 msgid "Swap the weakest shot"
 msgstr ""
 
+#: src/features/timeline/other-shots/other-shots-list.tsx
+msgid "Swapped in {name}."
+msgstr ""
+
+#: src/features/timeline/other-shots/other-shots-list.tsx
+msgid "Swapped."
+msgstr ""
+
 #: src/features/library/shot-action-labels.ts
 msgctxt "what people in a clip are doing"
 msgid "Swimming"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/features/palette/command-labels.ts
+msgid "commands.graphics.chooseOption"
 msgstr ""
 
 #: src/features/settings/models/retirement-notices.tsx
@@ -22949,6 +23564,10 @@ msgstr ""
 #: ../../packages/ui/src/cards/budget-cap-card.tsx
 #: ../../packages/ui/src/cards/cost-estimate-v2-card.tsx
 msgid "Switched to a cheaper model"
+msgstr ""
+
+#: ../../packages/ui/src/cards/design-options-card.tsx
+msgid "Switched to this design."
 msgstr ""
 
 #: src/features/templates/saved/watch-bar.tsx
@@ -23288,6 +23907,10 @@ msgstr ""
 msgid "errors.desktop.update_manifest_unreadable"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-says.tsx
+msgid "Taalcut couldn’t read this clip, so its frames don’t show. The steps and the exact trim still work."
+msgstr ""
+
 #: ../../packages/ui/src/library/import-outcome.ts
 msgid "Taalcut couldn’t read this file. It may be damaged or only partly copied."
 msgstr ""
@@ -23359,8 +23982,16 @@ msgstr ""
 msgid "errors.library.import_verification_failed"
 msgstr ""
 
+#: src/features/timeline/cover-generate.tsx
+msgid "Taalcut designs a {aspect} cover in the chat and saves it here."
+msgstr ""
+
 #: src/features/timeline/workspace/revision-list.tsx
 msgid "Taalcut designs from the current version next. Graphics on the video keep their designs."
+msgstr ""
+
+#: src/features/timeline/text-design-action.tsx
+msgid "Taalcut designs the look of all the text in this video and puts each text in place. Texts you moved stay where you put them."
 msgstr ""
 
 #: src/features/library/clip/inspector/clip-summary.tsx
@@ -23507,6 +24138,10 @@ msgstr ""
 msgid "Taalcut is now in {changedTo}."
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Taalcut is reading the video and writing its caption…"
+msgstr ""
+
 #: src/features/library/clip/progress/analysis-words.ts
 msgid "Taalcut is still looking at this clip"
 msgstr ""
@@ -23523,9 +24158,23 @@ msgstr ""
 msgid "Taalcut is up to date"
 msgstr ""
 
+#: src/features/timeline/cover-generate.tsx
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+#: src/features/timeline/text-design-action.tsx
+msgid "Taalcut is working in the chat. You can ask when it is done."
+msgstr ""
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/cards/flow-labels.ts
 msgid "opening.busy"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Taalcut is writing"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+msgid "Taalcut is writing your caption. The chat shows its work."
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -23657,7 +24306,8 @@ msgid "Taalcut pick"
 msgstr ""
 
 #: src/features/timeline/clip-block.tsx
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/why-dialog.tsx
 msgid "Taalcut picked this"
 msgstr ""
 
@@ -23667,6 +24317,10 @@ msgstr ""
 
 #: ../../packages/ui/src/cards/flow-labels.ts
 msgid "Taalcut proposes a video from your newest clips."
+msgstr ""
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+msgid "Taalcut read this shot as the reel’s own clip:"
 msgstr ""
 
 #: src/features/settings/sources/sources-settings.tsx
@@ -23799,6 +24453,10 @@ msgstr ""
 msgid "Taalcut won’t ask again before sending files for this."
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+msgid "Taalcut writes it in the chat and saves it here."
+msgstr ""
+
 #: src/features/timeline/comments/comment-row.tsx
 msgid "Taalcut:"
 msgstr ""
@@ -23806,6 +24464,7 @@ msgstr ""
 #: ../../packages/ui/src/templates/camera-move.tsx
 #: ../../packages/ui/src/templates/description-field.tsx
 #: ../../packages/ui/src/templates/graphic-brief.tsx
+#: ../../packages/ui/src/templates/slot-footage.tsx
 msgid "Taalcut’s reading"
 msgstr ""
 
@@ -24369,6 +25028,10 @@ msgstr ""
 msgid "errors.models.music_plan_invalid"
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+msgid "That part doesn’t fit inside one shot of the clip. Pick a part inside it, or make the scene shorter first."
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/settings/model-messages.ts
 msgid "errors.models.profile_not_found"
@@ -24599,6 +25262,10 @@ msgstr ""
 msgid "That’s too long for the graphic."
 msgstr ""
 
+#: src/features/timeline/more/size-dialog.tsx
+msgid "The {madeAspect} copy is ready"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/settings/settings-platform-words.ts
 msgid "errors.library.folder_missing.computer"
@@ -24748,6 +25415,10 @@ msgstr ""
 
 #: src/features/brand/bumper-field.tsx
 msgid "The clip chosen before"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "The clip ends before the scene would. Pick an earlier part, or make the scene shorter first."
 msgstr ""
 
 #: ../../packages/ui/src/gaps/weak-pick.tsx
@@ -24980,9 +25651,21 @@ msgstr ""
 msgid "The first {span} of each, again and again"
 msgstr ""
 
+#: src/features/timeline/clip-part/clip-part.tsx
+msgid "The first frame the scene plays"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-library.ts
 msgid "errors.templates.first_slot_cut"
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "The frame at {clock}"
+msgstr ""
+
+#: src/features/timeline/clip-part/clip-part.tsx
+msgid "The frame under the pointer"
 msgstr ""
 
 #: src/features/library/clip/scrubber/clip-filmstrip.tsx
@@ -25032,9 +25715,14 @@ msgid "compute.fallback.accelerator_failed"
 msgstr ""
 
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/media/media-errors.ts
 #: src/features/timeline/graphic-inspector.tsx
 msgid "The graphic isn’t on the timeline now."
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "The held moment becomes its own scene, and what follows moves to make room."
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -25110,6 +25798,10 @@ msgstr ""
 msgid "The last 30 days of videos and Live Photos, only what’s new."
 msgstr ""
 
+#: src/features/timeline/clip-part/clip-part.tsx
+msgid "The last frame the scene would play"
+msgstr ""
+
 #: src/onboarding/setup/sources/cable-source.tsx
 msgid "The last import from {name} stopped part-way."
 msgstr ""
@@ -25134,6 +25826,10 @@ msgstr ""
 
 #: src/features/settings/about/about-settings.tsx
 msgid "The licences didn’t load."
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "The line “{credit}” is switched on, and it is not in this text."
 msgstr ""
 
 #: ../../packages/ui/src/media/consent-outcomes.tsx
@@ -25445,6 +26141,14 @@ msgstr ""
 msgid "The other clips already fit."
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+msgid "The part scene {n} plays"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-says.tsx
+msgid "The part still moves: go by its times."
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages-listen.ts
 msgid "audio.critique.fix.truePeakHigh"
@@ -25468,6 +26172,14 @@ msgstr ""
 
 #: src/features/library/clip/player/clip-stage.tsx
 msgid "The photo"
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "The picture stops on this frame and holds it, then the video plays on."
+msgstr ""
+
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "The playhead is outside scene {n}. Close this and move it to the moment you want."
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -25572,6 +26284,11 @@ msgstr ""
 msgid "errors.render.media_missing.reference_audio"
 msgstr ""
 
+#: ../../packages/ui/src/make/cast-grid.tsx
+#: ../../packages/ui/src/templates/slot-strip.tsx
+msgid "The reel’s own clip"
+msgstr ""
+
 #: ../../packages/ui/src/templates/review-timeline.tsx
 msgid "The reel’s time"
 msgstr ""
@@ -25592,6 +26309,24 @@ msgstr ""
 #: src/features/templates/template/reel-media.tsx
 #: src/features/templates/templates-platform-words.ts
 msgid "The reel’s video is kept on this Mac. It has no sound of its own."
+msgstr ""
+
+#: src/features/templates/templates-platform-words.ts
+msgid "The reel’s video isn’t on this computer, so this slot can’t keep the reel’s clip."
+msgstr ""
+
+#: src/features/templates/templates-platform-words.ts
+msgid "The reel’s video isn’t on this computer. Get it before you make a video, or use your clip here."
+msgstr ""
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#: src/features/templates/templates-platform-words.ts
+msgid "The reel’s video isn’t on this Mac, so this slot can’t keep the reel’s clip."
+msgstr ""
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#: src/features/templates/templates-platform-words.ts
+msgid "The reel’s video isn’t on this Mac. Get it before you make a video, or use your clip here."
 msgstr ""
 
 #: src/features/settings/accounts/accounts-settings.tsx
@@ -25666,6 +26401,18 @@ msgstr ""
 msgid "The saved cover changed. Your design is still here."
 msgstr ""
 
+#: src/features/timeline/clip-part/part-words.ts
+msgid "The scene is too short to lose more."
+msgstr ""
+
+#: src/features/timeline/more/speed-sheet.tsx
+msgid "The scene keeps what it shows: faster makes it shorter, slower makes it longer."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "The scene would last {length}."
+msgstr ""
+
 #: ../../packages/ui/src/library/import-status-words.tsx
 msgid "the search model"
 msgstr ""
@@ -25710,6 +26457,10 @@ msgstr ""
 
 #: src/features/kit-gallery/anatomy-gallery.tsx
 msgid "The shape of what will be here, one line, the one action, and Kaatu for company."
+msgstr ""
+
+#: src/features/timeline/more/why-dialog.tsx
+msgid "The shot"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -25845,7 +26596,7 @@ msgstr ""
 msgid "The template"
 msgstr ""
 
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/more/why-dialog.tsx
 msgid "The template asks for"
 msgstr ""
 
@@ -25887,6 +26638,10 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/features/library/indexing-messages.ts
 msgid "indexing.skip.textRead"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-dialog.tsx
+msgid "The text you paste under the post. Taalcut writes it from what this video shows, and you can change any of it."
 msgstr ""
 
 #: ../../packages/ui/src/templates/review-nav.tsx
@@ -26015,6 +26770,22 @@ msgstr ""
 msgid "errors.render.engine_unavailable"
 msgstr ""
 
+#: src/features/timeline/clip-trim-controls.tsx
+msgid "The video follows a beat, so an end lands on the nearest beat, and a small amount may change nothing."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "The video follows a beat, so the end lands on the nearest beat."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "The video gets {amount} longer."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "The video gets {amount} shorter."
+msgstr ""
+
 #. js-lingui-explicit-id
 #: ../../packages/ui/src/feedback/error-words-agent.ts
 msgid "errors.agent.export_kept_changing"
@@ -26022,6 +26793,14 @@ msgstr ""
 
 #: src/features/products/product-video.tsx
 msgid "The video preview didn’t load."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "The video starts with this scene, so only its end can be dragged."
+msgstr ""
+
+#: src/features/timeline/clip-trim-controls.tsx
+msgid "The video starts with this scene: at its beginning, Remove plays a later part of the clip and Restore an earlier one, and the scene keeps its length."
 msgstr ""
 
 #: ../../packages/ui/src/variants/variant-tile.tsx
@@ -26184,13 +26963,25 @@ msgstr ""
 msgid "audio.critique.tip.voiceDuck"
 msgstr ""
 
+#: src/features/timeline/more/why-dialog.tsx
+msgid "There is no record of who picked this shot."
+msgstr ""
+
 #: src/features/library/imports/import-words.ts
 msgid "There is not enough destination space. Free space before importing."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "There isn’t enough footage for that: this clip, or the one next to it, runs out. Move the end by less."
 msgstr ""
 
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages.ts
 msgid "errors.render.disk_full"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "There isn’t enough of the clip left to go further."
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -26285,6 +27076,10 @@ msgstr ""
 
 #: src/features/timeline/variants/compare-view.tsx
 msgid "These videos aren’t here any more."
+msgstr ""
+
+#: src/features/timeline/more/scene-group.tsx
+msgid "These wait while Taalcut edits this video."
 msgstr ""
 
 #: src/features/library/library-empty.tsx
@@ -26445,6 +27240,10 @@ msgstr ""
 msgid "indexing.skip.noPlan"
 msgstr ""
 
+#: src/features/timeline/clip-part/clip-part.tsx
+msgid "This clip has no copy to play yet"
+msgstr ""
+
 #: src/features/library/clip/scrubber/clip-filmstrip.tsx
 msgid "This clip has no frames to lay out."
 msgstr ""
@@ -26486,6 +27285,10 @@ msgstr ""
 
 #: src/features/library/clip/scrubber/clip-filmstrip.tsx
 msgid "This clip’s frames didn’t load."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-says.tsx
+msgid "This clip’s original isn’t connected right now. You can still pick the part; connect it before you export."
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -26935,6 +27738,14 @@ msgstr ""
 msgid "This run ended."
 msgstr ""
 
+#: src/features/timeline/more/scene-group.tsx
+msgid "This scene"
+msgstr ""
+
+#: src/features/timeline/clip-part/clip-part.tsx
+msgid "This scene holds one moment still, so there is no part to pick. You can still make it longer or shorter."
+msgstr ""
+
 #: src/features/timeline/clip-trim-controls.tsx
 msgid "This scene is too short to remove that much"
 msgstr ""
@@ -26950,6 +27761,10 @@ msgstr ""
 
 #: src/features/settings/accounts/sign-ins.tsx
 msgid "this service"
+msgstr ""
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+msgid "This shot is the reel’s own clip"
 msgstr ""
 
 #: src/features/timeline/gaps/gap-fix-panel.tsx
@@ -27057,6 +27872,11 @@ msgstr ""
 msgid "errors.templates.unsupported_schema"
 msgstr ""
 
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/error-words-library.ts
+msgid "errors.templates.no_reel"
+msgstr ""
+
 #: src/features/timeline/use-text-draft.tsx
 msgid "This text changed while you were editing. Your draft is kept."
 msgstr ""
@@ -27099,6 +27919,7 @@ msgid "errors.timeline.interchange_format_unknown"
 msgstr ""
 
 #: src/features/timeline/inspector.tsx
+#: src/features/timeline/more/video-group.tsx
 msgid "This video"
 msgstr ""
 
@@ -27141,6 +27962,10 @@ msgstr ""
 msgid "This video has no voiceover now."
 msgstr ""
 
+#: src/features/timeline/more/video-group.tsx
+msgid "This video is {size}"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages.ts
 msgid "errors.render.duration_out_of_range"
@@ -27151,6 +27976,16 @@ msgstr ""
 msgid "errors.timeline.not_found"
 msgstr ""
 
+#. js-lingui-explicit-id
+#: src/features/make/make-platform-words.ts
+msgid "errors.timeline.reel_missing.computer"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/error-words-library.ts
+msgid "errors.timeline.reel_missing"
+msgstr ""
+
 #. placeholder {0}: summary.shots
 #: ../../packages/ui/src/gaps/gap-facts.tsx
 msgid "This video needs {0, plural, one {# clip} other {# clips}}."
@@ -27158,6 +27993,7 @@ msgstr ""
 
 #: ../../packages/ui/src/cards/cast-board-card.tsx
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/cards/image-takes-card.tsx
 #: ../../packages/ui/src/cards/timeline-card.tsx
 #: ../../packages/ui/src/cards/voiceover-card.tsx
@@ -27175,6 +28011,10 @@ msgstr ""
 msgid "This video wasn’t cut to a template, so it has no sections to pace."
 msgstr ""
 
+#: src/features/timeline/more/more-gallery.tsx
+msgid "This waits while Taalcut edits this video."
+msgstr ""
+
 #: ../../packages/ui/src/cards/live-read-line.tsx
 #: ../../packages/ui/src/make/selection-chip.tsx
 #: src/chat/sent-chips.tsx
@@ -27187,6 +28027,10 @@ msgstr ""
 
 #: ../../packages/ui/src/chat/thought-line.tsx
 msgid "Thought for"
+msgstr ""
+
+#: src/features/timeline/design-options-section.tsx
+msgid "Three new designs"
 msgstr ""
 
 #: src/features/library/clip/inspector/clip-capture.tsx
@@ -27397,6 +28241,10 @@ msgstr ""
 msgid "audio.critique.fix.bandSubHigh"
 msgstr ""
 
+#: src/features/timeline/other-shots/other-shots-list.tsx
+msgid "Too short"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/renders/render-messages.ts
 msgid "render.unavailable.tooShort"
@@ -27512,6 +28360,11 @@ msgstr ""
 msgid "Transfers"
 msgstr ""
 
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/speed-sheet.tsx
+msgid "Transition"
+msgstr ""
+
 #: ../../packages/ui/src/make/selection-chip.tsx
 msgid "Transition · {at}"
 msgstr ""
@@ -27588,12 +28441,12 @@ msgstr ""
 msgid "commands.timeline.trimClip"
 msgstr ""
 
-#: ../../packages/ui/src/cards/tool-labels-extra.ts
-msgid "Trim the audio"
+#: src/features/timeline/clip-part/exact-trim.tsx
+msgid "Trim by an exact amount"
 msgstr ""
 
-#: src/features/timeline/clip-trim-controls.tsx
-msgid "Trim the beginning or end. The following scenes move with the edit."
+#: ../../packages/ui/src/cards/tool-labels-extra.ts
+msgid "Trim the audio"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -27649,6 +28502,7 @@ msgstr ""
 msgid "Try a wider time or another shape."
 msgstr ""
 
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/cards/error-line.tsx
 #: ../../packages/ui/src/cards/opening-starters-failed.tsx
 #: ../../packages/ui/src/cards/qa-report-card.tsx
@@ -27693,6 +28547,7 @@ msgstr ""
 #: src/features/templates/start/formats.tsx
 #: src/features/templates/template/template-frame.tsx
 #: src/features/timeline/cleanup/cleanup-panel.tsx
+#: src/features/timeline/clip-part/part-says.tsx
 #: src/features/timeline/gaps/gap-fix-panel.tsx
 #: src/features/timeline/preview/live-preview.tsx
 #: src/features/timeline/timeline-page.tsx
@@ -27719,6 +28574,7 @@ msgstr ""
 
 #: ../../packages/ui/src/media/graphic-proposal.tsx
 #: src/features/timeline/design-inspector.tsx
+#: src/features/timeline/design-options-section.tsx
 msgid "Try again: design this graphic another way."
 msgstr ""
 
@@ -27950,7 +28806,7 @@ msgstr ""
 msgid "Unlisted"
 msgstr ""
 
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/scene-actions.tsx
 msgid "Unlock"
 msgstr ""
 
@@ -27978,10 +28834,11 @@ msgstr ""
 msgid "Unlock the selected scenes before removing words"
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/more-gallery.tsx
 msgid "Unlock this scene first"
 msgstr ""
 
+#: src/features/timeline/clip-part/clip-part.tsx
 #: src/features/timeline/clip-trim-controls.tsx
 msgid "Unlock this scene to trim it"
 msgstr ""
@@ -28012,6 +28869,10 @@ msgstr ""
 
 #: src/features/settings/speech/spoken-languages-editor.tsx
 msgid "Until you choose, these are Taalcut’s language and English."
+msgstr ""
+
+#: src/features/timeline/scene-strip.tsx
+msgid "Up arrow shows other shots."
 msgstr ""
 
 #: ../../packages/ui/src/make/preset-picker.tsx
@@ -28331,6 +29192,10 @@ msgstr ""
 
 #: src/features/recipes/recipes.ts
 msgid "Use my brand kit"
+msgstr ""
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+msgid "Use my clip"
 msgstr ""
 
 #: ../../packages/ui/src/cards/cover-editor.tsx
@@ -28655,7 +29520,7 @@ msgstr ""
 msgid "Video {variantAt} of {variantOf}"
 msgstr ""
 
-#: src/features/timeline/more-actions.tsx
+#: src/features/timeline/more/more-gallery.tsx
 msgid "Video actions"
 msgstr ""
 
@@ -28815,7 +29680,7 @@ msgid "View published post"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.vintage"
 msgstr ""
 
@@ -28836,7 +29701,7 @@ msgid "Visual preview"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.vivid"
 msgstr ""
 
@@ -28926,6 +29791,7 @@ msgstr ""
 msgid "Wait and carry on"
 msgstr ""
 
+#: src/features/timeline/clip-part/clip-part.tsx
 #: src/features/timeline/clip-trim-controls.tsx
 msgid "Wait for the current edit to finish"
 msgstr ""
@@ -29085,6 +29951,10 @@ msgstr ""
 msgid "Waits for the original"
 msgstr ""
 
+#: src/features/timeline/more/video-group.tsx
+msgid "Waits while Taalcut edits"
+msgstr ""
+
 #: src/features/library/shot-action-labels.ts
 msgctxt "what people in a clip are doing"
 msgid "Walking"
@@ -29095,11 +29965,15 @@ msgid "Walkthrough"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.look.warm"
 msgstr ""
 
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
+msgid "Warmer"
+msgstr ""
+
+#: src/features/timeline/more/colour-sheet.tsx
 msgid "Warmth"
 msgstr ""
 
@@ -29281,12 +30155,36 @@ msgstr ""
 msgid "What else Taalcut sends, and whether Local only allows it."
 msgstr ""
 
+#: src/features/timeline/more/freeze-dialog.tsx
+msgid "What follows moves to make room."
+msgstr ""
+
 #: src/features/renders/export-steps.ts
 msgid "What goes with the post: who to credit, and how the AI parts are labelled."
 msgstr ""
 
 #: src/features/feedback/feedback-dialog.tsx
 msgid "What happened, or what would you change?"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "What is next to it can’t fill more room."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "What is next to it gets {amount} longer. Nothing else moves."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "What is next to it gets {amount} shorter. Nothing else moves."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "What is next to it is too short to give up more."
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "What is next to the scene is too short to make that much room. Move the end by less."
 msgstr ""
 
 #: src/features/kit-gallery/motion-gallery.tsx
@@ -29356,6 +30254,14 @@ msgstr ""
 
 #: src/features/products/product-fields.tsx
 msgid "What should Taalcut know?"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "What should the caption say? (optional)"
+msgstr ""
+
+#: src/features/timeline/cover-generate.tsx
+msgid "What should the cover show or say? (optional)"
 msgstr ""
 
 #: src/features/create/create-fields.tsx
@@ -29579,11 +30485,23 @@ msgstr ""
 msgid "Where is your footage?"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Where it will be posted"
+msgstr ""
+
 #: ../../packages/ui/src/cards/export-options.tsx
 #: ../../packages/ui/src/make/preset-picker.tsx
 #: src/features/renders/export-steps.ts
 #: src/features/renders/sections/where.tsx
 msgid "Where it’s going"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Where scene {n} begins"
+msgstr ""
+
+#: src/features/timeline/clip-part/part-words.ts
+msgid "Where scene {n} ends"
 msgstr ""
 
 #: src/routes/settings/sources.tsx
@@ -29642,7 +30560,7 @@ msgid "whip"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.transition.whip"
 msgstr ""
 
@@ -29660,6 +30578,14 @@ msgstr ""
 
 #: src/features/create/create-fields.tsx
 msgid "Who is it for?"
+msgstr ""
+
+#: src/features/timeline/more/why-dialog.tsx
+msgid "Who picked it"
+msgstr ""
+
+#: src/features/timeline/more/more-words.ts
+msgid "Who picked it, and what was asked for"
 msgstr ""
 
 #: src/features/brand/creator-fields.tsx
@@ -29683,8 +30609,17 @@ msgstr ""
 msgid "Whooshes and hits"
 msgstr ""
 
+#: ../../packages/ui/src/templates/slot-footage.tsx
+msgid "Whose clip plays in slot {number}"
+msgstr ""
+
 #: src/features/products/product-content.tsx
 msgid "Why this idea fits"
+msgstr ""
+
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/why-dialog.tsx
+msgid "Why this shot"
 msgstr ""
 
 #: src/features/kit-gallery/controls-gallery.tsx
@@ -29895,6 +30830,10 @@ msgstr ""
 msgid "Would you post this?"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-words.ts
+msgid "Write a caption for this video’s {name} post."
+msgstr ""
+
 #: src/features/feedback/feedback-dialog.tsx
 msgid "Write a few words first: what you did, and what happened."
 msgstr ""
@@ -29936,6 +30875,10 @@ msgstr ""
 msgid "Write your own"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Write your own, or let Taalcut write one from what this video shows."
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/features/downloads/job-labels.ts
 msgid "downloads.job.writing"
@@ -29969,6 +30912,10 @@ msgstr ""
 
 #: ../../packages/ui/src/profiles/style-profile-paragraph.tsx
 msgid "Written by <0>{model}</0> (<1>{provider}</1>), which you allowed to see pictures."
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Written by Taalcut"
 msgstr ""
 
 #: ../../packages/ui/src/platform/kit-platform-words.ts
@@ -30033,7 +30980,9 @@ msgstr ""
 #: ../../packages/ui/src/templates/camera-move.tsx
 #: ../../packages/ui/src/templates/description-field.tsx
 #: ../../packages/ui/src/templates/graphic-brief.tsx
-#: src/features/timeline/clip-inspector.tsx
+#: ../../packages/ui/src/templates/slot-footage.tsx
+#: src/features/timeline/more/why-dialog.tsx
+#: src/features/timeline/other-shots/option-frame.tsx
 msgid "You"
 msgstr ""
 
@@ -30092,6 +31041,10 @@ msgstr ""
 msgid "You can search this clip now"
 msgstr ""
 
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "You can still save and copy it as it is."
+msgstr ""
+
 #: src/features/library/phone/connect/cable-tab.tsx
 #: src/features/library/phone/connect/cable-workspace.tsx
 msgid "You can still send clips <0>over Wi-Fi</0>."
@@ -30115,11 +31068,13 @@ msgstr ""
 
 #: ../../packages/ui/src/cards/breakdown-card.tsx
 #: ../../packages/ui/src/cards/design-graphic-card.tsx
+#: ../../packages/ui/src/cards/design-options-card.tsx
 #: ../../packages/ui/src/cards/step-header.tsx
 #: ../../packages/ui/src/variants/variant-tile.tsx
 #: src/features/settings/models/module-row.tsx
 #: src/features/timeline/clip-block.tsx
-#: src/features/timeline/clip-inspector.tsx
+#: src/features/timeline/more/scene-group.tsx
+#: src/features/timeline/more/why-dialog.tsx
 #: src/routes/_shell/dev/kit.tsx
 msgid "You changed this"
 msgstr ""
@@ -30235,8 +31190,17 @@ msgstr ""
 msgid "Your brief, story and finished video stay together here."
 msgstr ""
 
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/domain-error-messages.ts
+msgid "errors.models.chatgpt_images_not_connected"
+msgstr ""
+
 #: src/chat/chat-start.tsx
 msgid "Your chats stay in the sidebar under Recent chats: pick one to carry on where you left it."
+msgstr ""
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+msgid "Your clip goes here"
 msgstr ""
 
 #: src/features/library/library-empty.tsx
@@ -30249,6 +31213,15 @@ msgstr ""
 
 #: src/onboarding/setup/sources/sources-import.tsx
 msgid "Your clips coming in"
+msgstr ""
+
+#: ../../packages/ui/src/templates/slot-footage.tsx
+msgid "Your clips need at least one slot, so this one stays yours."
+msgstr ""
+
+#. js-lingui-explicit-id
+#: ../../packages/ui/src/feedback/error-words-library.ts
+msgid "errors.templates.no_person_slot"
 msgstr ""
 
 #: src/features/library/phone/connect/wifi-workspace-incoming.tsx
@@ -30287,6 +31260,10 @@ msgstr ""
 
 #: ../../packages/ui/src/cards/timeline-card.tsx
 msgid "Your cut"
+msgstr ""
+
+#: src/features/timeline/post-caption/post-caption-body.tsx
+msgid "Your edit, not saved yet"
 msgstr ""
 
 #: src/features/make/make-empty.tsx
@@ -30714,6 +31691,10 @@ msgstr ""
 msgid "Your work"
 msgstr ""
 
+#: src/features/timeline/more/more-words.ts
+msgid "YouTube and wide screens"
+msgstr ""
+
 #: src/features/brand/creator-fields.tsx
 msgid "YouTube channel link"
 msgstr ""
@@ -30794,7 +31775,7 @@ msgid "Zoom out"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/features/timeline/clip-edit-controls.tsx
+#: src/features/timeline/more/more-words.ts
 msgid "editor.ops.transition.zoom"
 msgstr ""
 

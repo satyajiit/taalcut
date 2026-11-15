@@ -58,7 +58,7 @@ export async function renderWatched(
   watches: Watch | readonly Watch[],
   options: Pick<
     FakeBackendOptions,
-    'usageHistory' | 'phase2' | 'phase2b' | 'phase3' | 'plugins' | 'interfaceSounds'
+    'usageHistory' | 'phase2' | 'phase2b' | 'phase3' | 'plugins' | 'interfaceSounds' | 'make'
   > = {},
 ) {
   await activateLocale('en');

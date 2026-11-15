@@ -6,8 +6,9 @@ import { QA_CHECK_IDS, qaCheckIdSchema, SLOT_MATCH_CHECK_IDS } from '../src';
 
 describe('AGT2-MATCH contract', () => {
   it('adds the slot-match checks after every earlier check', () => {
-    // EAR1-K0's sound checks come after them, so they sit right after graphicCoversFace.
-    expect(QA_CHECK_IDS.slice(32, 32 + SLOT_MATCH_CHECK_IDS.length)).toEqual([...SLOT_MATCH_CHECK_IDS]);
+    // EAR1-K0's sound checks come after them, so they sit right after graphicCoversFace; MOM1's slotPart is the
+    // seventh slot check and comes after the sound checks (mom1-moments-contract.test.ts).
+    expect(QA_CHECK_IDS.slice(32, 38)).toEqual(SLOT_MATCH_CHECK_IDS.slice(0, 6));
     expect(QA_CHECK_IDS.indexOf('graphicCoversFace')).toBe(31);
     for (const id of SLOT_MATCH_CHECK_IDS) expect(qaCheckIdSchema.parse(id)).toBe(id);
   });

@@ -7,6 +7,7 @@
  */
 import type { z } from 'zod';
 import { compositionFor, escapeUntrusted, type GraphicItem, type Timeline } from '@taalcut/core';
+import { newestCopy } from './options';
 import type { itemSchema } from './tool-schemas';
 
 /** A designed graphic's composition as graphics.list shows it. */
@@ -27,6 +28,16 @@ function compositionOf(timeline: Timeline, ref: NonNullable<GraphicItem['composi
   };
 }
 
+/** DSG2: a graphic's options as graphics.list numbers them, the one in use marked. */
+function optionsOf(timeline: Timeline, item: GraphicItem) {
+  return item.options?.designs.map((design, at) => ({
+    option: at + 1,
+    name: escapeUntrusted(newestCopy(design.compositionId, timeline.graphicCompositions)?.name ?? 'Graphic'),
+    idea: escapeUntrusted(design.idea),
+    inUse: design.compositionId === item.composition.id,
+  }));
+}
+
 /** One graphic as graphics.list's itemSchema has it. */
 type Listed = z.input<typeof itemSchema>;
 
@@ -45,6 +56,7 @@ export function listedGraphics(timeline: Timeline): Listed[] {
                   placement: item.placement,
                   origin: item.origin,
                   ...(item.proposal ? { proposal: { design: item.proposal.design } } : {}),
+                  ...(item.options ? { options: optionsOf(timeline, item) } : {}),
                 },
               ]
             : [],

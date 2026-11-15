@@ -6,6 +6,9 @@
  *   (pressed surface) · disabled (the run ended, the clip is locked or gone: aria-disabled, the reason is the
  *   caller's line) · loading (the pressed one dims and is busy; "Find something else" spins) · error (the caller's
  *   error line under the strip) · success (silent: the frame moves into the pick's place) · empty (emptyAction)
+ * layout: the frames wrap by default; `overflow="scroll"` keeps them on one line at their size and scrolls the
+ *   strip inside its own box when they don't fit (a thin bar; focus, by Tab or a grid's arrows, brings its frame
+ *   into view)
  * pre-emit critique: P5 H4 E4 S5 R5 V4 */
 import { useLingui } from '@lingui/react/macro';
 import { Search } from 'lucide-react';
@@ -42,7 +45,26 @@ export interface AlternatesStripProps {
   onItemKeyDown?: (index: number, event: KeyboardEvent<HTMLButtonElement>) => void;
   /** Names the group for screen readers; default "Other shots". */
   label?: string;
+  /**
+   * With no room for every frame: 'wrap' (default) puts them on more lines; 'scroll' keeps one line of full-size
+   * frames that scrolls inside the strip, so the strip never grows past the room its parent gives it.
+   */
+  overflow?: 'wrap' | 'scroll';
   className?: string;
+}
+
+/**
+ * Brings the focused frame into the strip's own box, the least distance needed, so the keyboard reaches a frame
+ * scrolled out of sight. Only the strip moves: nothing it sits in scrolls.
+ */
+function revealIn(strip: HTMLElement, item: Element): void {
+  const style = getComputedStyle(strip);
+  const inner = item.getBoundingClientRect();
+  const outer = strip.getBoundingClientRect();
+  const left = outer.left + parseFloat(style.paddingLeft);
+  const right = outer.right - parseFloat(style.paddingRight);
+  if (inner.left < left) strip.scrollLeft -= left - inner.left;
+  else if (inner.right > right) strip.scrollLeft += inner.right - right;
 }
 
 export function AlternatesStrip({
@@ -57,6 +79,7 @@ export function AlternatesStrip({
   tabStop,
   onItemKeyDown,
   label,
+  overflow = 'wrap',
   className,
 }: AlternatesStripProps) {
   const { t } = useLingui();
@@ -65,7 +88,20 @@ export function AlternatesStrip({
       role="group"
       aria-label={label ?? t`Other shots`}
       data-slot="alternates"
-      className={cn('flex flex-wrap items-end gap-2', className)}
+      data-overflow={overflow}
+      // Meant to scroll sideways: the text-fit checks leave it out (e2e/inspect.ts).
+      data-scroll-x={overflow === 'scroll' ? '' : undefined}
+      onFocus={overflow === 'scroll' ? (event) => revealIn(event.currentTarget, event.target) : undefined}
+      className={cn(
+        'flex items-end gap-2',
+        // One line that scrolls: the frames keep their shape; the padding (taken back by the margin) is the room a
+        // focus ring needs inside a box that clips. Positioned, so the frames' screen-reader names scroll and clip
+        // with the strip instead of widening the column it sits in.
+        overflow === 'scroll'
+          ? 'relative -m-1 scrollbar-thin min-w-0 overflow-x-auto overscroll-x-contain p-1 [&>*]:shrink-0'
+          : 'flex-wrap',
+        className,
+      )}
     >
       {items.length === 0 && emptyAction ? emptyAction : null}
       {items.map((item, index) => {

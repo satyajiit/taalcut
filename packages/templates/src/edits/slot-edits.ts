@@ -26,6 +26,7 @@ import {
 } from '@taalcut/core';
 import { LastSlot, SlotApproved, SlotNotFound, SlotsNotAdjacent } from '../errors';
 import { CUT_DOUBTS, INTENT_DOUBTS, MOTION_DOUBTS, onlyDoubts, withDoubts, withoutDoubts } from './doubts';
+import { mergedLands, withoutLandsOn } from './slot-lands';
 import { anchorAt, beatFrames, computePacing } from './timing';
 
 /** Who wrote an intent: the UI (a person) or the agent. */
@@ -114,12 +115,15 @@ export function mergeSlots(
   }
   const duration = group.slice(1).reduce((sum, slot) => RationalTime.add(sum, slot.duration), first.duration);
   // The first slot's cut stays, and the intent's doubt comes with the intent; a merged fade tail is answered.
-  // FRM1-MOT: the measured move and its doubt come with the intent too.
-  const { motionMeasure: _firstMeasure, ...firstRest } = first;
+  // FRM1-MOT: the measured move and its doubt come with the intent too. KEEP1: so does whose footage it plays.
+  // MATCH1: a stated moment stays on an edge the merged slot still has (slot-lands.ts).
+  const { motionMeasure: _firstMeasure, footage: _firstFootage, lands: _firstLands, ...firstRest } = first;
   const merged = withDoubts<TemplateSlot>(
     {
       ...firstRest,
       ...(source.motionMeasure ? { motionMeasure: source.motionMeasure } : {}),
+      ...(source.footage ? { footage: source.footage } : {}),
+      ...mergedLands(first, group[group.length - 1]!),
       duration,
       intent: source.intent,
       speedRamp: null,
@@ -156,7 +160,10 @@ export function dropSlot(template: Template, input: { readonly slotId: SlotId })
   let absorbing: TemplateSlot;
   if (index > 0) {
     const previous = slots[index - 1]!;
-    absorbing = { ...previous, duration: RationalTime.add(previous.duration, dropped.duration) };
+    absorbing = withoutLandsOn(
+      { ...previous, duration: RationalTime.add(previous.duration, dropped.duration) },
+      'end',
+    );
     slots[index - 1] = absorbing;
   } else {
     const next = slots[0]!;
@@ -164,7 +171,7 @@ export function dropSlot(template: Template, input: { readonly slotId: SlotId })
     // No cut at zero: its cut doubts go.
     absorbing = withoutDoubts(
       {
-        ...next,
+        ...withoutLandsOn(next, 'start'),
         role: dropped.role === 'hook' ? 'hook' : next.role,
         start: RationalTime.zero(rate),
         duration: RationalTime.add(next.duration, dropped.duration),

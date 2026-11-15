@@ -113,6 +113,7 @@ export const MODELS_MESSAGES_EN: Readonly<Record<string, string>> = {
   'fix.openAccounts': 'Open accounts',
   'fix.openModels': 'Open model settings',
   'fix.reviewSignInWarning': 'Read the warning',
+  'fix.connectChatGptImages': 'Connect ChatGPT images',
 
   // Errors.
   'errors.models.not_configured': 'Set up {provider} in Accounts first.',
@@ -136,6 +137,8 @@ export const MODELS_MESSAGES_EN: Readonly<Record<string, string>> = {
   'errors.models.profile_store_failed': 'Couldn’t save model settings.',
   'errors.models.hardware_probe_failed': 'Couldn’t read this computer’s hardware.',
   'errors.models.sign_in_failed': 'Signing in to {provider} didn’t work. Try again.',
+  'errors.models.sign_in_refused':
+    '{provider} approved the sign-in, then refused to give Taalcut access. This happens when the plan on that account has ended. Check your plan, then sign in again.',
   'errors.models.sign_in_timeout': 'Sign-in timed out after {seconds} seconds.',
   'errors.models.sign_in_denied': 'Access to {provider} was declined.',
   'errors.models.sign_in_port_busy': 'Another app is using port {port}, which {provider} sign-in needs.',
@@ -152,6 +155,8 @@ export const MODELS_MESSAGES_EN: Readonly<Record<string, string>> = {
     'Leave the user name and password out of the server address. Taalcut doesn’t keep passwords for local servers.',
   'errors.models.image_no_provider':
     'No connected image provider is available. Connect ChatGPT images or Grok, or add an image-provider API key in Settings › Accounts.',
+  'errors.models.chatgpt_images_not_connected':
+    'Your ChatGPT plan is connected for chat. Images need one more approval: choose Connect ChatGPT images in Settings › Accounts.',
   'errors.models.image_access_denied':
     '{provider} denied image access for this account. Check the plan and image access in Settings › Accounts.',
   'errors.models.image_output_invalid': '{provider} sent back an image Taalcut couldn’t use. Try again.',

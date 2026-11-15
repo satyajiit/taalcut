@@ -2,10 +2,13 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * Battery and thermal state, from main to the jobs process. Electron's
- * powerMonitor exists only in main, so main sends a snapshot when the jobs
- * process connects and after every change; the job engine throttles on it.
- * Not part of the app contract: the renderer can't set it.
+ * Thermal state, from main to the jobs process. Electron's powerMonitor
+ * exists only in main, so main sends a snapshot when the jobs process connects
+ * and after every change; the job engine throttles on it. Not part of the app
+ * contract: the renderer can't set it.
+ *
+ * Whether the Mac runs on battery or a charger is not in it and never decides
+ * anything (the owner, 2026-11-15).
  */
 import '../basics/zod-config';
 import { z } from 'zod';
@@ -15,7 +18,6 @@ export const THERMAL_STATES = ['nominal', 'fair', 'serious', 'critical'] as cons
 export type ThermalState = (typeof THERMAL_STATES)[number];
 
 export const powerSnapshotSchema = z.object({
-  onBattery: z.boolean(),
   thermalState: z.enum(THERMAL_STATES),
 });
 export type PowerSnapshot = z.infer<typeof powerSnapshotSchema>;

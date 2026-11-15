@@ -123,11 +123,15 @@ describe('prompt assembly', () => {
   it('follows the cover brief and requires actual composition, saved output and visual review', () => {
     const catalogue = registryFor([clipsModule()]).catalogue();
     const prompt = systemPrompt(SOUL, [{ ...catalogue[0]!, family: 'images' }]);
-    expect(prompt).toContain('workspace.docs topic taalcut/hallmark-thumbnails');
-    expect(prompt).toContain('its design field supports editable typography');
+    expect(prompt).toContain('workspace.docs topic taalcut/edit-cover, then taalcut/hallmark-thumbnails');
+    // CVR2: a cover is a designed composition over real frames, of the footage unless other art is asked for.
+    expect(prompt).toContain('a composition you design over real frames');
+    expect(prompt).toContain('save with workspace.placeCover');
+    expect(prompt).toContain('when they name none, the cover is made from the video’s own footage');
+    expect(prompt).not.toContain('its design field');
+    expect(prompt).not.toContain('do not force footage');
     expect(prompt).toContain('inspect the saved image before claiming it is ready');
     expect(prompt).toContain('supported ChatGPT or Grok sign-ins');
-    expect(prompt).toContain('do not force footage or photorealism');
     expect(prompt).toContain('image generation is not a prerequisite');
   });
 

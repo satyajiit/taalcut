@@ -32,7 +32,7 @@ describe('template fit through the resolved casting config', () => {
     });
     const first = await fitter.fitTemplates(input());
     if (!first.ok) throw new Error(first.error.code);
-    expect(first.value.configVersion).toBe('casting.v5');
+    expect(first.value.configVersion).toBe('casting.v6');
 
     const qualityFirst: CastingWeights = {
       intent: 0.2,
@@ -44,11 +44,11 @@ describe('template fit through the resolved casting config', () => {
     current = {
       config: { ...CASTING_CONFIG, weights: qualityFirst },
       weights: { source: 'default', values: qualityFirst },
-      label: 'casting.v5+learned@42',
+      label: 'casting.v6+learned@42',
     };
     const second = await fitter.fitTemplates(input());
     if (!second.ok) throw new Error(second.error.code);
-    expect(second.value.configVersion).toBe('casting.v5+learned@42');
+    expect(second.value.configVersion).toBe('casting.v6+learned@42');
     expect(nth(second.value.fits, 0).meanScore).not.toBeCloseTo(nth(first.value.fits, 0).meanScore ?? 0, 6);
   });
 });

@@ -20,7 +20,8 @@ export type VectorAt = (frame: number) => Float32Array | undefined;
 
 export interface CutFinding {
   readonly frame: number;
-  readonly method: 'both' | 'scdet' | 'embedding';
+  /** MATCH1: `pixels` is a gradual transition measured from the frames that method B does not confirm (gradual.ts). */
+  readonly method: 'both' | 'scdet' | 'embedding' | 'pixels';
   readonly status: 'confirmed' | 'disputed';
   /** Method A's score at the frame; null for a soft cut A didn't propose. */
   readonly score: number | null;
@@ -30,6 +31,16 @@ export interface CutFinding {
   readonly ramp: { readonly start: number; readonly end: number } | null;
   /** What the rule decides when no vision verdict comes back. */
   readonly ruleKeeps: boolean;
+  /**
+   * MATCH1: the transition measured from pixels (gradual.ts): its kind, and the frames before and after `frame`
+   * that are not wholly one shot's picture. Absent for a cut the two cut methods found.
+   */
+  readonly blend?: {
+    readonly kind: 'dissolve' | 'fade';
+    readonly before: number;
+    readonly after: number;
+    readonly confidence: number;
+  };
 }
 
 type CutsConfig = Pick<BreakdownConfig, 'scdet' | 'embed'>;
@@ -112,6 +123,29 @@ export function contextDistance(
   const later = pick(frame + 1, frame + 1 + context);
   const distance = cosineDistance(before, after);
   return later ? Math.min(distance, cosineDistance(before, later)) : distance;
+}
+
+/**
+ * MATCH1: method B's distance across a span: the mean of the `context` frames before `start` against the mean of
+ * the `context` frames after `end`. Null when either side has no embedded frame.
+ */
+export function spanDistance(
+  vectorAt: VectorAt,
+  span: { readonly start: number; readonly end: number },
+  total: number,
+  context: number,
+): number | null {
+  const pick = (from: number, to: number) => {
+    const out: Float32Array[] = [];
+    for (let f = Math.max(0, from); f < Math.min(total, to); f++) {
+      const vector = vectorAt(f);
+      if (vector) out.push(vector);
+    }
+    return mean(out);
+  };
+  const before = pick(span.start - context, span.start);
+  const after = pick(span.end + 1, span.end + 1 + context);
+  return before && after ? cosineDistance(before, after) : null;
 }
 
 /** A's proposal judged by B: confirmed, disputed, or null when B says it isn't a cut. */

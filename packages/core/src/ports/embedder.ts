@@ -19,7 +19,8 @@ import { createToken } from '../di/token';
 import { implementContract, ipc, type RpcClient } from '../ipc/contract';
 import { fromRpcError, unwrapRpc } from '../ipc/errors';
 
-export const EMBEDDING_ITEM_KINDS = ['frame', 'transcript', 'ocr', 'description'] as const;
+/** 'moment' (MOM1): a note of one stretch of a shot, `moment:<shotId>:<n>`, read by casting and never by search. */
+export const EMBEDDING_ITEM_KINDS = ['frame', 'transcript', 'ocr', 'description', 'moment'] as const;
 export type EmbeddingItemKind = (typeof EMBEDDING_ITEM_KINDS)[number];
 
 /** Which vectors are comparable: same model, revision and width. */

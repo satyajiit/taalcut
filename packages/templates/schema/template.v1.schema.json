@@ -1045,6 +1045,63 @@
               "confidence",
               "version"
             ]
+          },
+          "footage": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "enum": [
+                  "person",
+                  "reel"
+                ]
+              },
+              "by": {
+                "type": "string",
+                "enum": [
+                  "analyst",
+                  "user"
+                ]
+              },
+              "reason": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "from",
+              "by",
+              "reason"
+            ]
+          },
+          "lands": {
+            "type": "object",
+            "properties": {
+              "edge": {
+                "type": "string",
+                "enum": [
+                  "start",
+                  "end"
+                ]
+              },
+              "moment": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              }
+            },
+            "required": [
+              "edge",
+              "moment"
+            ]
           }
         },
         "required": [
@@ -1608,6 +1665,71 @@
                 "required": [
                   "relativeTo",
                   "zone"
+                ]
+              },
+              "type": {
+                "type": "object",
+                "properties": {
+                  "stem": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "outline": {
+                    "anyOf": [
+                      {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 0.5
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "shadow": {
+                    "type": "boolean"
+                  },
+                  "width": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "condensed",
+                          "normal",
+                          "wide"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "spacing": {
+                    "anyOf": [
+                      {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 2
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "stem",
+                  "outline",
+                  "shadow",
+                  "width",
+                  "spacing",
+                  "confidence"
                 ]
               },
               "confidence": {

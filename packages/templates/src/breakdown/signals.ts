@@ -25,7 +25,8 @@ export async function withoutFadeTails(
 ): Promise<{ kept: CutFinding[]; fades: number[] }> {
   const { config, total } = ctx;
   const lumaCurve = ctx.analysers.media.lumaCurve;
-  const weak = disputed.filter((finding) => (finding.score ?? 0) < config.scdet.strong);
+  // MATCH1: a transition measured from pixels is a cut between two pictures, never a fade's tail.
+  const weak = disputed.filter((finding) => !finding.blend && (finding.score ?? 0) < config.scdet.strong);
   if (!lumaCurve || weak.length === 0) return { kept: [...disputed], fades: [] };
   const bounds = [
     ...confirmed.map((finding) => finding.frame),

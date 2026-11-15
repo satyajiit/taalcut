@@ -51,6 +51,25 @@ export function baseCss(input: {
   ];
 }
 
+/**
+ * Where a text whose box follows its words is anchored (TXT1 `breaks: 'written'`): its left edge, centre or right
+ * edge at the box's, as wide as its words (`max-content`: no box and no size wraps them), a line break in the words
+ * its only break. The one limit is the frame's width, where a wider line wraps. No transform: tc.js owns those.
+ */
+function anchored(text: PlannedText, width: number): string {
+  const left = Math.round(text.box.x * width);
+  const right = Math.round((1 - text.box.x - text.box.width) * width);
+  const centre = Math.round((text.box.x + text.box.width / 2) * width);
+  const at =
+    text.align === 'left'
+      ? `left: ${left}px;`
+      : text.align === 'right'
+        ? `left: auto; right: ${right}px;`
+        : // Centred between two edges the same distance either side of the anchor, a frame's width each way.
+          `left: ${centre - width}px; right: ${-centre}px; margin-left: auto; margin-right: auto;`;
+  return `${at} width: max-content; max-width: ${width}px;`;
+}
+
 /** A text item's own rule: its box on the canvas, size, alignment, case and background. */
 export function textRule(text: PlannedText, width: number, height: number): string {
   const size = Math.round((text.sizeRatio * height) / CAP_HEIGHT_EM);
@@ -65,8 +84,11 @@ export function textRule(text: PlannedText, width: number, height: number): stri
           ? 'text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);'
           : '';
   return (
-    `#${elementId.text(text.id)} { left: ${Math.round(text.box.x * width)}px; ` +
-    `top: ${Math.round(text.box.y * height)}px; width: ${Math.round(text.box.width * width)}px; ` +
+    `#${elementId.text(text.id)} { ` +
+    (text.breaks === 'written'
+      ? anchored(text, width)
+      : `left: ${Math.round(text.box.x * width)}px; width: ${Math.round(text.box.width * width)}px;`) +
+    ` top: ${Math.round(text.box.y * height)}px; ` +
     `height: auto; font-size: ${size}px; text-align: ${text.align}; text-transform: ${transform}; ${background} }`
   );
 }

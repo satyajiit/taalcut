@@ -114,8 +114,9 @@ function ProjectConversation({ conversationId }: { conversationId: ConversationI
   const actions = useChatCardActions(runIdForApproval, state.answer, surface);
   // EDT1-CMT: "Send N comments to Taalcut" from the Comments tab, as one message once the chat is free.
   useCommentSends(send, state.status !== 'loading' && !busy);
-  // HFW1-UI: the inspector's Try again on a designed graphic.
-  useChatSends(send, state.status !== 'loading' && !busy);
+  // HFW1-UI: the inspector's Try again on a designed graphic. CVR1: the cover panel's Generate with AI, which also
+  // reads whether a run is going here.
+  useChatSends(send, state.status !== 'loading' && !busy, busy);
   const cardData = useAppCardData();
   const atEnd = useRef(true);
 

@@ -37,7 +37,7 @@ describe('Editor listening tools', () => {
       editorSkill({ service: world.service, capabilities: [], registered }, () => 'card');
     const listening = make(() => true);
     const without = make((name) => !name.startsWith('audio.'));
-    expect(listening.version).toBe('2.8.0');
+    expect(listening.version).toBe('2.12.0');
     for (const name of ['audio.listen', 'audio.critique']) {
       expect(listening.tools.names).toContain(name);
       expect(without.tools.names).not.toContain(name);

@@ -17,7 +17,7 @@ import {
   type TemplateSlot,
   type Timeline,
 } from '@taalcut/core';
-import type { NeedVerdict, SlotShot } from '@taalcut/timeline';
+import { slotAddedFrames, type NeedVerdict, type SlotShot } from '@taalcut/timeline';
 import type { ClipHeads } from '../../../engine/stages/heads';
 import type { FrameSpan, PlannedComposition, PlannedVisual } from '../../../plan/types';
 import { drawnOverlay } from '../../../workspace/designer/reel-match';
@@ -83,6 +83,12 @@ function mergedNeeds(shots: readonly SlotShot[]): NeedVerdict[] {
   });
 }
 
+/** MOM1: the slot's played part: the clip that misses when one does, else the first whose part could be read. */
+function playedPart(shots: readonly SlotShot[]): SlotFact['part'] {
+  const read = shots.flatMap((shot) => (shot.part ? [{ ...shot.part, clipId: shot.clipId }] : []));
+  return read.find((part) => !part.met) ?? read[0] ?? null;
+}
+
 /** The slot's camera move: what its intent says, else what was measured. */
 const reelMotion = (slot: TemplateSlot): CameraMotion | null =>
   (slot.intent.source === 'pending' ? null : slot.intent.motion) ?? slot.motionMeasure?.label ?? null;
@@ -121,7 +127,9 @@ function slotFact(input: SlotMatchBuildInput, slot: TemplateSlot, index: number)
     target: visuals[0]?.id ?? filler?.id ?? slot.id,
     clipId: visuals[0]?.id ?? null,
     span,
-    reelSeconds: RationalTime.toSeconds(slot.duration),
+    // LONG1: a slot lengthened by bars of the reel's music is held to the reel's length and those bars.
+    reelSeconds:
+      RationalTime.toSeconds(slot.duration) + seconds(slotAddedFrames(input.timeline).get(slot.id) ?? 0),
     draftSeconds: visuals.reduce((sum, visual) => sum + seconds(visual.cut.end - visual.cut.start), 0),
     needs: mergedNeeds(shots),
     face: {
@@ -135,6 +143,7 @@ function slotFact(input: SlotMatchBuildInput, slot: TemplateSlot, index: number)
       measured: clips.length > 0,
     },
     motion: { reel: reelMotion(slot), shot: shots[0]?.motion ?? null },
+    part: playedPart(shots),
   };
 }
 

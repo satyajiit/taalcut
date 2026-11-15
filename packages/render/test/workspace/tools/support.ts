@@ -176,14 +176,15 @@ export function workspaceWorld(timeline: Timeline, extra: Partial<WorkspaceToolD
     if (!found) throw new Error(`no ${name}`);
     return found;
   };
-  async function call(name: string, input: unknown) {
+  /** `run`: another run's id, for a call a later run makes (a "try again"). */
+  async function call(name: string, input: unknown, run: string = runId) {
     const spec = tool(name);
     const parsed = spec.input.safeParse(input);
     if (!parsed.success) throw new Error(`${name}: ${parsed.error.message}`);
     const ctx: CommandToolContext = {
       signal: new AbortController().signal,
       callId: newId<'ToolRun'>(),
-      runId,
+      runId: run as typeof runId,
       attempt: 1,
       artifacts,
       reportUsage: () => undefined,

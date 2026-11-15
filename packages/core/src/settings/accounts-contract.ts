@@ -57,11 +57,27 @@ export type AccountCheck = z.infer<typeof accountCheckSchema>;
 export const localServerCheckSchema = accountCheckSchema.extend({ models: z.int().nonnegative().optional() });
 export type LocalServerCheck = z.infer<typeof localServerCheckSchema>;
 
+/**
+ * CVR2: the last try at the ChatGPT plan's images (a second approval at OpenAI), until they connect: `waiting`
+ * while its page is open in the browser, `failed` when it ended without connecting (closed, timed out, refused),
+ * with the TaalcutError code that says why. Absent before the first try, once images are connected and after a
+ * sign-out.
+ */
+export const imagesAttemptSchema = z.object({
+  state: z.enum(['waiting', 'failed']),
+  /** Epoch ms: when it started (waiting) or ended (failed). */
+  at: z.int().nonnegative(),
+  /** With `failed`: e.g. 'models.sign_in_timeout'. */
+  errorCode: z.string().max(100).optional(),
+});
+export type ImagesAttempt = z.infer<typeof imagesAttemptSchema>;
+
 export const accountsStateSchema = z.object({
   chatgpt: z.object({
     signedIn: z.boolean(),
     /** Kept separately because the chat token-sharing route does not support image generation. */
     imagesSignedIn: z.boolean().optional(),
+    imagesAttempt: imagesAttemptSchema.optional(),
     /** OpenAI's usage page for the plan; the "Manage usage" link. */
     manageUsageUrl: z.url(),
   }),

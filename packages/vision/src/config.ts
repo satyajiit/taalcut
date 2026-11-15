@@ -194,6 +194,45 @@ export const VISION_CONFIG = {
   describe: {
     longSide: 768,
     maxTokens: 400,
+    /**
+     * MOM1: a shot's moments (describe/moments.ts). A shot of `minSeconds` or more is described from one frame per
+     * `strideSeconds`, at least two and at most `maxFrames`, by hardware tier (PRD G14), each at the middle of an
+     * equal part of the shot; a shorter one from its best frame alone, with no moments. The answer then also holds
+     * the ranges, so it may be `maxTokens` long; a moment under `minMomentSeconds` joins its neighbour. A change here
+     * comes with a rise of `vision.describe`'s version (stage-frames.ts), so every shot is described again.
+     *
+     * The caps are what a describe costs: the on-device model takes about 1,100 tokens a frame (its runtime's
+     * 1,024-token floor for a picture), so 8 frames are about 9,000 of the High tier's 32,768-token window and 6
+     * about 6,700 of the Recommended tier's 12,288, and each frame goes after its own label, two parts of the 16
+     * one ask may have (describe-answer.ts). Measured on an M5 Max with the 4B over 28 shots at the High tier: 6.75
+     * frames and 17 s a shot, about 2.5 s a frame.
+     */
+    moments: {
+      minSeconds: 2,
+      frames: {
+        minimum: { strideSeconds: 1.5, maxFrames: 4 },
+        recommended: { strideSeconds: 1, maxFrames: 6 },
+        high: { strideSeconds: 0.75, maxFrames: 8 },
+      },
+      minMomentSeconds: 0.5,
+      maxTokens: 900,
+      /**
+       * MOM2: whether the ask has each run state its camera, filming or handling, and the answer's word is stored
+       * (`ShotMoment.handling`). It was off for part of 2026-11-15: in the owner's app the on-device 9B stated six stretches in 35
+       * shots, and five were deliberate handheld pans (a restaurant, a ship, a bookshop, a shop aisle); one was a
+       * real drop to the floor. The measuring harness had found five in 135 with no pan, so it did not run what the
+       * app runs. Everything that acts on a handling stretch stays and reads none while this is off. Turn it on
+       * only with numbers taken through the app's own model route; a change here needs a rise in the describe
+       * stage's version.
+       *
+       * MOM3 took those numbers (vision SPEC, "MOM3"). The app's ask carries each shot's context text and the
+       * harness's had none: that was the difference. With the reader keeping a statement only at a shot's start or
+       * end, and the ask with the statement leaving out the camera's move, the 9B states both known take endings
+       * and no pan or whole shot over 133 shots on the app's route; the 4B states one of the two endings. On
+       * again with those two changes (describe version 7).
+       */
+      statesHandling: true,
+    },
   },
   breakdown: {
     ocrFps: 4,

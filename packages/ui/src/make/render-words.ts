@@ -133,6 +133,8 @@ const CHECKS: Readonly<Record<QaCheckId, MessageDescriptor>> = {
   soundOnCuts: msg`A sound lands on each cut`,
   soundClean: msg`No clicks or distortion in the sound`,
   soundCritique: msg`The sound mix sounds finished`,
+  // MOM1: the part of its shot each clip plays.
+  slotPart: msg`Each clip plays the part of its shot the moment needs`,
 };
 
 const A_CHECK = msg`A check`;
@@ -185,6 +187,8 @@ const FIXES: Readonly<Record<string, MessageDescriptor>> = {
   matchSlotMotion: msg`Use a shot that moves as the reel’s does`,
   matchSlotTiming: msg`Time the shot as the reel does`,
   matchSlotGraphics: msg`Put the reel’s graphic in its place`,
+  // MOM1: the AI plays another part of the same shot.
+  matchSlotPart: msg`Play the part of the shot that fits the moment`,
   // EAR1-A2: the Editor places the effects on their cuts again; a click in the mix is found and cut.
   resyncHits: msg`Put the effects back on their cuts`,
   findClick: msg`Find the click`,

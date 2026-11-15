@@ -9,8 +9,12 @@
  * person's body, off a busy background, and keeping a conversation's order and columns. With no room at the
  * reel's size it shrinks, down to QA's readable minimum; with none then it is `noRoom` at the relation's box, and
  * place-timeline.ts tries the clip's in-point and the slot's next clip. Pure and deterministic.
+ *
+ * TXT1: a run of texts shown in turn at one place is one item here (runs.ts), over every clip it crosses; with no
+ * place clear of every head it takes the least covered one (`leastCovered`), still `noRoom`. What it finds for a
+ * made video's text is a candidate the tools report, never where the text is put (place-timeline.ts `reelTextLayout`).
  */
-import { conversationCost, headKeepOuts, sceneCost } from './costs';
+import { conversationCost, headKeepOuts, headMarginOf, sceneCost } from './costs';
 import {
   bottom,
   inflate,
@@ -23,7 +27,7 @@ import {
   type Size,
 } from './geometry';
 import { mainHeadTrack, relationCost, sideOf, sideOver, targetBox } from './relation';
-import type { Placed, PlacementItem, Scene, SolverConfig } from './types';
+import type { Placed, PlacementItem, Scene, SceneFrame, SolverConfig } from './types';
 
 export const SOLVER_CONFIG: SolverConfig = {
   headMargin: 0.12,
@@ -79,6 +83,44 @@ function candidates(
 interface Done {
   readonly item: PlacementItem;
   readonly placed: Placed;
+}
+
+/**
+ * TXT1: for a run with no place clear of every head on every clip it crosses, the least bad place: the box a head
+ * is under on the fewest sampled frames, at the largest size that gets there, nearest the reel's relation. Null
+ * when the captions and other items leave no box at all.
+ */
+function leastCovered(
+  item: PlacementItem,
+  scene: Scene,
+  frames: readonly SceneFrame[],
+  blocked: readonly Rect[],
+  config: SolverConfig,
+): { box: Rect; scale: number; covered: number } | null {
+  const track = mainHeadTrack(frames);
+  const head = track?.swept ?? null;
+  const perFrame = frames.map((frame) =>
+    frame.heads.map((rect) => inflate(rect, headMarginOf(rect, config))),
+  );
+  const all = perFrame.flat();
+  let best: { box: Rect; scale: number; covered: number; cost: number } | null = null;
+  for (const scale of [1, ...config.shrinkSteps.filter((step) => step >= item.minScale)]) {
+    const size = item.sizeAt(scale);
+    const target = targetBox(item, size, head, scene.safe, config);
+    for (const box of candidates(size, target, all, blocked, scene, config)) {
+      if (!inside(box, scene.safe)) continue;
+      if (blocked.some((rect) => intersects(inflate(box, config.itemGapPx - 1), rect))) continue;
+      const covered = perFrame.filter((heads) => heads.some((rect) => intersects(box, rect))).length;
+      const cost = relationCost(item, box, target, head, scene, config, track);
+      if (
+        !best ||
+        covered < best.covered ||
+        (covered === best.covered && scale === best.scale && cost < best.cost)
+      )
+        best = { box, scale, covered, cost };
+    }
+  }
+  return best && { box: best.box, scale: best.scale, covered: best.covered / Math.max(1, frames.length) };
 }
 
 function solveOne(item: PlacementItem, scene: Scene, done: readonly Done[], config: SolverConfig): Placed {
@@ -161,6 +203,17 @@ function solveOne(item: PlacementItem, scene: Scene, done: readonly Done[], conf
       cost: nearest.cost,
     };
   if (fallback) return fallback;
+  const least = item.together ? leastCovered(item, scene, frames, blocked, config) : null;
+  if (least)
+    return {
+      id: item.id,
+      box: least.box,
+      scale: least.scale,
+      reason: 'noRoom',
+      side: sideAt(least.box),
+      cost: Infinity,
+      covered: least.covered,
+    };
   const size = item.sizeAt(1);
   const box = targetBox(item, size, head, scene.safe, config);
   return {

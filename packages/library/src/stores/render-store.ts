@@ -36,7 +36,7 @@ import {
 import { and, desc, eq, isNull, notInArray } from 'drizzle-orm';
 import { z } from 'zod';
 import type { LibraryDatabase } from '../db/database';
-import { attemptWrite, pageSize } from '../repositories/shared';
+import { attemptWrite, inTransaction, pageSize } from '../repositories/shared';
 import { renders } from '../schema/projects';
 
 type RenderRow = typeof renders.$inferSelect;
@@ -151,6 +151,22 @@ function toColumns(record: Omit<RenderRecord, 'progress'>) {
   };
 }
 
+/** The columns of `after` whose value differs from the stored row's (JSON columns compared by content). */
+function changedColumns<T extends Record<string, unknown>>(
+  before: Readonly<Record<string, unknown>>,
+  after: T,
+): Partial<T> {
+  const changed: Partial<T> = {};
+  for (const key of Object.keys(after) as (keyof T & string)[]) {
+    const [was, is] = [before[key], after[key]];
+    const same = was === is || (isObject(was) && isObject(is) && JSON.stringify(was) === JSON.stringify(is));
+    if (!same) changed[key] = is;
+  }
+  return changed;
+}
+
+const isObject = (value: unknown): value is object => typeof value === 'object' && value !== null;
+
 /** The record as the schema reads it: what is written is the parsed value, defaults included. */
 function check(record: Omit<RenderRecord, 'progress'>): Result<Omit<RenderRecord, 'progress'>> {
   const parsed = recordSchema.safeParse(record);
@@ -217,15 +233,21 @@ export function createRenderStore(db: LibraryDatabase): RenderStore {
     },
 
     async update(id, patch: RenderPatch) {
-      const stored = row(id);
-      if (!stored) return missing(id);
-      const valid = patched(stored, patch);
-      if (!valid.ok) return valid;
-      const saved = attemptWrite(db, 'render', () =>
-        orm.update(renders).set(toColumns(valid.value)).where(eq(renders.id, id)).returning().get(),
-      );
-      if (!saved.ok) return saved;
-      return saved.value ? toRecord(saved.value) : missing(id);
+      // Several processes patch one row, each from its own read: whoever queued the export sets its job, the
+      // export sets its status. Writing the whole row back put one's stale columns over the other's, and a render
+      // lost its job id that way (the owner, 2026-11-15). So the read and the write are one transaction, and only
+      // the columns the patch changes are written.
+      return inTransaction(db, 'render', () => {
+        const stored = row(id);
+        if (!stored) return missing(id);
+        const valid = patched(stored, patch);
+        if (!valid.ok) return valid;
+        // Against the row as stored, so a row an older build wrote still gets today's defaults with its first patch.
+        const changed = changedColumns(stored, toColumns(valid.value));
+        if (Object.keys(changed).length === 0) return toRecord(stored);
+        const saved = orm.update(renders).set(changed).where(eq(renders.id, id)).returning().get();
+        return saved ? toRecord(saved) : missing(id);
+      });
     },
   };
 }

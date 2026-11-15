@@ -42,7 +42,8 @@ async function withBase(
   const bySlot = new Map(request.base.map((entry) => [entry.slotId as string, entry]));
   const missing = pools.flatMap((pool) => {
     const entry = bySlot.get(pool.slot.slotId);
-    if (!entry || pool.locked) return [];
+    // KEEP1: a slot that keeps the reel's footage shows the reel, which is no shot of the library's.
+    if (!entry || pool.locked || pool.slot.reel) return [];
     return pool.candidates.some((candidate) => candidate.key === candidateKey(entry)) ? [] : [entry];
   });
   const found = missing.length > 0 ? await context.catalog.profiles(missing, context.signal) : ok([]);

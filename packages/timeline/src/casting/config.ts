@@ -10,7 +10,7 @@
  */
 import { CAMERA_MOTIONS } from '@taalcut/core';
 import { z } from 'zod';
-import raw from '../../config/casting.v5.json';
+import raw from '../../config/casting.v6.json';
 
 const unit = z.number().min(0).max(1);
 const weight = z.number().min(0).max(5);
@@ -120,6 +120,33 @@ export const castingConfigSchema = z.object({
     /** FIX-TRIM: a window gains up to this as its middle nears vision's best frame (the shot's length away: 0). */
     bestFrameWeight: weight,
     /**
+     * MOM1: what a window shows against what its slot states (moment-fit.ts). A moment's fit is its lift: how far
+     * the cosine of its note to the slot's intent and needs stands above its median cosine to every slot of the
+     * template, less `margin`, never under 0; a window's fit is its moments' lifts by time. A window loses up to
+     * `weight` for fitting worse than the shot's best window: nothing within `slack` of it, all of it from `scale`
+     * under it, a straight line between. `weight` is more than `subjects.faceWeight`, so a stretch with no face in it
+     * never wins a slot that shows none merely by being empty. QA's `slotPart` (match/part-verdict.ts) fails a placed
+     * part whose fit is `missMargin` or more under the best part's. The numbers are from the owner's library in the
+     * EmbeddingGemma space (2 shots of several moments against 32 intents): an intent's cosine to a note sat between
+     * 0.60 and 0.81, a note that named what a slot alone asks for 0.08 to 0.15 above its median, and a note with no
+     * such claim up to 0.07: `margin` and `slack` together keep those from moving a clip.
+     */
+    content: z.object({
+      weight,
+      margin: z.number().min(0).max(0.5),
+      slack: z.number().min(0).max(0.5),
+      scale: z.number().positive().max(1),
+      missMargin: z.number().positive().max(1),
+    }),
+    /**
+     * MOM2: the stretches vision's describer states as the camera being handled, not filming (handling.ts). A window
+     * may lie in them for at most `overlap` of its length: while some window of the slot's length keeps to that, the
+     * in-point rule and the step with the person choose among the windows that lie in them the least, and QA's
+     * `slotPart` fails a placed part that lies in them for more. A shot that is handling all through, or has no
+     * other stretch long enough, is chosen from as before.
+     */
+    handling: z.object({ overlap: z.number().min(0).max(0.5) }),
+    /**
      * FIX-TRIM: the recording's own ends (recording.ts). A phone recording's first `startSeconds` is the person and
      * whoever films getting going, its last `endSeconds` reaching to stop. A window loses up to `startWeight` for the
      * share of it inside the first, `endWeight` inside the last: the file's ends, not the shot's.
@@ -199,5 +226,5 @@ export const castingConfigSchema = z.object({
 
 export type CastingConfig = z.output<typeof castingConfigSchema>;
 
-/** config/casting.v5.json, validated at load. */
+/** config/casting.v6.json, validated at load. */
 export const CASTING_CONFIG: CastingConfig = castingConfigSchema.parse(raw);

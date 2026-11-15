@@ -90,6 +90,8 @@ export async function fakeChat(
     templateSearch?: 'ready' | 'failing';
     /** EDT1-CMT: three comments on Golden hour market's first video (src/backend/fake/comments/comments-seed.ts). */
     comments?: 'seeded';
+    /** MORE1: the fake runs a size copy, a frozen moment and a hold's length (src/backend/fake/make/fake-more.ts). */
+    more?: 'commands';
   },
 ): Promise<void> {
   await page.addInitScript(({ key, value }) => window.localStorage.setItem(key, value), {

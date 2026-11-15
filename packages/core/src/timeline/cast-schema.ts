@@ -33,7 +33,9 @@ export type CastCandidate = z.output<typeof castCandidateSchema>;
 
 /**
  * Why a slot's pick is as it is. P3: `gapFilled` (a gap fix put media in), `dropped` (the slot was dropped),
- * `filmRequested` (the person will film it: on the phone's shot list).
+ * `filmRequested` (the person will film it: on the phone's shot list). KEEP1: `reelKept` (the slot keeps the reel's
+ * own footage, as its template states: casting never looked in the library for it, its clip plays the template's
+ * kept reel at the slot's frame range, and it is never a gap or an unsure pick).
  */
 export const CAST_NOTES = [
   'noCandidates',
@@ -43,6 +45,7 @@ export const CAST_NOTES = [
   'gapFilled',
   'dropped',
   'filmRequested',
+  'reelKept',
 ] as const;
 export type CastNote = (typeof CAST_NOTES)[number];
 export const CAST_MODES = ['template', 'story'] as const;

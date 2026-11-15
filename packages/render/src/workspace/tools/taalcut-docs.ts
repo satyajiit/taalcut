@@ -7,12 +7,14 @@
  * - `taalcut/choreography`: Frame-accurate beat choreography & spring/stagger timing principles
  * - `taalcut/impeccable-craft`: Anti-slop visual craft, typographic hierarchy, and safe-zone rules
  * - `taalcut/sandbox-workspace`: Workspace file management, sandbox shell (`work/`, `inputs/`, `out/`), and CLI tools
+ * - `taalcut/design-options` (DSG2, design-options-guide.ts): the method for a job's three options
+ * - `taalcut/hallmark-thumbnails` (CVR2, cover-docs.ts): what a strong cover is
  */
+import { HALLMARK_THUMBNAILS_DOC } from './cover-docs';
+import { DESIGN_OPTIONS_DOC } from './design-options-guide';
+import type { TaalcutDocsTopic } from './taalcut-docs-topic';
 
-export interface TaalcutDocsTopic {
-  readonly topic: string;
-  readonly text: string;
-}
+export type { TaalcutDocsTopic } from './taalcut-docs-topic';
 
 export const TAALCUT_DOCS_TOPICS: readonly TaalcutDocsTopic[] = [
   {
@@ -103,52 +105,8 @@ Inside \`workspace.exec\`, the sandbox environment provides:
   },
 ];
 
-export const HALLMARK_THUMBNAILS_DOC: TaalcutDocsTopic = {
-  topic: 'taalcut/hallmark-thumbnails',
-  text: `# Hallmark Video Covers & Social Publishing Pack
-
-## 0. Follow the Brief's Medium and Composition
-- Let the brief choose photography, illustration, graphic artwork or a mixed composition. Read supplied references and preserve their defining hierarchy, accents, illustration and branding. Do not automatically choose footage or a stock photo treatment.
-- For new imagery, use \`images.generateThumbnail\` with the requested \`medium\`. Supported connected ChatGPT/Grok subscriptions and image API providers are eligible. Default \`composition: "backdrop"\` leaves lettering editable; use \`"complete"\` for an explicitly requested entirely generated composition with lettering and supplied branding. Do not overlay the same words again on a complete composition.
-- Existing footage is appropriate when the brief calls for it: inspect candidate frames with \`timeline.captureFrame\` and pass \`source: {kind:"frame",frame:<seconds>}\` directly to \`timeline.setCover\` (never use \`workspace.open\` or \`ffmpeg\` in \`workspace.exec\` to extract a cover frame). Local graphic covers can use \`source: {kind:"solid"}\` with a design. Neither local route requires image-generation credentials.
-- If generation is unavailable, explain the precise provider limitation and offer an alternative only if it still meets the requested medium. Do not silently substitute footage or tell an already signed-in person to repeat the same sign-in.
-
-## Authored Graphic Covers: the Supported Design Contract
-- Persist the finished design with \`timeline.setCover\`, then call \`render.exportCover\` at its returned revision. \`cover.design\` replaces preset title/badge overlays. Sources are \`{kind:"asset",assetId}\`, \`{kind:"frame",frame}\`, or \`{kind:"solid"}\` (requires design).
-- Design: \`{version:1,palette:{ink,paper,accent,muted},layers:[...]}\`. Palette values are six-digit hex colors. Optional \`backdrop:{fit:"cover"|"contain",x:0.5,y:0.5}\` controls image crop and focal position. Contain preserves the entire supplied image; uncovered canvas uses paper.
-- At most 16 ordered layers. Every layer has \`box:{x,y,width,height}\` in 0–1 canvas coordinates, with its box inside the canvas. Optional opacity 0–1 and rotation -180–180. Preserve the reference's intentional placements; crop guides inform review, they do not force all branding into a central square.
-- Text layer: \`{kind:"text",text,font:"notoSans"|"poppins"|"montserrat"|"anton"|"bebasNeue",fontSize:0.16,weight:800,lineHeight:1.08,letterSpacing:-0.02,align:"left",color:"ink",box}\`. fontSize is 0.012–0.25 of the shorter canvas edge, tracking is em. Use newlines for deliberate hierarchy. Exact bundled fonts load before fitting. Long edits shrink within their box; inspect legibility after changes.
-- Shape layer: \`{kind:"shape",shape:"rectangle"|"ellipse",fill:"accent",box}\`; optional stroke color role, strokeWidth 0–0.05 and radius 0–0.2 of the shorter canvas edge. Use a narrow rectangle (\`height: 0.006–0.01\`) for a precise accent underline or rule — **never place a heavy opaque \`fill:"ink"\` rectangular box behind headlines over a photo backdrop**. Over photography, place bold open display type (\`color:"paper"\` or \`"accent"\`) directly into clean negative space (sky, water, upper third, or natural shadow); Taalcut automatically renders optical depth shadow on light text over image backdrops.
-- Path layer: \`{kind:"path",box,commands:[{command:"M",x:0,y:1},{command:"Q",cx:0.7,cy:0.8,x:1,y:0}],stroke:"paper",strokeWidth:0.01,dashed:true}\`. Coordinates are normalized within the layer box. At most 64 commands, starting M; M/L use x,y, Q adds cx,cy, C adds c1x,c1y,c2x,c2y, and Z closes. Fill/stroke use ink/paper/accent/muted/transparent. No raw SVG, scripts, external assets or arbitrary markup.
-- Build a specific composition: oversized two-line upright headline, one intentional underline, a drawn flight path with a small plane silhouette, and supplied branding can all be separate editable layers over the chosen image. Do not apply this same structure to unrelated briefs.
-
-## 1. Multi-Aspect Coverage & Platform Safe Zones
-- **\`16:9\` (1920×1080 — YouTube):** Keep the bottom-right corner clear for the YouTube duration badge pill (\`0:42\`, \`12:18\`). Place the hero subject off-center on the right third and reserve low-detail tonal negative space in \`textAlign\` (\`left\`, \`top-left\`, or \`bottom-left\`).
-- **\`9:16\` (1080×1920 — Shorts / Reels / TikTok):** Keep the right-rail action icon column and bottom caption zone uncluttered; ensure the central \`4:5\` profile grid crop stays balanced around the focal subject and hook.
-- **\`4:5\` (1080×1350 — Instagram Feed) & \`1:1\` (1080×1080 — Profile Grid):** Frame the primary subject with clean margins so a center \`1:1\` square grid crop preserves both subject and headline hierarchy.
-
-## 2. Hallmark Typography & Copy Restraint
-- **Crisp Roman Display Hook (\`hookText\`):** 1–6 words maximum (\`<= 48\` chars). Prefer upright display type and preserve explicitly supplied punctuation; zero clickbait exclamation spam (\`!!!\`).
-- **Optional Eyebrow Kicker (\`kickerText\`):** Short categorical context (\`<= 28\` chars, e.g. \`OLD CITY · DAWN\`).
-- **Factual Stat Badge (\`statBadge\`):** Real timeline or production facts only (\`<= 20\` chars, e.g. \`14 SHOTS\`, \`4K RAW\`, \`DAY 2\`, \`0:42\`). Never invent fake engagement metrics (\`10M VIEWS\`, \`99.9%\`, \`100X\`).
-- **Optional Channel Identity (\`channel\`):** Creator channel name, \`@handle\`, and optional avatar badge when \`showOnThumbnail: true\`.
-
-## 3. Specific Art Direction
-- Choose \`theme\` and \`archetype\` for the video's subject and mood. Change composition and hierarchy when changing archetypes; a color swap alone is not structural variety. Do not default every video to the same editorial layout.
-- For generated imagery, describe the chosen visual medium and specific subject details relevant to the brief. Do not add film grain, shallow depth of field, cinematic glow or other stock effects unless they help this particular scene.
-- Prefer editable exact lettering and branding; complete generated artwork may include them when requested. Avoid invented logos, unrequested watermarks, generic neon gradients, glowing sci-fi HUDs, plastic skin and stock poses.
-
-## 4. Inspect the Finished Cover
-- Open the saved cover asset returned by \`render.exportCover\` using \`library.frameAt\` at seconds 0; inspect the composed image, not just its prompt or backdrop. Check headline alignment, contrast, spelling, subject visibility, the intended crop and any secondary platform crops, and legibility at feed size.
-- Self-critique Philosophy, Hierarchy, Execution, Specificity, Restraint and Variety from that visible result. Any axis below 3 needs revision and another export. Never invent visual scores before viewing the image; the thumbnail tool's brief checks are not a Hallmark visual pass.
-- Only say the cover is saved after the current revision's JPEG export succeeds. If it cannot be completed, explain the exact remaining step. A selected frame, a generated backdrop, or a publish-pack preview alone is not a saved finished thumbnail.
-
-## 5. Researched Social Publishing Metadata Pack (\`social\`)
-- **YouTube:** High-CTR non-clickbait \`title\` (\`<= 100\` chars), 2–4 \`titleAlternates\`, ready-to-paste \`description\` with a 2-line above-the-fold hook and \`00:00\` chapters, plus 8–25 search \`tags\` formatted for comma-separated copy-and-paste.
-- **Instagram Reels / Feed:** Punchy first-line \`hookLine\`, full story \`caption\` with save/share CTA, and 5–15 normalized \`hashtags\`.
-- **TikTok:** Natural SEO \`caption\`, 3–8 search-bar \`seoKeywords\`, and 4–10 \`hashtags\`.
-`,
-};
+/** CVR2: the cover craft guide, with the route beside it (cover-docs.ts). */
+export { HALLMARK_THUMBNAILS_DOC };
 
 export const TONE_AUDIO_DOC: TaalcutDocsTopic = {
   topic: 'taalcut/tone-audio',
@@ -162,6 +120,7 @@ export const TONE_AUDIO_DOC: TaalcutDocsTopic = {
 
 export const TAALCUT_DOCS: readonly TaalcutDocsTopic[] = [
   ...TAALCUT_DOCS_TOPICS,
+  DESIGN_OPTIONS_DOC,
   HALLMARK_THUMBNAILS_DOC,
   TONE_AUDIO_DOC,
 ];

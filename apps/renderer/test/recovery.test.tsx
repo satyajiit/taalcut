@@ -93,6 +93,24 @@ describe('recovery prompt', () => {
     await waitFor(() => expect(router.state.location.pathname).toBe('/chat/01K7C5M6Q8R9S0T1V2W3X4Y5Z6'));
   });
 
+  it('stops the task that was cut off when the prompt is closed without resuming', async () => {
+    // FIX-RUNSTOP: left as it was, the run still said "running" and its chat said the AI was working, for good.
+    const stopped: string[] = [];
+    const { recovery } = await launch('unfinished', '/library', {
+      stop: async (runId) => {
+        stopped.push(runId);
+        return { ok: true as const, value: { runId, status: 'cancelled' as const } };
+      },
+    });
+    await screen.findByRole('dialog', { name: 'Taalcut is back' });
+    fireEvent.click(screen.getByRole('button', { name: 'Not now' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    await waitFor(() => expect(stopped).toEqual([FAKE_UNFINISHED_RUN]));
+    expect(recovery.resumed()).toEqual([]);
+    const after = await recovery.report();
+    expect(after.ok && after.value.needsAttention).toBe(false);
+  });
+
   it('reloads an already-open conversation and follows the resumed run when Resume the task is clicked', async () => {
     const base = createTestServices().chat;
     let calls = 0;

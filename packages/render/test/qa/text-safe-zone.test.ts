@@ -2,54 +2,25 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * FIX-QA: captionSafeZone on a text item hands back the nearest box that passes, as a ready timeline.moveText, so
- * one fix round clears it. The probe measures the text as laid out, not the item's box: a right-aligned title sits
- * at its box's right edge, words wrapped in a narrow box run below it. `layout` below lays a made-up title out the
- * way render's CSS does (the box's left, top and width; height auto; text-align), so applying the fix and measuring
- * again is what the next draft's QA would see.
+ * TXT1: captionSafeZone on a text item. Where a video's text sits is its placer's to judge (the owner's rule: no
+ * code decides it), so a text outside the safe rect is a note: the check warns, names the text and how far out it
+ * is, and plans no move for it. A caption outside the rect fails as before, with its ready `captions.setStyle`; with
+ * both, the captions' failure comes first and the text is still named. The probe measures the text as laid out, not
+ * the item's box: a right-aligned title sits at its box's right edge.
  */
 import { describe, expect, it } from 'vitest';
-import {
-  TIMELINE_COMMANDS,
-  newId,
-  timelineCommandPayloads,
-  type Box,
-  type QaFix,
-  type Rect,
-  type TextTrackItem,
-} from '@taalcut/core';
-import { adaptPlan } from '../../src/plan/canvas';
-import { planTimeline } from '../../src/plan/render-plan';
-import { planQa } from '../../src/plan/qa-plan';
-import { presetFor, safeRectFor } from '../../src/presets/presets.v1';
+import { CAPTION_COMMANDS, newId, type Rect } from '@taalcut/core';
+import { safeRectFor } from '../../src/presets/presets.v1';
 import { captionSafeZoneCheck } from '../../src/qa/checks/captions';
-import { planTextMove } from '../../src/qa/text-move';
+import { textNotes } from '../../src/tools/schemas';
 import type { ProbedTextBox } from '../../src/types';
-import { makeTimeline } from '../support/timeline';
-import { qaPlan, target } from './support';
+import { captions, qaPlan, report, target } from './support';
 
-const CANVAS = { width: 1080, height: 1920 };
 /** Explicit cross-post rect: x 120–780, y 288–1248 (Shorts ∩ Reels ∩ TikTok). */
 const SAFE = safeRectFor([]);
 const ID = newId<'TimelineItem'>();
 
-type Align = 'left' | 'center' | 'right';
-
-/** The text's laid-out rect for `box`: `text` pixels wide and tall, placed by the alignment, from the box's top. */
-function layout(box: Box, align: Align, text: { width: number; height: number }): Rect {
-  const left = box.x * CANVAS.width;
-  const width = box.width * CANVAS.width;
-  const x =
-    align === 'left' ? left : align === 'right' ? left + width - text.width : left + (width - text.width) / 2;
-  return {
-    x: Math.floor(x),
-    y: Math.floor(box.y * CANVAS.height),
-    width: Math.ceil(text.width),
-    height: Math.ceil(text.height),
-  };
-}
-
-const probed = (rect: Rect, frame = 40): ProbedTextBox => ({
+const probed = (rect: Rect, frame = 40, overrides: Partial<ProbedTextBox> = {}): ProbedTextBox => ({
   kind: 'text',
   id: ID,
   frame,
@@ -58,122 +29,95 @@ const probed = (rect: Rect, frame = 40): ProbedTextBox => ({
   overflow: false,
   fontsReady: true,
   color: '#ffffff',
+  ...overrides,
 });
 
-function check(box: Box, align: Align, rects: readonly Rect[]) {
-  const plan = qaPlan({ texts: [{ id: ID, span: { start: 20, end: 60 }, probeFrame: 40, box, align }] });
-  return captionSafeZoneCheck({
-    plan,
-    captions: null,
-    boxes: rects.map((rect, i) => probed(rect, 30 + i)),
-    safe: SAFE,
-    target,
-  });
-}
+const plan = qaPlan({
+  texts: [{ id: ID, span: { start: 20, end: 60 }, probeFrame: 40 }],
+  cues: [{ id: 'cue-1', span: { start: 0, end: 30 }, probeFrames: [15] }],
+});
+/** A title whose words end at x 842: 62 px past the rect's 780, 60 over the tolerance. */
+const ON_THE_RAIL: Rect = { x: 632, y: 960, width: 210, height: 52 };
+const INSIDE: Rect = { x: 300, y: 700, width: 300, height: 52 };
+const CUE_BELOW: Rect = { x: 250, y: 1700, width: 560, height: 180 };
 
-/** The fix's box, after checking it is a ready timeline.moveText the Reviewer's check accepts. */
-function movedBox(fixes: readonly QaFix[]): Box {
-  expect(fixes).toHaveLength(1);
-  const fix = fixes[0]!;
-  if (fix.kind !== 'command') throw new Error(`expected a ready command, got an ${fix.kind} fix`);
-  expect(fix.command).toBe(TIMELINE_COMMANDS.moveText);
-  expect(fix.labelKey).toBe('qa.fixes.moveText');
-  const payload = timelineCommandPayloads[TIMELINE_COMMANDS.moveText].parse(fix.payload);
-  expect(payload).toMatchObject({ ...target, itemId: ID });
-  return payload.box;
-}
-
-describe('captionSafeZone on a text item (FIX-QA)', () => {
-  it('moves a right-aligned title off the action rail in one round, keeping its size', () => {
-    // A box running to x 842 on a 1080-wide frame: its words end there, 62 px past the rect’s 780.
-    const box = { x: 0.5, y: 0.5, width: 0.28, height: 0.03 };
-    const text = { width: 210, height: 52 };
-    const first = check(box, 'right', [layout(box, 'right', text)]);
-    expect(first.status).toBe('fail');
-    expect(first.measured?.value).toBe(60);
-    const moved = movedBox(first.fixes);
-    expect(moved.width).toBeCloseTo(box.width, 4);
-    expect(moved.y).toBeCloseTo(box.y, 4);
-    // The nearest place: its right edge just inside the rect, not somewhere in the middle.
-    expect((moved.x + moved.width) * 1080).toBeGreaterThan(SAFE.x + SAFE.width - 8);
-    expect(check(moved, 'right', [layout(moved, 'right', text)]).status).toBe('pass');
-  });
-
-  it('lifts words wrapped into a column below the rect by what they overrun, not by the box', () => {
-    // A box 65 px wide holding a title that wrapped into a column: the box is inside, its text runs 40 px below.
-    const box = { x: 0.58, y: 0.5, width: 0.06, height: 0.025 };
-    const text = { width: 60, height: 1248 + 40 - 960 };
-    const first = check(box, 'right', [layout(box, 'right', text)]);
-    expect(first.status).toBe('fail');
-    const moved = movedBox(first.fixes);
-    expect(moved.x).toBeCloseTo(box.x, 4);
-    expect(moved.y).toBeLessThan(box.y);
-    expect(check(moved, 'right', [layout(moved, 'right', text)]).status).toBe('pass');
-  });
-
-  it('narrows a box wider than the rect and keeps every frame the probe read inside', () => {
-    const box = { x: 0.02, y: 0.08, width: 0.96, height: 0.05 };
-    const text = { width: 520, height: 90 };
-    // The text reveals word by word: a narrower rect at the first frame, the whole line later.
-    const rects = [layout(box, 'center', { width: 300, height: 90 }), layout(box, 'center', text)];
-    const first = check(box, 'center', rects);
-    expect(first.status).toBe('fail');
-    const moved = movedBox(first.fixes);
-    expect(moved.width * 1080).toBeLessThanOrEqual(SAFE.width);
-    expect(moved.x * 1080).toBeGreaterThanOrEqual(SAFE.x);
-    const after = [layout(moved, 'center', { width: 300, height: 90 }), layout(moved, 'center', text)];
-    expect(check(moved, 'center', after).status).toBe('pass');
-  });
-
-  it('centres text that can never fit, and leaves the Editor its judgment when the plan has no box', () => {
-    const huge = planTextMove({
-      box: { x: 0.1, y: 0.1, width: 0.5, height: 0.1 },
-      align: 'left',
-      probed: [{ x: 108, y: 192, width: 540, height: 1100 }],
-      safe: SAFE,
-      canvas: CANVAS,
-    });
-    const top = huge.y * 1920;
-    expect(top + 1100 - (SAFE.y + SAFE.height)).toBeCloseTo(SAFE.y - top, 0);
-    // Refitted onto another canvas: the drawn box isn't the item's own, so no ready box.
-    const plan = qaPlan({ texts: [{ id: ID, span: { start: 20, end: 60 }, probeFrame: 40 }] });
+describe('captionSafeZone on a text item (TXT1)', () => {
+  it('a text outside the safe rect is a note: a warning that names it and how far out it is, with no fix', () => {
     const result = captionSafeZoneCheck({
       plan,
       captions: null,
-      boxes: [probed({ x: 700, y: 900, width: 200, height: 50 })],
+      boxes: [probed(ON_THE_RAIL)],
       safe: SAFE,
       target,
     });
-    expect(result.fixes).toEqual([
-      { kind: 'agent', instructionKey: 'qa.fixes.moveText', params: { textId: ID } },
+    expect(result.status).toBe('warn');
+    expect(result.measured).toEqual({ value: 60, unit: 'px' });
+    expect(result.findings).toEqual([
+      {
+        frames: { start: 40, end: 41 },
+        target: { kind: 'text', id: ID },
+        measured: { value: 60, unit: 'px' },
+      },
     ]);
+    expect(result.fixes).toEqual([]);
+    // Right across the frame, top to bottom: still a note.
+    const everywhere = captionSafeZoneCheck({
+      plan,
+      captions: null,
+      boxes: [probed({ x: 0, y: 0, width: 1080, height: 1920 })],
+      safe: SAFE,
+      target,
+    });
+    expect(everywhere.status).toBe('warn');
+    expect(everywhere.fixes).toEqual([]);
   });
 
-  it("carries the timeline item's box and alignment into the QA plan, except when refitted for another canvas", () => {
-    const timeline = makeTimeline({
-      items: [{ frames: 60 }],
-      texts: [{ start: 0, frames: 60, text: 'Made up' }],
-    });
-    const box = { x: 0.5, y: 0.4, width: 0.3, height: 0.05 };
-    const tracks = timeline.tracks.map((track) =>
-      track.kind !== 'text'
-        ? track
-        : {
-            ...track,
-            items: track.items.map((item): TextTrackItem =>
-              item.type === 'text'
-                ? { ...item, box, appearance: { ...item.appearance, align: 'right' } }
-                : item,
-            ),
-          },
-    );
-    const plan = planTimeline({ ...timeline, tracks });
-    if (!plan.ok) throw new Error(plan.error.code);
-    expect(planQa(plan.value, presetFor('device')).texts[0]).toMatchObject({ box, align: 'right' });
-    const landscape = planTimeline({ ...timeline, tracks });
-    if (!landscape.ok) throw new Error(landscape.error.code);
+  it('a text inside the rect passes', () => {
     expect(
-      planQa(adaptPlan(landscape.value, presetFor('landscape')), presetFor('landscape')).texts[0]?.box,
-    ).toBeUndefined();
+      captionSafeZoneCheck({ plan, captions: null, boxes: [probed(INSIDE)], safe: SAFE, target }).status,
+    ).toBe('pass');
+  });
+
+  it('a caption outside the rect still fails, with its ready move; a text outside with it is named after it', () => {
+    const track = captions([{ id: 'cue-1', start: 0, frames: 30, text: 'Watch this' }], { anchorY: 0.95 });
+    const cue = probed(CUE_BELOW, 15, { kind: 'caption', id: 'cue-1', lines: 2 });
+    const alone = captionSafeZoneCheck({ plan, captions: track, boxes: [cue], safe: SAFE, target });
+    expect(alone.status).toBe('fail');
+    expect(alone.fixes).toHaveLength(1);
+    expect(alone.fixes[0]).toMatchObject({ kind: 'command', command: CAPTION_COMMANDS.setStyle });
+    const both = captionSafeZoneCheck({
+      plan,
+      captions: track,
+      boxes: [probed(ON_THE_RAIL), cue],
+      safe: SAFE,
+      target,
+    });
+    expect(both.status).toBe('fail');
+    expect(both.findings.map((finding) => finding.target)).toEqual([
+      { kind: 'caption', id: 'cue-1' },
+      { kind: 'text', id: ID },
+    ]);
+    // The fix is the captions' alone: nothing moves the text.
+    expect(both.fixes).toEqual(alone.fixes);
+  });
+
+  it('the notes of a report are the two checks’ findings about texts, whatever else the report holds', () => {
+    const outside = captionSafeZoneCheck({
+      plan,
+      captions: null,
+      boxes: [probed(ON_THE_RAIL)],
+      safe: SAFE,
+      target,
+    });
+    expect(textNotes(report([outside]))).toEqual([
+      {
+        check: 'captionSafeZone',
+        itemId: ID,
+        frames: { start: 40, end: 41 },
+        measured: { value: 60, unit: 'px' },
+      },
+    ]);
+    expect(textNotes(report([]))).toEqual([]);
+    expect(textNotes(null)).toEqual([]);
   });
 });

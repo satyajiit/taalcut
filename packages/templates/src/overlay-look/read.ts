@@ -6,13 +6,15 @@
  * type; the frames round its edges give its entrance, exit and typing. A chat bubble is a filled shape with a tail;
  * a pill one with round ends; a lower third a wide band low in the frame; any other filled shape a label; words
  * with no shape are plain; a bubble with a small mark beside its words has read ticks (marks.ts). Pixels can't
- * name a typeface, so the class is sans and the confidence says so. Pure.
+ * name a typeface, so the class is sans and the confidence says so. TXT1: how the letters are set (their colour,
+ * outline, stem, width, spacing and shadow) is measured by type-look.ts and recorded as `type`. Pure.
  */
 import type { Box, OverlayDesign } from '@taalcut/core';
 import { entranceOf, exitOf, presence, shapeFirst, type EdgeFrames, type Mask } from './motion';
 import { hex, settle, type PixelRect, type RegionImage, type Rgb } from './pixels';
 import { hasReceipt, marksOf } from './marks';
 import { readInk, readShape, weightOf, type ShapeRead } from './shape';
+import { readType, typeOf, weightOfStem } from './type-look';
 
 export interface DesignInput {
   /** The frame's size, in pixels. */
@@ -28,6 +30,8 @@ export interface DesignInput {
   readonly settled: readonly RegionImage[];
   /** Region images of frames round its edges, in order. */
   readonly edges: EdgeFrames;
+  /** TXT1: how many letters and digits its words have, when known (type-look.ts; the words are never read). */
+  readonly letters?: number;
 }
 
 /** A shape's corners are a pill's from this share of its height. */
@@ -91,6 +95,15 @@ export function readDesignAndLead(
   const shape = found?.bounded ? found : null;
   const ink = readInk(settled, input.words, shape?.fill ?? null);
   if (!ink) return null;
+  // TXT1: how the letters are set, measured; null leaves the design as BRK1 reads it.
+  const type = readType({
+    frames: input.settled,
+    settled,
+    words: input.words,
+    fill: shape?.fill ?? null,
+    within: shape?.rect ?? null,
+    ...(input.letters !== undefined ? { letters: input.letters } : {}),
+  });
   // Read ticks are a chat bubble's: only a shape with a tail is looked at for them.
   const receipt =
     shape !== null &&
@@ -110,10 +123,15 @@ export function readDesignAndLead(
       : 0.55;
   const design: OverlayDesign = {
     kind: shape ? kindOf(shape, input) : 'plain',
-    colors: { fill: shape ? hex(shape.fill) : null, text: hex(ink.colour), stroke: null },
+    colors: {
+      fill: shape ? hex(shape.fill) : null,
+      text: hex(type?.fill ?? ink.colour),
+      // The letters' outline, for words on the picture; a shape's own outline is not read.
+      stroke: type?.outline && !shape ? hex(type.outline.colour) : null,
+    },
     cornerRadius: shape ? Math.round(Math.min(0.5, shape.radius / height) * 100) / 100 : 0,
     tail: shape?.tail ?? 'none',
-    font: { class: 'sans', weight: weightOf(ink.share) },
+    font: { class: 'sans', weight: type ? weightOfStem(type.stem / type.height) : weightOf(ink.share) },
     motion: {
       enter: typing === 'typewriter' ? 'typewriter' : entranceOf(input.edges, mask, full, first),
       exit: exitOf(input.edges, mask, full, input.end),
@@ -121,6 +139,7 @@ export function readDesignAndLead(
     },
     ...(shape ? { shape: boxOf(shape.rect, input) } : {}),
     ...(receipt ? { receipt: true } : {}),
+    ...(type ? { type: typeOf(type, shape !== null) } : {}),
     confidence: Math.round(confidence * 100) / 100,
   };
   return { design, lead: Math.max(0, input.start - first), first };

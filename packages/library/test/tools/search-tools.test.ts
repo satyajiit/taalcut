@@ -105,9 +105,10 @@ describe('library tools: metadata', () => {
       ]),
     );
     expect(meta).toEqual({
-      'library.search': ['1.1.0', 'read', 30_000, 2, 'local'],
-      'library.findSimilar': ['1.1.0', 'read', 10_000, 1, 'local'],
-      'library.getAsset': ['1.1.0', 'read', 5_000, 1, 'local'],
+      // 1.2.0 (MOM1): the shots' moments. 1.3.0 (MOM2): a handling stretch marked, and said in the description.
+      'library.search': ['1.3.0', 'read', 30_000, 2, 'local'],
+      'library.findSimilar': ['1.2.0', 'read', 10_000, 1, 'local'],
+      'library.getAsset': ['1.3.0', 'read', 5_000, 1, 'local'],
       'library.importStatus': ['1.1.0', 'read', 5_000, 1, 'local'],
       'library.addSource': ['1.1.0', 'write', 10_000, 1, 'local'],
       'library.listSources': ['1.1.0', 'read', 5_000, 1, 'local'],

@@ -3,10 +3,19 @@
 
 /**
  * What a user message carries besides its words (P3-V15, EDT1-CTX): the run's opening choice, the selection chips,
- * what its words pointed at and the editor as the user saw it from the docked chat. The chat service sends them
- * with the run, links the conversation to a project through them, and gives them back to the message in history.
+ * what its words pointed at, the editor as the user saw it from the docked chat and (CVR1) the cover asked for in
+ * the editor's cover panel. The chat service sends them with the run, links the conversation to a project through
+ * them, and gives them back to the message in history.
  */
-import type { ConversationId, EditorContext, ProjectId, SelectionChip, TimelineId } from '@taalcut/core';
+import type {
+  ConversationId,
+  CoverRequest,
+  EditorContext,
+  PostCaptionRequest,
+  ProjectId,
+  SelectionChip,
+  TimelineId,
+} from '@taalcut/core';
 import type { StartRequest } from './agent-types';
 import type { ChatHistoryEvent, UserMessageEvent } from './chat-types';
 import { commentIds } from './comments/chat-comments';
@@ -24,6 +33,9 @@ export interface MessageExtras {
   readonly start?: StartRequest['start'];
   readonly selections?: SelectionChip[];
   readonly editorContext?: EditorContext;
+  readonly cover?: CoverRequest;
+  /** CAP1: the post caption asked for in the editor's caption panel. */
+  readonly postCaption?: PostCaptionRequest;
 }
 
 /** The extras a sent message keeps, for its user.message and the run it starts: only what it has. */
@@ -31,12 +43,18 @@ export function messageExtras(sent: {
   readonly start?: StartRequest['start'] | undefined;
   readonly selections?: readonly SelectionChip[] | undefined;
   readonly editorContext?: EditorContext | undefined;
+  readonly cover?: CoverRequest | undefined;
+  readonly postCaption?: PostCaptionRequest | undefined;
 }): MessageExtras {
-  const { start, selections, editorContext } = sent;
+  const { start, selections, editorContext, cover } = sent;
   return {
     ...(start ? { start } : {}),
     ...(selections?.length ? { selections: [...selections] } : {}),
     ...(editorContext ? { editorContext } : {}),
+    // CVR1: a cover is asked for from the editor, so it goes only with the editor it was asked in.
+    ...(editorContext && cover ? { cover } : {}),
+    // CAP1: so is a post caption.
+    ...(editorContext && sent.postCaption ? { postCaption: sent.postCaption } : {}),
   };
 }
 
@@ -56,12 +74,13 @@ export async function linkedProject(
 
 /**
  * The user message a run started from gets the run's opening choice, selections and what its words pointed at
- * (P3-V15) back, and (EDT1-CMT) the comments it sent (history only).
+ * (P3-V15) back, (EDT1-CMT) the comments it sent and (CVR1) the cover it asked for (history only).
  */
 export function withExtras(segments: { events: ChatHistoryEvent[] }[], first: AgentEvent): void {
   if (first.type !== 'run.started') return;
   const { start, selections, pointers, message, comments } = first.payload;
   const editorContext = first.payload.editor?.context;
+  const cover = first.payload.editor?.cover;
   if (!start && !selections && !pointers && !editorContext && !comments) return;
   const match = segments
     .flatMap((s) => s.events)
@@ -78,6 +97,8 @@ export function withExtras(segments: { events: ChatHistoryEvent[] }[], first: Ag
       ...(selections ? { selections } : {}),
       ...(pointers ? { pointers } : {}),
       ...(editorContext ? { editorContext } : {}),
+      ...(cover ? { cover } : {}),
+      ...(first.payload.editor?.postCaption ? { postCaption: first.payload.editor.postCaption } : {}), // CAP1
       ...commentIds(comments), // EDT1-CMT
     },
   });

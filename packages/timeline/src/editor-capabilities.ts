@@ -7,6 +7,10 @@ import {
   EDITOR_COMMANDS,
   AUDIO_EDIT_COMMANDS,
   SIMPLE_EDITOR_COMMANDS,
+  POST_CAPTION_COMMAND,
+  TEXT_DESIGN_COMMAND,
+  TEXT_PLACE_COMMAND,
+  LENGTHEN_SLOT_COMMAND,
   type EditorCapability,
 } from '@taalcut/core';
 
@@ -15,6 +19,13 @@ export const timelineEditorCapabilities: readonly EditorCapability[] = [
     ...Object.values(EDITOR_COMMANDS),
     ...Object.values(AUDIO_EDIT_COMMANDS),
     ...Object.values(SIMPLE_EDITOR_COMMANDS),
+    // CAP1: the caption to post under the video.
+    POST_CAPTION_COMMAND,
+    // TXT1: the video's text looks, and where its text sits.
+    TEXT_DESIGN_COMMAND,
+    TEXT_PLACE_COMMAND,
+    // LONG1: a clip lengthened by whole bars of the reel's music.
+    LENGTHEN_SLOT_COMMAND,
     'timeline.setCover',
     'timeline.swapClip',
     'timeline.trimClip',
@@ -36,7 +47,8 @@ export const timelineEditorCapabilities: readonly EditorCapability[] = [
     'timeline.markForFilming',
     'timeline.applyCast',
   ]),
-  ...queryCapabilities(['timeline.get', 'timeline.transcript']),
+  // LONG1: timeline.musicBars reads the music's bars and each clip's spare footage.
+  ...queryCapabilities(['timeline.get', 'timeline.transcript', 'timeline.musicBars']),
   ...commandCapabilities(['timeline.prepareNarration']),
   ...queryCapabilities([
     'timeline.findAlternates',

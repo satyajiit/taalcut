@@ -15,7 +15,7 @@ import { toSrt, toVtt } from '../captions/subtitles';
 import { finalizeRender, markNeedsAttention } from '../qa/finalize';
 import { preflightPassed } from '../qa/run-preflight';
 import { DELIVERABLE_VERDICTS, verdictOf } from '../qa/verdict';
-import { renderDestination, renderWorkFile, renderWorkSidecar } from '../store/paths';
+import { renderDelivery, renderWorkFile, renderWorkSidecar, type RenderDelivery } from '../store/paths';
 import { workspaceOf } from '../workspace/fold/workspace-of';
 import { gatherExport, type ExportInputs } from './export-inputs';
 import { finishRender } from './finish';
@@ -52,17 +52,14 @@ export function preflightReport(
   };
 }
 
-async function sidecarFiles(stage: StageContext, inputs: ExportInputs) {
+async function sidecarFiles(stage: StageContext, inputs: ExportInputs, delivery: RenderDelivery) {
   const track = inputs.plan.captions;
   if (!track || stage.record.captions.sidecars.length === 0) return [];
   const files = [];
   for (const format of stage.record.captions.sidecars) {
     const from = renderWorkSidecar(stage.deps.folders, stage.record.id, format);
     await writeFile(from, format === 'srt' ? toSrt(track, inputs.plan.rate) : toVtt(track, inputs.plan.rate));
-    files.push({
-      from,
-      to: renderDestination(stage.deps.folders, stage.record.projectId, stage.record.id, format),
-    });
+    files.push({ from, to: delivery.sidecar(format) });
   }
   return files;
 }
@@ -186,14 +183,15 @@ export async function runStages(
   if (!report.ok) return report;
   if (!DELIVERABLE_VERDICTS.has(report.value.verdict))
     return markNeedsAttention(deps, { renderId: record.id, report: report.value });
+  const delivery = await renderDelivery(deps.folders, record);
   return finalizeRender(
     { store: deps.store, clock: deps.clock },
     {
       renderId: record.id,
       workFile: out,
-      destination: renderDestination(deps.folders, record.projectId, record.id),
+      destination: delivery.file,
       report: report.value,
-      sidecars: await sidecarFiles(stage, inputs),
+      sidecars: await sidecarFiles(stage, inputs, delivery),
     },
   );
 }

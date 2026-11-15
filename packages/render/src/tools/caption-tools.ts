@@ -37,6 +37,8 @@ const target = {
 function captionTool<I extends z.ZodObject>(spec: {
   readonly timelines?: TimelineAccess | undefined;
   readonly name: string;
+  /** Default 1.0.0. */
+  readonly version?: string;
   readonly command: string;
   readonly description: string;
   readonly summary?: string;
@@ -45,7 +47,7 @@ function captionTool<I extends z.ZodObject>(spec: {
 }) {
   return defineTool({
     name: spec.name,
-    version: '1.0.0',
+    version: spec.version ?? '1.0.0',
     description: spec.description,
     ...(spec.summary ? { summary: spec.summary } : {}),
     tags: spec.tags,
@@ -98,6 +100,8 @@ export function captionToolModule(timelines?: TimelineAccess): ToolModule {
   const setStyle = captionTool({
     timelines,
     name: CAPTION_COMMANDS.setStyle,
+    // 1.1.0 (TXT1): `style.font` takes six more faces (core's CAPTION_FONTS).
+    version: '1.1.0',
     command: CAPTION_COMMANDS.setStyle,
     description:
       'Changes the caption style: font, weight, size, colours, outline, background box, highlight, case, ' +

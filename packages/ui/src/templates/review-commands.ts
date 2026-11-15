@@ -20,6 +20,7 @@ export const REVIEW_COMMANDS = {
   renameSlot: 'template.slot.rename',
   setSoundCredit: 'template.setSoundCredit',
   setMotion: 'template.setMotion',
+  setFootage: 'template.slot.setFootage',
   setGraphic: 'template.graphic.set',
   editGraphic: 'template.graphic.edit',
 } as const satisfies Pick<
@@ -36,6 +37,7 @@ export const REVIEW_COMMANDS = {
   | 'renameSlot'
   | 'setSoundCredit'
   | 'setMotion'
+  | 'setFootage'
   | 'setGraphic'
   | 'editGraphic'
 >;

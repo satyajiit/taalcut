@@ -35,6 +35,13 @@ const CASES: readonly {
   { font: 'baloo2', weight: 700, size: 72, texts: ['hi', 'en'] },
   { font: 'anton', weight: 400, size: 96, texts: ['en', 'pt'] },
   { font: 'bebasNeue', weight: 400, size: 96, texts: ['es'] },
+  // TXT1's faces: Latin only (a Hindi word falls through the stack, as hinglish shows).
+  { font: 'playfairDisplay', weight: 700, size: 80, texts: ['en', 'es', 'pt'] },
+  { font: 'cormorantGaramond', weight: 300, size: 80, texts: ['en', 'pt', 'hinglish'] },
+  { font: 'oswald', weight: 500, size: 96, texts: ['en', 'es'] },
+  { font: 'caveat', weight: 700, size: 80, texts: ['en', 'pt'] },
+  { font: 'dancingScript', weight: 600, size: 80, texts: ['en', 'es'] },
+  { font: 'courierPrime', weight: 700, size: 64, texts: ['en', 'pt', 'emoji'] },
 ];
 
 function fontFaces(): string {

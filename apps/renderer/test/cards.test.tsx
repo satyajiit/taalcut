@@ -49,6 +49,8 @@ function translatableText(root: HTMLElement): string[] {
       found.push(text);
   }
   for (const el of root.querySelectorAll('[aria-label], [title], [placeholder]')) {
+    // As e2e/inspect.ts: a name's own tooltip (a folder's or a video's whole name, translate="no") is data too.
+    if (el.closest('[translate="no"], time')) continue;
     for (const name of ['aria-label', 'title', 'placeholder']) {
       const value = el.getAttribute(name)?.trim();
       if (value) found.push(value);

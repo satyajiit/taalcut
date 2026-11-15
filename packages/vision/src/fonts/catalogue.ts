@@ -11,6 +11,10 @@
  * inter, sourceSans3, sourceSerif4, lora, merriweather, libreFranklin, nunito,
  * ibmPlexSans, tiroDevanagariHindi, martel, kalam.
  *
+ * TXT1: six of core's CAPTION_FONTS ship with render only and are not scored here: playfairDisplay,
+ * cormorantGaramond, oswald, caveat, dancingScript, courierPrime (a video's text is set in them by a stated look,
+ * never by font match). Scoring them needs a static Regular of each in this folder, with its licence.
+ *
  * The fonts directory is a parameter: `packageFontsDir()` is the checkout's copy
  * (tests, development). Bundled code cannot find it from its own URL, so the
  * desktop passes the copy it ships, as it does for render's caption fonts.

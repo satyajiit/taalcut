@@ -17,6 +17,11 @@ export const UnsupportedSchema = defineError<{ schemaVersion: number }>('timelin
 /** No slot of the template could be filled from the library. */
 export const NoCandidates = defineError('timeline.no_candidates');
 export const TemplateNotFound = defineError<{ templateId: string }>('timeline.template_not_found');
+/**
+ * KEEP1: a slot keeps the reel's own footage and the template's reel isn't on this Mac (never kept, or deleted), or
+ * is a file the library can't hold as a video. The tools' fix fetches the reel again (tools/reel-source.ts).
+ */
+export const ReelMissing = defineError<{ templateId: string }>('timeline.reel_missing');
 
 // Phase 3 (SPEC "Errors (Phase 3)"). Shortfalls and warnings are results, not errors.
 /** No registered writer for this pro export format. */

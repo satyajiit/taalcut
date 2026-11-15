@@ -41,7 +41,7 @@ import type { localeRouter } from '../locale/locale-host';
 import { mainPhase3Routers } from './phase3-namespaces';
 
 export const UtilityHostToken = createToken<UtilityHost>('desktop.utilityHost');
-/** Desktop only: battery and thermal state from powerMonitor (main only). */
+/** Desktop only: thermal state from powerMonitor (main only). */
 export const PowerStateToken = createToken<PowerState & { dispose(): void }>('desktop.powerState');
 
 type Host = Pick<UtilityHost, 'client' | 'onConnected'>;

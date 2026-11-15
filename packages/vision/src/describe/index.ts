@@ -50,6 +50,7 @@ export {
   RETRY_TEMPERATURE,
   retryNote,
   SHOT_DESCRIPTION_PROMPT,
+  SHOT_MOMENTS_PROMPT,
   type DescribeShotsContext,
   type DescribeShotsDeps,
   type DescribeShotsInput,
@@ -65,3 +66,4 @@ export {
   type ShotContext,
   type ShotContextView,
 } from './shot-context';
+export { MOMENTS_FIELD, momentsRequestText, shotMoments, type MomentSpan } from './moments';

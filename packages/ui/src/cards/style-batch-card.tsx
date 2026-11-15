@@ -52,7 +52,13 @@ function VideoRow(props: { projectId: ProjectId; timelineId: TimelineId; outcome
   const name = title ? <UserContent translate="no">{title}</UserContent> : t`Video ${n}`;
   return (
     <li className="flex min-h-9 items-center gap-3">
-      <span id={nameId} className="min-w-0 flex-1 truncate text-sm text-ink">
+      {/* One line, cut at the row's width; the video's whole name (its own words) stays as the tooltip. */}
+      <span
+        id={nameId}
+        title={title}
+        translate={title ? 'no' : undefined}
+        className="min-w-0 flex-1 truncate text-sm text-ink"
+      >
         {name}
       </span>
       <OutcomeBadge outcome={props.outcome} />

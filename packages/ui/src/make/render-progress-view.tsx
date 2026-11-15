@@ -127,7 +127,12 @@ export function RenderProgressView({
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <p className="m-0 flex min-w-0 flex-wrap items-baseline gap-x-2 text-sm text-ink-2">
           {render.status === 'ready' ? (
-            <UserContent translate="no" className="truncate text-base font-semibold text-ink">
+            // One line, cut at the card's width (the editor's chat is narrow); the whole name stays as the tooltip.
+            <UserContent
+              translate="no"
+              title={render.name}
+              className="truncate text-base font-semibold text-ink"
+            >
               {render.name}
             </UserContent>
           ) : (

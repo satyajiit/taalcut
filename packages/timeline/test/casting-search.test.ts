@@ -38,18 +38,26 @@ function bruteForce(pools: readonly SlotPool[]): number {
 
 describe('beam search', () => {
   it('matches brute force where width 8 keeps every state', () => {
-    const template = buildTemplate({ slots: [{ frames: 30 }, { frames: 30 }, { frames: 30 }, { frames: 30 }] });
+    const template = buildTemplate({
+      slots: [{ frames: 30 }, { frames: 30 }, { frames: 30 }, { frames: 30 }],
+    });
     const specs = slotSpecs(template, config);
     for (let seed = 1; seed <= 20; seed++) {
       const next = random(seed);
       const shared = Array.from({ length: 3 }, (_, index) =>
-        makeProfile({ embedding: unitVector(seed * 50 + index), place: next() > 0.5 ? 'beach' : null, quality: next() }),
+        makeProfile({
+          embedding: unitVector(seed * 50 + index),
+          place: next() > 0.5 ? 'beach' : null,
+          quality: next(),
+        }),
       );
       const pools: SlotPool[] = specs.map((slot) => {
         const pair = [shared[Math.floor(next() * 3)]!, shared[Math.floor(next() * 3)]!].filter(
           (profile, index, list) => list.indexOf(profile) === index,
         );
-        const candidates = pair.map((profile) => scoreCandidate(slot, profile, next(), { config, recent: [] }));
+        const candidates = pair.map((profile) =>
+          scoreCandidate(slot, profile, next(), { config, recent: [] }),
+        );
         return { slot, candidates, locked: false, relaxed: false, reranked: false };
       });
       const [best] = beamSearch(pools, { width: 8, tie: config.tieEpsilon, adjacency });
@@ -60,14 +68,26 @@ describe('beam search', () => {
   });
 
   it('never puts two near duplicates back to back when a distinct shot is close', () => {
-    const template = buildTemplate({ slots: [{ frames: 30, text: 'a' }, { frames: 30, text: 'b' }] });
+    const template = buildTemplate({
+      slots: [
+        { frames: 30, text: 'a' },
+        { frames: 30, text: 'b' },
+      ],
+    });
     const intent = unitVector(9);
     const twin = makeProfile({ embedding: intent, motionClass: null });
     const copy = makeProfile({ embedding: intent, motionClass: null, assetId: twin.assetId });
     const other = makeProfile({ embedding: unitVector(10), motionClass: null });
     const engine = createCastingEngine({
       catalog: createMemoryShotCatalog([twin, copy, other]),
-      embedder: fakeEmbedder(new Map([['slot 0', intent], ['slot 1', intent], ['a', intent], ['b', intent]])),
+      embedder: fakeEmbedder(
+        new Map([
+          ['slot 0', intent],
+          ['slot 1', intent],
+          ['a', intent],
+          ['b', intent],
+        ]),
+      ),
     });
     return engine.cast({ projectId, template, mode: 'template', variants: 1, seed: 1 }).then((result) => {
       if (!result.ok) throw new Error(result.error.code);
@@ -93,7 +113,7 @@ describe('the engine', () => {
       expect(slot.needsRerank).toBe(slot.confidence! < config.confidence.rerankBelow);
       expect(slot.alternates[0]!.score).toBeLessThanOrEqual(slot.pick!.score + config.tieEpsilon);
     }
-    expect(result.value.configVersion).toBe('casting.v5');
+    expect(result.value.configVersion).toBe('casting.v6');
     expect(variant!.sequenceConfidence).toBeGreaterThan(0);
   });
 
@@ -106,9 +126,18 @@ describe('the engine', () => {
   });
 
   it('relaxes orientation for an empty slot, then leaves a gap, and never reuses a shot', async () => {
-    const template = buildTemplate({ slots: [{ frames: 30, text: 'wide' }, { frames: 30, text: 'wide' }, { frames: 30, text: 'wide' }] });
+    const template = buildTemplate({
+      slots: [
+        { frames: 30, text: 'wide' },
+        { frames: 30, text: 'wide' },
+        { frames: 30, text: 'wide' },
+      ],
+    });
     const landscape = makeProfile({ embedding: unitVector(4), orientation: 'landscape' });
-    const engine = createCastingEngine({ catalog: createMemoryShotCatalog([landscape]), embedder: fakeEmbedder(new Map()) });
+    const engine = createCastingEngine({
+      catalog: createMemoryShotCatalog([landscape]),
+      embedder: fakeEmbedder(new Map()),
+    });
     // A canvas the request names (a person's choice) keeps its orientation, so the other one is relaxed (BRK1-MAKE).
     const canvas = { width: template.canvas.width, height: template.canvas.height };
     const result = await engine.cast({ projectId, template, mode: 'template', variants: 1, seed: 1, canvas });
@@ -123,7 +152,10 @@ describe('the engine', () => {
   it('answers timeline.no_candidates when nothing can fill any slot', async () => {
     const template = buildTemplate({ slots: [{ frames: 30 }] });
     const short = makeProfile({ embedding: unitVector(1), frames: 10 });
-    const engine = createCastingEngine({ catalog: createMemoryShotCatalog([short]), embedder: fakeEmbedder(new Map()) });
+    const engine = createCastingEngine({
+      catalog: createMemoryShotCatalog([short]),
+      embedder: fakeEmbedder(new Map()),
+    });
     const result = await engine.cast({ projectId, template, mode: 'template', variants: 1, seed: 1 });
     expect(!result.ok && result.error.code).toBe('timeline.no_candidates');
   });
@@ -136,7 +168,14 @@ describe('the engine', () => {
     const five = [slot.pick!, ...slot.alternates].map((candidate) => candidate.shotId!);
     const outsider = profiles.find((profile) => !five.includes(profile.shotId!))!;
     const order = [five[3]!, five[0]!, five[1]!, five[2]!, outsider.shotId!];
-    const reranked = await engine.cast({ projectId, template, mode: 'template', variants: 1, seed: 1, rerank: [{ slotId: slot.slotId, order }] });
+    const reranked = await engine.cast({
+      projectId,
+      template,
+      mode: 'template',
+      variants: 1,
+      seed: 1,
+      rerank: [{ slotId: slot.slotId, order }],
+    });
     if (!reranked.ok) throw new Error(reranked.error.code);
     const after = reranked.value.variants[0]!.slots[0]!;
     expect(after.note).toBe('reranked');
@@ -155,7 +194,9 @@ describe('the engine', () => {
       mode: 'template',
       variants: 2,
       seed: 1,
-      locked: [{ slotId: template.slots[1]!.id, assetId: locked.assetId, shotId: locked.shotId, sourceStart }],
+      locked: [
+        { slotId: template.slots[1]!.id, assetId: locked.assetId, shotId: locked.shotId, sourceStart },
+      ],
     });
     if (!result.ok) throw new Error(result.error.code);
     for (const variant of result.value.variants) {

@@ -16,11 +16,15 @@ import { createEditorCommands } from './editor-commands';
 import { createEnergyCommands } from './energy-commands';
 import { createGapCommands } from './gap-commands';
 import { createInterchangeCommands } from './interchange-command';
+import { lengthenCommand } from './lengthen-command';
 import { createLifecycleCommands } from './lifecycle';
 import { createReframeCommands } from './reframe-commands';
 import { coverCommand } from './cover-command';
 import { createSimpleEditorCommands } from './simple-editor-commands';
+import { postCaptionCommand } from './post-caption-command';
 import { createStyleCommands } from './style-commands';
+import { textDesignCommand } from './text-design-command';
+import { textPlaceCommand } from './text-place-command';
 
 export interface TimelineCommands {
   /** Every handler, to register in one call: `bus.register(...commands.all)`. */
@@ -52,7 +56,14 @@ export function createTimelineCommands(deps: TimelineCommandDeps): TimelineComma
     ...createEditorCommands(shared).all,
     ...createAudioEditCommands(shared).all,
     ...createSimpleEditorCommands(shared).all,
+    // CAP1: the caption to post under the video.
+    postCaptionCommand(shared),
+    // TXT1: the video's text looks, saved as its own Style.
+    textDesignCommand(shared),
+    textPlaceCommand(shared),
     coverCommand(shared),
+    // LONG1: a slot lengthened by whole bars of the reel's music.
+    lengthenCommand(shared),
   ] as AnyCommand[];
   return {
     all,

@@ -38,6 +38,7 @@ import {
 } from './asset-tool';
 import { describeAssetCall, describeSimilarCall } from './call-summaries';
 import { compactHitsOutput, hitsOutput, summarizeSearchOutput, type hitSchema } from './compact-hits';
+import { HIT_MOMENTS, momentWords } from './shot-moments';
 import { importProgressCard } from './import-card';
 import {
   parseFilters,
@@ -82,7 +83,12 @@ function actionsOf(db: LibraryDatabase, shotIds: readonly string[]): Map<string,
   return found;
 }
 
-function toToolHit(hit: SearchHit, actions: ReadonlyMap<string, string[]>): z.input<typeof hitSchema> {
+function toToolHit(
+  hit: SearchHit,
+  actions: ReadonlyMap<string, string[]>,
+  moments: ReadonlyMap<string, string>,
+): z.input<typeof hitSchema> {
+  const shown = moments.get(hit.shot.id);
   return {
     shotId: hit.shot.id,
     assetId: hit.asset.id,
@@ -91,6 +97,7 @@ function toToolHit(hit: SearchHit, actions: ReadonlyMap<string, string[]>): z.in
     duration: plainTime(hit.shot.range.duration),
     description: hit.shot.description,
     actions: actions.get(hit.shot.id) ?? [],
+    ...(shown ? { moments: shown } : {}),
     place: hit.asset.place ? placeInWords(hit.asset.place) : null,
     trip: hit.asset.trip
       ? { id: hit.asset.trip.id, name: hit.asset.trip.name, month: hit.asset.trip.month }
@@ -102,11 +109,11 @@ function toToolHit(hit: SearchHit, actions: ReadonlyMap<string, string[]>): z.in
 }
 
 const toolHits = (db: LibraryDatabase, hits: readonly SearchHit[]) => {
-  const actions = actionsOf(
-    db,
-    hits.map((hit) => hit.shot.id),
-  );
-  return hits.map((hit) => toToolHit(hit, actions));
+  const shotIds = hits.map((hit) => hit.shot.id);
+  const actions = actionsOf(db, shotIds);
+  // MOM1: what each shot shows over time, cut short for a list of hits.
+  const moments = momentWords(db, shotIds, HIT_MOMENTS);
+  return hits.map((hit) => toToolHit(hit, actions, moments));
 };
 
 /** An asset's best first shot: the first that is a best take, else its first. */
@@ -120,11 +127,15 @@ function bestFirstShot(db: LibraryDatabase, assetId: string): ShotId | undefined
 export function libraryReadTools(deps: LibraryReadToolDeps) {
   const search = defineTool({
     name: 'library.search',
-    version: '1.1.0',
+    // 1.2.0 (MOM1): each hit's moments, what the shot shows from when to when.
+    // 1.3.0 (MOM2): a stretch where the camera is being handled is marked.
+    version: '1.3.0',
     description:
       "Searches the user's footage by meaning and keywords, in any of the app's languages: what is seen " +
       '(the frames), the descriptions, what is said and on-screen text. Returns shots with their file, ' +
-      'start and length, why each matched, and a 0..1 score for ordering.',
+      'start and length, why each matched, a 0..1 score for ordering and, where a shot shows different things ' +
+      'over its length, moments: what it shows from when to when (seconds in its file), to place the part that fits. ' +
+      'A stretch marked (camera handling) is not footage.',
     summary: "Finds shots in the user's footage by meaning and keywords.",
     tags: ['search', 'footage', 'shots', 'find'],
     input: z.object({
@@ -156,7 +167,8 @@ export function libraryReadTools(deps: LibraryReadToolDeps) {
 
   const findSimilar = defineTool({
     name: 'library.findSimilar',
-    version: '1.1.0',
+    // 1.2.0 (MOM1): each hit's moments, as library.search's.
+    version: '1.2.0',
     description:
       'Finds shots that look like a given shot (or an asset, by its best first shot): same kind of scene, ' +
       'framing and content. Leaves out the shot, its near-duplicates and, by default, the rest of its file.',
@@ -200,11 +212,15 @@ export function libraryReadTools(deps: LibraryReadToolDeps) {
 
   const getAsset = defineTool({
     name: 'library.getAsset',
-    version: '1.1.0',
+    // 1.2.0 (MOM1): each shot's moments.
+    // 1.3.0 (MOM2): a stretch where the camera is being handled is marked.
+    version: '1.3.0',
     description:
       "One file's profile: kind, length, size, orientation, language, quality and index state; with " +
-      '`include`, its shots (descriptions, objects, place, shot type, motion, quality, on-screen text, ' +
-      'speech), its transcript (long ones are stored as an artifact) and where its copies are.',
+      '`include`, its shots (descriptions, moments: what each shows from when to when, in seconds of the file, a ' +
+      'stretch that is not footage marked (camera handling); ' +
+      'objects, place, shot type, motion, quality, on-screen text, speech), its transcript (long ones are stored ' +
+      'as an artifact) and where its copies are.',
     summary: "One file's profile: facts, shots, transcript and copies.",
     tags: ['asset', 'profile', 'transcript', 'shots'],
     input: getAssetInput,

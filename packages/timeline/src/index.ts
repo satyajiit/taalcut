@@ -26,6 +26,28 @@ export { resyncBeats, setClipFit } from './edits/qa-fixes';
 export { trimToDuration, type TrimToDurationInput } from './edits/trim-duration';
 export { TIMELINE_PARTS, type EditOptions, type EditResult, type TimelinePart } from './edits/types';
 export { beatsUnderTimeline, resync, resyncToBeatMap, type ResyncOptions } from './resync/resync';
+// LONG1: a clip lengthened by whole bars of the reel's music, and the music's two clocks.
+export { lengthenSlot, type Lengthened, type LengthenInput } from './edits/lengthen';
+export { carriedBeatMap, heardAt, reelTimeAt, repeatsOf, slotAddedFrames } from './music/carry';
+export {
+  clipLengths,
+  heardBars,
+  planLengthen,
+  SPLICE,
+  type ClipLength,
+  type LengthenPlan,
+  type LengthenStatement,
+  type LengthenWould,
+} from './tools/length-facts';
+export type {
+  ReelBar,
+  ReelBars,
+  ReelChange,
+  ReelMusic,
+  ReelMusicDeps,
+  ReelMusicSource,
+  ReelSeam,
+} from './tools/reel-music';
 
 // Commands, service and router port (P2-M1, M7).
 export { createTimelineCommands, type TimelineCommands } from './commands/commands';
@@ -59,6 +81,10 @@ export * from './fit';
 // Learned casting preferences (LRN1-PREF).
 export * from './casting/learned';
 export { assemble, reframeFor, type AssembleIds, type AssembleInput } from './assembly/assemble';
+// KEEP1: slots that keep the reel's own footage: the reel as clip media, and the port that puts it in the library.
+export { reelMedia, withoutReelOverlays, type ReelMedia } from './assembly/reel-footage';
+export { hasReelSlots } from './casting/reel-slots';
+export { reelFor, type ReelDeps, type ReelSource, type ReelSourceInput } from './tools/reel-source';
 // DSG1-AUT: which kit component a design is drawn with (the design loop designs those).
 export { designedGraphic, isGraphicOverlay } from './assembly/designed';
 // FRM1-SUB: subject tracks for every clip before the first draft, and the clips' aspects for reframing.
@@ -74,6 +100,8 @@ export {
 // BRK1-MAKE: the made video follows the clips' orientation, and its overlays are fitted to it.
 export { followedOrientation, MADE_CANVAS_SIZES, madeCanvas } from './casting/follow-canvas';
 export { fitBox, fitTextTracks, MADE_SAFE_AREAS } from './assembly/fit-layout';
+// TXT1: the part of a vertical frame each platform's own interface leaves clear: facts the text tools report.
+export { PLATFORM_CLEAR_AREAS, PLATFORM_FRAME } from './assembly/platform-areas';
 
 // Pro export (P2-M1, P3-V5): OpenTimelineIO and FCPXML writers behind one registry.
 export {
@@ -145,13 +173,6 @@ export { EDITOR_GRAPHICS_PROMPT, EDITOR_GRAPHICS_TOOLS } from './skills/editor-g
 
 export * from './errors';
 // FRM1-OVL: the placement solver; render's layout and QA read heads as it does.
-export {
-  placeOverlays,
-  type PlaceInput,
-  type PlacementReport,
-  type PlaceResult,
-} from './assembly/placement/place-timeline';
-export { runPlacement, type PlacementDeps, type PlacementRun } from './assembly/placement/run-placement';
 export { checkSceneOf, type CheckScene } from './assembly/placement/check-scene';
 export { headsOf } from './assembly/placement/subjects';
 export { headMarginOf } from './assembly/placement/costs';
@@ -160,6 +181,10 @@ export { SOLVER_CONFIG, solvePlacements } from './assembly/placement/solve';
 // AGT2-MATCH: each draft shot against its slot (render QA's slot match), and video.done's verdict.
 export { needVerdicts, type NeedVerdict } from './match/shot-needs';
 export { slotShots, type SlotShot, type SlotShotsDeps } from './match/slot-shots';
+// MOM1: the part of a shot a clip plays against what its slot states, and the part a model states for a slot.
+export { partVerdict, type PartVerdict } from './match/part-verdict';
+export { contentPenalty, partFit, slotAsks, withAskSet, type PartFit } from './casting/moment-fit';
+export { partStarts, type PartStarts, type StatedPart } from './casting/stated-parts';
 export { showsFace } from './casting/subject-motion';
 export {
   checkVideoDone,

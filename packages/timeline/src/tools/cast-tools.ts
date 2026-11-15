@@ -12,48 +12,46 @@
  */
 import {
   defineTool,
-  err,
-  newId,
+  keepsReelFootage,
   NO_TOOL_RETRY,
   ok,
   rationalTimeSchema,
   TIMELINE_COMMANDS,
   type AnyTool,
-  type ArtifactRef,
   type AsyncResult,
   type ProjectId,
   type Result,
   type SubjectSource,
   type Template,
   type Timeline,
-  type TimelineId,
   type TimelineStore,
-  type TimelineSummary,
 } from '@taalcut/core';
-import type { z } from 'zod';
-import { assemble } from '../assembly/assemble';
 import { personInPoints } from '../assembly/person-in-points';
 import { castAspects, ensureForAssembly, type CastRefiner, type SubjectDeps } from '../assembly/subjects';
 import { runPlacement } from '../assembly/placement/run-placement';
 import { withCompositionFiles, type CompositionFiles } from '../assembly/composition-files';
-import { candidateKey } from '../model/cast';
 import { checkEdited } from '../model/validate';
 import type { CastingEngine, CastRequest, CastResult } from '../casting/engine';
 import type { TimelineService } from '../service/service';
 import type { TemplateReader } from '../service/templates';
+import { assembleVariants } from './assemble-variants';
+import { castAnswer, placedParts } from './cast-answer';
 import { sha256 } from './hash';
 import { GRAPHICS_WAIT_MAX_MS, type GraphicsReady, type GraphicsWait } from './graphics-wait';
-import { rerankMaterial, type RerankSlot, type ShotDescriptions } from './rerank-material';
+import { landMoments, momentsOf } from './landed-moments';
+import { assemblyMoments, withCastMoments } from './moment-answers';
+import { rerankMaterial, type ShotDescriptions } from './rerank-material';
+import { reelFor, type ReelDeps } from './reel-source';
+import { partProfiles } from './shot-moments';
 import {
   assembleToolInputSchema,
   assembleToolOutputSchema,
   castToolInputSchema,
   castToolOutputSchema,
-  type AssembleToolInput,
   type CastToolInput,
 } from './schemas';
 
-export interface CastToolDeps extends SubjectDeps {
+export interface CastToolDeps extends SubjectDeps, ReelDeps {
   readonly engine: CastingEngine;
   readonly templates: TemplateReader;
   readonly clock: { now(): number };
@@ -122,47 +120,31 @@ async function castFor(
     exclude: input.exclude,
     ...(input.pool ? { pool: input.pool } : {}),
     ...(input.rerank ? { rerank: input.rerank } : {}),
+    // MOM1: the part of a shot the model states for a slot; casting chooses the window inside it.
+    ...(input.parts ? { parts: input.parts } : {}),
   };
   const cast = await deps.engine.cast(request, signal);
   if (!cast.ok) return cast;
-  return ok({ template: template.value, cast: cast.value, ...(graphics ? { graphics } : {}) });
-}
-
-/** What `timeline.cast` answers: per variant and slot the pick, its alternates and confidence; the rest is the artifact. */
-function castAnswer(
-  result: CastResult,
-  artifact: ArtifactRef,
-  rerank: readonly RerankSlot[],
-  graphics?: GraphicsWait,
-): z.input<typeof castToolOutputSchema> {
-  return {
-    castId: result.castId,
-    configVersion: result.configVersion,
-    variants: result.variants.map((variant) => ({
-      sequenceConfidence: variant.sequenceConfidence,
-      slots: variant.slots.map((slot) => ({
-        slotId: slot.slotId,
-        shotId: slot.pick?.shotId ?? null,
-        assetId: slot.pick?.assetId ?? null,
-        confidence: slot.confidence,
-        needsRerank: slot.needsRerank,
-        note: slot.note,
-        alternates: slot.alternates.map((alternate) => alternate.shotId),
-      })),
-    })),
-    ...(result.variantsShort ? { variantsShort: result.variantsShort } : {}),
-    rerank: [...rerank],
-    artifact,
-    ...(graphics ? { graphics } : {}),
-  };
+  // MATCH1: each stated moment's in-point, where that shot fills that slot.
+  const landed = landMoments(cast.value, template.value, momentsOf(template.value, input.parts));
+  return ok({ template: template.value, cast: landed, ...(graphics ? { graphics } : {}) });
 }
 
 function castTool(deps: CastToolDeps): AnyTool {
   const tool = defineTool({
     name: 'timeline.cast',
-    version: '1.2.0',
+    // 1.3.0 (MOM1): `parts`, the rerank candidates' moments, and playsShotFrom on the slots they are for.
+    // 1.4.0 (MOM2): handling stretches marked in the rerank lists; a part stated inside one answers `handling`
+    // (the Librarian's prompt says what that is: its window has no room for the words here too).
+    // 1.5.0 (KEEP1): a slot that keeps the reel's own footage is noted `reelKept`, with no pick, and the answer
+    // says what that is (`reelKept`, only then: a cast without one pays no words for it, here or in the prompt).
+    // 1.6.0 (MATCH1): the answer lists the slots whose template states a moment that must land on their start or
+    // end (`lands`, with how to find the instant and state it: only when there is one). The instant is stated as
+    // that slot's part (its `to` for the slot's end, its `from` for its start), the clip is placed on it, and the
+    // slot says what became of it (`moment`). The inputs and the description are 1.5.0's: the window has no room.
+    version: '1.6.0',
     description:
-      'Casts the user\'s library into a template: per slot a pick, three alternates and a confidence, for 1–10 variants that differ in at least 30% of picks and in the hook. Mode "story" orders the brief\'s shots by capture time instead. Changes nothing; the full result is an artifact. `rerank` lists up to three unsure slots with what each candidate shows: to rerank, pass their order to timeline.assemble as `rerank`.',
+      "Casts the user's library into a template: per slot a pick, three alternates and a confidence, for 1–10 variants that differ in at least 30% of picks and in the hook. Mode \"story\" orders the brief's shots by capture time instead. Changes nothing; the full result is an artifact. `rerank` lists up to three unsure slots with what each candidate shows, its moments (what it shows from when to when, in seconds of its file) after its description: to rerank, pass their order to timeline.assemble as `rerank`. A shot shows different things over its length: `parts` names the stretch of a shot a slot should play ({slotId, shotId, from, to} in those seconds), the one whose moment fits what the slot asks for; the clip's window is chosen inside it. A slot listed in `rerank`, or with a part, says where its pick plays its shot from (playsShotFrom) and what became of the part.",
     summary: 'Casts library shots into a template: picks, alternates and confidence per slot, per variant.',
     tags: ['casting', 'variants', 'shots'],
     input: castToolInputSchema,
@@ -185,95 +167,40 @@ function castTool(deps: CastToolDeps): AnyTool {
       const rerank = await rerankMaterial(result, template, deps.shotDescriptions, {
         count: deps.engine.config.rerank.count,
         signal: ctx.signal,
+        ...(deps.engine.profiles ? { profiles: deps.engine.profiles.bind(deps.engine) } : {}),
       });
-      return ok(castAnswer(result, artifact.value, rerank, graphics));
+      const { config } = deps.engine;
+      // MOM2: the stated parts' shots, for a part set aside as a handling stretch.
+      const stated = await partProfiles(deps.engine.profiles?.bind(deps.engine), input.parts, ctx.signal);
+      const said = castAnswer(
+        result,
+        template,
+        config,
+        input.parts,
+        artifact.value,
+        rerank,
+        graphics,
+        stated,
+      );
+      return ok(withCastMoments(said, result, template, input.parts));
     },
   });
   return tool as AnyTool;
 }
 
-/** One assembled timeline per variant of the cast, named and id'd as the input asks. */
-function assembleVariants(
-  input: AssembleToolInput,
-  found: Found,
-  now: number,
-  keptAudio: boolean,
-  aspects: ReadonlyMap<string, number>,
-  existing: readonly TimelineSummary[] = [],
-): Result<Timeline[]> {
-  const { template, cast: result } = found;
-  const existingIds = new Set<string>(existing.map((item) => item.id));
-  const existingNames = new Set<string>(existing.map((item) => item.name));
-  const offset = existing.length;
-  const timelines: Timeline[] = [];
-  for (const [index, variant] of result.variants.entries()) {
-    const requestedId = input.timelineIds?.[index];
-    const timelineId = (
-      requestedId && !existingIds.has(requestedId) ? requestedId : newId<'Timeline'>()
-    ) as TimelineId;
-    existingIds.add(timelineId);
-    const variantIndex = Math.min(9, input.names?.[index] ? index : offset + index);
-    let variantNumber = offset + index + 1;
-    while (!input.names?.[index] && existingNames.has(`Variant ${variantNumber}`)) variantNumber += 1;
-    const name = input.names?.[index] ?? `Variant ${variantNumber}`;
-    existingNames.add(name);
-    const cast = {
-      castId: result.castId,
-      mode: input.mode,
-      variantIndex,
-      variantCount: result.variants.length,
-      configVersion: result.configVersion,
-    };
-    const assembled = assemble(
-      {
-        projectId: input.projectId,
-        template,
-        variant,
-        cast,
-        ...(input.texts ? { texts: input.texts } : {}),
-        // BRK1-MAKE: the canvas the cast was made for (the clips' orientation when it isn't the template's).
-        canvas: { width: result.canvas.width, height: result.canvas.height },
-        aspects,
-        keptAudio,
-        timelineId,
-        name,
-        now,
-      },
-      { item: () => newId<'TimelineItem'>() },
-    );
-    if (!assembled.ok) return err(assembled.error);
-    timelines.push(assembled.value);
-  }
-  return ok(timelines);
-}
-
 /**
- * FRM1-OVL: each new timeline's overlays placed with the people in its clips (placement/run-placement.ts); a
- * slot may be recast from the variant's own alternates when an overlay has no room.
+ * TXT1: each new timeline's text as the reel had it and its clips' subject tracks asked for, not waited for
+ * (placement/run-placement.ts): the tools that say what is under a text read them.
  */
-async function placedVariants(
+function placedVariants(
   deps: CastToolDeps,
   timelines: readonly Timeline[],
   found: Found,
-  signal: AbortSignal,
-): Promise<Result<Timeline[]>> {
+): Result<Timeline[]> {
   if (!deps.subjects) return ok([...timelines]);
   const out: Timeline[] = [];
-  for (const [index, timeline] of timelines.entries()) {
-    const variant = found.cast.variants[index];
-    const media = new Map(
-      (variant?.media ?? []).map((ref) => [
-        candidateKey({ assetId: ref.assetId, shotId: ref.kind === 'video' ? ref.shotId : null }),
-        ref,
-      ]),
-    );
-    const run = await runPlacement(timeline, found.template, {
-      subjects: deps.subjects,
-      media: async () => media,
-      tau: deps.engine.config.confidence.tau,
-      signal,
-    });
-    const checked = checkEdited(run.timeline);
+  for (const timeline of timelines) {
+    const checked = checkEdited(runPlacement(timeline, found.template, { subjects: deps.subjects }));
     if (!checked.ok) return checked;
     out.push(checked.value);
   }
@@ -290,13 +217,20 @@ const lowConfidence = (result: CastResult): number =>
   result.variants.reduce((sum, variant) => sum + variant.slots.filter((slot) => slot.needsRerank).length, 0);
 
 /** FIX-TRIM: assembly's step that chooses each pick's in-point again with the person in its shot. */
-function withPerson(deps: CastToolDeps, template: Template, signal: AbortSignal): CastRefiner | undefined {
+function withPerson(
+  deps: CastToolDeps,
+  template: Template,
+  parts: CastRequest['parts'],
+  signal: AbortSignal,
+): CastRefiner | undefined {
   const { subjects, engine } = deps;
   if (!subjects || !engine.profiles) return undefined;
   const profiles = engine.profiles.bind(engine);
+  // MOM1: the slots with what each states embedded, and the parts the model stated, which the step keeps.
+  const slotSpecs = engine.slotSpecs?.bind(engine);
   return async (cast, budgetMs) => {
     const done = await personInPoints(
-      { subjects, profiles },
+      { subjects, profiles, ...(slotSpecs ? { slotSpecs } : {}), ...(parts ? { parts } : {}) },
       template,
       cast,
       engine.config,
@@ -317,9 +251,16 @@ function withPerson(deps: CastToolDeps, template: Template, signal: AbortSignal)
 function assembleTool(deps: CastToolDeps): AnyTool {
   const tool = defineTool({
     name: 'timeline.assemble',
-    version: '1.1.0',
+    // 1.2.0 (MOM1): `parts`, and what became of each.
+    // 1.3.0 (MOM2): a part stated inside a handling stretch is reported `handling`.
+    // 1.4.0 (KEEP1): slots that keep the reel's own footage are filled from the template's reel (`reelSlots`).
+    // 1.5.0 (MATCH1): a part stated for a slot whose template says a moment lands on its edge puts that instant on
+    // the edge, and the answer says what became of each (`moments`) and which slots still ask for one (`lands`);
+    // a kept reel clip beside a dissolve or a fade starts clear of the blended frames, with the transition drawn
+    // again (`reelBlends`). The inputs and the description are 1.4.0's.
+    version: '1.5.0',
     description:
-      "Casts again (deterministic for the same library) and assembles one timeline per variant: every cut on the template's beat, transitions from the template, the overlays with `texts` where given. Creates them in one undoable step. Returns the timeline ids, their revisions and how many slots are under the confidence line.",
+      "Casts again (deterministic for the same library) and assembles one timeline per variant: every cut on the template's beat, transitions from the template, the overlays with `texts` where given. Creates them in one undoable step. `parts` names the stretch of a shot a slot plays ({slotId, shotId, from, to} in seconds of the shot's file, as its moments give them): the clip's window is chosen inside it, made just long enough when the stretch is shorter than the slot. Returns the timeline ids, their revisions, how many slots are under the confidence line and, for each stated part, where its clip plays from and whether the part was kept.",
     summary: 'Casts and assembles one timeline per variant, in one undoable step.',
     tags: ['assembly', 'variants'],
     input: assembleToolInputSchema,
@@ -335,30 +276,32 @@ function assembleTool(deps: CastToolDeps): AnyTool {
       const cast = await castFor(deps, input, ctx.signal, (fraction) => ctx.reportProgress(fraction));
       if (!cast.ok) return cast;
       let found = cast;
-      // FRM1-SUB: every pick's subject track before the first draft, then what placement's retime and recast read;
-      // and the clips' aspects for reframing. FIX-TRIM: between the two, each pick's in-point with the person.
+      // FRM1-SUB: every pick's subject track before the first draft, and the clips' aspects for reframing.
+      // FIX-TRIM: then each pick's in-point with the person.
       if (deps.subjects) {
+        const refine = withPerson(deps, cast.value.template, input.parts, ctx.signal);
+        const stated = momentsOf(cast.value.template, input.parts);
         const made = await ensureForAssembly(
           deps.subjects,
           cast.value.template,
           cast.value.cast,
           deps.subjectBudgetMs,
           Date.now,
-          withPerson(deps, cast.value.template, ctx.signal),
+          // MATCH1: a stated moment's in-point stands after the step with the person.
+          refine && (async (given, ms) => landMoments(await refine(given, ms), cast.value.template, stated)),
         );
         found = ok({ ...cast.value, cast: made.cast });
-        // Only a shortfall is worth a line: placement then reads fewer tracks until the queue catches up.
-        for (const [what, report] of [
-          ['subject tracks', made.picks],
-          ['fallback subject tracks', made.fallbacks],
-        ] as const)
-          if (!report.done)
-            console.warn(
-              `[timeline] ${what}: not all of ${report.ranges} ranges after ${report.ms} ms (${report.reason})`,
-            );
+        // Only a shortfall is worth a line: fewer tracks are read until the queue catches up.
+        if (!made.picks.done)
+          console.warn(
+            `[timeline] subject tracks: not all of ${made.picks.ranges} ranges after ${made.picks.ms} ms (${made.picks.reason})`,
+          );
       }
       const listed = await (deps.timelineStore ?? deps.service)?.listByProject(input.projectId as ProjectId);
       const existing = listed?.ok ? listed.value : [];
+      // KEEP1: the template's reel, for the slots that keep its footage (none: nothing is read).
+      const reel = await reelFor(deps, found.value.template, input.projectId as ProjectId, ctx.runId ?? null);
+      if (!reel.ok) return reel;
       const timelines = assembleVariants(
         input,
         found.value,
@@ -366,9 +309,10 @@ function assembleTool(deps: CastToolDeps): AnyTool {
         await keepsAudio(deps.templates, found.value.template),
         await castAspects(deps.frameSizes, found.value.cast),
         existing,
+        reel.value,
       );
       if (!timelines.ok) return timelines;
-      const placedFirst = await placedVariants(deps, timelines.value, found.value, ctx.signal);
+      const placedFirst = placedVariants(deps, timelines.value, found.value);
       if (!placedFirst.ok) return placedFirst;
       const filled = await withCompositionFiles(deps.workspace, input.projectId, placedFirst.value);
       for (const warning of filled.warnings) console.warn(`[timeline] ${warning}`);
@@ -384,6 +328,23 @@ function assembleTool(deps: CastToolDeps): AnyTool {
         ...(result.variantsShort ? { variantsShort: result.variantsShort } : {}),
         // FIX-GFXWAIT: the graphics it waited for, and the overlays left without a design (graphics.design makes them).
         ...(found.value.graphics ? { graphics: found.value.graphics } : {}),
+        ...(reel.value
+          ? { reelSlots: found.value.template.slots.filter(keepsReelFootage).map((slot) => slot.id) }
+          : {}),
+        // MOM1: what became of each part the model stated. MOM2: `handling` for one set aside as a handling stretch.
+        ...(input.parts && input.parts.length > 0
+          ? {
+              parts: placedParts(placed.value, input.parts, {
+                profiles: await partProfiles(
+                  deps.engine.profiles?.bind(deps.engine),
+                  input.parts,
+                  ctx.signal,
+                ),
+                config: deps.engine.config.inPoint.handling,
+              }),
+            }
+          : {}),
+        ...assemblyMoments(placed.value, found.value.template, input.parts, reel.value !== undefined),
       });
     },
   });

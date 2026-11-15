@@ -18,7 +18,7 @@ import { CleanupPlanCard } from './cleanup-plan-card';
 import { StyleBatchCard } from './style-batch-card';
 import { VoiceoverCard } from './voiceover-card';
 import { VoiceConsentCard } from './voice-consent-card';
-import { DesignGraphicCard } from './design-graphic-card';
+import { MotionGraphicCard } from './design-options-card';
 import { ImageTakesCard } from './image-takes-card';
 import { ConsentCard } from './consent-card';
 import { ErrorLine } from './error-line';
@@ -112,7 +112,8 @@ export const CARD_COMPONENTS: { readonly [T in CardType]: CardComponent<T> } = {
   styleBatch: StyleBatchCard,
   voiceover: VoiceoverCard,
   voiceConsent: VoiceConsentCard,
-  motionGraphic: DesignGraphicCard,
+  // DSG2: the options card when the graphic came with designs to choose between, else the designed graphic card.
+  motionGraphic: MotionGraphicCard,
   renderBatch: RenderBatchCard,
   imageTakes: ImageTakesCard,
   // Learning round 1 (LRN1-MEM).

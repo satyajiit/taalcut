@@ -39,8 +39,21 @@ export const CAPTION_FONT_FILES: readonly FontFileEntry[] = lockJson.files;
 /** The fallbacks every stack ends in: Latin, Devanagari, emoji. */
 export const FALLBACK_FONTS: readonly FontKey[] = ['notoSans', 'notoSansDevanagari', 'notoColorEmoji'];
 
-/** Design categories, so a reference's caption look maps to the nearest curated font. */
-export const FONT_CATEGORIES = ['sans', 'geometric', 'humanist', 'rounded', 'condensed'] as const;
+/**
+ * Design categories, so a reference's caption look maps to the nearest curated font. TXT1 adds the classes reels
+ * set their words in that the first nine faces lack: a serif, a script (handwriting and a formal script) and a
+ * mono (typewriter) face.
+ */
+export const FONT_CATEGORIES = [
+  'sans',
+  'geometric',
+  'humanist',
+  'rounded',
+  'condensed',
+  'serif',
+  'script',
+  'mono',
+] as const;
 export type FontCategory = (typeof FONT_CATEGORIES)[number];
 
 export const FONT_CATEGORY: Readonly<Record<CaptionFontId, FontCategory>> = {
@@ -53,6 +66,12 @@ export const FONT_CATEGORY: Readonly<Record<CaptionFontId, FontCategory>> = {
   baloo2: 'rounded',
   anton: 'condensed',
   bebasNeue: 'condensed',
+  playfairDisplay: 'serif',
+  cormorantGaramond: 'serif',
+  oswald: 'condensed',
+  caveat: 'script',
+  dancingScript: 'script',
+  courierPrime: 'mono',
 };
 
 type Range = readonly [number, number];

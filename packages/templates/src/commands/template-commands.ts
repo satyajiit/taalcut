@@ -36,6 +36,7 @@ import {
 } from '@taalcut/core';
 import type { z } from 'zod';
 import { moveCut, splitSlot } from '../edits/cut-edits';
+import { setFootage, withPersonSlot } from '../edits/footage-edits';
 import { editGraphic, setGraphic } from '../edits/graphic-edits';
 import {
   dismissDoubt,
@@ -70,7 +71,8 @@ type EditName =
   | typeof N.setMotion
   | typeof N.setGraphic
   | typeof N.editGraphic
-  | typeof N.setGraphics;
+  | typeof N.setGraphics
+  | typeof N.setFootage;
 
 interface EditPayload {
   readonly projectId: ProjectId | null;
@@ -104,7 +106,14 @@ export function createTemplateCommands({ service, store, slotId = () => newId() 
       handle: async (payload: z.output<S>, context) => {
         const { projectId, templateId, baseVersion } = payload;
         const outcome = await service.edit(
-          { templateId, baseVersion, command: name, payload, change: (t) => change(t, payload, context) },
+          // KEEP1: whatever the edit, a slot stays for the person's clips (footage-edits.ts).
+          {
+            templateId,
+            baseVersion,
+            command: name,
+            payload,
+            change: (t) => withPersonSlot(change(t, payload, context)),
+          },
           context,
         );
         if (!outcome.ok) return outcome;
@@ -256,6 +265,8 @@ export function createTemplateCommands({ service, store, slotId = () => newId() 
   const credit = edit(N.setSoundCredit, P[N.setSoundCredit], (t, p) => setSoundCredit(t, p));
   // FRM1-MOT: the camera's move the person picked in the review.
   const motion = edit(N.setMotion, P[N.setMotion], (t, p) => setMotion(t, p));
+  // KEEP1: whose footage a slot plays; from the review it is the person's statement.
+  const footage = edit(N.setFootage, P[N.setFootage], (t, p, context) => setFootage(t, p, author(context)));
   // DSG1-READ: the review's "Not a graphic", its restore, and a brief's words.
   const graphic = edit(N.setGraphic, P[N.setGraphic], (t, p) => setGraphic(t, p));
   const brief = edit(N.editGraphic, P[N.editGraphic], (t, p) => editGraphic(t, p));
@@ -284,6 +295,7 @@ export function createTemplateCommands({ service, store, slotId = () => newId() 
     graphic,
     brief,
     graphics,
+    footage,
     setHead,
     discard,
   ] as AnyCommand[];
@@ -310,6 +322,7 @@ export function createTemplateCommands({ service, store, slotId = () => newId() 
     setGraphic: graphic,
     editGraphic: brief,
     setGraphics: graphics,
+    setFootage: footage,
     setHead,
     discard,
     all,

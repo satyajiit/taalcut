@@ -5,6 +5,7 @@ import type { Timeline } from '@taalcut/core';
 import { CardActionsProvider, CardDataProvider, CoverEditor } from '@taalcut/ui';
 import { useAppCardActions } from '../../chat/card-actions';
 import { useAppCardData } from '../../chat/card-data';
+import { CoverGenerate } from './cover-generate';
 import type { Playhead } from './playhead';
 
 export function CoverPanel({
@@ -22,7 +23,13 @@ export function CoverPanel({
     <CardActionsProvider value={actions}>
       <CardDataProvider value={data}>
         <div className="p-4">
-          <CoverEditor timeline={timeline} currentFrame={() => playhead.frame()} paused={paused} />
+          <CoverEditor
+            timeline={timeline}
+            currentFrame={() => playhead.frame()}
+            paused={paused}
+            // CVR1: "Generate with AI" asks for a cover at the aspect picked just above it.
+            aspectAction={(aspect) => <CoverGenerate aspect={aspect} paused={paused} />}
+          />
         </div>
       </CardDataProvider>
     </CardActionsProvider>

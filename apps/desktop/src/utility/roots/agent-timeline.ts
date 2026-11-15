@@ -44,6 +44,7 @@ import {
   type SubjectSource,
   notServedRouter,
   ok,
+  POST_CAPTION_CREDIT_SETTING,
   SettingsStoreToken,
   SpeechCleanupSourceToken,
   StyleStoreToken,
@@ -78,7 +79,8 @@ import {
   type TimelineServiceDeps,
   type VariantMusicDeps,
 } from '@taalcut/timeline';
-import { LibraryDatabaseToken, ToolRegistryToken } from '../../shared/tokens';
+import type { MediaContext } from '@taalcut/media';
+import { LibraryDatabaseToken, ToolRegistryToken, UtilityConfigToken } from '../../shared/tokens';
 import { CastingEngineToken, registerCasting, ShotCatalogToken } from './agent-casting';
 import { TemplateFitterToken } from './agent-template-index';
 import { registerExportFileSink } from './agent-interchange';
@@ -88,6 +90,10 @@ import { editSubjects } from './edit-subjects';
 import { canGenerate } from './agent-audio-services';
 import { TemplateDesignTrackerToken } from './template-design-tracker';
 import { makerDoneOf } from './match-ports';
+import { keptReelSource } from './agent-kept-reel';
+import { reelMusicSource } from './agent-reel-music';
+import { mediaBinaries } from './media-jobs';
+import { textDesignPorts } from './text-design-ports';
 
 export function registerTimelineAgent(container: Container): void {
   registerCasting(container);
@@ -205,6 +211,13 @@ function variantMusic(container: Container): VariantMusicDeps | null {
   return container.has(LibraryDatabaseToken) ? { trackBeats: libraryBeatTracker(container) } : null;
 }
 
+/** The bundled FFmpeg, found when a tool first needs it; null where this process has none. */
+async function agentMedia(container: Container): Promise<MediaContext | null> {
+  if (!container.has(UtilityConfigToken)) return null;
+  const binaries = await mediaBinaries(container.resolve(UtilityConfigToken)).resolve();
+  return binaries.ok ? { binaries: binaries.value } : null;
+}
+
 /** One `timeline` module: the timeline package's tools and render's (captureFrame). */
 export function timelineAgentToolModule(
   container: Container,
@@ -228,10 +241,21 @@ export function timelineAgentToolModule(
     numbering: clipNumberingOf(container.resolve(TimelineStoreToken)),
     // HFW1: a template's composition files go into the project when a make draws with them.
     workspace: lazyWorkspace(container),
+    // CAP1: whether a post caption carries the credit line is the person's setting, read when the caption is
+    // built; the model never states it.
+    ...(container.has(SettingsStoreToken)
+      ? { postCaptionCredit: () => container.resolve(SettingsStoreToken).get(POST_CAPTION_CREDIT_SETTING) }
+      : {}),
     // FIX-GFXWAIT: a make from a template whose graphics are being designed waits for them.
     ...(container.has(TemplateDesignTrackerToken)
       ? { graphicsReady: container.resolve(TemplateDesignTrackerToken).wait }
       : {}),
+    // KEEP1: the template's kept reel, for the slots that keep its footage (agent-kept-reel.ts).
+    reel: keptReelSource(container),
+    // TXT1: the video's Style and render's faces, for timeline's text tools (textLook, designText, placeText).
+    ...textDesignPorts(container),
+    // LONG1: the bars of the template's kept reel, measured from its sound (agent-reel-music.ts).
+    reelMusic: reelMusicSource(container, () => agentMedia(container)),
   });
   const recorder = createPrepareNarration({
     timelines: container.resolve(TimelineStoreToken),

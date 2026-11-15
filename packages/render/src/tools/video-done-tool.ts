@@ -7,6 +7,10 @@
  * `checkVideoDone`, while the draft is of another revision, while any slot fails a slot-match check without a stated
  * reason, or while a QA check fails that the person may not export over. The refusal says what differs on each failing
  * slot and which tools fix it. It changes nothing; the make flow offers the export approval once it passes.
+ *
+ * TXT1: it also holds a video whose text would be drawn in the default face (every role its text uses needs a
+ * look in the Style the video renders with: `styles`, the same resolution a render uses), or whose text from the
+ * reference has no stated place yet. It never judges a look, a place or a size.
  */
 import { z } from 'zod';
 import {
@@ -29,6 +33,7 @@ import {
 } from '@taalcut/core';
 import { checkVideoDone } from '@taalcut/timeline';
 import type { TimelineAccess } from '../ports';
+import type { StyleSource } from '../style/resolve-style';
 
 /** A render whose QA has run: what video.done reads as a draft. */
 const FINISHED = new Set<RenderRecord['status']>(['ready', 'needsAttention']);
@@ -42,6 +47,11 @@ export interface VideoDoneDeps {
   readonly templateSlots?: (template: TemplateRef) => AsyncResult<readonly string[] | null>;
   /** AGT2: where a pass's reasons are kept, so the Maker's own check holds the handoff to the same verdict. */
   readonly ledger?: VideoDoneLedger;
+  /**
+   * TXT1: the Style a timeline renders with, so text in the default face, or text nobody placed, is held. Absent
+   * (no style store in this process): neither the text's look nor its place is held.
+   */
+  readonly styles?: Pick<StyleSource, 'styleFor'>;
 }
 
 type DoneReasons = z.output<typeof videoDoneInputSchema>['reasons'];
@@ -139,6 +149,8 @@ async function judge(
   const draft = await newestDraft(deps, projectId, timeline.value.id);
   if (!draft.ok) return draft;
   const found = draft.value;
+  const style = deps.styles ? await deps.styles.styleFor(timeline.value) : null;
+  if (style && !style.ok) return style;
   const outcome = checkVideoDone({
     timeline: timeline.value,
     slots: await slotOrder(deps, timeline),
@@ -146,6 +158,7 @@ async function judge(
       ? { renderId: found.id, timelineRevision: found.timelineRevision, report: found.qaReport }
       : null,
     reasons,
+    ...(style ? { textStyle: style.value } : {}),
   });
   return ok({ outcome, found });
 }
@@ -179,12 +192,13 @@ export function makerDone(
 export function videoDoneTool(deps: VideoDoneDeps): AnyTool {
   return defineTool({
     name: 'video.done',
-    version: '1.0.0',
+    // 1.1.0 (TXT1): holds text with no designed look, or no stated place.
+    version: '1.1.0',
     summary:
       'Finishes the make: the newest draft must match its template and pass QA, or say why a slot stays.',
     description:
       'Ends the make once the newest draft (render.draft) is of the timeline as it is and passes: every slot ' +
-      'matches the reel (slotNeeds, slotFace, slotFraming, slotMotion, slotTiming, slotGraphics) and no other QA ' +
+      'matches the reel (slotNeeds, slotFace, slotFraming, slotMotion, slotTiming, slotGraphics, slotPart) and no other QA ' +
       'check fails. It refuses while one fails, saying what differs on each slot and the tools that fix it. A ' +
       'slot that must stay as it is (no clip in the library shows its need) passes with a reason by its number.',
     tags: ['done', 'finish', 'match', 'template', 'reel', 'qa', 'slots'],

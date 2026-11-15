@@ -28,8 +28,10 @@ import { fileSha256 } from '../breakdown/fingerprint';
 import { readGraphics } from '../breakdown/graphic-brief';
 import { BREAKDOWN_FILE } from '../breakdown/draft';
 import { describeStrips } from '../breakdown/looks';
+import { readSequences } from '../breakdown/sequence-read';
 import { judging } from '../breakdown/slot-context-disputes';
 import { checkSceneText } from '../breakdown/text-check';
+import { sequenceWords, templateTextSequences } from '../breakdown/text-sequence';
 import { readProgress } from '../breakdown/slot-context-progress';
 import { ExperimentGone } from '../errors';
 import { analystSoundLine } from '../skills/analyst';
@@ -112,7 +114,8 @@ export function breakdownTool(deps: TemplateToolDeps, drafts: DraftCache) {
     // 3.0.0 (LRN1-CTX): the count of disputed cuts and the first to judge; templates.judgeCut hands out the rest.
     // 3.0.1: a shorter description (every turn a step is offered the tool carries it).
     // 3.1.0 (EAR1-C2): the summary ends with the reel's sound line when the breakdown heard it.
-    version: '3.1.0',
+    // 3.2.0 (MATCH1): dissolves and fades are found from the frames; a disputed one says `method: pixels`.
+    version: '3.2.0',
     summary: 'Breaks a reference reel down: cuts by two methods, beats, text, speech, audio, contact sheet.',
     description:
       'Breaks a reference reel down on this Mac: cuts (two methods), beats, on-screen text, speech, loudness ' +
@@ -225,6 +228,20 @@ export function breakdownTool(deps: TemplateToolDeps, drafts: DraftCache) {
           );
         }
       }
+      // LYR1: a sequence's texts stated by the vision model from its sheet: a word the text engine could not read,
+      // a case it read wrong (sequence-read.ts). Before the graphics are read, so each is read with its words.
+      if (deps.graphicModel) {
+        const stated = await readSequences(value, loaded.value.dir, deps.graphicModel, {
+          signal: ctx.signal,
+        });
+        if (stated.draft !== value) {
+          value = stated.draft;
+          drafts.remember(value);
+          await writeFile(join(loaded.value.dir, BREAKDOWN_FILE), JSON.stringify(value)).catch(
+            () => undefined,
+          );
+        }
+      }
       // DSG1-READ: each kept overlay read as design by a vision model; templates.finalise writes the briefs, with
       // the model that read them (graphics.json). The summary leaves the reading out: an on-device Analyst told of it
       // read the whole draft and ran out of context.
@@ -247,9 +264,12 @@ export function breakdownTool(deps: TemplateToolDeps, drafts: DraftCache) {
       });
       // EAR1-C2: what the reel's sound does, when the breakdown heard it.
       const sound = analystSoundLine(value.audio.listening);
+      // LYR1: text that replaces itself in place, named plainly: the template keeps each piece as its own overlay.
+      const sequences = templateTextSequences(value).map((item) => sequenceWords(item, value.canvas.rate));
       const summary =
         `${value.cuts.length} cuts confirmed by both methods, ${value.disputes.length} disputed; ` +
-        `${value.beatMap?.bpm ? `${value.beatMap.bpm} BPM` : 'no beat'}; ${value.text.length} text overlays; ` +
+        `${value.beatMap?.bpm ? `${value.beatMap.bpm} BPM` : 'no beat'}; ${value.text.length} text overlays` +
+        `${sequences.length > 0 ? ` (${sequences.join('; ')})` : ''}; ` +
         `audio ${value.audio.kind}; ${value.duration.value} frames at ${value.canvas.rate.num}/${value.canvas.rate.den}.` +
         (sound ? ` ${sound}` : '');
       return ok({

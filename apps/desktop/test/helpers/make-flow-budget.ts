@@ -122,6 +122,7 @@ export function makeFlowBudgetFixture() {
     timelineRevision: 3,
     passed: true,
     slotMatch: [],
+    textNotes: [],
   };
   const done = { renderId: budgetIds.renderId, revision: 3, slots: 13, waived: [], compared: true };
   const comments = {
@@ -151,18 +152,33 @@ export function makeFlowBudgetFixture() {
       tweens: 3,
     },
     'graphics.list': { revision: 3, items: [] },
-    'workspace.place': {
+    // DSG2: drawn where it plays, then placed as the first design of its set (in the video at once).
+    'workspace.renderOver': {
+      entry: EDIT_DESIGN_ENTRY,
+      passed: true,
+      findings: [],
+      frames: [],
+      checks: [],
+      rendersLeft: 24,
+    },
+    'workspace.placeOptions': {
       projectId: budgetIds.projectId,
       timelineId: budgetIds.timelineId,
       itemIds: ['01000000000000000000000091'],
       revision: 4,
       compositionId: '01000000000000000000000092',
-      version: 1,
-      name: 'Newspaper headline',
+      options: [
+        {
+          compositionId: '01000000000000000000000092',
+          version: 1,
+          name: 'Newspaper headline',
+          idea: 'A front page: a kicker over a bold headline on paper',
+        },
+      ],
       start: { value: 120, rate: { num: 30, den: 1 } },
       duration: { value: 105, rate: { num: 30, den: 1 } },
       unmatched: [],
-      note: 'The design is a proposal until the creator chooses Use it. '.repeat(100),
+      note: 'In the video now: 1 of 3 designs, option 1 in use. '.repeat(100),
     },
   };
   return { timeline, draft, done, comments, design };

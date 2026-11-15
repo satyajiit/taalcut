@@ -49,6 +49,12 @@ export const DOMAIN_ERROR_MESSAGES: Readonly<Record<string, MessageDescriptor>> 
     message:
       'No connected image provider is available. Connect ChatGPT images or Grok, or add an image-provider API key in Settings › Accounts.',
   }),
+  // CVR2: the plan is signed in for chat; its images are a second approval, which the fix starts.
+  'errors.models.chatgpt_images_not_connected': msg({
+    id: 'errors.models.chatgpt_images_not_connected',
+    message:
+      'Your ChatGPT plan is connected for chat. Images need one more approval: choose Connect ChatGPT images in Settings › Accounts.',
+  }),
   'errors.models.image_access_denied': msg({
     id: 'errors.models.image_access_denied',
     message:

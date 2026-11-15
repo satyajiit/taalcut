@@ -76,8 +76,15 @@ export interface FilesDeps {
   readonly renders: () => Pick<RenderStore, 'get'>;
   /** UX2: where a clip's original is on this Mac (its first present location, managed first), or undefined. */
   readonly assetOriginal: (assetId: AssetId) => string | undefined;
-  /** Taalcut's exports folder (shared/export-paths.ts), where the agent's sink wrote what saveExportAs copies out. */
+  /**
+   * The person's exports folder (shared/export-paths.ts): finished videos, and what the agent's sink wrote for
+   * saveExportAs to copy out. `openExportsFolder` opens it.
+   */
   readonly exportsDir: string;
+  /** Where the sink wrote before FIX-EXPORTNAMES: saveExportAs still finds a file there. */
+  readonly legacyExportsDir?: string;
+  /** Makes a folder and its parents if they aren't there. */
+  readonly makeDir: (path: string) => Promise<void>;
   /** P3-V14: a template's `.taalcut-template` text from the agent (templates.exportDocument). */
   readonly templateDocument: (
     input: TemplateDocumentInput,
@@ -122,13 +129,17 @@ export function renderFileName(name: string): string {
 
 /** P3-V5: Save as… for a file in Taalcut's exports folder, which the window names (never a path). */
 async function saveExportFile(
-  deps: Pick<FilesDeps, 'exportsDir' | 'exists' | 'save' | 'copy'>,
+  deps: Pick<FilesDeps, 'exportsDir' | 'legacyExportsDir' | 'exists' | 'save' | 'copy'>,
   fileName: string,
   webContentsId: number,
 ): Promise<{ saved: boolean; fileName?: string }> {
-  const file = join(deps.exportsDir, fileName);
-  if (!isExportFileName(fileName) || !(await deps.exists(file)))
-    throw toRpcError(NotFoundError({ entity: 'export file', id: fileName }));
+  if (!isExportFileName(fileName)) throw toRpcError(NotFoundError({ entity: 'export file', id: fileName }));
+  let file: string | undefined;
+  for (const folder of [deps.exportsDir, deps.legacyExportsDir]) {
+    if (!folder || file) continue;
+    if (await deps.exists(join(folder, fileName))) file = join(folder, fileName);
+  }
+  if (!file) throw toRpcError(NotFoundError({ entity: 'export file', id: fileName }));
   const ext = extname(fileName).slice(1);
   const chosen = await deps.save({ defaultName: fileName, extensions: ext ? [ext] : [], webContentsId });
   if (!chosen) return { saved: false };
@@ -202,8 +213,16 @@ export function filesRouter(deps: FilesDeps) {
     }),
     revealRender: os.revealRender.handler(async ({ input }) => {
       const record = unwrapRpc(await deps.renders().get(input.renderId as RenderId));
-      if (!record.filePath) throw toRpcError(NotFoundError({ entity: 'render file', id: input.renderId }));
+      // The file is the person's now, in their exports folder: moved or renamed there, Finder would show nothing.
+      if (!record.filePath || !(await deps.exists(record.filePath)))
+        throw toRpcError(NotFoundError({ entity: 'render file', id: input.renderId }));
       deps.reveal(record.filePath);
+    }),
+    openExportsFolder: os.openExportsFolder.handler(async () => {
+      await deps.makeDir(deps.exportsDir);
+      const failure = await deps.openPath(deps.exportsDir);
+      if (failure)
+        throw toRpcError(toTaalcutError(new Error(`couldn't open ${deps.exportsDir}: ${failure}`)));
     }),
     revealAsset: os.revealAsset.handler(async ({ input }) => {
       const path = deps.assetOriginal(input.assetId);

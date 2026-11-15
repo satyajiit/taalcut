@@ -41,6 +41,8 @@ export const slotFactsSchema = z.object({
   people: z.int().nullable(),
   /** Where the slot sits in the reel, in seconds. */
   reel: z.object({ at: seconds, seconds }),
+  /** KEEP1: the clip here is the reel's own footage, kept as the template states: not the person's, left as it is. */
+  keepsReel: z.literal(true).optional(),
   /** The cast's score for the clip filling it, and its parts (higher is better; penalty is subtracted). */
   cast: z
     .object({
@@ -83,8 +85,10 @@ export function slotFactsOf(
   template.slots.forEach((slot, index) => {
     const picked = cast.get(slot.id);
     const current = clipIds?.get(slot.id);
-    const pick =
-      picked?.pick && (current === undefined || picked.clipId === current) ? picked.pick : undefined;
+    const there = picked?.pick && (current === undefined || picked.clipId === current) ? picked : undefined;
+    // KEEP1: the reel's own footage was never scored: it says so in place of a score.
+    const keepsReel = there?.note === 'reelKept';
+    const pick = keepsReel ? undefined : (there?.pick ?? undefined);
     const { intent } = slot;
     facts.set(slot.id, {
       slot: index + 1,
@@ -99,6 +103,7 @@ export function slotFactsOf(
         at: round(RationalTime.toSeconds(slot.start), 2),
         seconds: round(RationalTime.toSeconds(slot.duration), 2),
       },
+      ...(keepsReel ? { keepsReel: true as const } : {}),
       ...(pick
         ? {
             cast: {

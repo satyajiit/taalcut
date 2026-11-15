@@ -250,8 +250,9 @@ describe('buildSocialMetadataPack', () => {
     const csvTags = formatYoutubeTagsCsv(pack.youtube.tags);
     expect(csvTags).toContain(', ');
 
-    // Instagram hashtags have no duplicate '#' prefix
-    expect(pack.instagram.hashtags.length).toBeGreaterThanOrEqual(5);
+    // Instagram hashtags have no duplicate '#' prefix. CAP1: they are the three that were stated, in the post
+    // caption rule's count (4 at most), never padded up to a quota from the hook's words or a built-in list.
+    expect(pack.instagram.hashtags).toEqual(['jaipur', 'rajasthantravel', 'cinematography']);
     for (const tag of pack.instagram.hashtags) {
       expect(tag.startsWith('#')).toBe(false);
     }

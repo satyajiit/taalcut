@@ -102,7 +102,7 @@ describe('FIX-STORY: what a slot names', () => {
     const after = await castOf(engineFor(template, profiles), template);
     expect(picks(after)).toEqual([phone.shotId, other.shotId]);
     const opening = after.variants[0]!.slots[0]!.pick!;
-    expect(after.configVersion).toBe('casting.v5');
+    expect(after.configVersion).toBe('casting.v6');
     // The phone counts on the intent part and, on the opening, on the hook.
     expect(opening.parts.intent).toBeGreaterThan(before.variants[0]!.slots[0]!.pick!.parts.intent);
     expect(opening.parts.hook).toBeGreaterThanOrEqual(CASTING_CONFIG.hook.story);

@@ -62,4 +62,7 @@ export const COMMAND_LABELS: readonly MessageDescriptor[] = [
   msg({ id: 'commands.workspace.importMedia', message: 'Keep media the AI made' }),
   msg({ id: 'commands.graphics.placeComposition', message: 'Propose a designed graphic' }),
   msg({ id: 'commands.graphics.setComposition', message: 'Give graphics a new design' }),
+  // DSG2: a graphic's designs to choose between, as Undo and Redo name them.
+  msg({ id: 'commands.graphics.placeOptions', message: 'Add a graphic with designs to choose from' }),
+  msg({ id: 'commands.graphics.chooseOption', message: 'Switch a graphic’s design' }),
 ];

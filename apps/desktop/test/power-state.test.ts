@@ -13,10 +13,10 @@ type Listener = (...args: unknown[]) => void;
 
 class FakeMonitor implements PowerMonitorPort {
   readonly events = new EventEmitter();
-  battery = false;
   thermal = 'unknown';
-  isOnBatteryPower() {
-    return this.battery;
+  /** Electron's powerMonitor has it; Taalcut must never ask (the owner, 2026-11-15). */
+  isOnBatteryPower(): boolean {
+    throw new Error('battery state was read');
   }
   getCurrentThermalState() {
     return this.thermal;
@@ -38,30 +38,33 @@ class FakeMonitor implements PowerMonitorPort {
 describe('createPowerState', () => {
   it('reads the current state, treating an unknown thermal state as nominal', () => {
     const monitor = new FakeMonitor();
-    monitor.battery = true;
-    expect(createPowerState(monitor).current()).toEqual({ onBattery: true, thermalState: 'nominal' });
+    expect(createPowerState(monitor).current()).toEqual({ thermalState: 'nominal' });
   });
 
-  it('reports battery and thermal changes, once each', () => {
+  it('never reads or follows battery or charger: plugging in or out changes nothing', () => {
+    const monitor = new FakeMonitor();
+    const power = createPowerState(monitor);
+    const seen: PowerSnapshot[] = [];
+    power.onChange((snapshot) => seen.push(snapshot));
+    expect(monitor.listenerCount('on-battery') + monitor.listenerCount('on-ac')).toBe(0);
+    monitor.emit('on-battery');
+    monitor.emit('on-ac');
+    expect(seen).toEqual([]);
+    expect(power.current()).toEqual({ thermalState: 'nominal' });
+  });
+
+  it('reports thermal changes, once each', () => {
     const monitor = new FakeMonitor();
     const power = createPowerState(monitor);
     const seen: PowerSnapshot[] = [];
     power.onChange((snapshot) => seen.push(snapshot));
 
-    monitor.emit('on-battery');
-    monitor.emit('on-battery');
     monitor.emit('thermal-state-change', { state: 'serious' });
     monitor.emit('thermal-state-change', { state: 'serious' });
-    monitor.emit('on-ac');
     monitor.emit('thermal-state-change', { state: 'critical' });
 
-    expect(seen).toEqual([
-      { onBattery: true, thermalState: 'nominal' },
-      { onBattery: true, thermalState: 'serious' },
-      { onBattery: false, thermalState: 'serious' },
-      { onBattery: false, thermalState: 'critical' },
-    ]);
-    expect(power.current()).toEqual({ onBattery: false, thermalState: 'critical' });
+    expect(seen).toEqual([{ thermalState: 'serious' }, { thermalState: 'critical' }]);
+    expect(power.current()).toEqual({ thermalState: 'critical' });
   });
 
   it('unsubscribes listeners and detaches from the monitor on dispose', () => {
@@ -70,10 +73,10 @@ describe('createPowerState', () => {
     const seen: PowerSnapshot[] = [];
     const off = power.onChange((snapshot) => seen.push(snapshot));
     off();
-    monitor.emit('on-battery');
+    monitor.emit('thermal-state-change', { state: 'serious' });
     expect(seen).toEqual([]);
     power.dispose();
-    expect(monitor.listenerCount('on-ac') + monitor.listenerCount('thermal-state-change')).toBe(0);
+    expect(monitor.listenerCount('thermal-state-change')).toBe(0);
   });
 });
 

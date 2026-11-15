@@ -21,6 +21,7 @@ import {
 import { z } from 'zod';
 import type { LibraryDatabase } from '../db/database';
 import { assetDetail, type StoredAssetDetail } from '../profile';
+import { momentWords } from './shot-moments';
 import { plainTime, plainTimeSchema } from './tool-schemas';
 
 export interface ContactSheetPictures {
@@ -104,6 +105,11 @@ export const getAssetOutput = z.object({
         start: time,
         duration: time,
         description: fromMedia(z.string().nullable()),
+        /**
+         * MOM1: what the shot shows over time, "0-2.8s: …; 2.8-4.8s: …", seconds in the file (the clock a clip's
+         * sourceStart and playsShotFrom use); null for a shot with none (described before MOM1, or from one frame).
+         */
+        moments: fromMedia(z.string().nullable()),
         objects: z.array(fromMedia(z.string())),
         /** What people in it are doing ("dancing", "playing music"), fixed words first. */
         actions: z.array(fromMedia(z.string())),
@@ -171,7 +177,12 @@ export const getAssetOutput = z.object({
 
 type Output = z.input<typeof getAssetOutput>;
 
-function shotsOf(detail: StoredAssetDetail): NonNullable<Output['shots']> {
+function shotsOf(db: LibraryDatabase, detail: StoredAssetDetail): NonNullable<Output['shots']> {
+  // MOM1: every shot's moments, whole.
+  const moments = momentWords(
+    db,
+    detail.shots.map((shot) => shot.id),
+  );
   return detail.shots.map((shot) => {
     const description = shot.analysis?.description;
     return {
@@ -180,6 +191,7 @@ function shotsOf(detail: StoredAssetDetail): NonNullable<Output['shots']> {
       start: plainTime(shot.range.start),
       duration: plainTime(shot.range.duration),
       description: shot.description,
+      moments: moments.get(shot.id) ?? null,
       objects: description?.objects ? [...description.objects] : [],
       actions: description?.actions ? [...description.actions] : [],
       place: description?.place ?? null,
@@ -333,7 +345,7 @@ export async function assetToolOutput(
           hasAudio: facts.hasAudio,
         }
       : null,
-    ...(include.has('shots') ? { shots: shotsOf(detail) } : {}),
+    ...(include.has('shots') ? { shots: shotsOf(db, detail) } : {}),
     ...(contactSheet !== undefined ? { contactSheet } : {}),
     ...(contactSheetIndexing ? { contactSheetStatus: 'indexing' as const } : {}),
     ...(include.has('transcript') ? { transcript: await transcriptOf(detail, artifacts) } : {}),

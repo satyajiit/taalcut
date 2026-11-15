@@ -7,6 +7,8 @@
  * and no Node beyond path: main and the utility processes both import it.
  */
 import { join } from 'node:path';
+import { EXPORTS_ROOTS } from '../platform/exports-roots';
+import { hostPlatformName } from '../platform/names';
 
 export interface RenderPaths {
   /** Render's cache: preview sessions, export work folders, conformed segments. */
@@ -17,8 +19,26 @@ export interface RenderPaths {
   readonly work: string;
   /** Conformed clip segments, content-addressed (LRU-capped by the render process). */
   readonly conform: string;
-  /** Finished renders: renders/<projectId>/<renderId>.mp4, written only by finalizeRender. */
+  /** Renders finished before FIX-EXPORTNAMES: renders/<projectId>/<renderId>.mp4. Still read; nothing new lands here. */
   readonly renders: string;
+  /** The person's exports folder (`exportsRoot`): finished renders by name, written only by finalizeRender. */
+  readonly exports: string;
+}
+
+/** What this module needs of the platform services: each OS's rule for the exports folder. */
+export interface ExportsPlatform {
+  exportsRoot(userData: string): string;
+}
+
+const HOST: ExportsPlatform = { exportsRoot: EXPORTS_ROOTS[hostPlatformName()] };
+
+/**
+ * The person's exports folder (FIX-EXPORTNAMES): `~/Movies/Taalcut/Exports` for the app's own data folder, inside
+ * `userData` for any other (platform/exports-roots.ts has each OS's rule and says why). Main and every utility
+ * process agree because both read it from here.
+ */
+export function exportsRoot(userData: string, platform: ExportsPlatform = HOST): string {
+  return platform.exportsRoot(userData);
 }
 
 export function renderPaths(userData: string): RenderPaths {
@@ -29,6 +49,7 @@ export function renderPaths(userData: string): RenderPaths {
     work: join(cache, 'work'),
     conform: join(cache, 'conform'),
     renders: join(userData, 'renders'),
+    exports: exportsRoot(userData),
   };
 }
 

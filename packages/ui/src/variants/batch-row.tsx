@@ -70,6 +70,7 @@ export function BatchRow({ item, status, live, fallbackName, send }: BatchRowPro
       ? renderStageLabel(i18n, live.progress?.stageKey, live.status)
       : i18n._(look.word);
   const renderId = item.renderId;
+  const facts = gone ? t`This export was deleted.` : `${presetLabel(i18n, item.presetId)} · ${words}`;
 
   const openReview = async () => {
     if (review) return setReview(null);
@@ -103,11 +104,16 @@ export function BatchRow({ item, status, live, fallbackName, send }: BatchRowPro
           )}
         />
         <div className="flex min-w-0 flex-1 flex-col">
-          <UserContent translate="no" className="truncate text-sm text-ink">
+          <UserContent
+            translate="no"
+            title={live?.name ?? fallbackName}
+            className="truncate text-sm text-ink"
+          >
             {live?.name ?? fallbackName}
           </UserContent>
-          <span className="truncate text-xs text-ink-2">
-            {gone ? t`This export was deleted.` : `${presetLabel(i18n, item.presetId)} · ${words}`}
+          {/* One line, cut at the row's width; its whole stays as the tooltip. */}
+          <span title={facts} className="truncate text-xs text-ink-2">
+            {facts}
           </span>
         </div>
         {fraction !== null ? (

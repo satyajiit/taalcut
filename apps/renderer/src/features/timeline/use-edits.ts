@@ -27,6 +27,8 @@ import { atRate, type TimelineModel } from './model';
 
 export interface Edits {
   pending: boolean;
+  /** MORE1: the AI is editing this video (the editor sets it; `pending` is true then too). */
+  aiPaused?: boolean;
   error: TaalcutError | null;
   clearError(): void;
   /** Moves a clip's edge by `frames` (positive lengthens it at that edge). */

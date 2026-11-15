@@ -2,10 +2,12 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * FRM1-OVL's graphicCoversFace: every text item is checked against every clip's heads on every probed
- * frame of its time (four a second and its last frame), whether or not a clip was reframed. A covered head fails
- * and may be overridden, as captionCoversFace; a clip with no subject track warns, never passes silently; no
- * probe with items on screen fails.
+ * FRM1-OVL's graphicCoversFace: every item is checked against every clip's heads on every probed frame of its time
+ * (four a second and its last frame), whether or not a clip was reframed. A graphic over a head fails and may be
+ * overridden, as captionCoversFace; a clip with no subject track warns, never passes silently; no probe with items
+ * on screen fails.
+ *
+ * TXT1: a text item over a head is a note, never a failure: the check warns and names the text and its frames.
  */
 import { describe, expect, it } from 'vitest';
 import { FrameRate, type Rect } from '@taalcut/core';
@@ -54,7 +56,7 @@ describe('graphicCoversFace', () => {
     expect(FACE_COVER_THRESHOLDS.framesPerSecond).toBeGreaterThanOrEqual(4);
   });
 
-  it('fails a graphic or a text item over a head, naming it and its frames', () => {
+  it('fails a graphic over a head, naming it and its frames; a text over one is not part of the failure', () => {
     const boxes = [
       probedAt('bubble', 0, clear),
       probedAt('bubble', 8, over),
@@ -62,11 +64,40 @@ describe('graphicCoversFace', () => {
     ];
     const result = graphicCoversFaceCheck({ items, boxes, heads: everywhere, clips: 1, tracked: 1 });
     expect(result.status).toBe('fail');
-    expect(result.measured).toEqual({ value: 2, unit: 'frames' });
-    expect(result.findings.map((finding) => finding.target)).toEqual([
-      { kind: 'text', id: 'bubble' },
-      { kind: 'text', id: 'title' },
+    expect(result.measured).toEqual({ value: 1, unit: 'frames' });
+    expect(result.findings).toEqual([
+      {
+        frames: { start: 8, end: 9 },
+        target: { kind: 'text', id: 'bubble' },
+        measured: { value: 1, unit: 'frames' },
+      },
     ]);
+  });
+
+  it('TXT1: a text item over a head is a note: it warns with the text and its frames, never fails', () => {
+    const boxes = [
+      probedAt('bubble', 0, clear, 'text'),
+      probedAt('title', 16, over, 'text'),
+      probedAt('title', 24, over, 'text'),
+      probedAt('title', 32, clear, 'text'),
+    ];
+    const result = graphicCoversFaceCheck({ items, boxes, heads: everywhere, clips: 1, tracked: 1 });
+    expect(result.status).toBe('warn');
+    expect(result.measured).toEqual({ value: 2, unit: 'frames' });
+    expect(result.findings).toEqual([
+      {
+        frames: { start: 16, end: 25 },
+        target: { kind: 'text', id: 'title' },
+        measured: { value: 2, unit: 'frames' },
+      },
+    ]);
+    // A note has no fix: where the text sits is its placer's to judge.
+    expect(result.fixes).toEqual([]);
+    // Every head under every text, on every frame: still a note.
+    const all = items.flatMap((item) => [0, 8, 16].map((frame) => probedAt(item.id, frame, over, 'text')));
+    expect(
+      graphicCoversFaceCheck({ items, boxes: all, heads: everywhere, clips: 1, tracked: 1 }).status,
+    ).toBe('warn');
   });
 
   it('passes items clear of every head, and ignores a head that is gone by then', () => {
@@ -124,10 +155,11 @@ describe('the faces module', () => {
     expect(frames).toEqual(expect.arrayContaining([0, 8, 16, 24, 29, 15, 23, 31, 39, 44]));
   });
 
-  it('fails a head under a text item, and fails without a probe', async () => {
+  it('TXT1: notes a head under a text item (a warning), and fails without a probe', async () => {
     const probed = { boxes: [probedAt('bubble', 8, over, 'text')], visuals: [] };
     const [covered] = await facesQaModule.run({ run, facts: { heads }, probed }, wanted);
-    expect(covered?.status).toBe('fail');
+    expect(covered?.status).toBe('warn');
+    expect(covered?.findings.map((finding) => finding.target)).toEqual([{ kind: 'text', id: 'bubble' }]);
     const [blind] = await facesQaModule.run({ run, facts: { heads }, probed: null }, wanted);
     expect(blind?.status).toBe('fail');
   });

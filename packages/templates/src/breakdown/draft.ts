@@ -26,7 +26,7 @@ import {
 import { z } from 'zod';
 import { draftCameraSchema } from './camera';
 import { draftGraphicSheetSchema } from './graphic-sheets';
-import { draftTextRegionSchema } from './text-judge';
+import { draftTextRegionSchema, draftTextSequenceSchema } from './text-judge';
 
 export const BREAKDOWN_FILE = 'breakdown.json';
 
@@ -55,6 +55,8 @@ export const draftCutSchema = z.object({
 });
 
 export const draftDisputeSchema = draftCutSchema.extend({
+  /** MATCH1: `pixels` is a gradual transition measured from the frames, which method B did not confirm. */
+  method: z.enum(['both', 'scdet', 'embedding', 'pixels']),
   ramp: z.object({ start: frame, end: frame }).nullable(),
   /** What the rule decides without a vision verdict. */
   ruleKeeps: z.boolean(),
@@ -99,6 +101,11 @@ export const breakdownDraftSchema = z.object({
    * FIX-SIGN.
    */
   textRegions: z.array(draftTextRegionSchema).max(500).optional(),
+  /**
+   * LYR1: text that replaces itself in place, a word or a line at a time (text-sequence.ts): which of `text` are its
+   * pieces, in order. Absent before LYR1 and when the reel has none.
+   */
+  textSequences: z.array(draftTextSequenceSchema).max(16).optional(),
   audio: audioProfileSchema,
   language: languageTagSchema.nullable(),
   /** Speed ramps inside shots, frames from the shot's start (`start`, `end` absolute). */

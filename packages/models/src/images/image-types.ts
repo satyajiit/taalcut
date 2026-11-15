@@ -67,6 +67,11 @@ export type ImageAccess = 'api-key' | 'openrouter' | 'subscription';
 export type ImageAvailability = GenerationAvailability & {
   readonly access?: ImageAccess;
   readonly error?: TaalcutError;
+  /**
+   * CVR2: with `not_configured`, the route is one approval away on a plan the person is signed in to: the error
+   * that says so. The chain returns it only when no path can run, so a paid key that works is still used.
+   */
+  readonly connect?: TaalcutError;
 };
 
 export interface GeneratedImage {

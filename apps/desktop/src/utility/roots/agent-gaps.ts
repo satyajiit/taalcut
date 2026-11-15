@@ -41,6 +41,7 @@ import {
 } from '@taalcut/agent';
 import { shotDescriptions } from '@taalcut/library';
 import { ImageProvidersToken, imagePathAvailable } from '@taalcut/models';
+import { designerSettler } from '@taalcut/render';
 import { getFormat } from '@taalcut/templates';
 import { createTimelineService, librarianSettler, storeTemplateReader } from '@taalcut/timeline';
 import { LibraryDatabaseToken, ModelProfilesToken, ToolRegistryToken } from '../../shared/tokens';
@@ -208,15 +209,26 @@ function voiceExtensions(container: Container, registered: (tool: string) => boo
 
 /**
  * The steps settled from what is stored when their model's handoff never passes: the Librarian's, from its stored
- * timelines (timeline's librarian-settle.ts). The gaps step is settled by its own extension.
+ * timelines (timeline's librarian-settle.ts), and the Designer's, from the designs it placed (DSG2, render's
+ * designer-settle.ts: a design in the video is a success with fewer options, not a failed job). The gaps step is
+ * settled by its own extension.
  */
 function stepSettlers(container: Container, skills: SkillRegistry): FlowExtensionDeps['settlers'] {
   const read = readers(container);
-  if (!read || !skills.get(LIBRARIAN_SKILL)) return undefined;
-  return { [LIBRARIAN_SKILL]: librarianSettler({ service: { read: read.timeline } }) };
+  if (!read) return undefined;
+  const settlers = {
+    ...(skills.get(LIBRARIAN_SKILL)
+      ? { [LIBRARIAN_SKILL]: librarianSettler({ service: { read: read.timeline } }) }
+      : {}),
+    ...(skills.get(DESIGNER_SKILL)
+      ? { [DESIGNER_SKILL]: designerSettler({ timelines: { get: read.timeline } }) }
+      : {}),
+  };
+  return Object.keys(settlers).length > 0 ? settlers : undefined;
 }
 
 const LIBRARIAN_SKILL = 'timeline.librarian';
+const DESIGNER_SKILL = 'render.designer';
 
 /**
  * The flow extensions this process can run (createAgent's `phase3.flowExtensions`): gaps once its skill

@@ -94,6 +94,12 @@ export function editWords(i18n: I18n, template: Template, edit: ReviewEdit): str
       const move = i18n._(MOTION_LABELS[edit.motion]);
       return i18n._(msg`Slot ${n}’s camera move is now ${move}`);
     }
+    case 'setFootage': {
+      const n = numberOf(edit.slotId);
+      return edit.from === 'reel'
+        ? i18n._(msg`Slot ${n} keeps the reel’s clip`)
+        : i18n._(msg`Slot ${n} uses your clip`);
+    }
     case 'setGraphic':
       return edit.graphic ? i18n._(msg`Restored as a graphic`) : i18n._(msg`Left out: not a graphic`);
     case 'editBrief':

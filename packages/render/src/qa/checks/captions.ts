@@ -5,11 +5,14 @@
  * Caption and text checks (docs/qa-gate.md). Boxes come from the DOM probe
  * (Chrome's own shaping of the real font, the authoritative measurement);
  * glyph coverage is checked before rendering from the fonts' cmaps.
+ *
+ * TXT1 (the owner's rule: no code decides where text sits): a text item outside the safe rect is a note, never a
+ * failure, and has no fix: captionSafeZone warns with the text and how far out it is, for whoever placed it to judge
+ * (render.draft's `textNotes`). Captions are held to the rect as before.
  */
 import {
   CAPTION_COMMANDS,
   FrameRate,
-  TIMELINE_COMMANDS,
   type CaptionTrack,
   type QaCheckResult,
   type QaFix,
@@ -18,7 +21,6 @@ import {
 import type { CaptionFontId, ProbedTextBox, ProbedWord, QaPlan } from '../../types';
 import { planCaptionFix, planOverflowFix } from '../fixes';
 import { agentFix, checkResult, commandFix, skipped, type QaFinding, type QaTarget } from '../result';
-import { planTextMove } from '../text-move';
 import { QA_THRESHOLDS } from '../thresholds.v1';
 import { uniqueFixes } from './video';
 
@@ -62,44 +64,32 @@ export function outsideBy(box: Rect, rect: Rect, tolerance: number): number {
 
 const hasText = (input: CaptionCheckInput) => input.plan.cues.length > 0 || input.plan.texts.length > 0;
 
-/**
- * A text item outside the safe rect: a ready timeline.moveText to the nearest box that passes (FIX-QA), planned on
- * every box the probe measured for it. Without the item's own box (a plan refitted to another canvas), the Editor's
- * judgment call as before.
- */
-function moveTextFix(input: CaptionCheckInput, textId: string): QaFix {
-  const text = input.plan.texts.find((entry) => entry.id === textId);
-  if (!text?.box) return agentFix('qa.fixes.moveText', { textId });
-  const box = planTextMove({
-    box: text.box,
-    align: text.align ?? 'center',
-    probed: input.boxes.filter((entry) => entry.kind === 'text' && entry.id === textId).map((entry) => entry.box),
-    safe: input.safe,
-    canvas: { width: input.plan.width, height: input.plan.height },
-  });
-  return commandFix('qa.fixes.moveText', TIMELINE_COMMANDS.moveText, { ...input.target, itemId: textId, box });
-}
-
 export function captionSafeZoneCheck(input: CaptionCheckInput): QaCheckResult {
   if (!hasText(input)) return skipped('captionSafeZone');
   const tolerance = QA_THRESHOLDS.captions.safeTolerancePx;
-  const failing = input.boxes.filter((box) => outsideBy(box.box, input.safe, tolerance) > 0);
+  const outside = input.boxes.filter((box) => outsideBy(box.box, input.safe, tolerance) > 0);
   const worst = Math.max(0, ...input.boxes.map((box) => outsideBy(box.box, input.safe, tolerance)));
+  // Captions fail; a text item outside is a note (TXT1), so alone it only warns, and nothing is planned for it.
+  const captionBoxes = outside.filter((box) => box.kind === 'caption');
   const fixes: QaFix[] = [];
-  const captionBoxes = failing.filter((box) => box.kind === 'caption');
   if (captionBoxes.length > 0 && input.captions) {
-    const patch = planCaptionFix({ boxes: captionBoxes, style: input.captions.style, safe: input.safe, canvasHeight: input.plan.height });
+    const patch = planCaptionFix({
+      boxes: captionBoxes,
+      style: input.captions.style,
+      safe: input.safe,
+      canvasHeight: input.plan.height,
+    });
     if (Object.keys(patch).length > 0) fixes.push(setStyle(input.target, patch, 'qa.fixes.moveCaptions'));
   }
-  for (const id of new Set(failing.filter((entry) => entry.kind === 'text').map((entry) => entry.id)))
-    fixes.push(moveTextFix(input, id));
   return checkResult(
     'captionSafeZone',
-    failing.length > 0 ? 'fail' : 'pass',
+    captionBoxes.length > 0 ? 'fail' : outside.length > 0 ? 'warn' : 'pass',
     {
       measured: { value: worst, unit: 'px' },
       threshold: { max: 0, unit: 'px' },
-      findings: failing.map((box) => finding(box, outsideBy(box.box, input.safe, tolerance))),
+      findings: [...captionBoxes, ...outside.filter((box) => box.kind !== 'caption')].map((box) =>
+        finding(box, outsideBy(box.box, input.safe, tolerance)),
+      ),
       fixes: uniqueFixes(fixes),
     },
     0,
@@ -155,10 +145,15 @@ export function captionOverflowCheck(input: CaptionCheckInput): QaCheckResult {
     'captionOverflow',
     failing.length > 0 ? 'fail' : 'pass',
     {
-      measured: { value: Math.max(0, ...input.boxes.filter((box) => box.kind === 'caption').map((box) => box.lines)), unit: 'count' },
+      measured: {
+        value: Math.max(0, ...input.boxes.filter((box) => box.kind === 'caption').map((box) => box.lines)),
+        unit: 'count',
+      },
       threshold: { max: Number.isFinite(maxLines) ? maxLines : 3, unit: 'count' },
       findings: failing.map((box) =>
-        collides(box) ? finding(box, Math.ceil(wordCollision(box.words ?? []))) : finding(box, box.lines, 'count'),
+        collides(box)
+          ? finding(box, Math.ceil(wordCollision(box.words ?? [])))
+          : finding(box, box.lines, 'count'),
       ),
       fixes: uniqueFixes(fixes),
     },
@@ -167,7 +162,14 @@ export function captionOverflowCheck(input: CaptionCheckInput): QaCheckResult {
 }
 
 /** Fonts to offer when the style's font misses glyphs, tried in this order. */
-const COVERING_FONTS: readonly CaptionFontId[] = ['notoSans', 'notoSansDevanagari', 'mukta', 'hind', 'baloo2', 'poppins'];
+const COVERING_FONTS: readonly CaptionFontId[] = [
+  'notoSans',
+  'notoSansDevanagari',
+  'mukta',
+  'hind',
+  'baloo2',
+  'poppins',
+];
 
 /** Cue texts as the captions module checks them: the words of the cue joined by spaces. */
 export function cueTexts(captions: CaptionTrack): { id: string; text: string }[] {
@@ -194,15 +196,24 @@ export function captionGlyphsCheck(
   const fixes: QaFix[] = [];
   if (issues.length > 0) {
     const failingCues = cues.filter((cue) => issues.some((issue) => issue.cueId === cue.id));
-    const font = COVERING_FONTS.find((candidate) => candidate !== captions.style.font && glyphIssues(failingCues, candidate).length === 0);
+    const font = COVERING_FONTS.find(
+      (candidate) => candidate !== captions.style.font && glyphIssues(failingCues, candidate).length === 0,
+    );
     if (font) fixes.push(setStyle(input.target, { font }, 'qa.fixes.coveringFont'));
     // No curated font covers it (Tamil, Arabic): the text itself has to change.
-    else for (const issue of issues.slice(0, 4)) fixes.push(agentFix('qa.fixes.editCaptionText', { cueId: issue.cueId }));
+    else
+      for (const issue of issues.slice(0, 4))
+        fixes.push(agentFix('qa.fixes.editCaptionText', { cueId: issue.cueId }));
   }
   return checkResult(
     'captionGlyphs',
     findings.length > 0 ? 'fail' : 'pass',
-    { measured: { value: findings.length, unit: 'count' }, threshold: { max: 0, unit: 'count' }, findings, fixes },
+    {
+      measured: { value: findings.length, unit: 'count' },
+      threshold: { max: 0, unit: 'count' },
+      findings,
+      fixes,
+    },
     0,
   );
 }
@@ -210,7 +221,11 @@ export function captionGlyphsCheck(
 /** WCAG 2 relative luminance of '#rrggbb'. */
 export function luminance(hex: string): number {
   const channels = [1, 3, 5].map((offset) => parseInt(hex.slice(offset, offset + 2), 16) / 255);
-  const [r, g, b] = channels.map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)) as [number, number, number];
+  const [r, g, b] = channels.map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)) as [
+    number,
+    number,
+    number,
+  ];
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
@@ -234,7 +249,11 @@ export function captionReadabilityCheck(
   let hard = false;
   const short = input.plan.cues.filter((cue) => cue.span.end - cue.span.start < minFrames);
   for (const cue of short)
-    findings.push({ frames: cue.span, target: { kind: 'caption', id: cue.id }, measured: { value: cue.span.end - cue.span.start, unit: 'frames' } });
+    findings.push({
+      frames: cue.span,
+      target: { kind: 'caption', id: cue.id },
+      measured: { value: cue.span.end - cue.span.start, unit: 'frames' },
+    });
   if (short.length > 0) {
     hard = true;
     fixes.push(rebuild(input.target));
@@ -242,7 +261,10 @@ export function captionReadabilityCheck(
   const style = captions.style;
   if (style.sizePx < minSizePx) {
     hard = true;
-    findings.push({ target: { kind: 'caption', id: 'style' }, measured: { value: style.sizePx, unit: 'px' } });
+    findings.push({
+      target: { kind: 'caption', id: 'style' },
+      measured: { value: style.sizePx, unit: 'px' },
+    });
     fixes.push(setStyle(input.target, { sizePx: minSizePx }, 'qa.fixes.largerCaptions'));
   }
   const protectedText =
@@ -255,17 +277,26 @@ export function captionReadabilityCheck(
       const ratio = contrastRatio(style.textColor, under);
       lowest = Math.min(lowest, ratio);
       if (ratio < minContrast)
-        findings.push({ frames: cue.span, target: { kind: 'caption', id: cue.id }, measured: { value: Math.round(ratio * 100) / 100, unit: 'ratio' } });
+        findings.push({
+          frames: cue.span,
+          target: { kind: 'caption', id: cue.id },
+          measured: { value: Math.round(ratio * 100) / 100, unit: 'ratio' },
+        });
     }
     if (lowest < minContrast)
-      fixes.push(setStyle(input.target, { stroke: { color: '#000000', widthPx: 4 } }, 'qa.fixes.captionStroke'));
+      fixes.push(
+        setStyle(input.target, { stroke: { color: '#000000', widthPx: 4 } }, 'qa.fixes.captionStroke'),
+      );
   }
   const status = hard ? 'fail' : findings.length > 0 ? 'warn' : 'pass';
   return checkResult(
     'captionReadability',
     status,
     {
-      measured: { value: Number.isFinite(lowest) ? Math.round(lowest * 100) / 100 : minContrast, unit: 'ratio' },
+      measured: {
+        value: Number.isFinite(lowest) ? Math.round(lowest * 100) / 100 : minContrast,
+        unit: 'ratio',
+      },
       threshold: { min: minContrast, unit: 'ratio' },
       findings,
       fixes: uniqueFixes(fixes),

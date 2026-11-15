@@ -11,7 +11,8 @@ import { marginConfidence } from '../model/cast';
 import type { Sequence } from './beam';
 import type { Candidate, SlotPool } from './candidates';
 import type { CastingConfig } from './config';
-import { selectInPoint } from './in-points';
+import { selectInPoint, windowFrames } from './in-points';
+import { partTerms } from './stated-parts';
 
 export type Adjacency = (previous: Candidate, next: Candidate) => number;
 
@@ -103,7 +104,10 @@ export function slotChoice(
   return { pick, alternates, confidence };
 }
 
-/** A scored candidate as the cast state stores it, with its in-point; null when the shot can't fill the slot. */
+/**
+ * A scored candidate as the cast state stores it, with its in-point; null when the shot can't fill the slot.
+ * MOM1: the in-point is chosen inside the part stated for the shot in this slot, when one was.
+ */
 export function toCastCandidate(
   entry: InContext,
   pool: SlotPool,
@@ -112,8 +116,18 @@ export function toCastCandidate(
   fixed?: Pick<CastCandidate, 'sourceStart' | 'syncPoint'>,
 ): CastCandidate | null {
   const { candidate } = entry;
+  // MOM1: a part the model stated for this shot in this slot limits where the window may start.
+  const part = pool.parts?.get(candidate.key);
+  const stated = part
+    ? partTerms(
+        candidate.profile,
+        windowFrames(pool.slot, candidate.profile.range.start.rate),
+        part,
+        config.inPoint.handling,
+      )
+    : undefined;
   const point =
-    fixed ?? selectInPoint(candidate.profile, pool.slot, canvasRate, config, pool.slot.index === 0);
+    fixed ?? selectInPoint(candidate.profile, pool.slot, canvasRate, config, pool.slot.index === 0, stated);
   if (!point) return null;
   return {
     assetId: candidate.profile.assetId,

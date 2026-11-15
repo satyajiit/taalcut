@@ -20,6 +20,8 @@ export interface TickStore<T> {
   latest(): Ticked<T> | null;
   /** True once per tick: the first claimer handles it. */
   claim(tick: number): boolean;
+  /** CVR1: the tick of the latest request while no consumer has claimed it; 0 once it is claimed, or with none. */
+  waiting(): number;
   subscribe(listener: () => void): () => void;
 }
 
@@ -27,17 +29,23 @@ export function createTickStore<T>(): TickStore<T> {
   let latest: Ticked<T> | null = null;
   let claimed = 0;
   const listeners = new Set<() => void>();
+  const tell = () => {
+    for (const listener of listeners) listener();
+  };
   return {
     push(value) {
       latest = { tick: (latest?.tick ?? 0) + 1, value };
-      for (const listener of listeners) listener();
+      tell();
     },
     latest: () => latest,
     claim(tick) {
       if (tick <= claimed) return false;
       claimed = tick;
+      // Whoever shows the request waiting (waiting()) hears that it was taken.
+      tell();
       return true;
     },
+    waiting: () => (latest && latest.tick > claimed ? latest.tick : 0),
     subscribe(listener) {
       listeners.add(listener);
       return () => listeners.delete(listener);

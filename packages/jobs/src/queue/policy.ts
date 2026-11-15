@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 
-/** Retry backoff and power/thermal throttling: pure functions, so the desktop can swap them. */
+/** Retry backoff and thermal throttling: pure functions, so the desktop can swap them. */
 import type { ConcurrencyLimits, PowerSnapshot, ResourceClass } from './types';
 
 export interface BackoffPolicy {
@@ -39,9 +39,9 @@ export type ThrottlePolicy = (base: ConcurrencyLimits, power: PowerSnapshot) => 
 const half = (n: number) => Math.max(1, Math.floor(n / 2));
 
 /**
- * The default throttle (PRD G7: aware of battery and thermals). Running jobs
- * are never interrupted; lower limits apply to what starts next.
- * - On battery: CPU, GPU, Neural Engine and video-engine work at half (at least one each).
+ * The default throttle: heat only. Running jobs are never interrupted; lower limits apply to what starts next.
+ * Battery or charger changes nothing (the owner, 2026-11-15: a Mac on battery ran its heavy work at half, which
+ * left one GPU place, and a render waited for ever behind itself).
  * - Thermal 'serious': one job each of CPU, GPU, Neural Engine and video engine; I/O at half.
  * - Thermal 'critical': no new CPU, GPU, Neural Engine or video-engine work; one I/O and one network job.
  * 'fair' is normal operation on macOS and changes nothing.
@@ -50,7 +50,6 @@ export const defaultThrottle: ThrottlePolicy = (base, power) => {
   const limits: Record<ResourceClass, number> = { ...base };
   const cap = (rc: ResourceClass, max: number) => (limits[rc] = Math.min(limits[rc], max));
   const heavy = ['cpu', 'gpu', 'npu', 'video'] as const;
-  if (power.onBattery) for (const rc of heavy) cap(rc, half(base[rc]));
   if (power.thermalState === 'serious') {
     for (const rc of heavy) cap(rc, 1);
     cap('io', half(base.io));

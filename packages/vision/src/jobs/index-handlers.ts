@@ -26,6 +26,7 @@ import { detectShots } from '../shots/detect-shots';
 import type { FrameSource } from '../media/frame-source';
 import type { VisionJobDeps } from './deps';
 import { FRAME_CONSUMERS, withAssetFrames } from './frame-jobs';
+import { embedMoments } from './moment-vectors';
 import { keepShotVectors } from './shot-vectors';
 import {
   TEXT_READER,
@@ -114,7 +115,9 @@ function describeHandler(
         : undefined;
     if (!describe) {
       const pruned = await embedDescriptions({ descriptions: [] }, input, deps, context.signal);
-      return pruned.ok ? ok({ descriptions: [], uploadedTo: [], skipped: 'not_yet' as const }) : pruned;
+      if (!pruned.ok) return pruned;
+      const moments = await embedMoments([], input, deps, context.signal);
+      return moments.ok ? ok({ descriptions: [], uploadedTo: [], skipped: 'not_yet' as const }) : moments;
     }
     const use = { consumer: FRAME_CONSUMERS.describe };
     const described = await withAssetFrames(deps, input, context.signal, use, describe);
@@ -130,6 +133,9 @@ function describeHandler(
       );
     const stored = await embedDescriptions(result, input, deps, context.signal);
     if (!stored.ok) return stored;
+    // MOM1: each moment's note beside the sentence's vector, for casting's in-points.
+    const moments = await embedMoments(result.descriptions, input, deps, context.signal);
+    if (!moments.ok) return moments;
     return ok({
       ...result,
       descriptions: [...result.descriptions],

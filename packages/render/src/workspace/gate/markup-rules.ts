@@ -141,8 +141,15 @@ const GLOBAL_ATTRIBUTES: Readonly<Record<string, RegExp>> = {
   'data-height': /^\d{2,5}$/,
 };
 
+/**
+ * CVR2: a cover's picture by reference. `<img data-picture="hero">` names a picture the cover states (a frame of
+ * the video, a library shot at a time); render sets its source when it draws the cover. It loads nothing itself.
+ */
+export const PICTURE_NAME = /^[a-z][a-z0-9-]{0,23}$/;
+
 const IMAGE_ATTRIBUTES: Readonly<Record<string, RegExp>> = {
   src: ASSET_PATH,
+  'data-picture': PICTURE_NAME,
   alt: /^[^<>]{0,160}$/,
   width: /^\d{1,5}$/,
   height: /^\d{1,5}$/,

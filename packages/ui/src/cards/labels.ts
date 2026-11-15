@@ -28,6 +28,8 @@ export const TOOL_LABELS: Readonly<Record<string, MessageDescriptor>> = {
   // AGT2: the AI's eyes.
   'library.frameAt': msg`Look at a clip`,
   'library.subjects': msg`Find the people in a clip`,
+  // MATCH1: a stretch of a clip as frames with their times.
+  'library.frameStrip': msg`Look through a clip`,
   'video.compare': msg`Compare the video with the reel`,
   // Media & vision
   'media.probe': msg`Check the video`,
@@ -126,6 +128,8 @@ export const PROVIDER_LABELS: Readonly<Record<string, MessageDescriptor>> = {
   google: msg({ message: 'Google', comment: 'Brand name: keep as written.' }),
   // The plans people sign in with (CHATGPT_PROVIDER and the warned logins): named as the person knows them.
   'openai-codex': msg({ message: 'ChatGPT', comment: 'Brand name: keep as written.' }),
+  // CHATGPT_IMAGE_PROVIDER: the plan's separate image connection, as Settings names it.
+  'openai-codex-images': msg({ message: 'ChatGPT images', comment: 'ChatGPT is a brand name.' }),
   'github-copilot': msg({ message: 'GitHub Copilot', comment: 'Brand name: keep as written.' }),
   openai: msg({ message: 'OpenAI', comment: 'Brand name: keep as written.' }),
   anthropic: msg({ message: 'Anthropic', comment: 'Brand name: keep as written.' }),

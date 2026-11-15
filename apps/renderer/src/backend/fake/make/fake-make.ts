@@ -34,13 +34,17 @@ import { createFakeProjects } from './fake-projects';
 import { FAKE_VIDEO_CODECS, reelOf, withReelMusic } from './export-options';
 import { createFakeRenders } from './fake-renders';
 import { createFakeCaptionEdit } from './fake-caption-edit';
+import { createFakePostCaption } from './fake-post-caption';
 import { createFakeEditorOps } from './fake-editor-ops';
+import { createFakeMore } from './fake-more';
+import { createFakePart, withSampleParts } from './fake-part';
 import { createFakeTimelines } from './fake-timelines';
 import type { FakeTemplates } from '../templates/fake-templates';
 import { GOLDEN_TIMELINES, idMaker } from './ids';
 import { seedRenders } from './render-seed';
 import type { FakeMakeOptions } from './make-options';
 import { seedProjects } from './seed';
+import { fileShot } from './shot-pool';
 
 export type { FakeMakeOptions } from './make-options';
 
@@ -85,7 +89,12 @@ export function createMakeFakes(events: EventBus, options: FakeMakeOptions = {},
     : seeded.projects.map((project) => ({
         ...project,
         timelines: project.timelines.map((timeline) =>
-          timeline.id === GOLDEN_TIMELINES[0] ? withHistory(timeline, seeded.shots) : timeline,
+          timeline.id !== GOLDEN_TIMELINES[0]
+            ? timeline
+            : // TRIM1: with `clipPart: 'samples'`, its first scenes play the sample clips (fake-part.ts).
+              options.areas?.['clipPart'] === 'samples'
+              ? withSampleParts(timeline)
+              : withHistory(timeline, seeded.shots),
         ),
       }));
   const reel = (templateId: TemplateId) => reelOf(templates, templateId);
@@ -94,6 +103,7 @@ export function createMakeFakes(events: EventBus, options: FakeMakeOptions = {},
     timelines: projectsSeed.flatMap((project) => project.timelines.map((each) => withReelMusic(each, reel))),
     shots: seeded.shots,
     pools: seeded.pools,
+    fileShot: (assetId, shotId) => fileShot(assetId, shotId, options.libraryCount),
   });
   // The cut as it was first made: the early versions keep it.
   const history = empty ? { renders: [], versions: [] } : seedRenders(seeded.projects);
@@ -151,7 +161,10 @@ export function createMakeFakes(events: EventBus, options: FakeMakeOptions = {},
   const pr = implementContract(appContract.projects);
   const tl = implementContract(appContract.timelines);
   const rn = implementContract(appContract.renders);
+  // CAP1: post captions (the command, the credit switch and its read; fake-post-caption.ts).
+  const postCaption = createFakePostCaption(timelines);
   const router = {
+    ...postCaption.router,
     projects: pr.router({
       list: pr.list.handler(async ({ input }) => {
         await wait(latency);
@@ -280,13 +293,18 @@ export function createMakeFakes(events: EventBus, options: FakeMakeOptions = {},
     ...timelines.commands,
     // EDT1-OPS: split, delete, speed, transitions, colour and sound levels.
     ...createFakeEditorOps(timelines),
+    // TRIM1: the part a clip plays (timeline.slipClip).
+    ...createFakePart(timelines, seeded.shots, options.libraryCount),
+    // MORE1: a size copy, a frozen moment and a hold's length, only with `more: 'commands'` (fake-more.ts).
+    ...(options.areas?.['more'] === 'commands' ? createFakeMore(timelines, events) : []),
     createFakeCaptionEdit(timelines),
+    ...postCaption.commands,
     ...projects.commands,
     ...renders.commands,
     ...Object.values(p3).flatMap((module) => module.commands),
   ];
   const exportedTemplates = () => exportedTemplatesOf(renders, timelines);
-  return { router, commands, timelines, renders, projects: made, p3, exportedTemplates };
+  return { router, commands, timelines, renders, projects: made, p3, exportedTemplates, postCaption };
 }
 
 export type FakeMake = ReturnType<typeof createMakeFakes>;

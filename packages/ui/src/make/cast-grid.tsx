@@ -7,7 +7,11 @@
  *   slots, columns the pick, the other shots, find and lock; arrows, Home, End, Ctrl+Home/End) · active (pressed) ·
  *   disabled (the run ended or the timeline is gone: aria-disabled, the card says why) · loading (a pressed shot
  *   dims and is busy; find spins) · error (the cause under the row) · success (silent: the frames trade places) ·
- *   locked ("Locked" beside the pick; swaps stay yours) · folded (low-confidence rows always show)
+ *   locked ("Locked" beside the pick; swaps stay yours) · folded (low-confidence rows always show) · the reel's own
+ *   (KEEP1: a slot that keeps the reel's clip says so in place of who picked and how sure; no other shots, no find)
+ * layout: sizes to its own box, not the window (a container query on the bed): from 36rem a slot is one line, the
+ *   other shots at the right of its words; narrower (the editor's chat) the other shots go under the words, with
+ *   Find and Lock at the end of their line, so the words keep the width and no frame shrinks
  * motion: a swap trades the two frames' places (shared layout, --dur-short, ease-out); reduced motion: they swap
  *   at once (MotionProvider)
  * pre-emit critique: P5 H5 E4 S5 R4 V5 */
@@ -18,10 +22,12 @@ import { LayoutGroup } from 'motion/react';
 import { useRef, useState, type KeyboardEvent } from 'react';
 import { Button } from '#components/button';
 import { Chip } from '#components/badge';
+import { cn } from '#lib/cn';
 import { useCardActions } from '../cards/card-actions';
 import { UserContent } from '../cards/card-frame';
 import { useCardData } from '../cards/card-data';
 import { errorMessage } from '../feedback/error-messages';
+import { CONCEPT_ICONS } from '../icons/concepts';
 import { AlternatesStrip } from './alternates';
 import { Confidence, confidenceLevel } from './confidence';
 import { ShotThumb } from './shot-thumb';
@@ -40,6 +46,8 @@ export interface CastGridProps {
 const FOLDED = 6;
 type Outcome = { readonly ok: true } | { readonly ok: false; readonly error: TaalcutError };
 const candidateKey = (candidate: CastCandidate) => shotKey(candidate);
+/** KEEP1: the slot keeps the reel's own clip: nobody picked it and nothing else can fill it. */
+const isReelOwn = (slot: SlotCast | undefined) => slot?.note === 'reelKept';
 
 export function CastGrid({ cardId, projectId, timeline, slots, disabled = false }: CastGridProps) {
   const { t, i18n } = useLingui();
@@ -128,20 +136,22 @@ export function CastGrid({ cardId, projectId, timeline, slots, disabled = false 
     }
   };
 
-  // The grid's one tab stop moves with the arrows; columns: 0 pick, 1..n other shots, then find, then lock.
+  // The grid's one tab stop moves with the arrows; columns: 0 pick, 1..n other shots, then find, then lock. A row
+  // that is the reel's own clip has the pick and lock only.
   const columns = (row: number) => {
     const slot = rows[row]?.slot;
-    const alternates = slot ? (found[slot.slotId] ?? slot.alternates).length : 0;
-    return { alternates, last: alternates + (data.findAlternates ? 2 : 1) };
+    const reelOwn = isReelOwn(slot);
+    const alternates = slot && !reelOwn ? (found[slot.slotId] ?? slot.alternates).length : 0;
+    const find = Boolean(data.findAlternates) && !reelOwn;
+    return { alternates, find, last: alternates + (find ? 2 : 1) };
   };
   const cellOf = (row: number, col: number) => {
     const el = grid.current?.querySelector<HTMLElement>(`[data-row="${row}"]`);
     if (!el) return null;
-    const { alternates } = columns(row);
+    const { alternates, find } = columns(row);
     if (col === 0) return el.querySelector<HTMLElement>('[data-col="pick"]');
     if (col <= alternates) return el.querySelector<HTMLElement>(`[data-alternate="${col - 1}"]`);
-    if (col === alternates + 1 && data.findAlternates)
-      return el.querySelector<HTMLElement>('[data-col="find"]');
+    if (col === alternates + 1 && find) return el.querySelector<HTMLElement>('[data-col="find"]');
     return el.querySelector<HTMLElement>('[data-col="lock"]');
   };
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -188,7 +198,7 @@ export function CastGrid({ cardId, projectId, timeline, slots, disabled = false 
                   : columns(row).last;
           if (row !== stop.row || col !== stop.col) setStop({ row, col });
         }}
-        className="flex flex-col rounded-xl bg-panel p-1"
+        className="@container flex flex-col rounded-xl bg-panel p-1"
       >
         {rows.map(({ slot, index }, row) => {
           const templateSlot = slots?.find((candidate) => candidate.id === slot.slotId) ?? null;
@@ -197,6 +207,7 @@ export function CastGrid({ cardId, projectId, timeline, slots, disabled = false 
           const locked = clip?.locked ?? false;
           const pool = found[slot.slotId] ?? slot.alternates;
           const by = slot.note === 'userPick' ? 'you' : 'ai';
+          const reelOwn = isReelOwn(slot);
           const pickFrame = slot.pick ? frames(slot.pick) : undefined;
           const searched = found[slot.slotId] !== undefined;
           const error = errors[slot.slotId];
@@ -207,7 +218,8 @@ export function CastGrid({ cardId, projectId, timeline, slots, disabled = false 
               aria-rowindex={index + 1}
               data-row={row}
               data-slot-id={slot.slotId}
-              className="grid grid-cols-[1.5rem_auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 rounded-lg px-2 py-2 [&+&]:border-t [&+&]:border-rule-subtle"
+              data-reel-own={reelOwn || undefined}
+              className="grid grid-cols-[1.5rem_auto_minmax(0,1fr)] items-center gap-x-3 gap-y-2 rounded-lg px-2 py-2 @xl:grid-cols-[1.5rem_auto_minmax(12rem,1fr)_auto] @xl:gap-y-1 [&+&]:border-t [&+&]:border-rule-subtle"
             >
               <span role="rowheader" className="self-start pt-1 text-sm font-semibold text-ink tabular-nums">
                 {number}
@@ -217,17 +229,17 @@ export function CastGrid({ cardId, projectId, timeline, slots, disabled = false 
                 role="gridcell"
                 data-col="pick"
                 tabIndex={tabFor(row, 0)}
-                className="block rounded-md p-0.5"
+                className="block self-start rounded-md p-0.5 @xl:self-center"
               >
                 <ShotThumb
                   url={pickFrame?.url}
                   size="sm"
-                  marker={slot.pick ? by : null}
+                  marker={slot.pick && !reelOwn ? by : null}
                   layoutId={slot.pick ? `${cardId}:${slot.slotId}:${candidateKey(slot.pick)}` : undefined}
                 />
                 <span className="sr-only">
-                  {by === 'you' ? t`Your pick` : t`AI pick`}
-                  {pickFrame ? (
+                  {reelOwn ? t`The reel’s own clip` : by === 'you' ? t`Your pick` : t`AI pick`}
+                  {pickFrame && !reelOwn ? (
                     <>
                       {': '}
                       <span translate="no" data-user-content>
@@ -244,7 +256,14 @@ export function CastGrid({ cardId, projectId, timeline, slots, disabled = false 
                   <span className="text-sm text-ink-2">{t`Slot ${number}`}</span>
                 )}
                 <span className="flex flex-wrap items-center gap-2">
-                  <Confidence value={slot.confidence} reranked={slot.note === 'reranked'} />
+                  {reelOwn ? (
+                    <Chip tone="neutral" data-slot="reel-own">
+                      <CONCEPT_ICONS.reel aria-hidden />
+                      {t`The reel’s own clip`}
+                    </Chip>
+                  ) : (
+                    <Confidence value={slot.confidence} reranked={slot.note === 'reranked'} />
+                  )}
                   {locked ? (
                     <Chip tone="neutral">
                       <Lock aria-hidden />
@@ -253,48 +272,67 @@ export function CastGrid({ cardId, projectId, timeline, slots, disabled = false 
                   ) : null}
                 </span>
               </span>
-              <span role="gridcell" className="flex items-center gap-1">
-                <AlternatesStrip
-                  items={pool.map((candidate) => ({
-                    key: candidateKey(candidate),
-                    frame: frames(candidate),
-                    layoutId: `${cardId}:${slot.slotId}:${candidateKey(candidate)}`,
-                  }))}
-                  size="sm"
-                  onSwap={(alternate) => void swap(slot, alternate)}
-                  disabled={off || !slot.clipId}
-                  swapping={swapping?.slot === slot.slotId ? swapping.index : null}
-                  tabStop={stop.row === row && stop.col >= 1 && stop.col <= pool.length ? stop.col - 1 : null}
-                  label={t`Other shots for slot ${number}`}
-                  emptyAction={
-                    searched ? (
-                      <span className="flex items-center gap-2 text-xs text-ink-2">
-                        {t`Nothing else fits this slot.`}
-                        {actions.ask ? (
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() =>
-                              actions.ask?.(
-                                t`About slot ${number}: `,
-                                timeline.template
-                                  ? [{ kind: 'slot', templateId: timeline.template.id, slotId: slot.slotId }]
-                                  : [],
-                              )
-                            }
-                          >
-                            {t`Ask Taalcut`}
-                          </Button>
-                        ) : null}
-                      </span>
-                    ) : null
-                  }
-                />
-                {data.findAlternates ? (
+              {/* Under the words in a narrow box (from the pick's column to the edge), beside them in a wide one. */}
+              <span
+                role="gridcell"
+                className={cn(
+                  'col-[2/-1] flex min-w-0 items-center gap-1 @xl:col-auto',
+                  reelOwn && 'justify-end',
+                )}
+              >
+                {reelOwn ? null : (
+                  <AlternatesStrip
+                    items={pool.map((candidate) => ({
+                      key: candidateKey(candidate),
+                      frame: frames(candidate),
+                      layoutId: `${cardId}:${slot.slotId}:${candidateKey(candidate)}`,
+                    }))}
+                    size="sm"
+                    overflow="scroll"
+                    className="flex-1 @xl:flex-initial"
+                    onSwap={(alternate) => void swap(slot, alternate)}
+                    disabled={off || !slot.clipId}
+                    swapping={swapping?.slot === slot.slotId ? swapping.index : null}
+                    tabStop={
+                      stop.row === row && stop.col >= 1 && stop.col <= pool.length ? stop.col - 1 : null
+                    }
+                    label={t`Other shots for slot ${number}`}
+                    emptyAction={
+                      searched ? (
+                        <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-2">
+                          {t`Nothing else fits this slot.`}
+                          {actions.ask ? (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() =>
+                                actions.ask?.(
+                                  t`About slot ${number}: `,
+                                  timeline.template
+                                    ? [
+                                        {
+                                          kind: 'slot',
+                                          templateId: timeline.template.id,
+                                          slotId: slot.slotId,
+                                        },
+                                      ]
+                                    : [],
+                                )
+                              }
+                            >
+                              {t`Ask Taalcut`}
+                            </Button>
+                          ) : null}
+                        </span>
+                      ) : null
+                    }
+                  />
+                )}
+                {data.findAlternates && !reelOwn ? (
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="size-8"
+                    className="size-8 shrink-0"
                     data-col="find"
                     tabIndex={tabFor(row, pool.length + 1)}
                     aria-label={t`Find something else for slot ${number}`}
@@ -309,7 +347,7 @@ export function CastGrid({ cardId, projectId, timeline, slots, disabled = false 
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="size-8"
+                  className="size-8 shrink-0"
                   data-col="lock"
                   tabIndex={tabFor(row, columns(row).last)}
                   aria-label={locked ? t`Unlock slot ${number}` : t`Lock slot ${number}`}

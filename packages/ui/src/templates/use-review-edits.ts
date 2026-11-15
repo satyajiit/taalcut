@@ -71,6 +71,11 @@ export function reviewEditCommand(
         name: REVIEW_COMMANDS.setMotion,
         payload: { ...base, slotId: edit.slotId, motion: edit.motion },
       };
+    case 'setFootage':
+      return {
+        name: REVIEW_COMMANDS.setFootage,
+        payload: { ...base, slotId: edit.slotId, from: edit.from },
+      };
     case 'setGraphic':
       return {
         name: REVIEW_COMMANDS.setGraphic,

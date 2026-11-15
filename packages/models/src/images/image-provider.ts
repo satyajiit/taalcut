@@ -76,6 +76,16 @@ export function createImageProvider(spec: ImageRouteSpec, deps: ImageProviderDep
     return ok(undefined);
   }
 
+  /** CVR2: the plan this route belongs to is signed in for chat, so the route is one approval away. */
+  async function oneApprovalAway(signal?: AbortSignal): Promise<Pick<ImageAvailability, 'connect'>> {
+    const plan = spec.planSignIn;
+    if (!plan) return {};
+    const chat = await deps.credentials.get(plan.credential, signal ? { signal } : {});
+    return chat.ok && chat.value?.kind === 'oauth_access' && chat.value.secret
+      ? { connect: plan.notConnected() }
+      : {};
+  }
+
   return {
     id: spec.id,
     access: spec.access,
@@ -87,7 +97,7 @@ export function createImageProvider(spec: ImageRouteSpec, deps: ImageProviderDep
       if (!wireOf(model)) return { ok: false, reason: 'no_model' };
       const key = await resolveCredential(signal);
       if (!key.ok) return { ok: false, reason: 'not_configured', error: key.error };
-      if (!key.value) return { ok: false, reason: 'not_configured' };
+      if (!key.value) return { ok: false, reason: 'not_configured', ...(await oneApprovalAway(signal)) };
       return key.value.access === 'subscription' ? { ok: true, access: 'subscription' } : { ok: true };
     },
 

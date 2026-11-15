@@ -24,6 +24,8 @@ export const SCENE_SIGNALS = [
   'short',
   'crowd',
   'replaced',
+  // LYR1: it is one piece of text that replaces itself in place (text-sequence.ts).
+  'sequence',
   'doubtful',
   'shape',
   'rendered',

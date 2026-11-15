@@ -8,6 +8,9 @@
  *   restore can make any of them the head again);
  * - a composition copy on one of its project's timelines (`graphicCompositions`), or on a saved version of one,
  *   which "Restore version" brings back;
+ * - the still of a design a graphic on one of those timelines (or saved versions) offers (DSG2,
+ *   `options.designs[*].still`): no revision names it, and the person chooses between the designs by it, so it is
+ *   kept as long as the graphic offers the design;
  * - a composition of any template (`graphics.compositions`, every version), in whichever project's folder it is,
  *   and in the templates' pool (HFW1-TPL, `workspaces/templates/`), where only that keeps a blob.
  *
@@ -62,7 +65,23 @@ const templateBlobs = (db: LibraryDatabase) =>
       WHERE json_valid(v.document)`,
   );
 
-/** The blobs one project names: its revisions, its timelines' copies and their saved versions' copies. */
+/** The stills of the designs the graphics in a timeline document offer (`from` joins that document as `doc`). */
+const optionStills = (db: LibraryDatabase, from: string, projectId: string) =>
+  namedIn(
+    db,
+    `SELECT DISTINCT json_extract(d.value, '$.still.sha256') AS sha256
+       FROM ${from},
+            json_each(doc.document, '$.tracks') k,
+            json_each(k.value, '$.items') i,
+            json_each(i.value, '$.options.designs') d
+      WHERE t.project_id = ? AND json_valid(doc.document)`,
+    projectId,
+  );
+
+/**
+ * The blobs one project names: its revisions, its timelines' copies and their saved versions' copies, and the
+ * stills of the designs those timelines' graphics offer.
+ */
 function projectBlobs(db: LibraryDatabase, projectId: string): string[] {
   const revisions = namedIn(
     db,
@@ -90,7 +109,11 @@ function projectBlobs(db: LibraryDatabase, projectId: string): string[] {
       WHERE t.project_id = ? AND json_valid(v.document)`,
     projectId,
   );
-  return [...revisions, ...timelines, ...versions];
+  const stills = [
+    ...optionStills(db, 'timelines t JOIN timelines doc ON doc.id = t.id', projectId),
+    ...optionStills(db, 'timelines t JOIN timeline_versions doc ON doc.timeline_id = t.id', projectId),
+  ];
+  return [...revisions, ...timelines, ...versions, ...stills];
 }
 
 async function entries(path: string): Promise<Dirent[]> {

@@ -13,6 +13,7 @@ export {
   type DetectCutsOptions,
 } from './detect-cuts';
 export { readOverlays, type OverlayDeps, type ReadOverlaysOptions } from './overlays';
+export { ocrRegion, type OcrRegionOptions, type RegionPage } from './region';
 export {
   frameEmbeddings,
   motionCurve,

@@ -1,12 +1,36 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 
-import { Trans } from '@lingui/react/macro';
+import type { I18n } from '@lingui/core';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { CHATGPT_IMAGE_PROVIDER, type AccountsState } from '@taalcut/core';
 import { Button, Chip, ProviderLogo, VERB_ICONS } from '@taalcut/ui';
+import { describeError } from '../model-messages';
 import { SettingRow } from '../rows';
 
-/** Image authorization is separate from the chat plan connection and never replaces it. */
+/**
+ * CVR2: why the last try at the plan's images did not connect, as a sentence (the page was closed and the sign-in
+ * timed out, OpenAI refused it, the sign-in could not start); undefined when no try failed.
+ */
+export function imagesFailure(i18n: I18n, state: AccountsState): string | undefined {
+  const attempt = state.chatgpt.imagesAttempt;
+  if (attempt?.state !== 'failed' || state.chatgpt.imagesSignedIn) return undefined;
+  return describeError(i18n, {
+    messageKey: `errors.${attempt.errorCode ?? 'models.sign_in_failed'}`,
+    params: { provider: CHATGPT_IMAGE_PROVIDER },
+  });
+}
+
+/** CVR2: the images' page is open in the browser now, whoever opened it (Continue with ChatGPT, this row, a fix). */
+export const imagesWaiting = (state: AccountsState): boolean =>
+  state.chatgpt.imagesAttempt?.state === 'waiting' && !state.chatgpt.imagesSignedIn;
+
+/**
+ * Image authorization is separate from the chat plan connection and never replaces it. Continue with ChatGPT asks
+ * for it right after the chat sign-in, on a second page in the browser; this row shows whether it connected, and
+ * connects or disconnects it on its own. CVR2: while that page is open the row says so, and when it ended without
+ * connecting the row says why and offers it again.
+ */
 export function ChatGptImagesRow({
   state,
   actions,
@@ -18,8 +42,10 @@ export function ChatGptImagesRow({
     signOut(provider: string): Promise<void>;
   };
 }) {
+  const { i18n } = useLingui();
   const signedIn = state.chatgpt.imagesSignedIn === true;
   const busy = actions.pending === CHATGPT_IMAGE_PROVIDER;
+  const failure = imagesFailure(i18n, state);
   return (
     <SettingRow
       data-provider={CHATGPT_IMAGE_PROVIDER}
@@ -30,9 +56,13 @@ export function ChatGptImagesRow({
       }
       title={<Trans>ChatGPT images</Trans>}
       description={
-        busy ? (
+        busy || imagesWaiting(state) ? (
           <span role="status">
             <Trans>Finish signing in in your browser, then come back.</Trans>
+          </span>
+        ) : failure ? (
+          <span role="status" className="text-danger-strong">
+            {failure}
           </span>
         ) : (
           <Trans>
@@ -45,6 +75,10 @@ export function ChatGptImagesRow({
         signedIn ? (
           <Chip tone="success">
             <Trans>Images connected</Trans>
+          </Chip>
+        ) : failure ? (
+          <Chip tone="warning">
+            <Trans>Not connected</Trans>
           </Chip>
         ) : null
       }

@@ -38,7 +38,7 @@ import { byScore, MATCH_LISTS, type FusedShot, type MatchLists } from './fusion/
 import { SEARCH_FUSION_V2, type SearchFusion } from './fusion/versions';
 import { buildHits, rankShots, type Ranked } from './hits';
 import { findSimilarShots } from './similar';
-import { vectorLists } from './vector-lists';
+import { SEARCHED_KINDS, vectorLists } from './vector-lists';
 
 export interface LibrarySearchDeps {
   readonly db: LibraryDatabase;
@@ -148,7 +148,7 @@ export function createLibrarySearch(deps: LibrarySearchDeps): LibrarySearch {
       let lists: MatchLists = { keyword };
       let widen = false;
       if (vector && deps.vectors) {
-        const matches = deps.vectors.search(vector, { k });
+        const matches = deps.vectors.search(vector, { k, filter: { kind: SEARCHED_KINDS } });
         if (!matches.ok) return matches;
         widen = matches.value.length >= k && k < fusion.maxKnn;
         const options = { metric: deps.vectors.metric, transcriptCredit: fusion.transcriptCredit };

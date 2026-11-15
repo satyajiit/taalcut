@@ -44,6 +44,11 @@ const lintFixSchema = fixLine.extend({ write: z.string().nullable().optional(), 
 /** The most renders one run makes (plan "Risks": cost and time per design). */
 export const RENDERS_PER_RUN = 25;
 
+/** Said in a passing lint's result and a clean draw's: a weak model reads its tool results, not its prompt. */
+export const LINT_PASSED_NEXT =
+  'Passed: the file is ready as it is. Do not write it again. Next: put it in the video (the placing tool draws it), or draw it to look first.';
+export const DRAWN_CLEAN_NOTE = 'No frame check failed: it is ready to place. Draw it again only after you change it.';
+
 const projectId = ulidSchema('Project');
 const checkSchema = z.object({
   id: z.string(),
@@ -57,6 +62,8 @@ export interface WorkspaceLooks {
   readonly posters: Map<string, string>;
   /** Renders made, per run. */
   readonly renders: Map<string, number>;
+  /** DSG2: the option sets each run started (run id → set ids), so its later designs join them. */
+  readonly sets?: Map<string, Set<string>>;
 }
 
 export const posterKey = (projectId: string, hash: string) => `${projectId}:${hash}`;
@@ -111,6 +118,8 @@ export function workspaceCheckTools(deps: WorkspaceToolDeps, looks: WorkspaceLoo
       durationSeconds: z.number().optional(),
       tweens: z.int().nonnegative(),
       fix: lintFixSchema.optional(),
+      /** On a pass: what comes next, said in the result (a 9B rewrote a passing file ten times over). */
+      next: z.string().optional(),
     }),
     sideEffect: 'read',
     timeoutMs: 30_000,
@@ -132,6 +141,7 @@ export function workspaceCheckTools(deps: WorkspaceToolDeps, looks: WorkspaceLoo
         ...(result.durationSeconds !== undefined ? { durationSeconds: result.durationSeconds } : {}),
         tweens: result.gate.loweredTweens,
         ...(fix ? { fix } : {}),
+        ...(result.gate.passed ? { next: LINT_PASSED_NEXT } : {}),
       });
     },
   });
@@ -158,6 +168,8 @@ export function workspaceCheckTools(deps: WorkspaceToolDeps, looks: WorkspaceLoo
     frames: z.array(frameSchema),
     checks: z.array(checkSchema),
     rendersLeft: z.int().nonnegative(),
+    /** A line the model should read: drawn over grey when footage was not named, or ready to place. */
+    note: z.string().optional(),
   });
   type StillsInput = z.output<z.ZodObject<typeof stillsInput>>;
   type Backdrop = WorkspaceFramesInput['over'];
@@ -215,6 +227,7 @@ export function workspaceCheckTools(deps: WorkspaceToolDeps, looks: WorkspaceLoo
       frames,
       checks: drawn.value.checks.map((check) => ({ ...check })),
       rendersLeft: RENDERS_PER_RUN - used - 1,
+      ...(drawn.value.checks.every((check) => check.status !== 'fail') ? { note: DRAWN_CLEAN_NOTE } : {}),
     });
   }
 
@@ -281,8 +294,13 @@ export function workspaceCheckTools(deps: WorkspaceToolDeps, looks: WorkspaceLoo
       `${entryLabel(input.entry)} · ${output.frames.length}${input.at !== undefined ? ` · ${callClock(input.at)}` : ''}`,
     run: async (input, ctx) => {
       if (input.over === 'footage') {
-        if (!input.timelineId || input.at === undefined)
-          return err(ValidationError({ field: 'at' }, { detail: 'Over footage needs timelineId and at' }));
+        if (!input.timelineId || input.at === undefined) {
+          // Footage that was not named is no dead end (a 9B sent the same call ten times): drawn over grey, said so.
+          const grey = await drawStills('workspace.renderOver', input, { kind: 'grey' }, 'grey', ctx);
+          if (!grey.ok) return grey;
+          const note = 'Drawn over grey: over footage needs timelineId (your input’s) and at (the second the graphic starts).';
+          return ok({ ...grey.value, note });
+        }
         const footage: Backdrop = {
           kind: 'footage',
           timelineId: input.timelineId,

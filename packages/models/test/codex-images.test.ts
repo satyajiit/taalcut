@@ -106,7 +106,13 @@ describe('Codex subscription image requests', () => {
     { [CHATGPT_IMAGE_PROVIDER]: { ...OAUTH, headers: {} } },
   ])('rejects chat grants, API keys and incomplete image grants before sending (%j)', async (stored) => {
     const { provider, net, callLog } = setup({ credentials: createStaticCredentialProvider(stored) });
-    expect(await provider.available(MODEL)).toEqual({ ok: false, reason: 'not_configured' });
+    // CVR2: with the plan signed in for chat (`openai`), the route also says the images approval is what is
+    // missing (image-plan-approval.test.ts); it is still not configured, and nothing is sent.
+    const available = await provider.available(MODEL);
+    expect(available).toMatchObject({ ok: false, reason: 'not_configured' });
+    expect(!available.ok && available.connect?.code).toBe(
+      'openai' in stored ? 'models.chatgpt_images_not_connected' : undefined,
+    );
     expect(await provider.generate(MODEL, REQUEST)).toMatchObject({
       ok: false,
       error: { code: 'models.not_configured' },

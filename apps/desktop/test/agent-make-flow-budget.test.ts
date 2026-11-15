@@ -14,6 +14,7 @@ import {
 import {
   EDIT_CHAT_ASK,
   EDIT_DESIGN_ASK,
+  EDIT_DESIGN_FEWER,
   MAKE_FLOW_COMMENTS_ASK,
   editChatTurn,
   editDesignTurn,
@@ -264,7 +265,12 @@ it.each([
             : scenario === 'comments'
               ? ['comments.reply', 'comments.reply', 'comments.reply']
               : role === 'render.designer'
-                ? ['workspace.write', 'workspace.lint', 'graphics.list', 'workspace.place']
+                ? [
+                    'workspace.write',
+                    'workspace.lint',
+                    'workspace.renderOver',
+                    'workspace.placeOptions',
+                  ]
                 : role === 'timeline.maker'
                   ? ['timeline.get', 'render.draft', 'video.done']
                   : role === 'render.reviewer'
@@ -283,8 +289,9 @@ it.each([
                   {
                     jobId: 'headline',
                     outcome: 'placed',
-                    itemIds: fixture.design['workspace.place'].itemIds,
-                    compositionId: fixture.design['workspace.place'].compositionId,
+                    itemIds: fixture.design['workspace.placeOptions'].itemIds,
+                    compositionId: fixture.design['workspace.placeOptions'].compositionId,
+                    fewerBecause: EDIT_DESIGN_FEWER,
                   },
                 ],
               }

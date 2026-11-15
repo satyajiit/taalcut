@@ -64,6 +64,35 @@ export const breakdownConfigSchema = z.object({
   }),
   /** BRK1: a cut inside a fade to black (one-shot.ts): darker than `luma` at the end, never brightening by `rise`. */
   fadeTail: z.object({ luma: unit, rise: unit }),
+  /** MATCH1: dissolves and fades found from pixels (gradual.ts, gradual-ramp.ts), on small gray frames. */
+  gradual: z.object({
+    /** The gray frames' long side, px. */
+    longSide: z.int().min(16).max(256),
+    /** A transition lasts at most this long; a fade's black between its two halves at most `maxHoldSeconds`. */
+    maxSeconds: positive,
+    maxHoldSeconds: positive,
+    /** A frame whose pixels deviate this little (0–255) is one tone: a cut is never read against it. */
+    flat: z.number().min(0).max(128),
+    /** A frame with a picture deviates at least this much: a ramp is measured from one, and a fade ends under it. */
+    detail: z.number().min(0).max(128),
+    /** The picture has held when each of the `steadyFrames` before still holds this share of it. */
+    steadyShare: unit,
+    steadyFrames: z.int().min(1).max(30),
+    /** What is left of the old picture after the ramp, at most: as a share of it, and as a correlation with it. */
+    floor: unit,
+    /** Frames on the way, at least; fewer is a cut. */
+    minBlended: z.int().min(1),
+    /** Frames after the ramp the share stays at its floor. */
+    plateau: z.int().min(1).max(30),
+    /** How far a frame's share may lie from the straight fall. */
+    fit: unit,
+    /** Neighbouring frames correlated under this are a hard cut: a ramp never crosses one. */
+    cutLikeness: z.number().min(-1).max(1),
+    /** A blend's middle frames have at most this share of the variance the two ends would give. */
+    dip: unit,
+    /** A frame holding this share of the other picture counts as blended. */
+    edge: unit,
+  }),
   /** BRK1: on-screen text that is part of the scene, not an overlay (text-scene.ts). */
   textScene: z.object({
     /** An overlay persists at least this long, unless it crosses a cut. */
@@ -82,6 +111,33 @@ export const breakdownConfigSchema = z.object({
      */
     sceneLine: z.number(),
     addedLine: z.number(),
+    /** LYR1: text that replaces itself in place, a word or a line at a time (text-sequence.ts). */
+    sequence: z.object({
+      /** The next piece starts within this long of the last one's end. */
+      gapSeconds: positive,
+      /** A piece lasts at most this long. */
+      maxSeconds: positive,
+      /** The taller of two pieces is at most this many times the shorter. */
+      sizeRatio: z.number().min(1),
+      /** Pieces a chain needs before it is evidence of editing. */
+      minMembers: z.int().min(2),
+      /** The second read of a sequence's place (text-zone.ts). */
+      zone: z.object({
+        /** Read this long before and after the sequence, and again further out while it keeps growing. */
+        marginSeconds: positive,
+        /** Frames read a second. */
+        fps: positive,
+        /**
+         * How many times the place is enlarged before it is read, once for each: an engine reads the same word
+         * differently at different sizes, and the reading most frames and sizes agree on is the word.
+         */
+        scales: z.array(z.number().min(1).max(4)).min(1).max(3),
+        /** Frames read for one sequence, at most (at each enlargement). */
+        maxFrames: z.int().min(1),
+        /** The place's picture changes this many times as much as in the frames round it where a word is replaced. */
+        changeRatio: z.number().min(1),
+      }),
+    }),
     /** Each signal's weight, in log-odds toward the scene (negative: toward composited). */
     weights: z.object(
       Object.fromEntries(SCENE_SIGNALS.map((signal) => [signal, z.number()])) as Record<
@@ -139,4 +195,8 @@ export const BREAKDOWN_CONFIG: BreakdownConfig = breakdownConfigSchema.parse(bre
 // 3 (FRM1-MOT): the camera's move is measured between every candidate cut (draft.camera).
 // 4 (FIX-SIGN): text is judged composited or scene from fused evidence (text-scene.ts).
 // 5 (DSG1-READ): each kept overlay's life drawn for its brief (draft.graphicSheets).
-export const BREAKDOWN_PIPELINE_VERSION = '5';
+// 6 (LYR1): text that replaces itself in place is kept piece by piece and its place read again (draft.textSequences).
+// 7 (TXT1): each read overlay's type is measured (design.type, its outline in colors.stroke, its weight from its
+//   stem). A reel broken down again is measured; a stored template is not re-run by this.
+// 8 (MATCH1): dissolves and fades are found from pixels, and the cut sits inside the transition (gradual.ts).
+export const BREAKDOWN_PIPELINE_VERSION = '8';

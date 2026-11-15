@@ -11,6 +11,10 @@
  * FIX-STORY: a slot with no alternate (a library with no spare shot) lists the other slots' picks that could
  * change places with its own, each with the slot it would leave and that slot's intent (casting/swaps.ts): put
  * first, one swaps the two slots. A slot under graphics says their kinds: a chat wants someone on a phone.
+ *
+ * MOM1: each described candidate also says what it shows from when to when (its first three moments, seconds of
+ * its file), after its description in the same string: the model picks the shot and can state the part to play. The
+ * list shows at most RERANK_MOMENT_CHARS of moments in all, the least sure slot's candidates first.
  */
 import {
   type AsyncResult,
@@ -23,6 +27,7 @@ import type { CastResult } from '../casting/engine';
 import type { CastVariant } from '../casting/result';
 import { slotGraphicKinds } from '../casting/slot-graphics';
 import type { GraphicKind } from '../casting/terms';
+import { momentsLine, profilesByShot, RERANK_MOMENT_CHARS, type ShotProfiles } from './shot-moments';
 
 /** Unsure slots one cast lists for a rerank. */
 export const RERANK_SLOTS = 3;
@@ -95,7 +100,12 @@ export async function rerankMaterial(
   result: CastResult,
   template: Template,
   describe: ShotDescriptions | undefined,
-  options: { readonly count: number; readonly signal?: AbortSignal },
+  options: {
+    readonly count: number;
+    readonly signal?: AbortSignal;
+    /** MOM1: the shots' profiles, for their moments. Absent: descriptions only. */
+    readonly profiles?: ShotProfiles;
+  },
 ): Promise<RerankSlot[]> {
   if (!describe || result.mode === 'story') return [];
   const slots = unsureSlots(result, template);
@@ -109,8 +119,18 @@ export async function rerankMaterial(
       ].slice(0, options.count),
     ]),
   );
-  const described = await describe([...new Set([...shots.values()].flat())] as ShotId[], options.signal);
+  const listedShots = [...new Set([...shots.values()].flat())];
+  const described = await describe(listedShots as ShotId[], options.signal);
   if (!described.ok) return [];
+  const profiles = await profilesByShot(options.profiles, listedShots, options.signal);
+  let left = RERANK_MOMENT_CHARS;
+  const momentsOf = (shotId: string) => {
+    const profile = profiles.get(shotId);
+    const line = profile ? momentsLine(profile) : null;
+    if (!line || line.length > left) return null;
+    left -= line.length;
+    return line;
+  };
   const intents = new Map(template.slots.map((slot) => [slot.id as string, slot.intent]));
   const kindsBySlot = slotGraphicKinds(template);
   const graphics = new Map(
@@ -121,9 +141,10 @@ export async function rerankMaterial(
     const candidates = (shots.get(slot.slotId) ?? []).map((shotId) => {
       const description = described.value.get(shotId);
       const from = swaps.get(shotId);
+      const moments = description ? momentsOf(shotId) : null;
       return {
         shotId,
-        description: description ? clip(description) : null,
+        description: description ? clip(description) + (moments ? ` | ${moments}` : '') : null,
         ...(from ? { from: { slotId: from, intent: clip(intents.get(from)?.text ?? '') } } : {}),
       };
     });

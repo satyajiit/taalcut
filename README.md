@@ -10,7 +10,7 @@ Say it _TAHL-cut_, the _aa_ as in “father”. Taal is the rhythm cycle in Indi
 
 <p>
   <a href="#get-it"><img src="https://img.shields.io/badge/macOS-14%2B_%C2%B7_Apple_silicon-211A13?style=for-the-badge&amp;logo=apple&amp;logoColor=white" alt="macOS 14 or later on Apple silicon"></a>
-  <a href="https://github.com/satyajiit/taalcut/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/Release-0.1.0-FFB331?style=for-the-badge&amp;labelColor=211A13" alt="Release 0.1.0"></a>
+  <a href="https://github.com/satyajiit/taalcut/releases/tag/v0.2.0"><img src="https://img.shields.io/badge/Release-0.2.0-FFB331?style=for-the-badge&amp;labelColor=211A13" alt="Release 0.2.0"></a>
   <a href="#get-it"><img src="https://img.shields.io/badge/Price-free-056965?style=for-the-badge&amp;labelColor=211A13" alt="Price: free"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0--or--later-6347B8?style=for-the-badge&amp;labelColor=211A13" alt="AGPL-3.0-or-later licence"></a>
 </p>
@@ -138,11 +138,11 @@ Kaatu is Taalcut’s mascot, a young beaver. The name comes from काटना
 
 You need a Mac with Apple silicon (M1 or later) on macOS 14 or later. 8 GB of memory and 20 GB of free space are recommended.
 
-1. Download `Taalcut-0.1.0-arm64.dmg` from the [0.1.0 release](https://github.com/satyajiit/taalcut/releases/tag/v0.1.0).
+1. Download `Taalcut-0.2.0-arm64.dmg` from the [0.2.0 release](https://github.com/satyajiit/taalcut/releases/tag/v0.2.0).
 2. Open it and drag Taalcut into Applications.
 3. Open Taalcut. It checks your Mac, picks models that fit it and downloads them in the background while you add a folder or connect a phone.
 
-The app is signed with a Developer ID and notarized by Apple, so it opens the ordinary way. The release also lists SHA-256 sums for the files, and its [notes](release-notes/0.1.0/en.md) say what’s in it. Releases are built, signed and published by hand.
+The app is signed with a Developer ID and notarized by Apple, so it opens the ordinary way. The release also lists SHA-256 sums for the files, and its [notes](release-notes/0.2.0/en.md) say what’s in it. Releases are built, signed and published by hand.
 
 Stuck? Start with the [FAQ](docs/support/faq.md) and [troubleshooting](docs/support/troubleshooting.md). A [debug bundle](docs/support/debug-bundle.md) is the quickest way to show what went wrong.
 

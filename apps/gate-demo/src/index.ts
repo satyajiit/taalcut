@@ -76,7 +76,9 @@ export {
   EDIT_DESIGN_ASKS,
   EDIT_DESIGN_AT,
   EDIT_DESIGN_NAME,
-  EDIT_DESIGN_PROPOSED,
+  EDIT_DESIGN_ADDED,
+  EDIT_DESIGN_FEWER,
+  EDIT_DESIGN_IDEA,
   editDesignTurn,
   isEditDesignAsk,
 } from './edit-design-script';

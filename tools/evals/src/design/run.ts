@@ -2,11 +2,13 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * One design case, run and judged (HFW1 dsn): a fresh world, the Designer loop with the Designer's own prompt
- * (designer/1) and tools on the step's input, then what it left: a placed proposal (new) or a replaced design
- * (redesign) the Designer's check accepted at handoff; the composition gated again from its stored files (a
- * composition that fails now escaped the gate); its last render's frame checks; the words it carries; the comment
- * answered. Also how many renders it made, and every refusal's code (the tools' and the gate's findings).
+ * One design case, run and judged (HFW1 dsn; DSG2): a fresh world, the Designer loop with the Designer's own prompt
+ * and tools on the step's input, then what it left: a graphic in the video (new) or a replaced design (redesign)
+ * the Designer's check accepted at handoff; the composition gated again from its stored files (a composition that
+ * fails now escaped the gate); its last render's frame checks; the words it carries; the comment answered. Also
+ * how many renders it made, and every refusal's code (the tools' and the gate's findings). DSG2: a job's designs go
+ * on one at a time, so the outcome says how many it has (`designs`) and whether one is in use at the end
+ * (`inUse`); a step that ran out of turns is settled from what it placed, as the agent settles it (`settled`).
  */
 import {
   type GraphicComposition,
@@ -33,6 +35,12 @@ export interface CaseOutcome {
   /** Why it failed, in words; null when it passed. */
   readonly why: string | null;
   readonly placed: boolean;
+  /** DSG2: the designs the job's graphic has to choose between (1 to 3; 0 when nothing was placed). */
+  readonly designs: number;
+  /** DSG2: a design is in the video for the job when the step ends, handed off or not. */
+  readonly inUse: boolean;
+  /** DSG2: the model never handed off (or never passed the check) and the step was settled from what it placed. */
+  readonly settled: boolean;
   readonly gatePassed: boolean;
   readonly gateEscape: boolean;
   readonly failedChecks: readonly string[];
@@ -149,13 +157,30 @@ export async function runDesignCase(
   });
   const timeline = world.timeline();
   const kind = entry.before ? 'redesign' : 'new';
-  const accepted = world.handoffs.at(-1);
+  const handedOff = world.handoffs.at(-1);
+  const settledOutput = handedOff
+    ? undefined
+    : world.settle(
+        // Completed calls only, as the agent hands its settlers.
+        loop.calls
+          .filter((call) => call.ok)
+          .map((call) => ({ tool: call.name, input: call.input, output: call.output })),
+      );
+  const accepted = handedOff ?? settledOutput;
   const result = accepted?.results[0];
   const graphics = graphicsOf(timeline);
+  const inVideo = (item: GraphicItem) => !item.proposal;
+  // What the step's own placements made, whether or not it was handed off.
+  const made = new Set(
+    loop.calls
+      .filter((call) => call.ok && call.name === 'workspace.placeOptions')
+      .flatMap((call) => ((call.output as { itemIds?: string[] } | undefined)?.itemIds ?? []) as string[]),
+  );
   const target =
     kind === 'redesign'
       ? graphics.find((item) => world.before?.itemIds.includes(item.id))
-      : graphics.find((item) => result?.itemIds?.includes(item.id) && item.proposal);
+      : (graphics.find((item) => result?.itemIds?.includes(item.id) && inVideo(item)) ??
+        graphics.find((item) => made.has(item.id) && inVideo(item)));
   const copy = target ? copyOf(timeline, target) : undefined;
   const placed =
     kind === 'redesign'
@@ -187,9 +212,7 @@ export async function runDesignCase(
         ? 'its composition does not pass the gate'
         : failedChecks.length > 0
           ? `frame checks failed: ${failedChecks.join(', ')}`
-          : !last
-            ? 'never rendered the design that went in'
-            : missing.length > 0
+          : missing.length > 0
               ? `missing words: ${missing.join(', ')}`
               : !replied
                 ? 'the comment was not answered'
@@ -201,6 +224,9 @@ export async function runDesignCase(
     pass: why === null,
     why,
     placed,
+    designs: target ? (target.options?.designs.length ?? 1) : 0,
+    inUse: target !== undefined && inVideo(target),
+    settled: settledOutput !== undefined,
     gatePassed,
     gateEscape,
     failedChecks,

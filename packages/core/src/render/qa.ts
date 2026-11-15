@@ -59,6 +59,8 @@ export const QA_CHECK_IDS = [
   'soundOnCuts',
   'soundClean',
   'soundCritique',
+  // MOM1: each slot's clip plays the stretch of its shot that fits what the slot states (a SLOT_MATCH_CHECK_IDS id).
+  'slotPart',
 ] as const;
 export const qaCheckIdSchema = z.enum(QA_CHECK_IDS);
 export type QaCheckId = z.infer<typeof qaCheckIdSchema>;
@@ -66,8 +68,8 @@ export type QaCheckId = z.infer<typeof qaCheckIdSchema>;
 /**
  * AGT2-MATCH: the checks that hold a draft made from a template to that template, one slot at a time: what the slot's
  * footage must show (its intent's `needs`), the face shown or kept out (`face`), where the subject sits against the
- * reel's, the camera's move, the slot's length and cut, and the reel's graphics in the reel's place. Each finding
- * covers one slot's frames on the draft; `video.done` reads them per slot.
+ * reel's, the camera's move, the slot's length and cut, the reel's graphics in the reel's place, and (MOM1) the part
+ * of its shot the slot plays. Each finding covers one slot's frames on the draft; `video.done` reads them per slot.
  */
 export const SLOT_MATCH_CHECK_IDS = [
   'slotNeeds',
@@ -76,6 +78,8 @@ export const SLOT_MATCH_CHECK_IDS = [
   'slotMotion',
   'slotTiming',
   'slotGraphics',
+  // MOM1: the stretch of the shot the slot plays (its stored moments), against what the slot states.
+  'slotPart',
 ] as const satisfies readonly QaCheckId[];
 export type SlotMatchCheckId = (typeof SLOT_MATCH_CHECK_IDS)[number];
 

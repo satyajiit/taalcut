@@ -1,0 +1,83 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"number","type":"string","label":"Number","default":"07"},{"id":"headline","type":"string","label":"Headline","default":"The long way round"},{"id":"kicker","type":"string","label":"Kicker","default":"A week on the ridge road"},{"id":"accent","type":"color","label":"Accent","default":"#e4572e"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="cover-split-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #f2efe6;
+        }
+        #shot {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 1240px;
+          height: 100%;
+          object-fit: cover;
+          object-position: 62% 50%;
+          clip-path: polygon(190px 0, 100% 0, 100% 100%, 0 100%);
+        }
+        #panel {
+          position: absolute;
+          left: 134px;
+          top: 96px;
+          bottom: 130px;
+          width: 590px;
+          display: grid;
+          grid-template-rows: auto 1fr auto;
+        }
+        #number {
+          margin: 0;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 360px;
+          line-height: 0.82;
+          color: var(--accent);
+        }
+        #headline {
+          margin: 0;
+          align-self: end;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 98px;
+          font-weight: 800;
+          line-height: 1;
+          letter-spacing: -0.03em;
+          color: #16181d;
+          text-wrap: balance;
+        }
+        #kicker {
+          margin: 28px 0 0;
+          padding-top: 22px;
+          border-top: 6px solid #16181d;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 54px;
+          font-weight: 600;
+          line-height: 1.1;
+          color: #16181d;
+          text-wrap: balance;
+        }
+      </style>
+      <div id="root" data-composition-id="cover-split" data-width="1920" data-height="1080" data-duration="2">
+        <img id="shot" data-picture="hero" alt="" />
+        <div id="panel">
+          <p id="number" data-var-text="number">07</p>
+          <h1 id="headline" data-var-text="headline">The long way round</h1>
+          <p id="kicker" data-var-text="kicker">A week on the ridge road</p>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.addLabel('exit', 1.5);
+        window.__timelines['cover-split'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

@@ -21,6 +21,13 @@ export {
   type DesignerOutput,
 } from './skills/designer-checks';
 export { DESIGNER_PROMPT, DESIGNER_PROMPT_VERSION } from './skills/designer-prompt';
+export {
+  designerSettler,
+  SETTLED_FEWER,
+  SETTLED_NONE,
+  settledDesigns,
+  type DesignerStepCall,
+} from './skills/designer-settle';
 export { WORKSPACE_EXTRA_TOOLS, WORKSPACE_TOOLS, workspaceToolModule } from './workspace/tools/module';
 export type { DesignerOf, TemplateGraphicsSource, WorkspaceToolDeps } from './workspace/tools/deps';
 export { briefText, BUNDLED_FAMILIES, GSAP_PLUGINS } from './workspace/tools/brief';

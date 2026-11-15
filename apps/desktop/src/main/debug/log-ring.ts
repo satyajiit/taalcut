@@ -12,7 +12,7 @@ interface StderrStream {
   on(event: 'data', listener: (chunk: Buffer | string) => void): unknown;
 }
 
-const TAGS = ['[update]', '[gpu]', '[components]', '[utility]'] as const;
+const TAGS = ['[update]', '[gpu]', '[components]', '[utility]', '[signin]'] as const;
 const MAX_BYTES = 2 * 1024 * 1024;
 const MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const STDERR_LINES = 500;

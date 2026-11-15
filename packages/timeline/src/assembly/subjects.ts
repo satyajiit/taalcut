@@ -5,14 +5,12 @@
  * FRM1-SUB: subject tracks for every clip of a made video, before its first draft. `timeline.assemble` asks core's
  * SubjectSource to make (or join) the tracks of every pick's range as soon as the cast is known, and waits for them
  * within a budget before it assembles, so placement, preview, QA and reframing all read tracks that exist. A range
- * not tracked in time is still being tracked by the jobs queue; the export joins it. Then, with what is left of the
- * budget, the ranges placement's fallbacks read (`fallbackRanges`): each pick widened by retime's reach, and each
- * slot's first alternates, so retime and recast have people to place by. Also: the clips' frame sizes, so assembly
- * can reframe a clip whose aspect isn't the canvas's.
+ * not tracked in time is still being tracked by the jobs queue; the export joins it. Also: the clips' frame sizes,
+ * so assembly can reframe a clip whose aspect isn't the canvas's. (Until TXT1 it also tracked what placement's retime
+ * and recast read; they are gone, and so are those tracks.)
  */
 import {
   RationalTime,
-  TimeRange,
   type AssetId,
   type AsyncResult,
   type Clip,
@@ -25,7 +23,6 @@ import {
 import type { CastResult } from '../casting/engine';
 import { candidateKey } from '../model/cast';
 import { consumedMedia } from '../model/speed';
-import { RETIME } from './placement/fallbacks';
 
 /** The upright frame sizes of assets, by id; an asset the library doesn't know is left out. */
 export type FrameSizes = (
@@ -54,83 +51,35 @@ function rangeOf(
   return { assetId, start, end: RationalTime.add(start, RationalTime.rescale(used, mediaRate, 'ceil')) };
 }
 
-/** How far placement's retime moves a clip's in-point either way (its RETIME steps), in seconds. */
-export const RETIME_REACH_SECONDS = RETIME.stepSeconds * RETIME.steps;
-/** The alternates per slot tracked ahead of placement's recast, in casting's order (it keeps three). */
-export const ALTERNATES_TRACKED = 2;
-/**
- * Fallback ranges are tracked this much wider than placement reads them, so a range it works out a frame
- * differently (its own rounding of a clip's span) still lies inside a stored track.
- */
-const SLACK_SECONDS = 0.25;
-
-/** A range widened by `seconds` each way, inside the media's usable range. */
-export function widened(range: SubjectClipRange, seconds: number, available: TimeRange): SubjectClipRange {
-  const rate = range.start.rate;
-  const by = RationalTime.fromSeconds(seconds, rate, 'ceil');
-  const first = RationalTime.rescale(available.start, rate, 'ceil');
-  const last = RationalTime.rescale(TimeRange.end(available), rate, 'floor');
-  const start = RationalTime.max(first, RationalTime.subtract(range.start, by));
-  const end = RationalTime.min(last, RationalTime.add(range.end, by));
-  return RationalTime.isBefore(start, end) ? { assetId: range.assetId, start, end } : range;
-}
-
 const keyOf = (range: SubjectClipRange) => `${range.assetId}:${range.start.value}:${range.end.value}`;
 
-/** Each video pick across the cast's variants, with its slot, media and the variant's media by candidate. */
-function eachPick(template: Template, cast: CastResult) {
+/** Every video pick's range across the cast's variants, once each. */
+export function castRanges(template: Template, cast: CastResult): SubjectClipRange[] {
   const slots = new Map(template.slots.map((slot) => [slot.id as string, slot]));
-  return cast.variants.flatMap((variant) => {
+  const ranges = new Map<string, SubjectClipRange>();
+  for (const variant of cast.variants) {
     const media = new Map(
       variant.media.map((ref) => [
         candidateKey({ assetId: ref.assetId, shotId: ref.kind === 'video' ? ref.shotId : null }),
         ref,
       ]),
     );
-    return variant.slots.flatMap((slotCast) => {
+    for (const slotCast of variant.slots) {
       const pick = slotCast.pick;
       const slot = slots.get(slotCast.slotId);
       const ref = pick ? media.get(candidateKey(pick)) : undefined;
-      if (!pick || !slot || ref?.kind !== 'video') return [];
-      const clip = { duration: slot.duration, speed: slot.speedRamp };
-      /** The span this slot plays of a clip from `sourceStart`. */
-      const rangeAt = (assetId: AssetId, sourceStart: RationalTime, rate: FrameRate) =>
-        rangeOf(assetId, sourceStart, clip, rate, template.canvas.rate);
-      const range = rangeAt(ref.assetId, pick.sourceStart, ref.available.start.rate);
-      return [{ slotCast, ref, media, range, rangeAt }];
-    });
-  });
-}
-
-/** Every video pick's range across the cast's variants, once each. */
-export function castRanges(template: Template, cast: CastResult): SubjectClipRange[] {
-  const ranges = new Map<string, SubjectClipRange>();
-  for (const { range } of eachPick(template, cast)) ranges.set(keyOf(range), range);
-  return [...ranges.values()];
-}
-
-/**
- * What placement's fallbacks read for the cast (FRM1-OVL's request): each pick widened by retime's reach, and the
- * first alternates of each slot over the span the slot plays; once each, the picks' windows first.
- */
-export function fallbackRanges(template: Template, cast: CastResult): SubjectClipRange[] {
-  const windows = new Map<string, SubjectClipRange>();
-  const alternates = new Map<string, SubjectClipRange>();
-  for (const { slotCast, ref, media, range, rangeAt } of eachPick(template, cast)) {
-    const window = widened(range, RETIME_REACH_SECONDS + SLACK_SECONDS, ref.available);
-    windows.set(keyOf(window), window);
-    for (const alternate of slotCast.alternates.slice(0, ALTERNATES_TRACKED)) {
-      const other = media.get(candidateKey(alternate));
-      if (other?.kind !== 'video') continue;
-      const span = widened(
-        rangeAt(other.assetId, alternate.sourceStart, other.available.start.rate),
-        SLACK_SECONDS,
-        other.available,
+      if (!pick || !slot || ref?.kind !== 'video') continue;
+      const range = rangeOf(
+        ref.assetId,
+        pick.sourceStart,
+        { duration: slot.duration, speed: slot.speedRamp },
+        ref.available.start.rate,
+        template.canvas.rate,
       );
-      alternates.set(keyOf(span), span);
+      ranges.set(keyOf(range), range);
     }
   }
-  return [...windows.values(), ...[...alternates.values()].filter((span) => !windows.has(keyOf(span)))];
+  return [...ranges.values()];
 }
 
 /** Every enabled video clip's range in a timeline (after an edit, a swap or a gap's fix). */
@@ -205,21 +154,20 @@ export async function castAspects(
   return aspects;
 }
 
-/** What the assembly waits for: the picks' tracks (the first draft's), then the fallbacks' in what is left. */
+/** What the assembly waits for: the picks' tracks (the first draft's). */
 export interface AssemblyTracks {
   readonly picks: EnsureReport;
-  readonly fallbacks: EnsureReport;
   /** The cast the video is made from: `refine`'s when one ran, else the one given. */
   readonly cast: CastResult;
 }
 
-/** FIX-TRIM: a step between the picks' tracks and the fallbacks': the cast changed in what is left of the budget. */
+/** FIX-TRIM: a step after the picks' tracks: the cast changed in what is left of the budget. */
 export type CastRefiner = (cast: CastResult, budgetMs: number) => Promise<CastResult>;
 
 /**
- * The picks' tracks within `budgetMs`, then `refine` (FIX-TRIM: the in-points with the person, person-in-points.ts),
- * then the fallbacks' (`fallbackRanges`, of the refined cast) in what is left of it. Fallback ranges not made in time
- * are still queued, behind the picks', for an edit's placement to read.
+ * The picks' tracks within `budgetMs`, then `refine` (FIX-TRIM: the in-points with the person, person-in-points.ts)
+ * in what is left of it. A clip `refine` moved has its track asked for when the timeline is laid out
+ * (placement/run-placement.ts).
  */
 export async function ensureForAssembly(
   source: SubjectSource,
@@ -232,11 +180,5 @@ export async function ensureForAssembly(
   const started = now();
   const picks = await ensureSubjects(source, castRanges(template, cast), budgetMs, now);
   const refined = refine ? await refine(cast, Math.max(0, budgetMs - (now() - started))) : cast;
-  const fallbacks = await ensureSubjects(
-    source,
-    fallbackRanges(template, refined),
-    Math.max(0, budgetMs - (now() - started)),
-    now,
-  );
-  return { picks, fallbacks, cast: refined };
+  return { picks, cast: refined };
 }

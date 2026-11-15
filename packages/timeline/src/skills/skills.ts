@@ -144,7 +144,9 @@ export function checkCast(
       const x = picks[a] as (string | null)[];
       const y = picks[b] as (string | null)[];
       const differences = x.filter((key, slot) => key !== y[slot]).length;
-      const hookLocked = timelines[a]?.cast?.slots[0]?.note === 'userPick';
+      // KEEP1: an opening that keeps the reel's own footage is the same in every variant, like a locked one.
+      const hook = timelines[a]?.cast?.slots[0]?.note;
+      const hookLocked = hook === 'userPick' || hook === 'reelKept';
       if (differences < Math.ceil(config.variants.minDifference * x.length) || (!hookLocked && x[0] === y[0]))
         return retry(
           `Variants ${a + 1} and ${b + 1} are too alike: assemble them in one timeline.assemble call.`,
@@ -179,6 +181,8 @@ export const LIBRARIAN_EXTRA_TOOLS = [
   'templates.list',
   'library.frameAt',
   'library.subjects',
+  // MATCH1: a stretch of a clip as frames with their times, to name the instant a slot's cut hangs on.
+  'library.frameStrip',
   'memory.recall',
   'memory.remember',
 ] as const;
@@ -197,7 +201,13 @@ export function timelineSkillModule(deps: TimelineSkillDeps): SkillModule {
   const librarian = defineSkill({
     id: 'timeline.librarian',
     // 1.6.0 (AGT2): the check holds reranked to the slots the stored cast says were reranked.
-    version: '1.6.0',
+    // 1.7.0 (KEEP1): a slot that keeps the reel's own footage is filled by timeline.assemble, never cast or a gap:
+    // the check reads an opening `reelKept` slot as locked. The prompt is unchanged (its window has no room):
+    // timeline.cast's answer says what such a slot is, when there is one.
+    // 1.8.0 (MATCH1): library.frameStrip joins its tools, and three more turns to look with it: where a slot
+    // states a moment for its cut, timeline.cast's answer says how to find the instant and state it (`lands`).
+    // The prompt is unchanged.
+    version: '1.8.0',
     labelKey: 'skills.timeline.librarian',
     description:
       "Casts the user's shots into a template (or a brief's format plan), reranks unsure slots, and assembles 1–10 variants.",
@@ -218,7 +228,8 @@ export function timelineSkillModule(deps: TimelineSkillDeps): SkillModule {
     // FIX-LIBRARIAN: its longest path (a brief planned or fitted, the question, earlier timelines read, the cast, the
     // assembly, a style set used, the handoff, one check retried) is 10 or 11 turns; 12 leaves one or two for finding
     // a tool. The loop's 10 ended the owner's step after it had assembled.
-    limits: { expectedTurns: 6, maxTurns: 12 },
+    // MATCH1: the strips of a clip looked at for a stated moment (the whole stretch, then narrower) are up to three.
+    limits: { expectedTurns: 6, maxTurns: 15 },
     refs: (output) =>
       output.timelineIds.map((id, index) => ({
         entity: 'timeline',

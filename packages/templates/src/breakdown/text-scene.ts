@@ -16,7 +16,10 @@
  *   or scripts; vertical lettering; cut off by the frame's edge;
  * - **lifetime** (weak): it crosses a cut, lives exactly as long as its shot, comes and goes mid-shot, flickers, or
  *   appears with three or more others at a cut;
- * - **look**: a still, even fill that stops on every side (a bubble's or a pill's shape) and rendered contrast.
+ * - **look**: a still, even fill that stops on every side (a bubble's or a pill's shape) and rendered contrast;
+ * - **sequence** (LYR1, text-sequence.ts): it is one piece of text that replaces itself in place, a word or a line
+ *   at a time, which only editing does. Its pieces are judged without the signals that punish exactly that: brief,
+ *   alike to one another, coming back, scenery beside them.
  *
  * The sum is the score; `sceneLine` and `addedLine` cut it into scene, composited and unsure. An unsure reading
  * leans scene when something stands in front of it, and composited when it sits on a still bounded fill (the owner's
@@ -28,6 +31,7 @@ import { RationalTime, type Box, type FrameRate, type ReelSubjects, type TextOve
 import type { BreakdownConfig } from './config';
 import type { OcrQuad } from './ports';
 import type { PixelEvidence, SceneSignal } from './text-signals';
+import { replacingTexts, sequenceRuleFor } from './text-sequence';
 import { siteFacts, type SiteFacts } from './text-sites';
 
 /** What the text pass saw of an overlay across its OCR samples. */
@@ -58,6 +62,13 @@ export interface TextRegionJudgement {
   readonly lean: 'scene' | 'composited' | null;
   /** Readings at one place in one shot share a site (text-sites.ts). */
   readonly site: number;
+  /** LYR1: the sequence it is a piece of (text-sequence.ts), by its index among the reel's; null when in none. */
+  readonly sequence: number | null;
+  /**
+   * LYR1: the sequence whose place and time it was read inside without being a piece of it: a scrap of the picture
+   * behind the words, never an overlay of its own. Null for the rest, and when that sequence is the scene's after all.
+   */
+  readonly within: number | null;
 }
 
 type SceneConfig = BreakdownConfig['textScene'];
@@ -166,7 +177,8 @@ function signalsOf(
   if (cutByPerson(box, facts.span, options.subjects, options.rate)) add('behindPerson', w.behindPerson);
   // Perspective and place.
   if (seen.quad) add('tilt', w.tilt * quadTilt(seen.quad, options.aspect ?? 1));
-  add('block', w.block * Math.min(2, seen.block ?? 0));
+  // Signage beside a piece of a sequence is the picture it was laid over, not a block it belongs to.
+  if (facts.sequence === null) add('block', w.block * Math.min(2, seen.block ?? 0));
   if (box.height >= config.verticalRatio * box.width && [...overlay.text.trim()].length >= 2)
     add('vertical', w.vertical);
   if (touchesEdge(box, config.edgeMargin)) add('edge', w.edge);
@@ -182,23 +194,43 @@ function signalsOf(
   if (facts.crowd) add('crowd', w.crowd);
   // Unrelated readings after one another at a place are captions, unless the place is also misread or hidden.
   if (facts.replaced > 0 && facts.misread === 0 && !facts.interrupted) add('replaced', w.replaced);
+  // LYR1: one piece of text replacing itself in place; scenery never does (text-sequence.ts).
+  if (facts.sequence !== null) add('sequence', w.sequence);
   if (overlay.confidence < CONFIDENT) add('doubtful', w.doubtful);
   return out;
 }
 
-/** Where and when each reading lives (text-sites.ts), with the config's edges. */
+/**
+ * Where and when each reading lives (text-sites.ts), with the config's edges. LYR1: text that replaces itself in
+ * place is found first (text-sequence.ts), so its pieces are one site and what else was read in its place is known.
+ */
 export function factsFor(
   overlays: readonly TextOverlay[],
   options: Pick<WeighOptions, 'cuts' | 'total' | 'rate' | 'config'>,
 ): SiteFacts[] {
   const { config, rate } = options;
   const fps = RationalTime.toFrames(RationalTime.fromSeconds(1, rate), rate);
+  const pieces = overlays.map((overlay) => {
+    const start = RationalTime.toFrames(overlay.start, rate);
+    return {
+      text: overlay.text,
+      box: overlay.box,
+      start,
+      end: start + RationalTime.toFrames(overlay.duration, rate),
+    };
+  });
+  const sequences = replacingTexts(pieces, {
+    cuts: options.cuts,
+    near: config.shotEdgeFrames,
+    rule: sequenceRuleFor(config.sequence, rate),
+  }).map(({ chain, noise }) => ({ members: chain.members, noise }));
   return siteFacts(overlays, {
     cuts: options.cuts,
     total: options.total,
     rate,
     near: config.shotEdgeFrames,
     minFrames: Math.max(1, Math.round(config.minSeconds * fps)),
+    sequences,
   });
 }
 
@@ -213,7 +245,7 @@ export function weighText(
 ): TextRegionJudgement[] {
   const { config } = options;
   const facts = factsFor(overlays, options);
-  return overlays.map((overlay, index) => {
+  const weighed = overlays.map((overlay, index) => {
     const pixels = options.pixels?.[index] ?? null;
     const signals = signalsOf(
       overlay,
@@ -222,17 +254,50 @@ export function weighText(
       pixels,
       options,
     );
-    const score = Math.round(Object.values(signals).reduce((sum, value) => sum + value, 0) * 1000) / 1000;
+    return {
+      signals,
+      score: Math.round(Object.values(signals).reduce((sum, v) => sum + v, 0) * 1000) / 1000,
+    };
+  });
+  // LYR1: a sequence is one piece of text. Where most of its pieces are composited, a piece left unsure is too; and
+  // while two of its pieces or more are not the scene's it holds, and what else was read in its place is its noise.
+  const scoresOf = new Map<number, number[]>();
+  facts.forEach((fact, index) => {
+    if (fact.sequence !== null)
+      scoresOf.set(fact.sequence, [...(scoresOf.get(fact.sequence) ?? []), weighed[index]!.score]);
+  });
+  const sorted = [...scoresOf.entries()].map(([at, scores]) => [at, scores.sort((a, b) => a - b)] as const);
+  const addedSequences = new Set(
+    sorted.flatMap(([at, scores]) => (scores[scores.length >> 1]! <= config.addedLine ? [at] : [])),
+  );
+  const held = new Set(
+    sorted.flatMap(([at, scores]) =>
+      scores.filter((score) => score < config.sceneLine).length >= 2 ? [at] : [],
+    ),
+  );
+  return weighed.map(({ signals, score }, index) => {
     const settled = score >= config.sceneLine ? 'scene' : score <= config.addedLine ? 'composited' : null;
+    const sequence = facts[index]!.sequence;
     // Unsure: something in front of it makes it the scene's (an added overlay is always on top); else a still
-    // bounded fill is a bubble or a pill, which no footage contains.
+    // bounded fill is a bubble or a pill, which no footage contains. LYR1: not for a reading that flickers on
+    // briefly: a fill seen for a few frames is a sign board as easily, so it stays unsure and is asked about (the
+    // owner's reel kept a scrap of a boarding pass and an airport sign as overlays this way).
     const inFront =
       signals.behindPerson !== undefined ||
       signals.misread !== undefined ||
       signals.interrupted !== undefined ||
       (signals.covered ?? 0) >= config.weights.covered / 2;
+    const withSequence = sequence !== null && addedSequences.has(sequence);
     const lean =
-      settled !== null ? null : inFront ? 'scene' : signals.shape !== undefined ? 'composited' : null;
+      settled !== null
+        ? null
+        : withSequence
+          ? 'composited'
+          : inFront
+            ? 'scene'
+            : signals.shape !== undefined && signals.short === undefined
+              ? 'composited'
+              : null;
     return {
       kind: settled ?? lean ?? 'unsure',
       score,
@@ -240,13 +305,22 @@ export function weighText(
       signals,
       lean,
       site: facts[index]!.site,
+      sequence,
+      within: facts[index]!.within !== null && held.has(facts[index]!.within!) ? facts[index]!.within : null,
     };
   });
 }
 
-/** The verdict the breakdown acts on: a composited reading is an overlay; an unsure one is kept and asked about. */
+/**
+ * The verdict the breakdown acts on: a composited reading is an overlay; an unsure one is kept and asked about; one
+ * read inside a sequence's place is dropped with the scene's, whatever it weighed.
+ */
 export const verdictOf = (judgement: TextRegionJudgement): TextVerdict =>
-  judgement.kind === 'composited' ? 'overlay' : judgement.kind === 'scene' ? 'scene' : 'maybeScene';
+  judgement.within !== null || judgement.kind === 'scene'
+    ? 'scene'
+    : judgement.kind === 'composited'
+      ? 'overlay'
+      : 'maybeScene';
 
 /**
  * Each overlay's verdict (BRK1's signature, kept for its callers). `evidence` is index-aligned with `overlays`

@@ -14,7 +14,7 @@ import { learnedCastingConfig, staticCastingConfig } from '../../src/casting/lea
 import { world } from '../fixtures/casting';
 import { fakeEmbedder } from '../fixtures/library';
 
-function learnedItem(weights: CastingWeights, configVersion = 'casting.v5'): MemoryItemView {
+function learnedItem(weights: CastingWeights, configVersion = 'casting.v6'): MemoryItemView {
   return {
     id: newId<'MemoryItem'>(),
     scope: { kind: 'user' },
@@ -41,7 +41,7 @@ describe('learnedCastingConfig', () => {
     expect(resolved.ok && resolved.value).toEqual({
       config: CASTING_CONFIG,
       weights: { source: 'default', values: CASTING_CONFIG.weights },
-      label: 'casting.v5',
+      label: 'casting.v6',
     });
   });
 
@@ -56,7 +56,7 @@ describe('learnedCastingConfig', () => {
       memoryId: item.id,
       updatedAt: 2_000,
     });
-    expect(resolved.value.label).toBe('casting.v5+learned@2000');
+    expect(resolved.value.label).toBe('casting.v6+learned@2000');
   });
 
   it('brings stored weights inside the bounds, and ignores another config version', async () => {
@@ -75,7 +75,9 @@ describe('casting through the resolved config', () => {
   const { template, profiles } = world({ slots: 5, perSlot: 4, confusers: 4, distractors: 20, seed: 11 });
   const items: MemoryItemView[] = [];
   // Each slot's line embeds near its own shots, so its cosines rise above casting's floor (FIX-CAST).
-  const near = new Map(template.slots.map((slot, index) => [slot.intent.text, profiles[index * 4]!.embedding]));
+  const near = new Map(
+    template.slots.map((slot, index) => [slot.intent.text, profiles[index * 4]!.embedding]),
+  );
   const engine = createCastingEngine({
     catalog: createMemoryShotCatalog(profiles),
     embedder: fakeEmbedder(near),
@@ -102,13 +104,13 @@ describe('casting through the resolved config', () => {
     expect(before.weights.source).toBe('default');
     items.push(learnedItem(leaning));
     const learned = await cast();
-    expect(learned.configVersion).toBe('casting.v5+learned@2000');
+    expect(learned.configVersion).toBe('casting.v6+learned@2000');
     expect(learned.weights.values).toEqual(leaning);
     expect(ranking(learned)).not.toEqual(ranking(before));
     // Reset deletes the item.
     items.length = 0;
     const reset = await cast();
-    expect(reset.configVersion).toBe('casting.v5');
+    expect(reset.configVersion).toBe('casting.v6');
     expect(ranking(reset)).toEqual(ranking(before));
   });
 

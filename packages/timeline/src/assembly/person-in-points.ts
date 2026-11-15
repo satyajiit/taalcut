@@ -8,8 +8,17 @@
  * `searchSeconds` before the pick to as far after it (inside the shot), within a budget, and the pick's window is
  * chosen again by casting's in-point rule plus the person's terms (subject-terms.ts): under way for a moment that
  * is motion, no face for one that shows none. A pick the person locked, a photo, a shot not tracked in time and a
- * shot nobody is in keep their in-point. The search spans hold the picks' own windows and most of placement's
- * fallback windows, so the tracks assembly waits for anyway cover most of what this reads.
+ * shot nobody is in keep their in-point. The search spans hold the picks' own windows, so the tracks assembly waits
+ * for anyway cover part of what this reads, and a moved pick's window lies inside a track this step made.
+ *
+ * MOM1: the window is weighed with what it shows too (casting/moment-fit.ts): a clip moves only when the person's
+ * terms and the content's together improve, so a stretch with nobody in it never takes a slot that shows no face
+ * merely by being empty. A part the model stated for the pick (casting/stated-parts.ts) is kept: the window is
+ * chosen again inside it.
+ *
+ * MOM2: the step chooses with the in-point rule, so it never moves a clip onto a stretch the describer states as the
+ * camera being handled while the shot has another stretch long enough (casting/handling.ts). When the person's
+ * terms leave only such windows, the clip keeps the rule's in-point.
  */
 import {
   RationalTime,
@@ -27,7 +36,9 @@ import {
 import type { CastingConfig } from '../casting/config';
 import type { CastResult } from '../casting/engine';
 import { selectInPoint, windowFrames, type InPoint } from '../casting/in-points';
+import { contentPenalty } from '../casting/moment-fit';
 import { slotSpecs, type SlotSpec } from '../casting/slots';
+import { partTerms, statedFor, type StatedPart } from '../casting/stated-parts';
 import {
   personTerms,
   shotPerson,
@@ -42,6 +53,10 @@ export interface PersonInPointDeps {
   readonly subjects: SubjectSource;
   /** The shots' profiles (casting's catalogue). */
   profiles(refs: readonly ShotProfileRef[], signal?: AbortSignal): AsyncResult<ShotProfile[]>;
+  /** MOM1: the slot specs with what each slot states embedded (the engine's `slotSpecs`). Absent: unembedded. */
+  slotSpecs?(template: Template, canvas: CastResult['canvas'], signal?: AbortSignal): Promise<SlotSpec[]>;
+  /** MOM1: the parts the model stated for this cast; a pick's window stays inside its part. */
+  readonly parts?: readonly StatedPart[];
 }
 
 export interface PersonInPointReport {
@@ -76,7 +91,9 @@ export function searchRange(
  * The window casting's rule gives a shot for a slot with the person in it (`person`, from `shotPerson`): their terms
  * on top of the rule's, inside the tracked span and `allowed`. With `current` (the in-point now, in media frames from
  * the shot's start), null unless the new window improves the person's terms by at least `minGain`: a shot that shows
- * a face everywhere, or a walk the clip is already on, keeps its in-point.
+ * a face everywhere, or a walk the clip is already on, keeps its in-point. MOM1: the gain counts what the window shows
+ * against what the slot states as well (the in-point rule's content term), so a move that loses more there than the
+ * person's terms gain is not made.
  */
 export function chooseWithPerson(input: {
   readonly profile: ShotProfile;
@@ -90,7 +107,8 @@ export function chooseWithPerson(input: {
 }): InPoint | null {
   const { profile, slot, person, config } = input;
   const settings = config.inPoint.subjects;
-  const terms = personTerms(person, input.wants, windowFrames(slot, profile.range.start.rate), settings);
+  const window = windowFrames(slot, profile.range.start.rate);
+  const terms = personTerms(person, input.wants, window, settings);
   const allowed = (start: number) => terms.allowed!(start) && (input.allowed ? input.allowed(start) : true);
   const point = selectInPoint(profile, slot, input.canvasRate, config, slot.index === 0, {
     ...terms,
@@ -98,7 +116,9 @@ export function chooseWithPerson(input: {
   });
   if (!point || input.current === undefined) return point;
   const at = RationalTime.subtract(point.sourceStart, profile.range.start).value;
-  return terms.penalty!(input.current) - terms.penalty!(at) >= settings.minGain ? point : null;
+  const content = contentPenalty(profile, slot, window, config.inPoint.content);
+  const cost = (start: number) => terms.penalty!(start) + (content ? content(start) : 0);
+  return cost(input.current) - cost(at) >= settings.minGain ? point : null;
 }
 
 /**
@@ -117,6 +137,8 @@ export function inPointWithPerson(input: {
   readonly wants?: Partial<SlotWants>;
   /** The in-point now, in media frames from the shot's start. */
   readonly current?: number;
+  /** MOM1: the starts a stated part allows (media frames from the shot's start). */
+  readonly allowed?: (start: number) => boolean;
 }): InPoint | null {
   const { profile, slot, config } = input;
   const settings = config.inPoint.subjects;
@@ -131,6 +153,7 @@ export function inPointWithPerson(input: {
     canvasRate: input.template.canvas.rate,
     config,
     ...(input.current !== undefined ? { current: input.current } : {}),
+    ...(input.allowed ? { allowed: input.allowed } : {}),
   });
 }
 
@@ -154,7 +177,9 @@ export async function personInPoints(
   signal?: AbortSignal,
 ): Promise<{ cast: CastResult; report: PersonInPointReport }> {
   const started = now();
-  const specs = slotSpecs(template, config, cast.canvas);
+  const specs = deps.slotSpecs
+    ? await deps.slotSpecs(template, cast.canvas, signal)
+    : slotSpecs(template, config, cast.canvas);
   const bySlot = new Map(specs.map((spec) => [spec.slotId as string, spec]));
   const wanted = cast.variants.flatMap((variant) =>
     variant.slots.flatMap((slot) =>
@@ -200,6 +225,15 @@ export async function personInPoints(
       RationalTime.rescale(was, pick.profile.range.start.rate, 'round'),
       pick.profile.range.start,
     ).value;
+    const stated = statedFor(deps.parts, pick.cast.slotId, pick.profile);
+    const within = stated
+      ? partTerms(
+          pick.profile,
+          windowFrames(pick.spec, pick.profile.range.start.rate),
+          stated,
+          config.inPoint.handling,
+        )?.allowed
+      : undefined;
     const point = inPointWithPerson({
       ...pick,
       slot: pick.spec,
@@ -207,6 +241,7 @@ export async function personInPoints(
       span: span.value,
       config,
       current,
+      ...(within ? { allowed: within } : {}),
     });
     if (!point || RationalTime.compare(RationalTime.rescale(point.sourceStart, was.rate, 'round'), was) === 0)
       continue;

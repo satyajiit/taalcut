@@ -232,6 +232,8 @@ function buildSlots(template: Template, pieces: readonly Piece[], ids: EnergyIds
           cut: kept?.cut ?? { method: 'user', confidence: 1 },
           approved: false,
           frame: kept?.frame ?? null,
+          // KEEP1: whose footage it plays comes with the intent's slot.
+          ...(source.footage ? { footage: source.footage } : {}),
         };
     slots.push(slot);
     slotMap.push({ slotId: slot.id, from: from.length > 0 ? from : [source.id], unchanged });

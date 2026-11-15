@@ -276,7 +276,7 @@ export function renderPhase3Deps(
     provenance: libraryProvenance(container),
     credentials: contentCredentials(
       config,
-      () => [folders.work, folders.renders, ...libraryRoots(container)],
+      () => [folders.work, folders.renders, folders.exports, ...libraryRoots(container)],
       onFallback,
     ),
     generatedMusic: async (choice) => {

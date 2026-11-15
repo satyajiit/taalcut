@@ -7,9 +7,22 @@
  * nothing else moves); the timeline's first edge slips (in-point moves,
  * length stays); its last edge ripples (the video gets shorter or longer).
  * The moved cut then re-syncs.
+ *
+ * MOM2: a clip the person trims by hand is theirs, like one they slip or swap: its cast slot is marked `userPick`, so
+ * QA reads no part verdict on it (it may run into a stretch the describer called camera handling: that is the
+ * person's choice) and a later re-cast leaves it be. The neighbour that gave or took the frames is not marked.
  */
-import { err, ok, RationalTime, type Clip, type Result, type Timeline, type TimelineItemId } from '@taalcut/core';
+import {
+  err,
+  ok,
+  RationalTime,
+  type Clip,
+  type Result,
+  type Timeline,
+  type TimelineItemId,
+} from '@taalcut/core';
 import { InvalidMove, MediaTooShort } from '../errors';
+import { updateSlots } from '../model/cast';
 import { toMedia, trimEnd, trimStart } from '../model/clip-edit';
 import { positions, videoItems, withVideoItems, type Filler } from '../model/sequence';
 import { clipMediaFits, speedAt } from '../model/speed';
@@ -24,7 +37,8 @@ export interface TrimInput {
 }
 
 function checked(item: Filler, timeline: Timeline): Result<Filler> {
-  if (item.duration.value < 1) return err(InvalidMove(undefined, { detail: 'An item would last under a frame' }));
+  if (item.duration.value < 1)
+    return err(InvalidMove(undefined, { detail: 'An item would last under a frame' }));
   if (item.type === 'clip' && !clipMediaFits(item, timeline.canvas.rate))
     return err(MediaTooShort({ clipId: item.id }));
   return ok(item);
@@ -45,7 +59,11 @@ function slip(timeline: Timeline, clip: Clip, by: number): Result<Clip> {
   const speed = clip.speed ? speedAt(clip.speed, 0) : 1;
   const shift = toMedia(Math.round(by * speed), timeline.canvas.rate, clip.sourceStart.rate);
   // The in-point is set on purpose, so there is no motion peak promised on the beat any more.
-  const slipped: Clip = { ...clip, sourceStart: RationalTime.subtract(clip.sourceStart, shift), syncPoint: null };
+  const slipped: Clip = {
+    ...clip,
+    sourceStart: RationalTime.subtract(clip.sourceStart, shift),
+    syncPoint: null,
+  };
   return clipMediaFits(slipped, timeline.canvas.rate) ? ok(slipped) : err(MediaTooShort({ clipId: clip.id }));
 }
 
@@ -83,7 +101,8 @@ export function trimClip(timeline: Timeline, input: TrimInput, options: EditOpti
     }
     // EDT1-OPS: a roll takes its frames from the neighbour; say how far the edge can go, in the tools' seconds.
     const giver = shift > 0 ? right.item : left.item;
-    if (RationalTime.rescale(giver.duration, rate, 'round').value - Math.abs(shift) < 1) return rollTooFar(giver, clip);
+    if (RationalTime.rescale(giver.duration, rate, 'round').value - Math.abs(shift) < 1)
+      return rollTooFar(giver, clip);
     const newLeft = checked(trimEnd(left.item, shift, rate), timeline);
     if (!newLeft.ok) return newLeft;
     const newRight = checked(trimStart(right.item, shift, rate), timeline);
@@ -93,12 +112,20 @@ export function trimClip(timeline: Timeline, input: TrimInput, options: EditOpti
     moved = [cut];
   }
 
-  const edited = withVideoItems(timeline, items);
+  const own =
+    options.source !== 'agent' &&
+    !!timeline.cast?.slots.some((slot) => slot.clipId === input.clipId && slot.pick);
+  const cast = own
+    ? updateSlots(timeline.cast, (slot) =>
+        slot.clipId === input.clipId && slot.pick ? { ...slot, note: 'userPick' as const } : slot,
+      )
+    : timeline.cast;
+  const edited = withVideoItems(own ? { ...timeline, cast } : timeline, items);
   const synced = resync(edited, {
     moved,
     before: timeline,
     ...(options.config ? { config: options.config } : {}),
     ...(options.ids ? { ids: options.ids } : {}),
   });
-  return ok({ timeline: synced, changed: ['tracks', 'markers'] });
+  return ok({ timeline: synced, changed: own ? ['tracks', 'markers', 'cast'] : ['tracks', 'markers'] });
 }

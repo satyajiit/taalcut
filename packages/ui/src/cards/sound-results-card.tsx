@@ -49,7 +49,9 @@ function SoundRow({ sound, followUp }: { sound: Sound; followUp: FollowUp }) {
       data-verdict={sound.verdict ?? 'hint'}
       className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg px-2 py-2.5"
     >
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
+      {/* The words ask for 12rem: in a narrow column (the editor's chat) Add on cuts goes under them instead of
+          squeezing the name, its chips and the credit into a sliver. */}
+      <div className="flex min-w-0 flex-[1_1_12rem] flex-col gap-1">
         <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
           <UserContent id={titleId} translate="no" className="min-w-0 text-md font-medium text-ink">
             {sound.title}

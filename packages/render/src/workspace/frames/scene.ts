@@ -93,10 +93,14 @@ export async function backdropsFor(
   return ok(backdrops);
 }
 
-/** The stills' timeline: image clips under the frames, `frames` long, at 30 fps on a 1080×1920 canvas. */
+/**
+ * The stills' timeline: image clips under the frames, `frames` long, at 30 fps on a 1080×1920 canvas, or on
+ * `canvas` (CVR2: a cover's composition is drawn on the cover's own canvas).
+ */
 export function sceneTimeline(
   backdrops: readonly Backdrop[],
   frames: number,
+  canvas: { readonly width: number; readonly height: number } = { width: 1080, height: 1920 },
 ): { timeline: Timeline; pictures: Map<string, Picture> } {
   const rate = FRAMES_RATE;
   const pictures = new Map<string, Picture>();
@@ -129,7 +133,7 @@ export function sceneTimeline(
     projectId: newId<'Project'>(),
     name: 'Workspace frames',
     revision: 1,
-    canvas: { width: 1080, height: 1920, rate },
+    canvas: { width: canvas.width, height: canvas.height, rate },
     template: null,
     beatMap: null,
     tracks: [{ kind: 'video', id: 'V1', name: 'Video', enabled: true, items }],

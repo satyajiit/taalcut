@@ -13,6 +13,11 @@
  * settle as kept, and the two real gaps are not buried). A clip that isn't weak is listed as `picked`, so a swap
  * shows in the stored timeline. FIX-ASK: each slot says what of the template's it carries (its text, its graphics),
  * and the timeline counts its shots, so the ask policy can weigh the gaps against the whole video.
+ *
+ * KEEP1: a slot that keeps the reel's own footage (cast note `reelKept`, its clip cut from the template's reel) is
+ * not the person's to fill. It is left out altogether: never empty, never weak, never a clip another shot can
+ * borrow or reuse, and not one of the shots the card counts ("This video needs N clips" is about the person's).
+ * The others keep the cast board's numbers.
  */
 import { RationalTime, type GapView, type SlotCast, type Timeline } from '@taalcut/core';
 import type { GapCarry, GapSlot, GapTimeline, SwapTarget, WeakPickInfo } from './gap-types';
@@ -68,6 +73,8 @@ export function gapTimelineOf(timeline: Timeline, options: GapTimelineOptions): 
   const { items, duration } = placed(timeline);
   const slots: GapSlot[] = [];
   for (const [index, cast] of (timeline.cast?.slots ?? []).entries()) {
+    // KEEP1: the reel's own footage, filled by assembly from the template's reel: nothing to ask the person for.
+    if (cast.note === 'reelKept' && cast.clipId) continue;
     const intent = options.intentOf?.(cast.slotId) ?? null;
     const carries = options.carriesOf?.(cast.slotId) ?? [];
     const base = {

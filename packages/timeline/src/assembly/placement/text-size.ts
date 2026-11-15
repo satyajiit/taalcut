@@ -2,10 +2,15 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * How big a made text item will be drawn (FRM1-OVL), so the solver places the whole of it: its wrapped lines in its
- * box, with its chrome. Widths use render's own estimate without fonts (0.6 of the size a grapheme), which is wider
- * than the bundled fonts draw, so the box holds what render draws. HFW1 retire: a graphic is a composition that lays
- * itself out with CSS, so nothing here sizes one. Pure.
+ * How big a text item's words are drawn (FRM1-OVL, TXT1), so its box holds the whole of them. Widths use render's own
+ * estimate without fonts (0.6 of the size a grapheme), which is wider than the bundled fonts draw, so the box holds
+ * what render draws. HFW1 retire: a graphic is a composition that lays itself out with CSS, so nothing here sizes
+ * one. Pure.
+ *
+ * TXT1 (the owner's "the single sentence has also broken into two lines"): the box follows the words, never the
+ * other way round. A text draws on one line for each line it is written on (a line break in the words), whatever
+ * its size, unless someone states a width to wrap at (`fitWords`). The one other break is the frame's: a line
+ * wider than the frame at its size wraps at the frame's width, and the tools say so.
  */
 import type { TextItem } from '@taalcut/core';
 import type { Size } from './geometry';
@@ -63,32 +68,37 @@ export function textChrome(background: TextItem['appearance']['background']): { 
   return { x: 0, y: 0 };
 }
 
-/**
- * The width a text item needs so no word breaks letter by letter: its longest word at `size` (a share of the canvas
- * height), with room for a wider real font. A reel's box read off a narrow sign can be narrower than a word.
- */
-export function longestWordPx(text: string, size: number, canvas: Size): number {
-  const fontPx = Math.round((size * canvas.height) / DESIGN.capShare);
-  const longest = Math.max(
-    0,
-    ...text
-      .trim()
-      .split(/\s+/u)
-      .map((word) => graphemes(word)),
-  );
-  return Math.ceil(longest * fontPx * DESIGN.advance * WORD_SLACK);
-}
-const WORD_SLACK = 1.15;
+/** The lines a text is written on: a line break in its words is the only break nobody else states. */
+export const writtenLines = (text: string): string[] => text.split(/\r?\n/u);
 
-/** A text item drawn in a box `width` pixels wide at its cap height: its lines' height, with its chrome. */
-export function textFootprint(
-  text: string,
-  appearance: TextItem['appearance'],
-  width: number,
-  canvas: Size,
-): Size {
-  const fontPx = Math.round((appearance.size * canvas.height) / DESIGN.capShare);
-  const lines = estimateLines(text, fontPx, Math.max(1, width));
-  const chrome = textChrome(appearance.background);
-  return { width: width + 2 * chrome.x, height: lines.count * Math.round(fontPx * 1.2) + 2 * chrome.y };
+export interface WordsFit {
+  /** The words' own box, pixels, without chrome. */
+  readonly width: number;
+  readonly height: number;
+  /** The lines the words draw on. */
+  readonly lines: number;
+  /** A written line is wider than the frame at this size: it wraps at the frame's width. */
+  readonly widerThanFrame: boolean;
+}
+
+/**
+ * The box a text's words take at `size` (the capitals' height over the canvas's): one line for each written line,
+ * as wide as the widest of them. `wrapAt` (pixels) is a width someone stated: the words wrap there instead.
+ */
+export function fitWords(text: string, size: number, canvas: Size, wrapAt?: number): WordsFit {
+  const fontPx = Math.round((size * canvas.height) / DESIGN.capShare);
+  const written = writtenLines(text);
+  const widest = Math.max(0, ...written.map((line) => estimateLines(line, fontPx, Infinity).widest));
+  const widerThanFrame = wrapAt === undefined && widest > canvas.width;
+  const limit = wrapAt ?? (widerThanFrame ? canvas.width : undefined);
+  const lines =
+    limit === undefined
+      ? written.length
+      : written.reduce((sum, line) => sum + estimateLines(line, fontPx, Math.max(1, limit)).count, 0);
+  return {
+    width: Math.max(1, limit === undefined ? widest : Math.round(limit)),
+    height: lines * Math.round(fontPx * 1.2),
+    lines,
+    widerThanFrame,
+  };
 }

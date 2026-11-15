@@ -66,13 +66,14 @@ export function createGenerateThumbnailTool(deps: ImageToolDeps) {
   const now = deps.now ?? Date.now;
   return defineTool({
     name: 'images.generateThumbnail',
-    version: '1.1.0',
+    // 1.1.1 (CVR2): its words name workspace.placeCover as the footage route.
+    version: '1.1.1',
     description:
       'Generates photography, illustration, graphics or mixed artwork following the brief and Hallmark guidance (16:9 YouTube, 9:16 Shorts/Reels/TikTok, ' +
       '4:5 and 1:1 Instagram feed/grid), with editable typography, optional channel branding, and a ' +
       'YouTube, Instagram, and TikTok social publishing metadata pack (titles, descriptions, chapters, comma-separated ' +
-      'tags, captions, and SEO keywords). Uses an available image provider, including supported ChatGPT/Grok subscriptions. Default backdrop mode leaves typography editable; complete mode includes requested lettering and supplied branding. For local graphic covers or footage, ' +
-      'use timeline.setCover and render.exportCover instead; they need no image provider. This tool checks the written ' +
+      'tags, captions, and SEO keywords). Uses an available image provider, including supported ChatGPT/Grok subscriptions. Default backdrop mode leaves typography editable; complete mode includes requested lettering and supplied branding. For a cover made from the video’s own footage, ' +
+      'use workspace.placeCover and render.exportCover instead; they need no image provider. This tool checks the written ' +
       'brief, not rendered visual quality: inspect the final composition, then save it with those cover tools before ' +
       'claiming a finished thumbnail. Never depicts a real person or their likeness.',
     summary: 'Generates thumbnail artwork and publishing copy for design review.',

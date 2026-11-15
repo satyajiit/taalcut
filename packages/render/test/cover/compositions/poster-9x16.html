@@ -1,0 +1,95 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"headline","type":"string","label":"Headline","default":"North of nowhere"},{"id":"kicker","type":"string","label":"Kicker","default":"Day 4 · 62°N"},{"id":"accent","type":"color","label":"Accent","default":"#ffb347"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="cover-poster-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0b0d14;
+        }
+        #shot {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transform-origin: 68% 100%;
+          transform: scale(1.32);
+        }
+        #ground {
+          position: absolute;
+          inset: 0;
+          background-image: linear-gradient(
+            to top,
+            rgba(8, 10, 18, 0.86) 0%,
+            rgba(8, 10, 18, 0.5) 30%,
+            rgba(8, 10, 18, 0) 58%
+          );
+        }
+        #words {
+          position: absolute;
+          left: 84px;
+          right: 210px;
+          bottom: 500px;
+          display: flex;
+          flex-direction: column;
+          gap: 26px;
+        }
+        #kicker {
+          margin: 0;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 54px;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: var(--accent);
+        }
+        #rule {
+          width: 132px;
+          height: 8px;
+          background: var(--accent);
+        }
+        #headline {
+          margin: 0;
+          font-family: 'Anton', sans-serif;
+          font-size: 206px;
+          font-weight: 400;
+          line-height: 0.98;
+          letter-spacing: -0.005em;
+          text-transform: uppercase;
+          color: #f6f1e7;
+          text-wrap: balance;
+        }
+      </style>
+      <div
+        id="root"
+        data-composition-id="cover-poster"
+        data-width="1080"
+        data-height="1920"
+        data-duration="2"
+      >
+        <img id="shot" data-picture="hero" alt="" />
+        <div id="ground"></div>
+        <div id="words">
+          <p id="kicker" data-var-text="kicker">Day 4 · 62°N</p>
+          <div id="rule"></div>
+          <h1 id="headline" data-var-text="headline">North of nowhere</h1>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.addLabel('exit', 1.5);
+        window.__timelines['cover-poster'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

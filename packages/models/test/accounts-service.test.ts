@@ -19,6 +19,7 @@ import {
   disableNetwork,
   signInOption,
   type AccountsService,
+  type AuthBroker,
   type ApiKeyTester,
   type LocalServerStore,
   type LocalServerUrls,
@@ -144,6 +145,69 @@ describe('accounts service', () => {
     expect(JSON.stringify(connected)).not.toContain('image-account-');
     const disconnected = value(await service.signOut({ provider: CHATGPT_IMAGE_PROVIDER }));
     expect(disconnected.chatgpt).toMatchObject({ signedIn: true, imagesSignedIn: false });
+  });
+
+  it('asks for the plan’s images after Continue with ChatGPT, without waiting for them, when the app says so', async () => {
+    h = await createAccountsHarness();
+    const asked: string[] = [];
+    const cancelled: string[] = [];
+    let imagesIn = false;
+    const settle: (() => void)[] = [];
+    // The images' own sign-in is the broker's; here it only records being asked and waits to be let through.
+    const broker: AuthBroker = {
+      ...h.broker,
+      signIn: (provider, request) => {
+        if (provider !== CHATGPT_IMAGE_PROVIDER) return h!.broker.signIn(provider, request);
+        asked.push(provider);
+        return new Promise((resolve) =>
+          settle.push(() => {
+            imagesIn = true;
+            resolve(ok({ provider, signedIn: true, method: 'subscription', planLabelKey: 'k' }));
+          }),
+        );
+      },
+      cancelSignIn: (provider) => void cancelled.push(provider),
+      statuses: async () => {
+        const all = await h!.broker.statuses();
+        if (!all.ok || !imagesIn) return all;
+        return ok([
+          ...all.value,
+          { provider: CHATGPT_IMAGE_PROVIDER, signedIn: true, method: 'subscription', planLabelKey: 'k' },
+        ]);
+      },
+    };
+    const make = (imagesWithChatGPT: boolean) =>
+      createAccountsService({
+        broker,
+        runtime: h!.mainRuntime,
+        testApiKey: async () => ok(undefined),
+        imagesWithChatGPT,
+      });
+
+    // A tool that signs in to ChatGPT asks for nothing else.
+    const plain = make(false);
+    expect(value(await plain.signIn({ provider: 'openai-codex' })).chatgpt.signedIn).toBe(true);
+    expect(asked).toEqual([]);
+    await plain.signOut({ provider: 'openai-codex' });
+    plain.dispose();
+
+    service = make(true);
+    // The chat sign-in is answered while the images' page is still open in the browser.
+    expect(value(await service.signIn({ provider: 'openai-codex' })).chatgpt).toMatchObject({
+      signedIn: true,
+      imagesSignedIn: false,
+    });
+    expect(asked).toEqual([CHATGPT_IMAGE_PROVIDER]);
+    settle.shift()?.();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(value(await service.state()).chatgpt).toMatchObject({ signedIn: true, imagesSignedIn: true });
+
+    // With images connected, signing in again asks for nothing more; signing out stops asking for them.
+    expect(value(await service.signIn({ provider: 'openai-codex' })).chatgpt.imagesSignedIn).toBe(true);
+    expect(asked).toEqual([CHATGPT_IMAGE_PROVIDER]);
+    cancelled.length = 0;
+    await service.signOut({ provider: 'openai-codex' });
+    expect(cancelled).toEqual([CHATGPT_IMAGE_PROVIDER]);
   });
 
   it('needs the warning card for Claude, then records when it was acknowledged and starts the sign-in', async () => {

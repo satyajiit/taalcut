@@ -49,9 +49,13 @@ export function visionStageVersions(config: StageVersionConfig, motion: number =
     /**
      * Its own: raise it to describe every shot again (2 since LRN1-CTX: each shot with its context). 3 since
      * LIB1-FIND: what people are doing (actions). The rise also describes once more every shot an older build left
-     * at `not_yet` while its model was still downloading (LIB1-FIX); since then such a description waits.
+     * at `not_yet` while its model was still downloading (LIB1-FIX); since then such a description waits. 4 since
+     * MOM1: each shot's moments (time-ranged notes) beside its sentence, from frames at a regular stride. A shot
+     * keeps the description it has until the new one is stored. 5 since 2026-11-15: the camera's handling is no
+     * longer asked (`describe.moments.statesHandling`), so the rows the first MOM2 build wrote with it are replaced.
+     * 6 since MOM3: it is asked again, without the camera's move in the same ask, and read only at a shot's ends.
      */
-    'vision.describe': 3 + COUPLED_AT_IX3.describe,
+    'vision.describe': 6 + COUPLED_AT_IX3.describe,
     /** Its own: raise it to embed every on-screen text again. */
     'vision.embedOcr': 1 + COUPLED_AT_IX3.embedOcr,
     /** Its own: raise it to rebuild every asset's contact sheet. */

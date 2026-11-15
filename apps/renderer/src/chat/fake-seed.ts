@@ -22,6 +22,9 @@ import {
   settle,
   type ScriptIds,
 } from './fake-script';
+import { everyCardSeed } from './fake-seed-every-card';
+import { keptReelSeed } from './fake-seed-kept-reel';
+import { reelRunSeed } from './fake-seed-reel-run';
 import { reviewSeeds } from './fake-seed-review';
 import { workspaceSeeds } from './fake-workspace-script';
 
@@ -260,5 +263,16 @@ function toolsDemo(): Seed {
 /** Fresh copies each time, so one test's sends never leak into the next. */
 export function seedConversations(): Seed[] {
   counter = 0;
-  return [tripReel(), diwali(), teaser(), reviewDemo(), toolsDemo(), ...reviewSeeds(), ...workspaceSeeds()];
+  return [
+    tripReel(),
+    diwali(),
+    teaser(),
+    reviewDemo(),
+    toolsDemo(),
+    ...reviewSeeds(),
+    ...workspaceSeeds(),
+    reelRunSeed(),
+    keptReelSeed(),
+    everyCardSeed(),
+  ];
 }

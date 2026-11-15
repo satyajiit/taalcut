@@ -15,7 +15,9 @@ import type { AsyncResult } from '../basics/result';
 import { createToken } from '../di/token';
 import { messageExtrasShape, questionAnswerSchema, type ChatStart, type SelectionChip } from './chat-start';
 import type { ChatEffort } from './effort';
+import type { CoverRequest } from '../timeline/cover';
 import type { EditorContext } from '../timeline/edit-target';
+import type { PostCaptionRequest } from '../timeline/post-caption';
 import type { ReasoningLevel } from '../ports/model-ports';
 import { agentEventSchema } from '../events/catalogue';
 import { RUN_STATUSES } from '../ports/run-log';
@@ -112,8 +114,12 @@ export interface ChatService {
       readonly selections?: readonly SelectionChip[];
       /** EDT1: the editor as the user saw it, when the message is from its docked composer. */
       readonly editorContext?: EditorContext;
+      /** CAP1: the post caption asked for in the editor's caption panel, for its platform. */
+      readonly postCaption?: PostCaptionRequest;
       /** EDT1-CMT: the comments the message hands to the agent ("Send N comments to Taalcut"). */
       readonly comments?: readonly TimelineCommentId[];
+      /** CVR1: the cover asked for in the editor's cover panel, at its aspect. */
+      readonly cover?: CoverRequest;
     },
     options: { readonly signal: AbortSignal },
   ): AsyncResult<RunStream>;

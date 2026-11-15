@@ -33,6 +33,7 @@ export const EXTRA_TOOL_LABELS: Readonly<Record<string, MessageDescriptor>> = {
   'workspace.renderOver': msg`Preview motion graphic on the clip`,
   'workspace.place': msg`Place motion graphic on the video`,
   'workspace.replace': msg`Update motion graphic on the video`,
+  'workspace.placeCover': msg`Design the cover`,
   'workspace.open': msg`Open in the workspace`,
   'workspace.exec': msg`Run a workspace command`,
   'workspace.importMedia': msg`Add media to the workspace`,
@@ -64,6 +65,13 @@ export const EXTRA_TOOL_LABELS: Readonly<Record<string, MessageDescriptor>> = {
   'timeline.captureFrame': msg`Capture a video frame`,
   'timeline.editText': msg`Edit text on the video`,
   'timeline.moveText': msg`Move text on the video`,
+  // TXT1: the look of the video's text, and where it sits.
+  'timeline.textLook': msg`Read the look of the text`,
+  'timeline.designText': msg`Design the text on the video`,
+  'timeline.placeText': msg`Place text on the video`,
+  // LONG1: the bars of the music, and a clip made longer by playing bars of it again.
+  'timeline.musicBars': msg`Measure the bars of the music`,
+  'timeline.lengthenSlot': msg`Make a clip run longer`,
   'timeline.lockClip': msg`Lock a clip in place`,
   'timeline.applyCast': msg`Place the chosen clips`,
   'timeline.setClipFit': msg`Fit the clip to the frame`,

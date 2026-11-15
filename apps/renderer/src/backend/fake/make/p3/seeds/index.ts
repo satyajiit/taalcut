@@ -4,10 +4,18 @@
 import type { SeededProject } from '../../seeded-project';
 import { seedCleanup } from './cleanup';
 import { seedGaps } from './gaps';
+import { seedKeptReel } from './kept-reel';
+import { seedReelRun } from './reel-run';
 import type { SeedTools } from './seeder';
 import { seedVariants } from './variants';
 
 /** Every Phase 3 area's seeded projects, after Phase 2's. */
 export function seedPhase3(tools: SeedTools): SeededProject[] {
-  return [...seedGaps(tools), ...seedCleanup(tools), ...seedVariants(tools)];
+  return [
+    ...seedGaps(tools),
+    ...seedCleanup(tools),
+    ...seedVariants(tools),
+    ...seedReelRun(tools),
+    ...seedKeptReel(tools),
+  ];
 }

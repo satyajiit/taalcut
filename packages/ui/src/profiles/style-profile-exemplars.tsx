@@ -71,6 +71,7 @@ function ExemplarRow({
         <UserContent
           translate="no"
           dir="auto"
+          title={name}
           className="line-clamp-2 text-sm font-medium break-words text-ink"
         >
           {name}
@@ -104,11 +105,17 @@ export function StyleProfileExemplars({
   const Heading = level === 3 ? 'h3' : 'h4';
   if (exemplars.length === 0) return null;
   return (
-    <section data-slot="style-profile-exemplars" aria-labelledby={titleId} className="flex flex-col gap-2">
+    // Three across where the section itself has 38rem (as the facts); one under the other in a narrower column
+    // (the editor's chat).
+    <section
+      data-slot="style-profile-exemplars"
+      aria-labelledby={titleId}
+      className="@container flex flex-col gap-2"
+    >
       <Heading id={titleId} className="m-0 text-sm font-medium text-ink">
         <Trans>Most like the rest</Trans>
       </Heading>
-      <ul className="m-0 grid list-none grid-cols-1 gap-2 p-0 lg:grid-cols-3">
+      <ul className="m-0 grid list-none grid-cols-1 gap-2 p-0 @min-[38rem]:grid-cols-3">
         {exemplars.map((exemplar) => (
           <ExemplarRow
             key={exemplar.templateId}

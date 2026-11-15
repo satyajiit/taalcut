@@ -37,8 +37,13 @@ export interface RenderFolders {
   readonly work: string;
   /** Conformed clip segments, content-addressed. */
   readonly conform: string;
-  /** Finished renders: <renders>/<projectId>/<renderId>.mp4 (finalizeRender writes them). */
+  /** Finished renders when there is no exports folder: <renders>/<projectId>/<renderId>.mp4. */
   readonly renders: string;
+  /**
+   * The person's exports folder (FIX-EXPORTNAMES): a finished render is delivered here under its own name
+   * (store/paths.ts, `renderDelivery`), where they can find it. Absent: the renders folder above, by id.
+   */
+  readonly exports?: string;
 }
 
 export interface RenderEngineDeps {

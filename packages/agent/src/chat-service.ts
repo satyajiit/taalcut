@@ -270,7 +270,18 @@ export function createChatService(deps: ChatServiceDeps): ChatService & { close(
     },
 
     async send(
-      { conversationId, text, effort, reasoning, start, selections, editorContext, comments: sent },
+      {
+        conversationId,
+        text,
+        effort,
+        reasoning,
+        start,
+        selections,
+        editorContext,
+        cover,
+        postCaption,
+        comments: sent,
+      },
       { signal },
     ) {
       if (signal.aborted) return err(CancelledError());
@@ -296,7 +307,7 @@ export function createChatService(deps: ChatServiceDeps): ChatService & { close(
       if (!stored.ok) return stored;
       // The time the store gave the message, so history and the live answer agree.
       const storedAt = (stored.value as { createdAt?: unknown } | undefined)?.createdAt;
-      const extras = messageExtras({ start, selections, editorContext });
+      const extras = messageExtras({ start, selections, editorContext, cover, postCaption });
       const userMessage: UserMessageEvent = {
         type: 'user.message',
         at: typeof storedAt === 'number' ? storedAt : at,

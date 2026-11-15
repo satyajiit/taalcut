@@ -48,13 +48,10 @@ export function testEngine(options: Partial<JobEngineOptions> = {}) {
 }
 
 /** A PowerState the test flips. */
-export function fakePower(initial: { onBattery?: boolean; thermalState?: ThermalState } = {}) {
+export function fakePower(initial: { thermalState?: ThermalState } = {}) {
   const listeners = new Set<() => void>();
-  const state = { onBattery: initial.onBattery ?? false, thermalState: initial.thermalState ?? 'nominal' };
+  const state = { thermalState: initial.thermalState ?? 'nominal' };
   const power: PowerState & { set(next: Partial<typeof state>): void } = {
-    get onBattery() {
-      return state.onBattery;
-    },
     get thermalState() {
       return state.thermalState;
     },

@@ -23,6 +23,7 @@ import {
   softWindows,
   type CutFinding,
 } from './cut-merge';
+import { clearOf, disputeSides, gradualCuts, type Blends } from './gradual-step';
 import type { BreakdownAnalysers, OcrLine } from './ports';
 import { driftSpan, isDrift } from './one-shot';
 import { overlayFromTrack } from './text-overlay';
@@ -41,12 +42,17 @@ export interface StepContext {
 
 const unique = (frames: Iterable<number>) => [...new Set(frames)].sort((a, b) => a - b);
 
-/** Method A everywhere, method B around every proposal and on a scan, soft cuts from the scan. */
+/**
+ * Method A everywhere, method B around every proposal and on a scan, soft cuts from the scan. MATCH1: then the
+ * dissolves and fades measured from the frames themselves (gradual-step.ts).
+ */
 export async function findCuts(ctx: StepContext): AsyncResult<{
   findings: CutFinding[];
   scores: readonly number[];
   /** The frames embedded, for measuring how far each shot travels (BRK1 moves). */
   vectors: ReadonlyMap<number, Float32Array>;
+  /** MATCH1: why no gradual transition was looked for, when the frames could not be read. */
+  warning?: string;
 }> {
   const { path, rate, total, config, signal } = ctx;
   const { vision } = ctx.analysers;
@@ -101,7 +107,10 @@ export async function findCuts(ctx: StepContext): AsyncResult<{
   for (const change of changes.filter((c) => !c.hard))
     if (!findings.some((finding) => Math.abs(finding.frame - change.frame) <= config.embed.context))
       findings.push(softCut(change, config));
-  return ok({ findings: findings.sort((a, b) => a.frame - b.frame), scores: scores.value, vectors });
+  findings.sort((a, b) => a.frame - b.frame);
+  const gradual = await gradualCuts(ctx, findings, embed, vectorAt);
+  if (!gradual.ok) return gradual;
+  return ok({ ...gradual.value, scores: scores.value, vectors });
 }
 
 /** OCR samples → tracks → overlays with frame-exact edges when single-frame OCR is available. */
@@ -219,20 +228,24 @@ export async function makeFrames(
     readonly shots: readonly { start: number; end: number }[];
     readonly disputes: readonly number[];
     readonly canvas: Canvas;
+    /** MATCH1: the transitions measured from pixels: a shot's shown frames and a dispute's two sides keep off them. */
+    readonly blends?: Blends;
   },
 ): AsyncResult<FramesResult> {
   const { path, dir, rate, total, config, signal } = ctx;
   const { media } = ctx.analysers;
   const many = input.shots.length > 100;
+  const blends = input.blends ?? [];
   const perShot = input.shots.map((shot) => {
     const middle = Math.floor((shot.start + shot.end - 1) / 2);
-    return many ? [middle] : unique([shot.start, middle, shot.end - 1]);
+    if (many) return [middle];
+    return unique([clearOf(shot.start, shot, blends, 1), middle, clearOf(shot.end - 1, shot, blends, -1)]);
   });
-  const disputeFrames = input.disputes.flatMap((frame) => [
-    Math.max(0, frame - 1),
-    Math.min(total - 1, frame),
+  const sides = new Map(input.disputes.map((frame) => [frame, disputeSides(frame, total, blends)]));
+  const wanted = unique([
+    ...perShot.flat(),
+    ...[...sides.values()].flatMap((side) => [side.before, side.after]),
   ]);
-  const wanted = unique([...perShot.flat(), ...disputeFrames]);
   const extracted = await media.extractFrames(path, wanted, {
     rate,
     maxDimension: config.contactSheet.workingFrame,
@@ -250,10 +263,7 @@ export async function makeFrames(
     ...(strips[index] ? { strip: relative(dir, strips[index]) } : {}),
   }));
   const disputes = new Map(
-    input.disputes.map((frame) => [
-      frame,
-      { before: at.get(Math.max(0, frame - 1))!, after: at.get(Math.min(total - 1, frame))! },
-    ]),
+    [...sides].map(([frame, side]) => [frame, { before: at.get(side.before)!, after: at.get(side.after)! }]),
   );
 
   const tiles = tileFrames(input.shots, config.contactSheet.maxTiles);

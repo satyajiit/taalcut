@@ -42,6 +42,8 @@ export interface FakeTimelinesInput {
   readonly timelines: readonly Timeline[];
   readonly shots: ReadonlyMap<string, PoolShot>;
   readonly pools: ReadonlyMap<TimelineId, readonly PoolShot[]>;
+  /** TRIM1: a shot the pools don't hold (another shot of a clip's own file), from the fake library. */
+  readonly fileShot?: (assetId: string, shotId: string | null) => PoolShot | undefined;
 }
 
 export function summaryOf(timeline: Timeline): TimelineSummary {
@@ -134,7 +136,9 @@ export function createFakeTimelines(events: EventBus, input: FakeTimelinesInput)
             timeline,
             {
               clipId: p.clipId,
-              shot: input.shots.get(p.media.shotId ?? p.media.assetId),
+              shot:
+                input.shots.get(p.media.shotId ?? p.media.assetId) ??
+                input.fileShot?.(p.media.assetId, p.media.shotId),
               sourceStart: p.sourceStart,
             },
             context.source,

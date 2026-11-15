@@ -4,13 +4,18 @@
 /**
  * The Designer's input, its handoff and its check (HFW1 "dsn"). The input is the jobs the Editor recorded with
  * `graphics.design` (or that template reading and a make hand it), on one timeline. The check is deterministic and
- * reads the timeline: every job ends as a placed proposal (or a new version of the graphics it names) that the
- * timeline really holds, or with a stated reason. Nothing is left silently undone, and no kit design hides a miss.
+ * reads the timeline: every job ends as graphics the timeline really holds, in the video (not waiting as a
+ * proposal), or with a stated reason. DSG2: a job's graphics carry three designs to choose between, placed one
+ * at a time (`workspace.placeOptions`), or the result says why there are fewer (`fewerBecause`: a change the
+ * person asked of the design in use, a design the gate kept refusing). The check sends a job with fewer and no
+ * reason back; it never takes a placed design away, and a step that ends early is settled from what it placed
+ * (designer-settle.ts). Nothing is left silently undone, and no kit design hides a miss.
  */
 import { z } from 'zod';
 import {
   DESIGN_JOB_MAX_ITEMS,
   editTargetJsonSchema,
+  GRAPHIC_OPTION_COUNT,
   GRAPHIC_REQUEST_MAX,
   ulidSchema,
   type GraphicItem,
@@ -54,6 +59,13 @@ export const designerOutputSchema = z.object({
         itemIds: z.array(ulidSchema('TimelineItem')).max(DESIGN_JOB_MAX_ITEMS).optional(),
         compositionId: ulidSchema('GraphicComposition').optional(),
         reason: z.string().trim().min(1).max(300).optional().describe('notDone: why, in one line'),
+        fewerBecause: z
+          .string()
+          .trim()
+          .min(1)
+          .max(300)
+          .optional()
+          .describe(`fewer than ${GRAPHIC_OPTION_COUNT} designs: why`),
       }),
     )
     .min(1)
@@ -79,7 +91,7 @@ function resultProblem(
   if (result.outcome === 'notDone') return result.reason ? null : `job ${job.jobId} is notDone: say why in reason`;
   // eval:design: the 9B placed a second graphic for a redesign, then gave up on the one it was to change.
   if (result.outcome === 'placed' && (job.itemIds?.length ?? 0) > 0)
-    return `job ${job.jobId} redesigns ${job.itemIds!.join(', ')}: workspace.replace them with your entry (workspace.place adds another graphic), and say replaced`;
+    return `job ${job.jobId} redesigns ${job.itemIds!.join(', ')}: workspace.placeOptions with those itemIds redraws them in place (without itemIds it adds another graphic), and say replaced`;
   const ids = result.itemIds ?? [];
   if (ids.length === 0) return `job ${job.jobId} is ${result.outcome}: give the itemIds of its graphics`;
   for (const id of ids) {
@@ -88,16 +100,25 @@ function resultProblem(
     if (result.compositionId && item.composition.id !== result.compositionId)
       return `job ${job.jobId}: ${id} is drawn with another composition than ${result.compositionId}`;
   }
-  if (result.outcome === 'placed' && !ids.some((id) => graphics.get(id)?.proposal))
-    return `job ${job.jobId} is placed: workspace.place proposes it, or say replaced for a redesign`;
+  // DSG2: nothing waits on the person as a proposal; the first design is in the video.
+  const waiting = ids.find((id) => graphics.get(id)?.proposal);
+  if (waiting)
+    return `job ${job.jobId}: ${waiting} is still a proposal: place the job's designs with workspace.placeOptions, which puts the first in the video`;
   if (result.outcome === 'replaced') {
     const left = (job.itemIds ?? []).filter((id) => !ids.includes(id));
     if (left.length > 0) return `job ${job.jobId} names ${left.join(', ')}: redesign them too, or say why not`;
   }
+  // DSG2: three designs to choose between, or the stated reason there are fewer.
+  const fewest = Math.min(...ids.map((id) => graphics.get(id)?.options?.designs.length ?? 1));
+  if (fewest < GRAPHIC_OPTION_COUNT && !result.fewerBecause)
+    return `job ${job.jobId} ended with ${fewest} of ${GRAPHIC_OPTION_COUNT} designs: design the next in its own folder and place it with workspace.placeOptions (the same request and itemIds), or say in fewerBecause why there are fewer`;
   return null;
 }
 
-/** The check: one result per job, each on the timeline or with its reason, at the timeline's revision. */
+/**
+ * The check: one result per job, each on the timeline with its three designs or with its reason, at the timeline's
+ * revision.
+ */
 export function checkDesigns(output: DesignerOutput, input: DesignerInput | undefined, timeline: Timeline): SkillVerdict {
   if (timeline.revision !== output.revision)
     return retry(`The timeline is at revision ${timeline.revision}; hand off that.`);

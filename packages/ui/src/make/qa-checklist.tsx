@@ -217,12 +217,15 @@ export function QaChecklist({
                         ? qaFixLabel(i18n, fix.labelKey)
                         : qaFixLabel(i18n, fix.instructionKey, fix.params);
                     return [
+                      // A fix is named by a phrase: where it is longer than the row (a narrow column, a language with
+                      // longer words) it takes a second line inside the button instead of running out of the card.
                       <Button
                         key={key}
                         size="sm"
                         variant="secondary"
                         disabled={disabled}
                         loading={running === key}
+                        className="h-auto min-h-8 max-w-full shrink py-1 text-start whitespace-normal"
                         onClick={() => void press(key, () => onFix(check, fix))}
                       >
                         {words}

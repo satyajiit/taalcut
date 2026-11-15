@@ -241,7 +241,7 @@ export async function settleExtensionStep(ctx: RunContext, step: StepState): Pro
   if (!by?.extension.settle && !settler) return undefined;
   try {
     const settled = settler
-      ? await settler(completedCalls(ctx, step), ctx.signal)
+      ? await settler(completedCalls(ctx, step), ctx.signal, step.entered?.input)
       : await by!.extension.settle!(ctx.log.state, step, ctx.signal);
     return settled.ok ? settled.value : undefined;
   } catch {

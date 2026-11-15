@@ -168,6 +168,7 @@ export function createPhase2Fakes(events: EventBus, options: Phase2FakeOptions =
         return path === null ? null : { path };
       }),
       revealRender: fs.revealRender.handler(() => undefined),
+      openExportsFolder: fs.openExportsFolder.handler(() => undefined),
       // UX2: Finder for a clip's original. Like main, not found when no copy of it is present on this Mac.
       revealAsset: fs.revealAsset.handler(async ({ input }) => {
         const detail = await library.library.asset(input.assetId);

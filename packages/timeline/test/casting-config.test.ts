@@ -6,7 +6,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { newId } from '@taalcut/core';
 import { describe, expect, it } from 'vitest';
-import raw from '../config/casting.v5.json';
+import raw from '../config/casting.v6.json';
 import { castingConfigSchema, CASTING_CONFIG } from '../src/casting/config';
 import { createCastingEngine } from '../src/casting/engine';
 import { createMemoryShotCatalog } from '../src/casting/catalog';
@@ -16,8 +16,8 @@ import { fakeEmbedder } from './fixtures/library';
 const source = join(import.meta.dirname, '..', 'src', 'casting');
 
 describe('casting config', () => {
-  it('loads v5 and pins the constants the plan fixes', () => {
-    expect(CASTING_CONFIG.version).toBe('casting.v5');
+  it('loads v6 and pins the constants the plan fixes', () => {
+    expect(CASTING_CONFIG.version).toBe('casting.v6');
     for (const [path, value] of [
       [['beam', 'width'], 9],
       [['candidates', 'k'], 40],
@@ -47,10 +47,22 @@ describe('casting config', () => {
 
   it('changes the cast when the config changes', async () => {
     const { template, profiles } = world({ slots: 4, perSlot: 4, distractors: 10, seed: 2 });
-    const table = new Map(template.slots.map((slot, index) => [slot.intent.text, profiles[index * 4]!.embedding]));
+    const table = new Map(
+      template.slots.map((slot, index) => [slot.intent.text, profiles[index * 4]!.embedding]),
+    );
     const cast = async (config: typeof CASTING_CONFIG) => {
-      const engine = createCastingEngine({ catalog: createMemoryShotCatalog(profiles), embedder: fakeEmbedder(table), config });
-      const result = await engine.cast({ projectId: newId<'Project'>(), template, mode: 'template', variants: 1, seed: 1 });
+      const engine = createCastingEngine({
+        catalog: createMemoryShotCatalog(profiles),
+        embedder: fakeEmbedder(table),
+        config,
+      });
+      const result = await engine.cast({
+        projectId: newId<'Project'>(),
+        template,
+        mode: 'template',
+        variants: 1,
+        seed: 1,
+      });
       if (!result.ok) throw new Error(result.error.code);
       return result.value;
     };

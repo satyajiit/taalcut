@@ -97,7 +97,7 @@ describe('power', () => {
       },
     };
     const monitor = new EventEmitter();
-    let snapshot: PowerSnapshot = { onBattery: false, thermalState: 'nominal' };
+    let snapshot: PowerSnapshot = { thermalState: 'nominal' };
     const power: PowerState = {
       current: () => snapshot,
       onChange: (listener) => {
@@ -108,13 +108,10 @@ describe('power', () => {
     const stop = forwardPower(host as never, power);
     for (const listener of connected) listener('agent');
     for (const listener of connected) listener('jobs');
-    snapshot = { onBattery: true, thermalState: 'serious' };
+    snapshot = { thermalState: 'serious' };
     monitor.emit('change', snapshot);
     await Promise.resolve();
-    expect(sent).toEqual([
-      { onBattery: false, thermalState: 'nominal' },
-      { onBattery: true, thermalState: 'serious' },
-    ]);
+    expect(sent).toEqual([{ thermalState: 'nominal' }, { thermalState: 'serious' }]);
     stop();
     monitor.emit('change', snapshot);
     expect(connected.size).toBe(0);
@@ -125,10 +122,11 @@ describe('power', () => {
     const { power, apply } = forwardedPower();
     const changed = vi.fn();
     const off = power.onChange(changed);
-    apply({ onBattery: false, thermalState: 'nominal' });
-    apply({ onBattery: true, thermalState: 'fair' });
+    apply({ thermalState: 'nominal' });
+    apply({ thermalState: 'fair' });
+    apply({ thermalState: 'fair' });
     expect(changed).toHaveBeenCalledOnce();
-    expect([power.onBattery, power.thermalState]).toEqual([true, 'fair']);
+    expect(power.thermalState).toBe('fair');
     off();
   });
 });

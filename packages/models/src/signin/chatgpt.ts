@@ -83,6 +83,16 @@ export interface ChatGPTCredential extends OAuthCredential {
   readonly accountLabel?: string;
 }
 
+/**
+ * What a refused code looked like, for main's log: its length and the names of the callback's fields, never a value.
+ * With the owner's plan ended (2026-11-15) the refused codes were 1903 characters and the callback had no `iss`;
+ * the code that went through after renewing was 128 characters, with `iss`.
+ */
+function codeShape(params: URLSearchParams): string {
+  const fields = [...new Set(params.keys())].filter((name) => /^[a-z_]{1,24}$/.test(name)).slice(0, 8);
+  return `The code had ${(params.get('code') ?? '').length} characters; the callback had ${fields.join(', ')}.`;
+}
+
 /** How the browser that brought the code hears about a sign-in that failed after it. */
 function exchangeOutcome(cause: unknown): CallbackOutcome {
   return cause instanceof SignInFlowError && cause.reason === 'cancelled' ? 'failed' : 'exchange_failed';
@@ -170,7 +180,10 @@ export function createChatGPTOAuth(options: ChatGPTSignInOptions = {}): OAuthAut
           resource: CHATGPT_SIGN_IN.resource,
         },
         interaction.signal,
-      );
+      ).catch((cause: unknown) => {
+        if (!(cause instanceof SignInFlowError) || cause.extra.oauthError !== 'invalid_grant') throw cause;
+        throw new SignInFlowError(cause.reason, `${cause.message} ${codeShape(params)}`, cause.extra);
+      });
       if (!token.id_token)
         throw new SignInFlowError('invalid_response', 'The token response has no id_token.');
       const credential = toCredential(token, clientId);

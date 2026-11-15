@@ -13,6 +13,11 @@
  * - **replaced**: unrelated readings follow each other at the place (captions, one line after another);
  * - **lifetime**: the site crosses a cut, lives exactly as long as its shot, or comes and goes mid-shot.
  *
+ * LYR1: text that replaces itself in place (text-sequence.ts) is one site across its shots, whatever cuts it runs
+ * over. Its pieces are not each other's misreadings, a piece that comes back is the words repeating, each is brief
+ * by design, and the scene's readings are counted without them. What else was read in its place while it showed is
+ * `within` it: a scrap of the picture behind the words, not an overlay of its own.
+ *
  * Pure: the overlays, the cuts and the reel's length come in.
  */
 import { RationalTime, type Box, type FrameRate, type TextOverlay } from '@taalcut/core';
@@ -46,6 +51,16 @@ export interface SiteFacts {
   readonly interrupted: boolean;
   /** Unrelated readings at the site: a sequence of captions. */
   readonly replaced: number;
+  /** LYR1: the sequence it is a piece of, by its index among those given; null when it is in none. */
+  readonly sequence: number | null;
+  /** LYR1: the sequence whose place and time it was read inside without being a piece of it; null for the rest. */
+  readonly within: number | null;
+}
+
+/** LYR1: one sequence's readings by index: its pieces, and what else was read in its place while it showed. */
+export interface SequenceReadings {
+  readonly members: readonly number[];
+  readonly noise: readonly number[];
 }
 
 /** Readings this alike, but under the tracker's "same line", are one text read differently. */
@@ -85,19 +100,33 @@ export function siteFacts(
     readonly rate: FrameRate;
     readonly near: number;
     readonly minFrames: number;
+    /** LYR1: each sequence's readings (text-sequence.ts): a sequence is one site. */
+    readonly sequences?: readonly SequenceReadings[];
   },
 ): SiteFacts[] {
   const { cuts, total, rate, near } = options;
   const spans = overlays.map((overlay) => spanOf(overlay, rate));
   const shots = spans.map((span) => shotAt(span.start, cuts, total));
-  // Union-find over readings at one place whose shots are the same.
+  const sequenceOf = new Map<number, number>();
+  const withinOf = new Map<number, number>();
+  (options.sequences ?? []).forEach((sequence, at) => {
+    sequence.members.forEach((index) => sequenceOf.set(index, at));
+    sequence.noise.forEach((index) => withinOf.set(index, at));
+  });
+  // Union-find over readings at one place whose shots are the same; a sequence's pieces join only each other.
   const parent = overlays.map((_, index) => index);
   const root = (index: number): number =>
     parent[index] === index ? index : (parent[index] = root(parent[index]!));
   for (let a = 0; a < overlays.length; a++)
-    for (let b = a + 1; b < overlays.length; b++)
-      if (shots[a]!.start === shots[b]!.start && samePlace(overlays[a]!.box, overlays[b]!.box))
+    for (let b = a + 1; b < overlays.length; b++) {
+      const together = sequenceOf.has(a) || sequenceOf.has(b);
+      if (
+        together
+          ? sequenceOf.get(a) === sequenceOf.get(b)
+          : shots[a]!.start === shots[b]!.start && samePlace(overlays[a]!.box, overlays[b]!.box)
+      )
         parent[root(b)] = root(a);
+    }
   const members = new Map<number, number[]>();
   overlays.forEach((_, index) => members.set(root(index), [...(members.get(root(index)) ?? []), index]));
   const siteIds = new Map([...members.keys()].map((key, at) => [key, at]));
@@ -109,7 +138,26 @@ export function siteFacts(
       start: Math.min(...group.map((at) => spans[at]!.start)),
       end: Math.max(...group.map((at) => spans[at]!.end)),
     };
-    const shot = shots[index]!;
+    const sequence = sequenceOf.get(index) ?? null;
+    // A sequence's lifetime is its own, from the shot it starts in.
+    const shot = sequence === null ? shots[index]! : shotAt(siteSpan.start, cuts, total);
+    const crosses = cuts.some((cut) => cut - span.start > near && span.end - cut > near);
+    const startsWithShot = siteSpan.start - shot.start <= near;
+    const endsWithShot = shotAt(siteSpan.end - 1, cuts, total).end - siteSpan.end <= near;
+    const lifetime = { site: siteIds.get(root(index))!, span, siteSpan, shot, crosses };
+    if (sequence !== null)
+      return {
+        ...lifetime,
+        startsWithShot,
+        endsWithShot,
+        short: false,
+        crowd: false,
+        misread: 0,
+        interrupted: false,
+        replaced: 0,
+        sequence,
+        within: null,
+      };
     const others = group.filter((at) => at !== index);
     const alike = others.map((at) => textSimilarity(overlay.text, overlays[at]!.text));
     const misread = alike.filter((value) => value >= MISREAD_FLOOR && value < SAME).length;
@@ -118,24 +166,18 @@ export function siteFacts(
       (at, k) =>
         alike[k]! >= SAME && (spans[at]!.start - span.end > near || span.start - spans[at]!.end > near),
     );
-    const crosses = cuts.some((cut) => cut - span.start > near && span.end - cut > near);
-    const startsWithShot = siteSpan.start - shot.start <= near;
-    const endsWithShot = shotAt(siteSpan.end - 1, cuts, total).end - siteSpan.end <= near;
     const crowd =
       startsWithShot &&
       spans.filter(
         (other, at) =>
           at !== index &&
           !group.includes(at) &&
+          !sequenceOf.has(at) &&
           shots[at]!.start === shot.start &&
           other.start - shot.start <= near,
       ).length >= CROWD;
     return {
-      site: siteIds.get(root(index))!,
-      span,
-      siteSpan,
-      shot,
-      crosses,
+      ...lifetime,
       startsWithShot,
       endsWithShot,
       short: !crosses && span.end - span.start < options.minFrames,
@@ -143,6 +185,8 @@ export function siteFacts(
       misread,
       interrupted,
       replaced,
+      sequence: null,
+      within: withinOf.get(index) ?? null,
     };
   });
 }

@@ -166,6 +166,7 @@ export async function runBreakdown(
   if (!step.ok) return step;
   const cuts = await findCuts(ctx);
   if (!cuts.ok) return cuts;
+  if (cuts.value.warning) warn(cuts.value.warning);
   const confirmed = cuts.value.findings.filter((finding) => finding.status === 'confirmed');
   // BRK1: a fade's tail is the shot before it, not a shot (one-shot.ts).
   const { kept: disputed, fades } = await withoutFadeTails(
@@ -204,21 +205,21 @@ export async function runBreakdown(
 
   step = stage('text');
   if (!step.ok) return step;
+  const newOverlayId = deps.newOverlayId ?? (() => newId<'TextOverlay'>());
   const read = optional(
     'text',
-    await readText(ctx, {
-      screenRecording: input.input === 'screenRecording',
-      newId: deps.newOverlayId ?? (() => newId<'TextOverlay'>()),
-    }),
+    await readText(ctx, { screenRecording: input.input === 'screenRecording', newId: newOverlayId }),
   );
   for (const warning of read?.warnings ?? []) warn(warning);
   // FIX-SIGN: only text added in editing is an overlay; each reading is weighed composited or scene (text-judge.ts).
+  // LYR1: text that replaces itself in place has its place read again first, and is kept piece by piece.
   const sceneText =
     read &&
     (await judgeReadText(ctx, read, {
       cuts: shotBounds.slice(1, -1),
       aspect: canvas.width / canvas.height,
       subjects: null,
+      newId: newOverlayId,
     }));
   for (const warning of sceneText?.warnings ?? []) warn(warning);
   const judged = sceneText && { overlays: sceneText.overlays, warnings: [] };
@@ -288,7 +289,9 @@ export async function runBreakdown(
 
   step = stage('sheet');
   if (!step.ok) return step;
-  const frames = await makeFrames(ctx, { shots, disputes: disputed.map((d) => d.frame), canvas });
+  // MATCH1: what the Analyst is shown of a shot, and of a disputed cut's two sides, keeps off the blended frames.
+  const blends = [...confirmed, ...disputed].flatMap((f) => (f.blend && f.ramp ? [f.ramp] : []));
+  const frames = await makeFrames(ctx, { shots, disputes: disputed.map((d) => d.frame), canvas, blends });
   if (!frames.ok) return frames;
 
   const fps = RationalTime.toFrames(RationalTime.fromSeconds(1, rate), rate);
@@ -327,20 +330,22 @@ export async function runBreakdown(
       method: finding.method,
       score: finding.score,
       distance: finding.distance,
-      transition: null,
+      transition: finding.blend ?? null,
     })),
     disputes: disputed.map((finding) => ({
       frame: finding.frame,
       method: finding.method,
       score: finding.score,
       distance: finding.distance,
-      transition: finding.ramp
-        ? classifyTransition(
-            { frame: finding.frame, ...finding.ramp, distance: finding.distance ?? 0 },
-            { luma: signals.luma, motion: signals.motion },
-            config,
-          )
-        : null,
+      transition:
+        finding.blend ??
+        (finding.ramp
+          ? classifyTransition(
+              { frame: finding.frame, ...finding.ramp, distance: finding.distance ?? 0 },
+              { luma: signals.luma, motion: signals.motion },
+              config,
+            )
+          : null),
       ramp: finding.ramp,
       ruleKeeps: finding.ruleKeeps,
       ...frames.value.disputeFrames.get(finding.frame)!,
@@ -348,6 +353,7 @@ export async function runBreakdown(
     beatMap,
     text: overlays,
     ...(sceneText ? { textRegions: sceneText.regions } : {}),
+    ...(sceneText && sceneText.sequences.length > 0 ? { textSequences: sceneText.sequences } : {}),
     audio: buildAudioProfile({
       integratedLufs: loudness?.integratedLufs ?? null,
       beatMap,

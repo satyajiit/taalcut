@@ -13,6 +13,7 @@ import { idSchema } from '../basics/ids';
 import { boxSchema, languageTagSchema, styleKeySchema } from '../templates/template-parts';
 import { graphicCompositionRefSchema } from '../workspace/composition-ref';
 import { rationalTimeSchema } from '../time/rational-time';
+import { graphicOptionsSchema } from './graphic-options';
 import { graphicProposalSchema, graphicScaleSchema } from './graphic-proposal';
 import { PLACEMENT_REASONS } from './made-placement';
 
@@ -56,10 +57,15 @@ export const graphicItemSchema = z.object({
     .object({ id: idSchema<'TextOverlay'>(), words: z.enum(['template', 'editor', 'user']) })
     .optional(),
   /**
-   * EDT1-GFX: a graphic the chat created and the person hasn't used yet (graphic-proposal.ts): the preview draws
-   * it, an export and QA leave it out until `graphics.useProposal`.
+   * EDT1-GFX: a graphic the chat created and the person hasn't used yet (graphic-proposal.ts): the preview and an
+   * export draw it, QA and the make's checks leave it out until `graphics.useProposal`.
    */
   proposal: graphicProposalSchema.optional(),
+  /**
+   * DSG2: the designs the person chooses between (graphic-options.ts). The graphic is in the video, drawn with one
+   * of them; `graphics.chooseOption` swaps another in for every graphic of the set.
+   */
+  options: graphicOptionsSchema.optional(),
   /** EDT1-GFX: its size against the composition's own (absent: 1). */
   scale: graphicScaleSchema.optional(),
   /** HFW1: the composition it is drawn with (a copy in the timeline's `graphicCompositions`) and its values. */

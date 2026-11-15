@@ -16,8 +16,14 @@ import { rationalTimeSchema } from '../time/rational-time';
 import { CAMERA_MOTIONS, cameraMotionMeasureSchema } from './camera-motion';
 import { overlayMotionSchema } from './overlay-motion';
 import { overlayPlacementSchema } from './overlay-placement';
+import { overlayTypeSchema } from './overlay-type';
+import { slotFootageSchema } from './slot-footage';
+import { slotLandsSchema } from './slot-landing';
 
 export * from './overlay-motion';
+export * from './overlay-type';
+export * from './slot-footage';
+export * from './slot-landing';
 
 const time = rationalTimeSchema;
 const unit = z.number().min(0).max(1);
@@ -202,6 +208,10 @@ export const templateSlotSchema = z.object({
   doubts: doubtsSchema.optional(),
   /** FRM1-MOT: the camera's move through the slot, measured (camera-motion.ts); absent before FRM1. */
   motionMeasure: cameraMotionMeasureSchema.optional(),
+  /** KEEP1: whose footage the slot plays (slot-footage.ts); absent is the person's, as before KEEP1. */
+  footage: slotFootageSchema.optional(),
+  /** MATCH1: a moment that must land on the slot's start or end (slot-landing.ts); absent before MATCH1. */
+  lands: slotLandsSchema.optional(),
 });
 
 const EDGE = 1e-6;
@@ -271,6 +281,8 @@ export const overlayDesignSchema = z.object({
   receipt: z.boolean().optional(),
   /** FRM1-OVL: where it sat, relative to the reel's subject or frame (overlay-placement.ts). */
   placement: overlayPlacementSchema.optional(),
+  /** TXT1: how its letters are set, measured (overlay-type.ts); absent before TXT1 or when unread. */
+  type: overlayTypeSchema.optional(),
   confidence: unit,
 });
 

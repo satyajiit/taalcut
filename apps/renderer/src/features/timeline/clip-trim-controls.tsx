@@ -9,6 +9,10 @@ import { useState } from 'react';
 import type { ClipView, TimelineModel } from './model';
 import type { Edits } from './use-edits';
 
+/**
+ * The exact trim: Remove and Restore by an amount, in seconds or (asked for) frames, at a scene's beginning and end.
+ * Each is one `timeline.trimClip`. Folded under the Trim tool's "pick the part" (clip-part/exact-trim.tsx).
+ */
 export function ClipTrimControls({
   clip,
   model,
@@ -33,6 +37,28 @@ export function ClipTrimControls({
       : tooShort
         ? t`This scene is too short to remove that much`
         : undefined;
+  // TRIM1: what timeline.trimClip really does at each end (the old line said the following scenes move; only the
+  // video's last edge moves anything, and its first edge moves the part instead of trimming).
+  const first = clip.index === 0;
+  const last = clip.index === model.positions.length - 1;
+  const truths = [
+    ...(first && last
+      ? []
+      : [
+          t`Remove makes the scene shorter and what is next to that end longer by the same amount; Restore does the opposite. Nothing else moves.`,
+        ]),
+    ...(first
+      ? [
+          t`The video starts with this scene: at its beginning, Remove plays a later part of the clip and Restore an earlier one, and the scene keeps its length.`,
+        ]
+      : []),
+    ...(last ? [t`At the end of the last scene, the video gets shorter or longer.`] : []),
+    ...(model.beats.length > 0
+      ? [
+          t`The video follows a beat, so an end lands on the nearest beat, and a small amount may change nothing.`,
+        ]
+      : []),
+  ];
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -60,7 +86,11 @@ export function ClipTrimControls({
           {t`Adjust by exact frames`}
         </label>
       </div>
-      <p className="m-0 type-meta text-ink-2">{t`Trim the beginning or end. The following scenes move with the edit.`}</p>
+      {truths.map((line) => (
+        <p key={line} className="m-0 type-meta text-ink-2">
+          {line}
+        </p>
+      ))}
       {(['start', 'end'] as const).map((edge) => (
         <div key={edge} className="flex flex-wrap items-center gap-2">
           <span className="w-20 type-label">{edge === 'start' ? t`Beginning` : t`End`}</span>

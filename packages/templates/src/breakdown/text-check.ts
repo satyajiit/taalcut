@@ -91,6 +91,8 @@ export async function checkSceneText(
 ): Promise<{ draft: BreakdownDraft; asked: number }> {
   const answers = await readAnswers(dir);
   const kept = new Set<string>(draft.text.map((overlay) => overlay.id));
+  // LYR1: a sequence's piece nobody could read has no words to ask about; its doubt is for the review.
+  const unread = new Set<string>((draft.textSequences ?? []).flatMap((sequence) => sequence.unread));
   const todo = (draft.textRegions ?? [])
     .filter(
       (region) =>
@@ -98,6 +100,7 @@ export async function checkSceneText(
         region.crop !== undefined &&
         region.overlayId !== null &&
         kept.has(region.overlayId) &&
+        !unread.has(region.overlayId) &&
         answers[region.overlayId] === undefined,
     )
     .sort((a, b) => b.end - b.start - (a.end - a.start))

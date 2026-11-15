@@ -142,9 +142,12 @@ test.describe('timeline editor (P2-M7)', () => {
     await others.locator('[data-alternate="0"]').click();
     await expect(page.locator('[data-slot=timeline-clip]').nth(2)).toHaveAttribute('data-chosen-by', 'you');
     expect(await ran(page, 'timeline.swapClip')).toEqual(['ui']);
+    // MORE1: the More tab's Why this shot tile says it, and its dialog says it again with the shot.
     await page.locator('[data-tool=more]').click();
-    await inspector(page).getByText('Source details', { exact: true }).click();
-    await expect(inspector(page)).toContainText('You changed this');
+    const why = inspector(page).locator('[data-slot=more-tile][data-tile=why]');
+    await expect(why).toContainText('You changed this');
+    await why.click();
+    await expect(page.getByRole('dialog', { name: 'Why this shot' })).toContainText('You changed this');
   });
 
   test('a stretch of the ruler goes to the docked chat as a chip', async ({ page }) => {

@@ -95,11 +95,11 @@ export function designMarkdown(report: DesignReport): string {
     '',
     '## Cases',
     '',
-    '| case | kind | result | renders | turns | s | judge |',
-    '| --- | --- | --- | --- | --- | --- | --- |',
+    '| case | kind | result | designs | in use | renders | turns | s | judge |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
     ...report.results.map(
       (result) =>
-        `| ${result.id} | ${result.kind} | ${result.pass ? 'pass' : `FAIL: ${result.why ?? ''}`} | ${result.renders} | ${result.turns} | ${(result.ms / 1000).toFixed(1)} | ${result.judged ? `${result.judged.score}: ${result.judged.note}` : '—'} |`,
+        `| ${result.id} | ${result.kind} | ${result.pass ? (result.settled ? 'pass (settled)' : 'pass') : `FAIL: ${result.why ?? ''}`} | ${result.designs} | ${result.inUse ? 'yes' : 'no'} | ${result.renders} | ${result.turns} | ${(result.ms / 1000).toFixed(1)} | ${result.judged ? `${result.judged.score}: ${result.judged.note}` : '—'} |`,
     ),
   ];
   return `${lines.join('\n')}\n`;

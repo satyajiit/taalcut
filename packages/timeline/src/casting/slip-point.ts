@@ -16,6 +16,7 @@
  */
 import { RationalTime, type FrameRate, type ShotProfile, type SlipAvoid } from '@taalcut/core';
 import type { CastingConfig } from './config';
+import { clearStarts } from './handling';
 import { selectInPoint, windowFrames, type InPoint } from './in-points';
 import { recordingHandles, recordingPenalty } from './recording';
 import { settleOf, settlePenalty } from './settle';
@@ -97,9 +98,11 @@ export function slipPoint(input: SlipPointInput): SlipChoice {
   const choose = (allowed: (start: number) => boolean): InPoint | null =>
     selectInPoint(profile, slot, input.canvasRate, config, slot.index === 0, { allowed, penalty: near });
 
+  // MOM2: the in-point rule chooses only windows clear of the shot's handling stretches, so the least is theirs.
+  const clear = clearStarts(profile, window, inPoint.handling);
   let floor = Number.POSITIVE_INFINITY;
   for (let start = 0; start <= last; start++)
-    if (way(start, 1) && tracked(start)) floor = Math.min(floor, shown(start));
+    if (way(start, 1) && tracked(start) && (!clear || clear(start))) floor = Math.min(floor, shown(start));
   const now = shown(Math.max(0, Math.min(last, current)));
   if (floor !== Number.POSITIVE_INFINITY && now - floor >= inPoint.subjects.minGain) {
     const bar = floor + config.tieEpsilon;

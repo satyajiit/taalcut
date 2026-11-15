@@ -72,7 +72,7 @@ export async function designMode(options: DesignModeOptions): Promise<DesignRepo
     results.push({ ...outcome, ...(judged ? { judged } : {}) });
     stills.set(entry.id, world.artifacts);
     log(
-      `${outcome.pass ? 'pass' : 'FAIL'} ${outcome.id} (${outcome.renders} renders, ${outcome.turns} turns, ${(outcome.ms / 1000).toFixed(1)} s)` +
+      `${outcome.pass ? 'pass' : 'FAIL'} ${outcome.id} (${outcome.designs} designs, ${outcome.inUse ? 'one in use' : 'none in use'}${outcome.settled ? ', settled' : ''}, ${outcome.renders} renders, ${outcome.turns} turns, ${(outcome.ms / 1000).toFixed(1)} s)` +
         `${outcome.why ? `: ${outcome.why}` : ''}`,
     );
     // What it did, one line: each call's tool, a refusal's code, a failed lint's findings.

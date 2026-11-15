@@ -6,7 +6,15 @@
  * core's QaCheckResult, so every check reports the same way: label key,
  * capped findings and fixes, its own duration.
  */
-import type { ProjectId, QaCheckId, QaCheckResult, QaFix, QA_STATUSES, QA_UNITS, TimelineId } from '@taalcut/core';
+import type {
+  ProjectId,
+  QaCheckId,
+  QaCheckResult,
+  QaFix,
+  QA_STATUSES,
+  QA_UNITS,
+  TimelineId,
+} from '@taalcut/core';
 import type { FrameSpan } from '../plan/types';
 
 export type QaStatus = (typeof QA_STATUSES)[number];
@@ -85,6 +93,8 @@ export const QA_CHECKS: readonly QaCheckMeta[] = [
   { id: 'soundOnCuts', group: 'audio', preflight: false, overridable: true },
   { id: 'soundClean', group: 'audio', preflight: false, overridable: true },
   { id: 'soundCritique', group: 'audio', preflight: false, overridable: true },
+  // MOM1: the part of its shot a clip plays; a slot check like AGT2-MATCH's, last because ids are only appended.
+  { id: 'slotPart', group: 'slots', preflight: false, overridable: true },
 ];
 
 export function checkMeta(id: QaCheckId): QaCheckMeta {
@@ -137,7 +147,11 @@ export function spanFinding(
   target?: QaFinding['target'],
   measured?: QaFinding['measured'],
 ): QaFinding {
-  return { frames: { start: frames.start, end: Math.max(frames.start, frames.end) }, ...(target ? { target } : {}), ...(measured ? { measured } : {}) };
+  return {
+    frames: { start: frames.start, end: Math.max(frames.start, frames.end) },
+    ...(target ? { target } : {}),
+    ...(measured ? { measured } : {}),
+  };
 }
 
 export const autoFix = (action: 'renormaliseAudio' | 'remux' | 'reencode' | 'rerender'): QaFix => ({

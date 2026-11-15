@@ -55,31 +55,31 @@ describe('job engine: concurrency and power', () => {
     expect(io.peak()).toBe(3);
   });
 
-  it('lowers CPU concurrency when the Mac is unplugged, and restores it on AC', async () => {
+  it('lowers CPU concurrency when the Mac runs hot, and restores it when it cools', async () => {
     const power = fakePower();
     const { engine, ofType } = testEngine({ power, concurrency: { cpu: 4 } });
     const cpu = gatedJobs('cpu');
     engine.register(cpu.definition);
     await engine.start();
     for (let i = 0; i < 12; i++) await engine.enqueue(cpu.definition, {});
-    await waitFor(() => cpu.running() === 4, 3000, 'four running on AC');
+    await waitFor(() => cpu.running() === 4, 3000, 'four running while cool');
 
-    power.set({ onBattery: true });
-    expect(engine.limits().cpu).toBe(2);
+    power.set({ thermalState: 'serious' });
+    expect(engine.limits().cpu).toBe(1);
     expect(ofType('queue.limits_changed').at(-1)).toMatchObject({
-      limits: { cpu: 2 },
-      power: { onBattery: true },
+      limits: { cpu: 1 },
+      power: { thermalState: 'serious' },
     });
-    // Running jobs aren't interrupted; as they finish, no more than two run.
+    // Running jobs aren't interrupted; as they finish, no more than one runs.
     cpu.resetPeak();
     for (let i = 0; i < 4; i++) cpu.releaseOne();
-    await waitFor(() => cpu.running() === 2, 3000, 'two running on battery');
+    await waitFor(() => cpu.running() === 1, 3000, 'one running while hot');
     await new Promise((r) => setTimeout(r, 60));
-    expect(cpu.running()).toBe(2);
+    expect(cpu.running()).toBe(1);
     expect(cpu.peak()).toBeLessThanOrEqual(4);
 
-    power.set({ onBattery: false });
-    await waitFor(() => cpu.running() === 4, 3000, 'back to four on AC');
+    power.set({ thermalState: 'nominal' });
+    await waitFor(() => cpu.running() === 4, 3000, 'back to four when cool');
     while (cpu.running() > 0) {
       cpu.releaseOne();
       await new Promise((r) => setTimeout(r, 5));
@@ -101,18 +101,11 @@ describe('job engine: concurrency and power', () => {
     power.set({ thermalState: 'fair' }); // no change, no event
   });
 
-  it('default throttle: battery halves heavy work, serious caps it at one, critical stops it', () => {
+  it('default throttle: heat only. Serious caps heavy work at one, critical stops it', () => {
     const base = { cpu: 6, gpu: 2, npu: 2, video: 4, io: 8, network: 4 };
-    expect(defaultThrottle(base, { onBattery: false, thermalState: 'nominal' })).toEqual(base);
-    expect(defaultThrottle(base, { onBattery: false, thermalState: 'fair' })).toEqual(base);
-    expect(defaultThrottle(base, { onBattery: true, thermalState: 'nominal' })).toEqual({
-      ...base,
-      cpu: 3,
-      gpu: 1,
-      npu: 1,
-      video: 2,
-    });
-    expect(defaultThrottle(base, { onBattery: false, thermalState: 'serious' })).toEqual({
+    expect(defaultThrottle(base, { thermalState: 'nominal' })).toEqual(base);
+    expect(defaultThrottle(base, { thermalState: 'fair' })).toEqual(base);
+    expect(defaultThrottle(base, { thermalState: 'serious' })).toEqual({
       cpu: 1,
       gpu: 1,
       npu: 1,
@@ -120,7 +113,7 @@ describe('job engine: concurrency and power', () => {
       io: 4,
       network: 4,
     });
-    expect(defaultThrottle(base, { onBattery: true, thermalState: 'critical' })).toEqual({
+    expect(defaultThrottle(base, { thermalState: 'critical' })).toEqual({
       cpu: 0,
       gpu: 0,
       npu: 0,
@@ -128,6 +121,16 @@ describe('job engine: concurrency and power', () => {
       io: 1,
       network: 1,
     });
-    expect(defaultThrottle(DEFAULT_CONCURRENCY, { onBattery: true, thermalState: 'nominal' }).cpu).toBe(1);
+    expect(defaultThrottle(DEFAULT_CONCURRENCY, { thermalState: 'nominal' })).toEqual(DEFAULT_CONCURRENCY);
+  });
+
+  it('battery or charger never lowers a limit: a power state that says so changes nothing', async () => {
+    // The owner, 2026-11-15: on battery the heavy classes ran at half, one GPU place was left, and a render
+    // waited for ever behind itself. What the engine reads has no such field; one passed anyway is ignored.
+    const unplugged = { ...fakePower(), onBattery: true };
+    const { engine, ofType } = testEngine({ power: unplugged, concurrency: { cpu: 4, gpu: 2 } });
+    await engine.start();
+    expect(engine.limits()).toMatchObject({ cpu: 4, gpu: 2 });
+    expect(ofType('queue.limits_changed')).toEqual([]);
   });
 });

@@ -177,7 +177,7 @@ describe('EAR1-K0: the sound QA checks', () => {
   const SOUND = ['soundOnCuts', 'soundClean', 'soundCritique'] as const;
 
   it('come after every earlier check, so no id moves', () => {
-    expect(QA_CHECK_IDS.slice(38)).toEqual([...SOUND]);
+    expect(QA_CHECK_IDS.slice(38, 41)).toEqual([...SOUND]);
     expect(QA_CHECK_IDS.indexOf('slotGraphics')).toBe(37);
     for (const id of SOUND) expect(qaCheckIdSchema.parse(id)).toBe(id);
   });

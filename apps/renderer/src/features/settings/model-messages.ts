@@ -188,6 +188,11 @@ export const KEYED_MESSAGES: readonly MessageDescriptor[] = [
   }),
   msg({ id: 'errors.models.sign_in_failed', message: 'Signing in to {provider} didn’t work. Try again.' }),
   msg({
+    id: 'errors.models.sign_in_refused',
+    message:
+      '{provider} approved the sign-in, then refused to give Taalcut access. This happens when the plan on that account has ended. Check your plan, then sign in again.',
+  }),
+  msg({
     id: 'errors.models.sign_in_timeout',
     message: 'The {provider} sign-in wasn’t finished in time. Try again, and finish it in your browser.',
   }),

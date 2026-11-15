@@ -31,7 +31,13 @@ import { starterIdSchema } from './starters';
 import { MAX_TEMPLATE_TAGS, templateTagSchema, trendFreshnessSchema } from './template-library';
 import { rationalTimeSchema } from '../time/rational-time';
 import { soundUrlSchema } from './template-audio';
-import { CAMERA_MOTIONS, DOUBT_REASONS, SLOT_ROLES, slotIntentPatchSchema } from './template-parts';
+import {
+  CAMERA_MOTIONS,
+  DOUBT_REASONS,
+  SLOT_FOOTAGE_SOURCES,
+  SLOT_ROLES,
+  slotIntentPatchSchema,
+} from './template-parts';
 import { templateSchema } from './template-schema';
 
 export const TEMPLATE_COMMANDS = {
@@ -97,6 +103,12 @@ export const TEMPLATE_COMMANDS = {
   setGraphic: 'template.graphic.set',
   /** DSG1-READ: changes an overlay's brief in `graphics.reading` as the person writes it (`graphicBriefPatchSchema`). */
   editGraphic: 'template.graphic.edit',
+  /**
+   * KEEP1: whose footage a slot plays (slot-footage.ts): `reel` keeps the reel's own footage in videos made from the
+   * template, `person` casts the person's clips. From the review the statement becomes the person's; the Analyst's
+   * reason stays. A new version; a template needs at least one slot for the person's clips.
+   */
+  setFootage: 'template.slot.setFootage',
 } as const;
 
 /**
@@ -130,6 +142,10 @@ export const TemplateCutOutOfRange = defineError('templates.cut_out_of_range');
 export const TemplateOverlayNotFound = defineError('templates.overlay_not_found');
 /** BRK1: `template.doubt.dismiss` of a doubt its target doesn't have. */
 export const TemplateDoubtNotFound = defineError('templates.doubt_not_found');
+/** KEEP1: `template.slot.setFootage` that would leave no slot for the person's clips. */
+export const TemplateNoPersonSlot = defineError('templates.no_person_slot');
+/** KEEP1: `template.slot.setFootage` to `reel` on a template that was not made from a reel. */
+export const TemplateNoReel = defineError('templates.no_reel');
 
 const slotId = idSchema<'TemplateSlot'>();
 const time = rationalTimeSchema;
@@ -263,6 +279,7 @@ export const templateCommandPayloads = {
     overlayId: idSchema<'TextOverlay'>(),
     brief: graphicBriefPatchSchema,
   }),
+  [TEMPLATE_COMMANDS.setFootage]: z.object({ ...edit, slotId, from: z.enum(SLOT_FOOTAGE_SOURCES) }),
 };
 
 /** Every edit command's result: the new head. */

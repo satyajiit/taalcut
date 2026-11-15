@@ -5,14 +5,14 @@ import { ulidSchema } from '@taalcut/core';
 import { z } from 'zod';
 
 export const editorOutputSchema = z.object({
-  postCaption: z
+  notSavedPostCaptionReason: z
     .string()
     .trim()
     .min(1)
-    .max(5000)
+    .max(2000)
     .optional()
     .describe(
-      'When asked for an Instagram/social post caption: the actual ready-to-copy post text, repeated verbatim in your visible response. This is not a subtitle setting.',
+      'Only when a requested post caption could not be saved with timeline.setPostCaption: the reason, repeated verbatim in your visible message.',
     ),
   timelineId: ulidSchema('Timeline'),
   revision: z.int().min(1),

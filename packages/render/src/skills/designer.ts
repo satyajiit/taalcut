@@ -4,15 +4,16 @@
 /**
  * The Designer (HFW1 "dsn", render SPEC "HFW1: the Designer"): every graphic a video needs, designed by the model
  * as a HyperFrames composition in the project's workspace, checked by Taalcut's gate, looked at over the footage,
- * and put on the timeline as a proposal the person can use, try again, undo or ask to change. It runs after the
+ * and put on the timeline as three designs the person chooses between (DSG2: the first is in the video at once;
+ * choosing another, asking for three new ones and undo are theirs). It runs after the
  * Editor's step when the Editor recorded design jobs (`graphics.design`; the agent's flow-followups add the step),
  * and for template reading and a make (tpl). Modelled on the Reviewer: a deterministic check before the handoff,
- * here that every job ended placed or with a stated reason. Whatever model the chain gives it designs: a vision
+ * here that every job ended in the video with its three designs, or with a stated reason. Whatever model the chain gives it designs: a vision
  * model sees its stills, a text-only one reads the frame checks; nothing falls back to a ready-made design.
  */
 import { defineSkill, ok, type Timeline, type TimelineId } from '@taalcut/core';
 import type { TimelineAccess } from '../ports';
-import { WORKSPACE_EXTRA_TOOLS, WORKSPACE_TOOLS } from '../workspace/tools/module';
+import { WORKSPACE_EXTRA_TOOLS, WORKSPACE_OPTIONS_TOOL, WORKSPACE_TOOLS } from '../workspace/tools/module';
 import {
   checkDesigns,
   designerInputSchema,
@@ -24,9 +25,13 @@ import { DESIGNER_PROMPT } from './designer-prompt';
 export const DESIGNER_SKILL_ID = 'render.designer';
 export const DESIGNER_LABEL = 'skills.render.designer';
 
-/** The tools besides the workspace's: what is on the timeline, a frame of it, and the comment a job answers. */
+/**
+ * The workspace's tools with `workspace.placeOptions` in `workspace.place`'s stead (DSG2: a single proposal is no
+ * longer how a job ends; one design with a reason goes through `workspace.placeOptions` too), then what is on the
+ * timeline, a frame of it, and the comment a job answers.
+ */
 export const DESIGNER_TOOLS = [
-  ...WORKSPACE_TOOLS,
+  ...WORKSPACE_TOOLS.map((name) => (name === 'workspace.place' ? WORKSPACE_OPTIONS_TOOL : name)),
   'graphics.list',
   'graphics.edit',
   'graphics.remove',
@@ -77,11 +82,12 @@ export function designerSkill(deps: DesignerSkillDeps) {
   const extras = DESIGNER_EXTRA_TOOLS.filter((name) => deps.registered?.(name) ?? false);
   return defineSkill({
     id: DESIGNER_SKILL_ID,
-    version: '1.0.0',
+    // 1.1.0 (DSG2): three designs a job, the first in the video; the check counts them.
+    version: '1.1.0',
     labelKey: DESIGNER_LABEL,
     description:
-      "Designs the video's graphics as HyperFrames compositions in the project's workspace, checks and looks at " +
-      'them over the footage, and proposes them on the timeline.',
+      "Designs the video's graphics as HyperFrames compositions in the project's workspace, three designs a job, " +
+      'checks and looks at them over the footage, and puts them in the video for the person to choose between.',
     prompt: DESIGNER_PROMPT,
     tools: { names: [...new Set([...DESIGNER_TOOLS, ...extras])] },
     input: designerInputSchema,
@@ -99,7 +105,7 @@ export function designerSkill(deps: DesignerSkillDeps) {
         return ok({ verdict: 'retry', reason: `Hand off the job's timeline, ${input.timelineId}.` });
       return ok(checkDesigns(output, input, timeline.value as Timeline));
     },
-    // A job is read, written, linted, rendered a few times and placed.
+    // A job is read, written, linted, rendered a few times and placed; its three designs share each of those turns.
     limits: { expectedTurns: 10, maxTurns: 30 },
   });
 }

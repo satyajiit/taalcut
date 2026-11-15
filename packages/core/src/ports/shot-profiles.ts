@@ -16,6 +16,20 @@ import type { TimeRange } from '../time/time-range';
 import type { Orientation } from '../analysis/media-facts';
 import type { CameraMotion, ShotType } from '../analysis/shot-analysis';
 
+/**
+ * MOM1: one stretch of a shot as casting reads it (`ShotMoment`, analysis/shot-moments.ts): [start, end) in frames
+ * from the shot's start at the asset's rate, vision's note of what it shows, and the note's direction in the active
+ * embedding space (document purpose; null until it is embedded).
+ */
+export interface ShotProfileMoment {
+  readonly start: number;
+  readonly end: number;
+  readonly note: string;
+  readonly vector: Float32Array | null;
+  /** MOM2: the describer states the camera is being handled in this stretch (core's `ShotMoment.handling`). */
+  readonly handling?: true;
+}
+
 /** One shot, or one photo. */
 export interface ShotProfile {
   readonly assetId: AssetId;
@@ -65,6 +79,12 @@ export interface ShotProfile {
    * a photo, or a shot whose analysis has none.
    */
   readonly bestFrame?: number | null;
+  /**
+   * MOM1: what the shot shows over time, in order from its start to its end. Casting's in-point step weighs each
+   * window by how its stretch's notes fit what the slot states; the tools show them to the model. Absent or null for
+   * a photo, and for a shot described before MOM1 (its `description` then speaks for all of it).
+   */
+  readonly moments?: readonly ShotProfileMoment[] | null;
 }
 
 export interface ShotProfileFilter {

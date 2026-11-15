@@ -22,6 +22,7 @@ import {
   consentsRouter,
   createCommandBus,
   createDirectJobRunner,
+  createPostCaptionCreditCommands,
   createSettingsCommands,
   createUiCommands,
   credentialChangesContract,
@@ -38,6 +39,7 @@ import {
   LOCAL_SERVER_KINDS,
   MAIN_SERVICE_CONTRACTS,
   MODEL_COMMANDS,
+  postCaptionRouter,
   SettingsStoreToken,
   TraceStoreToken,
   tracesRouter,
@@ -151,6 +153,8 @@ function registerCommands(container: Container, config: UtilityConfig): void {
   const ui = createUiCommands({ events: container.resolve(EventBusToken) });
   bus.register(
     ...settings.all,
+    // CAP1: the caption panel's credit switch, a person's command only.
+    ...createPostCaptionCreditCommands(container.resolve(SettingsStoreToken)).all,
     ...agentImportCommands(container),
     ...models,
     ...ui.all,
@@ -284,6 +288,7 @@ export function composeAgent(config: UtilityConfig, options: AgentRootOptions): 
     commands: commandsRouter(container.resolve(CommandBusToken)),
     speech: speechRouter(container),
     interfaceSounds: interfaceSoundsRouter(container.resolve(SettingsStoreToken)),
+    postCaption: postCaptionRouter(container.resolve(SettingsStoreToken)),
     models: modelsRouter(container.resolve(ModelSettingsToken)),
     usage: usageRouter(container.resolve(UsageStoreToken), container.resolve(UsageLimitsToken)),
     traces: tracesRouter(container.resolve(TraceStoreToken)),

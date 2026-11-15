@@ -22,7 +22,7 @@ export const TERMINAL_JOB_STATES: readonly JobState[] = ['succeeded', 'failed', 
  * Which concurrency pool a job runs in. 'video' is the hardware video engine (VideoToolbox, NVENC, QSV,
  * AMF, VA-API); 'gpu' is shader and compute work (Metal, WebGPU, Vulkan); 'npu' is the Neural Engine
  * (Core ML, Apple Vision). They are separate hardware, so one doesn't queue behind another. Limits per
- * class are the queue's policy (lowered on battery and heat); defaults video 2, gpu 1, npu 1.
+ * class are the queue's policy (lowered under heat, never for battery); defaults video 2, gpu 1, npu 1.
  */
 export const RESOURCE_CLASSES = ['cpu', 'gpu', 'npu', 'video', 'io', 'network'] as const;
 export type ResourceClass = (typeof RESOURCE_CLASSES)[number];

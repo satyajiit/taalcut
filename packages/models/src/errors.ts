@@ -13,6 +13,11 @@ export const openAccounts: FixAction = {
   labelKey: 'fix.openAccounts',
 };
 const openModels: FixAction = { command: SETTINGS_COMMANDS.openModels, labelKey: 'fix.openModels' };
+/** CVR2: opens Accounts › Subscriptions and starts the plan's images sign-in, in one click. */
+const connectChatGptImages: FixAction = {
+  command: SETTINGS_COMMANDS.connectChatGptImages,
+  labelKey: 'fix.connectChatGptImages',
+};
 
 type ProviderParams = { provider: string; model?: string };
 
@@ -89,6 +94,15 @@ export const SignInFailed = defineError<{ provider: string }>('models.sign_in_fa
   retryable: true,
   fix: openAccounts,
 });
+/**
+ * The provider approved the sign-in in the browser, then refused the code the browser brought (invalid_grant). OpenAI
+ * does this when the ChatGPT account has no active plan: the owner's plan had ended on 2026-11-15, three sign-ins
+ * were refused this way, and the next one after renewing went through.
+ */
+export const SignInRefused = defineError<{ provider: string }>('models.sign_in_refused', {
+  retryable: true,
+  fix: openAccounts,
+});
 /** Nobody finished the sign-in in the browser in time; nothing was stored. */
 export const SignInTimeout = defineError<{ provider: string; seconds: number }>('models.sign_in_timeout', {
   retryable: true,
@@ -146,6 +160,14 @@ export const LocalRuntimeFailed = defineError<{ step: string }>('models.local_ru
 
 /** No configured image route can serve the request, including separate subscription connections. */
 export const ImageNoProvider = defineError('models.image_no_provider', { fix: openAccounts });
+/**
+ * CVR2: the ChatGPT plan is signed in for chat and its images are not: OpenAI grants them on a second approval
+ * (CHATGPT_IMAGE_PROVIDER), and nothing else in the chain can make the still. Its own words, so the person is not
+ * told to sign in to a plan they are signed in to; its fix starts that approval.
+ */
+export const ChatGptImagesNotConnected = defineError('models.chatgpt_images_not_connected', {
+  fix: connectChatGptImages,
+});
 /** The provider accepted a connection but denied image access for this account. */
 export const ImageAccessDenied = defineError<ProviderParams>('models.image_access_denied', {
   fix: openAccounts,

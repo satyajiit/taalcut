@@ -16,7 +16,7 @@ import { defineTool, NO_TOOL_RETRY, ok, RENDER_COMMANDS, ulidSchema, type AnyToo
 import { DELIVERABLE_VERDICTS } from '../qa/verdict';
 import { dispatchAndFollow, exportOutput, exportOutputSchema, type ExportFollowDeps } from './export-follow';
 import { renderProgressCard } from './render-cards';
-import { slotMisses, slotMissSchema, toolRenderSchema } from './schemas';
+import { slotMisses, slotMissSchema, textNotes, textNoteSchema, toolRenderSchema } from './schemas';
 
 const sha256 = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 
@@ -27,20 +27,28 @@ export const draftOutputSchema = exportOutputSchema.extend({
   passed: z.boolean(),
   /**
    * AGT2-MATCH: the slot-match checks the draft misses against its template (slotNeeds, slotFace, slotFraming,
-   * slotMotion, slotTiming, slotGraphics), each with its fixes; empty when every slot matches or none was held.
+   * slotMotion, slotTiming, slotGraphics, slotPart), each with its fixes; empty when every slot matches or none was held.
    */
   slotMatch: z.array(slotMissSchema),
+  /**
+   * TXT1: facts about the on-screen text in this draft, for whoever placed it to judge: a text with a head under it
+   * (graphicCoversFace), a text outside the platform's clear area (captionSafeZone). Never failures, and they have
+   * no fixes; empty when QA found neither.
+   */
+  textNotes: z.array(textNoteSchema),
 });
 
 export function renderDraftTool(deps: ExportFollowDeps): AnyTool {
   return defineTool({
     name: 'render.draft',
-    version: '1.1.0',
+    version: '1.2.0',
     summary: 'Renders a QA-checked draft of one timeline revision, before the export approval.',
     description:
       'Renders the timeline revision with the project export settings and runs every QA check on it, without ' +
       'asking: the draft the export card previews. Returns the render, whether it passed QA, the failing checks ' +
       'with their fixes, the slots that differ from the template (slotMatch) with theirs, and the QA report. ' +
+      'textNotes are facts about the on-screen text for your judgement, never failures: a text with a head under ' +
+      'it, a text outside the platform’s clear area. ' +
       'Approving the export of the same revision delivers this render without rendering again.',
     tags: ['render', 'draft', 'qa', 'review', 'preview'],
     input: z.object({
@@ -64,7 +72,8 @@ export function renderDraftTool(deps: ExportFollowDeps): AnyTool {
       `Draft ${output.render.id} of revision ${output.timelineRevision}: ` +
       (output.passed ? 'QA passed' : `QA ${output.render.qa?.verdict ?? output.render.status}`) +
       (output.failing.length > 0 ? `, ${output.failing.length} failing` : '') +
-      (output.slotMatch.length > 0 ? `, ${output.slotMatch.length} slot checks missed` : ''),
+      (output.slotMatch.length > 0 ? `, ${output.slotMatch.length} slot checks missed` : '') +
+      (output.textNotes.length > 0 ? `, ${output.textNotes.length} notes on the text` : ''),
     run: async (input, ctx) => {
       const record = await dispatchAndFollow(
         deps,
@@ -85,6 +94,7 @@ export function renderDraftTool(deps: ExportFollowDeps): AnyTool {
         timelineRevision: record.value.timelineRevision,
         passed: verdict !== undefined && verdict !== 'overridden' && DELIVERABLE_VERDICTS.has(verdict),
         slotMatch: slotMisses(record.value.qaReport),
+        textNotes: textNotes(record.value.qaReport),
       });
     },
   }) as AnyTool;

@@ -3,7 +3,8 @@
 /* Hallmark · component: gap fix row (P3-B8) · genre: atmospheric studio app (chrome modern-minimal)
  * system: DESIGN.md v0.3 · one way to fill a gap, a row on the panel (hairline between rows, no box): a quiet icon
  *   (the AI mark in violet for a generated image: the AI's work), the fix's name, what it means in a line or two,
- *   and its one action at the right: Open on your phone · Ask in chat · Find stock video (opens the results under
+ *   and its one action at the right (under the words where the row has less than 28rem: the editor's chat; the
+ *   row's classes are clip-row.tsx's): Open on your phone · Ask in chat · Find stock video (opens the results under
  *   the row) · Drop this shot. While the agent asks, the action is Choose (a toggle: pressed ticks it in the answer, in teal: your choice)
  *   · FIX-ASK Add more clips: From this Mac (the library's folder import) and From your phone under its line, asking
  *   or not, so the person can add the clips the shot needs
@@ -34,6 +35,7 @@ import { useFormatters } from '#lib/format';
 import { UserContent } from '../cards/card-frame';
 import { errorMessage } from '../feedback/error-messages';
 import { toSeconds } from '../templates/slot-words';
+import { GAP_ROW, GAP_ROW_ACTION, GAP_ROW_LINE } from './clip-row';
 import type { GapFixHandlers, GapFixItem, GapFixOptionView } from './gap-types';
 import { FIX_TITLES } from './gap-words';
 import { StockResults } from './stock-results';
@@ -197,9 +199,9 @@ export function FixRow({ gap, option, handlers, choose, onDone }: FixRowProps) {
       data-slot="gap-fix"
       data-kind={option.kind}
       data-chosen={choose?.chosen || undefined}
-      className="flex flex-col gap-2 border-t border-rule-subtle py-3 first:border-t-0 first:pt-1 last:pb-0"
+      className={GAP_ROW}
     >
-      <div className="flex items-start gap-3">
+      <div className={GAP_ROW_LINE}>
         <span
           aria-hidden
           className="mt-0.5 inline-flex size-4 shrink-0 items-center justify-center text-ink-3"
@@ -214,7 +216,7 @@ export function FixRow({ gap, option, handlers, choose, onDone }: FixRowProps) {
             <Detail option={option} />
           </span>
         </div>
-        {action ? <div className="flex shrink-0 items-center">{action}</div> : null}
+        {action ? <div className={GAP_ROW_ACTION}>{action}</div> : null}
       </div>
       {option.kind === 'addClips' && (handlers.onAddFolder || handlers.onPhone) ? (
         <div className="flex flex-wrap items-center gap-2 ps-7">

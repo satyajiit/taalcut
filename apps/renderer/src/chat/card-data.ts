@@ -23,6 +23,7 @@ import type { Backend } from '../backend/backend';
 import { useBackend, useTimelineDocuments } from '../backend/backend';
 import { useMediaUrls } from '../services/provider';
 import { phase3CardData } from './card-data-phase3';
+import { designStillReader } from './design-stills';
 import { followTimelineDocument } from '../backend/timeline-documents';
 import { followStream, isGone } from './follow-stream';
 import { phonePanel, watchPhoneOnCable } from './phone-panels';
@@ -152,6 +153,8 @@ export function useAppCardData(): CardData {
         return found.ok ? found.value : undefined;
       },
       shot: (assetId, shotId) => shotLookup(backend, media).frame(assetId, shotId),
+      // DSG2: a design option's still, from the project's workspace files.
+      designStill: designStillReader(backend),
       watchAssetImage(assetId, onChange) {
         let alive = true;
         let request = 0;

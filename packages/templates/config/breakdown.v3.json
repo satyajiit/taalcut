@@ -28,6 +28,22 @@
   "audio": { "silentLufs": -60, "musicBeatConfidence": 0.5, "musicMaxSpeech": 0.2, "voiceMinSpeech": 0.5 },
   "soft": { "minPlateau": 4, "bump": 2 },
   "fadeTail": { "luma": 0.1, "rise": 0.02 },
+  "gradual": {
+    "longSide": 64,
+    "maxSeconds": 2,
+    "maxHoldSeconds": 1,
+    "flat": 4,
+    "detail": 6,
+    "steadyShare": 0.8,
+    "steadyFrames": 4,
+    "floor": 0.5,
+    "minBlended": 3,
+    "plateau": 3,
+    "fit": 0.15,
+    "cutLikeness": 0.4,
+    "dip": 0.8,
+    "edge": 0.05
+  },
   "textScene": {
     "minSeconds": 0.5,
     "edgeMargin": 0.01,
@@ -36,6 +52,13 @@
     "verticalRatio": 2,
     "sceneLine": 1.5,
     "addedLine": -1,
+    "sequence": {
+      "gapSeconds": 0.13,
+      "maxSeconds": 5,
+      "sizeRatio": 1.6,
+      "minMembers": 3,
+      "zone": { "marginSeconds": 1.5, "fps": 30, "scales": [2, 1], "maxFrames": 900, "changeRatio": 2.5 }
+    },
     "weights": {
       "withPicture": 4,
       "fixedOnPicture": -4,
@@ -55,6 +78,7 @@
       "short": 1.5,
       "crowd": 1.5,
       "replaced": -0.8,
+      "sequence": -4,
       "doubtful": 0.5,
       "shape": -2.5,
       "rendered": -0.6

@@ -7,16 +7,20 @@ import type { Phase3FakeOptions } from '../phase3/fake-phase3';
 import type { AreaOptions, AreaOptionsReader } from './area-options';
 import { brandOptions } from './brand';
 import { cleanupOptions } from './cleanup';
+import { clipPartOptions } from './clip-part';
 import { commentsOptions } from './comments';
 import { energyOptions } from './energy';
 import { exportOptions } from './export';
 import { fitOptions } from './fit';
 import { gapsOptions } from './gaps';
 import { hubOptions } from './hub';
+import { keptReelOptions } from './kept-reel';
 import { libraryOptions } from './library';
 import { mediaOptions } from './media';
 import { memoryOptions } from './memory';
+import { moreOptions } from './more';
 import { recipesOptions } from './recipes';
+import { reelRunOptions } from './reel-run';
 import { styleProfileOptions } from './style-profiles';
 import { templateMediaOptions } from './template-media';
 import { templateSearchOptions } from './template-search';
@@ -39,6 +43,10 @@ const READERS: readonly AreaOptionsReader[] = [
   styleProfileOptions,
   templateSearchOptions,
   templateMediaOptions,
+  reelRunOptions,
+  keptReelOptions,
+  clipPartOptions,
+  moreOptions,
 ];
 
 type Group = Phase2FakeOptions | FakeMakeOptions | Phase3FakeOptions;

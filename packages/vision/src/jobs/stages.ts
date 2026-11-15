@@ -27,7 +27,7 @@ import {
 } from '@taalcut/core';
 import type { FrameInput } from '../media/frame-source-policy';
 import type { z } from 'zod';
-import type { Tier } from '../config';
+import { VISION_CONFIG, type Tier } from '../config';
 import type { VisionPlacement } from '../describe/placement';
 import { withShotContext } from '../describe/shot-context';
 import {
@@ -55,49 +55,40 @@ export interface VisionStageOptions extends OcrStageOptions {
 const SKIP_NO_SHOTS = 'indexing.skip.noShots';
 const SKIP_NO_ANALYSIS = 'indexing.skip.notAnalysed';
 
+/** A shot's first frame on the asset's grid and its length in frames. */
+function shotSpan(range: TimeRange, rate: FrameRate): { start: number; length: number } {
+  return {
+    start: Math.max(0, RationalTime.toFrames(range.start, rate)),
+    length: Math.max(1, RationalTime.toFrames(range.duration, rate)),
+  };
+}
+
 /**
- * Chronological grid frames to send to the describer for one shot:
- * - Short shots (< 2 s): `[best]`
- * - Medium shots (2 s to < 6 s): up to 3 frames across the shot (start, middle, end) including `best`
- * - Longer shots (≥ 6 s): up to 4 frames across the shot (early, early-mid, late-mid, end) including `best`
+ * MOM1: the grid frames the describer sees for one shot, in order (VISION_CONFIG.describe.moments, by tier). A shot
+ * under `minSeconds` is its best frame alone. A longer one is a frame per `strideSeconds`, at least two and at most
+ * `maxFrames`, each at the middle of an equal part of the shot: a frame stands for the stretch around it, which is
+ * what the shot's moments are read from.
  */
-export function describeFramesForShot(range: TimeRange, bestFrame: number, rate: FrameRate): number[] {
-  const start = Math.max(0, RationalTime.toFrames(range.start, rate));
-  const total = Math.max(1, RationalTime.toFrames(range.duration, rate));
-  const best = start + Math.min(total - 1, Math.max(0, bestFrame));
+export function describeFramesForShot(
+  range: TimeRange,
+  bestFrame: number,
+  rate: FrameRate,
+  tier: Tier = 'recommended',
+): number[] {
+  const { start, length } = shotSpan(range, rate);
+  const rule = VISION_CONFIG.describe.moments;
   const seconds = RationalTime.toSeconds(range.duration);
-  if (seconds < 2 || total < 2) return [best];
-  const fractions = seconds < 6 ? [0.12, 0.5, 0.88] : [0.1, 0.36, 0.64, 0.9];
-  const anchors = fractions.map(
-    (f) => start + Math.min(total - 1, Math.max(0, Math.round((total - 1) * f))),
+  const { strideSeconds, maxFrames } = rule.frames[tier];
+  const count =
+    seconds < rule.minSeconds
+      ? 1
+      : Math.min(maxFrames, length, Math.max(2, Math.ceil(seconds / strideSeconds)));
+  if (count < 2) return [start + Math.min(length - 1, Math.max(0, bestFrame))];
+  const frames = Array.from(
+    { length: count },
+    (_, part) => start + Math.min(length - 1, Math.floor(((part + 0.5) * length) / count)),
   );
-  const minGap = Math.max(1, Math.round((rate.num / rate.den) * 0.75));
-  let nearestIdx = 0;
-  let nearestDist = Infinity;
-  for (let i = 0; i < anchors.length; i++) {
-    if (i === 0 && best - anchors[0]! >= minGap * 2) continue;
-    if (i === anchors.length - 1 && anchors[i]! - best >= minGap * 2) continue;
-    const dist = Math.abs(anchors[i]! - best);
-    if (dist < nearestDist) {
-      nearestDist = dist;
-      nearestIdx = i;
-    }
-  }
-  anchors[nearestIdx] = best;
-  const sorted = [...new Set(anchors)].sort((a, b) => a - b);
-  const kept: number[] = [];
-  for (const f of sorted) {
-    if (kept.length === 0 || f - kept[kept.length - 1]! >= minGap) {
-      kept.push(f);
-    } else if (f === best || f === sorted[sorted.length - 1]) {
-      kept[kept.length - 1] = f;
-    }
-  }
-  if (!kept.includes(best)) {
-    kept[0] = best;
-    kept.sort((a, b) => a - b);
-  }
-  return kept;
+  return [...new Set(frames)];
 }
 
 function shotsOf(
@@ -177,7 +168,7 @@ export function createVisionIndexStages(options: VisionStageOptions): IndexStage
     milestone: 'complete',
     job: (view) => {
       const analysed = shotsOf(view).filter((s) => s.analysis !== null);
-      if (analysed.length === 0) return { skip: SKIP_NO_ANALYSIS, clears: ['description'] };
+      if (analysed.length === 0) return { skip: SKIP_NO_ANALYSIS, clears: ['description', 'moment'] };
       const rate = view.facts?.frameRate ?? analysed[0]!.range.start.rate;
       const kind = options.placement() === 'local' ? visionDescribeShotsJob : visionDescribeShotsCloudJob;
       return stageJob(kind, {
@@ -189,11 +180,12 @@ export function createVisionIndexStages(options: VisionStageOptions): IndexStage
           view,
           analysed.map((s) => {
             const frame = RationalTime.toFrames(s.range.start, rate) + s.analysis!.bestFrame;
-            const frames = describeFramesForShot(s.range, s.analysis!.bestFrame, rate);
+            const frames = describeFramesForShot(s.range, s.analysis!.bestFrame, rate, options.tier);
             return {
               shotId: s.shotId,
               frame,
-              ...(frames.length > 1 ? { frames } : {}),
+              // MOM1: with the shot's span, the describer knows each frame's time and answers its moments.
+              ...(frames.length > 1 ? { frames, span: shotSpan(s.range, rate) } : {}),
             };
           }),
           rate,

@@ -9,11 +9,14 @@ import { PREVIEW_HOST } from '@taalcut/core';
 import { APP_SCHEME, isTrustedUrl, originOf } from '../runtime';
 
 /**
- * Permissions the app grants as asked, and only to its own pages. Empty on purpose: Taalcut needs none.
- * Add one here (with a test and a SECURITY.md line) when a feature needs it. The microphone is not here:
- * `media` has its own rule (isAudioOnly).
+ * Permissions the app grants as asked, and only to its own pages. Add one here (with a test and a SECURITY.md
+ * line) when a feature needs it. The microphone is not here: `media` has its own rule (isAudioOnly).
+ *
+ * - `clipboard-sanitized-write` (FIX-COPYMSG): the app's own Copy buttons put text on the clipboard after a click
+ *   (a message you sent, the credits, a link, a PIN). Without it every `navigator.clipboard.writeText` in the
+ *   window was refused. Writing only: `clipboard-read` stays refused, so a page never reads what was copied.
  */
-export const GRANTED_PERMISSIONS: ReadonlySet<string> = new Set<string>();
+export const GRANTED_PERMISSIONS: ReadonlySet<string> = new Set<string>(['clipboard-sanitized-write']);
 
 /**
  * What Electron says about a `media` ask: the kinds a request wants (`mediaTypes`, permission request) or the

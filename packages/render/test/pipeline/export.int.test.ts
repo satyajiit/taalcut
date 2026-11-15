@@ -10,13 +10,14 @@
  * twice.
  */
 import { existsSync } from 'node:fs';
-import { readdir } from 'node:fs/promises';
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { FrameRate, newId, type Timeline } from '@taalcut/core';
 import type { MediaContext } from '@taalcut/media';
 import { runExport, workFolder } from '../../src/engine/export-run';
 import { createLiveRenders } from '../../src/engine/live';
+import { exportFileStem } from '../../src/store/paths';
 import { measureLoudness } from '../../src/audio/loudness';
 import { movingClip, testEngine, type TestEngine } from '../support/engine';
 import { queueRender } from '../support/export-record';
@@ -126,6 +127,37 @@ describe.skipIf(skip)('export', { timeout: 600_000 }, () => {
     });
     expect(again.ok && again.value.status).toBe('ready');
     expect(engine.events.filter((event) => event.type === 'render.finished')).toHaveLength(1);
+  });
+
+  it('delivers into the exports folder under the render’s own name, the next free name when it is taken', async () => {
+    // FIX-EXPORTNAMES, through the real pipeline: the app passes the person's exports folder.
+    const root = join(work.dir, 'named');
+    const exports = join(root, 'Exports');
+    const base = testEngine(root, ctx, shell.path!);
+    const engine = testEngine(root, ctx, shell.path!, { folders: { ...base.deps.folders, exports } });
+    engine.assets.set(moving, join(work.dir, 'moving.mp4'));
+    const timeline = makeTimeline({
+      rate,
+      items: [{ frames: 45, assetId: moving, sourceStart: 0, mediaFrames: 150, mediaRate: rate }],
+      captions: captionTrackOf(rate, [[0, 40, 'Hello from Taalcut']]),
+    });
+    const record = await addRender(engine, timeline);
+    const stem = exportFileStem(record.name);
+    // Something of that name is already in the person's folder: it is not replaced.
+    await mkdir(exports, { recursive: true });
+    await writeFile(join(exports, `${stem}.mp4`), 'the person’s own file');
+    const result = await runExport(engine.deps, createLiveRenders(), {
+      renderId: record.id,
+      request: record.request,
+    });
+    if (!result.ok) throw new Error(`${result.error.code} ${result.error.detail ?? ''}`);
+    const stored = engine.store.records.get(record.id)!;
+    expect(stored.status).toBe('ready');
+    expect(stored.filePath).toBe(join(exports, `${stem} 2.mp4`));
+    expect(existsSync(join(exports, `${stem} 2.srt`))).toBe(true);
+    expect(await readFile(join(exports, `${stem}.mp4`), 'utf8')).toBe('the person’s own file');
+    expect(existsSync(join(engine.deps.folders.renders, timeline.projectId))).toBe(false);
+    expect(stored.bytes).toBeGreaterThan(10_000);
   });
 
   it('keeps a render that fails QA out of the renders folder (gate criterion 4)', async () => {

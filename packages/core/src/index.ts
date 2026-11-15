@@ -110,6 +110,7 @@ export * from './render/music';
 export * from './analysis/media-facts';
 export * from './analysis/contact-sheet';
 export * from './analysis/shot-analysis';
+export * from './analysis/shot-moments';
 export * from './analysis/transcript';
 export * from './analysis/language';
 export * from './ports/vector-index';
@@ -175,8 +176,10 @@ export * from './transfer/import-sink';
 export * from './basics/untrusted';
 export * from './timeline/graphics';
 export * from './timeline/graphic-proposal';
+export * from './timeline/graphic-options';
 export * from './timeline/voiceover';
 export * from './timeline/mix';
+export * from './timeline/music-repeats';
 export * from './timeline/timeline-upgrade';
 export * from './timeline/cleanup';
 export * from './timeline/variants';
@@ -296,6 +299,7 @@ export * from './timeline/graphics-design';
 
 export * from './timeline/simple-editor';
 export * from './timeline/cover';
+export * from './timeline/cover-composition';
 export * from './timeline/cover-design';
 
 export * from './commands/history-commands';
@@ -324,3 +328,11 @@ export * from './products/product-publishing';
 export * from './products/product-publishing-contract';
 export * from './audio/dsp-chain';
 export * from './vision/sheet-annotation';
+
+// CAP1: a post caption for a platform (the rule table, the request, the saved text) and its credit switch.
+export * from './timeline/post-caption';
+export * from './timeline/post-caption-rule';
+export * from './settings/post-caption-credit';
+
+// TXT1: a made video's text is designed (a look for each text role) and placed (each group's place and size, stated).
+export * from './timeline/text-design';

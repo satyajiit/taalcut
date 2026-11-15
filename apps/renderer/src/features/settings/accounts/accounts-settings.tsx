@@ -9,7 +9,8 @@
  *   way in (Continue with ChatGPT) and the other (a key). Then Instagram as one row: its sign-in lives in
  *   Templates › Saved, so this row only says how it stands and goes there.
  * states: loading (the named skeleton) · error (the frame's) · nothing connected (the empty state) · connected (the
- *   rows) · signing in (Continue with ChatGPT spins; the frame's polite line when it lands)
+ *   rows) · signing in (Continue with ChatGPT spins; the frame's polite line when it lands) · the plan's images
+ *   still in the browser, or not connected with why (CVR2: a row of their own, to Subscriptions)
  */
 import { Trans, useLingui } from '@lingui/react/macro';
 import type { AccountsState } from '@taalcut/core';
@@ -21,6 +22,7 @@ import { SettingRow, SettingRows } from '../rows';
 import { SETTINGS_ICONS } from '../settings-icons';
 import { AccountsBones } from './accounts-bones';
 import { AccountsPage } from './accounts-page';
+import { imagesFailure, imagesWaiting } from './chatgpt-images-row';
 import { KeyStatus } from './api-keys';
 import { InstagramRow } from './instagram-row';
 import { CONTINUE, ProviderMark, USING_PLAN } from './sign-ins';
@@ -44,6 +46,30 @@ function ConnectedRows({ state }: { state: AccountsState }) {
         title={<Trans>ChatGPT Plus, Pro &amp; Team</Trans>}
         description={i18n._(USING_PLAN)}
         status={signedIn}
+        action={<Link to="/settings/accounts/subscriptions" />}
+      />,
+    );
+  // CVR2: the plan's images are a second approval. A try that is in the browser, or that ended without
+  // connecting, is said here too: Continue with ChatGPT was pressed on this view.
+  const failure = imagesFailure(i18n, state);
+  if (state.chatgpt.signedIn && (failure || imagesWaiting(state)))
+    rows.push(
+      <SettingRow
+        key="chatgpt-images"
+        icon={<ProviderMark provider="openai-codex" />}
+        title={<Trans>ChatGPT images</Trans>}
+        description={
+          <span role="status" className={failure ? 'text-danger-strong' : undefined}>
+            {failure ?? <Trans>Finish signing in in your browser, then come back.</Trans>}
+          </span>
+        }
+        status={
+          failure ? (
+            <Chip tone="warning">
+              <Trans>Not connected</Trans>
+            </Chip>
+          ) : null
+        }
         action={<Link to="/settings/accounts/subscriptions" />}
       />,
     );

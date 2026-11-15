@@ -20,13 +20,14 @@ import {
   type ToolRunId,
   type UserMessageEvent,
 } from '@taalcut/core';
-import { isRecoveryScenario, type RecoveryScenario } from '../recovery/fake-recovery';
 import type { CommandDispatcher } from '../services/provider';
 import { createFlowEngine, flowFor } from './fake-flow';
+import type { FakeOptions } from './fake-options';
 import { editScript } from './fake-design-script';
 import { commentScript } from './fake-comment-script';
 import { frameInspectionScript } from './fake-frame-inspection-script';
 import { fakePointers, withPointers } from './fake-pointers';
+import { postCaptionScript } from './fake-post-caption-script';
 import { reaskSeeded } from './fake-reask';
 import { eventQueue, holdWhen, pause, settle, withLevel, type Follower } from './fake-run-kit';
 import { answerScript, scriptFor, type Beat } from './fake-script';
@@ -43,45 +44,7 @@ import { RUN_FINISHED } from './transcript';
  * `stop` cancels a playing or paused run by id.
  */
 
-export interface FakeOptions {
-  /** Delay before list and get answer, like an IPC round trip to a busy process. */
-  latencyMs?: number;
-  /** Multiplies the script's pace: 2 runs twice as fast. 0 means no waiting at all. */
-  speed?: number;
-  /** Command names whose dispatch fails (an error card's fix that doesn't work). */
-  failCommands?: readonly string[];
-  /** What the fake recovery client reports at launch (src/recovery/fake-recovery.ts). */
-  recovery?: RecoveryScenario;
-  /** 'cap': a flow stops at the project's budget before casting (P2-X1). */
-  budget?: 'cap';
-  /**
-   * A run holds after this event type until stopped. An optional occurrence suffix (agent.toolStarted:12)
-   * selects a later event; without it the first match holds. Used for stable mid-run browser checks.
-   */
-  holdAfter?: string;
-  now?: () => number;
-}
-
-/** localStorage key holding FakeOptions as JSON, for the end-to-end tests and manual demos. */
-export const FAKE_OPTIONS_KEY = 'taalcut.fake';
-
-export function fakeOptionsFromStorage(): FakeOptions {
-  try {
-    const parsed: unknown = JSON.parse(window.localStorage.getItem(FAKE_OPTIONS_KEY) ?? '{}');
-    if (!parsed || typeof parsed !== 'object') return {};
-    const { latencyMs, speed, failCommands, recovery, budget, holdAfter } = parsed as Record<string, unknown>;
-    return {
-      ...(typeof latencyMs === 'number' ? { latencyMs } : {}),
-      ...(typeof speed === 'number' ? { speed } : {}),
-      ...(Array.isArray(failCommands) ? { failCommands: failCommands.map(String) } : {}),
-      ...(isRecoveryScenario(recovery) ? { recovery } : {}),
-      ...(budget === 'cap' ? { budget } : {}),
-      ...(typeof holdAfter === 'string' ? { holdAfter } : {}),
-    };
-  } catch {
-    return {};
-  }
-}
+export { FAKE_OPTIONS_KEY, fakeOptionsFromStorage, type FakeOptions } from './fake-options';
 
 interface Stored {
   summary: ConversationSummary;
@@ -199,7 +162,18 @@ export function createFakeChatClient(options: FakeOptions = {}): FakeChatClient 
     },
 
     async send(
-      { conversationId, text, effort, reasoning, start, selections, editorContext, comments },
+      {
+        conversationId,
+        text,
+        effort,
+        reasoning,
+        start,
+        selections,
+        editorContext,
+        comments,
+        cover,
+        postCaption,
+      },
       { signal },
     ) {
       if (signal.aborted) return err(CancelledError());
@@ -219,6 +193,8 @@ export function createFakeChatClient(options: FakeOptions = {}): FakeChatClient 
           ...(start ? { start } : {}),
           ...(selections ? { selections: [...selections] } : {}),
           ...(editorContext ? { editorContext } : {}),
+          ...(editorContext && cover ? { cover } : {}), // CVR1: as the agent keeps it, with its editor
+          ...(editorContext && postCaption ? { postCaption } : {}), // CAP1: so is a post caption
           ...(comments?.length ? { comments: [...comments] } : {}),
         },
       };
@@ -245,7 +221,9 @@ export function createFakeChatClient(options: FakeOptions = {}): FakeChatClient 
       };
       // "Make this shot shorter" edits the clip it points at; a docked design request (HFW1-UI) goes to the
       // scripted Designer; an opening choice or a typed "make a video…" runs a flow; anything else, the P1 scripts.
-      const edit = start ? null : editScript(ids, text, selections ?? [], editorContext);
+      // CAP1: a caption asked for in the caption panel is the Editor's, whatever its words are.
+      const caption = start ? null : postCaptionScript(ids, postCaption, editorContext);
+      const edit = start ? null : (caption ?? editScript(ids, text, selections ?? [], editorContext));
       const path = start || !edit ? flowFor(text, start) : undefined;
       // EDT1-CMT: "Send N comments to Taalcut" answers each comment (fake-comment-script.ts).
       const script = comments?.length
@@ -256,7 +234,7 @@ export function createFakeChatClient(options: FakeOptions = {}): FakeChatClient 
             workspaceInspectionScript(ids, text) ??
             edit ??
             scriptFor(text, ids));
-      const beats = withPointers(withLevel(script, { reasoning, effort }), pointers);
+      const beats = withPointers(withLevel(caption ?? script, { reasoning, effort }), pointers);
       return ok({ runId, userMessage, events: run(beats, target, runId, stoppable(runId, signal)) });
     },
 

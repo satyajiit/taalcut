@@ -6,7 +6,8 @@
  * the Designer. The call records the job (the person's words verbatim, the graphics it is about or where a new one
  * comes on, and the comment it answers) after checking it names what the timeline holds; the agent's flow-followups
  * read the step's completed calls and add the Designer's step after the Editor's, and a comment handed over is the
- * Designer's to answer. Nothing changes until then, so the call is a read.
+ * Designer's to answer. Nothing changes until then, so the call is a read. DSG2: the Designer answers a job with
+ * three designs, the first in the video.
  */
 import {
   callClock,
@@ -54,8 +55,9 @@ export const designToolOutputSchema = z.object({
 export type DesignToolOutput = z.output<typeof designToolOutputSchema>;
 
 const NOTE =
-  'Recorded. The Designer designs it after your step, places it as a proposal and answers the comment if there is ' +
-  'one. Do not change the graphic yourself; say in one line that its design is on the way.';
+  'Recorded. The Designer designs it after your step as three options (the first goes in the video at once, the ' +
+  'person chooses between them) and answers the comment if there is one. Do not change the graphic yourself; say in ' +
+  'one line that its designs are on the way.';
 
 export interface DesignToolDeps {
   readonly timelines: TimelineAccess;

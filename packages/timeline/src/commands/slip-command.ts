@@ -5,9 +5,8 @@
  * FIX-TRIM: timeline.slipClip (SPEC, "FIX-TRIM: slipClip"). By a time or to an in-point: inside the clip's shot (or
  * as far outside it as the clip already is), else a refusal saying how far it can go. Away from what it should not
  * show (`avoid`): the shot's profile and, when there is a subject source, the shot's track over the span assembly
- * reads (searchRange), made if need be within `slip.trackMs`; then slipPoint. One undo step. The overlays over the
- * clip are placed again (FRM1-OVL), unless placement's fallbacks would move the clip itself: the slip is what was
- * asked for.
+ * reads (searchRange), made if need be within `slip.trackMs`; then slipPoint. One undo step. The text over the clip
+ * that nobody placed is laid out again as the reel had it (TXT1, replace-after.ts).
  */
 import {
   defineCommand,
@@ -33,7 +32,6 @@ import { slipClip, type SlipTo } from '../edits/slip';
 import { clipPosition, type EditOptions } from '../edits/types';
 import { InvalidMove } from '../errors';
 import { candidateKey } from '../model/cast';
-import { findPosition } from '../model/sequence';
 import { writeEdit, type CommandDeps } from './context';
 import { placedOver, replaceAfter } from './replace-after';
 import { positionSpec, profilesFor } from './resolve';
@@ -134,22 +132,14 @@ export function createSlipCommand(deps: CommandDeps) {
         if (!to.ok) return to;
         const slipped = slipClip(timeline, payload.clipId, to.value, options);
         if (!slipped.ok || slipped.value.changed.length === 0) return slipped;
-        // FRM1-OVL: other moments (other people, elsewhere) under the overlays now.
+        // Other moments (other people, elsewhere) under the text now: its track asked for, the text laid out again.
         const placed = await replaceAfter(
           deps,
           slipped.value,
           placedOver(slipped.value.timeline, [payload.clipId]),
           [payload.clipId],
         );
-        if (!placed.ok) return slipped;
-        const after = findPosition(placed.value.timeline, payload.clipId)?.item;
-        const kept =
-          after?.type === 'clip' &&
-          RationalTime.compare(
-            after.sourceStart,
-            RationalTime.rescale(to.value.sourceStart, after.sourceStart.rate, 'round'),
-          ) === 0;
-        return kept ? placed : slipped;
+        return placed.ok ? placed : slipped;
       }),
   });
 }

@@ -9,6 +9,7 @@ import {
   GRAPHIC_BRIEF_KINDS,
   rationalTimeJsonSchema,
   SHOT_TYPES,
+  SLOT_EDGES,
   ulidSchema,
 } from '@taalcut/core';
 import { z } from 'zod';
@@ -63,7 +64,74 @@ const castFields = {
     .array(z.object({ slotId, order: z.array(shotId).min(1).max(5) }))
     .max(200)
     .optional(),
+  /**
+   * MOM1: the part of a shot a slot should play, as the model reads it from the shot's moments (stated-parts.ts).
+   * Seconds in the shot's file, the clock of playsShotFrom and the moments' times. It applies while that shot fills
+   * that slot; the window is chosen inside it, and a stretch shorter than the slot is made just long enough.
+   */
+  parts: z
+    .array(
+      z.object({
+        slotId,
+        shotId,
+        from: z
+          .number()
+          .min(0)
+          .max(36_000)
+          .describe('Where the stretch starts, in seconds of the shot’s file'),
+        to: z
+          .number()
+          .min(0)
+          .max(36_000)
+          .optional()
+          .describe('Where it ends; left out, the end of the moment that holds `from`'),
+      }),
+    )
+    .max(200)
+    .optional(),
 };
+
+/**
+ * MATCH1: what became of a stated moment, measured from what fills its slot (landed-moments.ts). A moment is stated
+ * as the part of a slot whose template says one lands on its edge: the part's `to` (edge end) or `from` (start).
+ */
+const momentOutcome = z.object({
+  shotId,
+  edge: z.enum(SLOT_EDGES),
+  at: z.number(),
+  landed: z.boolean(),
+  /** Where in the video that frame shows, in seconds. */
+  videoSeconds: z.number().optional(),
+  playsShotFrom: z.number().optional(),
+  playsShotTo: z.number().optional(),
+  /** Not landed: what stands in the way, as facts. */
+  why: z.string().optional(),
+});
+
+/**
+ * MATCH1: the person slots whose cut hangs on one instant (the template's `lands`) and how to state it; only when
+ * there is such a slot. `at` is the instant a stated part was read as (seconds of the shot's file), absent while
+ * none is stated: a part given for another reason is read the same way, so the answer always says what was taken.
+ * The moment's words are the Analyst's, from a reference: data.
+ */
+const landsAsked = z.object({
+  how: z.string(),
+  slots: z.array(
+    z.object({
+      slotId,
+      edge: z.enum(SLOT_EDGES),
+      moment: z.string().meta({ untrusted: 'template-intent' }),
+      at: z.number().optional(),
+    }),
+  ),
+});
+
+/**
+ * MOM1: what became of a stated part: the window inside it, the stretch made longer for the slot, or another shot.
+ * MOM2: or `handling`: the stretch is one where the camera is being handled, so it was not used and the clip plays
+ * a part of the shot that keeps off it (playsShotFrom).
+ */
+const partOutcome = z.enum(['kept', 'widened', 'otherShot', 'handling']);
 
 export const castToolInputSchema = z.object(castFields);
 export type CastToolInput = z.output<typeof castToolInputSchema>;
@@ -76,6 +144,15 @@ const slotSummary = z.object({
   needsRerank: z.boolean(),
   note: castNoteJson,
   alternates: z.array(shotId.nullable()).max(3),
+  /**
+   * MOM1: where the pick plays its shot from, in seconds of the shot's file (as timeline.get's playsShotFrom), on a
+   * slot listed for a rerank (its candidates' moments are in the answer) or one with a stated part.
+   */
+  playsShotFrom: z.number().optional(),
+  /** MOM1: on a slot the model stated a part for, what became of it. */
+  part: partOutcome.optional(),
+  /** MATCH1: on a slot whose stated part is a moment that lands on its edge, what became of it. */
+  moment: momentOutcome.optional(),
 });
 
 /**
@@ -83,6 +160,8 @@ const slotSummary = z.object({
  * first). The intent comes from a reference or a person, the descriptions from the user's media: data, not
  * instructions. FIX-STORY: the kinds of the graphics over the slot, and, in a library with no spare shot,
  * other slots' picks marked `from` with the slot each would leave and its intent (put first, one swaps them).
+ * MOM1: a candidate's description ends with its moments, "… | 0-2.8s: …; 2.8-4.8s: …" (seconds of its file), in the
+ * same string, so each candidate stays one fenced block.
  */
 const rerankSlot = z.object({
   slotId,
@@ -114,6 +193,12 @@ export const castToolOutputSchema = z.object({
   artifact: artifactRefSchema,
   /** FIX-GFXWAIT: the wait for the template's graphics, when they were still being designed. */
   graphics: graphicsWaitSchema.optional(),
+  /**
+   * KEEP1: what a slot noted `reelKept` is and that it is left alone, in words for the model; only when the
+   * template has one. Here and not in the Librarian's prompt, whose casting turn has no room at the smallest window.
+   */
+  reelKept: z.string().optional(),
+  lands: landsAsked.optional(),
 });
 
 export const assembleToolInputSchema = z.object({
@@ -137,6 +222,39 @@ export const assembleToolOutputSchema = z.object({
   variantsShort: z.object({ asked: z.int(), made: z.int() }).optional(),
   /** FIX-GFXWAIT: the wait for the template's graphics; `missing` overlays have no design in the new timelines. */
   graphics: graphicsWaitSchema.optional(),
+  /** KEEP1: the slots that keep the reel's own footage, filled from the template's reel in every new timeline. */
+  reelSlots: z.array(slotId).optional(),
+  /** MOM1: each stated part in each new timeline: where its clip plays from, and what became of the part. */
+  parts: z
+    .array(
+      z.object({
+        timelineId: ulidSchema('Timeline'),
+        slotId,
+        shotId,
+        playsShotFrom: z.number().nullable(),
+        part: partOutcome,
+      }),
+    )
+    .optional(),
+  /** MATCH1: each stated moment in each new timeline. */
+  moments: z.array(momentOutcome.extend({ timelineId: ulidSchema('Timeline'), slotId })).optional(),
+  lands: landsAsked.optional(),
+  /**
+   * MATCH1: each edge of a kept reel slot the reel dissolved or faded into a person's slot: `redrawn`, the kept
+   * clip starts or ends clear of those `frames`, a held clean frame stands in and the transition is drawn again;
+   * not `redrawn`, the slot is too short for that and plays whole, the reel's blended frames with it.
+   */
+  reelBlends: z
+    .array(
+      z.object({
+        slotId,
+        edge: z.enum(SLOT_EDGES),
+        kind: z.enum(['dissolve', 'fade']),
+        frames: z.int().positive(),
+        redrawn: z.boolean(),
+      }),
+    )
+    .optional(),
 });
 
 export const getToolInputSchema = z.object({
@@ -204,6 +322,8 @@ export const getToolOutputSchema = z.object({
       frames: z.int(),
     }),
   ),
+  /** TXT1: only while the text has no designed look or no stated place, and never to a docked run. */
+  textLook: z.string().optional(),
   // EDT1-OPS: the length in seconds, transitions, sounds, music, the whole video's colour and markers.
   ...editorViewSchema,
 });

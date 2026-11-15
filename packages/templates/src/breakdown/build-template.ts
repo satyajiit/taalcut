@@ -22,6 +22,7 @@ import {
   ValidationError,
   type Result,
   type SlotIntent,
+  type SlotLands,
   type Template,
   type TemplateSlot,
 } from '@taalcut/core';
@@ -157,6 +158,10 @@ export interface SlotIntentInput {
   readonly role?: SlotRole;
   /** AGT1: templates.setIntents took a name out of the intent with no general word for it: the review asks. */
   readonly generalised?: boolean;
+  /** KEEP1: the slot is the reel's own footage, with the Analyst's reason (core's slot-footage.ts). */
+  readonly keepsReel?: { readonly reason: string | null };
+  /** MATCH1: a moment of the footage that must land on the slot's start or end (core's slot-landing.ts). */
+  readonly lands?: SlotLands;
 }
 
 const PENDING: SlotIntent = {
@@ -238,6 +243,10 @@ export function buildTemplate(
       cut: cut ? { method: cut.method, confidence: cut.confidence } : { method: 'rule', confidence: 1 },
       approved: false,
       frame: tileOf(bound.start, bound.end),
+      ...(given?.keepsReel
+        ? { footage: { from: 'reel' as const, by: 'analyst' as const, reason: given.keepsReel.reason } }
+        : {}),
+      ...(given?.lands ? { lands: given.lands } : {}),
     };
   });
 

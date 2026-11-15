@@ -3,7 +3,7 @@
 
 import { useLingui } from '@lingui/react/macro';
 import type { CoverSettings, ThumbnailVariant, Timeline } from '@taalcut/core';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Button } from '#components/button';
 import { Input } from '#components/input';
 import { VERB_ICONS } from '../icons/concepts';
@@ -14,6 +14,7 @@ import { useCardActions } from './card-actions';
 import { useCoverDrafts } from './use-cover-drafts';
 import { useCoverImage } from './use-cover-image';
 import { coverSafeInset } from './publish-thumbnail-layout';
+import { CoverCompositionFields, withLeadFrame } from './cover-composition-fields';
 import { CoverDesignFields } from './cover-design-fields';
 
 export function coverFromVariant(variant: ThumbnailVariant): CoverSettings {
@@ -36,12 +37,15 @@ export function CoverEditor({
   variants = [],
   paused = false,
   currentFrame,
+  aspectAction,
 }: {
   timeline: Timeline;
   initial?: CoverSettings;
   variants?: readonly ThumbnailVariant[];
   paused?: boolean;
   currentFrame?: () => number;
+  /** CVR1: what the host puts under the aspect choice, for the aspect picked (the editor's "Generate with AI"). */
+  aspectAction?: (aspect: CoverSettings['aspect']) => ReactNode;
 }) {
   const { t, i18n } = useLingui();
   const time = useTimecode();
@@ -139,15 +143,14 @@ export function CoverEditor({
           </Button>
         ))}
       </div>
+      {aspectAction?.(cover.aspect)}
       <div className="flex flex-wrap gap-2">
         <Button
           size="sm"
           variant="secondary"
           disabled={paused || length === 0}
           onClick={() =>
-            patch({
-              source: { kind: 'frame', frame: Math.min(currentFrame?.() ?? frame, Math.max(0, length - 1)) },
-            })
+            patch(withLeadFrame(cover, Math.min(currentFrame?.() ?? frame, Math.max(0, length - 1))))
           }
         >{t`Use video frame`}</Button>
         <Button
@@ -171,7 +174,7 @@ export function CoverEditor({
             step={1}
             value={frame}
             disabled={paused}
-            onChange={(event) => patch({ source: { kind: 'frame', frame: Number(event.target.value) } })}
+            onChange={(event) => patch(withLeadFrame(cover, Number(event.target.value)))}
           />
         </label>
       ) : null}
@@ -209,7 +212,14 @@ export function CoverEditor({
           <Button size="sm" variant="secondary" onClick={image.retry}>{t`Try preview again`}</Button>
         </>
       ) : null}
-      {cover.design ? (
+      {cover.composition ? (
+        // CVR2: a designed cover: its designs, and its words as a designed graphic's are edited.
+        <CoverCompositionFields
+          cover={{ ...cover, composition: cover.composition }}
+          paused={paused}
+          onChange={patch}
+        />
+      ) : cover.design ? (
         <CoverDesignFields design={cover.design} paused={paused} onChange={(design) => patch({ design })} />
       ) : (
         <>

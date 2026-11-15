@@ -8,6 +8,7 @@
  */
 import { z } from 'zod';
 import { CHATGPT_IMAGE_PROVIDER } from '@taalcut/core';
+import { ChatGptImagesNotConnected } from '../../errors';
 import { CODEX_IMAGES_BASE_URL } from '../../signin/codex-images';
 import { promptText, type ImageRouteSpec } from '../image-provider';
 
@@ -20,6 +21,8 @@ export const CODEX_IMAGES: ImageRouteSpec = {
   access: 'subscription',
   credentialKinds: ['oauth_access'],
   requiredCredentialHeaders: ['chatgpt-account-id'],
+  // CVR2: Continue with ChatGPT signs `openai` in for chat; the images are this route's own, second approval.
+  planSignIn: { credential: 'openai', notConnected: () => ChatGptImagesNotConnected() },
   models: [{ model: 'openai/gpt-image-2', wire: 'gpt-image-2' }],
   perRequest: 'one',
   allOrNothing: false,

@@ -3,7 +3,8 @@
 
 /**
  * The folders app://preview may serve from, in this app: the render cache
- * (preview sessions, conformed and QA frames), the renders folder and the
+ * (preview sessions, conformed and QA frames), the folders finished renders
+ * are in (the exports folder, and renders/ for earlier ones) and the
  * bundled caption fonts, all from render-paths.ts so the render process
  * writes where main reads; and (HFW1-WS) the projects' workspace blobs,
  * from the library's own `workspacesRoot`, read-only.
@@ -28,7 +29,8 @@ export function desktopPreviewRoots(): PreviewRoots {
   });
   roots = {
     preview: paths.preview,
-    allowed: [paths.cache, paths.renders, fonts, mediaCacheRoot(userData)],
+    // paths.exports: where finished renders are delivered (FIX-EXPORTNAMES); paths.renders: the earlier ones.
+    allowed: [paths.cache, paths.renders, paths.exports, fonts, mediaCacheRoot(userData)],
     workspaces: workspacesRoot(userData),
   };
   return roots;

@@ -4,8 +4,8 @@
 /**
  * BRK1-REV: the review's commands in the renderer's fake (core's TEMPLATE_COMMANDS, BRK1 §2): moving and adding a
  * cut, a slot's role, a typed description (template.slot.editIntent), removing text, halving or doubling the tempo,
- * leaving a doubt as it is, the reel's sound credit, (FRM1-MOT) a slot's camera move, and (DSG1-READ) a graphic's
- * brief and Not a graphic. Each runs through the fake's `edit` (one new version, template.setHead back as its
+ * leaving a doubt as it is, the reel's sound credit, (FRM1-MOT) a slot's camera move, (DSG1-READ) a graphic's
+ * brief and Not a graphic, and (KEEP1) whose footage a slot plays. Each runs through the fake's `edit` (one new version, template.setHead back as its
  * inverse, core.conflict on a stale base) with core's payloads and error codes, so the page sees what main answers.
  */
 import {
@@ -30,6 +30,7 @@ import {
   splitSlot,
 } from './template-review-edits';
 import { editGraphic, setGraphic } from './fake-graphic-briefs';
+import { setFootage } from './template-footage-edits';
 
 type Edit = (
   payload: { templateId: Id<'Template'>; baseVersion: number; projectId: Id<'Project'> | null },
@@ -107,6 +108,14 @@ export function reviewCommands(edit: Edit): AnyCommand[] {
       sideEffect: 'write',
       project: (p) => p.projectId,
       handle: (p, ctx) => edit(p, ctx.source, N.setMotion, (t, now) => setMotion(t, p.slotId, p.motion, now)),
+    }),
+    // KEEP1: the reel's own clip, or the person's.
+    defineCommand({
+      name: N.setFootage,
+      payload: P[N.setFootage],
+      sideEffect: 'write',
+      project: (p) => p.projectId,
+      handle: (p, ctx) => edit(p, ctx.source, N.setFootage, (t, now) => setFootage(t, p.slotId, p.from, now)),
     }),
     // DSG1-READ: Not a graphic, its restore, and a brief's words.
     defineCommand({

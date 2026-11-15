@@ -4,11 +4,21 @@
 /**
  * HFW1-WS: pruning keeps every blob a revision, a timeline's composition copy (or a saved version's) or a template's
  * composition names, spares young unnamed blobs (a tool's put before its write), deletes the rest and the folders of
- * projects that are gone, and removes links planted in the folder without touching what they point at.
+ * projects that are gone, and removes links planted in the folder without touching what they point at. DSG2: the
+ * still of each design a graphic offers is kept as long as the graphic offers it (on the timeline or a saved version).
  */
 import { existsSync, mkdirSync, readFileSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { newId, unwrap, type ProjectId, type WorkspaceFile } from '@taalcut/core';
+import {
+  newId,
+  RationalTime,
+  unwrap,
+  type GraphicComposition,
+  type GraphicItem,
+  type ProjectId,
+  type Timeline,
+  type WorkspaceFile,
+} from '@taalcut/core';
 import { describe, expect, it } from 'vitest';
 import { createTemplateStore } from '../../src/index';
 import { tempDir } from '../helpers';
@@ -78,6 +88,63 @@ describe('workspace prune (HFW1-WS)', () => {
     expect(await present(world, projectId, unnamed.sha256)).toBe(false);
     for (const kept of [old, saved, copied, forTemplate])
       expect(await present(world, projectId, kept.sha256), kept.path).toBe(true);
+  });
+
+  it('keep the still of every design a graphic offers, on the timeline and on a saved version (DSG2)', async () => {
+    const world = await setup();
+    const { projectId, timeline, timelineId } = await withProject(world);
+    const still = async (name: string) => {
+      const put = unwrap(await world.store.putBlob(projectId, bytes(`jpeg ${name}`)));
+      return { sha256: put.sha256, bytes: put.bytes, mimeType: 'image/jpeg' as const };
+    };
+    const rate = timeline.canvas.rate;
+    const at = (frames: number) => RationalTime.of(frames, rate);
+    /** The timeline with one graphic offering `designs` (the first in use), each with its still. */
+    const offering = async (names: readonly string[]): Promise<{ doc: Timeline; stills: string[] }> => {
+      const copies: GraphicComposition[] = [];
+      const designs = [];
+      for (const name of names) {
+        const copy = compositionOf([await file(world, projectId, `${name}/index.html`, `<p>${name}</p>`)]);
+        copies.push(copy);
+        designs.push({ compositionId: copy.id, idea: `Idea ${name}`, still: await still(name) });
+      }
+      const graphic: GraphicItem = {
+        type: 'graphic',
+        id: newId<'TimelineItem'>(),
+        anchor: { kind: 'time', at: at(0) },
+        start: at(0),
+        duration: at(30),
+        placement: { box: { x: 0, y: 0, width: 1, height: 1 } },
+        styleKey: 'composition',
+        language: null,
+        origin: 'agent',
+        composition: { id: copies[0]!.id, hash: copies[0]!.hash, params: { words: 'Leave' } },
+        options: { set: newId<'GraphicOptionSet'>(), request: 'a title', createdAt: 1, designs },
+      };
+      return {
+        doc: {
+          ...timeline,
+          tracks: [...timeline.tracks, { kind: 'text', id: 'T9', name: '', enabled: true, items: [graphic] }],
+          graphicCompositions: copies,
+        },
+        stills: designs.map((design) => design.still.sha256),
+      };
+    };
+    // Three designs saved in a version; then the person asks again and the working copy offers two new ones.
+    const first = await offering(['a', 'b', 'c']);
+    const stored = unwrap(await world.timelines.get(timelineId));
+    unwrap(await world.timelines.put(first.doc, stored.summary.revision));
+    unwrap(world.timelines.versions.snapshot({ timelineId, kind: 'named', label: 'First designs' }));
+    const second = await offering(['d', 'e']);
+    unwrap(await world.timelines.put(second.doc, stored.summary.revision + 1));
+    // A still nothing offers (a design that was dropped before it was placed).
+    const dropped = await still('dropped');
+
+    const report = unwrap(await world.store.prune({ now: later }));
+    expect(report.blobs).toBe(1);
+    expect(await present(world, projectId, dropped.sha256)).toBe(false);
+    for (const kept of [...first.stills, ...second.stills])
+      expect(await present(world, projectId, kept), kept).toBe(true);
   });
 
   it('spare a blob put again just now, which a write is about to name', async () => {

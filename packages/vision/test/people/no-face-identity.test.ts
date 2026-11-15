@@ -312,7 +312,8 @@ describe('no face identity is stored', () => {
     }
     expect(found).toEqual([{ file: 'packages/core/src/ports/shot-profiles.ts', type: 'number' }]);
 
-    const described = readFileSync(join(REPO, 'packages/vision/src/describe/describe-shots.ts'), 'utf8');
+    // The describer's answer schema (split out of describe-shots.ts by MOM1).
+    const described = readFileSync(join(REPO, 'packages/vision/src/describe/describe-answer.ts'), 'utf8');
     expect(described).toMatch(/people:\s*z\.number\(\)/);
     expect(described).not.toMatch(/people:\s*z\.array\(/);
   });

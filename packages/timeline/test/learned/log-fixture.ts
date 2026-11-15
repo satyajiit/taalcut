@@ -51,7 +51,7 @@ export function cast(slots: SlotCast[]): CastState {
     mode: 'template',
     variantIndex: 0,
     variantCount: 1,
-    configVersion: 'casting.v5',
+    configVersion: 'casting.v6',
     sequenceConfidence: 0.5,
     slots,
   };
@@ -134,7 +134,7 @@ export const LEARNER = { source: 'agent', actor: 'casting:learner' } as const;
 export function weightsData(weights: CastingWeights, pairs = 12) {
   return {
     kind: 'casting-weights' as const,
-    configVersion: 'casting.v5',
+    configVersion: 'casting.v6',
     defaults: CASTING_CONFIG.weights,
     weights,
     pairs,

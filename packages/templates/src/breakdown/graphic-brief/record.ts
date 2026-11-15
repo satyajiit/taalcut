@@ -48,6 +48,7 @@ const SIGNAL_WORDS: Readonly<Record<SceneSignal, string>> = {
   short: 'it flickers on briefly, as a passing misreading of scene text does',
   crowd: 'it appears with three or more other texts at a cut, as scene text in a busy shot does',
   replaced: 'other words replace it at the same place, as captions do',
+  sequence: 'it is one of several texts that take each other’s place in turn, as words added in editing do',
   doubtful: 'the text reader was unsure of its words',
   shape: 'it sits on an even fill bounded on every side, as a graphic’s box does, and a sign board too',
   rendered: 'its contrast is a rendered graphic’s',

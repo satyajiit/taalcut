@@ -33,6 +33,7 @@ import {
 } from '@taalcut/core';
 import { GraphicInvalid } from '../errors-phase3';
 import { resolveTiming } from './timing';
+import { isNamed, namedDesigns } from './options';
 import { replacementTracks } from './replacement-tracks';
 import {
   graphicWrites,
@@ -56,22 +57,12 @@ export const PLACES_ITSELF =
 /** The style key a composition graphic carries (it has no kit kind to key a look by). */
 export const COMPOSITION_STYLE_KEY = 'composition';
 
-const refsOf = (tracks: Timeline['tracks']) =>
-  new Set(
-    tracks.flatMap((track) =>
-      track.kind === 'text'
-        ? track.items.flatMap((item) =>
-            item.type === 'graphic' && item.composition
-              ? [`${item.composition.id}@${item.composition.hash}`]
-              : [],
-          )
-        : [],
-    ),
-  );
-
-/** The timeline's copies with `composition` added (once), keeping every one a graphic names. */
+/**
+ * The timeline's copies with `composition` added (once), keeping every one a graphic names: the one it is drawn
+ * with, and (DSG2) the designs its options offer.
+ */
 export function withComposition(timeline: Timeline, composition: GraphicComposition): Timeline {
-  const named = refsOf(timeline.tracks);
+  const named = namedDesigns(timeline.tracks);
   const others = (timeline.graphicCompositions ?? []).filter(
     (copy) =>
       !(
@@ -79,8 +70,8 @@ export function withComposition(timeline: Timeline, composition: GraphicComposit
         (copy.hash === composition.hash || copy.version === composition.version)
       ),
   );
-  const used = others.filter((copy) => named.has(`${copy.id}@${copy.hash}`));
-  const unused = others.filter((copy) => !named.has(`${copy.id}@${copy.hash}`));
+  const used = others.filter((copy) => isNamed(copy, named));
+  const unused = others.filter((copy) => !isNamed(copy, named));
   const room = Math.max(0, MAX_TIMELINE_COMPOSITIONS - 1 - used.length);
   return { ...timeline, graphicCompositions: [...used, ...unused.slice(-room), composition] };
 }

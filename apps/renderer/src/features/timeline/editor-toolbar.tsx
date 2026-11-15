@@ -20,9 +20,12 @@ import {
   UserContent,
   VERB_ICONS,
 } from '@taalcut/ui';
+import { useState } from 'react';
 import { ToolbarActions, ToolbarTitle } from '../../shell/toolbar';
+import { useOpenExportsFolder } from '../renders/open-exports-folder';
 import { cleanupAvailable } from './cleanup/cleanup-panel';
 import { type DockPanel } from './dock/editor-dock';
+import { PostCaptionDialog } from './post-caption/post-caption-dialog';
 import { VideoSwitcher } from './video-switcher';
 
 export interface EditorToolbarProps {
@@ -54,7 +57,10 @@ export function EditorToolbar({
   hideExport = false,
 }: EditorToolbarProps) {
   const { t } = useLingui();
+  const openExportsFolder = useOpenExportsFolder();
   const toggle = (panel: DockPanel) => onDock(dock === panel ? null : panel);
+  // CAP1: the caption to post under the video (its dialog asks the docked chat, so it lives with the dock's menu).
+  const [captionOpen, setCaptionOpen] = useState(false);
   return (
     <>
       <ToolbarTitle
@@ -97,6 +103,11 @@ export function EditorToolbar({
                 disabled={!timeline}
                 onSelect={() => toggle('files')}
               >{t`Graphics files`}</DropdownMenuItem>
+              <DropdownMenuItem
+                disabled={!timeline}
+                onSelect={() => setCaptionOpen(true)}
+              >{t`Post caption…`}</DropdownMenuItem>
+              <DropdownMenuItem onSelect={openExportsFolder}>{t`Open exports folder`}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           {hideExport ? null : (
@@ -113,6 +124,9 @@ export function EditorToolbar({
           )}
         </div>
       </ToolbarActions>
+      {timeline ? (
+        <PostCaptionDialog timeline={timeline} open={captionOpen} onOpenChange={setCaptionOpen} />
+      ) : null}
     </>
   );
 }

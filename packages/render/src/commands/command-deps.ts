@@ -28,7 +28,7 @@ export interface RenderCommandDeps {
   readonly settings?: SettingsStore;
   readonly clock: Pick<Clock, 'now'>;
   /** Where a needsAttention render's file waits, and where delivery puts it ("Export anyway"). */
-  readonly folders?: Pick<RenderFolders, 'work' | 'renders'>;
+  readonly folders?: Pick<RenderFolders, 'work' | 'renders' | 'exports'>;
   /** Replaces the default delivery (finalizeRender over `folders`). */
   readonly deliver?: (record: RenderRecord, report: QaReport) => AsyncResult<RenderRecord>;
   /** For render.finished after "Export anyway" and after cancelling a render that never started. */

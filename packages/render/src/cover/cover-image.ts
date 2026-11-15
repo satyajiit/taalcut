@@ -25,7 +25,13 @@ import { canvasPreset } from '../presets/canvas-preset';
 import { DEFAULT_PRESET_ID, presetFor } from '../presets/presets.v1';
 import { coverBundle } from './cover-bundle';
 import { coverBackdrop } from './cover-backdrop';
+import { drawComposedCover } from './cover-composition';
 
+/**
+ * The cover's JPEG: the one render the cover panel's preview and `render.exportCover` both show. CVR2: a cover
+ * with a composition is drawn from it (cover-composition.ts) and nothing else; one that cannot be drawn is
+ * refused with why, never drawn as its bare frame or with a preset.
+ */
 export async function coverImage(
   deps: RenderEngineDeps,
   input: CoverImageInput,
@@ -50,6 +56,25 @@ export async function coverImage(
   if (!cover) return err(NotFoundError({ entity: 'cover', id: timeline.id }));
   const work = await mkdtemp(join(tmpdir(), 'taalcut-cover-'));
   try {
+    if (cover.composition) {
+      const drawn = await drawComposedCover(
+        deps,
+        request,
+        { ...cover, composition: cover.composition },
+        work,
+        options.signal,
+      );
+      if (!drawn.ok) return drawn;
+      if (options.signal?.aborted) return err(CancelledError());
+      return ok({
+        mimeType: 'image/jpeg',
+        dataBase64: drawn.value.jpeg.toString('base64'),
+        width: drawn.value.width,
+        height: drawn.value.height,
+        revision: timeline.revision,
+        checks: drawn.value.checks,
+      });
+    }
     const image = await coverBackdrop(deps, request, cover, join(work, 'original.jpg'), options.signal);
     if (!image.ok) return image;
     if (options.signal?.aborted) return err(CancelledError());

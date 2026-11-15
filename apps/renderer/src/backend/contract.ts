@@ -31,6 +31,8 @@ const { speech, interfaceSounds } = appContract;
 const { comments } = appContract;
 // HFW1-UI: the editor's files viewer, read-only (WORKSPACE_COMMANDS go through `commands`).
 const { workspace, creation, products, productBackground, productPublishing } = appContract;
+// CAP1: the caption panel's credit switch (settings.setPostCaptionCredit goes through `commands`).
+const { postCaption } = appContract;
 
 const jobs = { get: appContract.jobs.get };
 
@@ -71,6 +73,7 @@ export const backendContract = {
   memory,
   speech,
   interfaceSounds,
+  postCaption,
   comments,
   workspace,
   creation,

@@ -13,6 +13,7 @@ import {
   VOICEOVER_FIXTURES,
 } from './fixtures-media';
 import { DESIGN_GRAPHIC_FIXTURES } from './fixtures-designs';
+import { DESIGN_OPTION_FIXTURES } from './fixtures-design-options';
 import { RATE_LIMIT_FIXTURES } from './fixtures-rate-limit';
 import { RENDER_BATCH_FIXTURES, VARIANTS_COMPARE_FIXTURES } from './fixtures-variants';
 import type { Phase3CardType } from './pending-card';
@@ -33,7 +34,7 @@ export const PHASE3_FIXTURES: {
   voiceover: VOICEOVER_FIXTURES,
   voiceConsent: VOICE_CONSENT_FIXTURES,
   // HFW1-UI: graphics the AI designed beside the kit's (retired with them).
-  motionGraphic: { ...MOTION_GRAPHIC_FIXTURES, ...DESIGN_GRAPHIC_FIXTURES },
+  motionGraphic: { ...MOTION_GRAPHIC_FIXTURES, ...DESIGN_GRAPHIC_FIXTURES, ...DESIGN_OPTION_FIXTURES },
   renderBatch: RENDER_BATCH_FIXTURES,
   imageTakes: IMAGE_TAKES_FIXTURES,
 };

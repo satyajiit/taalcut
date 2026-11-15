@@ -37,7 +37,8 @@ const given = (id: string) =>
             : { request: 'Follow my requested edit, preserving the locked clip and my own text.' }),
       };
 it.each([
-  { role: 'timeline.editor', tool: 'timeline.setCover', topic: 'taalcut/edit-cover' },
+  // CVR2: a cover is a designed composition saved with workspace.placeCover; the guide's first page is its route.
+  { role: 'timeline.editor', tool: 'workspace.placeCover', topic: 'taalcut/edit-cover' },
   { role: 'timeline.editor', tool: 'workspace.place', topic: 'taalcut/edit-graphics' },
   { role: 'timeline.maker', tool: 'timeline.editText', topic: 'taalcut/edit-text' },
 ])(
@@ -132,7 +133,7 @@ it.each([
           expect(last('workspace_docs')).toContain('hyperframes-docs');
           expect(last('workspace_docs')).toContain(topic);
           expect(last('workspace_docs')).toContain(
-            selected === 'timeline.setCover' ? 'timeline.setCover' : 'itemIds',
+            selected === 'workspace.placeCover' ? 'workspace.placeCover' : 'itemIds',
           );
           return {
             text: `Read ${topic}: keep existing item ids, preserve footage and user words, use current revision 1.`,
@@ -145,10 +146,15 @@ it.each([
           expect(text).toContain('preserve footage and user words');
           const base = { projectId: ids.projectId, timelineId: ids.timelineId, revision: 1 };
           const args =
-            selected === 'timeline.setCover'
+            selected === 'workspace.placeCover'
               ? {
                   ...base,
-                  cover: { aspect: '16:9', source: { kind: 'frame', frame: 0 }, hookText: 'Courtyard' },
+                  entry: 'cover/index.html',
+                  aspect: '16:9',
+                  medium: 'footage',
+                  pictures: [{ name: 'hero', frame: 0 }],
+                  idea: 'The courtyard, empty, before anyone walks in',
+                  params: { headline: 'Courtyard' },
                 }
               : selected === 'workspace.place'
                 ? {
@@ -172,14 +178,14 @@ it.each([
         expect(text).toMatch(/revision/);
         return {
           text:
-            selected === 'timeline.setCover'
+            selected === 'workspace.placeCover'
               ? pending
               : 'Applied the requested change and checked the current timeline.',
           toolCalls: [
             call('handOff', {
               timelineId: ids.timelineId,
               revision: 2,
-              ...(selected === 'timeline.setCover' ? { notSavedCoverReason: pending } : {}),
+              ...(selected === 'workspace.placeCover' ? { notSavedCoverReason: pending } : {}),
             }),
           ],
         };
@@ -221,7 +227,19 @@ it.each([
                       unmatched: [],
                       note: 'Proposed; the creator can choose Use it.',
                     }
-                  : { timelineId: ids.timelineId, revision, affectedItemIds: [] };
+                  : selected === 'workspace.placeCover'
+                    ? {
+                        projectId: ids.projectId,
+                        timelineId: ids.timelineId,
+                        revision,
+                        aspect: '16:9',
+                        width: 1920,
+                        height: 1080,
+                        designs: 1,
+                        fix: [],
+                        note: 'Saved. Now render.exportCover with aspect "16:9" and revision 2.',
+                      }
+                    : { timelineId: ids.timelineId, revision, affectedItemIds: [] };
             }
             expect(tool.spec.output.safeParse(value).success, name).toBe(true);
             return ok({

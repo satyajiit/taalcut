@@ -132,6 +132,9 @@ stream, and each call gets its CloudCall row. Nothing leaves the process.
   the cassette recorder recomputes the request hashes. Every response,
   interaction count and timestamp stays (`fixtures/catalogue-refresh.json`). It
   refuses, writing nothing, when a flow changed: re-record that session then.
+  `--rerecord=<session>` sets a changed session aside so the others refresh
+  first (DSG2: the docked design's journey replays the make flow before it
+  records its own turn, so the make flow's cassette has to match the offers).
 - **Why Anthropic for vision**: pi-ai's Google adapter refuses a custom `fetch`,
   and every `@taalcut/models` call passes one (its HTTP meter), so Google
   models couldn't be called when this session was recorded. A `pnpm patch`

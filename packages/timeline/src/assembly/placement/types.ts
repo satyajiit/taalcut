@@ -49,6 +49,11 @@ export interface PlacementItem {
   readonly chat?: ChatRole;
   /** Words sit on the picture (no panel), so a busy background behind them costs more. */
   readonly onPicture: boolean;
+  /**
+   * TXT1: it stands for this many texts shown in turn at one place (runs.ts). With no place clear of every head on
+   * every clip it crosses, it takes the place a head is under it on the fewest frames (`noRoom`, `covered`).
+   */
+  readonly together?: number;
 }
 
 export interface Scene {
@@ -64,11 +69,13 @@ export interface Placed {
   readonly id: string;
   readonly box: Rect;
   readonly scale: number;
-  /** asReel, moved, shrunk or noRoom: the solver's own; retimed and recast come from place-timeline.ts. */
+  /** asReel, moved, shrunk or noRoom: the solver's own. */
   readonly reason: Extract<PlacementReason, 'asReel' | 'moved' | 'shrunk' | 'noRoom'>;
   /** The side of the main head it ended on, or null with no head (for the reel-relation bar). */
   readonly side: OverlayPlacement['side'] | null;
   readonly cost: number;
+  /** TXT1: for a run with no room, the share of its sampled frames a head is under it where it sits. */
+  readonly covered?: number;
 }
 
 export interface SolverConfig {

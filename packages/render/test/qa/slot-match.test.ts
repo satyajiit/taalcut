@@ -143,6 +143,8 @@ describe('slot match', () => {
       'slotMotion',
       'slotTiming',
       'slotGraphics',
+      // MOM1.
+      'slotPart',
     ] as const) {
       expect(checkMeta(id)).toMatchObject({ group: 'slots', overridable: true, preflight: false });
       expect(QA_MODULES.some((module) => module.ids.includes(id))).toBe(true);
@@ -206,6 +208,28 @@ describe('slot match', () => {
     expect(short.findings[0]?.measured).toEqual({ value: -1.5, unit: 'seconds' });
   });
 
+  it('holds a slot lengthened by bars of the music to the reel’s length and those bars (LONG1)', () => {
+    // Slot 2 runs 150 frames where the reel's is 90: too long, unless the music plays 60 frames again for it.
+    const { input } = world({ slot2Frames: 150 });
+    const long = slotTimingCheck(slotMatchFact(input));
+    expect(fixOf(long)?.params).toMatchObject({ slot: 2, reelMs: 3000, draftMs: 5000 });
+    const hz = { num: 48_000, den: 1 };
+    const repeat = {
+      at: { value: 192_000, rate: hz },
+      length: { value: 60, rate: RATE },
+      crossfade: { value: 2400, rate: hz },
+      bars: 2,
+      slotId: input.template.slots[1]!.id,
+    };
+    const lengthened = { ...input.timeline, mix: { ...input.timeline.mix, musicRepeats: [repeat] } };
+    const fact = slotMatchFact({ ...input, timeline: lengthened });
+    expect(fact.slots.map((slot) => [slot.reelSeconds, slot.draftSeconds])).toEqual([
+      [2, 2],
+      [5, 5],
+    ]);
+    expect(slotTimingCheck(fact).status).toBe('pass');
+  });
+
   it("holds the reel's bubbles to the reel's place, and fails one the draft doesn't draw", () => {
     const { input, graphic } = world();
     const fact = slotMatchFact(input);
@@ -234,6 +258,6 @@ describe('slot match', () => {
       { run: runInput('/no/file.mp4', qaPlan()), facts: {}, probed: null },
       new Set(module.ids),
     );
-    expect(results.map((result) => result.status)).toEqual(Array(6).fill('skipped'));
+    expect(results.map((result) => result.status)).toEqual(Array(7).fill('skipped'));
   });
 });

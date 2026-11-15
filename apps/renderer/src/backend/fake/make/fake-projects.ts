@@ -81,7 +81,7 @@ export function createFakeProjects(
         createdAt: project.createdAt,
         updatedAt: Math.max(project.createdAt, ...project.timelines.map((timeline) => timeline.updatedAt)),
         archivedAt: project.archivedAt,
-        conversationId: fakeUlid<'Conversation'>(MAKE_KIND.conversation, index + 1),
+        conversationId: project.conversationId ?? fakeUlid<'Conversation'>(MAKE_KIND.conversation, index + 1),
       },
     ]),
   );

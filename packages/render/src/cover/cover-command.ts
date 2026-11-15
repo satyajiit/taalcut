@@ -35,11 +35,12 @@ export function createCoverExportCommand(deps: {
       const cover = input.aspect
         ? timeline.value.covers?.find((item) => item.aspect === input.aspect)
         : timeline.value.covers?.at(-1);
-      const model = cover?.design
-        ? 'designed-cover'
-        : cover?.source.kind === 'asset'
-          ? 'image-cover'
-          : 'source-frame-cover';
+      const model =
+        cover?.composition || cover?.design
+          ? 'designed-cover'
+          : cover?.source.kind === 'asset'
+            ? 'image-cover'
+            : 'source-frame-cover';
       const bytes = Buffer.from(captured.value.dataBase64, 'base64');
       const registered = deps.generatedAssets
         ? await deps.generatedAssets.put({

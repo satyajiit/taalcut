@@ -2,14 +2,15 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * A made timeline's overlay items placed (FRM1-OVL): the clips' subject spans laid on the canvas (subjects.ts),
- * the captions and every item not being placed as obstacles, the solver over the items that are (every reel
- * overlay on a fresh assembly; the ones an edit touched after it), and each chosen box written back with its
- * reason. Pure: the subject spans come in, read by run-placement.ts.
+ * A made timeline's text on its canvas (FRM1-OVL, TXT1). No code chooses where a made video's text sits.
+ * `reelTextLayout` is where its text starts: each text where the reel had it, the texts the reel showed in turn at
+ * one place together at one place and one size (runs.ts); a text someone placed is never touched. What the solver
+ * finds is `candidatePlaces`: the clips' subject spans laid on the canvas (subjects.ts), the captions and every item
+ * not being placed as obstacles, the solver over the text groups. It is information for whoever places the text,
+ * never applied. Pure: the subject spans come in, read by run-placement.ts `spansFor`.
  */
 import type {
   CaptionTrack,
-  OverlayPlacement,
   PlacementReason,
   SubjectSpan,
   Template,
@@ -17,8 +18,9 @@ import type {
   Timeline,
 } from '@taalcut/core';
 import { textTracks } from '../../model/sequence';
-import { spansOverlap, type Rect, type Size } from './geometry';
-import { footprintOf, ownedItem, safeFor, type Owned } from './place-items';
+import type { Rect, Size } from './geometry';
+import { footprintOf, ownedItem, safeFor, TEXT_HALO, type Owned } from './place-items';
+import { placedUnits, runMates, runSizes } from './runs';
 import { SOLVER_CONFIG, solvePlacements } from './solve';
 import { framesDuring, placedClips, sceneFramesOf } from './subjects';
 import type { Obstacle, Scene, SolverConfig } from './types';
@@ -31,23 +33,6 @@ export interface PlaceInput {
   /** The items to place; default every item a reel overlay made. The others stay put as obstacles. */
   readonly only?: ReadonlySet<string>;
   readonly config?: SolverConfig;
-}
-
-export interface PlacementReport {
-  readonly id: string;
-  readonly reason: PlacementReason;
-  readonly relation: OverlayPlacement;
-  /** The main head's side it ended on, or null with nobody on screen. */
-  readonly side: OverlayPlacement['side'] | null;
-  readonly scale: number;
-  /** The V1 clips on screen during it. */
-  readonly clipIds: readonly string[];
-  readonly span: { readonly start: number; readonly end: number };
-}
-
-export interface PlaceResult {
-  readonly timeline: Timeline;
-  readonly report: readonly PlacementReport[];
 }
 
 /** Each burnt-in cue's band, as render estimates it before laying the words out (graphic-placement.ts). */
@@ -82,7 +67,10 @@ const spanOf = (item: TextTrackItem) => ({
 });
 
 /** The scene of a timeline: its clips' people on the canvas, its captions, and the items not being placed. */
-export function sceneOf(input: PlaceInput, fixed: readonly TextTrackItem[]): Scene {
+export function sceneOf(
+  input: Pick<PlaceInput, 'timeline' | 'subjects'>,
+  fixed: readonly TextTrackItem[],
+): Scene {
   const { timeline } = input;
   const canvas = { width: timeline.canvas.width, height: timeline.canvas.height };
   const fps = timeline.canvas.rate.num / timeline.canvas.rate.den;
@@ -111,9 +99,18 @@ function ownedOf(input: PlaceInput, items: readonly TextTrackItem[]): Owned[] {
     canvas: { width: input.timeline.canvas.width, height: input.timeline.canvas.height },
     template: input.template,
   };
+  // TXT1: a text is never placed on its own out of its run: the run's other texts nobody placed come along.
+  const mates = input.only ? runMates(items, input.template, input.only) : null;
+  const wanted = (item: TextTrackItem) =>
+    !input.only ||
+    input.only.has(item.id) ||
+    (mates!.has(item.id) && item.type === 'text' && item.placement !== undefined);
+  // A run's texts are one size: the middle of the reel's own sizes for them.
+  const sizes = runSizes(input.template, surface);
   return items.flatMap((item) => {
-    if (input.only && !input.only.has(item.id)) return [];
-    const owned = ownedItem(item, surface);
+    if (!wanted(item)) return [];
+    const size = item.type === 'text' && item.overlayId ? sizes.get(item.overlayId) : undefined;
+    const owned = ownedItem(item, surface, size);
     return owned ? [owned] : [];
   });
 }
@@ -125,43 +122,67 @@ function ownedOf(input: PlaceInput, items: readonly TextTrackItem[]): Owned[] {
 function solveAll(owned: readonly Owned[], scene: Scene, input: PlaceInput) {
   const config = input.config ?? SOLVER_CONFIG;
   const textScene: Scene = { ...scene, safe: safeFor('text', scene.canvas) };
+  const units = placedUnits(owned, input.template);
   const placed = solvePlacements(
-    owned.map((entry) => entry.request),
+    units.map((unit) => unit.request),
     textScene,
     config,
   );
-  return owned.map((entry, index) => ({ entry, placed: placed[index]! }));
+  return units.map((unit, index) => ({ unit, placed: placed[index]! }));
 }
 
-export function placeOverlays(input: PlaceInput): PlaceResult {
-  const { timeline } = input;
-  const items = textItems(timeline);
+/** TXT1: where the solver would put one text group, were it asked: a candidate, never applied. */
+export interface CandidatePlace {
+  /** The group's texts as the solver would set them. Nothing stores them. */
+  readonly items: readonly TextTrackItem[];
+  readonly reason: PlacementReason;
+  /** With no place clear of every head: the share of the group's sampled frames a head is under it there. */
+  readonly covered?: number;
+}
+
+/** TXT1: the solver's place for each text group the reel made. Nothing is changed. */
+export function candidatePlaces(input: PlaceInput): CandidatePlace[] {
+  const items = textItems(input.timeline);
   const owned = ownedOf(input, items);
-  if (owned.length === 0) return { timeline, report: [] };
+  if (owned.length === 0) return [];
   const ids = new Set(owned.map((entry) => entry.item.id));
   const scene = sceneOf(
     input,
     items.filter((item) => !ids.has(item.id)),
   );
-  const solved = solveAll(owned, scene, input);
+  return solveAll(owned, scene, input).map(({ unit, placed }) => ({
+    items: unit.apply(placed.box, placed.scale, placed.reason),
+    reason: placed.reason,
+    ...(placed.covered !== undefined ? { covered: placed.covered } : {}),
+  }));
+}
+
+/**
+ * TXT1: where a made video's text starts, and all that code does about its place: every text the reel made that
+ * nobody has placed (`placedBy`) sits where the reel had it, a run's texts together at the run's one place and one
+ * size, set against each other as the reel set them, each on one line for each line it is written on (its box
+ * follows its words). No head, caption or safe area moves any of it, and it is the same however often it runs. `asked` places these texts whoever placed them ("as the reel has it").
+ */
+export function reelTextLayout(
+  input: Pick<PlaceInput, 'timeline' | 'template' | 'only'> & { readonly asked?: ReadonlySet<string> },
+): Timeline {
+  const { timeline } = input;
+  const free = (item: TextTrackItem) =>
+    item.type !== 'text' || item.placedBy === undefined || input.asked?.has(item.id) === true;
+  const owned = ownedOf({ ...input, subjects: new Map() }, textItems(timeline).filter(free));
+  if (owned.length === 0) return timeline;
+  const { width, height } = timeline.canvas;
+  // The frame's edge: a unit whose words would reach past it moves, as one, the least that brings them inside.
+  const inside = (from: number, length: number, limit: number) =>
+    Math.min(Math.max(0, from + TEXT_HALO), Math.max(0, limit - (length - 2 * TEXT_HALO))) - TEXT_HALO;
   const next = new Map<string, TextTrackItem>();
-  const clips = placedClips(timeline);
-  const report: PlacementReport[] = solved.map(({ entry, placed }) => {
-    next.set(entry.item.id, entry.apply(placed.box, placed.scale, placed.reason));
-    return {
-      id: entry.item.id,
-      reason: placed.reason,
-      relation: entry.request.relation,
-      side: placed.side,
-      scale: placed.scale,
-      clipIds: clips
-        .filter((clip) => spansOverlap(clip.seen, entry.request.span))
-        .map((clip) => clip.clip.id),
-      span: entry.request.span,
-    };
-  });
+  for (const unit of placedUnits(owned, input.template)) {
+    const reel = unit.request.reel;
+    const at = { ...reel, x: inside(reel.x, reel.width, width), y: inside(reel.y, reel.height, height) };
+    for (const item of unit.apply(at, 1, 'asReel')) next.set(item.id, item);
+  }
   const tracks = timeline.tracks.map((track) =>
     track.kind === 'text' ? { ...track, items: track.items.map((item) => next.get(item.id) ?? item) } : track,
   );
-  return { timeline: { ...timeline, tracks }, report };
+  return { ...timeline, tracks };
 }

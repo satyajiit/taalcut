@@ -20,9 +20,19 @@ import {
   type AcknowledgementRecord,
   type AcknowledgementStore,
 } from '@taalcut/core';
-import { ApiKeyInvalid, createModelRuntime, type AccountStatus, type AuthBroker } from '@taalcut/models';
+import {
+  ApiKeyInvalid,
+  createModelRuntime,
+  SignInFailed,
+  type AccountStatus,
+  type AuthBroker,
+} from '@taalcut/models';
 import { LOCAL_SERVERS_SETTING } from '../src/shared/account-settings';
-import { createMainAccounts, modelsAcknowledgements } from '../src/main/composition/accounts';
+import {
+  createMainAccounts,
+  modelsAcknowledgements,
+  signInFailureLine,
+} from '../src/main/composition/accounts';
 import { accountsRouter } from '../src/main/composition/main-routers';
 
 const KEY = 'sk-test-1234567890abcdef';
@@ -56,6 +66,7 @@ function fakeBroker() {
       changed(provider);
       return ok(undefined);
     },
+    cancelSignIn: () => undefined,
     onChange: (listener) => {
       listeners.add(listener);
       return () => listeners.delete(listener);
@@ -87,12 +98,12 @@ afterEach(() => {
   }
 });
 
-function setup() {
+function setup(broker: AuthBroker = fakeBroker()) {
   const notify = vi.fn();
   const acknowledgements = memoryAcknowledgements();
   const settings = createMemorySettingsStore();
   const accounts = createMainAccounts({
-    broker: fakeBroker(),
+    broker,
     runtime: createModelRuntime(),
     settings,
     acknowledgements,
@@ -156,6 +167,29 @@ describe('accounts', () => {
       baseUrl: 'http://127.0.0.1:11434',
     });
     controller.abort();
+  });
+
+  it('keeps the reason a sign-in failed in main’s log, with nothing token-like in it', async () => {
+    const token = `eyJ${'a'.repeat(30)}.${'b'.repeat(40)}.${'c'.repeat(20)}`;
+    const detail = `OpenAI Codex token exchange failed (403): {"access_token":"${token}","id":"${'k'.repeat(40)}"}`;
+    expect(signInFailureLine('openai-codex-images', { code: 'models.sign_in_failed', detail })).toBe(
+      '[signin] openai-codex-images: models.sign_in_failed: OpenAI Codex token exchange failed (403): ' +
+        '{"access_token":"[withheld]","id":"[withheld]"}',
+    );
+    expect(signInFailureLine('xai', { code: 'models.sign_in_timeout' })).toBe(
+      '[signin] xai: models.sign_in_timeout',
+    );
+
+    const warned = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const broker = fakeBroker();
+    broker.signIn = async (provider) => err(SignInFailed({ provider }, { detail: 'State mismatch' }));
+    const { accounts } = setup(broker);
+    const failed = await accounts.service.signIn({ provider: 'openai-codex-images' });
+    expect(failed.ok).toBe(false);
+    expect(warned).toHaveBeenCalledWith(
+      '[signin] openai-codex-images: models.sign_in_failed: State mismatch',
+    );
+    warned.mockRestore();
   });
 
   it('streams sign-in progress from the broker to windows', async () => {

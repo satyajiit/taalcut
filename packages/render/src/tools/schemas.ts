@@ -11,6 +11,7 @@ import { z } from 'zod';
 import {
   exportPresetIdSchema,
   MUSIC_PATHS,
+  QA_UNITS,
   qaCheckIdSchema,
   qaFixSchema,
   qaSummarySchema,
@@ -114,6 +115,44 @@ export const slotMissSchema = failingCheckSchema.extend({
   /** How many slots miss (each a finding); the fixes are the first five's. */
   slots: z.int().nonnegative(),
 });
+
+/**
+ * TXT1: what QA measured of an on-screen text that is its placer's to judge: a fact, never a failure, with no fix.
+ * No code decides where a video's text sits, so QA fails no text for a head under it or for a platform's interface
+ * over it (qa/checks/faces.ts, qa/checks/captions.ts).
+ */
+export const textNoteSchema = z.object({
+  /** `graphicCoversFace`: a head is under the text. `captionSafeZone`: the text is outside the platform's clear area. */
+  check: qaCheckIdSchema,
+  itemId: z.string(),
+  /** The draft's frames it was measured on, [start, end). */
+  frames: z.object({ start: z.int().nonnegative(), end: z.int().nonnegative() }).optional(),
+  /** A head under it: on how many of the frames read (four a second). Outside the clear area: by how many px. */
+  measured: z.object({ value: z.number(), unit: z.enum(QA_UNITS) }).optional(),
+});
+
+const TEXT_NOTE_CHECKS = new Set<string>(['graphicCoversFace', 'captionSafeZone']);
+
+/** The text notes of a report: the two checks' findings about text items. */
+export function textNotes(report: QaReport | null): z.output<typeof textNoteSchema>[] {
+  return (report?.checks ?? []).flatMap((check) => {
+    if (!TEXT_NOTE_CHECKS.has(check.id)) return [];
+    // A failing graphicCoversFace names the graphics over a head; the texts are named when it warns.
+    if (check.id === 'graphicCoversFace' && check.status === 'fail') return [];
+    return check.findings.flatMap((finding) =>
+      finding.target?.kind === 'text'
+        ? [
+            {
+              check: check.id,
+              itemId: finding.target.id,
+              ...(finding.frames ? { frames: finding.frames } : {}),
+              ...(finding.measured ? { measured: finding.measured } : {}),
+            },
+          ]
+        : [],
+    );
+  });
+}
 
 export const captionSummarySchema = z.object({
   affectedItemIds: z.array(ulidSchema('CaptionCue')).optional(),

@@ -57,9 +57,14 @@ for (const theme of ['light', 'dark'] as const) {
       const inspector = page.getByRole('complementary', { name: 'Inspector' });
       await expect(inspector).toBeVisible();
       if (size.width === 1440) {
-        await expect(inspector.getByText('Beginning', { exact: true })).toBeInViewport({ ratio: 1 });
-        await expect(inspector.getByText('End', { exact: true })).toBeInViewport({ ratio: 1 });
-        await expect(inspector.getByRole('button', { name: /^Restore / }).last()).toBeInViewport({
+        // TRIM1: the Trim tool is "pick the part": the window on the clip and its steps, with no scrolling.
+        await expect(inspector.getByRole('slider', { name: /^The part scene \d+ plays$/ })).toBeInViewport({
+          ratio: 1,
+        });
+        await expect(inspector.getByRole('slider', { name: /^Where scene \d+ ends$/ })).toBeInViewport({
+          ratio: 1,
+        });
+        await expect(inspector.getByRole('button', { name: '0.5s later' })).toBeInViewport({
           ratio: 1,
         });
       }

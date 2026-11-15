@@ -75,7 +75,15 @@ describe('the page a sign-in’s browser comes back to', () => {
     expect(html).toContain('Sign-in didn’t finish');
     expect(html).toContain('couldn’t get access from OpenAI');
     expectNothingEchoed(html, callback);
-    expect(await signingIn).toMatchObject({ ok: false, error: { code: 'models.sign_in_failed' } });
+    // The provider said yes in the browser, then refused the code: the error whose sentence names the plan.
+    const outcome = await signingIn;
+    expect(outcome).toMatchObject({ ok: false, error: { code: 'models.sign_in_refused' } });
+    const detail = outcome.ok ? '' : (outcome.error.detail ?? '');
+    // Main's log keeps what the refused code looked like, never the code.
+    expect(detail).toMatch(
+      /Token endpoint answered 400 \(invalid_grant\).* The code had 20 characters; the callback had code, state, client_id\.$/,
+    );
+    expect(detail).not.toContain('not-a-code-it-issued');
     expect(h.secrets.entries.has('models.credential.openai')).toBe(false);
   });
 

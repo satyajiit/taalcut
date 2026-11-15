@@ -9,6 +9,7 @@ import {
   ClockToken,
   ok,
   RenderStoreToken,
+  StyleStoreToken,
   TemplateStoreToken,
   type AsyncResult,
   type Container,
@@ -16,6 +17,7 @@ import {
   type ToolModule,
 } from '@taalcut/core';
 import {
+  createStyleSource,
   createVideoDoneLedger,
   makerDone,
   videoToolModule,
@@ -48,13 +50,34 @@ function ledgerOf(container: Container): VideoDoneLedger {
   return ledger;
 }
 
+/** TXT1: the Style a video renders with (its own, else its template's), as a render resolves it. */
+function videoStyles(container: Container): VideoDoneDeps['styles'] | undefined {
+  if (!container.has(StyleStoreToken)) return undefined;
+  const templates = container.has(TemplateStoreToken) ? container.resolve(TemplateStoreToken) : null;
+  return createStyleSource({
+    styles: container.resolve(StyleStoreToken),
+    ...(templates
+      ? {
+          templateStyleId: async (ref: TemplateRef) => {
+            const service = createTemplateService({ store: templates, clock: container.resolve(ClockToken) });
+            const found = await service.get({ templateId: ref.id, version: ref.version });
+            return found.ok ? ok(found.value.template.styleId ?? null) : found;
+          },
+        }
+      : {}),
+  });
+}
+
 function videoDoneDeps(container: Container): VideoDoneDeps {
   const templateSlots = templateSlotOrder(container);
+  const styles = videoStyles(container);
   return {
     store: container.resolve(RenderStoreToken),
     timelines: renderTimelines(container),
     ledger: ledgerOf(container),
     ...(templateSlots ? { templateSlots } : {}),
+    // TXT1: video.done holds text with no designed look, or no stated place.
+    ...(styles ? { styles } : {}),
   };
 }
 

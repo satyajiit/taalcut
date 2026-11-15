@@ -51,6 +51,11 @@ export const MAKE_MESSAGES: readonly MessageDescriptor[] = [
   msg({ id: 'commands.timeline.moveClip', message: 'Move a clip' }),
   msg({ id: 'commands.timeline.editText', message: 'Edit text' }),
   msg({ id: 'commands.timeline.moveText', message: 'Move text' }),
+  // TXT1: what Undo and Redo call a text design, and a placing of the text.
+  msg({ id: 'commands.timeline.designText', message: 'Design the text' }),
+  msg({ id: 'commands.timeline.placeText', message: 'Place the text' }),
+  // LONG1: what Undo and Redo call a clip made longer by bars of the music.
+  msg({ id: 'commands.timeline.lengthenSlot', message: 'Make a clip longer' }),
   msg({ id: 'commands.timeline.lockClip', message: 'Lock a clip' }),
   msg({ id: 'commands.timeline.applyCast', message: 'Recast the clips' }),
   msg({ id: 'commands.timeline.restore', message: 'Put the timeline back' }),

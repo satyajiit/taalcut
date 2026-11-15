@@ -4,7 +4,8 @@
 /**
  * graphicCoversFace (FRM1-OVL) on the probe's text boxes. It runs on every render with a text item, whether or not a
  * clip was reframed: the heads are every clip's (facts.heads). HFW1: a composition checks heads on its own frames
- * (workspace/frames).
+ * (workspace/frames), so every item here is a text item, and since TXT1 a head under one is a note: the check
+ * warns with the texts and their frames (checks/faces.ts), and fails only when the probe could not read them.
  */
 import { FrameRate } from '@taalcut/core';
 import { faceBoxesDump, faceProbeFrames, graphicCoversFaceCheck, type FaceCoverItem } from '../checks/faces';

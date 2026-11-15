@@ -25,6 +25,7 @@ import { timelineMixSchema } from './mix';
 import { markerSchema, trackSchema } from './timeline-items';
 import { checkTimeline } from './timeline-rules';
 import { voiceoverSchema } from './voiceover';
+import { MAX_POST_CAPTIONS, savedPostCaptionSchema } from './post-caption';
 import { authoredProgramSchema } from '../creation/authored-program';
 import { RationalTime } from '../time/rational-time';
 
@@ -45,6 +46,11 @@ const timelineObjectSchema = z.object({
   /** Resized copies default to their document shape until their own export choice is saved. */
   covers: z.array(coverSettingsSchema).max(4).optional(),
   exportAtCanvasSize: z.boolean().optional(),
+  /**
+   * CAP1: the text to paste under the post, one per platform (post-caption.ts). Never the words on the video:
+   * those are `captions`. `timeline.setPostCaption` writes it and changes nothing else. Absent: none written yet.
+   */
+  postCaptions: z.array(savedPostCaptionSchema).max(MAX_POST_CAPTIONS).optional(),
   template: templateRefSchema.nullable(),
   /** The grid edits re-sync to. */
   beatMap: beatMapSchema.nullable(),

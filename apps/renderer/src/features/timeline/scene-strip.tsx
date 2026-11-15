@@ -4,8 +4,13 @@
 import { useLingui } from '@lingui/react/macro';
 import type { TimelineItemId } from '@taalcut/core';
 import { cn, useTimecode } from '@taalcut/ui';
+import { useId } from 'react';
+import { KEYS } from './keys';
 import type { ClipView, TimelineModel } from './model';
 import type { AiEditMark } from './ai-edit-marks';
+import { ScenePicture } from './clip-part/scene-picture';
+import { shotOptions } from './other-shots/shot-options';
+import type { ShotLookup } from './shot-frames';
 
 export function SceneStrip({
   model,
@@ -13,17 +18,22 @@ export function SceneStrip({
   aiMarks,
   onPick,
   pictureFor,
+  lookup,
   onEdit,
 }: {
   model: TimelineModel;
   aiMarks?: ReadonlyMap<string, AiEditMark>;
+  /** The shot's own picture: what a card shows until its file's filmstrip is there. */
   pictureFor(clip: ClipView): string | null;
+  /** TRIM1: the files' filmstrips, so a card shows a frame from the part its scene plays. */
+  lookup?: ShotLookup;
   onEdit(): void;
   selectedIds: TimelineItemId[];
   onPick(id: TimelineItemId, shift: boolean, toggle: boolean): void;
 }) {
   const { t, i18n } = useLingui();
   const time = useTimecode();
+  const othersHint = useId();
   return (
     <div
       role="group"
@@ -32,17 +42,24 @@ export function SceneStrip({
       data-scroll-x
       className="flex gap-2 overflow-x-auto px-3 py-3"
     >
+      {/* EDT2: read after a scene's name when the cast kept other shots for it (other-shots/). */}
+      <span id={othersHint} hidden>
+        {t`Up arrow shows other shots.`}
+      </span>
       {model.clips.map((clip, index) => {
         const selected = selectedIds.includes(clip.item.id);
         const mark = aiMarks?.get(clip.item.id);
         const number = i18n.number(index + 1);
         const picture = pictureFor(clip);
         const duration = time.length(clip.end - clip.start, model.rate);
+        const others = shotOptions(clip) !== null;
         return (
-          <div key={clip.item.id} className="relative shrink-0">
+          <div key={clip.item.id} data-scene-clip={clip.item.id} className="relative shrink-0">
             <button
               type="button"
               aria-pressed={selected}
+              aria-keyshortcuts={others ? KEYS.otherShots : undefined}
+              aria-describedby={others ? othersHint : undefined}
               data-ai-edit={mark}
               className={cn(
                 'w-28 shrink-0 overflow-hidden rounded-md border border-rule bg-surface text-start text-ink',
@@ -55,9 +72,7 @@ export function SceneStrip({
               onDoubleClick={onEdit}
             >
               <div className="aspect-video overflow-hidden bg-viewer">
-                {picture ? (
-                  <img src={picture} alt="" className="size-full object-cover" draggable={false} />
-                ) : null}
+                <ScenePicture clip={clip} model={model} lookup={lookup} still={picture} />
               </div>
               <div className="flex items-baseline justify-between gap-1 px-2 py-1.5">
                 <span className="type-label">{t`Scene ${number}`}</span>

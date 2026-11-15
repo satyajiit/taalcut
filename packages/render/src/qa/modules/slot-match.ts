@@ -3,7 +3,7 @@
 
 /**
  * AGT2-MATCH: the draft against its template, slot by slot (checks/slot-match): needs, face, framing, camera move,
- * timing and the reel's graphics. The probe reads each reel graphic's box in the middle of its time. A render whose
+ * timing, the reel's graphics and (MOM1) the part of its shot each clip plays. The probe reads each reel graphic's box in the middle of its time. A render whose
  * timeline follows no template (or whose root can't read it) has no facts, and every slot check is skipped.
  */
 import { SLOT_MATCH_CHECK_IDS, type QaCheckResult, type SlotMatchCheckId } from '@taalcut/core';
@@ -12,6 +12,7 @@ import {
   slotFramingCheck,
   slotMotionCheck,
   slotNeedsCheck,
+  slotPartCheck,
   slotTimingCheck,
 } from '../checks/slot-match/slot-checks';
 import { slotGraphicsCheck, type GraphicBoxAt } from '../checks/slot-match/slot-graphics';
@@ -32,6 +33,7 @@ export function slotMatchChecks(
     slotMotion: () => slotMotionCheck(fact),
     slotTiming: () => slotTimingCheck(fact),
     slotGraphics: () => slotGraphicsCheck(fact, boxAt),
+    slotPart: () => slotPartCheck(fact),
   };
   return ids.map((id) => checks[id]());
 }

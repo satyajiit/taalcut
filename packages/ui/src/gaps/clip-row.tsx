@@ -25,6 +25,16 @@ const ICONS = { swap: Replace, borrow: ArrowLeftRight, reuse: CopyPlus } as cons
 const same = (a: SwapChoice | undefined, b: SwapChoice) =>
   a !== undefined && a.assetId === b.assetId && a.shotId === b.shotId;
 
+/**
+ * One fix's row, sized by its own width (a container query on the row): icon, words and the action on one line from
+ * 28rem; narrower (the editor's chat, a popover) the action goes under the words, at their indent, so a long label
+ * ("Open on your phone") never squeezes the words into a sliver. Shared with fix-row.tsx.
+ */
+export const GAP_ROW =
+  '@container flex flex-col gap-2 border-t border-rule-subtle py-3 first:border-t-0 first:pt-1 last:pb-0';
+export const GAP_ROW_LINE = 'flex flex-wrap items-start gap-x-3 gap-y-2';
+export const GAP_ROW_ACTION = 'flex basis-full items-center ps-7 @md:shrink-0 @md:basis-auto @md:ps-0';
+
 export interface ClipChoose {
   readonly chosen: GapFixPick | null;
   readonly locked: boolean;
@@ -60,13 +70,8 @@ function ClipChoiceRow({
   const chosen = choose?.chosen?.fix === kind && same(choose.chosen.swapTo, target);
   const Icon = ICONS[kind];
   return (
-    <li
-      data-slot="gap-fix"
-      data-kind={kind}
-      data-chosen={chosen || undefined}
-      className="flex flex-col gap-2 border-t border-rule-subtle py-3 first:border-t-0 first:pt-1 last:pb-0"
-    >
-      <div className="flex items-start gap-3">
+    <li data-slot="gap-fix" data-kind={kind} data-chosen={chosen || undefined} className={GAP_ROW}>
+      <div className={GAP_ROW_LINE}>
         <span
           aria-hidden
           className="mt-0.5 inline-flex size-4 shrink-0 items-center justify-center text-ink-3"
@@ -80,7 +85,7 @@ function ClipChoiceRow({
           <span className="text-sm text-ink-2">{children}</span>
         </div>
         {choose ? (
-          <div className="flex shrink-0 items-center">
+          <div className={GAP_ROW_ACTION}>
             <Button
               size="sm"
               aria-pressed={chosen}

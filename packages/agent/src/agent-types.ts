@@ -8,8 +8,10 @@ import type {
   ChatEffort,
   ChatStart,
   CommentBatch,
+  CoverRequest,
   EditorContext,
   EditingOwnership,
+  PostCaptionRequest,
   ProjectBudgetStore,
   QuestionAnswer,
   ReasoningLevel,
@@ -166,6 +168,10 @@ export interface StartRequest {
   readonly comments?: CommentBatch;
   /** EDT1: the editor as the user saw it, for a message from its docked chat (Phase3Deps.editor). */
   readonly editorContext?: EditorContext;
+  /** CAP1: the post caption asked for in the editor's caption panel; the docked run's brief keeps it. */
+  readonly postCaption?: PostCaptionRequest;
+  /** CVR1: the cover asked for in the editor's cover panel; the docked run's brief keeps it (editor-brief.ts). */
+  readonly cover?: CoverRequest;
 }
 
 export interface RunOutcome {

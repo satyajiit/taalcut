@@ -20,7 +20,9 @@ import {
   createKeyedQueue,
   err,
   ok,
+  SLOT_FOOTAGE_REASON_CHARS,
   SLOT_ROLES,
+  slotLandsSchema,
   UnknownError,
   ValidationError,
   type AsyncResult,
@@ -44,6 +46,10 @@ const storedIntentSchema = z.object({
   role: z.enum(SLOT_ROLES).optional(),
   /** AGT1: a name went out of the intent with no general word for it (transferable-repair.ts). */
   generalised: z.literal(true).optional(),
+  /** KEEP1: the slot is the reel's own footage, with the Analyst's reason. */
+  keepsReel: z.object({ reason: z.string().max(SLOT_FOOTAGE_REASON_CHARS).nullable() }).optional(),
+  /** MATCH1: a moment that must land on the slot's start or end. */
+  lands: slotLandsSchema.optional(),
 });
 const progressSchema = z.object({
   verdicts: z.array(z.object({ at: z.int().nonnegative(), cut: z.boolean() })).max(500),
@@ -120,6 +126,8 @@ export function intentsOf(progress: AnalystProgress, slots: readonly ResolvedSlo
             intent: stored.intent,
             ...(stored.role ? { role: stored.role } : {}),
             ...(stored.generalised ? { generalised: true } : {}),
+            ...(stored.keepsReel ? { keepsReel: stored.keepsReel } : {}),
+            ...(stored.lands ? { lands: stored.lands } : {}),
           },
         ]
       : [];
@@ -152,6 +160,8 @@ export function withIntents(
     intent: { ...entry.intent, motion: entry.intent.motion ?? null },
     ...(entry.role ? { role: entry.role } : {}),
     ...(entry.generalised ? { generalised: true as const } : {}),
+    ...(entry.keepsReel ? { keepsReel: entry.keepsReel } : {}),
+    ...(entry.lands ? { lands: entry.lands } : {}),
   }));
   const kept = progress.intents.filter((item) => !fresh.some((other) => sameBounds(item, other)));
   return { ...progress, intents: [...kept, ...fresh].sort((a, b) => a.start - b.start) };

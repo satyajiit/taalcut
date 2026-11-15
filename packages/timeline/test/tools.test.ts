@@ -47,6 +47,12 @@ describe('timeline tools', () => {
       'timeline.setHoldDuration',
       'timeline.setCover',
       'timeline.setVisualLayout',
+      'timeline.setPostCaption',
+      'timeline.textLook',
+      'timeline.designText',
+      'timeline.placeText',
+      'timeline.musicBars',
+      'timeline.lengthenSlot',
       'timeline.exportInterchange',
       'timeline.gaps',
       'timeline.fillGap',
@@ -93,7 +99,11 @@ describe('timeline tools', () => {
 
   it('assembles every variant in one step, then reads, edits and finds alternates', async () => {
     const { call, template, projectId, store, bus } = agentWorld();
-    const assembled = await call('timeline.assemble', { projectId, template: { id: template.id }, variants: 3 });
+    const assembled = await call('timeline.assemble', {
+      projectId,
+      template: { id: template.id },
+      variants: 3,
+    });
     if (!assembled.ok) throw new Error(assembled.error.code);
     const timelineIds = assembled.value.timelineIds as string[];
     expect(timelineIds).toHaveLength(3);
@@ -102,7 +112,12 @@ describe('timeline tools', () => {
     if (!read.ok) throw new Error(read.error.code);
     const clips = read.value.clips as { clipId: string; slotId: string; start: number }[];
     expect(clips.map((clip) => clip.start)).toEqual(template.slots.map((slot) => slot.start.value));
-    const locked = await call('timeline.lockClip', { projectId, timelineId: timelineIds[0], clipId: clips[0]!.clipId, locked: true });
+    const locked = await call('timeline.lockClip', {
+      projectId,
+      timelineId: timelineIds[0],
+      clipId: clips[0]!.clipId,
+      locked: true,
+    });
     expect(locked.ok && locked.value.revision).toBe(2);
     const trim = await call('timeline.trimClip', {
       projectId,
@@ -112,7 +127,11 @@ describe('timeline tools', () => {
       by: { value: 3, rate: { num: 30, den: 1 } },
     });
     expect(!trim.ok && trim.error.code).toBe('timeline.clip_locked');
-    const found = await call('timeline.findAlternates', { timelineId: timelineIds[0], slotId: clips[1]!.slotId, limit: 2 });
+    const found = await call('timeline.findAlternates', {
+      timelineId: timelineIds[0],
+      slotId: clips[1]!.slotId,
+      limit: 2,
+    });
     expect(found.ok && (found.value.candidates as unknown[]).length).toBe(2);
     // One undo takes back all three variants.
     await bus.undo(projectId, { source: 'ui', actor: 'user' });
@@ -123,11 +142,19 @@ describe('timeline tools', () => {
   it("gives every assembled cut the reel's own music when the template keeps its reel with sound (REF1)", async () => {
     for (const keptAudio of [true, false]) {
       const { call, template, projectId, store } = agentWorld(undefined, keptAudio);
-      const assembled = await call('timeline.assemble', { projectId, template: { id: template.id }, variants: 2 });
+      const assembled = await call('timeline.assemble', {
+        projectId,
+        template: { id: template.id },
+        variants: 2,
+      });
       if (!assembled.ok) throw new Error(assembled.error.code);
       const music = [...store.docs.values()].map((doc) => (doc as { music: unknown }).music);
       expect(music).toEqual(
-        Array(2).fill(keptAudio ? { path: 'referenceAudio', templateId: template.id, gainDb: 0 } : { path: 'platformSound' }),
+        Array(2).fill(
+          keptAudio
+            ? { path: 'referenceAudio', templateId: template.id, gainDb: 0 }
+            : { path: 'platformSound' },
+        ),
       );
     }
   });

@@ -63,9 +63,9 @@ describe('vision stage versions after the coupling (IX3-I3)', () => {
       // Raised by LIB1-FIX: each shot's text is cleaned before it is stored.
       'vision.ocr': 8,
       'vision.embed': 4,
-      // Raised on purpose by LRN1-CTX (each shot with what is said and shown around it) and LIB1-FIND (what people
-      // are doing): every shot is described again.
-      'vision.describe': 4,
+      // Raised on purpose by LRN1-CTX (each shot with what is said and shown around it), LIB1-FIND (what people
+      // are doing) and MOM1 (each shot's moments): every shot is described again.
+      'vision.describe': 7,
       'vision.embedOcr': 2,
       'vision.contactSheet': 1,
     });
@@ -123,7 +123,11 @@ describe('what vision’s stages read and store (IX3-I2)', () => {
     const stage = byName();
     expect(stage('vision.shots')?.reads).toEqual(['media.normalise']);
     expect(stage('vision.analyse')?.reads).toEqual(['vision.shots', 'media.normalise']);
-    expect(stage('vision.contactSheet')?.reads).toEqual(['vision.shots', 'vision.analyse', 'media.normalise']);
+    expect(stage('vision.contactSheet')?.reads).toEqual([
+      'vision.shots',
+      'vision.analyse',
+      'media.normalise',
+    ]);
     expect(stage('vision.describe')?.reads).toEqual(['vision.shots', 'vision.analyse', 'media.normalise']);
     // LIB1-FIX: where the clip was filmed too, so a description waits for it while it's coming and is made again
     // once it lands.

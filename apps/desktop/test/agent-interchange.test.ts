@@ -100,7 +100,8 @@ describe('export file names', () => {
     expect(isExportFileName('Goa trip – Variant 1.otio')).toBe(true);
     for (const name of ['', '.', '..', '.abc.tmp', 'a/b.otio', 'a\\b.otio', 'a:b.otio'])
       expect(isExportFileName(name)).toBe(false);
-    expect(exportFilePath('/u', 'Cut.otio')).toBe(join('/u', 'exports', 'Cut.otio'));
+    // FIX-EXPORTNAMES: the sink writes into the person's exports folder (inside userData for a test's data folder).
+    expect(exportFilePath('/u', 'Cut.otio')).toBe(join('/u', 'Exports', 'Cut.otio'));
     expect(exportFilePath('/u', '../Cut.otio')).toBeNull();
   });
 });

@@ -7,6 +7,7 @@ import type {
   CommandId,
   HubBrowseItem,
   HubTemplateId,
+  ProjectId,
   RenderSnapshot,
   Result,
   StockResult,
@@ -68,6 +69,11 @@ export interface CardDataPhase3 {
   renderPreviewFrom?(props: TimelinePreviewProps & { readonly playFrom: PreviewPlayFrom | null }): ReactNode;
   /** P3-V13: an artifact's URL the CSP allows (a motion graphic's poster); null shows the viewer grey. */
   artifactUrl?(artifactId: string): string | null;
+  /**
+   * DSG2: a design option's still (kept with the project's workspace files, named by its sha256) as a URL the CSP
+   * allows; null when it is gone, and the tile shows the shot under the graphic instead.
+   */
+  designStill?(projectId: ProjectId, sha256: string): Promise<string | null>;
 }
 
 /** How a phone's clips come in: over the Wi-Fi import page, or a cable (transfer's USB picker). */

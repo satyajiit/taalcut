@@ -119,6 +119,39 @@ describe('the render.export handler', () => {
     expect(calls[0]!.signal).toBeDefined();
   });
 
+  it('puts its own job id on the render’s row before the worker starts', async () => {
+    // FIX-RENDERLINK: the row gets its job id from whoever queued the export, after the job exists, so the export
+    // could start first. Everything it waits on (subject tracks, grade LUTs, the sound checks) is started as this
+    // job's child from the row's job id; without it that work queued behind the export itself (the owner,
+    // 2026-11-15: a draft render stuck at "checking", and every GPU job behind it).
+    const store = memoryRenderStore();
+    const row = renderRow({ projectId: project, status: 'queued', jobId: null });
+    store.records.set(row.id, row);
+    const seen: (string | null)[] = [];
+    const worker: RenderWorker = {
+      async export(input) {
+        seen.push(store.records.get(input.renderId as RenderId)?.jobId ?? null);
+        return ok({ renderId: input.renderId as RenderId, status: 'ready', qa: null });
+      },
+      captureFrame: async () => err(CancelledError()),
+    };
+    const ctx = context();
+    const jobs = createRenderJobs({ worker, folders, clock, store });
+    const result = await exportHandler(jobs).handler({ renderId: row.id, request: row.request }, ctx);
+    expect(result.ok).toBe(true);
+    expect(seen).toEqual([ctx.jobId]);
+    expect(store.records.get(row.id)?.jobId).toBe(ctx.jobId);
+
+    // A render whose row is gone is not started.
+    const gone = renderRow({ projectId: project });
+    const refused = await exportHandler(jobs).handler(
+      { renderId: gone.id, request: gone.request },
+      context(),
+    );
+    expect(refused.ok ? null : refused.error.code).toBe('core.not_found');
+    expect(seen).toHaveLength(1);
+  });
+
   it('aborts the worker when the job is cancelled', async () => {
     const { worker, calls } = slowWorker();
     const ctx = context();

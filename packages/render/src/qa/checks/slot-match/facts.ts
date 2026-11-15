@@ -8,7 +8,7 @@
  * slot-graphics.ts) hold them to the reel with the generic limits below.
  */
 import type { AsyncResult, CameraMotion, INTENT_FACES, ProjectId, Template, Timeline } from '@taalcut/core';
-import type { NeedVerdict, SlotShot } from '@taalcut/timeline';
+import type { NeedVerdict, PartVerdict, SlotShot } from '@taalcut/timeline';
 import type { FrameSpan } from '../../../plan/types';
 import type { OverlayBrief } from '../../../workspace/template/brief';
 
@@ -30,6 +30,7 @@ export interface SlotFact {
   readonly clipId: string | null;
   /** The draft frames its clips cover, first cut to last; null when no clip fills it. */
   readonly span: FrameSpan | null;
+  /** The slot's length in the reel, with the bars the video plays again for it (LONG1). */
   readonly reelSeconds: number;
   /** Its clips' cuts, summed (0 when none). */
   readonly draftSeconds: number;
@@ -54,6 +55,13 @@ export interface SlotFact {
     readonly reel: CameraMotion | null;
     readonly shot: CameraMotion | null;
   };
+  /**
+   * MOM1: the part of its shot the slot's clip plays against what the slot states (timeline's `partVerdict`): the
+   * clip that misses when one does, else the first with a verdict. Null when nothing could be read (a shot with no
+   * moments, a photo, a slot that states nothing). MOM2: its `handling` is set when the clip misses for resting on a
+   * stretch where the camera is being handled; a part the person picked by hand has no verdict.
+   */
+  readonly part: (PartVerdict & { readonly clipId: string }) | null;
 }
 
 export interface SlotGraphicFact {

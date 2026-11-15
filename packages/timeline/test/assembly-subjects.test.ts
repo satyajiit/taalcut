@@ -3,8 +3,8 @@
 
 /**
  * FRM1-SUB: assembly reframes a clip whose aspect differs from the canvas's by more than 1% (render SPEC P3.2), and
- * every pick's subject track is made before the first draft, from the cast's ranges, within a budget; then, in
- * what is left of it, the ranges placement's retime and recast read (FRM1-OVL's request).
+ * every pick's subject track is made before the first draft, from the cast's ranges, within a budget; a step that
+ * changes the cast (FIX-TRIM) runs in what is left of it.
  */
 import {
   err,
@@ -21,17 +21,7 @@ import {
 } from '@taalcut/core';
 import { describe, expect, it } from 'vitest';
 import { assemble, reframeFor } from '../src/assembly/assemble';
-import { clipSourceRange } from '../src/assembly/placement/subjects';
-import {
-  ALTERNATES_TRACKED,
-  castRanges,
-  ensureForAssembly,
-  ensureSubjects,
-  fallbackRanges,
-  RETIME_REACH_SECONDS,
-  timelineRanges,
-  widened,
-} from '../src/assembly/subjects';
+import { castRanges, ensureForAssembly, ensureSubjects, timelineRanges } from '../src/assembly/subjects';
 import { createMemoryShotCatalog } from '../src/casting/catalog';
 import { createCastingEngine, type CastResult } from '../src/casting/engine';
 import { fakeEmbedder, makeProfile, unitVector } from './fixtures/library';
@@ -167,52 +157,8 @@ describe('subject tracks before the first draft (FRM1-SUB)', () => {
   });
 });
 
-/** Whether a stored track over `outer` holds `inner` (SubjectSource's covering). */
-const holds = (outer: SubjectClipRange, inner: SubjectClipRange) =>
-  outer.assetId === inner.assetId &&
-  RationalTime.toSeconds(outer.start) <= RationalTime.toSeconds(inner.start) + 1e-9 &&
-  RationalTime.toSeconds(inner.end) <= RationalTime.toSeconds(outer.end) + 1e-9;
-
-describe('tracks for placement’s fallbacks, after the picks (FRM1-SUB for FRM1-OVL)', () => {
-  it('holds what retime reads around each clip and what recast reads of the first two alternates', async () => {
-    const { template, result } = await setup();
-    const tracked = fallbackRanges(template, result);
-    const timeline = assembled(template, result);
-    const rate = timeline.canvas.rate;
-    const clips = timeline.tracks[0]!.items.filter((item) => item.type === 'clip');
-    const variant = result.variants[0]!;
-    for (const clip of clips) {
-      if (clip.media.kind !== 'video') throw new Error('a video clip');
-      // Retime's read (run-placement.ts): the clip's span widened by its reach, inside the media.
-      const window = widened(
-        { assetId: clip.media.assetId, ...clipSourceRange(clip, rate) },
-        RETIME_REACH_SECONDS,
-        clip.media.available,
-      );
-      // Wider than the clip on both sides.
-      const played = clipSourceRange(clip, rate);
-      expect(RationalTime.toSeconds(window.start)).toBeLessThan(RationalTime.toSeconds(played.start));
-      expect(RationalTime.toSeconds(window.end)).toBeGreaterThan(RationalTime.toSeconds(played.end));
-      expect(tracked.some((range) => holds(range, window))).toBe(true);
-      // Recast's read: each alternate over the span the slot plays; the first two are tracked, the third isn't.
-      const slot = variant.slots.find((entry) => entry.slotId === clip.slotId)!;
-      expect(slot.alternates.length).toBeGreaterThan(ALTERNATES_TRACKED);
-      slot.alternates.forEach((alternate, index) => {
-        const ref = variant.media.find((media) => media.assetId === alternate.assetId)!;
-        if (ref.kind !== 'video') throw new Error('a video alternate');
-        const read = {
-          assetId: alternate.assetId,
-          ...clipSourceRange({ ...clip, media: ref, sourceStart: alternate.sourceStart }, rate),
-        };
-        const found = tracked.some((range) => holds(range, read));
-        if (index < ALTERNATES_TRACKED) expect(found).toBe(true);
-      });
-    }
-    // Nothing reaches outside its media.
-    for (const range of tracked) expect(range.start.value).toBeGreaterThanOrEqual(0);
-  });
-
-  it('waits for the picks first, then the fallbacks in what is left of the budget', async () => {
+describe('what assembly waits for (FRM1-SUB)', () => {
+  it('asks for the picks’ ranges once, then hands the cast to the step after them with what is left', async () => {
     const { template, result } = await setup();
     const asked: SubjectClipRange[][] = [];
     let clock = 0;
@@ -224,12 +170,24 @@ describe('tracks for placement’s fallbacks, after the picks (FRM1-SUB for FRM1
         return ok(undefined);
       },
     };
-    const made = await ensureForAssembly(source, template, result, 100, () => clock);
-    expect(asked[0]).toEqual(castRanges(template, result));
-    expect(asked[1]).toEqual(fallbackRanges(template, result));
+    const left: number[] = [];
+    const made = await ensureForAssembly(
+      source,
+      template,
+      result,
+      100,
+      () => clock,
+      async (cast, budget) => {
+        left.push(budget);
+        return cast;
+      },
+    );
+    // Nothing but the picks is tracked: no clip is retimed or recast for a text since TXT1.
+    expect(asked).toEqual([castRanges(template, result)]);
     expect(made.picks).toMatchObject({ done: true, ms: 40 });
-    expect(made.fallbacks).toMatchObject({ done: true, ms: 40 });
-    // The picks use the whole budget: the fallbacks are still asked for (queued), and reported late.
+    expect(left).toEqual([60]);
+    expect(made.cast).toBe(result);
+    // The picks use the whole budget: reported late, and the step after them gets none of it.
     const slow: SubjectSource = {
       over: async () => ok(undefined),
       ensure: (ranges) => {
@@ -239,7 +197,6 @@ describe('tracks for placement’s fallbacks, after the picks (FRM1-SUB for FRM1
     };
     const late = await ensureForAssembly(slow, template, result, 10);
     expect(late.picks).toMatchObject({ done: false, reason: 'budget' });
-    expect(late.fallbacks).toMatchObject({ done: false, reason: 'budget' });
-    expect(asked).toHaveLength(4);
+    expect(asked).toHaveLength(2);
   });
 });

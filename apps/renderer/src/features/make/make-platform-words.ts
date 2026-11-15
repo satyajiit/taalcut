@@ -26,6 +26,15 @@ export const MAKE_PLATFORM_WORDS: readonly PlatformWords[] = [
     }),
   },
   {
+    // KEEP1: a video that keeps the reel's own clips, made without the reel's video.
+    mac: macKey('errors.timeline.reel_missing'),
+    computer: msg({
+      id: 'errors.timeline.reel_missing.computer',
+      message:
+        'This video keeps clips from the reel, and the reel’s video isn’t on this computer. Get it, then try again.',
+    }),
+  },
+  {
     mac: msg`It may have been deleted, or it is on another Mac. Your other projects are in Make.`,
     computer: msg`It may have been deleted, or it is on another computer. Your other projects are in Make.`,
   },

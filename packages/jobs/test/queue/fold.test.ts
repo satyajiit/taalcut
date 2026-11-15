@@ -133,7 +133,7 @@ describe('job engine: folded classes (LNX1)', () => {
   });
 
   it('groups the classes into pools, the throttled target budget deciding', () => {
-    const slots = new Slots(PLAN, defaultThrottle, () => ({ onBattery: false, thermalState: 'nominal' }));
+    const slots = new Slots(PLAN, defaultThrottle, () => ({ thermalState: 'nominal' }));
     expect(slots.pools()).toEqual([['cpu'], ['gpu', 'npu'], ['video'], ['io'], ['network']]);
     const gpuJob = { resourceClass: 'gpu' as const };
     const npuJob = { resourceClass: 'npu' as const };
@@ -141,7 +141,7 @@ describe('job engine: folded classes (LNX1)', () => {
     expect(slots.classHasRoom('npu', [gpuJob, npuJob])).toBe(false);
     expect(slots.classHasRoom('gpu', [npuJob, npuJob])).toBe(false);
     expect(slots.classHasRoom('cpu', [gpuJob, npuJob])).toBe(true);
-    const battery = new Slots(PLAN, defaultThrottle, () => ({ onBattery: true, thermalState: 'nominal' }));
-    expect(battery.classHasRoom('npu', [gpuJob])).toBe(false);
+    const hot = new Slots(PLAN, defaultThrottle, () => ({ thermalState: 'serious' }));
+    expect(hot.classHasRoom('npu', [gpuJob])).toBe(false);
   });
 });

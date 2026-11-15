@@ -1,23 +1,23 @@
 {
-  "update": "beta-planning-editor-meta-schemas",
+  "update": "LONG1",
   "liveProviderCalls": 0,
-  "note": "Offline refresh: the catalogue's 183 tools (none added or changed). Plain steps took the offers of the gate demo's headless journey recorded again with the stored responses as its only upstream; skill steps took their skill's current list from the desktop's agent process. Planning, plain-step and recorded skill meta schemas came from actual public-agent requests serialized by the provider SDK. Canonical request hashes were recomputed by the cassette recorder with stored responses as its only upstream. Every response byte, interaction count and original recorder timestamp is unchanged; no live provider was contacted.",
+  "note": "Offline refresh: the catalogue's 193 tools (timeline.musicBars, timeline.lengthenSlot added or changed). Plain steps took the offers of the gate demo's headless journey recorded again with the stored responses as its only upstream; skill steps took their skill's current list from the desktop's agent process. Planning, plain-step and recorded skill meta schemas came from actual public-agent requests serialized by the provider SDK. Canonical request hashes were recomputed by the cassette recorder with stored responses as its only upstream. Every response byte, interaction count and original recorder timestamp is unchanged; no live provider was contacted.",
   "sessions": {
     "gate-demo": {
       "recordedAt": "2026-11-05T20:11:37.520Z",
       "interactionCount": 26,
-      "offersChanged": 0,
-      "updatedRequests": 0,
+      "offersChanged": 16,
+      "updatedRequests": 16,
       "validCalls": 0,
       "responseSha256": "aced3a847f86389f66c7ac64622a6adea793b71eaaa8f3a1726d05d959279198"
     },
     "make-flow": {
-      "recordedAt": "2026-11-13T08:09:46.568Z",
-      "interactionCount": 90,
-      "offersChanged": 0,
-      "updatedRequests": 0,
+      "recordedAt": "2026-11-15T14:43:02.099Z",
+      "interactionCount": 95,
+      "offersChanged": 50,
+      "updatedRequests": 50,
       "validCalls": 0,
-      "responseSha256": "223ab0e0f33874493bd55b63c5b90ef88837a9d5c27d7ea6c34aa9ea9049619f"
+      "responseSha256": "f15bddd22f037911c517aa5708003ede6d2d1dd31d1999b5d38543dd74e5b1e1"
     },
     "edit-chat": {
       "recordedAt": "2026-11-05T20:41:49.632Z",
@@ -389,5 +389,52 @@
       }
     },
     "note": "The earlier blocks of this file describe the tape this one replaced; their indices and digests are historical. edit-chat and edit-design keep their own tapes and replay their make part from this one."
+  },
+  "makeFlowRerecordTxt1": {
+    "update": "TXT1",
+    "source": "documented in-process deterministic stand-in",
+    "liveProviderCalls": 0,
+    "command": "after a test build of apps/desktop, TAALCUT_RECORD=1 TAALCUT_RECORD_SESSION=make-flow playwright test --project=make e2e/make-flow.e2e.ts in apps/desktop",
+    "reason": "video.done holds a video whose on-screen text has no designed look or no stated place (TXT1), so the brief ask's Maker meets that hold, reads the text (timeline.textLook), designs it (timeline.designText), states every group's place (timeline.placeText) and drafts again before video.done takes the video: seventeen turns where it took twelve. Tool offers alone could not be refreshed to fit: the session was recorded again.",
+    "result": "All six journeys of make-flow.e2e.ts passed while recording; the tape then replays in the same journeys.",
+    "before": {
+      "recordedAt": "2026-11-13T08:09:46.568Z",
+      "interactionCount": 90,
+      "asks": {
+        "1": 26,
+        "2": 32,
+        "3": 20,
+        "4": 12
+      },
+      "responseSha256": "223ab0e0f33874493bd55b63c5b90ef88837a9d5c27d7ea6c34aa9ea9049619f",
+      "cassetteSha256": "54d2a67c835764c1a28a25631bfbd92d982b2e39fdd02fabc8c2575983b3e578"
+    },
+    "after": {
+      "recordedAt": "2026-11-15T14:43:02.099Z",
+      "interactionCount": 95,
+      "asks": {
+        "1": 26,
+        "2": 32,
+        "3": 25,
+        "4": 12
+      },
+      "responseSha256": "f15bddd22f037911c517aa5708003ede6d2d1dd31d1999b5d38543dd74e5b1e1",
+      "cassetteSha256": "1b7bdf6e17afba028afb453aec4b17e230775334d3141a8f8fb796b901e290d0"
+    },
+    "steps": {
+      "reference": {
+        "before": "librarian 3, maker 4, reviewer 2",
+        "after": "librarian 3, maker 4, reviewer 2"
+      },
+      "swap": {
+        "before": "librarian 3, maker 4, reviewer 2, maker 4, reviewer 2",
+        "after": "librarian 3, maker 4, reviewer 2, maker 4, reviewer 2"
+      },
+      "brief": {
+        "before": "maker 12, reviewer 2",
+        "after": "maker 17, reviewer 2"
+      }
+    },
+    "note": "makeFlowRerecord describes the tape this one replaced; its indices and digests are historical. The before digests are of the tape as committed before TXT1 (after its later offline refreshes). gate-demo and edit-chat were refreshed offline for the same update (sessions above); edit-chat and edit-design keep their own tapes and replay their make part from this one. edit-design was set aside (--rerecord): it is still the tape from before DSG2."
   }
 }

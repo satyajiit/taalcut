@@ -4,6 +4,7 @@
 /** The `graphics` tools' inputs and outputs as the model writes and reads them (tools.ts). */
 import { z } from 'zod';
 import {
+  GRAPHIC_OPTION_COUNT,
   graphicParamValuesSchema,
   graphicPlacementSchema,
   rationalTimeJsonSchema,
@@ -61,6 +62,13 @@ export const removeInput = z.object({
 
 export const useProposalInput = z.object({ ...target, itemId: ulidSchema('TimelineItem') });
 
+/** DSG2: the option to use, by its number in graphics.list's `options`. */
+export const chooseOptionInput = z.object({
+  ...target,
+  itemId: ulidSchema('TimelineItem'),
+  option: z.int().min(1).max(GRAPHIC_OPTION_COUNT).describe('Its number in graphics.list’s options'),
+});
+
 export const receiptSchema = z.object({
   timelineId: ulidSchema('Timeline'),
   affectedItemIds: z.array(ulidSchema('TimelineItem')),
@@ -89,4 +97,15 @@ export const itemSchema = z.object({
   origin: z.enum(['agent', 'user']),
   /** EDT1-GFX: still a proposal the person hasn't used (not in the video yet). */
   proposal: z.object({ design: z.string() }).optional(),
+  /** DSG2: the designs the person chooses between, numbered for graphics.chooseOption, and the one in use. */
+  options: z
+    .array(
+      z.object({
+        option: z.int().min(1),
+        name: z.string().meta({ untrusted: 'composition-name' }),
+        idea: z.string().meta({ untrusted: 'composition-name' }),
+        inUse: z.boolean(),
+      }),
+    )
+    .optional(),
 });

@@ -10,6 +10,8 @@
 import type {
   AsyncResult,
   CommentToolView,
+  CoverImage,
+  CoverImageInput,
   GraphicCompositionId,
   GraphicSystem,
   Style,
@@ -44,6 +46,14 @@ export interface WorkspaceToolDeps {
     input: WorkspaceFramesInput,
     options: { readonly signal: AbortSignal },
   ) => AsyncResult<WorkspaceFramesOutput>;
+  /**
+   * CVR2: a cover drawn as the cover panel and `render.exportCover` draw it (RenderWorker.coverImage, through
+   * main); without it `workspace.placeCover` says it can't and saves nothing.
+   */
+  readonly coverImage?: (
+    input: CoverImageInput,
+    options: { readonly signal: AbortSignal },
+  ) => AsyncResult<CoverImage>;
   /** For `workspace.promote`. */
   readonly templates?: TemplateGraphicsSource;
   /** The video's look for the brief: its template's graphic system and its Style. */

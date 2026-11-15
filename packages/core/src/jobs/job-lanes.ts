@@ -33,8 +33,8 @@ export const DEFAULT_LANE_LIMIT = 1;
 /**
  * What the hardware planner hands the job engine: how many jobs of each
  * class and of each lane may run at once. A lane never runs more than its
- * class's budget allows, whatever its own limit; battery and heat lower the
- * class budgets, not the lane limits.
+ * class's budget allows, whatever its own limit; heat lowers the class
+ * budgets, not the lane limits.
  */
 export interface JobConcurrencyPlan {
   /** The budget every lane of a class shares, and the limit for its jobs that have no lane. */

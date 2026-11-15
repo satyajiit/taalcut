@@ -48,6 +48,7 @@ import {
 import type { DraftCache, TemplateToolDeps } from './deps';
 import { discardExperiment } from './discard';
 import { keepReference } from './keep-media';
+import { ALL_REEL_REFUSAL, reelSlotsOf } from './reel-footage';
 import {
   finaliseInputSchema,
   judgeCutInputSchema,
@@ -67,13 +68,17 @@ export const finaliseOutputSchema = templateRefOutputSchema.extend({
   breakdownId: ulidSchema('Experiment'),
   /** REF1: the reel's video and music kept with the template on this Mac; null when none could be kept. */
   media: z.object({ bytes: z.int().positive(), hasAudio: z.boolean() }).nullable(),
+  /** KEEP1: the slots saved as the reel's own footage, by slot index: videos made from the template keep them. */
+  reelSlots: z.array(z.int().nonnegative()).optional(),
 });
 
 export function judgeCutTool(deps: TemplateToolDeps, drafts: DraftCache) {
   return defineTool({
     name: 'templates.judgeCut',
     // 1.0.1: a shorter description; what a verdict means is on `cut`.
-    version: '1.0.1',
+    // 1.1.0 (MATCH1): a dispute may be a dissolve or fade measured from the frames (`method: pixels`); its frames
+    // before and after are then the two pictures either side of the transition.
+    version: '1.1.0',
     summary: 'Stores a verdict on one disputed cut of a breakdown and returns the next cut to judge.',
     description:
       'Stores your verdict on one disputed cut and returns the next to judge (next, with its frames), until ' +
@@ -118,7 +123,8 @@ export function resolveCutsTool(deps: TemplateToolDeps, drafts: DraftCache) {
     name: 'templates.resolveCuts',
     // 3.0.0 (LRN1-CTX): the verdicts come from templates.judgeCut; the page is as many slots as the window holds.
     // 3.0.1: a shorter description.
-    version: '3.0.1',
+    // 3.1.0 (MATCH1): a slot's context says the transition it starts in and the one it ends in.
+    version: '3.1.0',
     summary: "Resolves a breakdown's cuts and returns the next slots to write intents for.",
     // Description, summary and tags are what the model is offered and what findTools ranks by, and recorded
     // sessions match on the tools offered (gate-demo cassettes), so the page size, which follows the model's
@@ -140,9 +146,14 @@ export function resolveCutsTool(deps: TemplateToolDeps, drafts: DraftCache) {
       const { draft, dir } = loaded.value;
       const progress = await readProgress(dir);
       if (!progress.ok) return progress;
-      const { slots } = resolveCuts(draft, progress.value.verdicts);
+      const { slots, cuts } = resolveCuts(draft, progress.value.verdicts);
       const looks = await readLooks(dir);
       const window = deps.contextWindow?.();
+      // MATCH1: slot i starts at cut i - 1 and ends at cut i; a transition there is said by its kind.
+      const edges = (index: number) => ({
+        ...(cuts[index - 1]?.transition ? { startsIn: cuts[index - 1]!.transition!.kind } : {}),
+        ...(cuts[index]?.transition ? { endsIn: cuts[index]!.transition!.kind } : {}),
+      });
       // Context for every slot at the window's caps, then the page: the shared text level is the same on every page.
       const open = unwritten(progress.value, withSlotContext(draft, slots, slotContextLimitsFor(window)));
       const render = (page: readonly (typeof open)[number][]) => ({
@@ -152,9 +163,10 @@ export function resolveCutsTool(deps: TemplateToolDeps, drafts: DraftCache) {
           const frame = slotFrame(draft, slot);
           // BRK1 looks: a described strip comes as words, not a frame to look at again (or to mistype).
           const look = frame === null ? undefined : looks[frame];
+          const context = { ...slot.context, ...edges(slot.index) };
           return look
-            ? { index: slot.index, frame: null, context: { ...slot.context, looks: look } }
-            : { index: slot.index, frame: frame === null ? null : join(dir, frame), context: slot.context };
+            ? { index: slot.index, frame: null, context: { ...context, looks: look } }
+            : { index: slot.index, frame: frame === null ? null : join(dir, frame), context };
         }),
       });
       // As many as the model's window holds, and no more than stay in the prompt rather than an artifact.
@@ -200,7 +212,11 @@ async function storedWork(draft: BreakdownDraft, dir: string) {
         },
       ),
     );
-  return ok({ verdicts, intents: intentsOf(progress.value, slots), unconfirmed });
+  const intents = intentsOf(progress.value, slots);
+  // KEEP1: a slot is left for the person's clips (reel-footage.ts).
+  if (reelSlotsOf(intents).length === slots.length)
+    return err(ValidationError({ field: 'footage' }, { detail: ALL_REEL_REFUSAL }));
+  return ok({ verdicts, intents, unconfirmed });
 }
 
 /** FIX-CAST: a slot whose intent has no `reel` keeps its looks (what its strip showed) as what the reel shows. */
@@ -229,7 +245,8 @@ export function finaliseTool(deps: TemplateToolDeps, drafts: DraftCache) {
     // 2.0.1: a shorter description. 2.1.0 (REF1): the reel's video and music are kept with the template.
     // 2.2.0 (BRK1's gate): no contact sheet hash in the output. No tool opens it, and a small model kept asking
     // readArtifact for it; the template keeps the sheet (`contactSheet.asset`), and its card shows it.
-    version: '2.2.0',
+    // 2.3.0 (KEEP1): the slots saved as the reel's own footage (`reelSlots`); refused when every slot is one.
+    version: '2.3.0',
     summary: "Saves a breakdown as a new template (version 1), keeping the reel's video and music with it.",
     description:
       'Saves a breakdown as a new template from the verdicts and intents you stored, once every slot has an ' +
@@ -251,6 +268,7 @@ export function finaliseTool(deps: TemplateToolDeps, drafts: DraftCache) {
       const stored = await storedWork(draft, dir);
       if (!stored.ok) return stored;
       const { verdicts, unconfirmed } = stored.value;
+      const reelSlots = reelSlotsOf(stored.value.intents);
       const intents = await withLooksAsReel(draft, dir, verdicts, stored.value.intents);
       const sheet = await keepContactSheet(deps, draft, dir);
       const built = buildTemplate(draft, verdicts, intents, deps.ids, {
@@ -289,6 +307,7 @@ export function finaliseTool(deps: TemplateToolDeps, drafts: DraftCache) {
         unconfirmedCuts: [...unconfirmed],
         breakdownId: input.breakdownId,
         media: media ? { bytes: media.bytes, hasAudio: media.hasAudio } : null,
+        ...(reelSlots.length > 0 ? { reelSlots } : {}),
       });
     },
   });

@@ -30,6 +30,7 @@ import {
   type WorkspaceRevision,
 } from '@taalcut/core';
 import { DESIGN_FILE_TEXT } from '@taalcut/ui';
+import { optionStill } from './option-stills';
 
 interface Workspace {
   head: number;
@@ -159,6 +160,9 @@ export function createFakeWorkspace(deps: FakeWorkspaceDeps) {
       };
     }),
     read: os.read.handler(({ input }) => {
+      // DSG2: a design option's still is a picture, handed back as one (option-stills.ts paints the fixtures').
+      const still = optionStill(input.sha256);
+      if (still) return { sha256: input.sha256, bytes: 24_000, text: null, image: still };
       if (!blobs.has(input.sha256))
         return unwrap(err(NotFoundError({ entity: 'workspaceBlob', id: input.sha256 })));
       const text = blobs.get(input.sha256) ?? null;

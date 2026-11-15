@@ -34,13 +34,15 @@ export function CardFrame({ cardType, icon, title, aside, className, children, .
       )}
       {...props}
     >
-      <header className="flex items-start gap-2">
+      {/* The title keeps 7rem beside its chip: where the two don't fit one line (a narrow column with a long chip,
+          longer words in another language) the chip goes under the title instead of squeezing it. */}
+      <header className="flex flex-wrap items-start gap-x-2 gap-y-1">
         {icon ? (
           <span aria-hidden className="mt-1 inline-flex shrink-0 text-ink-3 [&_svg]:size-4">
             {icon}
           </span>
         ) : null}
-        <h3 className="m-0 min-w-0 flex-1 text-lg font-bold text-balance">{title}</h3>
+        <h3 className="m-0 min-w-0 flex-[1_1_7rem] text-lg font-bold text-balance">{title}</h3>
         {aside ? <div className="flex min-h-6 shrink-0 items-center gap-2">{aside}</div> : null}
       </header>
       {children}

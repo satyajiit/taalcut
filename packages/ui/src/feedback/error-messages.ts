@@ -100,6 +100,8 @@ export const FIX_LABELS: Readonly<Record<string, MessageDescriptor>> = {
   'fix.reload': msg({ id: 'fix.reload', message: 'Reload' }),
   'fix.signIn': msg({ id: 'fix.signIn', message: 'Sign in' }),
   'fix.reviewSignInWarning': msg({ id: 'fix.reviewSignInWarning', message: 'Read the warning' }),
+  // CVR2: the fix on models.chatgpt_images_not_connected (ChatGPT is a brand name).
+  'fix.connectChatGptImages': msg({ id: 'fix.connectChatGptImages', message: 'Connect ChatGPT images' }),
   // Fix actions core defines (core SPEC 14.7): the reference warnings, and System Settings' Files and Folders.
   'fix.openReferenceAudioWarning': msg({ id: 'fix.openReferenceAudioWarning', message: 'Read and decide' }),
   /**

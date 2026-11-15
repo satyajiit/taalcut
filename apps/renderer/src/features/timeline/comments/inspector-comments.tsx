@@ -21,9 +21,12 @@ export function selectionTarget(selection: EditorSelection, timeline: Timeline):
 export function InspectorComments({
   selection,
   timeline,
+  compact = false,
 }: {
   selection: EditorSelection;
   timeline: Timeline;
+  /** MORE1: beside a title, among its other actions: Comment… as its glyph alone, the count after it. */
+  compact?: boolean;
 }) {
   const { t } = useLingui();
   const target = selectionTarget(selection, timeline);
@@ -34,8 +37,11 @@ export function InspectorComments({
   );
   const first = waiting[0];
   return (
-    <div data-slot="inspector-comments" className="mt-auto flex flex-col items-start gap-1 pt-4">
-      {first ? (
+    <div
+      data-slot="inspector-comments"
+      className={compact ? 'flex items-center gap-1' : 'mt-auto flex flex-col items-start gap-1 pt-4'}
+    >
+      {first && !compact ? (
         <Button size="sm" variant="ghost" onClick={() => showComment(first.id)}>
           <Plural value={waiting.length} one="# comment on this" other="# comments on this" />
         </Button>
@@ -43,13 +49,20 @@ export function InspectorComments({
       <Button
         size="sm"
         variant="ghost"
+        className={compact ? 'w-8 px-0' : undefined}
         aria-keyshortcuts="C"
+        aria-label={compact ? t`Comment…` : undefined}
         title={t`Comment on this (C)`}
         icon={VERB_ICONS.comment}
         onClick={() => commentOn({ target })}
       >
-        {t`Comment…`}
+        {compact ? null : t`Comment…`}
       </Button>
+      {first && compact ? (
+        <Button size="sm" variant="ghost" onClick={() => showComment(first.id)}>
+          <Plural value={waiting.length} one="# comment on this" other="# comments on this" />
+        </Button>
+      ) : null}
     </div>
   );
 }

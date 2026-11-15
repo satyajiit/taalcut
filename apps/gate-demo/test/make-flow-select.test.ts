@@ -8,7 +8,7 @@ import { viewOf, type RequestView, type ToolCall } from '../src/anthropic-view';
 import { carryProgress, resumeProgress } from '../src/make-flow-progress';
 import { readCall } from '../src/make-flow-reads';
 import { makeFlowTurn } from '../src/make-flow-script';
-import { editDesignTurn } from '../src/edit-design-script';
+import { EDIT_DESIGN_FEWER, editDesignTurn } from '../src/edit-design-script';
 
 const handle = 'result:13:0';
 const source = (result = `Stored as result ${handle} (application/json, 10000 bytes).`): ToolCall => ({
@@ -197,7 +197,7 @@ describe('purpose-based result reads', () => {
   });
 
   it('finishes an already placed graphic after its source call leaves the fitted view', () => {
-    const placed = { ...source(), name: 'workspace_place' };
+    const placed = { ...source(), name: 'workspace_placeOptions' };
     const request: RequestView = {
       ...view(placed),
       skill: 'render.designer',
@@ -222,7 +222,15 @@ describe('purpose-based result reads', () => {
       args: {
         timelineId: 'timeline',
         revision: 4,
-        results: [{ jobId: 'job', outcome: 'placed', itemIds: ['graphic'], compositionId: 'composition' }],
+        results: [
+          {
+            jobId: 'job',
+            outcome: 'placed',
+            itemIds: ['graphic'],
+            compositionId: 'composition',
+            fewerBecause: EDIT_DESIGN_FEWER,
+          },
+        ],
       },
     });
   });

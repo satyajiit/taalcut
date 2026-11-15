@@ -28,6 +28,7 @@ import { createFakeLimits, summarizeUsage, type LimitScenario } from './fake-usa
 import { createFakeComments, type FakeCommentsOptions } from '../comments/fake-comments';
 import { createFakeMemory, type FakeMemoryOptions } from '../memory/fake-memory';
 import { seedDesigns } from '../workspace/design-arrange';
+import { createFakeOptionCommands } from '../workspace/fake-option-commands';
 import { createFakeWorkspace } from '../workspace/fake-workspace';
 import { createFakeDesignCommands } from './fake-design-commands';
 
@@ -54,7 +55,11 @@ export interface Phase3FakeOptions {
   /** EDT1-CMT: the editor's comments. */
   readonly comments?: FakeCommentsOptions;
   /** HFW1-UI: graphics the AI designed on Golden hour's first video, and its workspace (design-arrange.ts). */
-  readonly designs?: { readonly arranged?: boolean };
+  readonly designs?: {
+    readonly arranged?: boolean;
+    /** DSG2: one of them is a title that came as three designs to choose between. */
+    readonly options?: boolean;
+  };
 }
 
 export type { Phase3Deps } from './phase3-deps';
@@ -107,7 +112,8 @@ export function createPhase3Fakes(deps: Phase3Deps, options: Phase3FakeOptions =
 
   // HFW1-UI: the workspace's files and revisions; with `designs`, Golden hour's designed graphics.
   const workspace = createFakeWorkspace({ now: deps.now });
-  if (options.designs?.arranged) seedDesigns(deps.make.timelines, workspace);
+  if (options.designs?.arranged)
+    seedDesigns(deps.make.timelines, workspace, options.designs.options === true);
 
   const comments = createFakeComments(
     { ...deps, timelines: { get: deps.make.timelines.get, list: deps.make.timelines.all } },
@@ -213,6 +219,8 @@ export function createPhase3Fakes(deps: Phase3Deps, options: Phase3FakeOptions =
     // HFW1-UI: WORKSPACE_COMMANDS and the Designer's graphics commands.
     ...workspace.commands,
     ...createFakeDesignCommands(deps).commands,
+    // DSG2: the person's choice between a graphic's designs.
+    ...createFakeOptionCommands(deps).commands,
   ];
   return {
     router,

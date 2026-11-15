@@ -6,6 +6,8 @@
  * the timeline as a proposal (`graphics.placeComposition`), gets a new design (`graphics.setComposition`), becomes
  * part of the video when the person uses it (`graphics.useProposal`), retimes and rewords (`graphics.edit`: its
  * anchor, its length and its variables; a designed graphic places and sizes itself) and goes (`graphics.remove`).
+ * DSG2 (option-commands.ts): the Designer's designs go on as a set, the first in the video at once
+ * (`graphics.placeOptions`), and the person swaps another in (`graphics.chooseOption`).
  * Each is a new timeline revision; its inverse is `timeline.restore` with the tracks as they were, so undo is exact.
  */
 import {
@@ -21,6 +23,7 @@ import {
 } from '@taalcut/core';
 import { GraphicInvalid } from '../errors-phase3';
 import { compositionHandlers } from './composition-commands';
+import { optionHandlers } from './option-commands';
 import {
   graphicWrites,
   withoutGraphic,
@@ -142,12 +145,15 @@ export function createCompositionCommands(deps: CompositionCommandDeps) {
   });
 
   const { placeComposition, setComposition } = compositions;
+  const { placeOptions, chooseOption } = optionHandlers(deps);
   return {
     edit,
     remove,
     useProposal,
     placeComposition,
     setComposition,
-    all: [edit, remove, useProposal, placeComposition, setComposition],
+    placeOptions,
+    chooseOption,
+    all: [edit, remove, useProposal, placeComposition, setComposition, placeOptions, chooseOption],
   };
 }

@@ -66,7 +66,6 @@ export function adaptPlan(plan: RenderPlan, preset: ExportPreset): RenderPlan {
   const texts: PlannedText[] = plan.texts.map((text) => ({
     ...text,
     box: boxIntoSafe(text.box, preset.safe, preset),
-    refitted: true as const,
   }));
   return {
     ...plan,

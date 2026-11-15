@@ -11,6 +11,7 @@ import {
   callRpc,
   type AssetDetail,
   type AssetId,
+  type Filmstrip,
   type ShotId,
   type Timeline,
 } from '@taalcut/core';
@@ -33,6 +34,16 @@ export interface ShotLookup {
   frame(assetId: AssetId, shotId: ShotId | null, size?: FrameSize): Promise<ShotFrame | undefined>;
   /** The frame now, from what has loaded (undefined while its file loads). */
   frameNow(assetId: AssetId, shotId: ShotId | null, size?: FrameSize): ShotFrame | undefined;
+  /** The file's filmstrip (a frame at any moment, without decoding video), once the file has loaded and has one. */
+  strip(assetId: AssetId): ShotStrip | undefined;
+  /** TRIM1: what a <video> loads to play the file, once the file has loaded and has a copy to play. */
+  playback(assetId: AssetId): string | undefined;
+}
+
+/** A file's filmstrip sprite and where the page loads it from. */
+export interface ShotStrip {
+  readonly filmstrip: Filmstrip;
+  readonly src: string;
 }
 
 function frameOf(detail: AssetDetail, shotId: ShotId | null, media: MediaUrls, size?: FrameSize): ShotFrame {
@@ -78,6 +89,15 @@ export function shotLookup(backend: Backend, media: MediaUrls): ShotLookup {
     frameNow(assetId, shotId, size) {
       const detail = done.get(assetId);
       return detail ? frameOf(detail, shotId, media, size) : undefined;
+    },
+    strip(assetId) {
+      const filmstrip = done.get(assetId)?.filmstrip;
+      const src = filmstrip ? media.derived(filmstrip.file) : null;
+      return filmstrip && src ? { filmstrip, src } : undefined;
+    },
+    playback(assetId) {
+      const playback = done.get(assetId)?.playback;
+      return (playback && media.playback(assetId, playback)) || undefined;
     },
   };
   byMedia.set(media, lookup);

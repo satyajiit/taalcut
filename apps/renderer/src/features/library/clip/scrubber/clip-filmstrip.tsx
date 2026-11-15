@@ -32,7 +32,8 @@ const STRIP_HEIGHT = 56;
 /** The narrowest frame slot, in CSS pixels (media's filmstrip counts its frames for the same). */
 const NARROWEST_SLOT = 24;
 
-function useSlots(ratio: number) {
+/** How many frames fit across the strip at its height and the clip's shape, and each one's width. */
+export function useSlots(ratio: number) {
   const ref = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ count: 0, slot: 0 });
   useEffect(() => {
@@ -61,7 +62,7 @@ function useSlots(ratio: number) {
 type Drawn = Extract<FilmstripState, { kind: 'drawn' }>;
 
 /** One box per slot, each showing the sprite frame nearest its middle. */
-function SpriteFrames({
+export function SpriteFrames({
   strip,
   src,
   count,
@@ -92,7 +93,7 @@ const ICON = 'size-3.5 shrink-0';
 const WAITING = <Clock aria-hidden className={cn(ICON, 'text-ink-3')} />;
 
 /** Until the sprite shows: where media.filmstrip is, in one line. */
-function stateLine(
+export function stateLine(
   i18n: I18n,
   state: Exclude<FilmstripState, Drawn> | { kind: 'broken' },
 ): [ReactNode, string] {

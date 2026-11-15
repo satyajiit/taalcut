@@ -49,6 +49,7 @@ import { mcpSessionsContract } from '../mcp/mcp-sessions-contract';
 import { localeContract } from '../settings/locale-contract';
 import { speechContract } from '../settings/spoken-languages';
 import { interfaceSoundsContract } from '../settings/interface-sounds';
+import { postCaptionContract } from '../settings/post-caption-credit';
 import { stylesContract } from '../styles/styles-contract';
 import { voiceCaptureContract, voiceCaptureFilesContract } from './voice-capture-contract';
 import { memoryContract } from '../memory/memory-contract';
@@ -108,6 +109,8 @@ export const UTILITY_CONTRACTS = {
     /** LIB1-LANG: the languages you speak (settings/spoken-languages.ts). */
     speech: speechContract,
     interfaceSounds: interfaceSoundsContract,
+    /** CAP1: the caption credit switch (settings/post-caption-credit.ts). */
+    postCaption: postCaptionContract,
     /** LRN1-MEM: Settings → Memory. */
     memory: memoryContract,
     telemetry: telemetryContract,
@@ -258,6 +261,8 @@ export const appContract = {
   /** LIB1-LANG: the languages you speak. */
   speech: speechContract,
   interfaceSounds: interfaceSoundsContract,
+  /** CAP1: the caption credit switch. */
+  postCaption: postCaptionContract,
   telemetry: telemetryContract,
   feedback: feedbackContract,
   updates: updatesContract,
@@ -326,6 +331,7 @@ export const APP_ROUTES = {
   onboarding: 'agent',
   speech: 'agent',
   interfaceSounds: 'agent',
+  postCaption: 'agent',
   telemetry: 'agent',
   feedback: 'main',
   updates: 'main',

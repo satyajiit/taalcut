@@ -40,6 +40,7 @@ import {
   CircleCheck,
   CircleDot,
   CircleFadingArrowUp,
+  CircleGauge,
   CircleHelp,
   CircleMinus,
   CircleStop,
@@ -73,6 +74,7 @@ import {
   History,
   Hourglass,
   Image,
+  ImagePlay,
   Import,
   Info,
   KeyRound,
@@ -109,6 +111,7 @@ import {
   PlugZap,
   Plus,
   Puzzle,
+  Ratio,
   RectangleVertical,
   Redo2,
   RefreshCw,
@@ -126,6 +129,7 @@ import {
   ShieldCheck,
   SlidersHorizontal,
   Smartphone,
+  Snowflake,
   SquareCheckBig,
   SquarePlay,
   Star,
@@ -190,6 +194,12 @@ export const CONCEPT_ICONS = {
   // EDT1: what the editor's bed holds besides clips and words: a motion graphic, a transition between two clips.
   graphic: Sticker,
   transition: ArrowRightLeft,
+  // MORE1: what the editor's More tiles change besides a transition and the colour: how fast a scene plays, a
+  // moment held still, the video's cover and its shape.
+  speed: CircleGauge,
+  freeze: Snowflake,
+  cover: ImagePlay,
+  videoSize: Ratio,
   // HFW1-UI: a designed graphic's files (the editor's Files tab), one of them, and the checks it passed.
   designFiles: FolderCode,
   file: FileCode,

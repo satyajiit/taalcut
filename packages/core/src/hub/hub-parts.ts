@@ -75,7 +75,9 @@ export const hubCaptionStyleSchema = captionStyleSchema
     background: strictNullable(captionStyleSchema.shape.background),
   })
   .strict();
+// TXT1: a look's shadow and letter spacing stay out of hub v0 (its text look is as it was).
 export const hubTextLookSchema = textLookSchema
+  .omit({ shadow: true, letterSpacing: true })
   .extend({
     font: hubFont,
     background: strictNullable(textLookSchema.shape.background),

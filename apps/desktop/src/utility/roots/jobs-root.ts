@@ -87,6 +87,7 @@ import { placeJobRegistrations, registerPlaces } from './library-places';
 import { mainServices } from './main-services';
 import { mediaBinaries, wireMediaJobs } from './media-jobs';
 import { renderJobs } from './render-jobs';
+import { settleRenders } from './render-settle';
 import { templateJobs } from './template-jobs';
 import { workspaceShellJobs } from './workspace-shell';
 import { componentList, usedByOf } from './system-info';
@@ -360,6 +361,7 @@ export function composeJobs(config: UtilityConfig, options: JobsRootOptions = {}
     if (media) await media.readCap(container.resolve(SettingsStoreToken));
     void applyHardwarePlan(engine, hardware); // this machine's budgets and lanes once probed; defaults until then
     await engine.start();
+    await settleRenders(container); // a render whose export job is gone is stopped, not left waiting
     await startLibraryJobs(container);
     libraryStarted = true;
     // A cache already over its cap is kept to it, 30 s on, keeping what is in use: the clips the windows show are

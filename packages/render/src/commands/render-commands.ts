@@ -33,7 +33,7 @@ import { hasPreset, presetCodecs, presetFor } from '../presets/presets.v1';
 import { finalizeRender, overrideQa } from '../qa/finalize';
 import { summarize } from '../qa/verdict';
 import { exportSettingFor } from '../settings';
-import { renderDestination, renderWorkFile, renderWorkSidecar } from '../store/paths';
+import { renderDelivery, renderWorkFile, renderWorkSidecar } from '../store/paths';
 import { FINAL_RENDER_STATUSES, RUNNING_RENDER_STATUSES } from '../store/snapshot';
 import type { OverrideResult, RenderCommandDeps } from './command-deps';
 import { queueExport } from './queue-export';
@@ -65,6 +65,7 @@ export function createRenderCommands(deps: RenderCommandDeps) {
     const folders = deps.folders;
     if (!folders)
       return err(ValidationError({ field: 'folders' }, { detail: 'No render folders to deliver from' }));
+    const delivery = await renderDelivery(folders, record);
     const sidecars = [];
     for (const format of record.request.captions.sidecars) {
       const from = renderWorkSidecar(folders, record.id, format);
@@ -74,14 +75,14 @@ export function createRenderCommands(deps: RenderCommandDeps) {
           () => false,
         )
       )
-        sidecars.push({ from, to: renderDestination(folders, record.projectId, record.id, format) });
+        sidecars.push({ from, to: delivery.sidecar(format) });
     }
     return finalizeRender(
       { store: deps.store, clock: deps.clock },
       {
         renderId: record.id,
         workFile: renderWorkFile(folders, record.id),
-        destination: renderDestination(folders, record.projectId, record.id),
+        destination: delivery.file,
         report,
         sidecars,
       },

@@ -13,7 +13,9 @@ import { GAP_FIX_KINDS } from '../skills/skill-refs';
 import { FORMAT_IDS } from '../templates/template-parts';
 import { p31MillisecondRangeSchema } from '../time/milliseconds';
 import { timeRangeSchema } from '../time/time-range';
+import { coverRequestSchema } from '../timeline/cover';
 import { editItemTargetSchema, editorContextSchema } from '../timeline/edit-target';
+import { postCaptionRequestSchema } from '../timeline/post-caption';
 import { MAX_COMMENT_BATCH } from '../comments/comment-schema';
 import { chatEffectIdSchema } from './chat-effects';
 
@@ -148,8 +150,15 @@ export const messageExtrasShape = {
   /** EDT1: the editor as the user saw it, from the editor's docked composer only. */
   editorContext: editorContextSchema.optional(),
   /**
+   * CAP1: the post caption asked for in the editor's caption panel, for the platform picked there; the Editor
+   * owes a caption saved for that platform.
+   */
+  postCaption: postCaptionRequestSchema.optional(),
+  /**
    * EDT1-CMT: "Send N comments to Taalcut": the comments this message hands to the agent, in the editor's order. The
    * agent sends the open ones to the run (`comments.send`) and its Editor answers each.
    */
   comments: z.array(idSchema<'TimelineComment'>()).min(1).max(MAX_COMMENT_BATCH).optional(),
+  /** CVR1: the cover asked for in the editor's cover panel, at its aspect; the Editor owes a cover at that aspect. */
+  cover: coverRequestSchema.optional(),
 };

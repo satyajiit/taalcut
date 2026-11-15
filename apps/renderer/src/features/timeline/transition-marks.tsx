@@ -5,7 +5,7 @@
  *   meeting at the cut), named in words for assistive tech ("Crossfade between clips 3 and 4"); a plain cut has none
  * states: n/a (not interactive: the clip before it sets it in the inspector) · empty (no transitions: nothing) */
 import { useLingui } from '@lingui/react/macro';
-import { TRANSITION_WORDS } from './clip-edit-controls';
+import { TRANSITION_WORDS } from './more/more-words';
 import { useEditorContext } from './editor-context';
 
 export function TransitionMarks({ pxPerFrame }: { readonly pxPerFrame: number }) {

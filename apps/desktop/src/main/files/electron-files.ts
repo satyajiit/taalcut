@@ -10,7 +10,7 @@
  * the jobs process gives.
  */
 import { constants } from 'node:fs';
-import { access, copyFile, writeFile } from 'node:fs/promises';
+import { access, copyFile, mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
   app,
@@ -23,7 +23,7 @@ import {
 } from 'electron';
 import { callRpc, ok, type Container } from '@taalcut/core';
 import { createRenderStore, presentOriginal } from '@taalcut/library';
-import { exportsFolder } from '../../shared/export-paths';
+import { exportsFolder, legacyExportsFolder } from '../../shared/export-paths';
 import { PlatformServicesToken } from '../../platform';
 import { LibraryDatabaseToken } from '../../shared/tokens';
 import type { UtilityHost } from '../rpc/utility-host';
@@ -74,6 +74,8 @@ export function electronFilesRouter(container: Container, host: Pick<UtilityHost
     renders: () => createRenderStore(container.resolve(LibraryDatabaseToken)),
     assetOriginal: (assetId) => presentOriginal(container.resolve(LibraryDatabaseToken), assetId)?.path,
     exportsDir: exportsFolder(app.getPath('userData')),
+    legacyExportsDir: legacyExportsFolder(app.getPath('userData')),
+    makeDir: async (path) => void (await mkdir(path, { recursive: true })),
     templateDocument: (input) => callRpc(host.client('agent').templates.exportDocument(input)),
     writeText: (path, text) => writeFile(path, text, 'utf8'),
     installedNotice: async (componentId) => {

@@ -4,13 +4,15 @@
 import type { ProjectId, TimelineId } from '@taalcut/core';
 import type { ComponentProps } from 'react';
 import { BulkControls } from './bulk-controls';
+import { InspectorComments } from './comments/inspector-comments';
 import { CoverPanel } from './cover-panel';
 import { EditorTaskPanel, type EditorTask } from './dock/editor-task';
 import type { InspectorTool } from './editor-workspace-state';
 import { Inspector } from './inspector';
-import { MoreActions } from './more-actions';
+import { MoreGallery } from './more/more-gallery';
 import { NarrationPanel } from './narration-panel';
 import type { Playhead } from './playhead';
+import { PostCaptionTile } from './post-caption/post-caption-tile';
 import { WordsPanel } from './words-panel';
 
 interface EditorPanelsProps extends Omit<ComponentProps<typeof Inspector>, 'tool'> {
@@ -24,6 +26,8 @@ interface EditorPanelsProps extends Omit<ComponentProps<typeof Inspector>, 'tool
   onCloseTask(): void;
   onCover(): void;
   onVideo(id: TimelineId): void;
+  /** The simple view's way back to its scenes; absent where the timeline is on screen. */
+  onScenes?: (() => void) | undefined;
 }
 
 /** One panel host keeps drafts alive while the detailed timeline stays available underneath. */
@@ -38,11 +42,15 @@ export function EditorPanels({
   onCloseTask,
   onCover,
   onVideo,
+  onScenes,
   ...inspector
 }: EditorPanelsProps) {
   const { timeline, model, edits, selection } = inspector;
-  const selectedClip =
-    selection?.kind === 'clip' ? model.clips.find((view) => view.item.id === selection.clipId) : undefined;
+  // MORE1: More is a gallery of tiles for a scene or for nothing selected; anything else selected (words, a
+  // graphic, a stretch of time) keeps its own inspector. A designed video with nothing selected keeps its
+  // design's inspector too, under the video's own tiles.
+  const gallery = inspect === 'more' && (!selection || selection.kind === 'clip');
+  const designed = !selection && !!timeline.authoredPrograms?.length;
   return (
     <>
       <div hidden={!!task || inspect !== 'sound'}>
@@ -73,17 +81,25 @@ export function EditorPanels({
             <BulkControls ids={selectedIds} model={model} edits={edits} />
           ) : (
             <>
-              {inspect === 'more' && (!selection || selection.kind === 'clip') ? (
-                <MoreActions
-                  clip={selectedClip}
+              {gallery ? (
+                <MoreGallery
+                  timeline={timeline}
                   model={model}
+                  selection={selection}
                   playhead={playhead}
                   edits={edits}
+                  lookup={inspector.lookup}
+                  videoOnly={designed}
+                  comments={<InspectorComments compact selection={selection} timeline={timeline} />}
+                  onSelect={inspector.onSelect}
+                  onAddToChat={inspector.onAddToChat}
                   onVideo={onVideo}
                   onCover={onCover}
+                  onScenes={onScenes}
+                  videoTiles={<PostCaptionTile timeline={timeline} />}
                 />
               ) : null}
-              <Inspector {...inspector} tool={inspect} />
+              {!gallery || designed ? <Inspector {...inspector} tool={inspect} /> : null}
             </>
           )}
         </div>

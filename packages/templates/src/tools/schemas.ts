@@ -12,9 +12,12 @@ import {
   FORMAT_IDS,
   OVERLAY_DESIGN_KINDS,
   SHOT_TYPES,
+  SLOT_EDGES,
+  SLOT_FOOTAGE_SOURCES,
   SLOT_ROLES,
   TEXT_REVEALS,
   TEXT_ROLES,
+  TRANSITION_KINDS,
   ulidSchema,
 } from '@taalcut/core';
 import { z } from 'zod';
@@ -25,6 +28,42 @@ import { INTENT_LIMITS, MAX_SLOT_PAGE } from '../breakdown/slot-context-pages';
 import { plainTimeSchema } from '../jobs/kinds';
 
 export { plainTimeSchema };
+
+/**
+ * The reason's length as the Analyst is offered it: one short line. A page's budget (slot-context-pages.ts) was
+ * measured before KEEP1, so a statement is kept small: this and the field's keys are what a reel slot adds.
+ */
+const FOOTAGE_REASON_OFFERED = 100;
+
+/**
+ * KEEP1: whose footage a slot plays, as the Analyst states it (core's slot-footage.ts). Only a slot that is the
+ * reel's own footage needs one, with its reason; a reason past the store's length is cut at a word, never refused.
+ */
+export const slotFootageEntrySchema = z
+  .object({
+    from: z.enum(SLOT_FOOTAGE_SOURCES),
+    reason: z.string().trim().min(1).max(500).meta({ maxLength: FOOTAGE_REASON_OFFERED }).optional(),
+  })
+  .refine((footage) => footage.from !== 'reel' || footage.reason !== undefined, {
+    message: "footage.reason: say in one short line why this slot is the reel's own footage",
+    path: ['reason'],
+  })
+  .describe('Only for a slot that keeps the reel’s own footage: {from: "reel", reason}');
+
+/**
+ * MATCH1: a moment of the footage that must land on the slot's start or end (core's slot-landing.ts), as the Analyst
+ * states it. Offered short, as the footage reason is (a page's budget); a longer one is cut at a word, never refused.
+ */
+export const slotLandsEntrySchema = z
+  .object({
+    edge: z.enum(SLOT_EDGES),
+    moment: z.string().trim().min(1).max(500).meta({ maxLength: FOOTAGE_REASON_OFFERED }),
+  })
+  .describe(
+    'Only when the cut or transition at the slot’s start or end (context.startsIn, endsIn) hangs on one instant ' +
+      'of the footage: that edge, and what is seen at that instant, for anyone’s footage: {edge: "end", moment: ' +
+      '"the door swings shut"}. A video made from the template puts that instant of the user’s clip on the cut',
+  );
 
 /**
  * A slot's intent as templates.setIntents takes it. The shot type is required here ('text' and 'screen' are shot
@@ -60,6 +99,8 @@ export const slotIntentEntrySchema = z.object({
     ),
   }),
   role: z.enum(SLOT_ROLES).optional(),
+  footage: slotFootageEntrySchema.optional(),
+  lands: slotLandsEntrySchema.optional(),
 });
 
 /** A string from the reference (its title, sound credit): the mark sits on the string, not its nullable. */
@@ -91,7 +132,8 @@ export const breakdownInputSchema = z
 /** A disputed cut to judge, with its frames before and after (`breakdown/slot-context-disputes.ts`). */
 export const disputeSchema = z.object({
   at: z.int(),
-  method: z.enum(['both', 'scdet', 'embedding']),
+  // MATCH1: `pixels` is a dissolve or fade measured from the frames; `before` and `after` are the pictures either side.
+  method: z.enum(['both', 'scdet', 'embedding', 'pixels']),
   transition: z.string().nullable(),
   ruleKeeps: z.boolean(),
   before: z.string(),
@@ -157,6 +199,9 @@ export const slotContextSchema = z.object({
   camera: z.string().min(1).max(CAMERA_WORDS_CHARS).optional(),
   /** BRK1 looks: what the slot's strip shows, described on this Mac (breakdown/looks.ts); its frame is then null. */
   looks: z.string().min(1).max(LOOKS_CHARS).meta({ untrusted: 'vision' }).optional(),
+  /** MATCH1: the transition the reel comes into the slot by, and the one it leaves by; absent at a plain cut. */
+  startsIn: z.enum(TRANSITION_KINDS).optional(),
+  endsIn: z.enum(TRANSITION_KINDS).optional(),
 });
 
 /**
@@ -189,6 +234,10 @@ export const setIntentsOutputSchema = z.object({
     )
     .optional(),
   note: z.string().optional(),
+  /** KEEP1: every slot stored as the reel's own footage so far, by slot index. Absent with none. */
+  reelSlots: z.array(z.int().nonnegative()).optional(),
+  /** MATCH1: every slot stored with a moment that must land on its start or end, by slot index. Absent with none. */
+  landSlots: z.array(z.int().nonnegative()).optional(),
 });
 
 /** The verdicts and intents are the ones templates.judgeCut and templates.setIntents stored. */

@@ -22,6 +22,7 @@ import {
 } from '../templates/template-parts';
 import { cameraMotionMeasureSchema, type CameraMotionMeasure } from '../templates/camera-motion';
 import { ORIENTATIONS, type Orientation } from './media-facts';
+import { shotMomentsSchema, type ShotMoment } from './shot-moments';
 
 const unit = z.number().min(0).max(1);
 
@@ -155,6 +156,12 @@ export interface ShotDescription {
    * Absent from descriptions made before LIB1, and when nothing is happening.
    */
   readonly actions?: readonly string[];
+  /**
+   * MOM1: what the shot shows over time (shot-moments.ts): consecutive stretches from its first frame to its last,
+   * each with a note. Absent from descriptions made before MOM1, for a shot described from one frame, and when the
+   * model's answer gave none that could be used; `text` then speaks for the whole shot.
+   */
+  readonly moments?: readonly ShotMoment[];
   readonly model: { readonly provider: string; readonly model: string; readonly local: boolean };
 }
 
@@ -212,6 +219,7 @@ export const shotDescriptionSchema: z.ZodType<ShotDescription> = z.object({
   shotType: z.enum(SHOT_TYPES).optional(),
   people: z.int().nonnegative().max(1000).optional(),
   actions: z.array(shotActionSchema).max(SHOT_ACTION_LIMITS.count).optional(),
+  moments: shotMomentsSchema.optional(),
   model: z.object({ provider: z.string().min(1), model: z.string().min(1), local: z.boolean() }),
 });
 

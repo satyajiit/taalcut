@@ -15,7 +15,9 @@
  *   from frame 0 (P3-V6).
  * - d, referenceAudio: the audio stream of the reel the template keeps, from
  *   its first sample at frame 0, where its beat map starts (REF1). Finding the
- *   file is musicPreflight's job; this only lays it out.
+ *   file is musicPreflight's job; this only lays it out. LONG1: where the
+ *   timeline says the music plays bars again, the bed is one segment per
+ *   stretch, crossfaded at each splice (music-repeats.ts).
  *
  * With a Style's bumpers (P3-V10) "frame 0" is the timeline's first frame: the
  * music starts after the intro and stops where the outro starts, and the
@@ -28,6 +30,7 @@ import { speedCurve, tempoPieces } from '../plan/speed-curve';
 import type { PlannedAudioClip, RenderPlan } from '../plan/types';
 import { samplesForFrames } from '../time/frames';
 import { MIX_SAMPLE_RATE, toSamples, type AudioMixPlan, type MixSegment } from './mix-types';
+import { withMusicRepeats } from './music-repeats';
 import { speechJoins, withSpeechJoins } from './speech-joins';
 
 export { atempoChain } from '../plan/speed-filters';
@@ -177,9 +180,13 @@ function onBed(segment: MixSegment, plan: RenderPlan): MixSegment | null {
   };
 }
 
-function musicSegment(plan: RenderPlan, sources: AudioSourceMap, total: number): Result<MixSegment | null> {
+/** The music as segments: one, or one per stretch where the reel's own music plays bars again (LONG1). */
+function musicSegments(plan: RenderPlan, sources: AudioSourceMap, total: number): Result<MixSegment[]> {
   const laid = baseMusicSegment(plan, sources, total);
-  return laid.ok && laid.value ? ok(onBed(laid.value, plan)) : laid;
+  if (!laid.ok) return laid;
+  const bedded = laid.value ? onBed(laid.value, plan) : null;
+  if (!bedded) return ok([]);
+  return ok(bedded.kind === 'reference' ? withMusicRepeats(bedded, plan.musicRepeats ?? []) : [bedded]);
 }
 
 function baseMusicSegment(
@@ -222,10 +229,12 @@ export function planAudioMix(plan: RenderPlan, sources: AudioSourceMap): Result<
     const segment = clamp(joined, totalSamples);
     if (segment) segments.push(segment);
   }
-  const music = musicSegment(plan, sources, totalSamples);
+  const music = musicSegments(plan, sources, totalSamples);
   if (!music.ok) return music;
-  const clamped = music.value ? clamp(music.value, totalSamples) : null;
-  if (clamped) segments.push(clamped);
+  for (const piece of music.value) {
+    const clamped = clamp(piece, totalSamples);
+    if (clamped) segments.push(clamped);
+  }
   return ok({
     sampleRate: MIX_SAMPLE_RATE,
     totalSamples,

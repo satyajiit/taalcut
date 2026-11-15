@@ -35,6 +35,19 @@ export { createSherpaParakeetEngine } from './speech/sherpa-engine';
 export { createWhisperEngine } from './speech/whisper-engine';
 export { parseWhisperJson, wordsFromTokens } from './speech/whisper-parse';
 export { audioToolModule } from './tools/module';
+// LONG1: the bars of a piece of music, measured from its samples (no model), for playing bars again.
+export {
+  BARS_MIN_ON_BEAT,
+  BARS_MIN_PULSE,
+  findMusicBars,
+  repeatSeam,
+  type MusicBar,
+  type MusicBars,
+  type MusicChange,
+  type RepeatSeam,
+} from './bars/find-bars';
+export { measureMusicFile, type MeasuredMusic } from './bars/measure-file';
+export { BARS_SAMPLE_RATE } from './bars/spectrum';
 export { createAudioIndexJobs } from './jobs/index-handlers';
 export {
   audioIdentifyLanguageJob,

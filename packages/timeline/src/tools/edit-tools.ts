@@ -25,6 +25,7 @@ import { mendMoveFields, mendTrimFields } from './clip-mend';
 import { createClipNumbering, idsOnly, numberedClips, oneClipId, type ClipRef } from './clip-refs';
 import { editCommandTool } from './edit-command-tool';
 import { guardPointing } from './pointing-guard';
+import { guardSequence } from './sequence-guard';
 import type { EditorToolDeps } from './editor-tools';
 import { ms } from './editor-payloads';
 import { editInputs } from './json';
@@ -54,8 +55,10 @@ const EDITS = [
   },
   {
     command: TIMELINE_COMMANDS.editText,
+    // TXT1: a box it gives places a text as timeline.moveText does, and its box follows new words.
+    version: '1.1.0',
     description:
-      "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words.",
+      "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words. A line break in the wording is the only thing that breaks a line; a box places a text as timeline.moveText does.",
     summary: 'Edits, retimes, moves or removes one or more on-screen text items in a single step.',
     tags: [
       'text',
@@ -79,8 +82,10 @@ const EDITS = [
   },
   {
     command: TIMELINE_COMMANDS.moveText,
+    // TXT1: the box says where a text sits, never where its words wrap.
+    version: '1.1.0',
     description:
-      'Moves the normalised bounding box (x, y, width, height in 0..1) of one or more on-screen text items (via itemId, itemIds[], or moves[]), e.g. into the platform safe area for a QA fix.',
+      'Moves one or more on-screen text items (via itemId, itemIds[], or moves[]) to a box (x, y, width, height in 0..1). The box says where a text sits, never where it wraps: its words draw on one line from the box’s left edge, centre or right edge (as the text is aligned), at the box’s middle. To break a line, put a line break in the words (timeline.editText) or state a width with timeline.placeText.',
     summary:
       'Moves one or more on-screen texts (the title or other lines) in the frame: up, down, to the top or bottom.',
     tags: [
@@ -344,6 +349,11 @@ export function editTools(deps: EditorToolDeps = {}): AnyTool[] {
             payload: async (input, _artifacts, ctx) => {
               const made = await payload(input as never, ctx, withNumbering);
               if (!made.ok) return made;
+              // LYR1: a text the reference shows in turn with others is not stretched over their turns.
+              if (edit.command === TIMELINE_COMMANDS.editText) {
+                const inTurn = await guardSequence(made.value as never, ctx, withNumbering);
+                if (!inTurn.ok) return inTurn;
+              }
               // EDT1-OPS: a change away from what the person pointed at, refused once (pointing-guard.ts).
               const pointing = await guardPointing(
                 edit.command,

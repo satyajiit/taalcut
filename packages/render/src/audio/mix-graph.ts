@@ -61,11 +61,14 @@ export function segmentFilter(segment: MixSegment, input: number, label: string)
     `apad=whole_len=${segment.samples}`,
     `atrim=end_sample=${segment.samples}`,
   ];
-  // Equal-power curves: two clips crossfading over a transition or a speech join keep their loudness.
-  if (segment.fadeInSamples > 0) steps.push(`afade=t=in:ss=0:ns=${segment.fadeInSamples}:curve=qsin`);
+  // Equal-power curves: two clips crossfading over a transition or a speech join keep their loudness. LONG1: a
+  // linear one where the two sides are one recording in step (the reel's music playing bars again).
+  const curve = (linear: 'linear' | undefined) => (linear ? 'tri' : 'qsin');
+  if (segment.fadeInSamples > 0)
+    steps.push(`afade=t=in:ss=0:ns=${segment.fadeInSamples}:curve=${curve(segment.fadeInCurve)}`);
   if (segment.fadeOutSamples > 0)
     steps.push(
-      `afade=t=out:ss=${segment.samples - segment.fadeOutSamples}:ns=${segment.fadeOutSamples}:curve=qsin`,
+      `afade=t=out:ss=${segment.samples - segment.fadeOutSamples}:ns=${segment.fadeOutSamples}:curve=${curve(segment.fadeOutCurve)}`,
     );
   if (segment.gainDb !== 0) steps.push(`volume=${segment.gainDb}dB`);
   if (segment.startSample > 0) steps.push(`adelay=delays=${segment.startSample}S:all=1`);

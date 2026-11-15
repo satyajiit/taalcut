@@ -2,17 +2,18 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * HFW1-UI's journey in the real app: the editor's docked chat asks for a designed graphic, which the Editor hands to
- * the Designer, and the person uses it and takes it back. The test build on recorded model sessions (stand-in
- * provider: no key, no network, no cost): the make flow's reference journey makes the video, taking the gaps
- * card's proposals, up to its one approval; then, in the editor:
+ * HFW1-UI's journey in the real app, as DSG2 left it: the editor's docked chat asks for a designed graphic, which the
+ * Editor hands to the Designer, and the design is in the video at once. The test build on recorded model sessions
+ * (stand-in provider: no key, no network, no cost): the make flow's reference journey makes the video, taking the
+ * gaps card's proposals, up to its one approval; then, in the editor:
  *
  * - "Add a newspaper-style headline at 0:04" in the docked chat goes to the Editor, which records a design job
  *   (graphics.design); the Designer's step after it writes the headline's composition into the project's workspace
- *   (workspace.writeFiles), checks it and proposes it at 0:04 (graphics.placeComposition). Its card in the dock names
- *   the design and when it plays, with Use it, Try again and Change…; the graphics lane shows it by its name, marked
- *   Proposed; it is stored as a proposal drawn with its composition, which the timeline keeps a copy of.
- * - Use it on the card: it is part of the video ("Added to your video."). ⌘Z makes it a proposal again.
+ *   (workspace.writeFiles), checks it, draws it over the video and places it at 0:04 (graphics.placeOptions). Its
+ *   card in the dock names the design and when it plays, with nothing to "use": it is part of the video. The
+ *   graphics lane shows it by its name, not marked Proposed; it is stored drawn with its composition, which the
+ *   timeline keeps a copy of, as the first design of its set (the stand-in has one design, so there is nothing to
+ *   choose between yet).
  * - The dock's Files tab shows the design's files, read only, from the project's workspace.
  *
  * Re-record with TAALCUT_RECORD=1 TAALCUT_RECORD_SESSION=edit-design (the make flow's part replays from its own
@@ -28,6 +29,7 @@ import {
   EDIT_DESIGN_ASK,
   EDIT_DESIGN_AT,
   EDIT_DESIGN_ENTRY,
+  EDIT_DESIGN_IDEA,
   EDIT_DESIGN_NAME,
   EDIT_DESIGN_SESSION,
   MAKE_FLOW_REFERENCE,
@@ -107,7 +109,7 @@ test.afterAll(async () => {
   if (root) rmSync(root, { recursive: true, force: true });
 });
 
-test('the docked chat: “a newspaper-style headline at 0:04”, designed and proposed; Use it; ⌘Z; its files', async () => {
+test('the docked chat: “a newspaper-style headline at 0:04”, designed and in the video at once; its files', async () => {
   test.setTimeout(FLOW_MS * 2);
   // A video to edit: the reference journey up to its one approval (its draft passed QA).
   await page.getByRole('link', { name: 'New chat' }).click();
@@ -136,22 +138,26 @@ test('the docked chat: “a newspaper-style headline at 0:04”, designed and pr
     timeout: 30_000,
   });
 
-  // "Add a newspaper-style headline at 0:04": designed, proposed, not yet in the video.
+  // "Add a newspaper-style headline at 0:04": designed and in the video at once (DSG2: no proposal to accept).
   const box = dock.getByRole('textbox', { name: 'Message Taalcut' });
   await box.fill(EDIT_DESIGN_ASK);
   await box.press('Enter');
   const card = dock.getByRole('article', { name: `Motion graphic: ${EDIT_DESIGN_NAME}` }).last();
-  const proposal = card.locator('[data-slot=design-proposal]');
-  await expect(proposal).toBeVisible({ timeout: FLOW_MS });
-  await expect(proposal.getByText(/^Plays from 0?0:04 to /)).toBeAttached();
-  for (const action of ['Use it', 'Try again', 'Change…'])
-    await expect(card.getByRole('button', { name: action })).toBeVisible();
+  await expect(card).toBeVisible({ timeout: FLOW_MS });
+  await expect(card.getByText(/^Starts at 0?0:04/)).toBeVisible();
+  await expect(card.locator('[data-slot=design-proposal]')).toHaveCount(0);
+  await expect(card.getByRole('button', { name: 'Use it' })).toHaveCount(0);
   const now = stored(world.userData, id);
   const made = graphicsOf(now).filter((item) => !before.includes(item.id));
   expect(made).toHaveLength(1);
   const graphic = made[0]!;
   expect(graphic.composition).toBeTruthy();
-  expect(graphic.proposal).toMatchObject({ request: EDIT_DESIGN_ASK, design: 'designed' });
+  expect(graphic.proposal).toBeUndefined();
+  // The first design of its set: one design is in use, with nothing to choose between yet.
+  expect(graphic.options).toMatchObject({
+    request: EDIT_DESIGN_ASK,
+    designs: [{ compositionId: graphic.composition.id, idea: EDIT_DESIGN_IDEA }],
+  });
   expect(graphic.start.value / (graphic.start.rate.num / graphic.start.rate.den)).toBeCloseTo(
     EDIT_DESIGN_AT,
     1,
@@ -161,29 +167,16 @@ test('the docked chat: “a newspaper-style headline at 0:04”, designed and pr
     entry: EDIT_DESIGN_ENTRY,
   });
   const block = page.locator(`[data-slot=timeline-graphic][data-graphic-id="${graphic.id}"]`);
-  await expect(block).toHaveAttribute('data-proposed', '');
+  await expect(block).not.toHaveAttribute('data-proposed', '');
   await expect(block).toContainText(EDIT_DESIGN_NAME);
 
   // The Editor recorded the job and the Designer's step designed and placed it, in the same run.
   const run = library.runFor(EDIT_DESIGN_ASK);
   expect(run, `the ${EDIT_DESIGN_SESSION.name} run`).toBeTruthy();
   const commands = library.commandsOf(run!).map((command) => command.name);
-  expect(commands).toEqual(expect.arrayContaining(['workspace.writeFiles', 'graphics.placeComposition']));
+  expect(commands).toEqual(expect.arrayContaining(['workspace.writeFiles', 'graphics.placeOptions']));
   expect(commands).not.toContain('graphics.propose');
-
-  // Use it: part of the video. ⌘Z: a proposal again.
-  await card.getByRole('button', { name: 'Use it' }).click();
-  await expect(card).toContainText('Added to your video.');
-  await expect(block).not.toHaveAttribute('data-proposed', '');
-  await expect
-    .poll(() => graphicsOf(stored(world.userData, id)).find((item) => item.id === graphic.id)?.proposal)
-    .toBe(undefined);
-  await page.getByRole('group', { name: 'Video preview' }).click();
-  await page.keyboard.press('ControlOrMeta+z');
-  await expect(block).toHaveAttribute('data-proposed', '');
-  await expect
-    .poll(() => graphicsOf(stored(world.userData, id)).find((item) => item.id === graphic.id)?.proposal)
-    .toMatchObject({ request: EDIT_DESIGN_ASK });
+  expect(commands).not.toContain('graphics.placeComposition');
 
   // Its files, read only, from the project's workspace: View files opens Files in the lower work area.
   await block.click();

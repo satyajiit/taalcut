@@ -182,15 +182,12 @@ export function jobEventSink(bus: EventBus, log: (message: string) => void = con
   };
 }
 
-/** The engine's PowerState, holding the latest snapshot main sent. On AC and nominal until the first. */
+/** The engine's PowerState, holding the latest snapshot main sent. Nominal until the first. */
 export function forwardedPower(): { readonly power: PowerState; apply(snapshot: PowerSnapshot): void } {
-  let current: PowerSnapshot = { onBattery: false, thermalState: 'nominal' };
+  let current: PowerSnapshot = { thermalState: 'nominal' };
   const listeners = new Set<() => void>();
   return {
     power: {
-      get onBattery() {
-        return current.onBattery;
-      },
       get thermalState() {
         return current.thermalState;
       },
@@ -200,7 +197,7 @@ export function forwardedPower(): { readonly power: PowerState; apply(snapshot: 
       },
     },
     apply(snapshot) {
-      if (snapshot.onBattery === current.onBattery && snapshot.thermalState === current.thermalState) return;
+      if (snapshot.thermalState === current.thermalState) return;
       current = snapshot;
       for (const listener of [...listeners]) listener();
     },

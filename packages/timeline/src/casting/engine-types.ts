@@ -21,6 +21,8 @@ import type { CastingConfig } from './config';
 import type { HookVariantRequest } from './hook-variants';
 import type { CastingConfigSource, CastingWeightsUsed } from './learned/config-source';
 import type { CastVariant } from './result';
+import type { SlotSpec } from './slots';
+import type { StatedPart } from './stated-parts';
 import type { LockedShot } from './template-pools';
 
 export interface CastRequest {
@@ -42,6 +44,8 @@ export interface CastRequest {
   readonly exclude?: readonly ShotId[];
   /** The order a vision rerank gave a slot's five, best first. */
   readonly rerank?: readonly { readonly slotId: SlotId; readonly order: readonly ShotId[] }[];
+  /** MOM1: the part of a shot the model stated for a slot; the pick's in-point is chosen inside it. */
+  readonly parts?: readonly StatedPart[];
   /**
    * The made video's size, when a person chose it. Absent: the template's, unless most picks have another
    * orientation (BRK1-MAKE, follow-canvas.ts).
@@ -86,6 +90,11 @@ export interface CastingEngine {
   alternates(request: AlternatesRequest, signal?: AbortSignal): AsyncResult<CastCandidate[]>;
   /** FIX-TRIM: the catalogue's profiles of these shots, for assembly's in-points with the person (absent: none). */
   profiles?(refs: readonly ShotProfileRef[], signal?: AbortSignal): AsyncResult<ShotProfile[]>;
+  /**
+   * MOM1: a template's slot specs with what each slot states embedded (slot-asks.ts), for in-points chosen outside a
+   * cast. An embedder that fails leaves them unembedded.
+   */
+  slotSpecs?(template: Template, canvas?: Canvas, signal?: AbortSignal): Promise<SlotSpec[]>;
 }
 
 export interface CastingEngineDeps {

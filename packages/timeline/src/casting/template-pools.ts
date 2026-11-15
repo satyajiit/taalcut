@@ -25,6 +25,8 @@ import {
   type SlotPool,
 } from './candidates';
 import { profileKey } from './catalog';
+import { withAskSet } from './moment-fit';
+import { reelPool } from './reel-slots';
 import type { LockedPick } from './result';
 import type { SlotSpec } from './slots';
 
@@ -82,14 +84,22 @@ export async function templatePools(
     code === 'vision.embedder_unavailable' || code === 'library.embedder_unavailable';
   const needed = await withNeedVectors(input.specs, context.embedder, context.signal);
   if (!needed.ok && !isEmbedderUnavailable(needed.error.code)) return needed;
-  const specs = needed.ok ? needed.value : input.specs;
-  const texts = [...new Set(specs.flatMap((spec) => (spec.intentText ? [spec.intentText] : [])))];
+  const plain = needed.ok ? needed.value : input.specs;
+  const texts = [...new Set(plain.flatMap((spec) => (spec.intentText ? [spec.intentText] : [])))];
   const vectors = needed.ok ? await embedAll(context.embedder, texts, context.signal) : null;
   if (vectors && !vectors.ok && !isEmbedderUnavailable(vectors.error.code)) return vectors;
   const byText =
     vectors && vectors.ok
       ? new Map(texts.map((text, index) => [text, vectors.value[index] as Float32Array]))
       : new Map<string, Float32Array>();
+  // MOM1: each spec keeps its intent's vector and every slot's asks, which the in-point rule weighs a shot's
+  // moments against (moment-fit.ts).
+  const specs = withAskSet(
+    plain.map((spec) => ({
+      ...spec,
+      intentVector: spec.intentText ? (byText.get(spec.intentText) ?? null) : null,
+    })),
+  );
   const reranks = new Map((input.rerank ?? []).map((entry) => [entry.slotId as string, entry.order]));
   const reserved = [...(input.reserved ?? new Map<string, string>())];
   const excludedFor = (slotId: string) =>
@@ -98,17 +108,20 @@ export async function templatePools(
       : new Set([...input.excluded, ...reserved.flatMap(([key, owner]) => (owner === slotId ? [] : [key]))]);
   const results = await Promise.all(
     specs.map((spec) =>
-      gatherPool(
-        {
-          slot: spec,
-          vector: spec.intentText ? (byText.get(spec.intentText) ?? null) : null,
-          locked: input.locked.get(spec.index) ?? null,
-          rerank: reranks.get(spec.slotId) ?? null,
-        },
-        input.scope,
-        excludedFor(spec.slotId),
-        context,
-      ),
+      // KEEP1: a slot that keeps the reel's footage asks the library for nothing.
+      spec.reel
+        ? Promise.resolve(ok(reelPool(spec)))
+        : gatherPool(
+            {
+              slot: spec,
+              vector: spec.intentVector,
+              locked: input.locked.get(spec.index) ?? null,
+              rerank: reranks.get(spec.slotId) ?? null,
+            },
+            input.scope,
+            excludedFor(spec.slotId),
+            context,
+          ),
     ),
   );
   const pools: SlotPool[] = [];
@@ -116,19 +129,19 @@ export async function templatePools(
     if (!pool.ok) return pool;
     pools.push(pool.value);
   }
-  const unlocked = pools.filter((pool) => !pool.locked);
+  const unlocked = pools.filter((pool) => !pool.locked && !pool.slot.reel);
   const strictKeys = new Set(
     unlocked.flatMap((pool) => (pool.relaxed ? [] : pool.candidates.map((candidate) => candidate.key))),
   );
   if (strictKeys.size > 0 && strictKeys.size < unlocked.length) {
     const widened = await Promise.all(
       pools.map((pool) => {
-        if (pool.locked || pool.relaxed) return Promise.resolve(ok(pool));
+        if (pool.locked || pool.relaxed || pool.slot.reel) return Promise.resolve(ok(pool));
         const spec = pool.slot;
         return gatherPool(
           {
             slot: spec,
-            vector: spec.intentText ? (byText.get(spec.intentText) ?? null) : null,
+            vector: spec.intentVector ?? null,
             locked: null,
             rerank: reranks.get(spec.slotId) ?? null,
           },

@@ -145,6 +145,12 @@ function markupOf(
       if (name === 'data-start') out.push([name, String(Math.round((Number(value) + offset) * 1e6) / 1e6)]);
       else if (name === 'src' && placement.assets?.[value])
         out.push([name, placement.assets[value].bundlePath]);
+      // CVR2: a picture by reference draws the picture the cover resolved for its name (never a source it wrote).
+      else if (name === 'data-picture' && node.tag === 'img') {
+        out.push([name, value]);
+        const picture = placement.pictures?.[value];
+        if (picture && node.attributes.src === undefined) out.push(['src', picture.bundlePath]);
+      }
       // A paint, clip or mask by id names the composition's own element, prefixed like it.
       else out.push([name, value.replace(/^url\(#([A-Za-z][A-Za-z0-9_-]*)\)$/, `url(#${prefix}$1)`)]);
     }
@@ -242,7 +248,10 @@ export function compositionsLayer(
         tweens.push(...placedTweens(placement, context, prefix));
         splits.push(...composition.motion.splits.map((split) => ({ ...split, id: prefix + split.id })));
         for (const font of composition.fonts) fonts.add(font);
-        for (const asset of Object.values(placement.assets ?? {}))
+        for (const asset of [
+          ...Object.values(placement.assets ?? {}),
+          ...Object.values(placement.pictures ?? {}),
+        ])
           links[asset.bundlePath] = { source: asset.source, key: asset.key };
       }
       return ok(layerOutput({ markup, css, motion: { tweens, splits }, links, fonts: [...fonts], warnings }));

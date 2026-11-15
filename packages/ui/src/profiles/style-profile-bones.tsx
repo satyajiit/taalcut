@@ -41,7 +41,7 @@ export function StyleProfileBones() {
   return (
     <div
       data-slot="style-profile-bones"
-      className="flex flex-col gap-4 rounded-lg border border-rule bg-raised p-4 shadow-xs"
+      className="@container flex flex-col gap-4 rounded-lg border border-rule bg-raised p-4 shadow-xs"
     >
       <span className="sr-only" role="status">
         {t`Loading`}
@@ -50,14 +50,14 @@ export function StyleProfileBones() {
         <span className={cn(BONE, 'h-5 w-72 max-w-full')} />
         <span className={cn(BONE, 'h-3 w-36')} />
       </span>
-      <span aria-hidden className="grid grid-cols-2 gap-x-6 gap-y-4 lg:grid-cols-4">
+      <span aria-hidden className="grid grid-cols-2 gap-x-6 gap-y-4 @min-[38rem]:grid-cols-4">
         {Array.from({ length: 8 }, (_, index) => (
           <FactBones key={index} />
         ))}
       </span>
       <span aria-hidden className="flex flex-col gap-2">
         <span className={cn(BONE, 'h-4 w-32')} />
-        <span className="grid grid-cols-1 gap-2 lg:grid-cols-3">
+        <span className="grid grid-cols-1 gap-2 @min-[38rem]:grid-cols-3">
           {Array.from({ length: 3 }, (_, index) => (
             <ExemplarBones key={index} />
           ))}

@@ -4,7 +4,7 @@
 /**
  * Text items (overlay text from the template, the Editor or the user): plain text, always escaped, placed by
  * their box on the canvas, revealed by tc.js. A Style's text look (P3-V10, style/text-looks.ts) restyles the
- * items whose `styleKey` it names, unless a person wrote the text.
+ * items whose `styleKey` it names (TXT1: every text of the role, whoever wrote the words).
  */
 import { ok } from '@taalcut/core';
 import { textLookRules } from '../../style/text-looks';

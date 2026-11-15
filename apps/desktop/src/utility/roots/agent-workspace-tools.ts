@@ -134,6 +134,8 @@ export function workspaceToolDepsOf(container: Container): WorkspaceToolDeps {
     store: container.resolve(WorkspaceStoreToken),
     timelines: renderTimelines(container),
     ...(worker?.workspaceFrames ? { frames: worker.workspaceFrames } : {}),
+    // CVR2: workspace.placeCover draws the cover as the panel and the export do, in the render process.
+    ...(worker?.coverImage ? { coverImage: worker.coverImage } : {}),
     ...(templates ? { templates } : {}),
     look: lookOf(container),
     comments: openComments(container),

@@ -3,8 +3,8 @@
 
 /**
  * The durable job engine (PRD G7, plan P1-E1). It claims due jobs from the
- * JobStore within per-class budgets (lowered on battery and under thermal
- * pressure) and per-lane limits inside them (slots.ts), runs their handlers,
+ * JobStore within per-class budgets (lowered under thermal pressure, never
+ * for battery) and per-lane limits inside them (slots.ts), runs their handlers,
  * and reclaims jobs whose worker died. One engine per process; several
  * processes can share one store, unless the engine is `exclusive` (takeover.ts).
  */
@@ -73,7 +73,7 @@ class Engine implements JobEngine {
     this.slots = new Slots(
       { classes: { ...DEFAULT_CONCURRENCY, ...options.concurrency }, lanes: options.lanes ?? {} },
       options.throttle ?? defaultThrottle,
-      () => ({ onBattery: this.power.onBattery, thermalState: this.power.thermalState }),
+      () => ({ thermalState: this.power.thermalState }),
     );
     this.pausedAll = options.startPaused ?? false;
   }
@@ -345,7 +345,7 @@ class Engine implements JobEngine {
   }
 
   private limitsChanged(): void {
-    const power = { onBattery: this.power.onBattery, thermalState: this.power.thermalState };
+    const power = { thermalState: this.power.thermalState };
     const { slots } = this;
     const folds = slots.folds();
     this.ctx.emit({

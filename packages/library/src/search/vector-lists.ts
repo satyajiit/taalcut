@@ -29,6 +29,13 @@ import type { TranscriptCredit, VectorList } from './fusion/versions';
 
 export type { VectorList };
 
+/**
+ * The item kinds a search's kNN reads, one list each. MOM1: a shot's moment vectors (`moment:<shotId>:<n>`) are in
+ * the same index for casting's in-points and are left out here, so they take no neighbour's place: a search ranks
+ * exactly what it ranked before them.
+ */
+export const SEARCHED_KINDS: readonly VectorList[] = ['frame', 'description', 'transcript', 'ocr'];
+
 /** The shot an item id names directly, or null for transcripts and unknown ids. */
 export function shotOfItem(
   id: string,

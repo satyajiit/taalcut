@@ -15,6 +15,7 @@ import {
   forwardCommandEvents,
   newId,
   ok,
+  type StyleStore,
   type SubjectSource,
 } from '@taalcut/core';
 import { createMemoryShotCatalog } from '../../src/casting/catalog';
@@ -23,6 +24,8 @@ import { createTimelineService } from '../../src/service/service';
 import { memoryTemplateReader, type TemplateReader } from '../../src/service/templates';
 import type { GraphicsReady } from '../../src/tools/graphics-wait';
 import { timelineToolModule } from '../../src/tools/module';
+import type { ReelMusicSource } from '../../src/tools/reel-music';
+import type { ReelSource } from '../../src/tools/reel-source';
 import type { ShotDescriptions } from '../../src/tools/rerank-material';
 import { world, type World, type WorldDef } from './casting';
 import { createMemoryTimelineStore } from './store';
@@ -47,6 +50,12 @@ export interface AgentWorldOptions {
   /** FIX-GFXWAIT: the templates the tools read (default: the world's one template), and the wait for graphics. */
   readonly templates?: TemplateReader;
   readonly graphicsReady?: GraphicsReady;
+  /** KEEP1: the template's kept reel as a library asset, for the slots that keep its footage. */
+  readonly reel?: ReelSource;
+  /** TXT1: the Styles a video's text design is saved to and read from. */
+  readonly styles?: Pick<StyleStore, 'get' | 'create'>;
+  /** LONG1: the measured bars of the template's kept reel, for the length tools. */
+  readonly reelMusic?: ReelMusicSource;
 }
 
 /** The tools and stores over a casting world built elsewhere (a library of the test's own making). */
@@ -67,6 +76,7 @@ export function agentWorldOver(cast: World, options: AgentWorldOptions = {}) {
       clock,
       catalog: createMemoryShotCatalog(cast.profiles),
       ...(options.subjects ? { templates, subjects: options.subjects } : {}),
+      ...(options.styles ? { styles: options.styles } : {}),
     }).all,
   );
   const service = createTimelineService({ store, events, engine: cast.engine, templates });
@@ -78,8 +88,11 @@ export function agentWorldOver(cast: World, options: AgentWorldOptions = {}) {
     clock,
     ...shotDescriptions,
     ...subjects,
+    ...(options.styles ? { textStyle: options.styles.get } : {}),
     ...(options.workspace ? { workspace: options.workspace } : {}),
     ...(options.graphicsReady ? { graphicsReady: options.graphicsReady } : {}),
+    ...(options.reel ? { reel: options.reel } : {}),
+    ...(options.reelMusic ? { reelMusic: options.reelMusic } : {}),
   });
   const artifacts = memoryArtifactStore();
   const projectId = newId<'Project'>();

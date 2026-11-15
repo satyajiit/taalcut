@@ -120,6 +120,18 @@ export function lintFix(text: string, first: { readonly code: string; readonly m
     const inside = root ? selectorsIn(root.inner) : selectorsIn(text);
     const tween = lines.find((line) => line.text.includes(missing)) ?? lines.find((line) => /\btl\.(to|from|fromTo|set)\(/.test(line.text));
     if (!tween) return undefined;
+    // A root with nothing in it: the tween is right and its element was never written (a 9B renamed the selector
+    // for ten rounds). Say the element to write, by the selector the tween already names.
+    const simple = /^([#.])([A-Za-z][\w-]*)$/.exec(missing);
+    if (root && inside.length === 0 && simple)
+      return {
+        line: tween.number,
+        now: tween.text.trim(),
+        why:
+          `The root element is empty, so "${missing}" matches nothing. Keep this line and write the element inside ` +
+          `the root (between <div id="root" …> and its </div>): <div ${simple[1] === '#' ? 'id' : 'class'}="${simple[2]}">…</div>, ` +
+          'with the words in it as a text variable.',
+      };
     return {
       line: tween.number,
       now: tween.text.trim(),

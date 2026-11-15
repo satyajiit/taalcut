@@ -51,7 +51,7 @@ describe('timeline.maker (AGT2)', () => {
     const world = agentWorld();
     const without = timelineSkillModule({ service: world.service, templates: world.templates });
     expect(without.skills.map((skill) => skill.id)).toEqual(['timeline.librarian', 'timeline.editor']);
-    expect(makerOf(TODAY)?.version).toBe('1.3.0');
+    expect(makerOf(TODAY)?.version).toBe('1.7.0');
   });
 
   it('lists the workspace shell where it is registered, for the Maker and the Editor alike', () => {
@@ -188,7 +188,8 @@ describe('timeline.maker (AGT2)', () => {
 
   it('offers the complete local cover workflow only where its tools are registered', () => {
     const world = agentWorld();
-    const coverTools = ['timeline.setCover', 'render.exportCover'];
+    // CVR2: a cover is a designed composition saved with workspace.placeCover.
+    const coverTools = ['workspace.placeCover', 'timeline.setCover', 'render.exportCover'];
     const skills = (registered: (name: string) => boolean) =>
       timelineSkillModule({
         service: world.service,
@@ -203,9 +204,13 @@ describe('timeline.maker (AGT2)', () => {
     }
     const editor = skills(() => true).find((skill) => skill.id === 'timeline.editor')!;
     expect(editor.prompt).toContain('taalcut/hallmark-thumbnails');
-    expect(editor.prompt).toContain('revision returned by setCover');
-    expect(editor.prompt).toContain('Inspect the saved asset with vision.describeFrame');
-    expect(editor.prompt).toContain('no silent art substitution');
+    expect(editor.prompt).toContain('A cover is a composition you design over real frames');
+    expect(editor.prompt).toContain('workspace.placeCover (medium, pictures, idea)');
+    expect(editor.prompt).toContain('render.exportCover at the revision it returned');
+    expect(editor.prompt).toContain('Look at the JPEG with vision.describeFrame');
+    expect(editor.prompt).toContain('none named: footage');
+    expect(editor.prompt).not.toContain('Save: timeline.setCover');
+    expect(editor.prompt).toContain('no drawn stand-in art');
   });
 
   it('profilesFor resolves a whole-video asset ref (shotId: null) against an indexed shot profile', async () => {

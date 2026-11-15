@@ -122,6 +122,11 @@ export const filesContract = {
     .output(z.object({ path: z.string() }).nullable()),
   revealRender: ipc.input(z.object({ renderId: idSchema<'Render'>() })).output(z.void()),
   /**
+   * FIX-EXPORTNAMES: opens the person's exports folder in Finder, where finished videos, covers and pro exports
+   * are delivered under their own names. Made first if it isn't there yet. The window names no path.
+   */
+  openExportsFolder: ipc.output(z.void()),
+  /**
    * Shows a clip's original in Finder (UX2): its first present location, managed copies first. core.not_found when
    * no location is present (the drive is away, the file is gone, or it is only in iCloud).
    */

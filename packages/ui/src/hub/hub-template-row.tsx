@@ -97,7 +97,7 @@ function ForkControl({ item, fork, removed }: { item: HubRowItem; fork: HubRowFo
     );
   if (copy)
     return (
-      <span className="flex items-center gap-2">
+      <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <span role="status" className="flex items-center gap-1 text-sm text-you-strong">
           <CircleCheck aria-hidden className="size-4" />
           {t`In your templates`}
@@ -144,13 +144,18 @@ export function HubTemplateRow({ item, onOpen, fork, removed = false, className 
           label={t`Structure`}
           className="w-32 shrink-0"
         />
-        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-          {/* The name keeps its width (cut only at the row's); the format chip wraps under a long one. */}
+        {/* The words ask for 9rem beside the strip: in a narrow column (the editor's chat) they go under it at full
+            width instead of being cut to a word. */}
+        <div className="flex min-w-0 flex-[1_1_9rem] flex-col gap-0.5">
+          {/* The name keeps its width (cut only at the row's, its whole in a tooltip); the format chip wraps under a
+              long one. */}
           <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
             <button
               type="button"
               data-row-open
               onClick={onOpen}
+              translate="no"
+              title={item.name}
               className="w-fit max-w-full shrink-0 cursor-pointer truncate rounded-sm text-start text-md font-medium text-ink after:absolute after:inset-0 after:rounded-lg"
             >
               <UserContent translate="no">{item.name}</UserContent>
@@ -160,7 +165,8 @@ export function HubTemplateRow({ item, onOpen, fork, removed = false, className 
           <Facts item={item} />
           {removed ? <span className="text-sm text-warning-strong">{t`Removed from the hub`}</span> : null}
         </div>
-        <div className="relative z-10 flex shrink-0 items-center gap-3">
+        {/* Never wider than the row: the rating and Copy go on two lines when one can't hold them. */}
+        <div className="relative z-10 flex max-w-full flex-wrap items-center gap-x-3 gap-y-2">
           {forked && !fork ? <Chip tone="you">{t`In your templates`}</Chip> : null}
           <HubRatingText rating={item.rating} />
           {fork ? <ForkControl item={item} fork={fork} removed={removed} /> : null}

@@ -54,11 +54,12 @@ function Item({ icon, children }: { icon: ReactNode; children: ReactNode }) {
  * nothing when there is nothing to tell. The report is read at launch and
  * again on `recovery.changed` (main re-offers a run an agent-process crash cut
  * off); a report that arrives while the prompt is open joins it, never a
- * second dialog. Only the middle scrolls: the title and the buttons stay in
+ * second dialog. Closing it without resuming stops the tasks that were cut off
+ * (FIX-RUNSTOP), so no chat is left saying the AI is still working. Only the middle scrolls: the title and the buttons stay in
  * view however long the details are, and the main button has the focus.
  */
 export function RecoveryPrompt() {
-  const { recovery } = useServices();
+  const { recovery, chat } = useServices();
   const [, conversationsChanged] = useConversationsRevision();
   const [, runsResumed] = useRunsResumed();
   const { t } = useLingui();
@@ -118,6 +119,15 @@ export function RecoveryPrompt() {
   const dismiss = () => {
     close();
     void recovery.dismiss();
+    // FIX-RUNSTOP: a task nobody picks up is stopped, not left as it was. Its run still said "running", so its
+    // chat said the AI was working for good, with nothing there to work (the owner, 2026-11-15). A task waiting on
+    // a question keeps waiting: its chat shows the question.
+    const cutOff = runs.filter((run) => run.status === 'running');
+    if (cutOff.length === 0) return;
+    void Promise.all(cutOff.map((run) => chat.stop(run.runId))).then(() => {
+      runsResumed();
+      conversationsChanged();
+    });
   };
 
   const resume = async () => {

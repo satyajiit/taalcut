@@ -172,7 +172,7 @@ async function handoffEvent(ctx: RunContext, call: ToolCallState): Promise<Event
     (await exportHandoffProblem(state, step, parsed.data, ctx.artifacts)) ||
     (await coverHandoffProblem(state, step, parsed.data, ctx.artifacts)) ||
     (await editsHandoffProblem(state, step, parsed.data, ctx.artifacts)) ||
-    postCaptionHandoffProblem(state, step, parsed.data);
+    (await postCaptionHandoffProblem(state, step, parsed.data, ctx.artifacts));
   if (problem) return failed(call, 'tools.invalid_input', problem);
   return completed(call, 'Handed off. Taalcut is checking it.', { handoff: parsed.data });
 }

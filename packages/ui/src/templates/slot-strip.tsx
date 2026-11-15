@@ -6,7 +6,8 @@
  * one block per slot, as wide as its share of the reel, so it sits under its stretch of the waveform; a 3 px mark
  *   along the top of the hook (coral), the peak (orchid) and the ending (sky), its role in the block's name too.
  *   With `frames` (the review) each block shows its slot's frame from the contact sheet at the reel's own shape,
- *   repeated across the block like a filmstrip, and its number and marks sit on small raised chips over it
+ *   repeated across the block like a filmstrip, and its number and marks sit on small raised chips over it.
+ *   KEEP1: a slot that keeps the reel's own clip carries the reel's glyph beside its number, and says so in its name
  * states: default (raised block, rule hairline) · hover (hover surface, or a strong edge over frames; its sound
  *   lights up) · focus (base ring on the block, roving: arrows, Home, End) · active (pressed surface) · selected
  *   (selection wash or the strong marigold edge) · to check (BRK1: the dashed warning circle, and "to check" in its
@@ -106,6 +107,7 @@ export function SlotStrip({
   const total = toSeconds(template.duration) || 1;
   const count = template.slots.length;
   const ToCheck = REVIEW_ICONS.toCheck;
+  const Reel = REVIEW_ICONS.reel;
 
   const focusSlot = (index: number) => {
     onSelect(index);
@@ -151,6 +153,7 @@ export function SlotStrip({
         const isSelected = index === selected;
         const position = i18n.number(index + 1);
         const checking = toCheck?.has(slot.id) ?? false;
+        const reelOwn = slot.footage?.from === 'reel';
         return (
           <motion.div
             key={slot.id}
@@ -166,6 +169,7 @@ export function SlotStrip({
             aria-label={[
               shot ? t`Slot ${position}, ${shot}` : t`Slot ${position}`,
               slot.role === 'body' ? null : i18n._(ROLE_LABELS[slot.role]),
+              reelOwn ? t`The reel’s own clip` : null,
               checking ? t`To check` : null,
               slot.approved ? t`Approved` : null,
             ]
@@ -199,13 +203,23 @@ export function SlotStrip({
                 />
               )}
               <span className="relative flex items-center justify-between gap-0.5">
-                <span
-                  className={cn(
-                    'text-xs font-semibold text-ink tabular-nums',
-                    filmstrip && 'rounded-sm bg-raised px-1 leading-4',
-                  )}
-                >
-                  {i18n.number(index + 1)}
+                <span className="flex min-w-0 items-center gap-0.5">
+                  <span
+                    className={cn(
+                      'text-xs font-semibold text-ink tabular-nums',
+                      filmstrip && 'rounded-sm bg-raised px-1 leading-4',
+                    )}
+                  >
+                    {i18n.number(index + 1)}
+                  </span>
+                  {reelOwn ? (
+                    <span
+                      data-slot="reel-mark"
+                      className={cn('hidden @[3.5rem]:flex', filmstrip && 'rounded-sm bg-raised p-px')}
+                    >
+                      <Reel aria-hidden className="size-3 shrink-0 text-ink-2" />
+                    </span>
+                  ) : null}
                 </span>
                 {/* A tile too narrow for both keeps its number; its name says the rest. */}
                 {checking ? (

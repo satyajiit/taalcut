@@ -53,14 +53,16 @@ function Lines({ card }: { card: CostEstimateCardV2 }) {
             className="flex flex-wrap items-center gap-x-2.5 border-t border-rule-subtle py-1.5 text-sm first:border-t-0"
           >
             <ProviderLogo provider={line.local ? 'local' : line.provider} size="xs" framed={false} />
-            <span className="min-w-0 flex-1 truncate text-ink">
+            {/* The model keeps 9rem: in a narrow column its amounts go under it, at the right, instead of cutting
+                the name to a few letters; a name longer than the line takes a second one, whole. */}
+            <span className="min-w-0 flex-[1_1_9rem] break-words text-ink">
               <span translate="no">{line.model}</span>
               <span className="text-ink-2">
                 {' · '}
                 {line.local ? here : <span translate="no">{providerLabel(i18n, line.provider)}</span>}
               </span>
             </span>
-            <span className="text-xs text-ink-3 tabular-nums">{billed ?? t`${tokens} tokens`}</span>
+            <span className="ms-auto text-xs text-ink-3 tabular-nums">{billed ?? t`${tokens} tokens`}</span>
             <span className="min-w-16 text-end font-medium text-ink tabular-nums">
               {line.local
                 ? t`free`
@@ -109,7 +111,9 @@ export function CostBreakdown({
           !asking && !inline && 'w-fit rounded-md border border-rule-subtle bg-chip px-2.5 py-1',
         )}
       >
-        <p className="m-0 flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 text-xs text-ink-2 tabular-nums">
+        {/* Sized by its words (flex-auto): where they and Cost breakdown don't fit one line (a narrow column, longer
+            words) the button goes under them instead of squeezing them to a word a line. */}
+        <p className="m-0 flex min-w-0 flex-auto flex-wrap items-baseline gap-x-2 text-xs text-ink-2 tabular-nums">
           {asking ? null : <Coins aria-hidden className="size-3.5 shrink-0 self-center text-ink-3" />}
           <span className="font-medium text-ink">{summary}</span>
           {state ? <span aria-hidden="true">·</span> : null}

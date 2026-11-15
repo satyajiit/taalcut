@@ -8,15 +8,11 @@ import {
   type AsyncResult,
   type ReasoningLevel,
   type ChatEvent,
-  type ChatStart,
-  type SelectionChip,
-  type EditorContext,
   type ConversationId,
   type ConversationSummary,
   type Result,
   type RunId,
   type TaalcutError,
-  type TimelineCommentId,
 } from '@taalcut/core';
 import { loadingTracker } from '@taalcut/ui';
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
@@ -25,7 +21,8 @@ import { usePlaySound } from '../features/sounds/interface-sounds';
 import { prepareEditorSend } from './prepare-editor-send';
 import { useConversationsRevision, useRunsResumed, useServices } from '../services/provider';
 import { isFinal, pendingAsks, reducer, stoppableRuns } from './conversation-reducer';
-import { addSelection, selectionKey, takeSelections } from './selection-store';
+import { once, type MessageExtras } from './message-extras';
+import { addSelection, takeSelections } from './selection-store';
 import { EMPTY_TRANSCRIPT, replay, RUN_FINISHED, type Transcript } from './transcript';
 import type { Outgoing } from './transcript-view';
 import { getPickedReasoning } from './use-agent-model';
@@ -33,6 +30,7 @@ import { useWatchPausedRun } from './use-watch-paused-run';
 import { useConversationUpdates } from './use-conversation-updates';
 
 export { pendingAsks, stoppableRuns } from './conversation-reducer';
+export type { MessageExtras } from './message-extras';
 
 export interface ConversationState {
   status: 'loading' | 'ready' | 'error';
@@ -76,27 +74,6 @@ export interface ConversationState {
   /** Stops one run that waits for an answer, by id (its paused line offers this). */
   stopRun: (runId: RunId) => void;
   reload: () => void;
-}
-
-/** What a message carries besides its words (core's messageExtrasShape). */
-export interface MessageExtras {
-  readonly start?: ChatStart;
-  readonly selections?: readonly SelectionChip[];
-  /** EDT1-CMT: the comments it sends to Taalcut. */
-  readonly comments?: readonly TimelineCommentId[];
-  /** EDT1: the editor as the user saw it, from the docked chat. */
-  readonly editorContext?: EditorContext;
-}
-
-/** The chips once each, first first (the docked chat's selection may also have been added). */
-function once(chips: readonly SelectionChip[]): SelectionChip[] {
-  const seen = new Set<string>();
-  return chips.filter((chip) => {
-    const key = selectionKey(chip);
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
 }
 
 /** The stream being shown: a sent message's run, or a run followed after an answer. */
@@ -274,6 +251,8 @@ export function useConversation(id: ConversationId): ConversationState {
                 ...(selections.length ? { selections } : {}),
                 ...(extras?.comments?.length ? { comments: extras.comments } : {}),
                 ...(editorContext ? { editorContext } : {}),
+                ...(extras?.cover ? { cover: extras.cover } : {}), // CVR1
+                ...(extras?.postCaption ? { postCaption: extras.postCaption } : {}), // CAP1
               },
               { signal: run.abort.signal },
             );
@@ -288,6 +267,8 @@ export function useConversation(id: ConversationId): ConversationState {
               selections,
               ...(extras?.comments ? { comments: extras.comments } : {}),
               ...(editorContext ? { editorContext } : {}),
+              ...(extras?.cover ? { cover: extras.cover } : {}),
+              ...(extras?.postCaption ? { postCaption: extras.postCaption } : {}),
             },
           });
           setError(result.error);

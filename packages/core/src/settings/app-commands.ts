@@ -16,6 +16,10 @@
  * - settings.openAccounts and settings.openModels: the fixes "Open Accounts"
  *   and "Open Models" on models' errors (a model not set up or signed out, a
  *   download that failed). They open that page the same way.
+ * - settings.connectChatGptImages (CVR2): the fix on
+ *   models.chatgpt_images_not_connected. The plan's images are a second
+ *   approval at OpenAI; the window opens Accounts › Subscriptions and starts
+ *   that sign-in, so one click reaches the browser page.
  * - Removed in HFW1 (retire): settings.setMotionDesign, the Motion design
  *   switch: it gated the kit's motion graphics, and a graphic is now a
  *   composition the AI designs.
@@ -39,6 +43,7 @@ export const SETTINGS_COMMANDS = {
   openSignInWarning: 'settings.openSignInWarning',
   openAccounts: 'settings.openAccounts',
   openModels: 'settings.openModels',
+  connectChatGptImages: 'settings.connectChatGptImages',
 } as const;
 
 export function createSettingsCommands(deps: {
@@ -96,7 +101,12 @@ export function createSettingsCommands(deps: {
   });
 
   /** Asks the window to open a page; changes nothing. A fix sends no payload, so the schema is an empty object. */
-  const openPage = (name: typeof SETTINGS_COMMANDS.openAccounts | typeof SETTINGS_COMMANDS.openModels) =>
+  const openPage = (
+    name:
+      | typeof SETTINGS_COMMANDS.openAccounts
+      | typeof SETTINGS_COMMANDS.openModels
+      | typeof SETTINGS_COMMANDS.connectChatGptImages,
+  ) =>
     defineCommand({
       name,
       payload: z.object({}),
@@ -109,6 +119,7 @@ export function createSettingsCommands(deps: {
     });
   const openAccounts = openPage(SETTINGS_COMMANDS.openAccounts);
   const openModels = openPage(SETTINGS_COMMANDS.openModels);
+  const connectChatGptImages = openPage(SETTINGS_COMMANDS.connectChatGptImages);
 
   return {
     ...sounds,
@@ -117,6 +128,15 @@ export function createSettingsCommands(deps: {
     openSignInWarning,
     openAccounts,
     openModels,
-    all: [setTheme, setLocale, openSignInWarning, openAccounts, openModels, ...sounds.all],
+    connectChatGptImages,
+    all: [
+      setTheme,
+      setLocale,
+      openSignInWarning,
+      openAccounts,
+      openModels,
+      connectChatGptImages,
+      ...sounds.all,
+    ],
   };
 }

@@ -101,7 +101,14 @@ export function planQa(plan: RenderPlan, preset: ExportPreset): QaPlan {
     height: preset.height,
     cuts,
     anchors,
-    intendedDark: merge([...plan.gaps, ...dips, ...stills, ...darkOverlays, ...fullCompositions, ...programs]),
+    intendedDark: merge([
+      ...plan.gaps,
+      ...dips,
+      ...stills,
+      ...darkOverlays,
+      ...fullCompositions,
+      ...programs,
+    ]),
     intendedStatic: merge([
       ...plan.gaps,
       ...stills,
@@ -116,7 +123,6 @@ export function planQa(plan: RenderPlan, preset: ExportPreset): QaPlan {
       id: text.id,
       span: text.span,
       probeFrame: Math.floor((text.span.start + text.span.end) / 2),
-      ...(text.refitted ? {} : { box: text.box, align: text.align }),
     })),
     ...(plan.compositions?.length || plan.programs?.length
       ? {

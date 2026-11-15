@@ -31,16 +31,16 @@ import type { FakeTimelines } from './fake-timelines';
 const P = editorCommandPayloads;
 type Items = readonly SequenceItem[];
 
-const v1 = (timeline: Timeline): Items =>
+export const v1 = (timeline: Timeline): Items =>
   timeline.tracks[0]?.kind === 'video' ? timeline.tracks[0].items : [];
-const withV1 = (timeline: Timeline, items: Items): Timeline => ({
+export const withV1 = (timeline: Timeline, items: Items): Timeline => ({
   ...timeline,
   tracks: timeline.tracks.map((track, index) =>
     index === 0 && track.kind === 'video' ? { ...track, items: [...items] } : track,
   ),
 });
 const frames = (item: SequenceItem) => (item.type === 'transition' ? 0 : item.duration.value);
-const startOf = (items: Items, index: number) =>
+export const startOf = (items: Items, index: number) =>
   items.slice(0, index).reduce((sum, item) => sum + frames(item), 0);
 const notFound = (id: string): Edit => ({
   ok: false,
@@ -52,7 +52,7 @@ const invalid = (reason: string): Edit => ({
 });
 
 /** Text, captions and markers at or after `at` move by `delta`; with a negative delta, what was inside goes. */
-function shiftAfter(timeline: Timeline, at: number, delta: number): Timeline {
+export function shiftAfter(timeline: Timeline, at: number, delta: number): Timeline {
   if (delta === 0) return timeline;
   const rate = timeline.canvas.rate;
   const gone = (start: number) => delta < 0 && start >= at + delta && start < at;

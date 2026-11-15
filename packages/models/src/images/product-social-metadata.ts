@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 
-import { socialMetadataPackSchema, type SocialMetadataPack } from '@taalcut/core';
+import { POST_CAPTION_RULES, socialMetadataPackSchema, type SocialMetadataPack } from '@taalcut/core';
 
 export interface ProductSocialMetadataInput {
   readonly productName: string;
@@ -39,7 +39,12 @@ export function buildProductSocialMetadata(input: ProductSocialMetadataInput): S
   return socialMetadataPackSchema.parse({
     researchSummary: ['Copy uses the accepted product story and its source evidence.'],
     youtube: { title, titleAlternates: [], description: copy, tags, chapters: [] },
-    instagram: { hookLine: clean(title, 140), caption: copy, hashtags },
+    // CAP1: Instagram takes the post caption rule's count (core's table).
+    instagram: {
+      hookLine: clean(title, 140),
+      caption: copy,
+      hashtags: hashtags.slice(0, POST_CAPTION_RULES.instagram.hashtags.max),
+    },
     tiktok: { caption: copy, seoKeywords: tags.slice(0, 8).map((tag) => clean(tag, 40)), hashtags },
     // Every Unicode scalar weighs at most two before URL transformation; leave room for copy edits.
     x: { text: clean([title, cta].filter(Boolean).join('\n\n'), 120) },

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Taalcut contributors
 /* Hallmark · component: stock results (P3-V18 in P3-B8) · genre: atmospheric studio app (chrome modern-minimal)
- * system: DESIGN.md v0.3 · a gap's stock fix opened in place: up to six 9:16 results in a row of three, "Videos from
- *   Pexels" under them as plain words (the app opens no link the allow-list doesn't name), unboxed on the panel
+ * system: DESIGN.md v0.3 · a gap's stock fix opened in place: up to six 9:16 results in a row of three (two across
+ *   in a column under 24rem, by a container query), "Videos from Pexels" under them as plain words (the app opens
+ *   no link the allow-list doesn't name), unboxed on the panel
  * states: loading (six still bones in the grid's shape, "Looking for stock video") · empty ("Nothing for “…”") ·
  *   unavailable (the reason in one line, the settings link) · error (the cause, Try again) · default (the grid) ·
  *   using (that tile spins, the others wait, "Getting the video…") · failed (the cause under the grid, Retry) ·
@@ -35,12 +36,18 @@ export interface StockResultsProps {
   onSettings?: (section: 'accounts' | 'models' | 'privacy' | 'usage') => void;
 }
 
+/**
+ * A row of three where the results themselves have 24rem; two across in anything narrower (the editor's chat), so
+ * a result keeps a frame you can see and its maker's name isn't broken mid-word.
+ */
+const GRID = 'grid grid-cols-2 gap-3 @sm:grid-cols-3';
+
 function Bones() {
   const { t } = useLingui();
   return (
-    <div aria-busy="true" data-slot="stock-loading" className="flex flex-col gap-2">
+    <div aria-busy="true" data-slot="stock-loading" className="@container flex flex-col gap-2">
       <span className="sr-only">{t`Looking for stock video`}</span>
-      <div aria-hidden className="grid grid-cols-3 gap-3">
+      <div aria-hidden className={GRID}>
         {Array.from({ length: SHOWN }, (_, index) => (
           <span key={index} className="tc-bone block aspect-[9/16] w-full rounded-md bg-hover" />
         ))}
@@ -107,8 +114,8 @@ export function StockResults({ query, search, onUse, onSettings }: StockResultsP
       </p>
     );
   return (
-    <div data-slot="stock-results" className="flex flex-col gap-2">
-      <ul aria-label={t`Stock videos`} className="m-0 grid list-none grid-cols-3 gap-3 p-0">
+    <div data-slot="stock-results" className="@container flex flex-col gap-2">
+      <ul aria-label={t`Stock videos`} className={`m-0 list-none p-0 ${GRID}`}>
         {items.map((item) => (
           <StockResultTile
             key={`${item.provider}:${item.providerId}`}

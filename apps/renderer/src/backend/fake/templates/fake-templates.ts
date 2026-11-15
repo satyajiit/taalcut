@@ -49,6 +49,8 @@ import { TEMPLATE_FORMATS } from './template-formats';
 import { headOf, keptMedia, summary, type Lineage } from './template-lineage';
 import { BASE_META, seedLibrary, type LibraryMeta } from './template-seed-library';
 import { reviewTemplates } from './template-review-plans';
+import { REEL_RUN, reelRunTemplate } from './template-reel-run';
+import { keptReelTemplates } from './template-kept-reel';
 import { reviewCommands } from './fake-review-commands';
 
 export type { LibraryMeta } from './template-seed-library';
@@ -97,7 +99,12 @@ export function createFakeTemplates(events: EventBus, options: FakeTemplatesOpti
         media: seed.template.origin.kind === 'reference' ? keptMedia(seed.template, seed.updatedAt) : null,
       });
     // BRK1-REV: the review's two reels, read in a chat and not saved (unlisted), each keeping its reel.
-    for (const { template, name } of reviewTemplates())
+    // FIX-DOCKCHAT: and the 32-slot reel the editor's chat shows its cast board for (template-reel-run.ts).
+    for (const { template, name } of [
+      ...reviewTemplates(),
+      { template: reelRunTemplate(), name: REEL_RUN.name },
+      ...keptReelTemplates(),
+    ])
       lineages.set(template.id, {
         name,
         meta: { listed: false },

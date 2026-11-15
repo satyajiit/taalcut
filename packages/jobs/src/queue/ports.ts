@@ -86,15 +86,13 @@ export interface JobStore {
 }
 
 /**
- * Power and thermal state. The desktop maps Electron's powerMonitor:
- * `isOnBatteryPower()` and the 'on-battery' / 'on-ac' events for `onBattery`;
- * `getCurrentThermalState()` and 'thermal-state-change' (macOS) for
- * `thermalState`, with Electron's 'unknown' read as 'nominal'.
+ * Thermal state. The desktop maps Electron's powerMonitor: `getCurrentThermalState()` and
+ * 'thermal-state-change' (macOS), with Electron's 'unknown' read as 'nominal'. Battery or charger is not
+ * here: nothing depends on it (the owner, 2026-11-15).
  */
 export interface PowerState {
-  readonly onBattery: boolean;
   readonly thermalState: ThermalState;
-  /** Calls `listener` after either value changes. Returns an unsubscribe function. */
+  /** Calls `listener` after the value changes. Returns an unsubscribe function. */
   onChange(listener: () => void): () => void;
 }
 
@@ -103,9 +101,8 @@ export interface JobEventSink {
   emit(event: JobEvent): void;
 }
 
-/** A PowerState that never changes: on AC power, nominal temperature. */
+/** A PowerState that never changes: nominal temperature. */
 export const STEADY_POWER: PowerState = {
-  onBattery: false,
   thermalState: 'nominal',
   onChange: () => () => undefined,
 };

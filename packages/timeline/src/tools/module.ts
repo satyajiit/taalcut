@@ -16,6 +16,7 @@ import type { VariantMusicDeps } from '../variants/variant-deps';
 import type { CompositionFiles } from '../assembly/composition-files';
 import { coverTool } from './cover-tool';
 import { visualLayoutTool } from './visual-layout-tool';
+import { postCaptionTool, type PostCaptionToolDeps } from './post-caption-tool';
 import { castTools } from './cast-tools';
 import { cleanupTools } from './cleanup-tools';
 import { createClipNumbering, type ClipNumbering } from './clip-refs';
@@ -26,13 +27,23 @@ import { fitTools } from './fit-tools';
 import { gapTools } from './gap-tools';
 import type { GraphicsReady } from './graphics-wait';
 import { interchangeTools } from './interchange-tools';
+import { lengthenTools } from './lengthen-tools';
 import { readTools } from './read-tools';
+import type { ReelMusicDeps } from './reel-music';
+import type { ReelDeps } from './reel-source';
 import type { ShotDescriptions } from './rerank-material';
 import { styleTools } from './style-tools';
+import { textDesignTools, type TextDesignToolDeps } from './text-design-tools';
 import { simpleEditorTools } from './simple-editor-tools';
 import { variantTools } from './variant-tools';
 
-export interface TimelineToolDeps extends SubjectDeps {
+export interface TimelineToolDeps
+  extends
+    SubjectDeps,
+    PostCaptionToolDeps,
+    ReelDeps,
+    ReelMusicDeps,
+    Pick<TextDesignToolDeps, 'textStyle' | 'textFaces'> {
   readonly engine: CastingEngine;
   readonly service: TimelineService;
   readonly templates: TemplateReader;
@@ -64,19 +75,38 @@ export function timelineToolModule(deps: TimelineToolDeps): ToolModule {
   const editorDeps = {
     service: deps.service,
     numbering,
+    // LYR1: timeline.editText keeps a template's texts in turn (sequence-guard.ts).
+    templates: deps.templates,
     ...(deps.shotDescriptions ? { shotDescriptions: deps.shotDescriptions } : {}),
   };
   return defineToolModule({
     id: 'timeline',
     tools: [
       ...castTools(deps),
-      ...readTools({ ...deps, numbering }),
+      // MOM1: timeline.get reads each clip's shot's moments from the casting engine's profiles.
+      ...readTools({
+        ...deps,
+        numbering,
+        ...(deps.engine.profiles ? { profiles: deps.engine.profiles.bind(deps.engine) } : {}),
+      }),
       ...editTools(editorDeps),
       // EDT1-OPS: the editor's full set of edits and the sound's.
       ...editorTools(editorDeps),
       ...simpleEditorTools(deps.service),
       coverTool(deps.service),
       visualLayoutTool(),
+      // CAP1: the caption to post under the video, built from its parts and held to its platform's rule.
+      postCaptionTool(deps),
+      // TXT1: the video's text read, designed (its looks) and placed (each group's place and size).
+      ...textDesignTools(deps),
+      // LONG1: the music's bars read, and a clip lengthened by whole bars of them.
+      ...lengthenTools({
+        service: deps.service,
+        templates: deps.templates,
+        numbering,
+        ...(deps.reelMusic ? { reelMusic: deps.reelMusic } : {}),
+        ...(deps.shotDescriptions ? { shotDescriptions: deps.shotDescriptions } : {}),
+      }),
       ...interchangeTools(),
       ...gapTools(deps.service),
       ...cleanupTools(deps.service),

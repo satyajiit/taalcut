@@ -133,7 +133,7 @@ describe('job engine: lanes inside class budgets', () => {
     expect(t.peak('gpu')).toBe(2);
   });
 
-  it('lets the throttle lower class budgets only: on battery the two lanes take turns', async () => {
+  it('lets the throttle lower class budgets only: when the Mac runs hot the two lanes take turns', async () => {
     const t = tracker();
     const power = fakePower();
     const { engine, ofType } = testEngine({ store: steppingStore(), power, concurrency: { gpu: 2 } });
@@ -147,22 +147,22 @@ describe('job engine: lanes inside class budgets', () => {
       await engine.enqueue(whisper, { n });
     }
     await waitFor(() => t.running('gpu') === 2);
-    power.set({ onBattery: true });
+    power.set({ thermalState: 'serious' });
     expect(engine.limits().gpu).toBe(1);
     expect(engine.laneLimits()).toEqual({});
     expect(ofType('queue.limits_changed').at(-1)).toMatchObject({
       limits: { gpu: 1 },
       lanes: {},
-      power: { onBattery: true },
+      power: { thermalState: 'serious' },
     });
     // Running jobs finish; after that, one gpu job at a time.
     t.release('test.embed');
     t.release('test.whisper');
-    await waitFor(() => t.running('gpu') === 1, 3000, 'one gpu job on battery');
+    await waitFor(() => t.running('gpu') === 1, 3000, 'one gpu job while hot');
     await new Promise((r) => setTimeout(r, 40));
     expect(t.running('gpu')).toBe(1);
-    power.set({ onBattery: false });
-    await waitFor(() => t.running('gpu') === 2, 3000, 'two again on AC');
+    power.set({ thermalState: 'nominal' });
+    await waitFor(() => t.running('gpu') === 2, 3000, 'two again when cool');
     await drain(t, engine);
   });
 

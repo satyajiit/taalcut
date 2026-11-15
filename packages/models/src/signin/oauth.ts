@@ -27,7 +27,13 @@ export class SignInFlowError extends Error {
   constructor(
     readonly reason: SignInFailureReason,
     message: string,
-    readonly extra: { readonly status?: number; readonly port?: number; readonly seconds?: number } = {},
+    readonly extra: {
+      readonly status?: number;
+      readonly port?: number;
+      readonly seconds?: number;
+      /** The OAuth error code of a token endpoint's refusal, e.g. invalid_grant. */
+      readonly oauthError?: string;
+    } = {},
   ) {
     super(message);
     this.name = 'SignInFlowError';
@@ -62,7 +68,24 @@ const TokenResponseSchema = z.object({
 });
 export type TokenResponse = z.infer<typeof TokenResponseSchema>;
 
-const OAuthErrorSchema = z.object({ error: z.string().max(80) });
+const OAuthErrorSchema = z.object({
+  error: z.string().max(80),
+  error_description: z.string().max(2000).optional(),
+});
+
+/**
+ * The provider's own sentence about a refusal, made safe to keep: no value we sent (the code, the verifier, the
+ * refresh token), nothing token-like, one short line. Without it "invalid_grant" does not say which grant, or why.
+ */
+function refusalNote(description: string | undefined, sent: readonly string[]): string {
+  if (!description) return '';
+  return scrubSecrets(description, sent)
+    .replace(/[\w-]{24,}/g, '[withheld]')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\.+$/, '')
+    .slice(0, 200);
+}
 
 /** POSTs a form to a token endpoint and validates the answer. */
 export async function requestToken(
@@ -89,13 +112,16 @@ export async function requestToken(
   }
   const text = await response.text().catch(() => '');
   if (!response.ok) {
-    // Keep only the OAuth error code: the rest of the body may echo the grant.
-    const code = OAuthErrorSchema.safeParse(jsonFromText(text)).data?.error;
+    // Keep the OAuth error code and the provider's sentence about it, scrubbed: the rest of the body may echo the
+    // grant.
+    const refusal = OAuthErrorSchema.safeParse(jsonFromText(text)).data;
+    const code = refusal?.error;
+    const note = refusalNote(refusal?.error_description, Object.values(form));
     const reason = response.status >= 500 || response.status === 429 ? 'network' : 'rejected';
     throw new SignInFlowError(
       reason,
-      `Token endpoint answered ${response.status}${code ? ` (${code})` : ''}.`,
-      { status: response.status },
+      `Token endpoint answered ${response.status}${code ? ` (${code})` : ''}${note ? `: ${note}` : ''}.`,
+      { status: response.status, ...(code ? { oauthError: code } : {}) },
     );
   }
   const parsed = TokenResponseSchema.safeParse(jsonFromText(text));

@@ -6,17 +6,33 @@
  * HFW1-UI: with the fake's `media: { designs: true }`, Golden hour market's first video gets graphics the AI
  * "designed" (the ui kit's design fixtures) in place of the kit's: an incoming question and a reply drawn with the
  * chat bubble (version 1, used) and a price tag the chat proposed; the project's workspace holds the revisions
- * their files came from. Pure but for the seed: the document in, the arranged document out.
+ * their files came from. DSG2: with `designOptions` too, a title that came as three designs to choose between,
+ * drawn with the first. Pure but for the seed: the document in, the arranged document out.
  */
-import { RationalTime, timelineSchema, type GraphicItem, type Timeline } from '@taalcut/core';
-import { DESIGN_COMPOSITIONS, DESIGN_FIXTURE_IDS, designRevisions, MEDIA_FIXTURE_IDS } from '@taalcut/ui';
+import {
+  RationalTime,
+  timelineSchema,
+  type GraphicComposition,
+  type GraphicItem,
+  type Timeline,
+} from '@taalcut/core';
+import {
+  DESIGN_COMPOSITIONS,
+  DESIGN_FIXTURE_IDS,
+  DESIGN_OPTION_COMPOSITIONS,
+  DESIGN_OPTION_IDS,
+  DESIGN_OPTIONS_SET,
+  DESIGN_OPTIONS_SPAN,
+  designRevisions,
+  MEDIA_FIXTURE_IDS,
+} from '@taalcut/ui';
 import type { FakeWorkspace } from './fake-workspace';
 
 const ids = DESIGN_FIXTURE_IDS.graphics;
 
 function designed(
   id: GraphicItem['id'],
-  composition: (typeof DESIGN_COMPOSITIONS)[keyof typeof DESIGN_COMPOSITIONS],
+  composition: Pick<GraphicComposition, 'id' | 'hash'>,
   frames: { start: number; length: number },
   rate: Timeline['canvas']['rate'],
   rest: Partial<GraphicItem> & Pick<GraphicItem, 'placement'>,
@@ -37,8 +53,11 @@ function designed(
   };
 }
 
-/** Golden hour's first video with its designed graphics; the document as it was if it isn't that video. */
-export function arrangeDesigns(timeline: Timeline): Timeline {
+/**
+ * Golden hour's first video with its designed graphics (and, with `options`, the title's three designs); the
+ * document as it was if it isn't that video.
+ */
+export function arrangeDesigns(timeline: Timeline, options = false): Timeline {
   if (timeline.id !== MEDIA_FIXTURE_IDS.timelines[0] || timeline.projectId !== MEDIA_FIXTURE_IDS.project)
     return timeline;
   const rate = timeline.canvas.rate;
@@ -79,13 +98,25 @@ export function arrangeDesigns(timeline: Timeline): Timeline {
       { item: 'Mangoes', price: '₹120 a dozen' },
     ),
   ];
+  // DSG2: a title that came as three designs; the first is in the video, the others beside it.
+  if (options)
+    items.push(
+      designed(
+        DESIGN_OPTION_IDS.graphic,
+        DESIGN_OPTION_COMPOSITIONS[0],
+        DESIGN_OPTIONS_SPAN,
+        rate,
+        { placement: { box: { x: 0, y: 0, width: 1, height: 1 } }, options: DESIGN_OPTIONS_SET },
+        { title: 'Golden hour market' },
+      ),
+    );
   const next: Timeline = {
     ...timeline,
     tracks: [
       ...timeline.tracks.filter((track) => track.id !== 'T2'),
       { kind: 'text', id: 'T2', name: 'Graphics', enabled: true, items },
     ],
-    graphicCompositions: [bubble, priceTag],
+    graphicCompositions: [bubble, priceTag, ...(options ? DESIGN_OPTION_COMPOSITIONS : [])],
   };
   const checked = timelineSchema.safeParse(next);
   return checked.success ? checked.data : timeline;
@@ -95,9 +126,10 @@ export function arrangeDesigns(timeline: Timeline): Timeline {
 export function seedDesigns(
   timelines: { all(): readonly Timeline[]; replace(projectId: Timeline['projectId'], next: Timeline): void },
   workspace: FakeWorkspace,
+  options = false,
 ): void {
   for (const timeline of timelines.all()) {
-    const arranged = arrangeDesigns(timeline);
+    const arranged = arrangeDesigns(timeline, options);
     if (arranged !== timeline) timelines.replace(timeline.projectId, arranged);
   }
   workspace.seed(MEDIA_FIXTURE_IDS.project, designRevisions(MEDIA_FIXTURE_IDS.project));

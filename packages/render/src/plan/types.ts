@@ -20,6 +20,7 @@ import type {
   GraphicComposition,
   Grade,
   MusicBed,
+  MusicRepeat,
   MusicChoice,
   ProjectId,
   RationalTime,
@@ -107,6 +108,11 @@ export interface PlannedText {
   readonly text: string;
   readonly role: (typeof TEXT_ROLES)[number];
   readonly box: Box;
+  /**
+   * TXT1: 'written' anchors the words at the box and draws one line for each written line (the box follows the
+   * words); 'width', and a text from before TXT1 (absent), wraps them at the box's width.
+   */
+  readonly breaks?: 'written' | 'width';
   readonly sizeRatio: number;
   readonly align: 'left' | 'center' | 'right';
   readonly letterCase: 'upper' | 'lower' | 'mixed';
@@ -117,8 +123,6 @@ export interface PlannedText {
   readonly styleKey: string;
   /** A person's own text keeps its look over the Style's. */
   readonly origin: 'template' | 'editor' | 'user';
-  /** Laid into the preset's safe rect for another canvas (adaptPlan): `box` is no longer the timeline item's. */
-  readonly refitted?: true;
 }
 
 /** A Style's intro or outro text card (P3-V10), drawn by the brand layer over a V1 gap. */
@@ -207,6 +211,8 @@ export interface RenderPlan {
   readonly music: MusicChoice;
   /** EDT1-OPS: where the music sounds, its shift, fades and mute (core's MusicBed). Absent: all of it, as before. */
   readonly musicBed?: MusicBed;
+  /** LONG1: where the reel's own music plays bars again (core's MusicRepeat), in time order. Absent: nowhere. */
+  readonly musicRepeats?: readonly MusicRepeat[];
   readonly beatMap: BeatMap | null;
   /** Non-fatal notes, e.g. a template transition drawn as a cut. */
   readonly warnings: readonly string[];

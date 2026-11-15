@@ -44,6 +44,18 @@ export const textLookSchema = z.object({
   colour: hex,
   background: z.object({ colour: hex, opacity: opacity(0, 1) }).nullable(),
   stroke: z.object({ colour: hex, widthPx: z.int().min(1).max(16) }).nullable(),
+  /** TXT1: a shadow under the letters, in pixels of the 1080-wide canvas; absent or null: none. */
+  shadow: z
+    .object({
+      colour: hex,
+      opacity: opacity(0, 1),
+      blurPx: z.int().min(0).max(48),
+      offsetPx: z.int().min(0).max(24),
+    })
+    .nullable()
+    .optional(),
+  /** TXT1: space added between letters, in em (0.05 is a twentieth of the type size); absent: the face's own. */
+  letterSpacing: z.number().min(-0.05).max(0.5).optional(),
 });
 export type TextLook = z.output<typeof textLookSchema>;
 

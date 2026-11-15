@@ -29,6 +29,8 @@ export type ReviewEdit =
   | { readonly kind: 'describe'; readonly slotId: SlotId; readonly text: string }
   /** FRM1-MOT: the camera's move the person picked; null is "I don't know". */
   | { readonly kind: 'setMotion'; readonly slotId: SlotId; readonly motion: CameraMotion | null }
+  /** KEEP1: whose footage the slot plays in a video made from the template: the reel's own, or the person's. */
+  | { readonly kind: 'setFootage'; readonly slotId: SlotId; readonly from: 'person' | 'reel' }
   | { readonly kind: 'notText'; readonly overlayIds: readonly Id<'TextOverlay'>[] }
   | { readonly kind: 'tempo'; readonly factor: 0.5 | 2 }
   | { readonly kind: 'dismiss'; readonly target: DoubtTarget; readonly reason: DoubtReason }

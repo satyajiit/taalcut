@@ -4,9 +4,11 @@
 /**
  * EDT1-GFX, HFW1: a graphic the Designer made (`graphics.placeComposition`) that the person hasn't used yet. It sits
  * on a text track like any graphic, so the preview draws it, the bed shows it, and graphics.edit, graphics.design and
- * graphics.remove change it; an export and QA leave it out until `graphics.useProposal` keeps it. Its record keeps
+ * graphics.remove change it. An export draws it too (render's `gatherExport`, so a file matches the preview); QA,
+ * the make's fill checks and the slot match leave it out until `graphics.useProposal` keeps it. Its record keeps
  * the person's words it was made from. HFW1 retire: a proposal is always a design of its own (no kit design, no kit
- * reason).
+ * reason). DSG2: the Designer's graphics no longer wait as proposals: they come as three options, the first in use
+ * (graphic-options.ts).
  */
 import '../basics/zod-config';
 import { z } from 'zod';

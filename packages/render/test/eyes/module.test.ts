@@ -22,9 +22,13 @@ describe('the eyes module', () => {
   );
   const library = withLibraryEyes(defineToolModule({ id: 'library', tools: [] }), eyes);
 
-  it('offers video.compare, and library.frameAt and library.subjects in the library module, well formed and read-only', () => {
+  it('offers video.compare, and library.frameAt, library.subjects and library.frameStrip in the library module, well formed and read-only', () => {
     expect(eyes.video.tools.map((tool) => tool.name)).toEqual(['video.compare']);
-    expect(library.tools.map((tool) => tool.name)).toEqual(['library.frameAt', 'library.subjects']);
+    expect(library.tools.map((tool) => tool.name)).toEqual([
+      'library.frameAt',
+      'library.subjects',
+      'library.frameStrip',
+    ]);
     expect(toolModuleProblems(eyes.video)).toEqual([]);
     expect(toolModuleProblems(library)).toEqual([]);
     for (const tool of [...eyes.video.tools, ...library.tools]) {

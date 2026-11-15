@@ -57,6 +57,7 @@ function fake(
   const documents: TemplateDocumentInput[] = [];
   const written: [string, string][] = [];
   const notices: string[] = [];
+  const made: string[] = [];
   const deps: FilesDeps = {
     open: async (request) => {
       opened.push(request);
@@ -82,6 +83,8 @@ function fake(
     }),
     assetOriginal: () => answer ?? undefined,
     exportsDir: '/data/exports',
+    legacyExportsDir: '/data/older-exports',
+    makeDir: async (path) => void made.push(path),
     templateDocument: async (input) => {
       documents.push(input);
       return document;
@@ -100,10 +103,10 @@ function fake(
           ),
     openPath: async (path) => {
       notices.push(path);
-      return '';
+      return path.includes('unopenable') ? 'no application' : '';
     },
   };
-  return { deps, opened, saving, copied, revealed, urls, documents, written, notices };
+  return { deps, opened, saving, copied, revealed, urls, documents, written, notices, made };
 }
 
 const READY: Partial<RenderRecord> = {
@@ -142,10 +145,19 @@ describe('files router', () => {
   });
 
   it("reveals a render's file in Finder by its id", async () => {
-    const done = fake(null, { filePath: '/Users/me/Movies/Taalcut/trip.mp4' });
+    const file = '/Users/me/Movies/Taalcut/Exports/Goa – Reels (9x16).mp4';
+    const done = fake(null, { filePath: file }, [file]);
     const client = connectRpc(filesContract, serve(done.deps), { peer: 'main' }).client;
     await client.revealRender({ renderId: newId<'Render'>() });
-    expect(done.revealed).toEqual(['/Users/me/Movies/Taalcut/trip.mp4']);
+    expect(done.revealed).toEqual([file]);
+
+    // FIX-EXPORTNAMES: the file is the person's now. Moved or renamed in Finder, it is not found (never a silent no-op).
+    const moved = fake(null, { filePath: file });
+    const gone = connectRpc(filesContract, serve(moved.deps), { peer: 'main' }).client;
+    await expect(gone.revealRender({ renderId: newId<'Render'>() })).rejects.toMatchObject({
+      data: { code: 'core.not_found' },
+    });
+    expect(moved.revealed).toEqual([]);
 
     const unfinished = fake(null, { filePath: null });
     const again = connectRpc(filesContract, serve(unfinished.deps), { peer: 'main' }).client;
@@ -153,6 +165,20 @@ describe('files router', () => {
       data: { code: 'core.not_found' },
     });
     expect(unfinished.revealed).toEqual([]);
+  });
+
+  it('opens the exports folder (FIX-EXPORTNAMES), making it first, and says so when the system could not', async () => {
+    const done = fake(null);
+    const client = connectRpc(filesContract, serve(done.deps), { peer: 'main' }).client;
+    await client.openExportsFolder();
+    expect(done.made).toEqual(['/data/exports']);
+    expect(done.notices).toEqual(['/data/exports']);
+
+    const stuck = fake(null);
+    const failing = connectRpc(filesContract, serve({ ...stuck.deps, exportsDir: '/data/unopenable' }), {
+      peer: 'main',
+    }).client;
+    await expect(failing.openExportsFolder()).rejects.toBeTruthy();
   });
 
   it("reveals a clip's original in Finder, and says not found when no copy is present", async () => {
@@ -226,6 +252,11 @@ describe('files router', () => {
     });
     expect(done.saving).toEqual([{ defaultName: 'Goa – Main.otio', extensions: ['otio'], webContentsId: 4 }]);
     expect(done.copied).toEqual([['/data/exports/Goa – Main.otio', '/Users/me/Desktop/Goa.otio']]);
+    // A file the sink wrote before the exports folder moved (FIX-EXPORTNAMES) is still found where it was.
+    const older = fake('/Users/me/Desktop/Old.fcpxml', undefined, ['/data/older-exports/Old.fcpxml']);
+    const old = connectRpc(filesContract, serve(older.deps, 4), { peer: 'main' }).client;
+    expect((await old.saveExportAs({ fileName: 'Old.fcpxml' })).saved).toBe(true);
+    expect(older.copied).toEqual([['/data/older-exports/Old.fcpxml', '/Users/me/Desktop/Old.fcpxml']]);
     // A file that isn't there, or a hidden or dot name, is not found and no panel opens.
     for (const fileName of ['Other.otio', '..', '.hidden.otio']) {
       await expect(client.saveExportAs({ fileName })).rejects.toMatchObject({

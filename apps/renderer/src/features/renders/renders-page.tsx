@@ -15,7 +15,7 @@
  */
 import { Plural, useLingui } from '@lingui/react/macro';
 import type { RenderId, RenderSnapshot } from '@taalcut/core';
-import { Arrival, ListRows, Skeleton } from '@taalcut/ui';
+import { Arrival, Button, ListRows, Skeleton, VERB_ICONS } from '@taalcut/ui';
 import { useEffect, useRef, useState } from 'react';
 import { useBackend } from '../../backend/backend';
 import { useRpcStream } from '../../backend/use-rpc';
@@ -26,6 +26,7 @@ import { RowShape } from '../make/project-list';
 import { Page } from '../../shell/page';
 import { ExportDialog } from './export-dialog';
 import { ExportMoment } from './export-moment';
+import { useOpenExportsFolder } from './open-exports-folder';
 import { RenderRow } from './render-row';
 import { RUNNING, useRenderActions } from './render-actions';
 import { ReviewDialog } from './review-dialog';
@@ -86,6 +87,7 @@ export function RendersPage({ now = Date.now() }: { now?: number }) {
   const [exporting, setExporting] = useState<RenderSnapshot | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const reopen = () => setRound((n) => n + 1);
+  const openFolder = useOpenExportsFolder();
 
   const items = renders.data;
   const ending = useEnding(items);
@@ -114,7 +116,16 @@ export function RendersPage({ now = Date.now() }: { now?: number }) {
   );
 
   return (
-    <Page title={t`Make`} detail={t`Exports`} views={views}>
+    <Page
+      title={t`Make`}
+      detail={t`Exports`}
+      views={views}
+      actions={
+        <Button size="sm" icon={VERB_ICONS.reveal} data-slot="open-exports-folder" onClick={openFolder}>
+          {t`Open exports folder`}
+        </Button>
+      }
+    >
       {empty ? (
         <section aria-label={t`Exports`} data-slot="renders">
           <RendersEmpty />

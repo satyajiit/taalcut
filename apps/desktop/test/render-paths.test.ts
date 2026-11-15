@@ -15,13 +15,15 @@ afterEach(() => {
 });
 
 describe('renderPaths', () => {
-  it('keeps the cache and the renders folder under userData', () => {
+  it('keeps the cache and the renders folder under userData, and a test’s exports too', () => {
     expect(renderPaths('/u')).toEqual({
       cache: join('/u', 'cache', 'render'),
       preview: join('/u', 'cache', 'render', 'preview'),
       work: join('/u', 'cache', 'render', 'work'),
       conform: join('/u', 'cache', 'render', 'conform'),
       renders: join('/u', 'renders'),
+      // FIX-EXPORTNAMES: the person's exports folder; inside userData for any data folder but the app's own.
+      exports: join('/u', 'Exports'),
     });
   });
 

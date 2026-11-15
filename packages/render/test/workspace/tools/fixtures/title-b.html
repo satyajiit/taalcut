@@ -1,0 +1,53 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"title","type":"string","label":"Title","default":"Leave"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="title-b-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #centre {
+          position: absolute;
+          left: 70px;
+          top: 880px;
+          width: 940px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #title {
+          margin: 0;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 104px;
+          font-weight: 200;
+          letter-spacing: -2px;
+          line-height: 1.05;
+          color: #fbfaf6;
+          text-shadow: 0 2px 8px rgba(12, 16, 22, 0.55);
+          text-wrap: balance;
+        }
+      </style>
+      <div id="root" data-composition-id="title-b" data-width="1080" data-height="1920" data-duration="3">
+        <div id="centre">
+          <p id="title" data-var-text="title">Leave</p>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.from('#title', { scale: 1.12, opacity: 0, duration: 0.5, ease: 'power3.out' }, 0);
+        tl.addLabel('exit', 2.65);
+        tl.to('#title', { opacity: 0, duration: 0.25, ease: 'power2.in' }, 'exit');
+        window.__timelines['title-b'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

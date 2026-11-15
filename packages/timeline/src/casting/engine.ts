@@ -37,9 +37,12 @@ import { followedOrientation, madeCanvas } from './follow-canvas';
 import { withNeedVectors } from './needs';
 import { buildVariant, type CastVariant } from './result';
 import { adjacencyPenalty } from './score';
+import { withAskVectors } from './slot-asks';
 import { orientationOf, slotSpecs, type SlotSpec } from './slots';
+import { withParts } from './stated-parts';
 import { collapseDuplicates, planStory, storySearch, storyTargets } from './story';
 import { castHookVariants, type HookVariantRequest } from './hook-variants';
+import { forPersonSlots, hasReelSlots, personRerank, withoutReelPicks } from './reel-slots';
 import { planReranks, type RerankPlan } from './swaps';
 import { lockedShots, templatePools } from './template-pools';
 import { castVariants, type Variant, type VariantSearch } from './variants';
@@ -118,6 +121,8 @@ export function createCastingEngine(deps: CastingEngineDeps): CastingEngine {
     hookVariants: (request, signal) => resolved(signal, (engine) => engine.hookVariants(request, signal)),
     alternates: (request, signal) => resolved(signal, (engine) => engine.alternates(request, signal)),
     profiles: (refs, signal) => deps.catalog.profiles(refs, signal),
+    slotSpecs: (template, canvas, signal) =>
+      withAskVectors(slotSpecs(template, config, canvas), deps.embedder, signal),
   };
 }
 
@@ -157,9 +162,7 @@ function engineFor(deps: CastingEngineDeps, resolved: ResolvedCastingConfig): Ca
       const relaxed = await fetchProfiles(relaxedFilter);
       if (!relaxed.ok) return relaxed;
       const seen = new Set(combined.map((p) => `${p.assetId}:${p.shotId}`));
-      const extra = relaxed.value.filter(
-        (p) => !seen.has(`${p.assetId}:${p.shotId}`) && fitsShortest(p),
-      );
+      const extra = relaxed.value.filter((p) => !seen.has(`${p.assetId}:${p.shotId}`) && fitsShortest(p));
       combined = collapseDuplicates([...combined, ...extra]);
     }
     return ok(combined);
@@ -169,7 +172,8 @@ function engineFor(deps: CastingEngineDeps, resolved: ResolvedCastingConfig): Ca
    * FIX-STORY: a template rerank is read on the cast the Librarian reranked (the same cast without it), so a
    * rerank that puts another slot's pick first swaps the two slots (swaps.ts).
    */
-  async function cast(request: CastRequest, signal?: AbortSignal): AsyncResult<CastResult> {
+  async function cast(given: CastRequest, signal?: AbortSignal): AsyncResult<CastResult> {
+    const request = personRerank(given);
     if (request.mode !== 'template' || !request.rerank || request.rerank.length === 0)
       return castFor(request, { id: castId }, signal);
     const { rerank, ...plain } = request;
@@ -186,7 +190,9 @@ function engineFor(deps: CastingEngineDeps, resolved: ResolvedCastingConfig): Ca
     const template = request.template;
     const named = request.canvas ? { ...template.canvas, ...request.canvas } : undefined;
     const first = await castOn(request, named ?? template.canvas, run, signal);
-    if (!first.ok || named || request.mode !== 'template') return first.ok ? ok(first.value.result) : first;
+    // KEEP1: a template with the reel's own footage keeps its canvas, so that footage shows as the reel showed it.
+    if (!first.ok || named || request.mode !== 'template' || hasReelSlots(template))
+      return first.ok ? ok(first.value.result) : first;
     const follow = followedOrientation(first.value.picked, orientationOf(template.canvas));
     if (!follow) return ok(first.value.result);
     const again = await castOn(request, madeCanvas(template.canvas, follow), run, signal);
@@ -212,7 +218,7 @@ function engineFor(deps: CastingEngineDeps, resolved: ResolvedCastingConfig): Ca
       recent: recent.value,
       ...(signal ? { signal } : {}),
     };
-    const locked = await lockedShots(request.locked ?? [], specs, context);
+    const locked = await lockedShots(forPersonSlots(request.locked ?? [], specs), specs, context);
     if (!locked.ok) return locked;
     const lockedKeys = new Set([...locked.value.profiles.values()].map(profileKey));
     const excluded = new Set<string>([...(request.exclude ?? []), ...lockedKeys]);
@@ -253,6 +259,9 @@ function engineFor(deps: CastingEngineDeps, resolved: ResolvedCastingConfig): Ca
       search = withLocks(storySearch(plan, adjacency, config), lockedCandidates);
     }
 
+    // KEEP1: a slot that keeps the reel's footage takes nothing from the library, in either mode.
+    ({ pools, search } = withoutReelPicks(pools, search));
+    pools = withParts(pools, request.parts ? forPersonSlots(request.parts, specs) : request.parts);
     if (pools.every((pool) => pool.candidates.length === 0)) return err(NoCandidates());
     const seed = seedOf(run.plan, pools, adjacency);
     const variants: Variant[] = castVariants(pools, request.variants, adjacency, config, search, seed);
@@ -309,7 +318,10 @@ function engineFor(deps: CastingEngineDeps, resolved: ResolvedCastingConfig): Ca
       if (embedded.ok) vector = embedded.value[0] ?? null;
     }
     const exclude = new Set<string>([...request.used, ...request.exclude]);
-    const slotRequest = { slot: spec, vector, locked: null, rerank: null };
+    // MOM1: the slot with what every slot states, which the in-point rule weighs each shot's moments against.
+    const asked = (await withAskVectors(specs, deps.embedder, signal)).find((s) => s.slotId === spec.slotId);
+    const slot = { ...spec, intentVector: vector, ...(asked?.askSet ? { askSet: asked.askSet } : {}) };
+    const slotRequest = { slot, vector, locked: null, rerank: null };
     const gathered = await gatherPool(slotRequest, {}, exclude, context);
     if (!gathered.ok) return gathered;
     // FIX-STORY: the words count by their rarity among the shots this slot weighs.

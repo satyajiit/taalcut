@@ -2,14 +2,21 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * Where exports that aren't renders live (P3-V5 pro export: `.otio`, `.fcpxml`), agreed between the agent
+ * Where exports that aren't renders live (P3-V5 pro export: `.otio`, `.fcpxml`; covers), agreed between the agent
  * process (core's ExportFileSink writes them) and main (`files.saveExportAs` copies one where the person
- * chooses). One flat folder: a window names a file, never a path. No Electron and no Node beyond path.
+ * chooses). One flat folder: a window names a file, never a path. Since FIX-EXPORTNAMES it is the person's
+ * exports folder (render-paths.ts, `exportsRoot`), the one the finished videos land in. No Electron.
  */
 import { join } from 'node:path';
+import { exportsRoot } from './render-paths';
 
-/** `<userData>/exports`. */
+/** The person's exports folder: `~/Movies/Taalcut/Exports` for the app's own data folder. */
 export function exportsFolder(userData: string): string {
+  return exportsRoot(userData);
+}
+
+/** Where the sink wrote before FIX-EXPORTNAMES, `<userData>/exports`: a file already there is still found. */
+export function legacyExportsFolder(userData: string): string {
   return join(userData, 'exports');
 }
 

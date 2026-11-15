@@ -26,7 +26,6 @@ import {
   type SkillVerdict,
 } from '@taalcut/core';
 import { z } from 'zod';
-import { asksOnlyForPostCopy } from './editor-post-copy';
 import { cutsOffAnchor, timelineStats } from '../model/checks';
 import type { TimelineService } from '../service/service';
 import type { ClipNumbering } from '../tools/clip-refs';
@@ -181,6 +180,9 @@ export const REQUEST_TOOL_NAMES = [
   'library.getAsset',
 ] as const;
 
+/** CAP1: the Editor's alone. A post's caption is asked for in the editor, so the Maker's offer does not carry it. */
+export const EDITOR_ONLY_TOOL_NAMES = ['timeline.setPostCaption'] as const;
+
 /**
  * AGT2-SBX: the workspace shell (render's workspace.open, exec, files and importMedia), for what no other tool does.
  * The Editor and the Maker list them only where the composition registers them.
@@ -206,6 +208,13 @@ export const SHARED_TOOL_NAMES = [
   'timeline.trimToDuration',
   'timeline.planCleanup',
   'timeline.applyCleanup',
+  // TXT1: the video's text read, its look designed, and each group of it placed and sized as stated.
+  'timeline.textLook',
+  'timeline.designText',
+  'timeline.placeText',
+  // LONG1: the music's bars read, and a clip made longer by whole bars of them.
+  'timeline.musicBars',
+  'timeline.lengthenSlot',
 ] as const;
 
 /** The project's style set (the make flow's finish reads it first). */
@@ -279,15 +288,20 @@ export function editorSkill(
   // cmt's comments family (comments.list, comments.reply) answers a batch of comments, in either mode.
   const families = deps.capabilities ? ['comments'] : ['captions', 'comments', ...(deps.families ?? [])];
   // gfx's graphics tools (editor-graphics.ts).
-  const edits = [...REQUEST_TOOL_NAMES, ...EDITOR_GRAPHICS_TOOLS];
+  const edits = [...REQUEST_TOOL_NAMES, ...EDITOR_ONLY_TOOL_NAMES, ...EDITOR_GRAPHICS_TOOLS];
   return defineSkill({
     id: 'timeline.editor',
     // 2.1 (FIX-TRIM): timeline.slipClip. 2.2 (FIX-CMT): a comment batch is a request. 2.3 (HFW1): graphics.design
     // replaces graphics.create and graphics.restyle. 2.4 (HFW1 retire): no text item has a kit shape; a graphic's
     // words are its design's (graphics.edit). 2.5 (AGT2): the make flow's finish has every tool, and takes more fixes.
     // 2.6 (AGT2): the workspace shell's tools, where the composition registers them. 2.7 (EAR1-A3): audio.listen
-    // and audio.critique, where registered.
-    version: '2.8.0',
+    // and audio.critique, where registered. 2.9 (CVR2): workspace.placeCover saves a cover as a composition over
+    // real frames; the Covers line names that route. 2.10 (CAP1): timeline.setPostCaption saves a post
+    // caption; the output's postCaption gives way to notSavedPostCaptionReason. 2.11 (TXT1): timeline.textLook
+    // and timeline.designText design the look of the video's text; timeline.placeText places and sizes it.
+    // 2.12 (LONG1): timeline.musicBars and timeline.lengthenSlot make a clip longer by whole bars of the reel's
+    // music; the request block names the guide (taalcut/edit-longer).
+    version: '2.12.0',
     labelKey: 'skills.timeline.editor',
     // The step loads the tools that best match this plus the request: words the tools share (timeline, graphics, text,
     // colour) would load the same few for every request, so it names what the Editor reads (timeline.get) and no more.
@@ -339,13 +353,12 @@ export function editorSkill(
       const exportRequest =
         input?.request !== undefined &&
         /\b(export|render|download|save\s+video|4k|1080p|60\s*fps)\b/i.test(input.request);
-      // The agent checks that this copy is visible; a stray output field cannot excuse an unrelated edit.
-      const postCopy = output.postCaption !== undefined && asksOnlyForPostCopy(input?.request);
+      // CAP1: a post caption is saved on the timeline (timeline.setPostCaption), so a run that wrote one moved the
+      // revision and is not sent back; no reading of the request's words decides it.
       if (
         numbering &&
         input?.request !== undefined &&
         !exportRequest &&
-        !postCopy &&
         input.context !== undefined &&
         output.revision === input.context.revision &&
         numbering.firstAsk(ctx.runId, 'handoff')

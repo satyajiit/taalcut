@@ -31,6 +31,7 @@ import {
   withoutDoubts,
 } from './doubts';
 import { fitRamp, fitTransition, retimed, USER_CUT } from './follow';
+import { withoutLandsOn } from './slot-lands';
 import { anchorAt, beatFrames } from './timing';
 
 /** Template v1's limit (templateSchema). */
@@ -151,15 +152,16 @@ export function splitSlot(template: Template, input: CutInput, newId: SlotId): R
   const cut = landed.value;
   const firstLength = RationalTime.of(cut - own.start, rate);
   const secondLength = RationalTime.of(own.end - cut, rate);
+  // MATCH1: a stated moment stays with the half that keeps its edge (slot-lands.ts).
   const first: TemplateSlot = {
-    ...slot,
+    ...withoutLandsOn(slot, 'end'),
     duration: firstLength,
     speedRamp: fitRamp(slot.speedRamp, firstLength),
     transitionIn: fitTransition(slot.transitionIn, slot.transitionIn?.before ?? firstLength, firstLength),
   };
   const second = withDoubts(
     {
-      ...slot,
+      ...withoutLandsOn(slot, 'start'),
       id: newId,
       name: null,
       start: RationalTime.of(cut, rate),

@@ -9,6 +9,7 @@
  */
 import {
   FrameRate,
+  keepsReelFootage,
   RationalTime,
   type CameraMotion,
   type Canvas,
@@ -36,6 +37,13 @@ export interface SlotSpec {
   readonly anchorRel: number | null;
   /** The text the intent is embedded from; null when the slot says nothing. */
   readonly intentText: string | null;
+  /** MOM1: the intent's embedding (query purpose), once a cast embeds it (moment-fit.ts); absent or null before. */
+  readonly intentVector?: Float32Array | null;
+  /**
+   * MOM1: what every slot of the template states (each slot's intent and need vectors, this slot's included), which
+   * a moment's fit to this slot is read against (moment-fit.ts). Absent before a cast embeds them.
+   */
+  readonly askSet?: readonly (readonly Float32Array[])[];
   readonly motion: CameraMotion | null;
   /** The slot's energy raised by its beat density, 0..1. */
   readonly energy: number;
@@ -53,6 +61,8 @@ export interface SlotSpec {
   readonly speed: SpeedRamp | null;
   /** Media the slot consumes, at the canvas rate (source time; a ramp's integral rounded up). */
   readonly consumes: RationalTime;
+  /** KEEP1: the slot keeps the reel's own footage, as its template states: nothing is cast into it (reel-slots.ts). */
+  readonly reel?: true;
 }
 
 export function orientationOf(canvas: Pick<Canvas, 'width' | 'height'>): Orientation {
@@ -115,6 +125,7 @@ export function slotSpecs(template: Template, config: CastingConfig, canvas?: Ca
       orientation,
       speed: slot.speedRamp,
       consumes: consumes(frames, slot.speedRamp, rate),
+      ...(keepsReelFootage(slot) ? { reel: true as const } : {}),
     };
   });
 }

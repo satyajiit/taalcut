@@ -38,7 +38,18 @@ describe('font catalogue', () => {
       expect(licence).toContain('SIL Open Font License');
       expect(face.file.endsWith('.ttf') || face.file.endsWith('.otf')).toBe(true);
     }
-    for (const id of CAPTION_FONTS) expect(FONT_CATALOGUE.some((face) => face.id === id)).toBe(true);
+    // TXT1: six faces a video's text can be set in ship with render only; font match scores none of them yet.
+    const renderOnly = [
+      'playfairDisplay',
+      'cormorantGaramond',
+      'oswald',
+      'caveat',
+      'dancingScript',
+      'courierPrime',
+    ];
+    for (const id of CAPTION_FONTS)
+      expect(FONT_CATALOGUE.some((face) => face.id === id) || renderOnly.includes(id)).toBe(true);
+    for (const id of renderOnly) expect(FONT_CATALOGUE.some((face) => face.id === id)).toBe(false);
     for (const id of EXTRA) {
       const face = FONT_CATALOGUE.find((entry) => entry.id === id);
       expect(face?.captionFont).toBe(false);

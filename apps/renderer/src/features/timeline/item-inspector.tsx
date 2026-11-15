@@ -3,7 +3,8 @@
 /* Impeccable · Operate · component: item inspector (EDT1, the fallback) · system: DESIGN.md v0.6 + UX4
  * any selected item that has no inspector of its own (the inspector sends graphics to gfx's, audio and captions
  *   to ops's first): its name and number, when it plays and for how long, its words (as written, never
- *   translated), and how to point the chat at it (Add to chat, Clear); plain canvas, the inspector's column
+ *   translated), and how to point the chat at it (Add to chat, Clear); plain canvas, the inspector's column;
+ *   TXT1: a text also has "Design text with AI" (text-design-action.tsx)
  * states: each control carries the eight · gone (the item went: the editor lets go of it) · loading: the page's
  *   bones · error: the editor's line · pre-emit critique: P4 H4 E4 S5 R5 V4 */
 import { useLingui } from '@lingui/react/macro';
@@ -12,6 +13,7 @@ import { Button, useShortcutFormat, useTimecode, UserContent, VERB_ICONS } from 
 import type { ReactNode } from 'react';
 import { ACCELERATORS, KEYS } from './keys';
 import type { TimelineModel } from './model';
+import { TextDesignAction } from './text-design-action';
 
 export interface ItemInspectorProps {
   model: TimelineModel;
@@ -44,7 +46,14 @@ function useItemName() {
   };
 }
 
-export function ItemInspector({ model, timeline, itemId, onAddToChat, onClear, children }: ItemInspectorProps) {
+export function ItemInspector({
+  model,
+  timeline,
+  itemId,
+  onAddToChat,
+  onClear,
+  children,
+}: ItemInspectorProps) {
   const { t } = useLingui();
   const time = useTimecode();
   const shortcut = useShortcutFormat();
@@ -71,6 +80,8 @@ export function ItemInspector({ model, timeline, itemId, onAddToChat, onClear, c
           <p className="m-0 type-body text-ink-2">
             {t`Ask the chat to change it: “move this to the top”, “make this one shorter”.`}
           </p>
+          {/* TXT1: the look of the video's text is asked for here; nothing restyles a video on its own. */}
+          {place.target.itemKind === 'text' ? <TextDesignAction /> : null}
         </>
       )}
       <div className="flex flex-wrap items-center gap-1.5">

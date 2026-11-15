@@ -60,6 +60,7 @@ const QA_CHECKS: Readonly<Record<QaCheckId, true>> = {
   soundOnCuts: true,
   soundClean: true,
   soundCritique: true,
+  slotPart: true,
 };
 
 describe('export review: the AI label', () => {

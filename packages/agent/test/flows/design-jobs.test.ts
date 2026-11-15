@@ -64,7 +64,7 @@ const job = (index: number, extra: Record<string, unknown> = {}) => ({
 const designer = { get: (id: string) => (id === DESIGNER_SKILL ? { id, labelKey: 'skills.render.designer' } : undefined) };
 
 describe('the Designer’s step', () => {
-  it('follows the Editor’s step with its completed jobs, eight a step, on the first job’s timeline', () => {
+  it('follows the Editor’s step with its completed jobs, four a step, on the first job’s timeline', () => {
     const jobs = [...Array.from({ length: 10 }, (_, index) => job(index)), job(10, { timelineId: otherTimeline })];
     const { state, step } = editorRun(jobs, 1);
     expect(designJobsIn(state, step).map((entry) => entry.jobId)).toEqual(jobs.slice(1).map((entry) => entry.jobId));
@@ -74,9 +74,9 @@ describe('the Designer’s step', () => {
     const [name, payload] = events[0] as [string, Steps & { insertAfter: string }];
     expect(name).toBe('plan.updated');
     expect(payload.insertAfter).toBe('f1');
-    expect(payload.steps.map((entry) => entry.skill)).toEqual([DESIGNER_SKILL, DESIGNER_SKILL]);
-    // The first call failed and the last is on another timeline: nine jobs, as eight and one.
-    expect(payload.steps.map((entry) => entry.input.jobs.length)).toEqual([8, 1]);
+    expect(payload.steps.map((entry) => entry.skill)).toEqual([DESIGNER_SKILL, DESIGNER_SKILL, DESIGNER_SKILL]);
+    // The first call failed and the last is on another timeline: nine jobs. DSG2: three designs each, four a step.
+    expect(payload.steps.map((entry) => entry.input.jobs.length)).toEqual([4, 4, 1]);
     expect(payload.steps[0]?.input.timelineId).toBe(timelineId);
     expect(payload.steps[0]?.input.templateId).toBeTypeOf('string');
     // A job carries no project or timeline of its own: the step's input does.

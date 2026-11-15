@@ -28,7 +28,10 @@ export function RenderLine({ render, label }: { render: RenderSnapshot; label: s
       <div data-slot="variant-render" data-status={status} className="flex flex-col gap-1">
         <p className="m-0 flex items-center gap-1.5 text-xs text-ink-2">
           {fraction === null ? <LoaderCircle aria-hidden className="size-3 shrink-0 animate-spin" /> : null}
-          <span className="min-w-0 truncate">{stage}</span>
+          {/* One line in a narrow tile; the whole stage stays as the tooltip (longer in other languages). */}
+          <span title={stage} className="min-w-0 truncate">
+            {stage}
+          </span>
           {percent ? <span className="ms-auto text-ink tabular-nums">{percent}</span> : null}
         </p>
         <div

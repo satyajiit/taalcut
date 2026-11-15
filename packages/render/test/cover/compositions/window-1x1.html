@@ -1,0 +1,109 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"headline","type":"string","label":"Headline","default":"golden, briefly."},{"id":"kicker","type":"string","label":"Kicker","default":"18:42"},{"id":"ink","type":"color","label":"Ink","default":"#1f3a5f"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template id="cover-window-template">
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0b0d14;
+        }
+        .shot {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: 62% 50%;
+        }
+        #toned {
+          filter: grayscale(1) contrast(1.15) brightness(1.1);
+        }
+        #ink {
+          position: absolute;
+          inset: 0;
+          background: var(--ink);
+          mix-blend-mode: multiply;
+        }
+        #lift {
+          position: absolute;
+          inset: 0;
+          background: var(--ink);
+          mix-blend-mode: lighten;
+          opacity: 0.55;
+        }
+        #window {
+          clip-path: circle(214px at 690px 396px);
+        }
+        #ring {
+          position: absolute;
+          left: 452px;
+          top: 158px;
+          width: 476px;
+          height: 476px;
+          overflow: visible;
+        }
+        #ring-line {
+          fill: none;
+          stroke: #f6f1e7;
+          stroke-width: 6;
+        }
+        #kicker {
+          position: absolute;
+          left: 84px;
+          top: 110px;
+          margin: 0;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 96px;
+          line-height: 1;
+          letter-spacing: 0.06em;
+          color: #f6f1e7;
+        }
+        #headline {
+          position: absolute;
+          left: 80px;
+          right: 170px;
+          bottom: 150px;
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          font-size: 132px;
+          font-weight: 800;
+          line-height: 0.98;
+          letter-spacing: -0.04em;
+          color: #f6f1e7;
+          text-wrap: balance;
+        }
+      </style>
+      <div
+        id="root"
+        data-composition-id="cover-window"
+        data-width="1080"
+        data-height="1080"
+        data-duration="2"
+      >
+        <img class="shot" id="toned" data-picture="hero" alt="" />
+        <div id="ink"></div>
+        <div id="lift"></div>
+        <img class="shot" id="window" data-picture="hero" alt="" />
+        <svg id="ring" viewBox="0 0 476 476" aria-hidden="true">
+          <circle id="ring-line" cx="238" cy="238" r="226" />
+        </svg>
+        <p id="kicker" data-var-text="kicker">18:42</p>
+        <h1 id="headline" data-var-text="headline">golden, briefly.</h1>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.addLabel('enter', 0);
+        tl.addLabel('exit', 1.5);
+        window.__timelines['cover-window'] = tl;
+      </script>
+    </template>
+  </body>
+</html>

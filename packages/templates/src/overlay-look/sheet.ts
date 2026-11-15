@@ -23,20 +23,21 @@ export const SHEET = {
   background: [24, 24, 24] as const,
 } as const;
 
-interface Canvas {
+export interface Canvas {
   readonly width: number;
   readonly height: number;
   readonly rgb: Uint8Array;
 }
 
-function canvas(width: number, height: number): Canvas {
+/** A canvas of the sheet's background (LYR1: the sequence sheet draws on one too). */
+export function canvas(width: number, height: number): Canvas {
   const rgb = new Uint8Array(width * height * 3);
   for (let index = 0; index < width * height; index++) rgb.set(SHEET.background, index * 3);
   return { width, height, rgb };
 }
 
 /** Draws `rect` of `source` scaled into `to` (canvas pixels), bilinear. */
-function draw(target: Canvas, source: RgbFrame, rect: PixelRect, to: PixelRect): void {
+export function draw(target: Canvas, source: RgbFrame, rect: PixelRect, to: PixelRect): void {
   const sw = rect.right - rect.left;
   const sh = rect.bottom - rect.top;
   const tw = to.right - to.left;

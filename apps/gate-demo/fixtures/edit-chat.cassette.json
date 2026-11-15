@@ -8,7 +8,7 @@
       "request": {
         "method": "POST",
         "url": "https://api.anthropic.com/v1/messages?beta=true",
-        "match": "POST /v1/messages sha256:92b603dcb941e1a0",
+        "match": "POST /v1/messages sha256:01087406c8465e47",
         "headers": {
           "content-type": "application/json",
           "accept": "application/json",
@@ -179,11 +179,11 @@
               "input_schema": {
                 "type": "object",
                 "properties": {
-                  "postCaption": {
-                    "description": "When asked for an Instagram/social post caption: the actual ready-to-copy post text, repeated verbatim in your visible response. This is not a subtitle setting.",
+                  "notSavedPostCaptionReason": {
+                    "description": "Only when a requested post caption could not be saved with timeline.setPostCaption: the reason, repeated verbatim in your visible message.",
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 5000
+                    "maxLength": 2000
                   },
                   "timelineId": {
                     "type": "string",
@@ -2230,8 +2230,437 @@
               }
             },
             {
+              "name": "timeline_setPostCaption",
+              "description": "Saves the caption to post under this video on a platform (the post’s own text, never subtitles) from its parts: body, hashtags, keywords. Taalcut assembles them in the platform’s order, adds the credit line itself when the person wants one, and refuses what is outside the platform’s rule, saying what to fix. Changes nothing else in the video. Answers the assembled text: show it to the person as written.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "instagram"
+                    ],
+                    "description": "Where it will be posted"
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 5000,
+                    "description": "The words: a hook line, what this video really shows, one ask. No credit line"
+                  },
+                  "hashtags": {
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 80
+                    },
+                    "description": "This video’s subject, without #. In the whole caption, Instagram: 1 to 4"
+                  },
+                  "keywords": {
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 120
+                    },
+                    "description": "Phrases people type into search for this subject. Instagram: 3 to 10"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "platform",
+                  "body",
+                  "hashtags",
+                  "keywords"
+                ]
+              }
+            },
+            {
+              "name": "timeline_designText",
+              "description": "Designs a video's on-screen text: a look for every role timeline.textLook names, each stated in full, saved as this video’s own Style. Start from the reference’s measured look unless the person asked for another. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80,
+                    "description": "A short name for the look"
+                  },
+                  "looks": {
+                    "minItems": 1,
+                    "maxItems": 16,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,31}$",
+                          "description": "A role from timeline.textLook"
+                        },
+                        "font": {
+                          "type": "object",
+                          "properties": {
+                            "family": {
+                              "type": "string",
+                              "enum": [
+                                "notoSans",
+                                "notoSansDevanagari",
+                                "poppins",
+                                "mukta",
+                                "hind",
+                                "baloo2",
+                                "montserrat",
+                                "anton",
+                                "bebasNeue",
+                                "playfairDisplay",
+                                "cormorantGaramond",
+                                "oswald",
+                                "caveat",
+                                "dancingScript",
+                                "courierPrime"
+                              ]
+                            },
+                            "weight": {
+                              "type": "integer",
+                              "minimum": 100,
+                              "maximum": 900,
+                              "multipleOf": 100
+                            }
+                          },
+                          "required": [
+                            "family",
+                            "weight"
+                          ],
+                          "description": "A face and weight from timeline.textLook’s faces"
+                        },
+                        "colour": {
+                          "type": "string",
+                          "pattern": "^#[0-9a-f]{6}$",
+                          "description": "#rrggbb, lower case"
+                        },
+                        "outline": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "widthPx": {
+                                  "type": "integer",
+                                  "minimum": 1,
+                                  "maximum": 16
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "widthPx"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Round the letters; null: none"
+                        },
+                        "shadow": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "opacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
+                                },
+                                "blurPx": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 48
+                                },
+                                "offsetPx": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 24
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "opacity",
+                                "blurPx",
+                                "offsetPx"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Under the letters; null: none"
+                        },
+                        "box": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "opacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "opacity"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Behind the words; null: none"
+                        },
+                        "letterSpacing": {
+                          "description": "Extra, in em",
+                          "type": "number",
+                          "minimum": -0.05,
+                          "maximum": 0.5
+                        },
+                        "case": {
+                          "type": "string",
+                          "enum": [
+                            "upper",
+                            "lower",
+                            "mixed"
+                          ]
+                        },
+                        "reveal": {
+                          "description": "How the texts come on",
+                          "type": "string",
+                          "enum": [
+                            "none",
+                            "fade",
+                            "pop",
+                            "slide",
+                            "typewriter",
+                            "wordByWord"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "font",
+                        "colour",
+                        "outline",
+                        "shadow",
+                        "box"
+                      ]
+                    },
+                    "description": "One for every role the text uses"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "name",
+                  "looks"
+                ]
+              }
+            },
+            {
+              "name": "timeline_placeText",
+              "description": "Places a video's on-screen text: for each group its place, alignment and size, or asReel. Texts shown in turn at one place move as one. A text draws on one line at any size; only a line break in its words or a width you state breaks it. What you state is applied exactly, with one exception: a group stated past the frame’s edge is moved the least that keeps it inside the frame, and a line wider than the frame wraps at the frame’s width (atFrameEdge: true). The answer gives facts for each group (capital height in px, the lines each text draws on, faces under it, a platform’s interface over it) and the sizes and places as one system. A text the person placed stays. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "groups": {
+                    "minItems": 1,
+                    "maxItems": 60,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "itemId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 64,
+                          "description": "The group, from timeline.textLook"
+                        },
+                        "asReel": {
+                          "description": "true: the place and size the reference had",
+                          "type": "boolean"
+                        },
+                        "x": {
+                          "description": "Share of the width: its left, centre or right, as align says",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "description": "Share of the height: its middle",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "align": {
+                          "type": "string",
+                          "enum": [
+                            "left",
+                            "center",
+                            "right"
+                          ]
+                        },
+                        "size": {
+                          "description": "Capital height over frame height",
+                          "type": "number",
+                          "minimum": 0.005,
+                          "maximum": 0.5
+                        },
+                        "width": {
+                          "description": "Only to wrap: the widest a line may be, share of the width",
+                          "type": "number",
+                          "minimum": 0.05,
+                          "maximum": 1
+                        }
+                      },
+                      "required": [
+                        "itemId"
+                      ]
+                    },
+                    "description": "Every group you place, in one call"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "groups"
+                ]
+              }
+            },
+            {
+              "name": "timeline_lengthenSlot",
+              "description": "Makes one of the person’s clips longer by whole bars of the reel’s music. At `at`, a bar line inside the clip (its end counts), the music plays the bars before it again, joined by a 50 ms crossfade; the clip shows that much more of its shot (`footage`); every later clip, transition, text and caption is later by the same whole frames, so the reel’s own clips stay on their music. Applied exactly as stated, or not at all with why in numbers. Read timeline.musicBars first. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "revision": {
+                    "description": "The revision timeline.get showed when you read the clip numbers",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "clip": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 400
+                      },
+                      {
+                        "type": "string",
+                        "enum": [
+                          "this",
+                          "next",
+                          "previous"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 40
+                      }
+                    ],
+                    "description": "The clip by its number, as timeline.get numbers it (3 is clip 3); or \"this\" for what the person pointed at (the selected clip, else the one at the playhead), \"next\" and \"previous\" for the clip after or before it"
+                  },
+                  "bars": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64,
+                    "description": "Whole bars to add"
+                  },
+                  "at": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 36000,
+                    "description": "A bar line (music.bars of timeline.musicBars), seconds of the video: the bars before it play again"
+                  },
+                  "footage": {
+                    "type": "string",
+                    "enum": [
+                      "before",
+                      "after"
+                    ],
+                    "description": "The added footage: the shot before what the clip plays now, or after it"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "clip",
+                  "bars",
+                  "at",
+                  "footage"
+                ]
+              }
+            },
+            {
               "name": "timeline_setCover",
-              "description": "Saves a cover using a timeline frame, an image asset or a solid background. Optional cover.design composes up to 16 editable text, shape and bounded vector-path layers with an explicit palette, normalized layout and image crop; it replaces preset overlays. One undo restores the prior choices. Use render.exportCover to save the full-resolution JPEG.",
+              "description": "Sets the cover’s picture to one frame of the video or one library image as it is, with nothing designed on it: only when the person asks for exactly that frame or image as the cover. A cover with lettering or a layout is a composition saved with workspace.placeCover, never this. medium says what the picture is made of. One undo restores the cover before. Use render.exportCover to save the full-resolution JPEG.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -2300,626 +2729,25 @@
                               "kind",
                               "assetId"
                             ]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "kind": {
-                                "type": "string",
-                                "const": "solid"
-                              }
-                            },
-                            "required": [
-                              "kind"
-                            ]
                           }
                         ]
                       },
-                      "archetype": {
-                        "default": "minimal-frame",
+                      "medium": {
                         "type": "string",
                         "enum": [
-                          "editorial-specimen",
-                          "brutal-slab",
-                          "atmospheric-cinema",
-                          "minimal-frame",
-                          "stat-callout"
-                        ]
-                      },
-                      "theme": {
-                        "default": "golden-hour",
-                        "type": "string",
-                        "enum": [
-                          "golden-hour",
-                          "midnight",
-                          "newsprint",
-                          "studio",
-                          "terminal",
-                          "brand-kit"
-                        ]
-                      },
-                      "textAlign": {
-                        "default": "bottom-left",
-                        "type": "string",
-                        "enum": [
-                          "left",
-                          "top-left",
-                          "bottom-left"
-                        ]
-                      },
-                      "hookText": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 48
-                      },
-                      "kickerText": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 28
-                      },
-                      "statBadge": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 20
-                      },
-                      "channel": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "maxLength": 60
-                          },
-                          "handle": {
-                            "type": "string",
-                            "maxLength": 40
-                          },
-                          "show": {
-                            "type": "boolean"
-                          }
-                        },
-                        "required": [
-                          "name",
-                          "handle",
-                          "show"
-                        ]
-                      },
-                      "design": {
-                        "type": "object",
-                        "properties": {
-                          "version": {
-                            "type": "number",
-                            "const": 1
-                          },
-                          "palette": {
-                            "type": "object",
-                            "properties": {
-                              "ink": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "paper": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "accent": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "muted": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              }
-                            },
-                            "required": [
-                              "ink",
-                              "paper",
-                              "accent",
-                              "muted"
-                            ]
-                          },
-                          "backdrop": {
-                            "type": "object",
-                            "properties": {
-                              "fit": {
-                                "default": "cover",
-                                "type": "string",
-                                "enum": [
-                                  "cover",
-                                  "contain"
-                                ]
-                              },
-                              "x": {
-                                "default": 0.5,
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 1
-                              },
-                              "y": {
-                                "default": 0.5,
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 1
-                              }
-                            }
-                          },
-                          "layers": {
-                            "minItems": 1,
-                            "maxItems": 16,
-                            "type": "array",
-                            "items": {
-                              "oneOf": [
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "text"
-                                    },
-                                    "text": {
-                                      "type": "string",
-                                      "minLength": 1,
-                                      "maxLength": 180
-                                    },
-                                    "font": {
-                                      "default": "notoSans",
-                                      "type": "string",
-                                      "enum": [
-                                        "notoSans",
-                                        "poppins",
-                                        "montserrat",
-                                        "anton",
-                                        "bebasNeue"
-                                      ]
-                                    },
-                                    "fontSize": {
-                                      "type": "number",
-                                      "minimum": 0.012,
-                                      "maximum": 0.25
-                                    },
-                                    "weight": {
-                                      "default": 700,
-                                      "type": "integer",
-                                      "minimum": 100,
-                                      "maximum": 900
-                                    },
-                                    "lineHeight": {
-                                      "default": 1.08,
-                                      "type": "number",
-                                      "minimum": 1,
-                                      "maximum": 1.8
-                                    },
-                                    "letterSpacing": {
-                                      "default": -0.02,
-                                      "type": "number",
-                                      "minimum": -0.08,
-                                      "maximum": 0.2
-                                    },
-                                    "align": {
-                                      "default": "left",
-                                      "type": "string",
-                                      "enum": [
-                                        "left",
-                                        "center",
-                                        "right"
-                                      ]
-                                    },
-                                    "color": {
-                                      "default": "ink",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "text",
-                                    "fontSize"
-                                  ]
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "shape"
-                                    },
-                                    "shape": {
-                                      "type": "string",
-                                      "enum": [
-                                        "rectangle",
-                                        "ellipse"
-                                      ]
-                                    },
-                                    "fill": {
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "stroke": {
-                                      "default": "transparent",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "strokeWidth": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 0.05
-                                    },
-                                    "radius": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 0.2
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "shape",
-                                    "fill"
-                                  ]
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "path"
-                                    },
-                                    "commands": {
-                                      "minItems": 2,
-                                      "maxItems": 64,
-                                      "type": "array",
-                                      "items": {
-                                        "oneOf": [
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "M"
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "L"
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "Q"
-                                              },
-                                              "cx": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "cy": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "cx",
-                                              "cy",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "C"
-                                              },
-                                              "c1x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c1y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c2x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c2y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "c1x",
-                                              "c1y",
-                                              "c2x",
-                                              "c2y",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "Z"
-                                              }
-                                            },
-                                            "required": [
-                                              "command"
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    },
-                                    "fill": {
-                                      "default": "transparent",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "stroke": {
-                                      "default": "ink",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "strokeWidth": {
-                                      "default": 0.01,
-                                      "type": "number",
-                                      "minimum": 0.001,
-                                      "maximum": 0.08
-                                    },
-                                    "dashed": {
-                                      "default": false,
-                                      "type": "boolean"
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "commands"
-                                  ]
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "version",
-                          "palette",
-                          "layers"
-                        ]
+                          "footage",
+                          "generated",
+                          "drawn"
+                        ],
+                        "description": "What the picture is made of: footage unless the person asked for other art"
                       }
                     },
                     "required": [
                       "aspect",
-                      "source"
-                    ]
+                      "source",
+                      "medium"
+                    ],
+                    "additionalProperties": false
                   }
                 },
                 "required": [
@@ -3269,7 +3097,7 @@
             },
             {
               "name": "timeline_editText",
-              "description": "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words.",
+              "description": "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words. A line break in the wording is the only thing that breaks a line; a box places a text as timeline.moveText does.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -3431,7 +3259,7 @@
             },
             {
               "name": "timeline_moveText",
-              "description": "Moves the normalised bounding box (x, y, width, height in 0..1) of one or more on-screen text items (via itemId, itemIds[], or moves[]), e.g. into the platform safe area for a QA fix.",
+              "description": "Moves one or more on-screen text items (via itemId, itemIds[], or moves[]) to a box (x, y, width, height in 0..1). The box says where a text sits, never where it wraps: its words draw on one line from the box’s left edge, centre or right edge (as the text is aligned), at the box’s middle. To break a line, put a line break in the words (timeline.editText) or state a width with timeline.placeText.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -4620,7 +4448,7 @@
             },
             {
               "name": "timeline_get",
-              "description": "Reads a timeline: its clips in order (each one’s number as the editor shows it, its id and what it shows, start and length in seconds, speed, sound, colour, lock; outside the editor’s chat also its slot, shot, frames and confidence), with atSeconds the clip playing then and the cut nearest it (here), the transitions between them, its text items, the sounds on its audio tracks, the music, the whole video’s colour and its markers. A clip made for a template slot has slot: the slot’s number and role, what it should show (intent, needs, face, shot type, camera move, people), where it sits in the reel (at, seconds) and the cast’s score for the clip there with its parts.",
+              "description": "Reads a timeline: its clips in order (each one’s number as the editor shows it, its id and what it shows, where its shot changes over its length also what the part it plays shows and the rest of the shot in seconds of the shot’s file (camera handling marks a stretch that is not footage), start and length in seconds, speed, sound, colour, lock; outside the editor’s chat also its slot, shot, frames and confidence), with atSeconds the clip playing then and the cut nearest it (here), the transitions between them, its text items, the sounds on its audio tracks, the music, the whole video’s colour and its markers. A clip made for a template slot has slot: the slot’s number and role, what it should show (intent, needs, face, shot type, camera move, people), where it sits in the reel (at, seconds) and the cast’s score for the clip there with its parts.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -4656,6 +4484,85 @@
                   }
                 },
                 "required": [
+                  "timelineId"
+                ]
+              }
+            },
+            {
+              "name": "timeline_musicBars",
+              "description": "Reads the facts for making a video longer. The reel’s music, measured from its sound: the bar’s length, each bar line in seconds of the video, how sure the measurement is, where the music changes strongly. Each clip: its place and length, and how much of its shot lies before and after what it plays. With `would` it answers what a lengthening would do (new length, what moves, where the instant on the cut lands) or why it can’t be done, changing nothing.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "would": {
+                    "description": "A lengthening to try: answered in `would` or `cannot`, nothing changed",
+                    "type": "object",
+                    "properties": {
+                      "clip": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 400
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "this",
+                              "next",
+                              "previous"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 40
+                          }
+                        ],
+                        "description": "The clip by its number, as timeline.get numbers it (3 is clip 3); or \"this\" for what the person pointed at (the selected clip, else the one at the playhead), \"next\" and \"previous\" for the clip after or before it"
+                      },
+                      "bars": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64,
+                        "description": "Whole bars to add"
+                      },
+                      "at": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 36000,
+                        "description": "A bar line (music.bars of timeline.musicBars), seconds of the video: the bars before it play again"
+                      },
+                      "footage": {
+                        "type": "string",
+                        "enum": [
+                          "before",
+                          "after"
+                        ],
+                        "description": "The added footage: the shot before what the clip plays now, or after it"
+                      }
+                    },
+                    "required": [
+                      "clip",
+                      "bars",
+                      "at",
+                      "footage"
+                    ]
+                  }
+                },
+                "required": [
+                  "projectId",
                   "timelineId"
                 ]
               }
@@ -5434,7 +5341,13 @@
                           "baloo2",
                           "montserrat",
                           "anton",
-                          "bebasNeue"
+                          "bebasNeue",
+                          "playfairDisplay",
+                          "cormorantGaramond",
+                          "oswald",
+                          "caveat",
+                          "dancingScript",
+                          "courierPrime"
                         ]
                       },
                       "weight": {
@@ -5923,6 +5836,49 @@
               }
             },
             {
+              "name": "graphics_chooseOption",
+              "description": "Switches a graphic to another of the designs it came with, when the person asks for one (\"use the second one\", \"go back to the first\"). option is its number in graphics.list’s options; every graphic of the same set switches with it and keeps its words. Three new designs instead is graphics.design. Undoable.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "itemId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "TimelineItem id"
+                  },
+                  "option": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 3,
+                    "description": "Its number in graphics.list’s options"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "revision",
+                  "itemId",
+                  "option"
+                ]
+              }
+            },
+            {
               "name": "render_export",
               "description": "Exports the timeline as one video with the project export settings (preset, codec and captions, which render.setExportPreset sets), after the user approves on the export card. Waits for the render and its QA checks, and returns the render, the failing checks with their fixes and the QA report. timelineRevision is the reviewed revision (from the Editor or render.listPresets); a changed timeline is refused with core.conflict. rate requests an output frame rate; omit it to use the timeline frame rate. Set supersedes to the previous render when exporting again after QA fixes.",
               "eager_input_streaming": true,
@@ -5989,7 +5945,7 @@
             },
             {
               "name": "render_exportCover",
-              "description": "Exports the video’s saved cover as a full-resolution JPEG in Taalcut’s exports folder. Uses original media, editable video effects and the same design renderer as the publishing studio preview. First use timeline.setCover to choose a frame, image or solid background and compose editable typography, shapes and drawn paths with cover.design.",
+              "description": "Exports the video’s saved cover as a full-resolution JPEG in Taalcut’s exports folder: the same picture the cover panel shows, drawn from original media. Save the cover first with workspace.placeCover (a designed composition over real frames); then look at the JPEG before saying it is done.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -7515,7 +7471,7 @@
             },
             {
               "name": "library_search",
-              "description": "Searches the user's footage by meaning and keywords, in any of the app's languages: what is seen (the frames), the descriptions, what is said and on-screen text. Returns shots with their file, start and length, why each matched, and a 0..1 score for ordering.",
+              "description": "Searches the user's footage by meaning and keywords, in any of the app's languages: what is seen (the frames), the descriptions, what is said and on-screen text. Returns shots with their file, start and length, why each matched, a 0..1 score for ordering and, where a shot shows different things over its length, moments: what it shows from when to when (seconds in its file), to place the part that fits. A stretch marked (camera handling) is not footage.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -7753,7 +7709,7 @@
             },
             {
               "name": "library_getAsset",
-              "description": "One file's profile: kind, length, size, orientation, language, quality and index state; with `include`, its shots (descriptions, objects, place, shot type, motion, quality, on-screen text, speech), its transcript (long ones are stored as an artifact) and where its copies are.",
+              "description": "One file's profile: kind, length, size, orientation, language, quality and index state; with `include`, its shots (descriptions, moments: what each shows from when to when, in seconds of the file, a stretch that is not footage marked (camera handling); objects, place, shot type, motion, quality, on-screen text, speech), its transcript (long ones are stored as an artifact) and where its copies are.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -8393,7 +8349,7 @@
       "request": {
         "method": "POST",
         "url": "https://api.anthropic.com/v1/messages?beta=true",
-        "match": "POST /v1/messages sha256:75f95e933a70946d",
+        "match": "POST /v1/messages sha256:83031f011eb9544f",
         "headers": {
           "content-type": "application/json",
           "accept": "application/json",
@@ -8594,11 +8550,11 @@
               "input_schema": {
                 "type": "object",
                 "properties": {
-                  "postCaption": {
-                    "description": "When asked for an Instagram/social post caption: the actual ready-to-copy post text, repeated verbatim in your visible response. This is not a subtitle setting.",
+                  "notSavedPostCaptionReason": {
+                    "description": "Only when a requested post caption could not be saved with timeline.setPostCaption: the reason, repeated verbatim in your visible message.",
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 5000
+                    "maxLength": 2000
                   },
                   "timelineId": {
                     "type": "string",
@@ -10645,8 +10601,437 @@
               }
             },
             {
+              "name": "timeline_setPostCaption",
+              "description": "Saves the caption to post under this video on a platform (the post’s own text, never subtitles) from its parts: body, hashtags, keywords. Taalcut assembles them in the platform’s order, adds the credit line itself when the person wants one, and refuses what is outside the platform’s rule, saying what to fix. Changes nothing else in the video. Answers the assembled text: show it to the person as written.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "instagram"
+                    ],
+                    "description": "Where it will be posted"
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 5000,
+                    "description": "The words: a hook line, what this video really shows, one ask. No credit line"
+                  },
+                  "hashtags": {
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 80
+                    },
+                    "description": "This video’s subject, without #. In the whole caption, Instagram: 1 to 4"
+                  },
+                  "keywords": {
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 120
+                    },
+                    "description": "Phrases people type into search for this subject. Instagram: 3 to 10"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "platform",
+                  "body",
+                  "hashtags",
+                  "keywords"
+                ]
+              }
+            },
+            {
+              "name": "timeline_designText",
+              "description": "Designs a video's on-screen text: a look for every role timeline.textLook names, each stated in full, saved as this video’s own Style. Start from the reference’s measured look unless the person asked for another. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80,
+                    "description": "A short name for the look"
+                  },
+                  "looks": {
+                    "minItems": 1,
+                    "maxItems": 16,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,31}$",
+                          "description": "A role from timeline.textLook"
+                        },
+                        "font": {
+                          "type": "object",
+                          "properties": {
+                            "family": {
+                              "type": "string",
+                              "enum": [
+                                "notoSans",
+                                "notoSansDevanagari",
+                                "poppins",
+                                "mukta",
+                                "hind",
+                                "baloo2",
+                                "montserrat",
+                                "anton",
+                                "bebasNeue",
+                                "playfairDisplay",
+                                "cormorantGaramond",
+                                "oswald",
+                                "caveat",
+                                "dancingScript",
+                                "courierPrime"
+                              ]
+                            },
+                            "weight": {
+                              "type": "integer",
+                              "minimum": 100,
+                              "maximum": 900,
+                              "multipleOf": 100
+                            }
+                          },
+                          "required": [
+                            "family",
+                            "weight"
+                          ],
+                          "description": "A face and weight from timeline.textLook’s faces"
+                        },
+                        "colour": {
+                          "type": "string",
+                          "pattern": "^#[0-9a-f]{6}$",
+                          "description": "#rrggbb, lower case"
+                        },
+                        "outline": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "widthPx": {
+                                  "type": "integer",
+                                  "minimum": 1,
+                                  "maximum": 16
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "widthPx"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Round the letters; null: none"
+                        },
+                        "shadow": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "opacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
+                                },
+                                "blurPx": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 48
+                                },
+                                "offsetPx": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 24
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "opacity",
+                                "blurPx",
+                                "offsetPx"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Under the letters; null: none"
+                        },
+                        "box": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "opacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "opacity"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Behind the words; null: none"
+                        },
+                        "letterSpacing": {
+                          "description": "Extra, in em",
+                          "type": "number",
+                          "minimum": -0.05,
+                          "maximum": 0.5
+                        },
+                        "case": {
+                          "type": "string",
+                          "enum": [
+                            "upper",
+                            "lower",
+                            "mixed"
+                          ]
+                        },
+                        "reveal": {
+                          "description": "How the texts come on",
+                          "type": "string",
+                          "enum": [
+                            "none",
+                            "fade",
+                            "pop",
+                            "slide",
+                            "typewriter",
+                            "wordByWord"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "font",
+                        "colour",
+                        "outline",
+                        "shadow",
+                        "box"
+                      ]
+                    },
+                    "description": "One for every role the text uses"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "name",
+                  "looks"
+                ]
+              }
+            },
+            {
+              "name": "timeline_placeText",
+              "description": "Places a video's on-screen text: for each group its place, alignment and size, or asReel. Texts shown in turn at one place move as one. A text draws on one line at any size; only a line break in its words or a width you state breaks it. What you state is applied exactly, with one exception: a group stated past the frame’s edge is moved the least that keeps it inside the frame, and a line wider than the frame wraps at the frame’s width (atFrameEdge: true). The answer gives facts for each group (capital height in px, the lines each text draws on, faces under it, a platform’s interface over it) and the sizes and places as one system. A text the person placed stays. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "groups": {
+                    "minItems": 1,
+                    "maxItems": 60,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "itemId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 64,
+                          "description": "The group, from timeline.textLook"
+                        },
+                        "asReel": {
+                          "description": "true: the place and size the reference had",
+                          "type": "boolean"
+                        },
+                        "x": {
+                          "description": "Share of the width: its left, centre or right, as align says",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "description": "Share of the height: its middle",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "align": {
+                          "type": "string",
+                          "enum": [
+                            "left",
+                            "center",
+                            "right"
+                          ]
+                        },
+                        "size": {
+                          "description": "Capital height over frame height",
+                          "type": "number",
+                          "minimum": 0.005,
+                          "maximum": 0.5
+                        },
+                        "width": {
+                          "description": "Only to wrap: the widest a line may be, share of the width",
+                          "type": "number",
+                          "minimum": 0.05,
+                          "maximum": 1
+                        }
+                      },
+                      "required": [
+                        "itemId"
+                      ]
+                    },
+                    "description": "Every group you place, in one call"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "groups"
+                ]
+              }
+            },
+            {
+              "name": "timeline_lengthenSlot",
+              "description": "Makes one of the person’s clips longer by whole bars of the reel’s music. At `at`, a bar line inside the clip (its end counts), the music plays the bars before it again, joined by a 50 ms crossfade; the clip shows that much more of its shot (`footage`); every later clip, transition, text and caption is later by the same whole frames, so the reel’s own clips stay on their music. Applied exactly as stated, or not at all with why in numbers. Read timeline.musicBars first. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "revision": {
+                    "description": "The revision timeline.get showed when you read the clip numbers",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "clip": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 400
+                      },
+                      {
+                        "type": "string",
+                        "enum": [
+                          "this",
+                          "next",
+                          "previous"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 40
+                      }
+                    ],
+                    "description": "The clip by its number, as timeline.get numbers it (3 is clip 3); or \"this\" for what the person pointed at (the selected clip, else the one at the playhead), \"next\" and \"previous\" for the clip after or before it"
+                  },
+                  "bars": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64,
+                    "description": "Whole bars to add"
+                  },
+                  "at": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 36000,
+                    "description": "A bar line (music.bars of timeline.musicBars), seconds of the video: the bars before it play again"
+                  },
+                  "footage": {
+                    "type": "string",
+                    "enum": [
+                      "before",
+                      "after"
+                    ],
+                    "description": "The added footage: the shot before what the clip plays now, or after it"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "clip",
+                  "bars",
+                  "at",
+                  "footage"
+                ]
+              }
+            },
+            {
               "name": "timeline_setCover",
-              "description": "Saves a cover using a timeline frame, an image asset or a solid background. Optional cover.design composes up to 16 editable text, shape and bounded vector-path layers with an explicit palette, normalized layout and image crop; it replaces preset overlays. One undo restores the prior choices. Use render.exportCover to save the full-resolution JPEG.",
+              "description": "Sets the cover’s picture to one frame of the video or one library image as it is, with nothing designed on it: only when the person asks for exactly that frame or image as the cover. A cover with lettering or a layout is a composition saved with workspace.placeCover, never this. medium says what the picture is made of. One undo restores the cover before. Use render.exportCover to save the full-resolution JPEG.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -10715,626 +11100,25 @@
                               "kind",
                               "assetId"
                             ]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "kind": {
-                                "type": "string",
-                                "const": "solid"
-                              }
-                            },
-                            "required": [
-                              "kind"
-                            ]
                           }
                         ]
                       },
-                      "archetype": {
-                        "default": "minimal-frame",
+                      "medium": {
                         "type": "string",
                         "enum": [
-                          "editorial-specimen",
-                          "brutal-slab",
-                          "atmospheric-cinema",
-                          "minimal-frame",
-                          "stat-callout"
-                        ]
-                      },
-                      "theme": {
-                        "default": "golden-hour",
-                        "type": "string",
-                        "enum": [
-                          "golden-hour",
-                          "midnight",
-                          "newsprint",
-                          "studio",
-                          "terminal",
-                          "brand-kit"
-                        ]
-                      },
-                      "textAlign": {
-                        "default": "bottom-left",
-                        "type": "string",
-                        "enum": [
-                          "left",
-                          "top-left",
-                          "bottom-left"
-                        ]
-                      },
-                      "hookText": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 48
-                      },
-                      "kickerText": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 28
-                      },
-                      "statBadge": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 20
-                      },
-                      "channel": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "maxLength": 60
-                          },
-                          "handle": {
-                            "type": "string",
-                            "maxLength": 40
-                          },
-                          "show": {
-                            "type": "boolean"
-                          }
-                        },
-                        "required": [
-                          "name",
-                          "handle",
-                          "show"
-                        ]
-                      },
-                      "design": {
-                        "type": "object",
-                        "properties": {
-                          "version": {
-                            "type": "number",
-                            "const": 1
-                          },
-                          "palette": {
-                            "type": "object",
-                            "properties": {
-                              "ink": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "paper": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "accent": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "muted": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              }
-                            },
-                            "required": [
-                              "ink",
-                              "paper",
-                              "accent",
-                              "muted"
-                            ]
-                          },
-                          "backdrop": {
-                            "type": "object",
-                            "properties": {
-                              "fit": {
-                                "default": "cover",
-                                "type": "string",
-                                "enum": [
-                                  "cover",
-                                  "contain"
-                                ]
-                              },
-                              "x": {
-                                "default": 0.5,
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 1
-                              },
-                              "y": {
-                                "default": 0.5,
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 1
-                              }
-                            }
-                          },
-                          "layers": {
-                            "minItems": 1,
-                            "maxItems": 16,
-                            "type": "array",
-                            "items": {
-                              "oneOf": [
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "text"
-                                    },
-                                    "text": {
-                                      "type": "string",
-                                      "minLength": 1,
-                                      "maxLength": 180
-                                    },
-                                    "font": {
-                                      "default": "notoSans",
-                                      "type": "string",
-                                      "enum": [
-                                        "notoSans",
-                                        "poppins",
-                                        "montserrat",
-                                        "anton",
-                                        "bebasNeue"
-                                      ]
-                                    },
-                                    "fontSize": {
-                                      "type": "number",
-                                      "minimum": 0.012,
-                                      "maximum": 0.25
-                                    },
-                                    "weight": {
-                                      "default": 700,
-                                      "type": "integer",
-                                      "minimum": 100,
-                                      "maximum": 900
-                                    },
-                                    "lineHeight": {
-                                      "default": 1.08,
-                                      "type": "number",
-                                      "minimum": 1,
-                                      "maximum": 1.8
-                                    },
-                                    "letterSpacing": {
-                                      "default": -0.02,
-                                      "type": "number",
-                                      "minimum": -0.08,
-                                      "maximum": 0.2
-                                    },
-                                    "align": {
-                                      "default": "left",
-                                      "type": "string",
-                                      "enum": [
-                                        "left",
-                                        "center",
-                                        "right"
-                                      ]
-                                    },
-                                    "color": {
-                                      "default": "ink",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "text",
-                                    "fontSize"
-                                  ]
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "shape"
-                                    },
-                                    "shape": {
-                                      "type": "string",
-                                      "enum": [
-                                        "rectangle",
-                                        "ellipse"
-                                      ]
-                                    },
-                                    "fill": {
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "stroke": {
-                                      "default": "transparent",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "strokeWidth": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 0.05
-                                    },
-                                    "radius": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 0.2
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "shape",
-                                    "fill"
-                                  ]
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "path"
-                                    },
-                                    "commands": {
-                                      "minItems": 2,
-                                      "maxItems": 64,
-                                      "type": "array",
-                                      "items": {
-                                        "oneOf": [
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "M"
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "L"
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "Q"
-                                              },
-                                              "cx": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "cy": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "cx",
-                                              "cy",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "C"
-                                              },
-                                              "c1x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c1y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c2x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c2y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "c1x",
-                                              "c1y",
-                                              "c2x",
-                                              "c2y",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "Z"
-                                              }
-                                            },
-                                            "required": [
-                                              "command"
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    },
-                                    "fill": {
-                                      "default": "transparent",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "stroke": {
-                                      "default": "ink",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "strokeWidth": {
-                                      "default": 0.01,
-                                      "type": "number",
-                                      "minimum": 0.001,
-                                      "maximum": 0.08
-                                    },
-                                    "dashed": {
-                                      "default": false,
-                                      "type": "boolean"
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "commands"
-                                  ]
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "version",
-                          "palette",
-                          "layers"
-                        ]
+                          "footage",
+                          "generated",
+                          "drawn"
+                        ],
+                        "description": "What the picture is made of: footage unless the person asked for other art"
                       }
                     },
                     "required": [
                       "aspect",
-                      "source"
-                    ]
+                      "source",
+                      "medium"
+                    ],
+                    "additionalProperties": false
                   }
                 },
                 "required": [
@@ -11684,7 +11468,7 @@
             },
             {
               "name": "timeline_editText",
-              "description": "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words.",
+              "description": "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words. A line break in the wording is the only thing that breaks a line; a box places a text as timeline.moveText does.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -11846,7 +11630,7 @@
             },
             {
               "name": "timeline_moveText",
-              "description": "Moves the normalised bounding box (x, y, width, height in 0..1) of one or more on-screen text items (via itemId, itemIds[], or moves[]), e.g. into the platform safe area for a QA fix.",
+              "description": "Moves one or more on-screen text items (via itemId, itemIds[], or moves[]) to a box (x, y, width, height in 0..1). The box says where a text sits, never where it wraps: its words draw on one line from the box’s left edge, centre or right edge (as the text is aligned), at the box’s middle. To break a line, put a line break in the words (timeline.editText) or state a width with timeline.placeText.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -13035,7 +12819,7 @@
             },
             {
               "name": "timeline_get",
-              "description": "Reads a timeline: its clips in order (each one’s number as the editor shows it, its id and what it shows, start and length in seconds, speed, sound, colour, lock; outside the editor’s chat also its slot, shot, frames and confidence), with atSeconds the clip playing then and the cut nearest it (here), the transitions between them, its text items, the sounds on its audio tracks, the music, the whole video’s colour and its markers. A clip made for a template slot has slot: the slot’s number and role, what it should show (intent, needs, face, shot type, camera move, people), where it sits in the reel (at, seconds) and the cast’s score for the clip there with its parts.",
+              "description": "Reads a timeline: its clips in order (each one’s number as the editor shows it, its id and what it shows, where its shot changes over its length also what the part it plays shows and the rest of the shot in seconds of the shot’s file (camera handling marks a stretch that is not footage), start and length in seconds, speed, sound, colour, lock; outside the editor’s chat also its slot, shot, frames and confidence), with atSeconds the clip playing then and the cut nearest it (here), the transitions between them, its text items, the sounds on its audio tracks, the music, the whole video’s colour and its markers. A clip made for a template slot has slot: the slot’s number and role, what it should show (intent, needs, face, shot type, camera move, people), where it sits in the reel (at, seconds) and the cast’s score for the clip there with its parts.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -13071,6 +12855,85 @@
                   }
                 },
                 "required": [
+                  "timelineId"
+                ]
+              }
+            },
+            {
+              "name": "timeline_musicBars",
+              "description": "Reads the facts for making a video longer. The reel’s music, measured from its sound: the bar’s length, each bar line in seconds of the video, how sure the measurement is, where the music changes strongly. Each clip: its place and length, and how much of its shot lies before and after what it plays. With `would` it answers what a lengthening would do (new length, what moves, where the instant on the cut lands) or why it can’t be done, changing nothing.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "would": {
+                    "description": "A lengthening to try: answered in `would` or `cannot`, nothing changed",
+                    "type": "object",
+                    "properties": {
+                      "clip": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 400
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "this",
+                              "next",
+                              "previous"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 40
+                          }
+                        ],
+                        "description": "The clip by its number, as timeline.get numbers it (3 is clip 3); or \"this\" for what the person pointed at (the selected clip, else the one at the playhead), \"next\" and \"previous\" for the clip after or before it"
+                      },
+                      "bars": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64,
+                        "description": "Whole bars to add"
+                      },
+                      "at": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 36000,
+                        "description": "A bar line (music.bars of timeline.musicBars), seconds of the video: the bars before it play again"
+                      },
+                      "footage": {
+                        "type": "string",
+                        "enum": [
+                          "before",
+                          "after"
+                        ],
+                        "description": "The added footage: the shot before what the clip plays now, or after it"
+                      }
+                    },
+                    "required": [
+                      "clip",
+                      "bars",
+                      "at",
+                      "footage"
+                    ]
+                  }
+                },
+                "required": [
+                  "projectId",
                   "timelineId"
                 ]
               }
@@ -13849,7 +13712,13 @@
                           "baloo2",
                           "montserrat",
                           "anton",
-                          "bebasNeue"
+                          "bebasNeue",
+                          "playfairDisplay",
+                          "cormorantGaramond",
+                          "oswald",
+                          "caveat",
+                          "dancingScript",
+                          "courierPrime"
                         ]
                       },
                       "weight": {
@@ -14338,6 +14207,49 @@
               }
             },
             {
+              "name": "graphics_chooseOption",
+              "description": "Switches a graphic to another of the designs it came with, when the person asks for one (\"use the second one\", \"go back to the first\"). option is its number in graphics.list’s options; every graphic of the same set switches with it and keeps its words. Three new designs instead is graphics.design. Undoable.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "itemId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "TimelineItem id"
+                  },
+                  "option": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 3,
+                    "description": "Its number in graphics.list’s options"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "revision",
+                  "itemId",
+                  "option"
+                ]
+              }
+            },
+            {
               "name": "render_export",
               "description": "Exports the timeline as one video with the project export settings (preset, codec and captions, which render.setExportPreset sets), after the user approves on the export card. Waits for the render and its QA checks, and returns the render, the failing checks with their fixes and the QA report. timelineRevision is the reviewed revision (from the Editor or render.listPresets); a changed timeline is refused with core.conflict. rate requests an output frame rate; omit it to use the timeline frame rate. Set supersedes to the previous render when exporting again after QA fixes.",
               "eager_input_streaming": true,
@@ -14404,7 +14316,7 @@
             },
             {
               "name": "render_exportCover",
-              "description": "Exports the video’s saved cover as a full-resolution JPEG in Taalcut’s exports folder. Uses original media, editable video effects and the same design renderer as the publishing studio preview. First use timeline.setCover to choose a frame, image or solid background and compose editable typography, shapes and drawn paths with cover.design.",
+              "description": "Exports the video’s saved cover as a full-resolution JPEG in Taalcut’s exports folder: the same picture the cover panel shows, drawn from original media. Save the cover first with workspace.placeCover (a designed composition over real frames); then look at the JPEG before saying it is done.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -15930,7 +15842,7 @@
             },
             {
               "name": "library_search",
-              "description": "Searches the user's footage by meaning and keywords, in any of the app's languages: what is seen (the frames), the descriptions, what is said and on-screen text. Returns shots with their file, start and length, why each matched, and a 0..1 score for ordering.",
+              "description": "Searches the user's footage by meaning and keywords, in any of the app's languages: what is seen (the frames), the descriptions, what is said and on-screen text. Returns shots with their file, start and length, why each matched, a 0..1 score for ordering and, where a shot shows different things over its length, moments: what it shows from when to when (seconds in its file), to place the part that fits. A stretch marked (camera handling) is not footage.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -16168,7 +16080,7 @@
             },
             {
               "name": "library_getAsset",
-              "description": "One file's profile: kind, length, size, orientation, language, quality and index state; with `include`, its shots (descriptions, objects, place, shot type, motion, quality, on-screen text, speech), its transcript (long ones are stored as an artifact) and where its copies are.",
+              "description": "One file's profile: kind, length, size, orientation, language, quality and index state; with `include`, its shots (descriptions, moments: what each shows from when to when, in seconds of the file, a stretch that is not footage marked (camera handling); objects, place, shot type, motion, quality, on-screen text, speech), its transcript (long ones are stored as an artifact) and where its copies are.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -16815,7 +16727,7 @@
       "request": {
         "method": "POST",
         "url": "https://api.anthropic.com/v1/messages?beta=true",
-        "match": "POST /v1/messages sha256:ff36ed1ddf139c18",
+        "match": "POST /v1/messages sha256:5eadddd454043063",
         "headers": {
           "content-type": "application/json",
           "accept": "application/json",
@@ -17061,11 +16973,11 @@
               "input_schema": {
                 "type": "object",
                 "properties": {
-                  "postCaption": {
-                    "description": "When asked for an Instagram/social post caption: the actual ready-to-copy post text, repeated verbatim in your visible response. This is not a subtitle setting.",
+                  "notSavedPostCaptionReason": {
+                    "description": "Only when a requested post caption could not be saved with timeline.setPostCaption: the reason, repeated verbatim in your visible message.",
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 5000
+                    "maxLength": 2000
                   },
                   "timelineId": {
                     "type": "string",
@@ -19112,8 +19024,437 @@
               }
             },
             {
+              "name": "timeline_setPostCaption",
+              "description": "Saves the caption to post under this video on a platform (the post’s own text, never subtitles) from its parts: body, hashtags, keywords. Taalcut assembles them in the platform’s order, adds the credit line itself when the person wants one, and refuses what is outside the platform’s rule, saying what to fix. Changes nothing else in the video. Answers the assembled text: show it to the person as written.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "instagram"
+                    ],
+                    "description": "Where it will be posted"
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 5000,
+                    "description": "The words: a hook line, what this video really shows, one ask. No credit line"
+                  },
+                  "hashtags": {
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 80
+                    },
+                    "description": "This video’s subject, without #. In the whole caption, Instagram: 1 to 4"
+                  },
+                  "keywords": {
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 120
+                    },
+                    "description": "Phrases people type into search for this subject. Instagram: 3 to 10"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "platform",
+                  "body",
+                  "hashtags",
+                  "keywords"
+                ]
+              }
+            },
+            {
+              "name": "timeline_designText",
+              "description": "Designs a video's on-screen text: a look for every role timeline.textLook names, each stated in full, saved as this video’s own Style. Start from the reference’s measured look unless the person asked for another. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80,
+                    "description": "A short name for the look"
+                  },
+                  "looks": {
+                    "minItems": 1,
+                    "maxItems": 16,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z0-9]{0,31}$",
+                          "description": "A role from timeline.textLook"
+                        },
+                        "font": {
+                          "type": "object",
+                          "properties": {
+                            "family": {
+                              "type": "string",
+                              "enum": [
+                                "notoSans",
+                                "notoSansDevanagari",
+                                "poppins",
+                                "mukta",
+                                "hind",
+                                "baloo2",
+                                "montserrat",
+                                "anton",
+                                "bebasNeue",
+                                "playfairDisplay",
+                                "cormorantGaramond",
+                                "oswald",
+                                "caveat",
+                                "dancingScript",
+                                "courierPrime"
+                              ]
+                            },
+                            "weight": {
+                              "type": "integer",
+                              "minimum": 100,
+                              "maximum": 900,
+                              "multipleOf": 100
+                            }
+                          },
+                          "required": [
+                            "family",
+                            "weight"
+                          ],
+                          "description": "A face and weight from timeline.textLook’s faces"
+                        },
+                        "colour": {
+                          "type": "string",
+                          "pattern": "^#[0-9a-f]{6}$",
+                          "description": "#rrggbb, lower case"
+                        },
+                        "outline": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "widthPx": {
+                                  "type": "integer",
+                                  "minimum": 1,
+                                  "maximum": 16
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "widthPx"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Round the letters; null: none"
+                        },
+                        "shadow": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "opacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
+                                },
+                                "blurPx": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 48
+                                },
+                                "offsetPx": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 24
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "opacity",
+                                "blurPx",
+                                "offsetPx"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Under the letters; null: none"
+                        },
+                        "box": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "colour": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-f]{6}$"
+                                },
+                                "opacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
+                                }
+                              },
+                              "required": [
+                                "colour",
+                                "opacity"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "Behind the words; null: none"
+                        },
+                        "letterSpacing": {
+                          "description": "Extra, in em",
+                          "type": "number",
+                          "minimum": -0.05,
+                          "maximum": 0.5
+                        },
+                        "case": {
+                          "type": "string",
+                          "enum": [
+                            "upper",
+                            "lower",
+                            "mixed"
+                          ]
+                        },
+                        "reveal": {
+                          "description": "How the texts come on",
+                          "type": "string",
+                          "enum": [
+                            "none",
+                            "fade",
+                            "pop",
+                            "slide",
+                            "typewriter",
+                            "wordByWord"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "font",
+                        "colour",
+                        "outline",
+                        "shadow",
+                        "box"
+                      ]
+                    },
+                    "description": "One for every role the text uses"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "name",
+                  "looks"
+                ]
+              }
+            },
+            {
+              "name": "timeline_placeText",
+              "description": "Places a video's on-screen text: for each group its place, alignment and size, or asReel. Texts shown in turn at one place move as one. A text draws on one line at any size; only a line break in its words or a width you state breaks it. What you state is applied exactly, with one exception: a group stated past the frame’s edge is moved the least that keeps it inside the frame, and a line wider than the frame wraps at the frame’s width (atFrameEdge: true). The answer gives facts for each group (capital height in px, the lines each text draws on, faces under it, a platform’s interface over it) and the sizes and places as one system. A text the person placed stays. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "groups": {
+                    "minItems": 1,
+                    "maxItems": 60,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "itemId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 64,
+                          "description": "The group, from timeline.textLook"
+                        },
+                        "asReel": {
+                          "description": "true: the place and size the reference had",
+                          "type": "boolean"
+                        },
+                        "x": {
+                          "description": "Share of the width: its left, centre or right, as align says",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "description": "Share of the height: its middle",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "align": {
+                          "type": "string",
+                          "enum": [
+                            "left",
+                            "center",
+                            "right"
+                          ]
+                        },
+                        "size": {
+                          "description": "Capital height over frame height",
+                          "type": "number",
+                          "minimum": 0.005,
+                          "maximum": 0.5
+                        },
+                        "width": {
+                          "description": "Only to wrap: the widest a line may be, share of the width",
+                          "type": "number",
+                          "minimum": 0.05,
+                          "maximum": 1
+                        }
+                      },
+                      "required": [
+                        "itemId"
+                      ]
+                    },
+                    "description": "Every group you place, in one call"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "groups"
+                ]
+              }
+            },
+            {
+              "name": "timeline_lengthenSlot",
+              "description": "Makes one of the person’s clips longer by whole bars of the reel’s music. At `at`, a bar line inside the clip (its end counts), the music plays the bars before it again, joined by a 50 ms crossfade; the clip shows that much more of its shot (`footage`); every later clip, transition, text and caption is later by the same whole frames, so the reel’s own clips stay on their music. Applied exactly as stated, or not at all with why in numbers. Read timeline.musicBars first. One undo step.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "revision": {
+                    "description": "The revision timeline.get showed when you read the clip numbers",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "clip": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 400
+                      },
+                      {
+                        "type": "string",
+                        "enum": [
+                          "this",
+                          "next",
+                          "previous"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 40
+                      }
+                    ],
+                    "description": "The clip by its number, as timeline.get numbers it (3 is clip 3); or \"this\" for what the person pointed at (the selected clip, else the one at the playhead), \"next\" and \"previous\" for the clip after or before it"
+                  },
+                  "bars": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64,
+                    "description": "Whole bars to add"
+                  },
+                  "at": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 36000,
+                    "description": "A bar line (music.bars of timeline.musicBars), seconds of the video: the bars before it play again"
+                  },
+                  "footage": {
+                    "type": "string",
+                    "enum": [
+                      "before",
+                      "after"
+                    ],
+                    "description": "The added footage: the shot before what the clip plays now, or after it"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "clip",
+                  "bars",
+                  "at",
+                  "footage"
+                ]
+              }
+            },
+            {
               "name": "timeline_setCover",
-              "description": "Saves a cover using a timeline frame, an image asset or a solid background. Optional cover.design composes up to 16 editable text, shape and bounded vector-path layers with an explicit palette, normalized layout and image crop; it replaces preset overlays. One undo restores the prior choices. Use render.exportCover to save the full-resolution JPEG.",
+              "description": "Sets the cover’s picture to one frame of the video or one library image as it is, with nothing designed on it: only when the person asks for exactly that frame or image as the cover. A cover with lettering or a layout is a composition saved with workspace.placeCover, never this. medium says what the picture is made of. One undo restores the cover before. Use render.exportCover to save the full-resolution JPEG.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -19182,626 +19523,25 @@
                               "kind",
                               "assetId"
                             ]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "kind": {
-                                "type": "string",
-                                "const": "solid"
-                              }
-                            },
-                            "required": [
-                              "kind"
-                            ]
                           }
                         ]
                       },
-                      "archetype": {
-                        "default": "minimal-frame",
+                      "medium": {
                         "type": "string",
                         "enum": [
-                          "editorial-specimen",
-                          "brutal-slab",
-                          "atmospheric-cinema",
-                          "minimal-frame",
-                          "stat-callout"
-                        ]
-                      },
-                      "theme": {
-                        "default": "golden-hour",
-                        "type": "string",
-                        "enum": [
-                          "golden-hour",
-                          "midnight",
-                          "newsprint",
-                          "studio",
-                          "terminal",
-                          "brand-kit"
-                        ]
-                      },
-                      "textAlign": {
-                        "default": "bottom-left",
-                        "type": "string",
-                        "enum": [
-                          "left",
-                          "top-left",
-                          "bottom-left"
-                        ]
-                      },
-                      "hookText": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 48
-                      },
-                      "kickerText": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 28
-                      },
-                      "statBadge": {
-                        "default": "",
-                        "type": "string",
-                        "maxLength": 20
-                      },
-                      "channel": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "maxLength": 60
-                          },
-                          "handle": {
-                            "type": "string",
-                            "maxLength": 40
-                          },
-                          "show": {
-                            "type": "boolean"
-                          }
-                        },
-                        "required": [
-                          "name",
-                          "handle",
-                          "show"
-                        ]
-                      },
-                      "design": {
-                        "type": "object",
-                        "properties": {
-                          "version": {
-                            "type": "number",
-                            "const": 1
-                          },
-                          "palette": {
-                            "type": "object",
-                            "properties": {
-                              "ink": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "paper": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "accent": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              },
-                              "muted": {
-                                "type": "string",
-                                "pattern": "^#[0-9a-fA-F]{6}$"
-                              }
-                            },
-                            "required": [
-                              "ink",
-                              "paper",
-                              "accent",
-                              "muted"
-                            ]
-                          },
-                          "backdrop": {
-                            "type": "object",
-                            "properties": {
-                              "fit": {
-                                "default": "cover",
-                                "type": "string",
-                                "enum": [
-                                  "cover",
-                                  "contain"
-                                ]
-                              },
-                              "x": {
-                                "default": 0.5,
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 1
-                              },
-                              "y": {
-                                "default": 0.5,
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 1
-                              }
-                            }
-                          },
-                          "layers": {
-                            "minItems": 1,
-                            "maxItems": 16,
-                            "type": "array",
-                            "items": {
-                              "oneOf": [
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "text"
-                                    },
-                                    "text": {
-                                      "type": "string",
-                                      "minLength": 1,
-                                      "maxLength": 180
-                                    },
-                                    "font": {
-                                      "default": "notoSans",
-                                      "type": "string",
-                                      "enum": [
-                                        "notoSans",
-                                        "poppins",
-                                        "montserrat",
-                                        "anton",
-                                        "bebasNeue"
-                                      ]
-                                    },
-                                    "fontSize": {
-                                      "type": "number",
-                                      "minimum": 0.012,
-                                      "maximum": 0.25
-                                    },
-                                    "weight": {
-                                      "default": 700,
-                                      "type": "integer",
-                                      "minimum": 100,
-                                      "maximum": 900
-                                    },
-                                    "lineHeight": {
-                                      "default": 1.08,
-                                      "type": "number",
-                                      "minimum": 1,
-                                      "maximum": 1.8
-                                    },
-                                    "letterSpacing": {
-                                      "default": -0.02,
-                                      "type": "number",
-                                      "minimum": -0.08,
-                                      "maximum": 0.2
-                                    },
-                                    "align": {
-                                      "default": "left",
-                                      "type": "string",
-                                      "enum": [
-                                        "left",
-                                        "center",
-                                        "right"
-                                      ]
-                                    },
-                                    "color": {
-                                      "default": "ink",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "text",
-                                    "fontSize"
-                                  ]
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "shape"
-                                    },
-                                    "shape": {
-                                      "type": "string",
-                                      "enum": [
-                                        "rectangle",
-                                        "ellipse"
-                                      ]
-                                    },
-                                    "fill": {
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "stroke": {
-                                      "default": "transparent",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "strokeWidth": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 0.05
-                                    },
-                                    "radius": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 0.2
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "shape",
-                                    "fill"
-                                  ]
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "box": {
-                                      "type": "object",
-                                      "properties": {
-                                        "x": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "y": {
-                                          "type": "number",
-                                          "minimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "width": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        },
-                                        "height": {
-                                          "type": "number",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 1
-                                        }
-                                      },
-                                      "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                      ]
-                                    },
-                                    "opacity": {
-                                      "default": 1,
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 1
-                                    },
-                                    "rotation": {
-                                      "default": 0,
-                                      "type": "number",
-                                      "minimum": -180,
-                                      "maximum": 180
-                                    },
-                                    "kind": {
-                                      "type": "string",
-                                      "const": "path"
-                                    },
-                                    "commands": {
-                                      "minItems": 2,
-                                      "maxItems": 64,
-                                      "type": "array",
-                                      "items": {
-                                        "oneOf": [
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "M"
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "L"
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "Q"
-                                              },
-                                              "cx": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "cy": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "cx",
-                                              "cy",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "C"
-                                              },
-                                              "c1x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c1y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c2x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "c2y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "x": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              },
-                                              "y": {
-                                                "type": "number",
-                                                "minimum": 0,
-                                                "maximum": 1
-                                              }
-                                            },
-                                            "required": [
-                                              "command",
-                                              "c1x",
-                                              "c1y",
-                                              "c2x",
-                                              "c2y",
-                                              "x",
-                                              "y"
-                                            ]
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "command": {
-                                                "type": "string",
-                                                "const": "Z"
-                                              }
-                                            },
-                                            "required": [
-                                              "command"
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    },
-                                    "fill": {
-                                      "default": "transparent",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "stroke": {
-                                      "default": "ink",
-                                      "type": "string",
-                                      "enum": [
-                                        "ink",
-                                        "paper",
-                                        "accent",
-                                        "muted",
-                                        "transparent"
-                                      ]
-                                    },
-                                    "strokeWidth": {
-                                      "default": 0.01,
-                                      "type": "number",
-                                      "minimum": 0.001,
-                                      "maximum": 0.08
-                                    },
-                                    "dashed": {
-                                      "default": false,
-                                      "type": "boolean"
-                                    }
-                                  },
-                                  "required": [
-                                    "box",
-                                    "kind",
-                                    "commands"
-                                  ]
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "version",
-                          "palette",
-                          "layers"
-                        ]
+                          "footage",
+                          "generated",
+                          "drawn"
+                        ],
+                        "description": "What the picture is made of: footage unless the person asked for other art"
                       }
                     },
                     "required": [
                       "aspect",
-                      "source"
-                    ]
+                      "source",
+                      "medium"
+                    ],
+                    "additionalProperties": false
                   }
                 },
                 "required": [
@@ -20151,7 +19891,7 @@
             },
             {
               "name": "timeline_editText",
-              "description": "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words.",
+              "description": "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words. A line break in the wording is the only thing that breaks a line; a box places a text as timeline.moveText does.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -20313,7 +20053,7 @@
             },
             {
               "name": "timeline_moveText",
-              "description": "Moves the normalised bounding box (x, y, width, height in 0..1) of one or more on-screen text items (via itemId, itemIds[], or moves[]), e.g. into the platform safe area for a QA fix.",
+              "description": "Moves one or more on-screen text items (via itemId, itemIds[], or moves[]) to a box (x, y, width, height in 0..1). The box says where a text sits, never where it wraps: its words draw on one line from the box’s left edge, centre or right edge (as the text is aligned), at the box’s middle. To break a line, put a line break in the words (timeline.editText) or state a width with timeline.placeText.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -21502,7 +21242,7 @@
             },
             {
               "name": "timeline_get",
-              "description": "Reads a timeline: its clips in order (each one’s number as the editor shows it, its id and what it shows, start and length in seconds, speed, sound, colour, lock; outside the editor’s chat also its slot, shot, frames and confidence), with atSeconds the clip playing then and the cut nearest it (here), the transitions between them, its text items, the sounds on its audio tracks, the music, the whole video’s colour and its markers. A clip made for a template slot has slot: the slot’s number and role, what it should show (intent, needs, face, shot type, camera move, people), where it sits in the reel (at, seconds) and the cast’s score for the clip there with its parts.",
+              "description": "Reads a timeline: its clips in order (each one’s number as the editor shows it, its id and what it shows, where its shot changes over its length also what the part it plays shows and the rest of the shot in seconds of the shot’s file (camera handling marks a stretch that is not footage), start and length in seconds, speed, sound, colour, lock; outside the editor’s chat also its slot, shot, frames and confidence), with atSeconds the clip playing then and the cut nearest it (here), the transitions between them, its text items, the sounds on its audio tracks, the music, the whole video’s colour and its markers. A clip made for a template slot has slot: the slot’s number and role, what it should show (intent, needs, face, shot type, camera move, people), where it sits in the reel (at, seconds) and the cast’s score for the clip there with its parts.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -21538,6 +21278,85 @@
                   }
                 },
                 "required": [
+                  "timelineId"
+                ]
+              }
+            },
+            {
+              "name": "timeline_musicBars",
+              "description": "Reads the facts for making a video longer. The reel’s music, measured from its sound: the bar’s length, each bar line in seconds of the video, how sure the measurement is, where the music changes strongly. Each clip: its place and length, and how much of its shot lies before and after what it plays. With `would` it answers what a lengthening would do (new length, what moves, where the instant on the cut lands) or why it can’t be done, changing nothing.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "would": {
+                    "description": "A lengthening to try: answered in `would` or `cannot`, nothing changed",
+                    "type": "object",
+                    "properties": {
+                      "clip": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 400
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "this",
+                              "next",
+                              "previous"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 40
+                          }
+                        ],
+                        "description": "The clip by its number, as timeline.get numbers it (3 is clip 3); or \"this\" for what the person pointed at (the selected clip, else the one at the playhead), \"next\" and \"previous\" for the clip after or before it"
+                      },
+                      "bars": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64,
+                        "description": "Whole bars to add"
+                      },
+                      "at": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 36000,
+                        "description": "A bar line (music.bars of timeline.musicBars), seconds of the video: the bars before it play again"
+                      },
+                      "footage": {
+                        "type": "string",
+                        "enum": [
+                          "before",
+                          "after"
+                        ],
+                        "description": "The added footage: the shot before what the clip plays now, or after it"
+                      }
+                    },
+                    "required": [
+                      "clip",
+                      "bars",
+                      "at",
+                      "footage"
+                    ]
+                  }
+                },
+                "required": [
+                  "projectId",
                   "timelineId"
                 ]
               }
@@ -22316,7 +22135,13 @@
                           "baloo2",
                           "montserrat",
                           "anton",
-                          "bebasNeue"
+                          "bebasNeue",
+                          "playfairDisplay",
+                          "cormorantGaramond",
+                          "oswald",
+                          "caveat",
+                          "dancingScript",
+                          "courierPrime"
                         ]
                       },
                       "weight": {
@@ -22805,6 +22630,49 @@
               }
             },
             {
+              "name": "graphics_chooseOption",
+              "description": "Switches a graphic to another of the designs it came with, when the person asks for one (\"use the second one\", \"go back to the first\"). option is its number in graphics.list’s options; every graphic of the same set switches with it and keeps its words. Three new designs instead is graphics.design. Undoable.",
+              "eager_input_streaming": true,
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Project id"
+                  },
+                  "timelineId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "Timeline id"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "itemId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+                    "description": "TimelineItem id"
+                  },
+                  "option": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 3,
+                    "description": "Its number in graphics.list’s options"
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "timelineId",
+                  "revision",
+                  "itemId",
+                  "option"
+                ]
+              }
+            },
+            {
               "name": "render_export",
               "description": "Exports the timeline as one video with the project export settings (preset, codec and captions, which render.setExportPreset sets), after the user approves on the export card. Waits for the render and its QA checks, and returns the render, the failing checks with their fixes and the QA report. timelineRevision is the reviewed revision (from the Editor or render.listPresets); a changed timeline is refused with core.conflict. rate requests an output frame rate; omit it to use the timeline frame rate. Set supersedes to the previous render when exporting again after QA fixes.",
               "eager_input_streaming": true,
@@ -22871,7 +22739,7 @@
             },
             {
               "name": "render_exportCover",
-              "description": "Exports the video’s saved cover as a full-resolution JPEG in Taalcut’s exports folder. Uses original media, editable video effects and the same design renderer as the publishing studio preview. First use timeline.setCover to choose a frame, image or solid background and compose editable typography, shapes and drawn paths with cover.design.",
+              "description": "Exports the video’s saved cover as a full-resolution JPEG in Taalcut’s exports folder: the same picture the cover panel shows, drawn from original media. Save the cover first with workspace.placeCover (a designed composition over real frames); then look at the JPEG before saying it is done.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -24397,7 +24265,7 @@
             },
             {
               "name": "library_search",
-              "description": "Searches the user's footage by meaning and keywords, in any of the app's languages: what is seen (the frames), the descriptions, what is said and on-screen text. Returns shots with their file, start and length, why each matched, and a 0..1 score for ordering.",
+              "description": "Searches the user's footage by meaning and keywords, in any of the app's languages: what is seen (the frames), the descriptions, what is said and on-screen text. Returns shots with their file, start and length, why each matched, a 0..1 score for ordering and, where a shot shows different things over its length, moments: what it shows from when to when (seconds in its file), to place the part that fits. A stretch marked (camera handling) is not footage.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",
@@ -24635,7 +24503,7 @@
             },
             {
               "name": "library_getAsset",
-              "description": "One file's profile: kind, length, size, orientation, language, quality and index state; with `include`, its shots (descriptions, objects, place, shot type, motion, quality, on-screen text, speech), its transcript (long ones are stored as an artifact) and where its copies are.",
+              "description": "One file's profile: kind, length, size, orientation, language, quality and index state; with `include`, its shots (descriptions, moments: what each shows from when to when, in seconds of the file, a stretch that is not footage marked (camera handling); objects, place, shot type, motion, quality, on-screen text, speech), its transcript (long ones are stored as an artifact) and where its copies are.",
               "eager_input_streaming": true,
               "input_schema": {
                 "type": "object",

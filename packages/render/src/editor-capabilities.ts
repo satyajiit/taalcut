@@ -12,6 +12,8 @@ export const renderEditorCapabilities: readonly EditorCapability[] = [
     'graphics.edit',
     'graphics.remove',
     'graphics.useProposal',
+    // DSG2: another of the designs a graphic came with ("use the second one").
+    'graphics.chooseOption',
     'render.export',
     'render.exportCover',
     'render.cancel',

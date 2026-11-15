@@ -91,6 +91,8 @@ describe.skipIf(!media.binaries)('runQa', () => {
       slotMotion: 'skipped',
       slotTiming: 'skipped',
       slotGraphics: 'skipped',
+      // MOM1: no template, so no slot states what a part should show.
+      slotPart: 'skipped',
       // EAR1-A2: no listener in this QA run.
       soundOnCuts: 'skipped',
       soundClean: 'skipped',

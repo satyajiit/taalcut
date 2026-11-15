@@ -83,12 +83,10 @@ export function standInDesigner(entry: DesignCase, input: DesignerInput, entryPa
         () =>
           redesign
             ? call('workspace.replace', { projectId, timelineId, revision, entry: path, itemIds: job.itemIds })
-            : call('workspace.place', {
+            : call('workspace.placeOptions', {
                 projectId,
                 timelineId,
-                revision,
-                entry: path,
-                name: entry.id,
+                options: [{ entry: path, name: entry.id, idea: `The stand-in's one design for ${entry.id}` }],
                 request: job.request,
                 ...(job.at !== undefined ? { at: job.at } : {}),
                 ...(job.phrase ? { phrase: job.phrase } : {}),
@@ -110,6 +108,8 @@ export function standInDesigner(entry: DesignCase, input: DesignerInput, entryPa
                 outcome: redesign ? 'replaced' : 'placed',
                 itemIds: redesign ? job.itemIds : placed.itemIds,
                 compositionId: placed.compositionId,
+                // DSG2: the stand-in has one fixture design a case, so it says why there are fewer than three.
+                fewerBecause: redesign ? 'A change to the design in use.' : 'The stand-in has one design.',
               },
             ],
           }),

@@ -26,6 +26,8 @@ import type { TimelineService } from '../service/service';
 export interface EditCommandToolSpec<I extends z.ZodType> {
   /** The command it dispatches, also the tool's name. */
   readonly command: string;
+  /** The tool's version when its words or schema moved on from 1.0.0. */
+  readonly version?: string;
   readonly service?: Pick<TimelineService, 'read'> | undefined;
   readonly description: string;
   readonly summary: string;
@@ -47,7 +49,7 @@ export function editCommandTool<I extends z.ZodType>(spec: EditCommandToolSpec<I
   const output = spec.output ?? editToolOutputSchema;
   const tool = defineTool({
     name: spec.command,
-    version: '1.0.0',
+    version: spec.version ?? '1.0.0',
     description: spec.description,
     summary: spec.summary,
     tags: [...spec.tags],

@@ -25,6 +25,14 @@ export const CAPTION_FONTS = [
   'montserrat',
   'anton',
   'bebasNeue',
+  // TXT1: the classes reels set their words in that the nine above lack (a serif, a light serif, a condensed
+  // face with weights, handwriting, a script, a typewriter face); render bundles them (fonts.lock.json).
+  'playfairDisplay',
+  'cormorantGaramond',
+  'oswald',
+  'caveat',
+  'dancingScript',
+  'courierPrime',
 ] as const;
 export type CaptionFontId = (typeof CAPTION_FONTS)[number];
 const CAPTION_FONT_IDS: ReadonlySet<string> = new Set(CAPTION_FONTS);

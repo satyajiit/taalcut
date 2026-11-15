@@ -4,7 +4,7 @@
 /**
  * Templates' sentences that name the Mac, and their words on every other computer (UX3-MAC; the kit's
  * platform-words.ts says how a pair works): the hub's owner error, Saved's sign-in and settings, a template's kept
- * reel (REF1), and the list's keys.
+ * reel (REF1), a slot that keeps the reel's clip (KEEP1), and the list's keys.
  */
 import { msg } from '@lingui/core/macro';
 import { macKey, type PlatformWords } from '@taalcut/ui';
@@ -36,6 +36,15 @@ export const TEMPLATES_PLATFORM_WORDS: readonly PlatformWords[] = [
   {
     mac: msg`The reel’s video is kept on this Mac. It has no sound of its own.`,
     computer: msg`The reel’s video is kept on this computer. It has no sound of its own.`,
+  },
+  {
+    // KEEP1: a slot's footage choice in the review (the kit's templates/slot-footage.tsx), without the reel's video.
+    mac: msg`The reel’s video isn’t on this Mac, so this slot can’t keep the reel’s clip.`,
+    computer: msg`The reel’s video isn’t on this computer, so this slot can’t keep the reel’s clip.`,
+  },
+  {
+    mac: msg`The reel’s video isn’t on this Mac. Get it before you make a video, or use your clip here.`,
+    computer: msg`The reel’s video isn’t on this computer. Get it before you make a video, or use your clip here.`,
   },
   {
     // The list's keys, read by a screen reader: Ctrl where a Mac has Command.

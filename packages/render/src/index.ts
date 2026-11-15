@@ -158,6 +158,8 @@ export {
   type FontFileEntry,
   type FontKey,
 } from './captions/fonts';
+// TXT1: the bundled faces as the text-design tools list them.
+export { textFaces, type TextFaceInfo } from './captions/text-faces';
 export { createTextMeasurer, type DetailedTextMeasurer } from './captions/measure';
 export { buildCaptionCues, captionWordsFromPlan, minCueFrames, type BuildCuesOptions } from './captions/cues';
 export { clampAnchorY, layoutCue, type CueLayoutDetail } from './captions/layout';
@@ -263,17 +265,8 @@ export {
 } from './commands/render-commands';
 export { createMusicCommands } from './commands/music-commands';
 export { exportRequestKey, PRESET_NAMES, renderName } from './commands/request';
-export {
-  createRenderJobs,
-  RENDER_EXPORT_RETRY,
-  RENDER_EXPORT_TIMEOUT_MS,
-  RENDER_JOB_STAGES,
-  renderExportJob,
-  renderExportJobKey,
-  renderPurgeJob,
-  renderPurgeJobKey,
-  type RenderJobDeps,
-} from './jobs/render-jobs';
+// The job kinds and handlers, and the settling of renders whose export job is gone (jobs/exports.ts).
+export * from './jobs/exports';
 export { renderToolModule, type RenderToolDeps } from './tools/render-tools';
 export { draftOutputSchema, renderDraftTool } from './tools/draft-tool';
 // AGT2-MATCH: the Maker's finish, and QA's slot match (match-exports.ts).

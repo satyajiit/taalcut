@@ -19,6 +19,20 @@ export {
   designRevisions,
 } from '../cards/fixtures-designs';
 export { DESIGN_FILE_SHAS, DESIGN_FILE_TEXT } from '../cards/fixtures-design-files';
+// DSG2: a graphic's designs to choose between: the picker, its reads, and the made-up set for the fake.
+export {
+  DesignOptionPicker,
+  type DesignOptionPickerProps,
+  type DesignOptionView,
+} from '../cards/design-option-picker';
+export { canvasAspect, CHOOSE_OPTION, newestDesign, useDesignOptions } from '../cards/use-design-options';
+export {
+  DESIGN_OPTION_COMPOSITIONS,
+  DESIGN_OPTION_FIXTURES,
+  DESIGN_OPTION_IDS,
+  DESIGN_OPTIONS_SET,
+  DESIGN_OPTIONS_SPAN,
+} from '../cards/fixtures-design-options';
 // EDT1-GFX: a graphic's editing pieces, for the editor's graphics inspector.
 export { GraphicProposalRow, type GraphicProposalRowProps, type ProposalTryAgain } from './graphic-proposal';
 export { GraphicTiming, type GraphicTimingProps } from './graphic-timing';

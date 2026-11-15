@@ -11,11 +11,17 @@
  * (REF1), and platform sound otherwise. On a canvas of another shape than the
  * template's (the clips', BRK1-MAKE) the overlays are fitted to it
  * (fit-layout.ts), and every overlay is placed by the reel's relation, not
- * its coordinates (FRM1-OVL, placement/). Pure.
+ * its coordinates (FRM1-OVL, placement/). KEEP1: a slot the template states as
+ * the reel's own footage is filled from the template's kept reel, and the
+ * overlays over it are not drawn again (reel-footage.ts). MATCH1: where the
+ * reel dissolved or faded between that footage and a slot the person's clip
+ * fills, the kept clip is cut clear of the blended frames and the transition
+ * is drawn again (reel-transitions.ts). Pure.
  */
 import {
   DEFAULT_MIX,
   err,
+  keepsReelFootage,
   ok,
   TIMELINE_SCHEMA_VERSION,
   type CastId,
@@ -33,7 +39,7 @@ import {
   type TimelineItemId,
 } from '@taalcut/core';
 import type { CastVariant } from '../casting/result';
-import { MediaMissing, MediaTooShort } from '../errors';
+import { MediaMissing, MediaTooShort, ReelMissing } from '../errors';
 import { candidateKey } from '../model/cast';
 import { marker, MARKER_LABELS } from '../model/markers';
 import { positions } from '../model/sequence';
@@ -42,9 +48,11 @@ import { checkEdited } from '../model/validate';
 import { fitTransitions } from '../resync/neighbours';
 import { resync } from '../resync/resync';
 import { fitTextTracks } from './fit-layout';
-import { placeOverlays } from './placement/place-timeline';
+import { reelTextLayout } from './placement/place-timeline';
 import { textTracksFor } from './text';
 import { compositionsUsed } from './designed';
+import { reelCast, withoutReelOverlays, type ReelMedia } from './reel-footage';
+import { isBlended, reelEdges, reelItems } from './reel-transitions';
 
 export interface AssembleInput {
   readonly projectId: ProjectId;
@@ -71,6 +79,11 @@ export interface AssembleInput {
    * map starts. Default false: platform sound.
    */
   readonly keptAudio?: boolean;
+  /**
+   * KEEP1: the template's kept reel as a library asset (reel-footage.ts `reelMedia`), which fills each slot the
+   * template states as the reel's own footage. A template with such a slot and no reel here is refused.
+   */
+  readonly reel?: ReelMedia;
   readonly timelineId: TimelineId;
   readonly name: string;
   /** Epoch ms for createdAt and updatedAt. */
@@ -146,6 +159,17 @@ export function assemble(input: AssembleInput, ids: AssembleIds): Result<Timelin
   const slots: SlotCast[] = [];
   const markers: Marker[] = [];
   for (const [index, slot] of template.slots.entries()) {
+    // KEEP1: the reel's own footage, cut from the template's reel; casting chose nothing here.
+    if (keepsReelFootage(slot)) {
+      if (!input.reel) return err(ReelMissing({ templateId: template.id }));
+      const id = ids.item();
+      // MATCH1: clear of the frames the reel blended with the person's side, the transition drawn again.
+      const edges = reelEdges(template, index);
+      const ownIds = { clip: id, item: ids.item };
+      items.push(...reelItems(slot, input.reel, template, edges, ownIds, items.at(-1)?.type === 'clip'));
+      slots.push(reelCast(slot, id, input.reel, edges.lead));
+      continue;
+    }
     const cast = casts.get(slot.id) ?? {
       slotId: slot.id,
       clipId: null,
@@ -164,7 +188,12 @@ export function assemble(input: AssembleInput, ids: AssembleIds): Result<Timelin
     }
     const ref = media.get(candidateKey(pick));
     if (!ref) return err(MediaMissing({ assetId: pick.assetId }));
-    const transition = slot.transitionIn;
+    // KEEP1: after the reel's own footage the cut is the reel's, already in its picture: no transition on top.
+    // MATCH1: unless the reel blended the two there and the kept clip ends in its held last clean frame.
+    const afterReel = index > 0 && keepsReelFootage(template.slots[index - 1]!);
+    const last = items.at(-1);
+    const redrawn = isBlended(slot) && last?.type === 'clip' && last.holdFrame !== undefined;
+    const transition = afterReel && !redrawn ? null : slot.transitionIn;
     if (transition && index > 0 && items.at(-1)?.type === 'clip')
       items.push({
         type: 'transition',
@@ -195,7 +224,9 @@ export function assemble(input: AssembleInput, ids: AssembleIds): Result<Timelin
   const hookEnd = Math.min(template.pacing.hookEnd.value, template.duration.value);
   if (hookEnd > 0) markers.push(marker(ids.item(), 'hook', MARKER_LABELS.hook, 0, hookEnd, rate));
 
-  const textTracks = fitTextTracks(textTracksFor(template, input.texts ?? {}, ids), template.canvas, canvas);
+  // KEEP1: only the overlays over the person's clips become items; the reel's footage has its own burned in.
+  const overlaid = withoutReelOverlays(template);
+  const textTracks = fitTextTracks(textTracksFor(overlaid, input.texts ?? {}, ids), template.canvas, canvas);
   const graphics = textTracks.flatMap((track) => track.items.filter((item) => item.type === 'graphic'));
   // HFW1: the compositions they draw with, copied once each (their files go into the project: cast-tools.ts).
   const graphicCompositions = compositionsUsed(template, graphics);
@@ -230,9 +261,9 @@ export function assemble(input: AssembleInput, ids: AssembleIds): Result<Timelin
     createdAt: input.now,
     updatedAt: input.now,
   };
-  // FRM1-OVL: each overlay placed by the reel's relation, clear of captions and of each other. Who is in the
-  // clips is read afterwards (placement/run-placement.ts), when a subject source is there to say.
-  const placed = placeOverlays({ timeline, template, subjects: new Map() }).timeline;
+  // TXT1: the text starts where the reel had it, a run together at one place and one size. No code moves it from
+  // there (FRM1-OVL's solver did): whoever makes the video places it (timeline.placeText).
+  const placed = reelTextLayout({ timeline, template });
   // A no-op on a fresh assembly (tested): every cut is already the template's.
   return checkEdited(resync(placed, { moved: [] }));
 }

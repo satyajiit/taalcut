@@ -4,7 +4,8 @@
 /**
  * eval:design's stand-in run (HFW1 dsn): a new graphic and a comment's redesign through the Designer loop end to
  * end, placed and replaced, accepted by the Designer's own check at handoff, gated again from the stored files and
- * scored; a report that misses the bar says so; the refusal codes are counted.
+ * scored; a report that misses the bar says so; the refusal codes are counted. DSG2: the new graphic is in the
+ * video (no proposal) with the one design the stand-in has, and the outcome says so.
  */
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -36,6 +37,8 @@ describe('eval:design with the stand-in', () => {
   it('places a new graphic and replaces a commented one, each accepted at handoff', async () => {
     const fresh = await run('countdown');
     expect(fresh.outcome).toMatchObject({ pass: true, kind: 'new', placed: true, gatePassed: true, gateEscape: false, renders: 1 });
+    expect(fresh.outcome).toMatchObject({ designs: 1, inUse: true, settled: false });
+    expect(fresh.world.handoffs[0]?.results[0]?.fewerBecause).toBeTruthy();
     expect(fresh.world.handoffs[0]?.results[0]?.outcome).toBe('placed');
     const comment = await run('comment-rounder');
     expect(comment.outcome).toMatchObject({ pass: true, kind: 'redesign', placed: true });
@@ -52,6 +55,9 @@ describe('eval:design with the stand-in', () => {
       pass: false,
       why: 'no accepted handoff (turns)',
       placed: false,
+      designs: 0,
+      inUse: false,
+      settled: false,
       gatePassed: false,
       gateEscape: false,
       failedChecks: [],

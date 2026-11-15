@@ -2,7 +2,8 @@
 // Copyright (C) 2026 Taalcut contributors
 /* Hallmark · component: chat-message · genre: atmospheric studio app (chrome modern-minimal)
  * system: DESIGN.md v0.3 (A1) · states: settled · streaming (aria-busy; the AI mark sits on a soft violet halo that
- *   fades in and out once, no loop) · sending and not sent (yours: the footer says so) · not interactive
+ *   fades in and out once, no loop) · sending and not sent (yours: the footer says so) · the words are not
+ *   interactive; under yours sits one compact action, Copy (copy-message.tsx)
  * UX round 1: your words in a compact sunken bubble with no edge and no shadow, as DESIGN.md says; the AI mark's
  *   infinite pulse is gone (the working line is the one thing that moves while a run goes)
  * pre-emit critique: P5 H5 E5 S4 R5 V4 */
@@ -12,6 +13,7 @@ import { memo, type ReactNode } from 'react';
 import { cn } from '#lib/cn';
 import { AiMark } from '../components/ai-mark';
 import { UserContent } from '../cards/card-frame';
+import { CopyMessage } from './copy-message';
 import { MarkdownText } from './markdown-text';
 
 export type ChatRole = 'agent' | 'user';
@@ -32,7 +34,8 @@ export interface ChatMessageProps {
 /**
  * One chat message (DESIGN.md v0.3, A1). The agent's words sit on the canvas,
  * unboxed, led by the AI mark and "Taalcut" in ink-2, at prose size and
- * measure. Yours sit in a compact raised/sunken studio bubble on the right.
+ * measure. Yours sit in a compact raised/sunken studio bubble on the right,
+ * with Copy under it so the same words can start another chat.
  * Authorship is also a word (visible for the agent, read out for you),
  * so colour and position are never the only signal.
  */
@@ -50,19 +53,22 @@ export const ChatMessage = memo(function ChatMessage({
       <article
         data-slot="chat-message"
         data-role="user"
-        className={cn(
-          'max-w-[min(60ch,85%)] self-end rounded-2xl rounded-br-sm bg-bubble px-4 py-2.5 text-md text-ink',
-          className,
-        )}
+        className={cn('flex max-w-[min(60ch,85%)] flex-col items-end gap-1 self-end', className)}
       >
-        <span className="sr-only">{t`You`}: </span>
-        {attachments ? <div className="mb-1.5 flex flex-wrap gap-1">{attachments}</div> : null}
-        <p className="m-0 leading-relaxed break-words">
-          <UserContent>{text}</UserContent>
-        </p>
-        {footer ? (
-          <footer className="mt-1 flex items-center gap-1.5 text-sm text-ink-2">{footer}</footer>
-        ) : null}
+        <div
+          data-slot="chat-bubble"
+          className="max-w-full min-w-0 rounded-2xl rounded-br-sm bg-bubble px-4 py-2.5 text-md text-ink"
+        >
+          <span className="sr-only">{t`You`}: </span>
+          {attachments ? <div className="mb-1.5 flex flex-wrap gap-1">{attachments}</div> : null}
+          <p className="m-0 leading-relaxed break-words">
+            <UserContent>{text}</UserContent>
+          </p>
+          {footer ? (
+            <footer className="mt-1 flex items-center gap-1.5 text-sm text-ink-2">{footer}</footer>
+          ) : null}
+        </div>
+        {text.trim() ? <CopyMessage text={text} /> : null}
       </article>
     );
   }

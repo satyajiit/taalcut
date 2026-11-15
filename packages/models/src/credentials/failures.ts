@@ -13,6 +13,7 @@ import {
   ModelProviderError,
   SignInDenied,
   SignInFailed,
+  SignInRefused,
   SignInPortBusy,
   SignInRequired,
   SignInTimeout,
@@ -49,7 +50,11 @@ export function authFailure(
       return SignInPortBusy({ provider, port: flow.extra.port ?? 0 }, extras);
     case 'rejected':
       // A refused refresh token won't work on retry; only signing in again helps.
-      return signingIn ? SignInFailed(params, extras) : SignInRequired(params, extras);
+      if (!signingIn) return SignInRequired(params, extras);
+      // The browser came back with a code and the provider refused it: its own sentence, which names the plan.
+      return flow.extra.oauthError === 'invalid_grant'
+        ? SignInRefused(params, extras)
+        : SignInFailed(params, extras);
     case 'invalid_response':
     case 'network':
       return signingIn ? SignInFailed(params, extras) : ModelAuthExpired(params, extras);

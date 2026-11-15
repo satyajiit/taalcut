@@ -112,6 +112,49 @@ describe('render store', () => {
     expect(Object.keys(snapshot)).not.toContain('qaReport');
   });
 
+  it('writes only the columns a patch changes, so one writer never puts another’s columns back', async () => {
+    // FIX-RENDERLINK: whoever queues an export sets the row's job while the export sets its status, each from
+    // its own read. A patch that wrote the whole row back erased the job id, and the export's sound check then
+    // waited for the slot its own export held (the owner, 2026-11-15).
+    const db = openTestDb({ file: false });
+    const store = createRenderStore(db);
+    const { project } = seed(db);
+    const input = record(project.id);
+    unwrap(await store.create(input));
+    db.driver.exec(`
+      CREATE TEMP TABLE written (col TEXT NOT NULL);
+      CREATE TEMP TRIGGER wrote_job AFTER UPDATE OF job_id ON renders BEGIN INSERT INTO written VALUES ('job_id'); END;
+      CREATE TEMP TRIGGER wrote_status AFTER UPDATE OF status ON renders BEGIN INSERT INTO written VALUES ('status'); END;
+      CREATE TEMP TRIGGER wrote_request AFTER UPDATE OF request ON renders BEGIN INSERT INTO written VALUES ('request'); END;
+      CREATE TEMP TRIGGER wrote_name AFTER UPDATE OF name ON renders BEGIN INSERT INTO written VALUES ('name'); END;
+    `);
+    const written = () =>
+      (db.driver.prepare('SELECT col FROM written ORDER BY rowid').all() as { col: string }[]).map(
+        (r) => r.col,
+      );
+
+    const jobId = newId<'Job'>();
+    expect(unwrap(await store.update(input.id, { status: 'rendering', error: null })).status).toBe(
+      'rendering',
+    );
+    expect(written()).toEqual(['status']);
+    // The other writer's stale read no longer matters: its patch touches its own column only.
+    expect(unwrap(await store.update(input.id, { jobId })).jobId).toBe(jobId);
+    expect(unwrap(await store.update(input.id, { status: 'checking' }))).toMatchObject({
+      status: 'checking',
+      jobId,
+    });
+    expect(written()).toEqual(['status', 'job_id', 'status']);
+    // A patch that changes nothing writes nothing, and still answers with the record.
+    expect(unwrap(await store.update(input.id, { jobId, status: 'checking' }))).toMatchObject({ jobId });
+    expect(written()).toEqual(['status', 'job_id', 'status']);
+    expect(unwrap(await store.get(input.id))).toMatchObject({
+      status: 'checking',
+      jobId,
+      name: 'Goa – Reels',
+    });
+  });
+
   it('refuses invalid records and patches, and unknown ids', async () => {
     const db = openTestDb({ file: false });
     const store = createRenderStore(db);

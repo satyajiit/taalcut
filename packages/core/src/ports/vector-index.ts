@@ -19,7 +19,7 @@ export type VectorMetric = (typeof VECTOR_METRICS)[number];
 export interface VectorMetadata {
   readonly assetId?: string | null;
   readonly sourceId?: string | null;
-  /** In the library's index: 'frame', 'transcript', 'ocr', 'description' (EMBEDDING_ITEM_KINDS). Other indexes name their own. */
+  /** In the library's index: 'frame', 'transcript', 'ocr', 'description', 'moment' (EMBEDDING_ITEM_KINDS). Other indexes name their own. */
   readonly kind?: string | null;
 }
 

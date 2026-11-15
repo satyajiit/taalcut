@@ -180,6 +180,42 @@ export function slotMotionCheck(fact: SlotMatchFact): QaCheckResult {
   return slotCheck('slotMotion', 'matchSlotMotion', held.length, misses);
 }
 
+/**
+ * MOM1 slotPart: each clip plays the part of its shot that shows what its slot states. The measure is timeline's
+ * (`partVerdict`): the notes indexing wrote for the moments the clip plays, against the slot's intent and needs by
+ * meaning, relative to the best part of the same shot. It needs no vision model and no picture consent. The fix says
+ * how far to slip the clip; it carries no note (a note is the user's media: timeline.get shows it, fenced).
+ *
+ * MOM2: a clip also misses when its part rests on a stretch the describer stated as the camera being handled (raised,
+ * lowered, covered, put down) while its shot has a part that keeps off them; the fix then says how much of the part
+ * does (`cameraHandlingPercent`) and slips to the clear part that fits best. A part the person picked by hand (a
+ * locked clip, or the person's own slip or swap) is never read.
+ */
+export function slotPartCheck(fact: SlotMatchFact): QaCheckResult {
+  const held = fact.slots.filter((slot) => slot.part !== null);
+  const misses = held.flatMap((slot): SlotMiss[] => {
+    const part = slot.part!;
+    if (part.met) return [];
+    return [
+      {
+        slot,
+        // MOM2: a part that rests on a stretch where the camera is being handled is measured by how much of it does.
+        measured: { value: pct(part.handling ?? part.under), unit: 'percent' },
+        params: {
+          clipId: part.clipId,
+          playsShotFrom: part.playsFrom,
+          ...(part.handling !== undefined ? { cameraHandlingPercent: pct(part.handling) } : {}),
+          betterPartFrom: part.betterFrom,
+          // What timeline.slipClip takes: part {"seconds": …}, later when positive.
+          slipSeconds: Math.round((part.betterFrom - part.playsFrom) * 100) / 100,
+          tools: 'timeline.get, timeline.slipClip, timeline.swapClip, timeline.findAlternates',
+        },
+      },
+    ];
+  });
+  return slotCheck('slotPart', 'matchSlotPart', held.length, misses);
+}
+
 /** slotTiming: each slot about as long as the reel's (a dropped slot is 0 s long). */
 export function slotTimingCheck(fact: SlotMatchFact): QaCheckResult {
   const { share, seconds } = SLOT_MATCH.timing;

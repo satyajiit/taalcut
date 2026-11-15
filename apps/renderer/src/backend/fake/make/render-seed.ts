@@ -15,6 +15,7 @@ import { fakeUlid } from '../library/seed';
 import type { SeededVersion } from './fake-projects';
 import { presetName } from './render-snapshot';
 import { GOLDEN_RENDER, MAKE_KIND } from './ids';
+import { REEL_RUN_PROJECT } from './p3/seeds/reel-run';
 import { bytesOf, needsAttention, qaReport, summaryOf, WARNED } from './render-data';
 import type { SeededProject } from './seeded-project';
 
@@ -114,6 +115,16 @@ export function seedRenders(projects: readonly SeededProject[]): {
     render(6, trip, trip.timelines[0]!, 'tiktok', 'cancelled', 32),
     render(7, diwali, diwali.timelines[0]!, 'device', 'ready', 21 * 24, {}, { verdict: 'passed' }),
   ];
+  // FIX-DOCKCHAT: the reel run's two exports, when its project is seeded: one to look at, one that failed.
+  const reelRun = projects.find((project) => project.id === REEL_RUN_PROJECT);
+  const reel = reelRun?.timelines[0];
+  if (reelRun && reel)
+    renders.push(
+      render(70, reelRun, reel, 'device', 'needsAttention', 2.5, {}, needsAttention(reelRun.id, reel.id)),
+      render(71, reelRun, reel, 'device', 'failed', 2.2, {
+        error: { code: 'render.capture_failed', messageKey: 'errors.render.capture_failed', retryable: true },
+      }),
+    );
   const at = (hoursAgo: number) => FIXTURE_NOW - hoursAgo * HOUR;
   const versions: SeededVersion[] = [
     { timelineId: g1.id, kind: 'auto', label: null, snapshot: g1, createdAt: at(26) },

@@ -19,7 +19,9 @@ export const READ_RETRY = { maxAttempts: 2, initialDelayMs: 300 };
 export const keyOf =
   (name: string) =>
   (input: unknown): string =>
-    createHash('sha256').update(JSON.stringify([name, input])).digest('hex');
+    createHash('sha256')
+      .update(JSON.stringify([name, input]))
+      .digest('hex');
 
 /** A human label for a workspace path in tool call summaries ("vietnam-chat/index.html" → "Vietnam chat"). */
 export function entryLabel(path: string): string {
@@ -30,9 +32,17 @@ export function entryLabel(path: string): string {
   return words ? `${words[0]!.toUpperCase()}${words.slice(1)}` : path;
 }
 
-/** defineTool with the module's version, run on this Mac unless the spec says otherwise. */
-export function workspaceTool<I extends z.ZodType, O extends z.ZodType, const C extends string | undefined = undefined>(
-  spec: Omit<ToolSpec<I, O, C>, 'version' | 'costClass'> & Partial<Pick<ToolSpec<I, O, C>, 'costClass'>>,
+/**
+ * defineTool with the module's version (its own when its words or schema moved on since), run on this Mac unless
+ * the spec says otherwise.
+ */
+export function workspaceTool<
+  I extends z.ZodType,
+  O extends z.ZodType,
+  const C extends string | undefined = undefined,
+>(
+  spec: Omit<ToolSpec<I, O, C>, 'version' | 'costClass'> &
+    Partial<Pick<ToolSpec<I, O, C>, 'costClass' | 'version'>>,
 ): ToolSpec<I, O, C> {
   return defineTool<I, O, C>({ version: TOOLS_VERSION, costClass: 'local', ...spec } as ToolSpec<I, O, C>);
 }

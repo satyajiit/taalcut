@@ -41,7 +41,12 @@ function SourceRow({ source }: { source: SourceView }) {
   return (
     <li className="flex items-center gap-3 border-b border-rule-subtle py-2 last:border-b-0">
       <Icon aria-hidden className="size-4 shrink-0 text-ink-3" />
-      <UserContent translate="no" className="min-w-0 flex-1 truncate text-sm font-medium text-ink">
+      {/* One line, cut at the row's width; the folder's whole name stays as the tooltip. */}
+      <UserContent
+        translate="no"
+        title={source.name}
+        className="min-w-0 flex-1 truncate text-sm font-medium text-ink"
+      >
         {source.name}
       </UserContent>
       <span className="shrink-0 text-xs text-ink-2 tabular-nums">

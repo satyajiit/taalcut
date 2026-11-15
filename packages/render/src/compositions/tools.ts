@@ -6,6 +6,7 @@
  * through its command, so an agent edit is the same undoable, audited step as the inspector's; and `graphics.design`
  * (design-tool.ts), the Editor's every new graphic and every change to one's look, a job for the Designer. A graphic
  * is a composition the Designer made: it places and sizes itself, and its words and colours are its variables.
+ * DSG2: a graphic comes with three designs; `graphics.list` numbers them and `graphics.chooseOption` switches.
  * Graphic text is someone's words, so it comes back with any look-alike untrusted fence defused.
  */
 import { createHash } from 'node:crypto';
@@ -30,6 +31,7 @@ import { createDesignTool } from './design-tool';
 import { listedGraphics } from './listed';
 import { staleRevision } from './revision-check';
 import {
+  chooseOptionInput,
   editInput,
   itemSchema,
   receiptSchema,
@@ -209,5 +211,47 @@ export function compositionToolModule(deps: CompositionToolDeps): ToolModule {
       return done.ok ? ok(removeOutput.parse(done.value)) : done;
     },
   });
-  return defineToolModule({ id: 'graphics', tools: [list, edit, remove, design, useProposal] });
+  // DSG2: "use the second one": the person's choice between a graphic's designs, said in the chat.
+  const chooseOption = defineTool({
+    ...writeTool(GRAPHICS_COMMANDS.chooseOption),
+    description:
+      'Switches a graphic to another of the designs it came with, when the person asks for one ("use the second ' +
+      'one", "go back to the first"). option is its number in graphics.list’s options; every graphic of the same ' +
+      'set switches with it and keeps its words. Three new designs instead is graphics.design. Undoable.',
+    summary: 'Switches a graphic to another of its three options.',
+    tags: [
+      'option',
+      'options',
+      'choose',
+      'pick',
+      'switch',
+      'alternative',
+      'second',
+      'third',
+      'first',
+      'other',
+    ],
+    input: chooseOptionInput,
+    output: removeOutput,
+    run: async (input, ctx) => {
+      const timeline = await deps.timelines.get(input.timelineId);
+      if (!timeline.ok) return timeline;
+      const listed = listedGraphics(timeline.value).find((item) => item.itemId === input.itemId);
+      const graphic = timeline.value.tracks
+        .flatMap((track) => (track.kind === 'text' ? track.items : []))
+        .find((item) => item.id === input.itemId);
+      const chosen = graphic?.type === 'graphic' ? graphic.options?.designs[input.option - 1] : undefined;
+      if (!listed || !chosen)
+        return err(
+          ValidationError(
+            { field: 'option' },
+            { detail: 'That graphic has no such option: graphics.list numbers the ones it has' },
+          ),
+        );
+      const { option: _number, ...target } = input;
+      const done = await dispatchAt(deps, { ...target, compositionId: chosen.compositionId }, ctx.dispatch);
+      return done.ok ? ok(removeOutput.parse(done.value)) : done;
+    },
+  });
+  return defineToolModule({ id: 'graphics', tools: [list, edit, remove, design, useProposal, chooseOption] });
 }

@@ -133,6 +133,19 @@ export const sequenceItemSchema = z.discriminatedUnion('type', [
   authoredProgramItemSchema,
 ]);
 
+/** TXT1: who may state where a text item sits: the person, or the AI through its tool. */
+export const TEXT_PLACERS = ['person', 'editor'] as const;
+export type TextPlacer = (typeof TEXT_PLACERS)[number];
+
+/**
+ * TXT1: how a text's words break into lines. 'written': one line for each line of the words (a line break in the
+ * words is the only break), drawn from the box's anchor (its left edge, centre or right edge, as
+ * `appearance.align` says): the box follows the words, and no size or box wraps them. 'width': the words wrap at
+ * the box's width, which whoever placed the text stated.
+ */
+export const TEXT_BREAKS = ['written', 'width'] as const;
+export type TextBreaks = (typeof TEXT_BREAKS)[number];
+
 export const textItemSchema = z.object({
   type: z.literal('text'),
   id: itemId,
@@ -151,6 +164,16 @@ export const textItemSchema = z.object({
   origin: z.enum(['template', 'editor', 'user']),
   /** FRM1-OVL: why `box` is where it is (the placement solver's); absent when the person set it or before FRM1. */
   placement: madePlacementSchema.optional(),
+  /**
+   * TXT1: who stated where the text sits. Absent on a text nobody has placed (it sits where the reel had it) and
+   * on every text from before TXT1. Nothing automatic moves or resizes a text that has it.
+   */
+  placedBy: z.enum(TEXT_PLACERS).optional(),
+  /**
+   * TXT1: how the words break into lines (`TEXT_BREAKS`). Absent on every text from before it, which is drawn as
+   * 'width', as it always was.
+   */
+  breaks: z.enum(TEXT_BREAKS).optional(),
 });
 
 /** What a text track holds: text items and motion graphics (graphics.ts), without overlaps. */

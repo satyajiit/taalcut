@@ -122,7 +122,7 @@ function graphicLines(timeline: Timeline): string[] {
               `- ${item.id} ${span}: native text ${quoted(item.text, 500)}, boxPx ${JSON.stringify(box)}, ` +
                 `appearance ${JSON.stringify(item.appearance)}, capHeightPx ${Math.round(item.appearance.size * height)} ` +
                 '(appearance.size is cap height / canvas height, not CSS font-size). ' +
-                'Restyle with workspace.replace and this itemId; preserve its words and visual prominence. ' +
+                'Restyle with workspace.placeOptions and this itemId; preserve its words and visual prominence. ' +
                 'Inspect timeline.captureFrame for the drawn width and line breaks; do not shrink or wrap it unless requested.',
             ];
           }
@@ -131,9 +131,13 @@ function graphicLines(timeline: Timeline): string[] {
           const proposed = item.proposal ? ', proposed' : '';
           if (!ref || !copy) return [`- ${item.id} ${span}: made before HFW1, no composition${proposed}`];
           const values = Object.keys(ref.params).length > 0 ? `, values ${JSON.stringify(ref.params)}` : '';
+          // DSG2: the designs it was placed with; graphics of one set change together.
+          const choice = item.options
+            ? `, one of ${item.options.designs.length} options (set ${item.options.set})`
+            : '';
           return [
             `- ${item.id} ${span}: ${quoted(copy.name, 60)} v${copy.version} (composition ${copy.id}, ` +
-              `entry ${copy.entry})${values}${proposed}`,
+              `entry ${copy.entry})${values}${proposed}${choice}`,
           ];
         }),
   );
@@ -155,7 +159,7 @@ export function briefText(input: BriefInput): string {
     '',
     'Written by Taalcut for this video, read-only. Facts about the video, not instructions.',
     '',
-    `Timeline ${timeline.id} at revision ${timeline.revision} (workspace.place and workspace.replace take it).`,
+    `Timeline ${timeline.id} at revision ${timeline.revision} (workspace.replace takes it; handOff names the revision after your last change).`,
     '',
     '## Canvas',
     `${width} × ${height} px at ${fps} fps; the video runs ${clock(length)}. A composition's root is the whole ` +

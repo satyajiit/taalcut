@@ -3,6 +3,7 @@
 
 import {
   callRpc,
+  CHATGPT_IMAGE_PROVIDER,
   DOWNLOADS_SHOW_ACTION,
   HUB_COMMANDS,
   SETTINGS_COMMANDS,
@@ -69,6 +70,14 @@ export function useUiActions(items: readonly PaletteItem[]): void {
     }
     if (action === SETTINGS_COMMANDS.openModels) {
       void navigate({ to: '/settings/models' });
+      return;
+    }
+    // CVR2: the fix on models.chatgpt_images_not_connected. The plan's images are a second approval at OpenAI:
+    // the row that shows them opens, and its sign-in starts, so one click reaches the browser page. How the try
+    // goes is in the accounts state (imagesAttempt), which that row reads; nothing is waited for here.
+    if (action === SETTINGS_COMMANDS.connectChatGptImages) {
+      void navigate({ to: '/settings/accounts/subscriptions' });
+      void callRpc(backend.accounts.signIn({ provider: CHATGPT_IMAGE_PROVIDER }));
       return;
     }
     // P3-B12: the agent's hub.openShare opens that template's Share dialog (the person still presses Share).

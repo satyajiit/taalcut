@@ -2,12 +2,17 @@
 // Copyright (C) 2026 Taalcut contributors
 
 /**
- * `graphicCoversFace` (FRM1-OVL; docs/qa-gate.md "Reframing"): no graphic and no text item covers a person's head
- * on any probed frame of its time, four a second and its last frame, for every video clip of the render, reframed
- * or not. Heads come from each clip's subject track through what the clip shows on the canvas
- * (engine/stages/heads.ts), the samples either side of the frame. It fails, and the person may export anyway, as
- * with `captionCoversFace`. A clip it has no track for is not seen: the check warns with how many, never passes
- * them silently. Pure.
+ * `graphicCoversFace` (FRM1-OVL; docs/qa-gate.md "Reframing"): whether a graphic or a text item covers a person's
+ * head on any probed frame of its time, four a second and its last frame, for every video clip of the render,
+ * reframed or not. Heads come from each clip's subject track through what the clip shows on the canvas
+ * (engine/stages/heads.ts), the samples either side of the frame. A graphic over a head fails, and the person may
+ * export anyway, as with `captionCoversFace`. A clip it has no track for is not seen: the check warns with how
+ * many, never passes them silently. Pure.
+ *
+ * TXT1 (the owner's rule: no code decides where text sits): a text item over a head is a note, never a failure.
+ * The check warns, and its findings name each such text with the frames a head is under it: a fact for whoever
+ * placed the text to judge (render.draft's `textNotes`). A failure would send the model dodging heads one text at a
+ * time, which is how a video's text ends up scattered. While a graphic fails, the findings are the graphics'.
  */
 import { overlapArea, type FrameRate, type QaCheckResult, type Rect } from '@taalcut/core';
 import type { FrameSpan } from '../../plan/types';
@@ -53,15 +58,20 @@ export function faceProbeFrames(items: readonly FaceCoverItem[], rate: FrameRate
 export function graphicCoversFaceCheck(input: FaceCoverInput, durationMs = 0): QaCheckResult {
   if (input.items.length === 0) return skipped('graphicCoversFace', durationMs);
   const ids = new Set(input.items.map((item) => item.id));
-  const covering = new Map<string, number[]>();
+  const covering = { graphic: new Map<string, number[]>(), text: new Map<string, number[]>() };
   for (const probed of input.boxes) {
     if ((probed.kind !== 'graphic' && probed.kind !== 'text') || !ids.has(probed.id)) continue;
     const hit = input
       .heads(probed.frame)
       .some((head) => overlapArea(probed.box, head, FACE_COVER_THRESHOLDS.tolerancePx) > 0);
-    if (hit) covering.set(probed.id, [...(covering.get(probed.id) ?? []), probed.frame]);
+    if (!hit) continue;
+    const frames = covering[probed.kind];
+    frames.set(probed.id, [...(frames.get(probed.id) ?? []), probed.frame]);
   }
-  const findings: QaFinding[] = [...covering].map(([id, frames]) =>
+  // A graphic over a head is the failure; with none, the texts over one are the warning's notes.
+  const failed = covering.graphic.size > 0;
+  const reported = failed ? covering.graphic : covering.text;
+  const findings: QaFinding[] = [...reported].map(([id, frames]) =>
     spanFinding(
       { start: Math.min(...frames), end: Math.max(...frames) + 1 },
       { kind: 'text', id },
@@ -74,10 +84,10 @@ export function graphicCoversFaceCheck(input: FaceCoverInput, durationMs = 0): Q
       target: { kind: 'file', id: 'subjectTrack' },
       measured: { value: unseen, unit: 'count' },
     });
-  const frames = [...covering.values()].reduce((sum, list) => sum + list.length, 0);
+  const frames = [...reported.values()].reduce((sum, list) => sum + list.length, 0);
   return checkResult(
     'graphicCoversFace',
-    covering.size > 0 ? 'fail' : unseen > 0 ? 'warn' : 'pass',
+    failed ? 'fail' : covering.text.size > 0 || unseen > 0 ? 'warn' : 'pass',
     {
       measured: { value: frames, unit: 'frames' },
       threshold: { max: 0, unit: 'frames' },
