@@ -136,4 +136,34 @@ describe('the Editor’s tool routing (EDT1-OPS)', () => {
     });
     expect(missing).toEqual([]);
   });
+
+  // FIX-ROUTE: LONG1's lengthening and TXT1's text placing, asked for in a person's words. One of the tools that do
+  // the job is among the five; each names the other (timeline.lengthenSlot's description, timeline.musicBars' answer).
+  it('loads a tool that lets a clip run longer, and one that moves a text', async () => {
+    const world = await editWorld();
+    const registry = unwrap(createToolRegistry([...world.modules]));
+    const skills = unwrap(createSkillRegistry([...world.skills], registry));
+    const editor = skills.get('timeline.editor') as AnySkill;
+    const withheld = new Set(editor.withheldTools?.({ request: 'x' } as never) ?? []);
+    const allowed = new Set(skills.subset(editor).filter((name) => !withheld.has(name)));
+    const longer = ['timeline.musicBars', 'timeline.lengthenSlot'];
+    // As the chat writes a step's text: the person's words, then the kinds selected.
+    const asks: readonly (readonly [string, readonly string[]])[] = [
+      ['Let my part run longer.', longer],
+      ['Make my clip run longer. (selected: clip)', longer],
+      ['Make the video a bit longer.', longer],
+      ['Move the title higher. (selected: text)', ['timeline.moveText', 'timeline.placeText']],
+    ];
+    const missing = asks.flatMap(([ask, oneOf]) => {
+      const loaded = registry
+        .search(`${editor.description} ${ask}`, { limit: 20 })
+        .map((hit) => hit.name)
+        .filter((name) => allowed.has(name))
+        .slice(0, 5);
+      return oneOf.some((wanted) => loaded.includes(wanted))
+        ? []
+        : [`${ask}: none of ${oneOf.join(', ')} (loaded ${loaded.join(', ')})`];
+    });
+    expect(missing).toEqual([]);
+  });
 });

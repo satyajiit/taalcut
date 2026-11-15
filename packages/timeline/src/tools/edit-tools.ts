@@ -47,19 +47,23 @@ const EDITS = [
   },
   {
     command: TIMELINE_COMMANDS.moveClip,
+    // FIX-ROUTE: the tag "video" (the end is the video's end), so "move this clip to the end" loads it again.
+    version: '1.0.1',
     description:
       'Moves a clip (its number, or "this") to another place: to is where it goes, counted like the clips: "start" (or 1), "end", or the number it will have (3 makes it the third clip). Positions keep their lengths and beats, so the clip takes its new position\'s length, with its in-point chosen again around its motion peak.',
     summary:
       'Moves a clip to another place in the order (the start, the end); positions keep their lengths and beats.',
-    tags: ['reorder', 'order', 'move', 'position', 'end', 'start', 'first', 'open', 'opening'],
+    tags: ['reorder', 'order', 'move', 'position', 'end', 'start', 'first', 'open', 'opening', 'video'],
   },
   {
     command: TIMELINE_COMMANDS.editText,
     // TXT1: a box it gives places a text as timeline.moveText does, and its box follows new words.
-    version: '1.1.0',
+    // FIX-ROUTE (1.1.1): the tag "video", as the other text tools say "a video's text", so "change this text" loads it.
+    version: '1.1.1',
     description:
       "Replaces the wording, timing (atSeconds, durationSeconds), box, or removes one or more on-screen text items (via itemId or batch edits[]). Write wording for the user's footage, in your own words. A line break in the wording is the only thing that breaks a line; a box places a text as timeline.moveText does.",
-    summary: 'Edits, retimes, moves or removes one or more on-screen text items in a single step.',
+    summary:
+      'Changes what one or more on-screen texts say, or retimes, moves or removes them, in a single step.',
     tags: [
       'text',
       'title',
@@ -78,6 +82,7 @@ const EDITS = [
       'delete',
       'batch',
       'bulk',
+      'video',
     ],
   },
   {

@@ -1,39 +1,39 @@
 {
-  "update": "LONG1",
+  "update": "FIX-ROUTE",
   "liveProviderCalls": 0,
-  "note": "Offline refresh: the catalogue's 193 tools (timeline.musicBars, timeline.lengthenSlot added or changed). Plain steps took the offers of the gate demo's headless journey recorded again with the stored responses as its only upstream; skill steps took their skill's current list from the desktop's agent process. Planning, plain-step and recorded skill meta schemas came from actual public-agent requests serialized by the provider SDK. Canonical request hashes were recomputed by the cassette recorder with stored responses as its only upstream. Every response byte, interaction count and original recorder timestamp is unchanged; no live provider was contacted.",
+  "note": "Offline refresh: the catalogue's 193 tools (timeline.moveClip, timeline.editText, timeline.setTransition, timeline.musicBars, timeline.lengthenSlot added or changed). Plain steps took the offers of the gate demo's headless journey recorded again with the stored responses as its only upstream; skill steps took their skill's current list from the desktop's agent process. Planning, plain-step and recorded skill meta schemas came from actual public-agent requests serialized by the provider SDK. Canonical request hashes were recomputed by the cassette recorder with stored responses as its only upstream. Every response byte, interaction count and original recorder timestamp is unchanged; no live provider was contacted.",
   "sessions": {
     "gate-demo": {
       "recordedAt": "2026-11-05T20:11:37.520Z",
       "interactionCount": 26,
-      "offersChanged": 16,
-      "updatedRequests": 16,
+      "offersChanged": 14,
+      "updatedRequests": 14,
       "validCalls": 0,
       "responseSha256": "aced3a847f86389f66c7ac64622a6adea793b71eaaa8f3a1726d05d959279198"
     },
     "make-flow": {
       "recordedAt": "2026-11-15T14:43:02.099Z",
       "interactionCount": 95,
-      "offersChanged": 50,
-      "updatedRequests": 50,
-      "validCalls": 0,
+      "offersChanged": 0,
+      "updatedRequests": 0,
+      "validCalls": 3,
       "responseSha256": "f15bddd22f037911c517aa5708003ede6d2d1dd31d1999b5d38543dd74e5b1e1"
     },
     "edit-chat": {
       "recordedAt": "2026-11-05T20:41:49.632Z",
       "interactionCount": 4,
-      "offersChanged": 3,
-      "updatedRequests": 3,
+      "offersChanged": 0,
+      "updatedRequests": 0,
       "validCalls": 0,
       "responseSha256": "66432aa9d7ccfdb69053f5e9474518deec6dc34ef663a30928f96635bdf733f8"
     },
     "edit-design": {
-      "recordedAt": "2026-11-05T20:49:10.937Z",
+      "recordedAt": "2026-11-15T19:28:38.932Z",
       "interactionCount": 9,
-      "offersChanged": 3,
-      "updatedRequests": 3,
+      "offersChanged": 0,
+      "updatedRequests": 0,
       "validCalls": 0,
-      "responseSha256": "9fa5efd5e8c1731636a59231db216660a2732933956f8d8a8da8f436d4d70aeb"
+      "responseSha256": "6a835a3ae41096172809899d46896ced56f05c2f037083b36a050baaface4cff"
     }
   },
   "followup": {
@@ -436,5 +436,39 @@
       }
     },
     "note": "makeFlowRerecord describes the tape this one replaced; its indices and digests are historical. The before digests are of the tape as committed before TXT1 (after its later offline refreshes). gate-demo and edit-chat were refreshed offline for the same update (sessions above); edit-chat and edit-design keep their own tapes and replay their make part from this one. edit-design was set aside (--rerecord): it is still the tape from before DSG2."
+  },
+  "editDesignRerecord": {
+    "update": "DSG2-EDIT-DESIGN-RERECORD",
+    "source": "documented in-process deterministic stand-in",
+    "liveProviderCalls": 0,
+    "command": "after a test build of apps/desktop, TAALCUT_RECORD=1 TAALCUT_RECORD_SESSION=edit-design TAALCUT_RECORD_DIR=<scratch> playwright test --project=make e2e/make-flow-edit-design.e2e.ts in apps/desktop",
+    "sourceTree": "9b20a9aebd2b5ef360b6aad6a3223def8cd1995b",
+    "reason": "DSG2 changed the docked design's flow: the stand-in Designer draws its design over the video where it plays (workspace.renderOver) and places it as the first design of its set (workspace.placeOptions), where it read the revision (graphics.list) and proposed the design (workspace.place). workspace.renderOver shows stills of the person's video to a cloud model, so the run asks first with the consent card. The journey had no step that answered the card and waited on it until its time ran out, so the session could not be recorded and every refresh since DSG2 set it aside (--rerecord=edit-design). The journey now allows the stills once, and the session was recorded again. Tool offers alone could not be refreshed to fit.",
+    "result": "make-flow-edit-design.e2e.ts passed while recording, twice in a row with identical responses; the second recording is the tape, which then replays in the same journey. An offline refresh of all four sessions after it found nothing to refresh.",
+    "before": {
+      "recordedAt": "2026-11-05T20:49:10.937Z",
+      "interactionCount": 9,
+      "asks": {
+        "1": 9
+      },
+      "responseSha256": "9fa5efd5e8c1731636a59231db216660a2732933956f8d8a8da8f436d4d70aeb",
+      "cassetteSha256": "0d6ace1e85434c7fab04abf7c8c47fc8ac9aa24eccea1d41ce0a3eece7e68c89"
+    },
+    "after": {
+      "recordedAt": "2026-11-15T19:28:38.932Z",
+      "interactionCount": 9,
+      "asks": {
+        "1": 9
+      },
+      "responseSha256": "6a835a3ae41096172809899d46896ced56f05c2f037083b36a050baaface4cff",
+      "cassetteSha256": "359c308e2718daa132c39cec4e5afbcec4ee61afba32c752ee6f0233832628a9"
+    },
+    "steps": {
+      "headline": {
+        "before": "editor 3, designer 5 (write, lint, graphics.list, place, handOff), closing turn 1",
+        "after": "editor 3, designer 5 (write, lint, renderOver, placeOptions, handOff), closing turn 1"
+      }
+    },
+    "note": "The edit-design entries of the earlier blocks describe the tape this one replaced; their indices and digests are historical. The make part of the journey replayed from make-flow.cassette.json as it was: gate-demo, make-flow and edit-chat were not recorded or refreshed for this."
   }
 }

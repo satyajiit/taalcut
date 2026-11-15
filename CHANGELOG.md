@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+Fixed: with a small on-device model, the editor's AI was not offered the tool for moving a clip to the end,
+changing a transition's length or changing a text's words, and asking for a clip to run longer did not reach
+the tools that lengthen it. See the [release notes](release-notes/0.2.1/en.md).
+
 ## 0.2.0
 
 A video made from a reference reel follows the reel more closely. A shot from the reel can stay in the video, a

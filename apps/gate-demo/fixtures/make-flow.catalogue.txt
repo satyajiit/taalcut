@@ -67,8 +67,8 @@ timeline timeline.get 5130c8e082e6
 timeline timeline.findAlternates c007cc357cc8
 timeline timeline.swapClip 67bd93007963
 timeline timeline.trimClip 66ad9b2b5d33
-timeline timeline.moveClip 5b140b52ceb8
-timeline timeline.editText c5be02a788c8
+timeline timeline.moveClip 1c07f5dcafd1
+timeline timeline.editText 73b24e92110b
 timeline timeline.moveText 083538c1544d
 timeline timeline.lockClip 419ec0cc6697
 timeline timeline.applyCast 89530797d722
@@ -81,7 +81,7 @@ timeline timeline.deleteClip b477ef43752c
 timeline timeline.insertClip 4455c4c4c2c4
 timeline timeline.duplicateClip 423e377c94d7
 timeline timeline.setSpeed cfb3094869e5
-timeline timeline.setTransition a5a80aa0eadd
+timeline timeline.setTransition 25ed4de2a278
 timeline timeline.removeTransition 36bcd7b4e074
 timeline timeline.setGrade 17c8c6bf29fd
 timeline timeline.addMarker a585e6c4d891
@@ -101,8 +101,8 @@ timeline timeline.setPostCaption a7b62a1ab10c
 timeline timeline.textLook e2d8b59a8c7b
 timeline timeline.designText b3cc0d426eb2
 timeline timeline.placeText fd8f54f4c9a1
-timeline timeline.musicBars c26abfb35df2
-timeline timeline.lengthenSlot 7d47fd967de6
+timeline timeline.musicBars 880959c17b17
+timeline timeline.lengthenSlot cd2ea4fab208
 timeline timeline.exportInterchange 87d8654cc72a
 timeline timeline.gaps 1009ace5ad77
 timeline timeline.fillGap e00d70ebe9d8

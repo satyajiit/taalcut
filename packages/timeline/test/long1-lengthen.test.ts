@@ -367,12 +367,13 @@ describe('what can’t be done as stated changes nothing and says why, with the 
 });
 
 describe('the tools’ versions (LONG1)', () => {
-  it('timeline.musicBars 1.0.0 reads and timeline.lengthenSlot 1.0.0 writes its command', async () => {
+  it('timeline.musicBars 1.0.1 reads and timeline.lengthenSlot 1.0.1 writes its command', async () => {
     const { w } = await setup();
     const tool = (name: string) => w.tools.tools.find((candidate) => candidate.name === name)!;
-    expect(tool('timeline.musicBars')).toMatchObject({ version: '1.0.0', sideEffect: 'read' });
+    // FIX-ROUTE: 1.0.1 is the tag "run" on both (test/fix-route.test.ts).
+    expect(tool('timeline.musicBars')).toMatchObject({ version: '1.0.1', sideEffect: 'read' });
     expect(tool('timeline.lengthenSlot')).toMatchObject({
-      version: '1.0.0',
+      version: '1.0.1',
       sideEffect: 'write',
       command: 'timeline.lengthenSlot',
     });

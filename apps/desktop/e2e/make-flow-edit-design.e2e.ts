@@ -14,6 +14,9 @@
  *   graphics lane shows it by its name, not marked Proposed; it is stored drawn with its composition, which the
  *   timeline keeps a copy of, as the first design of its set (the stand-in has one design, so there is nothing to
  *   choose between yet).
+ * - Drawing it over the video (workspace.renderOver) shows stills of the person's video to a cloud model, so the run
+ *   asks first, with the consent card in the dock, and waits. The person allows it once: the stills go, the approval
+ *   is in the run's log, and no consent stands after.
  * - The dock's Files tab shows the design's files, read only, from the project's workspace.
  *
  * Re-record with TAALCUT_RECORD=1 TAALCUT_RECORD_SESSION=edit-design (the make flow's part replays from its own
@@ -39,7 +42,7 @@ import { createBinaryResolver } from '@taalcut/media';
 import { showDetailedTimeline } from './editor-navigation';
 import { libraryPath } from '../src/shared/library-path';
 import { takeGapProposals } from './gap-card';
-import { launchApp } from './gate-support';
+import { launchApp, libraryReader, SEND_OFF_HEADING } from './gate-support';
 import { shellAvailable } from './headless-shell';
 import { makeFlowEnv, makeFlowHome, makeFlowReader, type MakeFlowHome } from './make-flow-support';
 import { approvalAsks } from './review-page';
@@ -142,8 +145,18 @@ test('the docked chat: “a newspaper-style headline at 0:04”, designed and in
   const box = dock.getByRole('textbox', { name: 'Message Taalcut' });
   await box.fill(EDIT_DESIGN_ASK);
   await box.press('Enter');
+  // The Designer looks at its design over the video before placing it: stills of the person's video for a cloud
+  // model, so the run asks first, here in the dock, and waits. The card says what leaves; the person allows it once.
+  const consent = dock
+    .getByRole('listitem')
+    .filter({ has: page.getByRole('heading', { name: SEND_OFF_HEADING }) });
+  await expect(consent.getByRole('button', { name: 'Allow once' })).toBeEnabled({ timeout: FLOW_MS });
+  await expect(consent).toContainText('Checking this graphic shows stills of your video with it on top to');
+  await consent.getByRole('button', { name: 'Allow once' }).click();
   const card = dock.getByRole('article', { name: `Motion graphic: ${EDIT_DESIGN_NAME}` }).last();
   await expect(card).toBeVisible({ timeout: FLOW_MS });
+  await expect(consent).toContainText('Sent');
+  await expect(consent.getByRole('button', { name: 'Allow once' })).toHaveCount(0);
   await expect(card.getByText(/^Starts at 0?0:04/)).toBeVisible();
   await expect(card.locator('[data-slot=design-proposal]')).toHaveCount(0);
   await expect(card.getByRole('button', { name: 'Use it' })).toHaveCount(0);
@@ -177,6 +190,13 @@ test('the docked chat: “a newspaper-style headline at 0:04”, designed and in
   expect(commands).toEqual(expect.arrayContaining(['workspace.writeFiles', 'graphics.placeOptions']));
   expect(commands).not.toContain('graphics.propose');
   expect(commands).not.toContain('graphics.placeComposition');
+  // The stills were asked for once, as an upload by the agent's model, and allowed for that call alone.
+  const events = library.events(run!);
+  const asked = events.filter((e) => e.type === 'approval.requested' && e.payload['kind'] === 'consent');
+  expect(asked.map((e) => e.payload)).toMatchObject([{ reason: 'upload', upload: { modules: ['agent'] } }]);
+  const granted = events.filter((e) => e.type === 'approval.granted');
+  expect(granted.map((e) => e.payload['requestId'])).toContain(asked[0]!.payload['requestId']);
+  expect(libraryReader(world.userData).uploadConsents()).toBeUndefined();
 
   // Its files, read only, from the project's workspace: View files opens Files in the lower work area.
   await block.click();

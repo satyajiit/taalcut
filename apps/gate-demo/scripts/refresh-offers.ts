@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { unwrap, type ToolModule } from '@taalcut/core';
 import { openCassette } from '@taalcut/models';
-import { createToolRegistry } from '@taalcut/tools';
+import { createToolRegistry, parseToolInput } from '@taalcut/tools';
 
 export interface WireTool {
   readonly name: string;
@@ -53,6 +53,12 @@ export interface RegistryTool {
   readonly tool: string;
   readonly description: string;
   readonly inputSchema: unknown;
+  /**
+   * A call's input as the executor admits it (@taalcut/tools executor.ts): mended first where the tool mends an
+   * older caller's fields (`mendInput`), then parsed. FIX-ROUTE: the make flow's recorded timeline.setTransition
+   * names its clip as `clipId`, which the tool mends to `clip`; checked unmended, a refresh that touched the tool's
+   * tags refused a call the app runs.
+   */
   readonly input: { safeParse(value: unknown): { success: boolean } };
 }
 
@@ -72,7 +78,9 @@ export function registryWire(modules: readonly ToolModule[]): Map<string, Regist
       tool: tool.name,
       description: described.description,
       inputSchema: { type: 'object', properties: schema?.properties ?? {}, required: schema?.required ?? [] },
-      input: tool.input,
+      input: {
+        safeParse: (value) => parseToolInput(tool.input, tool.mendInput ? tool.mendInput(value) : value),
+      },
     });
   }
   return wire;

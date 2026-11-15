@@ -5,6 +5,8 @@ import type { EditorToolName } from './editor-json';
 
 interface EditorToolText {
   readonly command: EditorToolName;
+  /** The tool's version when its words moved on from 1.0.0. */
+  readonly version?: string;
   readonly description: string;
   readonly summary: string;
   readonly tags: readonly string[];
@@ -49,6 +51,8 @@ export const EDITOR_TOOLS: readonly EditorToolText[] = [
   },
   {
     command: 'timeline.setTransition',
+    // FIX-ROUTE: the tags "lasts" and "seconds" (how long it lasts), so "make the crossfade last a second" loads it.
+    version: '1.0.1',
     description:
       'Adds (or changes) the transition at one edge of a clip (its number or "this"): edge "end" (default) into the next clip, "start" from the one before; "into the next one" is clip "this" with edge "end". Kinds: dissolve (a crossfade), fade (dip to black), flash (through white), whip, zoom (direction "down" zooms out), slide (direction: where the next clip comes from). Half a second by default.',
     summary:
@@ -67,6 +71,8 @@ export const EDITOR_TOOLS: readonly EditorToolText[] = [
       'between',
       'next',
       'longer',
+      'lasts',
+      'seconds',
     ],
   },
   {

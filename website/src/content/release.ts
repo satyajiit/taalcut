@@ -11,7 +11,7 @@ import { SITE } from './site';
  * Download for Mac does not carry the version: the release publisher keeps a copy of the newest stable .dmg under one
  * fixed name, so the button is right even before VERSION is changed here.
  */
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 const TAG = `v${VERSION}`;
 const FILE = `Taalcut-${VERSION}-arm64.dmg`;
 const NEWEST_FILE = 'Taalcut-mac-arm64.dmg';

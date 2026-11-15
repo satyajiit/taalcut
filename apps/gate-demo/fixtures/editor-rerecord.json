@@ -13,12 +13,13 @@
       "responseSha256": "66432aa9d7ccfdb69053f5e9474518deec6dc34ef663a30928f96635bdf733f8"
     },
     "edit-design": {
-      "sourceRecordedAt": "2026-11-05T11:51:42.204Z",
-      "recordedAt": "2026-11-05T20:49:10.937Z",
+      "sourceRecordedAt": "2026-11-15T19:23:43.672Z",
+      "recordedAt": "2026-11-15T19:28:38.932Z",
       "interactionCount": 9,
       "editorOfferRequests": [0, 1, 2],
-      "sourceResponseSha256": "9fa5efd5e8c1731636a59231db216660a2732933956f8d8a8da8f436d4d70aeb",
-      "responseSha256": "9fa5efd5e8c1731636a59231db216660a2732933956f8d8a8da8f436d4d70aeb"
+      "sourceResponseSha256": "6a835a3ae41096172809899d46896ced56f05c2f037083b36a050baaface4cff",
+      "responseSha256": "6a835a3ae41096172809899d46896ced56f05c2f037083b36a050baaface4cff",
+      "note": "DSG2 changed this flow: the Designer draws its design over the video (workspace.renderOver) and places it as the first design of its set (workspace.placeOptions), so the tape of 2026-11-05 could not be refreshed. The journey now allows the stills once on the consent card. It was recorded twice in a row through the same TAALCUT_RECORD path: the first recording is the source here, the second is the tape, and their responses are identical."
     }
   }
 }

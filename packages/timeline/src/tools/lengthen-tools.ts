@@ -131,7 +131,8 @@ async function planned(
 export function lengthenTools(deps: LengthenToolDeps): AnyTool[] {
   const read = defineTool({
     name: 'timeline.musicBars',
-    version: '1.0.0',
+    // FIX-ROUTE (1.0.1, with timeline.lengthenSlot): the tag "run", so "let my part run longer" loads them.
+    version: '1.0.1',
     description:
       'Reads the facts for making a video longer. The reel’s music, measured from its sound: the bar’s length, ' +
       'each bar line in seconds of the video, how sure the measurement is, where the music changes strongly. ' +
@@ -139,7 +140,7 @@ export function lengthenTools(deps: LengthenToolDeps): AnyTool[] {
       '`would` it answers what a lengthening would do (new length, what moves, where the instant on the cut ' +
       'lands) or why it can’t be done, changing nothing.',
     summary: "Reads the music's bars under a video and each clip's spare footage, for making it longer.",
-    tags: ['music', 'bars', 'beat', 'longer', 'lengthen', 'extend', 'length', 'duration', 'repeat'],
+    tags: ['music', 'bars', 'beat', 'longer', 'lengthen', 'extend', 'length', 'duration', 'repeat', 'run'],
     input: musicBarsInputSchema,
     output: musicBarsOutputSchema,
     costClass: 'local',
@@ -231,7 +232,7 @@ export function lengthenTools(deps: LengthenToolDeps): AnyTool[] {
 
   const write = defineTool({
     name: LENGTHEN_SLOT_COMMAND,
-    version: '1.0.0',
+    version: '1.0.1',
     description:
       'Makes one of the person’s clips longer by whole bars of the reel’s music. At `at`, a bar line inside the ' +
       'clip (its end counts), the music plays the bars before it again, joined by a 50 ms crossfade; the clip ' +
@@ -240,7 +241,7 @@ export function lengthenTools(deps: LengthenToolDeps): AnyTool[] {
       'all with why in numbers. Read timeline.musicBars first. One undo step.',
     summary:
       'Makes a clip longer by whole bars of the music, which plays those bars again; the rest moves later.',
-    tags: ['longer', 'lengthen', 'extend', 'length', 'duration', 'music', 'bars', 'repeat', 'loop'],
+    tags: ['longer', 'lengthen', 'extend', 'length', 'duration', 'music', 'bars', 'repeat', 'loop', 'run'],
     input: lengthenSlotInputSchema,
     output: lengthenSlotOutputSchema,
     costClass: 'local',

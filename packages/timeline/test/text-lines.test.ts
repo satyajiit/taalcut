@@ -216,11 +216,12 @@ describe('the owner’s make: one box for both sentences, with timeline.moveText
 });
 
 describe('the tools say it', () => {
-  it('timeline.moveText and timeline.editText are 1.1.0, and each says a box never wraps a text', () => {
+  it('timeline.moveText 1.1.0 and timeline.editText 1.1.1 each say a box never wraps a text', () => {
     const tools = new Map(editTools().map((tool) => [tool.name, tool]));
     const move = tools.get('timeline.moveText')!;
     const edit = tools.get('timeline.editText')!;
-    expect([move.version, edit.version]).toEqual(['1.1.0', '1.1.0']);
+    // FIX-ROUTE: editText is 1.1.1 for its tag and summary (test/fix-route.test.ts); its description is TXT1's.
+    expect([move.version, edit.version]).toEqual(['1.1.0', '1.1.1']);
     expect(move.description).toContain('never where it wraps');
     expect(edit.description).toContain('A line break in the wording is the only thing that breaks a line');
     // The other edit tools are as they were.

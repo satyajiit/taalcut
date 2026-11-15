@@ -25,7 +25,8 @@
  * 4. every registry tool offered must then be the registry's description and input schema, and an unchanged tool
  *    the bytes it was recorded with;
  * 5. match hashes are recomputed by @taalcut/models' recorder with each stored response as its upstream;
- * 6. recorded calls to the added or changed tools are checked against their input schemas;
+ * 6. recorded calls to the added or changed tools are checked as the executor admits a call: mended where the tool
+ *    mends an older caller's fields, then parsed against its input schema (test/refresh-calls.test.ts);
  * 7. --write writes the cassettes, the catalogues and catalogue-refresh.json.
  */
 import { spawnSync } from 'node:child_process';
